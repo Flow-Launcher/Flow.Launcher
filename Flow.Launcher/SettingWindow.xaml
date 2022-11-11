@@ -94,7 +94,6 @@
             <Setter Property="Margin" Value="0,5,0,0" />
             <Setter Property="Padding" Value="0,15,0,15" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
-
         </Style>
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
@@ -262,9 +261,6 @@
             </Setter>
         </Style>
 
-        <!--  Plugin Store Item when Selected layout for nothing  -->
-        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}" />
-
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
             <Setter Property="Padding" Value="0,0,0,0" />
@@ -400,6 +396,7 @@
             x:Key="StoreListStyle"
             BasedOn="{StaticResource {x:Type ListBox}}"
             TargetType="ListBox">
+            <Setter Property="Background" Value="{DynamicResource Color01B}" />
             <Style.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
                     <Setter Property="Template">
@@ -1044,7 +1041,7 @@
                             <ListBox
                                 Name="Plugins"
                                 Width="Auto"
-                                Margin="0,0,0,0"
+                                Margin="5,0,0,0"
                                 Padding="0,0,7,0"
                                 HorizontalAlignment="Stretch"
                                 Background="{DynamicResource Color01B}"
@@ -1534,7 +1531,45 @@
 
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <!--  Hover Layout Style  -->
+                                    <DataTemplate.Resources>
+                                        <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            x:Name="Background"
+                                                            Background="{DynamicResource Color00B}"
+                                                            BorderBrush="{DynamicResource Color03B}"
+                                                            BorderThickness="1"
+                                                            CornerRadius="4"
+                                                            SnapsToDevicePixels="True">
+                                                            <Border
+                                                                x:Name="Border"
+                                                                Padding="{TemplateBinding Padding}"
+                                                                BorderThickness="1"
+                                                                CornerRadius="4">
+                                                                <ContentPresenter
+                                                                    x:Name="ContentPresenter"
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    Focusable="False"
+                                                                    RecognizesAccessKey="True"
+                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Border>
+                                                        </Border>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataTemplate.Resources>
                                     <Button
                                         Name="StoreListItem"
                                         Margin="0"
@@ -1545,7 +1580,8 @@
                                         VerticalContentAlignment="Stretch"
                                         BorderThickness="0"
                                         Click="StoreListItem_Click"
-                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}">
+                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
+                                        Style="{DynamicResource StoreListItemBtnStyle}">
                                         <ui:FlyoutService.Flyout>
                                             <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
                                                 <Grid MinWidth="200">
