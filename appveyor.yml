@@ -7,6 +7,9 @@ init:
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
+cache:
+  - packages -> **\packages.config
+
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
