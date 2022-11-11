@@ -163,15 +163,17 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            var loadFullImage = (Path.GetExtension(imagePath) ?? "").Equals(".url", StringComparison.OrdinalIgnoreCase);
+
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = await ImageLoader.LoadAsync(imagePath);
+                image = await ImageLoader.LoadAsync(imagePath, loadFullImage);
                 return;
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            var i = await Task.Run(async () => await ImageLoader.LoadAsync(imagePath));
+            var i = await Task.Run(async () => await ImageLoader.LoadAsync(imagePath, loadFullImage));
             Image = i;
         }
 

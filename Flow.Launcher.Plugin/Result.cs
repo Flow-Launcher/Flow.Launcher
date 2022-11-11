@@ -37,7 +37,11 @@ namespace Flow.Launcher.Plugin
         /// user's clipboard when Ctrl + C is pressed on a result. If the text is a file/directory path
         /// flow will copy the actual file/folder instead of just the path text.
         /// </summary>
-        public string CopyText { get; set; } = string.Empty;
+        public string CopyText
+        {
+            get => string.IsNullOrEmpty(_copyText) ? SubTitle : _copyText;
+            set => _copyText = value;
+        }
 
         /// <summary>
         /// This holds the text which can be provided by plugin to help Flow autocomplete text
@@ -87,6 +91,7 @@ namespace Flow.Launcher.Plugin
         /// Delegate to Get Image Source
         /// </summary>
         public IconDelegate Icon;
+        private string _copyText = string.Empty;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)

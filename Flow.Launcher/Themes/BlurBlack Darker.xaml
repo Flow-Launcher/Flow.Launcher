@@ -7,6 +7,7 @@
     </ResourceDictionary.MergedDictionaries>
 
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
     </Style>
@@ -36,6 +37,7 @@
         x:Key="WindowBorderStyle"
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
+
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="#444444" />
         <Setter Property="CornerRadius" Value="0" />
@@ -137,6 +139,20 @@
     </Style>
     <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.2" />
+    </Style>
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="Opacity" Value="0.2" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
