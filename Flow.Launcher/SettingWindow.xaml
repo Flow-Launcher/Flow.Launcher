@@ -48,10 +48,9 @@
                 <scm:SortDescription PropertyName="Source" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
-        <CollectionViewSource x:Key="PluginStoreCollectionView"
-            Source="{Binding ExternalPlugins}">
+        <CollectionViewSource x:Key="PluginStoreCollectionView" Source="{Binding ExternalPlugins}">
             <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="Category"></PropertyGroupDescription>
+                <PropertyGroupDescription PropertyName="Category" />
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
 
@@ -2906,7 +2905,12 @@
                                                 Margin="0,0,12,0"
                                                 Click="ClearLogFolder"
                                                 Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
+                                            <Button
+                                                Margin="0,0,12,0"
+                                                Click="OpenTestBtn"
+                                                Content="Open Test" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
+
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xec7a;

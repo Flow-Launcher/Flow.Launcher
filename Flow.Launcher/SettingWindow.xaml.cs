@@ -278,6 +278,10 @@ namespace Flow.Launcher
             var WelcomeWindow = new WelcomeWindow(settings);
             WelcomeWindow.ShowDialog();
         }
+        private void OpenTestBtn(object sender, RoutedEventArgs e)
+        {
+            var messageBoxResult = MessageBoxEx.Show("Message Box Title", "Are you sure?");
+        }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
             PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
