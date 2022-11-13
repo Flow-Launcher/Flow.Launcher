@@ -134,7 +134,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Acceso a trabajo o escuela</value>
+    <value>Acceder a trabajo o escuela</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
@@ -1995,7 +1995,7 @@
     <value>Comprobar estado del teclado</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Controlar el ordenador sin el ratón o el teclado</value>
+    <value>Controlar el equipo sin el ratón o el teclado</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
     <value>Cambiar o eliminar un programa</value>
