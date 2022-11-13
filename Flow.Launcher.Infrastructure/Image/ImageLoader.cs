@@ -267,6 +267,7 @@ namespace Flow.Launcher.Infrastructure.Image
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
             image.UriSource = new Uri(path);
+            image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
             return image;
         }

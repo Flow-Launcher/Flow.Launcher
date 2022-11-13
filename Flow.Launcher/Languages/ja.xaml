@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">選択</system:String>
     <system:String x:Key="hideOnStartup">起動時にFlow Launcherを隠す</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Should Use Pinyin</system:String>
@@ -69,18 +70,20 @@
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">New Priority</system:String>
     <system:String x:Key="priority">重要度</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">プラグイン・ディレクトリ</system:String>
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">初期化時間:</system:String>
     <system:String x:Key="plugin_query_time">クエリ時間:</system:String>
     <system:String x:Key="plugin_query_version">| バージョン</system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
+    <system:String x:Key="uninstallbtn">アンインストール</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="install">Install</system:String>
+    <system:String x:Key="installbtn">Install</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">テーマ</system:String>
@@ -155,11 +158,13 @@
         更新のダウンロードに失敗しました、github-cloud.s3.amazonaws.com への接続とプロキシ設定を確認するか、
         https://github.com/Flow-Launcher/Flow.Launcher/releases から手動でアップデートをダウンロードしてください。
     </system:String>
-    <system:String x:Key="releaseNotes">リリースノート:</system:String>
+    <system:String x:Key="releaseNotes">リリースノート</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->

@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
     <system:String x:Key="hideNotifyIcon">Systeemvakpictogram verbergen</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Zoekopdracht nauwkeurigheid</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Wijzigt de minimale overeenkomst-score die vereist is voor resultaten.</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
@@ -69,18 +70,20 @@
     <system:String x:Key="currentPriority">Huidige Prioriteit</system:String>
     <system:String x:Key="newPriority">Nieuwe Prioriteit</system:String>
     <system:String x:Key="priority">Prioriteit</system:String>
+    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin map</system:String>
     <system:String x:Key="author">door</system:String>
     <system:String x:Key="plugin_init_time">Init tijd:</system:String>
     <system:String x:Key="plugin_query_time">Query tijd:</system:String>
     <system:String x:Key="plugin_query_version">| Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
-    <system:String x:Key="install">Installeren</system:String>
+    <system:String x:Key="installbtn">Installeren</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
@@ -155,11 +158,13 @@
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes:</system:String>
+    <system:String x:Key="releaseNotes">Release Notes</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->

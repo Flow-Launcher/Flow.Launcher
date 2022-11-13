@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al arrancar el sistema</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de la búsqueda</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima de similitud requerida para resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Debe usar Pinyin</system:String>
@@ -76,12 +77,13 @@
     <system:String x:Key="plugin_query_time">Tiempo de consulta:</system:String>
     <system:String x:Key="plugin_query_version">| Versión</system:String>
     <system:String x:Key="plugin_query_web">Sitio web</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de Plugins</system:String>
     <system:String x:Key="refresh">Recargar</system:String>
-    <system:String x:Key="install">Instalar</system:String>
+    <system:String x:Key="installbtn">Instalar</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -161,6 +163,8 @@
     <system:String x:Key="devtool">Herramientas de desarrollo</system:String>
     <system:String x:Key="settingfolder">Carpeta de Configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->

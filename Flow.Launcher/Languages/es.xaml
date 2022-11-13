@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja del sistema</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
@@ -57,7 +58,7 @@
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="plugin">Complemento</system:String>
+    <system:String x:Key="plugin">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
     <system:String x:Key="disable">Desactivado</system:String>
@@ -69,13 +70,14 @@
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
-    <system:String x:Key="priorityToolTip">Cambiar la prioridad del resultado del complemento</system:String>
+    <system:String x:Key="priorityToolTip">Cambiar la prioridad de los resultados del complemento</system:String>
     <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
     <system:String x:Key="plugin_query_time">Tiempo de consulta:</system:String>
     <system:String x:Key="plugin_query_version">| Versión</system:String>
     <system:String x:Key="plugin_query_web">Sitio web</system:String>
+    <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -158,9 +160,11 @@
     </system:String>
     <system:String x:Key="releaseNotes">Notas de la versión</system:String>
     <system:String x:Key="documentation">Consejos de uso</system:String>
-    <system:String x:Key="devtool">Herramientas de desarrolador</system:String>
+    <system:String x:Key="devtool">Herramientas de desarrollador</system:String>
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
+    <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
+    <system:String x:Key="clearlogfolderMessage">¿Está seguro que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->

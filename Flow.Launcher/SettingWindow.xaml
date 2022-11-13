@@ -7,24 +7,26 @@
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     Title="{DynamicResource flowlauncher_settings}"
-    Width="1000"
-    Height="700"
+    Width="{Binding SettingWindowWidth, Mode=TwoWay}"
+    Height="{Binding SettingWindowHeight, Mode=TwoWay}"
     MinWidth="900"
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
     Icon="Images\app.ico"
+    Left="{Binding SettingWindowLeft, Mode=TwoWay}"
     Loaded="OnLoaded"
     MouseDown="window_MouseDown"
     ResizeMode="CanResize"
     StateChanged="Window_StateChanged"
-    WindowStartupLocation="CenterScreen"
+    Top="{Binding SettingWindowTop, Mode=TwoWay}"
+    WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
@@ -38,12 +40,32 @@
 
     <Window.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:TextConverter x:Key="TextConverter" />
+        <converters:TranlationConverter x:Key="TranlationConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
             </CollectionViewSource.SortDescriptions>
         </CollectionViewSource>
+        <CollectionViewSource x:Key="PluginStoreCollectionView" Source="{Binding ExternalPlugins}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
 
+        <Style x:Key="StoreItemFocusVisualStyleKey">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="0"
+                            Stroke="Black"
+                            StrokeThickness="2" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
@@ -72,7 +94,6 @@
             <Setter Property="Margin" Value="0,5,0,0" />
             <Setter Property="Padding" Value="0,15,0,15" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
-
         </Style>
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
@@ -112,6 +133,7 @@
             BasedOn="{StaticResource DefaultToggleSwitch}"
             TargetType="{x:Type ui:ToggleSwitch}">
             <Setter Property="Grid.Column" Value="2" />
+            <Setter Property="FocusVisualMargin" Value="5" />
             <Setter Property="Width" Value="Auto" />
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
@@ -125,6 +147,7 @@
             <Setter Property="Grid.Column" Value="1" />
             <Setter Property="Margin" Value="0,0,-18,0" />
         </Style>
+
 
         <Style x:Key="logo" TargetType="{x:Type TabItem}">
             <!--#region Logo Style-->
@@ -238,16 +261,11 @@
             </Setter>
         </Style>
 
-        <!--  Plugin Store Item when Selected layout for nothing  -->
-        <Style x:Key="StoreItem" TargetType="{x:Type ToggleButton}">
-            <Style.Triggers>
-                <Trigger Property="IsChecked" Value="True" />
-            </Style.Triggers>
-        </Style>
-
         <Style x:Key="PluginList" TargetType="ListBoxItem">
             <Setter Property="Background" Value="{DynamicResource Color00B}" />
-            <Setter Property="Padding" Value="0,12,0,12" />
+            <Setter Property="Padding" Value="0,0,0,0" />
+            <Setter Property="UseLayoutRounding" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
             <Setter Property="Margin" Value="0,0,18,5" />
             <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
@@ -262,7 +280,7 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5"
-                            SnapsToDevicePixels="True">
+                            UseLayoutRounding="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -316,13 +334,12 @@
         </Style>
 
         <!--#region PluginStore Style-->
-        <Style x:Key="StoreList" TargetType="ListBoxItem">
-            <Setter Property="Background" Value="{DynamicResource Color02B}" />
+        <Style x:Key="StoreList" TargetType="ListViewItem">
             <Setter Property="Padding" Value="0,0,0,0" />
-            <Setter Property="Margin" Value="0,0,8,5" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-            <Setter Property="MinWidth" Value="330" />
-            <Setter Property="Height" Value="98" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="Margin" Value="0,0,8,8" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
             <!--#region Template for blue highlight win10-->
             <Setter Property="Template">
                 <Setter.Value>
@@ -334,7 +351,8 @@
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
                             CornerRadius="5"
-                            SnapsToDevicePixels="True">
+                            SnapsToDevicePixels="True"
+                            UseLayoutRounding="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -343,49 +361,62 @@
                                 ContentTemplate="{TemplateBinding ContentTemplate}"
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
-                        <ControlTemplate.Triggers>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsMouseOver" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color07B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="False" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
-
-                            </MultiTrigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="Selector.IsSelectionActive" Value="True" />
-                                    <Condition Property="IsSelected" Value="True" />
-                                </MultiTrigger.Conditions>
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource Color02B}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource Color03B}" />
-                                <Setter TargetName="Bd" Property="CornerRadius" Value="5" />
-                                <Setter TargetName="Bd" Property="Margin" Value="0,0,0,0" />
-
-
-                            </MultiTrigger>
-                            <Trigger Property="IsEnabled" Value="False">
-                                <Setter TargetName="Bd" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <!--#endregion-->
         </Style>
 
+        <Style
+            x:Key="PluginListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult_Subtitle}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style
+            x:Key="StoreListStyle"
+            BasedOn="{StaticResource {x:Type ListBox}}"
+            TargetType="ListBox">
+            <Setter Property="Background" Value="{DynamicResource Color01B}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Grid Margin="20,0,0,0">
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,20,0,4"
+                                            FontWeight="Bold"
+                                            Text="{DynamicResource searchplugin_Noresult_Title}" />
+                                        <TextBlock Text="{DynamicResource searchplugin_Noresult}" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
         <!--  For Tab Header responsive Width  -->
         <Style TargetType="{x:Type TabControl}">
             <Setter Property="FontSize" Value="14" />
@@ -434,7 +465,6 @@
                 Width="16"
                 Height="16"
                 Margin="10,4,4,4"
-                RenderOptions.BitmapScalingMode="HighQuality"
                 Source="/Images/app.png" />
             <TextBlock
                 Grid.Column="1"
@@ -582,8 +612,10 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Background="{DynamicResource Color01B}"
-                        ScrollViewer.CanContentScroll="False">
-                        <StackPanel Margin="5,18,25,30" Orientation="Vertical">
+                        CanContentScroll="False"
+                        VirtualizingPanel.ScrollUnit="Pixel"
+                        VirtualizingStackPanel.IsVirtualizing="True">
+                        <VirtualizingStackPanel Margin="5,18,25,30" Orientation="Vertical">
                             <TextBlock
                                 Grid.Row="2"
                                 Margin="0,5,0,5"
@@ -597,7 +629,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource startFlowLauncherOnSystemStartup}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding StartFlowLauncherOnSystemStartup}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding StartFlowLauncherOnSystemStartup}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8fc;
                                     </TextBlock>
@@ -609,7 +645,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideOnStartup}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideOnStartup}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideOnStartup}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xed1a;
                                     </TextBlock>
@@ -621,7 +661,11 @@
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideFlowLauncherWhenLoseFocus}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideWhenDeactive}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideWhenDeactive}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
 
@@ -632,16 +676,33 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource hideNotifyIcon}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource hideNotifyIconToolTip}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.HideNotifyIcon}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.HideNotifyIcon}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource rememberLastLocation}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.RememberLastLaunchLocation}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ComboBox
+                                        x:Name="SearchWindowPosition"
+                                        Grid.Column="2"
+                                        MinWidth="220"
+                                        Margin="0,0,18,0"
+                                        VerticalAlignment="Center"
+                                        DisplayMemberPath="Display"
+                                        FontSize="14"
+                                        ItemsSource="{Binding SearchWindowPositions}"
+                                        SelectedValue="{Binding Settings.SearchWindowPosition}"
+                                        SelectedValuePath="Value" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe7f4;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
 
@@ -651,7 +712,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreen}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ignoreHotkeysOnFullscreenToolTip}" />
                                     </StackPanel>
-                                    <CheckBox IsChecked="{Binding Settings.IgnoreHotkeysOnFullscreen}" Style="{DynamicResource SideControlCheckBox}" />
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7fc;
                                     </TextBlock>
@@ -680,9 +745,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
                                     </StackPanel>
-                                    <CheckBox
-                                        IsChecked="{Binding Settings.ShouldUsePinyin}"
-                                        Style="{DynamicResource SideControlCheckBox}"
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.ShouldUsePinyin}"
+                                        Style="{DynamicResource SideToggleSwitch}"
                                         ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe98a;
@@ -785,11 +852,13 @@
                                         BorderThickness="0"
                                         Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <TextBlock
-                                                Grid.Column="1"
-                                                VerticalAlignment="Center"
-                                                Style="{DynamicResource SettingTitleLabel}"
-                                                Text="{DynamicResource maxShowResults}" />
+                                            <StackPanel Grid.Column="1">
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
+                                                    Text="{DynamicResource maxShowResults}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource maxShowResultsToolTip}" />
+                                            </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
                                                 Width="100"
@@ -891,10 +960,10 @@
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
-                        </StackPanel>
+                        </VirtualizingStackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem>
+                <TabItem KeyDown="OnPluginSettingKeydown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -919,13 +988,66 @@
                             <RowDefinition Height="73" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
-                        <Border Grid.Row="0" Padding="5,18,0,0">
-                            <TextBlock
-                                Margin="0,5,0,0"
-                                FontSize="30"
-                                Style="{StaticResource PageTitle}"
-                                Text="{DynamicResource plugin}"
-                                TextAlignment="left" />
+                        <Border
+                            Grid.Row="0"
+                            Padding="5,18,0,0"
+                            HorizontalAlignment="Stretch">
+                            <DockPanel>
+                                <TextBlock
+                                    Margin="0,5,0,0"
+                                    DockPanel.Dock="Left"
+                                    FontSize="30"
+                                    Style="{StaticResource PageTitle}"
+                                    Text="{DynamicResource plugin}"
+                                    TextAlignment="Left" />
+                                <DockPanel DockPanel.Dock="Right">
+                                    <TextBox
+                                        Name="pluginFilterTxb"
+                                        Width="150"
+                                        Height="34"
+                                        Margin="0,5,26,0"
+                                        HorizontalAlignment="Right"
+                                        DockPanel.Dock="Right"
+                                        FontSize="14"
+                                        KeyDown="PluginFilterTxb_OnKeyDown"
+                                        LostFocus="RefreshPluginListEventHandler"
+                                        Text=""
+                                        TextAlignment="Left"
+                                        ToolTip="{DynamicResource searchpluginToolTip}"
+                                        ToolTipService.InitialShowDelay="200"
+                                        ToolTipService.Placement="Top">
+                                        <TextBox.Style>
+                                            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                                <Style.Resources>
+                                                    <VisualBrush
+                                                        x:Key="CueBannerBrush"
+                                                        AlignmentX="Left"
+                                                        AlignmentY="Center"
+                                                        Stretch="None">
+                                                        <VisualBrush.Visual>
+                                                            <Label
+                                                                Padding="10,0,0,0"
+                                                                Content="{DynamicResource searchplugin}"
+                                                                Foreground="{DynamicResource CustomContextDisabled}" />
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Style.Resources>
+                                                <Style.Triggers>
+                                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="Text" Value="{x:Null}">
+                                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsKeyboardFocused" Value="True">
+                                                        <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBox.Style>
+                                    </TextBox>
+                                </DockPanel>
+                            </DockPanel>
                         </Border>
                         <Border
                             Grid.Row="1"
@@ -941,14 +1063,17 @@
                                 Background="{DynamicResource Color01B}"
                                 ItemContainerStyle="{StaticResource PluginList}"
                                 ItemsSource="{Binding PluginViewModels}"
-                                ScrollViewer.CanContentScroll="False"
+                                ScrollViewer.CanContentScroll="True"
                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                                 SelectedItem="{Binding SelectedPlugin}"
-                                SelectionChanged="SelectedPluginChanged"
-                                SnapsToDevicePixels="True">
+                                SnapsToDevicePixels="True"
+                                Style="{DynamicResource PluginListStyle}"
+                                VirtualizingPanel.ScrollUnit="Pixel"
+                                VirtualizingStackPanel.IsVirtualizing="True"
+                                VirtualizingStackPanel.VirtualizationMode="Recycling">
                                 <ListBox.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <StackPanel Margin="0,0,0,18" />
+                                        <VirtualizingStackPanel Margin="0,0,0,0" />
                                     </ItemsPanelTemplate>
                                 </ListBox.ItemsPanel>
                                 <ListBox.ItemTemplate>
@@ -957,57 +1082,54 @@
                                             x:Name="expanderHeader"
                                             Grid.Column="4"
                                             Padding="0"
-                                            Background="Transparent"
-                                            FlowDirection="RightToLeft"
-                                            IsExpanded="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}"
+                                            BorderThickness="0"
+                                            ClipToBounds="True"
+                                            IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
+                                            SnapsToDevicePixels="True"
                                             Style="{StaticResource ExpanderStyle1}">
                                             <Expander.Header>
-                                                <Grid
-                                                    Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}"
-                                                    HorizontalAlignment="Left"
-                                                    FlowDirection="LeftToRight">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="100" MinWidth="100" />
-                                                        <ColumnDefinition Width="8*" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                        <ColumnDefinition Width="Auto" />
-                                                    </Grid.ColumnDefinitions>
-                                                    <StackPanel
-                                                        Grid.Column="0"
-                                                        Margin="24,0,0,0"
-                                                        VerticalAlignment="Center"
-                                                        FlowDirection="LeftToRight">
-                                                        <Image
-                                                            Width="32"
-                                                            Height="32"
-                                                            Margin="32,0,0,0"
-                                                            FlowDirection="LeftToRight"
-                                                            Source="{Binding Image, IsAsync=True}" />
-                                                    </StackPanel>
-                                                    <StackPanel Grid.Column="1" Margin="12,0,14,0">
-                                                        <TextBlock
-                                                            Foreground="{DynamicResource Color05B}"
-                                                            Text="{Binding PluginPair.Metadata.Name}"
-                                                            TextWrapping="Wrap"
-                                                            ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                                        <TextBlock
-                                                            Margin="0,2,0,0"
-                                                            Foreground="{DynamicResource Color04B}"
-                                                            TextWrapping="WrapWithOverflow">
-                                                            <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
-                                                        </TextBlock>
-                                                    </StackPanel>
-                                                    <StackPanel
-                                                        Grid.Column="2"
-                                                        HorizontalAlignment="Right"
-                                                        Orientation="Horizontal">
-                                                        <TextBlock
-                                                            Margin="0,0,8,0"
-                                                            VerticalAlignment="Center"
-                                                            FontSize="12"
-                                                            Foreground="{DynamicResource Color08B}"
-                                                            Text="{DynamicResource priority}" />
-                                                        <Border>
+                                                <Border Padding="0,12,0,12">
+                                                    <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}" HorizontalAlignment="Left">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="36" MinWidth="36" />
+                                                            <ColumnDefinition Width="7*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <StackPanel
+                                                            Grid.Column="0"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center">
+                                                            <Image
+                                                                Width="32"
+                                                                Height="32"
+                                                                Margin="0,0,0,0"
+                                                                FlowDirection="LeftToRight"
+                                                                Source="{Binding Image, IsAsync=True}" />
+                                                        </StackPanel>
+                                                        <StackPanel Grid.Column="1" Margin="16,0,14,0">
+                                                            <TextBlock
+                                                                Foreground="{DynamicResource Color05B}"
+                                                                Text="{Binding PluginPair.Metadata.Name}"
+                                                                TextWrapping="Wrap"
+                                                                ToolTip="{Binding PluginPair.Metadata.Version}" />
+                                                            <TextBlock
+                                                                Margin="0,2,0,0"
+                                                                Foreground="{DynamicResource Color04B}"
+                                                                TextWrapping="WrapWithOverflow">
+                                                                <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
+                                                            </TextBlock>
+                                                        </StackPanel>
+                                                        <StackPanel
+                                                            Grid.Column="2"
+                                                            HorizontalAlignment="Right"
+                                                            Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="0,0,8,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="12"
+                                                                Foreground="{DynamicResource Color08B}"
+                                                                Text="{DynamicResource priority}" />
                                                             <Button
                                                                 x:Name="PriorityButton"
                                                                 Margin="0,0,22,0"
@@ -1038,26 +1160,28 @@
                                                                 </Button.Style>
                                                                 <!--#endregion-->
                                                             </Button>
-                                                        </Border>
-                                                    </StackPanel>
-                                                    <DockPanel Grid.Column="3">
-                                                        <ui:ToggleSwitch
-                                                            Margin="0,0,6,0"
-                                                            HorizontalAlignment="Right"
-                                                            IsOn="{Binding PluginState}"
-                                                            OffContent="{DynamicResource disable}"
-                                                            OnContent="{DynamicResource enable}" />
-                                                    </DockPanel>
-                                                </Grid>
 
+                                                        </StackPanel>
+                                                        <DockPanel Grid.Column="3">
+                                                            <ui:ToggleSwitch
+                                                                Margin="0,0,60,0"
+                                                                HorizontalAlignment="Right"
+                                                                DockPanel.Dock="Right"
+                                                                IsOn="{Binding PluginState}"
+                                                                OffContent="{DynamicResource disable}"
+                                                                OnContent="{DynamicResource enable}" />
+                                                        </DockPanel>
+                                                    </Grid>
+                                                </Border>
                                             </Expander.Header>
 
                                             <Grid FlowDirection="LeftToRight">
-                                                <StackPanel Margin="0,12,0,0" Orientation="Vertical">
+                                                <StackPanel Margin="0,0,0,0" Orientation="Vertical">
                                                     <StackPanel>
                                                         <Border
-                                                            Width="auto"
+                                                            Width="Auto"
                                                             Height="52"
+                                                            Margin="0"
                                                             Padding="0"
                                                             BorderThickness="0,1,0,0"
                                                             CornerRadius="0"
@@ -1082,8 +1206,6 @@
                                                                         DockPanel.Dock="Left"
                                                                         Style="{DynamicResource SettingTitleLabel}"
                                                                         Text="{DynamicResource actionKeywords}" />
-
-
                                                                     <Button
                                                                         Grid.Column="2"
                                                                         Width="100"
@@ -1098,14 +1220,11 @@
                                                                         ToolTip="{DynamicResource actionKeywordsTooltip}"
                                                                         Visibility="{Binding ActionKeywordsVisibility}" />
                                                                 </DockPanel>
-
                                                             </ItemsControl>
                                                         </Border>
                                                     </StackPanel>
 
                                                     <StackPanel>
-
-
                                                         <Border
                                                             Padding="0"
                                                             HorizontalAlignment="Stretch"
@@ -1126,25 +1245,27 @@
                                                                     </Style.Triggers>
                                                                 </Style>
                                                             </Border.Style>
+
+                                                        </Border>
+                                                        <Border Background="{DynamicResource Color00B}">
+                                                            <ContentControl
+                                                                x:Name="PluginSettingControl"
+                                                                Margin="0"
+                                                                Padding="1"
+                                                                VerticalAlignment="Stretch"
+                                                                Content="{Binding SettingControl}" />
                                                         </Border>
                                                         <!--#endregion-->
-                                                        <ContentControl
-                                                            x:Name="PluginSettingControl"
-                                                            MaxHeight="550"
-                                                            Margin="0"
-                                                            Padding="1"
-                                                            VerticalAlignment="Stretch"
-                                                            Content="{Binding SettingControl}"
-                                                            SizeChanged="ItemSizeChanged" />
+
                                                     </StackPanel>
 
                                                     <StackPanel>
                                                         <Border
                                                             Margin="0"
-                                                            Padding="0,12,0,0"
+                                                            Padding="0,12,0,12"
                                                             VerticalAlignment="Center"
                                                             BorderThickness="0,1,0,0"
-                                                            CornerRadius="0"
+                                                            CornerRadius="0 0 5 5"
                                                             Style="{DynamicResource SettingGroupBox}">
                                                             <ItemsControl Style="{DynamicResource SettingGrid}">
                                                                 <StackPanel
@@ -1263,7 +1384,7 @@
                 </TabItem>
 
                 <!--#region Plugin Store-->
-                <TabItem>
+                <TabItem KeyDown="PluginStore_OnKeyDown">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1300,220 +1421,319 @@
                                 Text="{DynamicResource pluginStore}"
                                 TextAlignment="left" />
                         </Border>
-                        <Border
+
+                        <DockPanel
                             Grid.Row="0"
                             Grid.Column="1"
-                            Padding="5,18,32,0">
+                            Margin="5,24,0,0">
+
+                            <TextBox
+                                Name="pluginStoreFilterTxb"
+                                Width="150"
+                                Height="34"
+                                Margin="0,0,26,0"
+                                HorizontalAlignment="Right"
+                                DockPanel.Dock="Right"
+                                FontSize="14"
+                                KeyDown="PluginStoreFilterTxb_OnKeyDown"
+                                LostFocus="RefreshPluginStoreEventHandler"
+                                Text=""
+                                TextAlignment="Left"
+                                ToolTip="{DynamicResource searchpluginToolTip}"
+                                ToolTipService.InitialShowDelay="200"
+                                ToolTipService.Placement="Top">
+                                <TextBox.Style>
+                                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                                        <Style.Resources>
+                                            <VisualBrush
+                                                x:Key="CueBannerBrush"
+                                                AlignmentX="Left"
+                                                AlignmentY="Center"
+                                                Stretch="None">
+                                                <VisualBrush.Visual>
+                                                    <Label
+                                                        Padding="10,0,0,0"
+                                                        Content="{DynamicResource searchplugin}"
+                                                        Foreground="{DynamicResource CustomContextDisabled}" />
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Style.Resources>
+                                        <Style.Triggers>
+                                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="Text" Value="{x:Null}">
+                                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                            </Trigger>
+                                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
                             <Button
                                 Height="34"
-                                Margin="0,5,0,5"
+                                Margin="0,5,10,5"
                                 Padding="12,4,12,4"
                                 HorizontalAlignment="Right"
-                                Click="OnPluginStoreRefreshClick"
+                                VerticalAlignment="Center"
+                                Command="{Binding RefreshExternalPluginsCommand}"
                                 Content="{DynamicResource refresh}"
+                                DockPanel.Dock="Right"
                                 FontSize="13" />
-                        </Border>
-                        <Border
+                        </DockPanel>
+                        <ListView
+                            x:Name="StoreListBox"
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Padding="0,0,0,0">
-                            <ListBox
-                                x:Name="StoreListBox"
-                                Width="Auto"
-                                Margin="6,0,0,0"
-                                Padding="0,0,0,0"
-                                HorizontalAlignment="Stretch"
-                                VerticalContentAlignment="Center"
-                                Background="{DynamicResource Color01B}"
-                                ItemContainerStyle="{StaticResource StoreList}"
-                                ItemsSource="{Binding ExternalPlugins}"
-                                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                                SelectionMode="Single">
-                                <ListBox.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <UniformGrid
-                                            Margin="0,0,6,18"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Columns="2"
-                                            IsItemsHost="True"
-                                            SnapsToDevicePixels="True" />
-                                    </ItemsPanelTemplate>
-                                </ListBox.ItemsPanel>
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <!--  Hover Layout Style  -->
-
-                                        <ToggleButton
-                                            Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"
-                                            HorizontalAlignment="Left"
-                                            HorizontalContentAlignment="left"
-                                            Background="Transparent"
-                                            IsChecked="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                            Style="{StaticResource StoreItem}">
-                                            <ToggleButton.Template>
-                                                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                                    <ContentPresenter
-                                                        x:Name="contentPresenter"
-                                                        Margin="{TemplateBinding Padding}"
-                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                        Content="{TemplateBinding Content}"
-                                                        ContentStringFormat="{TemplateBinding ContentStringFormat}"
-                                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                        Focusable="False"
-                                                        RecognizesAccessKey="True"
-                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                                    <ControlTemplate.Triggers />
-                                                </ControlTemplate>
-                                            </ToggleButton.Template>
-
-                                            <Grid HorizontalAlignment="Left" VerticalAlignment="Stretch">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="72" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <StackPanel
-                                                    Grid.Column="0"
-                                                    Margin="0,0,0,0"
-                                                    VerticalAlignment="Center">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <Image
-                                                        Width="32"
-                                                        Height="32"
-                                                        Margin="8,0,6,0"
-                                                        VerticalAlignment="Center"
-                                                        RenderOptions.BitmapScalingMode="HighQuality"
-                                                        Source="{Binding IcoPath, IsAsync=True}"
-                                                        Stretch="Uniform" />
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.Column="1"
-                                                    Margin="0,0,8,0"
-                                                    VerticalAlignment="Center"
-                                                    Panel.ZIndex="0">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Opacity" Value="1" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-                                                    <TextBlock
-                                                        Padding="0,0,20,0"
-                                                        Foreground="{DynamicResource Color05B}"
-                                                        Text="{Binding Name}"
-                                                        TextWrapping="WrapWithOverflow"
-                                                        ToolTip="{Binding Version}" />
-                                                    <TextBlock
-                                                        Margin="0,2,0,0"
-                                                        Padding="0,0,20,0"
-                                                        Foreground="{DynamicResource Color04B}"
-                                                        TextWrapping="WrapWithOverflow">
-                                                        <Run
-                                                            FontSize="12"
-                                                            Foreground="{DynamicResource Color04B}"
-                                                            Text="{Binding Description}" />
-                                                    </TextBlock>
-
-                                                </StackPanel>
-                                                <StackPanel
-                                                    Grid.Column="0"
-                                                    Grid.ColumnSpan="2"
-                                                    HorizontalAlignment="Stretch"
-                                                    VerticalAlignment="Stretch">
-                                                    <StackPanel.Style>
-                                                        <Style>
-                                                            <Setter Property="StackPanel.Visibility" Value="Collapsed" />
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding Mode=TwoWay, Path=IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem, Mode=FindAncestor}}" Value="true">
-                                                                    <Setter Property="StackPanel.Visibility" Value="Visible" />
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </StackPanel.Style>
-
-
-                                                    <Grid
-                                                        Height="94"
-                                                        HorizontalAlignment="Stretch"
-                                                        VerticalAlignment="Stretch"
-                                                        Panel.ZIndex="1">
-                                                        <Grid.Background>
-                                                            <SolidColorBrush Opacity=".95" Color="{DynamicResource HoverStoreGrid}" />
-                                                        </Grid.Background>
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
-                                                        </Grid.ColumnDefinitions>
-
-                                                        <StackPanel
-                                                            Grid.Column="0"
-                                                            HorizontalAlignment="Stretch"
-                                                            VerticalAlignment="Center">
-                                                            <StackPanel Orientation="Horizontal">
+                            Margin="4,0,0,0"
+                            Padding="0,0,18,0"
+                            ItemContainerStyle="{StaticResource StoreList}"
+                            ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
+                            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                            SelectionMode="Single"
+                            Style="{DynamicResource StoreListStyle}"
+                            VirtualizingPanel.CacheLength="1,1"
+                            VirtualizingPanel.CacheLengthUnit="Page"
+                            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+                            VirtualizingPanel.ScrollUnit="Pixel"
+                            VirtualizingPanel.VirtualizationMode="Standard">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wpftk:VirtualizingWrapPanel
+                                        x:Name="ItemWrapPanel"
+                                        Margin="0,0,0,10"
+                                        ItemSize="216,184"
+                                        MouseWheelDelta="48"
+                                        Orientation="Vertical"
+                                        ScrollLineDelta="16"
+                                        SpacingMode="None"
+                                        StretchItems="True" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.GroupStyle>
+                                <GroupStyle HidesIfEmpty="True">
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate>
+                                                        <Grid>
+                                                            <StackPanel Orientation="Vertical">
                                                                 <TextBlock
-                                                                    Margin="20,0,0,0"
-                                                                    Padding="0,0,0,0"
+                                                                    Margin="2,0,0,10"
+                                                                    VerticalAlignment="Top"
+                                                                    FontSize="16"
                                                                     FontWeight="Bold"
                                                                     Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Name}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Name}" />
-                                                                <TextBlock
-                                                                    Margin="10,0,0,0"
-                                                                    Padding="0,0,20,0"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Version}"
-                                                                    TextWrapping="WrapWithOverflow"
-                                                                    ToolTip="{Binding Version}" />
+                                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                                                <ItemsPresenter />
                                                             </StackPanel>
-                                                            <StackPanel Margin="20,2,120,0" Orientation="Vertical">
-                                                                <TextBlock Padding="0,0,0,0" TextWrapping="Wrap">
-                                                                    <Hyperlink
-                                                                        Foreground="{DynamicResource Color04B}"
-                                                                        NavigateUri="{Binding Website}"
-                                                                        RequestNavigate="OnRequestNavigate">
-                                                                        <Run FontSize="12" Text="{Binding Author}" />
-                                                                    </Hyperlink>
-                                                                </TextBlock>
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                        <Border Padding="0,0,20,0">
-                                                            <Button
-                                                                Name="ShortCutButtonPrev"
-                                                                Grid.Column="1"
-                                                                MinHeight="40"
-                                                                Margin="0,0,0,0"
-                                                                Padding="15,5,15,5"
-                                                                HorizontalAlignment="Right"
-                                                                VerticalAlignment="Center"
-                                                                Click="OnExternalPluginInstallClick"
-                                                                Content="{DynamicResource install}" />
+                                                        </Grid>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                    <GroupStyle.Panel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel Orientation="{Binding Orientation, Mode=OneWay}" />
+                                        </ItemsPanelTemplate>
+                                    </GroupStyle.Panel>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <DataTemplate.Resources>
+                                        <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="Button">
+                                                        <Border
+                                                            x:Name="Background"
+                                                            Background="{DynamicResource Color00B}"
+                                                            BorderBrush="{DynamicResource Color03B}"
+                                                            BorderThickness="1"
+                                                            CornerRadius="4"
+                                                            SnapsToDevicePixels="True">
+                                                            <Border
+                                                                x:Name="Border"
+                                                                Padding="{TemplateBinding Padding}"
+                                                                BorderThickness="1"
+                                                                CornerRadius="4">
+                                                                <ContentPresenter
+                                                                    x:Name="ContentPresenter"
+                                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    Focusable="False"
+                                                                    RecognizesAccessKey="True"
+                                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                            </Border>
                                                         </Border>
-                                                    </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                                            </Trigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </DataTemplate.Resources>
+                                    <Button
+                                        Name="StoreListItem"
+                                        Margin="0"
+                                        Padding="0"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Stretch"
+                                        HorizontalContentAlignment="Stretch"
+                                        VerticalContentAlignment="Stretch"
+                                        BorderThickness="0"
+                                        Click="StoreListItem_Click"
+                                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
+                                        Style="{DynamicResource StoreListItemBtnStyle}">
+                                        <ui:FlyoutService.Flyout>
+                                            <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
+                                                <Grid MinWidth="200">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition />
+                                                        <RowDefinition />
+                                                    </Grid.RowDefinitions>
+                                                    <VirtualizingStackPanel
+                                                        Grid.Row="0"
+                                                        Grid.Column="0"
+                                                        Margin="5,0,0,0"
+                                                        Orientation="Horizontal">
+                                                        <TextBlock
+                                                            Margin="0,0,5,0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="14"
+                                                            FontWeight="Bold"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="{Binding Name}"
+                                                            TextWrapping="Wrap"
+                                                            ToolTip="{Binding Name}" />
+                                                        <TextBlock
+                                                            VerticalAlignment="Center"
+                                                            FontSize="12"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="{Binding Version}"
+                                                            TextWrapping="Wrap"
+                                                            ToolTip="{Binding Version}" />
+                                                    </VirtualizingStackPanel>
+                                                    <TextBlock
+                                                        Grid.Row="1"
+                                                        Grid.Column="0"
+                                                        Margin="5,4,0,0"
+                                                        TextWrapping="Wrap">
+                                                        <Hyperlink
+                                                            Foreground="{DynamicResource Color04B}"
+                                                            NavigateUri="{Binding Website}"
+                                                            RequestNavigate="OnRequestNavigate">
+                                                            <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
+                                                        </Hyperlink>
+                                                    </TextBlock>
+
+                                                    <VirtualizingStackPanel
+                                                        Grid.Row="0"
+                                                        Grid.RowSpan="2"
+                                                        Grid.Column="1"
+                                                        Margin="20,0,0,0"
+                                                        HorizontalAlignment="Right"
+                                                        Orientation="Horizontal">
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Stretch"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginInstallClick"
+                                                            Content="{DynamicResource installbtn}"
+                                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginUninstallClick"
+                                                            Content="{DynamicResource uninstallbtn}"
+                                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                        <Button
+                                                            MinHeight="42"
+                                                            Margin="5,0,5,0"
+                                                            Padding="15,5,15,5"
+                                                            HorizontalAlignment="Right"
+                                                            VerticalAlignment="Center"
+                                                            Click="OnExternalPluginUpdateClick"
+                                                            Content="{DynamicResource updatebtn}"
+                                                            Style="{DynamicResource AccentButtonStyle}"
+                                                            Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                    </VirtualizingStackPanel>
+                                                </Grid>
+                                            </ui:Flyout>
+                                        </ui:FlyoutService.Flyout>
+                                        <Grid>
+                                            <StackPanel Width="200">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Image
+                                                        Grid.Column="0"
+                                                        Width="32"
+                                                        Height="32"
+                                                        Margin="18,24,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        RenderOptions.BitmapScalingMode="Fant"
+                                                        Source="{Binding IcoPath, IsAsync=True}" />
+                                                    <Border
+                                                        x:Name="LabelUpdate"
+                                                        Height="12"
+                                                        Margin="10,24,0,0"
+                                                        Padding="6,2,6,2"
+                                                        HorizontalAlignment="Left"
+                                                        VerticalAlignment="Top"
+                                                        Background="#45BD59"
+                                                        CornerRadius="36"
+                                                        ToolTip="{DynamicResource LabelUpdateToolTip}"
+                                                        Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 </StackPanel>
-                                            </Grid>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    Margin="18,10,18,0"
+                                                    FontWeight="SemiBold"
+                                                    Foreground="{DynamicResource Color05B}"
+                                                    Text="{Binding Name}"
+                                                    TextWrapping="Wrap"
+                                                    ToolTip="{Binding Version}" />
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    Height="60"
+                                                    Margin="18,6,18,0"
+                                                    Padding="0,0,0,10"
+                                                    FontSize="12"
+                                                    Foreground="{DynamicResource Color04B}"
+                                                    Text="{Binding Description, Mode=OneWay}"
+                                                    TextTrimming="WordEllipsis"
+                                                    TextWrapping="Wrap" />
 
-                                        </ToggleButton>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
-                        </Border>
+                                            </StackPanel>
 
+                                        </Grid>
+                                    </Button>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </Grid>
+
                 </TabItem>
                 <!--#endregion-->
 
@@ -1537,7 +1757,9 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
@@ -1584,8 +1806,11 @@
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
-
                                                     </Border>
+                                                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
+                                                        <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
+                                                        <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
+                                                    </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
                                                             Margin="0"
@@ -1635,6 +1860,7 @@
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource windowWidthSizeToolTip}" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <TextBlock
@@ -1648,6 +1874,7 @@
                                                     Name="WindowWidthValue"
                                                     Width="300"
                                                     Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
                                                     Maximum="1920"
@@ -1906,7 +2133,88 @@
                                     <StackPanel>
 
                                         <Border
-                                            Margin="0,30,0,0"
+                                            Margin="0,24,0,12"
+                                            Padding="0"
+                                            CornerRadius="5"
+                                            Style="{DynamicResource SettingGroupBox}">
+                                            <StackPanel Orientation="Vertical">
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Clock}" />
+                                                        </StackPanel>
+                                                        <StackPanel
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            Orientation="Horizontal">
+                                                            <ComboBox
+                                                                x:Name="TimeFormat"
+                                                                Grid.Column="2"
+                                                                MinWidth="180"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                ItemsSource="{Binding TimeFormatList}"
+                                                                SelectedValue="{Binding Settings.TimeFormat}"
+                                                                SelectionChanged="PreviewClockAndDate" />
+                                                            <ui:ToggleSwitch
+                                                                IsOn="{Binding UseClock, Mode=TwoWay}"
+                                                                OffContent="{DynamicResource disable}"
+                                                                OnContent="{DynamicResource enable}"
+                                                                Style="{DynamicResource SideToggleSwitch}"
+                                                                Toggled="PreviewClockAndDate" />
+                                                        </StackPanel>
+                                                        <TextBlock Style="{StaticResource Glyph}">
+                                                            &#xec92;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                                <Separator
+                                                    Width="Auto"
+                                                    BorderThickness="1"
+                                                    Style="{StaticResource SettingSeparatorStyle}" />
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Date}" />
+                                                        </StackPanel>
+                                                        <StackPanel
+                                                            Grid.Row="0"
+                                                            Grid.Column="2"
+                                                            Orientation="Horizontal">
+                                                            <ComboBox
+                                                                x:Name="DateFormat"
+                                                                Grid.Column="2"
+                                                                MinWidth="180"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                ItemsSource="{Binding DateFormatList}"
+                                                                SelectedValue="{Binding Settings.DateFormat}"
+                                                                SelectionChanged="PreviewClockAndDate" />
+                                                            <ui:ToggleSwitch
+                                                                IsOn="{Binding UseDate, Mode=TwoWay}"
+                                                                OffContent="{DynamicResource disable}"
+                                                                OnContent="{DynamicResource enable}"
+                                                                Style="{DynamicResource SideToggleSwitch}"
+                                                                Toggled="PreviewClockAndDate" />
+                                                        </StackPanel>
+                                                        <TextBlock Style="{StaticResource Glyph}">
+                                                            &#xe787;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                            </StackPanel>
+                                        </Border>
+
+                                        <Border
+                                            Margin="0,12,0,12"
                                             Padding="0"
                                             CornerRadius="5"
                                             Style="{DynamicResource SettingGroupBox}">
@@ -2027,16 +2335,26 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="0,0,6,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
                             <Grid Margin="5,18,18,10">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="43" />
                                     <RowDefinition Height="80" />
                                     <RowDefinition Height="146" />
+
                                     <RowDefinition Height="50" />
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="50" />
+
+                                    <RowDefinition Height="50" />
+                                    <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
@@ -2121,11 +2439,10 @@
                                                         Text="{DynamicResource showOpenResultHotkey}" />
                                                     <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource showOpenResultHotkeyToolTip}" />
                                                 </StackPanel>
-                                                <CheckBox
+                                                <ui:ToggleSwitch
                                                     Grid.Column="2"
-                                                    FontSize="14"
-                                                    IsChecked="{Binding Settings.ShowOpenResultHotkey}"
-                                                    Style="{DynamicResource SideControlCheckBox}" />
+                                                    IsOn="{Binding Settings.ShowOpenResultHotkey}"
+                                                    Style="{DynamicResource SideToggleSwitch}" />
                                             </ItemsControl>
                                         </Border>
                                     </StackPanel>
@@ -2141,6 +2458,7 @@
                                     Text="{DynamicResource customQueryHotkey}" />
                                 <ListView
                                     Grid.Row="4"
+                                    MinHeight="160"
                                     Margin="0,0,0,0"
                                     Background="{DynamicResource Color02B}"
                                     BorderBrush="DarkGray"
@@ -2181,14 +2499,112 @@
                                     <Button
                                         MinWidth="100"
                                         Margin="10"
-                                        Click="OnnEditCustomHotkeyClick"
+                                        Click="OnEditCustomHotkeyClick"
                                         Content="{DynamicResource edit}" />
                                     <Button
                                         MinWidth="100"
                                         Margin="10,10,0,10"
-                                        Click="OnAddCustomeHotkeyClick"
+                                        Click="OnAddCustomHotkeyClick"
                                         Content="{DynamicResource add}" />
                                 </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="6"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="{DynamicResource customQueryShortcut}" />
+                                <ListView
+                                    Name="customShortcutView"
+                                    Grid.Row="7"
+                                    MinHeight="160"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding CustomShortcuts}"
+                                    SelectedItem="{Binding SelectedCustomShortcut}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Width="540" Header="{DynamicResource customShortcutExpansion}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Value}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                                <StackPanel
+                                    Grid.Row="8"
+                                    Margin="0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    Orientation="Horizontal">
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnDeleteCustomShortCutClick"
+                                        Content="{DynamicResource delete}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10"
+                                        Click="OnEditCustomShortCutClick"
+                                        Content="{DynamicResource edit}" />
+                                    <Button
+                                        MinWidth="100"
+                                        Margin="10,10,0,10"
+                                        Click="OnAddCustomShortCutClick"
+                                        Content="{DynamicResource add}" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    Grid.Row="9"
+                                    Margin="0,0,12,2"
+                                    Padding="0,12,0,0"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="Built-in Shortcuts" />
+                                <ListView
+                                    Grid.Row="10"
+                                    MinHeight="160"
+                                    Margin="0,6,0,0"
+                                    Background="{DynamicResource Color02B}"
+                                    BorderBrush="DarkGray"
+                                    BorderThickness="1"
+                                    ItemsSource="{Binding BuiltinShortcuts}"
+                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Key}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                            <GridViewColumn Width="540" Header="{DynamicResource builtinShortcutDescription}">
+                                                <GridViewColumn.CellTemplate>
+                                                    <DataTemplate>
+                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
+                                                    </DataTemplate>
+                                                </GridViewColumn.CellTemplate>
+                                            </GridViewColumn>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
                             </Grid>
                         </Border>
                     </ScrollViewer>
@@ -2214,7 +2630,9 @@
                     <ScrollViewer
                         Margin="0,0,0,0"
                         Padding="5,0,24,0"
-                        ScrollViewer.CanContentScroll="False">
+                        ScrollViewer.CanContentScroll="True"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
 
                             <StackPanel>
@@ -2245,7 +2663,10 @@
                                                     VerticalAlignment="Center"
                                                     Style="{DynamicResource SettingTitleLabel}"
                                                     Text="{DynamicResource enableProxy}" />
-                                                <CheckBox IsChecked="{Binding Settings.Proxy.Enabled}" Style="{DynamicResource SideControlCheckBox}" />
+                                                <ui:ToggleSwitch
+                                                    Grid.Column="2"
+                                                    IsOn="{Binding Settings.Proxy.Enabled}"
+                                                    Style="{DynamicResource SideToggleSwitch}" />
                                             </ItemsControl>
                                         </Border>
                                         <Separator
@@ -2386,7 +2807,9 @@
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Background="{DynamicResource Color01B}"
-                            ScrollViewer.CanContentScroll="False">
+                            ScrollViewer.CanContentScroll="True"
+                            VirtualizingStackPanel.IsVirtualizing="True"
+                            VirtualizingStackPanel.ScrollUnit="Pixel">
                             <StackPanel Margin="5,14,25,30" Orientation="Vertical">
                                 <TextBlock
                                     Grid.Row="2"
@@ -2554,6 +2977,11 @@
                                                 Margin="0,0,12,0"
                                                 Click="OpenSettingFolder"
                                                 Content="{DynamicResource settingfolder}" />
+                                            <Button
+                                                Name="ClearLogFolderBtn"
+                                                Margin="0,0,12,0"
+                                                Click="ClearLogFolder"
+                                                Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
                                             <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">

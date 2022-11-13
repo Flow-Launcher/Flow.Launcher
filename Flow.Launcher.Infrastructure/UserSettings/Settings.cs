@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher;
@@ -41,7 +42,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
+        public bool UseClock { get; set; } = true;
+        public bool UseDate { get; set; } = false;
+        public string TimeFormat { get; set; } = "hh:mm tt";
+        public string DateFormat { get; set; } = "MM'/'dd ddd";
         public bool FirstLaunch { get; set; } = true;
+
+        public double SettingWindowWidth { get; set; } = 1000;
+        public double SettingWindowHeight { get; set; } = 700;
+        public double SettingWindowTop { get; set; }
+        public double SettingWindowLeft { get; set; }
+        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -120,8 +131,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 PrivateArg = "-private",
                 EnablePrivate = false,
                 Editable = false
-            }
-            ,
+            },
             new()
             {
                 Name = "MS Edge",
@@ -178,6 +188,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
 
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+
+        [JsonIgnore]
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<BuiltinShortcutModel>() { 
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText)
+        };
+
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }
 
@@ -195,7 +212,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactive { get; set; } = true;
-        public bool RememberLastLaunchLocation { get; set; }
+        public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
@@ -220,5 +237,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         System,
         Light,
         Dark
+    }
+    public enum SearchWindowPositions
+    {
+        RememberLastLaunchLocation,
+        MouseScreenCenter,
+        MouseScreenCenterTop,
+        MouseScreenLeftTop,
+        MouseScreenRightTop
     }
 }

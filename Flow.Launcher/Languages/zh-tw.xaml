@@ -42,7 +42,7 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">全螢幕模式下停用快捷鍵（推薦用於遊戲時）。</system:String>
     <system:String x:Key="defaultFileManager">預設檔案管理器</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">選擇打開資料夾時要使用的檔案管理器。</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">選擇開啟資料夾時要使用的檔案管理器。</system:String>
     <system:String x:Key="defaultBrowser">預設瀏覽器</system:String>
     <system:String x:Key="defaultBrowserToolTip">設定新增分頁、視窗和無痕模式。</system:String>
     <system:String x:Key="pythonDirectory">Python 路徑</system:String>
@@ -50,6 +50,7 @@
     <system:String x:Key="selectPythonDirectory">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜索精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
@@ -76,12 +77,13 @@
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
     <system:String x:Key="plugin_query_version">| 版本</system:String>
     <system:String x:Key="plugin_query_web">官方網站</system:String>
+    <system:String x:Key="uninstallbtn">解除安裝</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">外掛商店</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
-    <system:String x:Key="install">安裝</system:String>
+    <system:String x:Key="installbtn">安裝</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主題</system:String>
@@ -156,11 +158,13 @@
         下載更新失敗，請檢查您對 github-cloud.s3.amazonaws.com 的連線和代理設定，
         或是到 https://github.com/Flow-Launcher/Flow.Launcher/releases 手動下載更新。
     </system:String>
-    <system:String x:Key="releaseNotes">更新說明:</system:String>
+    <system:String x:Key="releaseNotes">更新說明</system:String>
     <system:String x:Key="documentation">使用技巧</system:String>
     <system:String x:Key="devtool">開發工具</system:String>
     <system:String x:Key="settingfolder">設定資料夾</system:String>
     <system:String x:Key="logfolder">日誌資料夾</system:String>
+    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
+    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
 
     <!--  FileManager Setting Dialog  -->
