@@ -390,58 +390,6 @@
                         <ContentControl Content="{Binding Result.PreviewPanel.Value}" Visibility="{Binding ShowCustomizedPrewview}" />
                     </Grid>
                 </Grid>
-
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius"
-                                RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox x:Name="ResultListBox"
-                            DataContext="{Binding Results}"
-                            PreviewMouseLeftButtonUp="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius"
-                                RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox x:Name="ContextMenu"
-                            DataContext="{Binding ContextMenu}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
-                <Border Style="{DynamicResource WindowRadius}">
-                    <Border.Clip>
-                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                            <Binding Path="ActualWidth"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="ActualHeight"
-                                RelativeSource="{RelativeSource Self}" />
-                            <Binding Path="CornerRadius"
-                                RelativeSource="{RelativeSource Self}" />
-                        </MultiBinding>
-                    </Border.Clip>
-                    <ContentControl>
-                        <flowlauncher:ResultListBox x:Name="History"
-                            DataContext="{Binding History}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
-                    </ContentControl>
-                </Border>
             </StackPanel>
         </Border>
     </Grid>
