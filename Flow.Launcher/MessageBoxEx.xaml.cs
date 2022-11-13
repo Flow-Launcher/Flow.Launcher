@@ -13,6 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 using YamlDotNet.Core.Tokens;
 
 namespace Flow.Launcher
@@ -145,15 +147,19 @@ namespace Flow.Launcher
             {
                 case MessageBoxImage.Warning:
                     msgBox.SetImage("Warning.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Question:
                     msgBox.SetImage("Question.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Information:
                     msgBox.SetImage("Information.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Error:
                     msgBox.SetImage("Error.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 default:
                     msgBox.Img.Visibility = Visibility.Collapsed;
@@ -162,7 +168,8 @@ namespace Flow.Launcher
         }
         private void SetImage(string imageName)
         {
-            string uri = string.Format("/Images/{0}", imageName);
+            //string uri = string.Format("/Resources/Images/{0}", imageName);
+            string uri = Constant.ProgramDirectory + "/Images/" + imageName;
             var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
             Img.Source = new BitmapImage(uriSource);
         }

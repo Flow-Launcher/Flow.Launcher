@@ -72,8 +72,11 @@
                     Grid.Column="0"
                     Width="18"
                     Height="18"
-                    Margin="30,0,10,0"
+                    Margin="30,10,0,0"
                     HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    RenderOptions.BitmapScalingMode="Fant"
+                    Stretch="UniformToFill"
                     Visibility="Collapsed" />
                 <TextBlock
                     x:Name="TitleTextBlock"
@@ -117,19 +120,19 @@
                     MinWidth="140"
                     Margin="5,0,5,0"
                     Click="Button_Click"
-                    Content="{DynamicResource cancel}" />
+                    Content="No" />
                 <Button
                     x:Name="btnOk"
                     MinWidth="140"
                     Margin="5,0,5,0"
                     Click="Button_Click"
-                    Content="{DynamicResource done}" />
+                    Content="OK" />
                 <Button
                     x:Name="btnYes"
                     MinWidth="140"
                     Margin="5,0,5,0"
                     Click="Button_Click"
-                    Content="{DynamicResource done}" />
+                    Content="Yes" />
             </WrapPanel>
         </Border>
     </Grid>

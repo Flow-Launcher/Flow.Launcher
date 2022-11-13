@@ -20,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using static Flow.Launcher.MessageBoxEx;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
@@ -280,7 +281,7 @@ namespace Flow.Launcher
         }
         private void OpenTestBtn(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = MessageBoxEx.Show("The TitleBarBackground property can be used to set the background for the Title bar. ... The following screen shots illustrate the title bar background changes.", "This is Title Part This is Title Part This is Title Part This is Title Part");                
+            var messageBoxResult = MessageBoxEx.Show("Yes, This is sucks", "MessageBox is bad?", MessageBoxType.ConfirmationWithYesNo);                
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
