@@ -579,84 +579,89 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 // windows 8.1 https://msdn.microsoft.com/en-us/library/windows/apps/hh965372.aspx#target_size
                 // windows 8 https://msdn.microsoft.com/en-us/library/windows/apps/br211475.aspx
 
-                string path;
-                if (uri.Contains("\\"))
+                string path = Path.Combine(Package.Location, uri);
+
+                var logoPath = TryToFindLogo(uri, path);
+                if (String.IsNullOrEmpty(logoPath))
                 {
-                    path = Path.Combine(Package.Location, uri);
-                }
-                else
-                {
+                    // TODO: Don't know why, just keep it at the moment
+                    // Maybe on older version of Windows 10?
                     // for C:\Windows\MiracastView etc
-                    path = Path.Combine(Package.Location, "Assets", uri);
+                    return TryToFindLogo(uri, Path.Combine(Package.Location, "Assets", uri));
                 }
+                return logoPath;
 
-                var extension = Path.GetExtension(path);
-                if (extension != null)
+                string TryToFindLogo(string uri, string path)
                 {
-                    var end = path.Length - extension.Length;
-                    var prefix = path.Substring(0, end);
-                    var paths = new List<string>
+                    var extension = Path.GetExtension(path);
+                    if (extension != null)
                     {
-                        path
-                    };
+                        //if (File.Exists(path))
+                        //{
+                        //    return path; // shortcut, avoid enumerating files
+                        //}
 
-                    var scaleFactors = new Dictionary<PackageVersion, List<int>>
-                    {
-                        // scale factors on win10: https://docs.microsoft.com/en-us/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets#asset-size-tables,
+                        var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
+                        var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
+                        if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
                         {
-                            PackageVersion.Windows10, new List<int>
-                            {
-                                100,
-                                125,
-                                150,
-                                200,
-                                400
-                            }
-                        },
+                            // Known issue: Edge always triggers it since logo is not at uri
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                               $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Package.Location}", new FileNotFoundException());
+                            return string.Empty;
+                        }
+
+                        var files = Directory.EnumerateFiles(logoDir);
+
+                        // Currently we don't care which one to choose
+                        // Just ignore all qualifiers
+                        // select like logo.[xxx_yyy].png
+                        // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
+                        var logos = files.Where(file =>
+                            Path.GetFileName(file)?.StartsWith(logoNamePrefix, StringComparison.OrdinalIgnoreCase) ?? false
+                            && extension.Equals(Path.GetExtension(file), StringComparison.OrdinalIgnoreCase)
+                        );
+
+                        var selected = logos.FirstOrDefault();
+                        var closest = selected;
+                        int min = int.MaxValue;
+                        foreach(var logo in logos)
                         {
-                            PackageVersion.Windows81, new List<int>
+
+                            var imageStream = File.OpenRead(logo);
+                            var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.None);
+                            var height = decoder.Frames[0].PixelHeight;
+                            var width = decoder.Frames[0].PixelWidth;
+                            int pixelCountDiff = Math.Abs(height * width - 1936); // 44*44=1936
+                            if(pixelCountDiff < min)
                             {
-                                100,
-                                120,
-                                140,
-                                160,
-                                180
-                            }
-                        },
-                        {
-                            PackageVersion.Windows8, new List<int>
-                            {
-                                100
+                                // try to find the closest to 44x44 logo
+                                closest = logo;
+                                if (pixelCountDiff == 0)
+                                    break;  // found 44x44
+                                min = pixelCountDiff;
                             }
                         }
-                    };
 
-                    if (scaleFactors.ContainsKey(Package.Version))
-                    {
-                        foreach (var factor in scaleFactors[Package.Version])
+                        selected = closest;
+                        if (!string.IsNullOrEmpty(selected))
                         {
-                            paths.Add($"{prefix}.scale-{factor}{extension}");
+                            return selected;
                         }
-                    }
-
-                    var selected = paths.FirstOrDefault(File.Exists);
-                    if (!string.IsNullOrEmpty(selected))
-                    {
-                        return selected;
+                        else
+                        {
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                                                       $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Package.Location}", new FileNotFoundException());
+                            return string.Empty;
+                        }
                     }
                     else
                     {
                         ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                   $"|{UserModelId} can't find logo uri for {uri} in package location: {Package.Location}", new FileNotFoundException());
+                                                   $"|Unable to find extension from {uri} for {UserModelId} " +
+                                                   $"in package location {Package.Location}", new FileNotFoundException());
                         return string.Empty;
                     }
-                }
-                else
-                {
-                    ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                               $"|Unable to find extension from {uri} for {UserModelId} " +
-                                               $"in package location {Package.Location}", new FileNotFoundException());
-                    return string.Empty;
                 }
             }
 
@@ -664,7 +669,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public ImageSource Logo()
             {
                 var logo = ImageFromPath(LogoPath);
-                var plated = PlatedImage(logo);
+                var plated = PlatedImage(logo);  // TODO: maybe get plated directly from app package?
 
                 // todo magic! temp fix for cross thread object
                 plated.Freeze();
