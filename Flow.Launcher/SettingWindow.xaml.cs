@@ -253,6 +253,7 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowState = WindowState;
             settings.SettingWindowTop = Top;
             settings.SettingWindowLeft = Left;
             viewModel.Save();
@@ -553,6 +554,7 @@ namespace Flow.Launcher
                 Top = WindowTop();
                 Left = WindowLeft();
             }
+            WindowState = settings.SettingWindowState;
         }
         public double WindowLeft()
         {
