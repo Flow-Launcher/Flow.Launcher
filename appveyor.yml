@@ -7,6 +7,10 @@ init:
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
+cache:
+  - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
+
+
 assembly_info:
   patch: true
   file: SolutionAssemblyInfo.cs
@@ -28,7 +32,9 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
-after_build:
+test_script:
+  - dotnet test --no-build -c Release
+after_test:
   - ps: .\Scripts\post_build.ps1
 
 artifacts:
