@@ -6,12 +6,12 @@
     Title="{DynamicResource customeQueryShortcutTitle}"
     Width="530"
     Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    WindowStartupLocation="CenterScreen"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -100,8 +100,7 @@
                             Grid.Row="0"
                             Grid.Column="1"
                             Margin="10"
-                            Text="{Binding Key}"
-                            />
+                            Text="{Binding Key}" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
@@ -126,8 +125,8 @@
                                 x:Name="tbExpand"
                                 Margin="10"
                                 HorizontalAlignment="Stretch"
-                                Text="{Binding Value}"
-                                VerticalAlignment="Center" />
+                                VerticalAlignment="Center"
+                                Text="{Binding Value}" />
                         </DockPanel>
                     </Grid>
                 </StackPanel>

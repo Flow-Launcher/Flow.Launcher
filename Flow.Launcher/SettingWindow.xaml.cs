@@ -280,7 +280,7 @@ namespace Flow.Launcher
         }
         private void OpenTestBtn(object sender, RoutedEventArgs e)
         {
-            var messageBoxResult = MessageBoxEx.Show("Message Box Title", "Are you sure?");
+            var messageBoxResult = MessageBoxEx.Show("The TitleBarBackground property can be used to set the background for the Title bar. ... The following screen shots illustrate the title bar background changes.", "This is Title Part This is Title Part This is Title Part This is Title Part");                
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {

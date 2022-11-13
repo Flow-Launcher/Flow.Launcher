@@ -17,46 +17,166 @@ using YamlDotNet.Core.Tokens;
 
 namespace Flow.Launcher
 {
-    /// <summary>
-    /// MessageBoxEx.xaml에 대한 상호 작용 논리
-    /// </summary>
     public partial class MessageBoxEx : Window
     {
-        static MessageBoxEx msgBox;
-        static string Button_id;
         public MessageBoxEx()
         {
             InitializeComponent();
         }
 
+        public enum MessageBoxType
+        {
+            ConfirmationWithYesNo = 0,
+            ConfirmationWithYesNoCancel,
+            Information,
+            Error,
+            Warning
+        }
 
-        public static string Show(string txtMessage, string txtTitle)
+        public enum MessageBoxImage
+        {
+            Warning = 0,
+            Question,
+            Information,
+            Error,
+            None
+        }
+
+        static MessageBoxEx msgBox;
+        static MessageBoxResult _result = MessageBoxResult.No;
+
+
+        /// 1 parameter
+        public static MessageBoxResult Show(string msg)
+        {
+            return Show(string.Empty, msg, MessageBoxButton.OK, MessageBoxImage.None);
+        }
+
+        // 2 parameter
+        public static MessageBoxResult Show(string caption, string text)
+        {
+            return Show(caption, text, MessageBoxButton.OK, MessageBoxImage.None);
+        }
+
+        /// 3 parameter
+        public static MessageBoxResult Show(string caption, string msg, MessageBoxType type) 
+        {
+            switch (type)
+            {
+                case MessageBoxType.ConfirmationWithYesNo:
+                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                case MessageBoxType.ConfirmationWithYesNoCancel:
+                    return Show(caption, msg, MessageBoxButton.YesNoCancel,
+                    MessageBoxImage.Question);
+                case MessageBoxType.Information:
+                    return Show(caption, msg, MessageBoxButton.OK,
+                    MessageBoxImage.Information);
+                case MessageBoxType.Error:
+                    return Show(caption, msg, MessageBoxButton.OK,
+                    MessageBoxImage.Error);
+                case MessageBoxType.Warning:
+                    return Show(caption, msg, MessageBoxButton.OK,
+                    MessageBoxImage.Warning);
+                default:
+                    return MessageBoxResult.No;
+            }
+        }
+
+        // 4 parameter, Final Display Message. 
+        public static MessageBoxResult Show(string caption, string text, MessageBoxButton button, MessageBoxImage image)
         {
             msgBox = new MessageBoxEx();
-            msgBox.TitleTextBlock.Text = txtTitle;
-            msgBox.DescTextBlock.Text = txtMessage;
-            //msgBox.label1.Text = txtMessage;
-            //msgBox.Text = txtTitle;
+            msgBox.TitleTextBlock.Text = text;
+            msgBox.DescTextBlock.Text = caption;
+            msgBox.Title = text;
+            SetVisibilityOfButtons(button);
+            SetImageOfMessageBox(image);
             msgBox.ShowDialog();
-            return Button_id;
+            return _result;
         }
-
-        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;
-            Close();
+            if (sender == btnOk)
+                _result = MessageBoxResult.OK;
+            else if (sender == btnYes)
+                _result = MessageBoxResult.Yes;
+            else if (sender == btnNo)
+                _result = MessageBoxResult.No;
+            else if (sender == btnCancel)
+                _result = MessageBoxResult.Cancel;
+            else
+                _result = MessageBoxResult.None;
+            msgBox.Close();
+            msgBox = null;
         }
 
-        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
+        private static void SetVisibilityOfButtons(MessageBoxButton button)
         {
-
-            Close();
+            switch (button)
+            {
+                case MessageBoxButton.OK:
+                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
+                    msgBox.btnNo.Visibility = Visibility.Collapsed;
+                    msgBox.btnYes.Visibility = Visibility.Collapsed;
+                    msgBox.btnOk.Focus();
+                    break;
+                case MessageBoxButton.OKCancel:
+                    msgBox.btnNo.Visibility = Visibility.Collapsed;
+                    msgBox.btnYes.Visibility = Visibility.Collapsed;
+                    msgBox.btnCancel.Focus();
+                    break;
+                case MessageBoxButton.YesNo:
+                    msgBox.btnOk.Visibility = Visibility.Collapsed;
+                    msgBox.btnCancel.Visibility = Visibility.Collapsed;
+                    msgBox.btnNo.Focus();
+                    break;
+                case MessageBoxButton.YesNoCancel:
+                    msgBox.btnOk.Visibility = Visibility.Collapsed;
+                    msgBox.btnCancel.Focus();
+                    break;
+                default:
+                    break;
+            }
         }
-
+        private static void SetImageOfMessageBox(MessageBoxImage image)
+        {
+            switch (image)
+            {
+                case MessageBoxImage.Warning:
+                    msgBox.SetImage("Warning.png");
+                    break;
+                case MessageBoxImage.Question:
+                    msgBox.SetImage("Question.png");
+                    break;
+                case MessageBoxImage.Information:
+                    msgBox.SetImage("Information.png");
+                    break;
+                case MessageBoxImage.Error:
+                    msgBox.SetImage("Error.png");
+                    break;
+                default:
+                    msgBox.Img.Visibility = Visibility.Collapsed;
+                    break;
+            }
+        }
+        private void SetImage(string imageName)
+        {
+            string uri = string.Format("/Images/{0}", imageName);
+            var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
+            Img.Source = new BitmapImage(uriSource);
+        }
         private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             DialogResult = false;
             Close();
         }
+
+        private void Button_Cancel(object sender, RoutedEventArgs e)
+        {
+            msgBox.Close();
+            msgBox = null;
+        }
+
     }
 }

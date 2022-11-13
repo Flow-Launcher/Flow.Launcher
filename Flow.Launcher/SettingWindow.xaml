@@ -2905,7 +2905,7 @@
                                                 Margin="0,0,12,0"
                                                 Click="ClearLogFolder"
                                                 Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Button
+                                            <Button Name="TestBtn"
                                                 Margin="0,0,12,0"
                                                 Click="OpenTestBtn"
                                                 Content="Open Test" />

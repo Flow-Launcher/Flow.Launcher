@@ -5,10 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MessageBoxEx"
-    Width="800"
-    Height="450"
+    x:Name="MessageBoxWindow"
+    Width="420"
+    Height="Auto"
     ResizeMode="NoResize"
+    SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -22,8 +23,9 @@
     </Window.CommandBindings>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="80" />
+            <RowDefinition MinHeight="68" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0">
             <StackPanel>
@@ -37,7 +39,7 @@
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="4"
-                        Click="BtnCancel_OnClick"
+                        Click="Button_Cancel"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
                             Width="46"
@@ -58,48 +60,77 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,0,26,0">
-                <StackPanel Grid.Row="0" Margin="0,0,0,12">
-                    <TextBlock
-                        x:Name="TitleTextBlock"
-                        Grid.Column="0"
-                        Margin="0,0,0,0"
-                        FontFamily="Segoe UI"
-                        FontSize="20"
-                        FontWeight="SemiBold"
-                        TextAlignment="Left" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock
-                        x:Name="DescTextBlock"
-                        FontSize="14"
-                        TextAlignment="Left"
-                        TextWrapping="WrapWithOverflow" />
-                </StackPanel>
-            </StackPanel>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Margin="0,0,0,24">
+            <Grid Grid.Column="0" Margin="0,0,0,12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Name="Img"
+                    Grid.Column="0"
+                    Width="18"
+                    Height="18"
+                    Margin="30,0,10,0"
+                    HorizontalAlignment="Left"
+                    Visibility="Collapsed" />
+                <TextBlock
+                    x:Name="TitleTextBlock"
+                    Grid.Column="1"
+                    MaxWidth="400"
+                    Margin="26,0,26,0"
+                    FontFamily="Segoe UI"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    TextAlignment="Left"
+                    TextWrapping="Wrap" />
+            </Grid>
+            <TextBlock
+                x:Name="DescTextBlock"
+                Grid.Column="1"
+                MaxWidth="400"
+                Margin="26,0,26,0"
+                HorizontalAlignment="Stretch"
+                FontSize="14"
+                TextAlignment="Left"
+                TextWrapping="Wrap" />
         </StackPanel>
         <Border
-            Grid.Row="1"
-            Margin="0,14,0,0"
+            Grid.Row="2"
+            Margin="0,0,0,0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0">
-            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+            <WrapPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
                 <Button
                     x:Name="btnCancel"
                     MinWidth="140"
-                    Margin="10,0,5,0"
-                    Click="BtnCancel_OnClick"
+                    Margin="5,0,5,0"
+                    Click="Button_Click"
                     Content="{DynamicResource cancel}" />
                 <Button
-                    x:Name="btnAdd"
+                    x:Name="btnNo"
                     MinWidth="140"
-                    Margin="5,0,10,0"
-                    Click="BtnAdd_OnClick"
-                    Style="{StaticResource AccentButtonStyle}">
-                    <TextBlock x:Name="lblAdd" Text="{DynamicResource done}" />
-                </Button>
-            </StackPanel>
+                    Margin="5,0,5,0"
+                    Click="Button_Click"
+                    Content="{DynamicResource cancel}" />
+                <Button
+                    x:Name="btnOk"
+                    MinWidth="140"
+                    Margin="5,0,5,0"
+                    Click="Button_Click"
+                    Content="{DynamicResource done}" />
+                <Button
+                    x:Name="btnYes"
+                    MinWidth="140"
+                    Margin="5,0,5,0"
+                    Click="Button_Click"
+                    Content="{DynamicResource done}" />
+            </WrapPanel>
         </Border>
     </Grid>
 </Window>
