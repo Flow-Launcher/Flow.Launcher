@@ -98,6 +98,7 @@
     </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.7.6" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
   </ItemGroup>
 
   <ItemGroup>
@@ -115,12 +116,12 @@
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="taskkill /f /fi &quot;IMAGENAME eq Flow.Launcher.exe&quot;" />
   </Target>
-
+  
   <Target Name="RemoveDuplicateAnalyzers" BeforeTargets="CoreCompile">
     <!-- Work around https://github.com/dotnet/wpf/issues/6792 -->
 
     <ItemGroup>
-      <FilteredAnalyzer Include="@(Analyzer->Distinct())" />
+      <FilteredAnalyzer Include="@(Analyzer-&gt;Distinct())" />
       <Analyzer Remove="@(Analyzer)" />
       <Analyzer Include="@(FilteredAnalyzer)" />
     </ItemGroup>
