@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_program_add">Aggiungi</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
@@ -36,8 +37,12 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Please select a program source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">OK</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_update">Aggiorna</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
