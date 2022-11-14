@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_program_add">Añadir</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Nombre</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Activar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Activado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Desactivar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
@@ -36,8 +37,12 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor, seleccione la ruta del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Está seguro que desea eliminar las fuentes del programa seleccionadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">Aceptar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_update">Actualizar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">El complemento Programa sólo indexará archivos y direcciones .url con las extensiones y protocolos seleccionados.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Extensiones de archivo actualizadas correctamente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Las extensiones de archivo no pueden estar vacías</system:String>
