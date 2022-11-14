@@ -14,10 +14,14 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">재색인</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">색인 중</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">시작메뉴 색인</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">Index Sources</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Start Menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">활성화시 Flow가 시작 메뉴의 프로그램을 로드합니다.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">레지스트리 색인</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">활성화시 Flow가 레지스트리로부터 프로그램을 로드합니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">앱 경로 숨김</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">UWP나 Lnk 같이 실행 가능한 프로그램인 경우 경로를 표시하지 않습니다</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">프로그램 설명 검색</system:String>
