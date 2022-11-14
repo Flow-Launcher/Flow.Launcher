@@ -11,10 +11,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Infrastructure.Logger;
-using System.Collections;
 using System.Diagnostics;
-using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using System.Threading.Channels;
@@ -279,6 +276,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 program.Valid = false;
                 return program;
             }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
+                                "|An unexpected error occurred in the calling method LnkProgram", e);
+
+                program.Valid = false;
+                return program;
+            }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
             {
@@ -352,14 +357,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes)
+        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
 
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
-                IgnoreInaccessible = true, RecurseSubdirectories = true
+                IgnoreInaccessible = true, RecurseSubdirectories = recursive
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 
@@ -395,7 +400,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes)
         {
-            var disabledProgramsList = Main._settings.DisabledProgramSources;
 
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
@@ -409,6 +413,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     ShortcutExtension => LnkProgram(x),
                     UrlExtension => UrlProgram(x),
+                    _ => Win32Program(x)
+                });
+            return programs;
+        }
+
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
+        {
+            var pathEnv = Environment.GetEnvironmentVariable("Path");
+            if (String.IsNullOrEmpty(pathEnv)) 
+            { 
+                return Array.Empty<Win32>(); 
+            }
+
+            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
+
+            var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
+
+            var programs = ExceptDisabledSource(toFilter.Distinct())
+                .Select(x => Extension(x) switch
+                {
+                    ShortcutExtension => LnkProgram(x),
+                    UrlExtension => UrlProgram(x),
+                    ExeExtension => ExeProgram(x),
                     _ => Win32Program(x)
                 });
             return programs;
@@ -564,6 +591,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var startMenu = StartMenuPrograms(settings.GetSuffixes());
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
+                }
+
+                if (settings.EnablePATHSource)
+                {
+                    var path = PATHPrograms(settings.GetSuffixes());
+                    autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
