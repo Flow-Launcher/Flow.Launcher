@@ -29,14 +29,16 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
             }
         }
 
-        public string Name { get => name ; set => name = value ?? string.Empty; }
+        public string Name { get => name; set => name = value ?? string.Empty; }
         public bool Enabled { get; set; } = true;
 
-        public string UniqueIdentifier { get => uniqueIdentifier; 
+        public string UniqueIdentifier
+        {
+            get => uniqueIdentifier;
             private set
             {
                 uniqueIdentifier = value == null ? string.Empty : value.ToLowerInvariant();
-            } 
+            }
         }
 
         [JsonConstructor]
