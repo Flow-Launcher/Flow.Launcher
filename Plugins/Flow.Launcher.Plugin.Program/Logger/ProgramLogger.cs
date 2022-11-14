@@ -1,13 +1,8 @@
 using NLog;
-using NLog.Config;
-using NLog.Targets;
 using System;
-using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Security;
-using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Plugin.Program.Logger
 {
