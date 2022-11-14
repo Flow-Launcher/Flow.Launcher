@@ -5,10 +5,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource flowlauncher_plugin_program_directory}"
-    Width="400"
+    Width="Auto"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
-    SizeToContent="Height"
+    ResizeMode="NoResize"
+    SizeToContent="WidthAndHeight"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -64,17 +65,26 @@
                         TextAlignment="Left" />
                 </StackPanel>
                 <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                    <TextBox
-                        Name="Directory"
-                        Width="268"
-                        Margin="0,7"
-                        VerticalAlignment="Center" />
-                    <Button
-                        Width="70"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        Click="BrowseButton_Click"
-                        Content="{DynamicResource flowlauncher_plugin_program_browse}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox
+                            Name="Directory"
+                            Grid.Column="0"
+                            MinWidth="248"
+                            Margin="0,7"
+                            VerticalAlignment="Center" />
+                        <Button
+                            Grid.Column="1"
+                            MinWidth="80"
+                            Margin="10,10,0,10"
+                            Padding="14,6,14,6"
+                            HorizontalAlignment="Right"
+                            Click="BrowseButton_Click"
+                            Content="{DynamicResource flowlauncher_plugin_program_browse}" />
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
