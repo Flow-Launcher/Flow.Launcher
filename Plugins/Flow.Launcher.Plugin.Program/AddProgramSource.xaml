@@ -100,7 +100,7 @@
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 Name="Directory"
-                                MinWidth="280"
+                                Width="300"
                                 Margin="10"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center" />
