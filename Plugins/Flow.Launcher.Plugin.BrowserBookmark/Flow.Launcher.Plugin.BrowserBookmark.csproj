@@ -3,6 +3,7 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <UseWPF>true</UseWPF>
     <ProjectGuid>{9B130CC5-14FB-41FF-B310-0A95B6894C37}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -63,20 +64,5 @@
   <ItemGroup>
     <Compile Remove="Bookmark.cs" />
   </ItemGroup>
-
-  <Target Name="CopyDLLs" AfterTargets="Build">
-    <Message Text="Executing CopyDLLs task" Importance="High" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x64" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x86" />
-  </Target>
-
-  <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">
-    <Message Text="Deleting runtimes folder" Importance="High" />
-    <Delete Files="$(TargetDir)\runtimes" />
-  </Target>
 
 </Project>
