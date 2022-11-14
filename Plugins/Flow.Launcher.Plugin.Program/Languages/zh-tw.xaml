@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_program_add">新增</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">名稱</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">啟</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">已啟用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">停用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">路徑</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
@@ -36,6 +37,10 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">請先選擇一項</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Are you sure you want to delete the selected program sources?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
