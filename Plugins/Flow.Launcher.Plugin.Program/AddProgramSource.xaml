@@ -69,9 +69,9 @@
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
                 </StackPanel>
-                
-                <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
-                    <Grid Width="470">
+
+                <StackPanel Margin="0,10,10,0" Orientation="Horizontal">
+                    <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -88,21 +88,22 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource flowlauncher_plugin_program_directory}" />
-                        <DockPanel 
-                            Grid.Row="0" 
-                            Grid.Column="1" 
+                        <DockPanel
+                            Grid.Row="0"
+                            Grid.Column="1"
                             LastChildFill="True">
                             <Button
-                                Width="70"
+                                MinWidth="70"
                                 HorizontalAlignment="Right"
                                 Click="BrowseButton_Click"
-                                DockPanel.Dock="Right"
-                                Content="{DynamicResource flowlauncher_plugin_program_browse}" />
+                                Content="{DynamicResource flowlauncher_plugin_program_browse}"
+                                DockPanel.Dock="Right" />
                             <TextBox
                                 Name="Directory"
+                                MinWidth="280"
                                 Margin="10"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Stretch" />
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" />
                         </DockPanel>
                         <TextBlock
                             Grid.Row="1"
@@ -112,7 +113,8 @@
                             VerticalAlignment="Center"
                             FontSize="14"
                             Text="{DynamicResource flowlauncher_plugin_program_enabled}" />
-                        <CheckBox x:Name="Chkbox"
+                        <CheckBox
+                            x:Name="Chkbox"
                             Grid.Row="1"
                             Grid.Column="1"
                             Margin="10,0"
