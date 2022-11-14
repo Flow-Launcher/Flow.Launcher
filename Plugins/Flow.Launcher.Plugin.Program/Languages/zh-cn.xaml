@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_program_add">增加</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">名称</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">启用</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">启用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">禁用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">位置</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">所有程序</system:String>
@@ -36,6 +37,10 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">请先选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">更新</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">程序插件仅索引具有指定后缀的文件以及具有指定协议的URL文件。</system:String>
