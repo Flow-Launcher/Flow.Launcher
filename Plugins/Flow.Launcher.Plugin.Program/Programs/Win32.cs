@@ -273,6 +273,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 program.Valid = false;
                 return program;
             }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
+                                "|An unexpected error occurred in the calling method LnkProgram", e);
+
+                program.Valid = false;
+                return program;
+            }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
             {
@@ -343,7 +351,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes)
+        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -351,7 +359,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Directory.EnumerateFiles(directory, "*", new EnumerationOptions
             {
                 IgnoreInaccessible = true,
-                RecurseSubdirectories = true
+                RecurseSubdirectories = recursive
             }).Where(x => suffixes.Contains(Extension(x)));
         }
 
@@ -394,7 +402,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
+        {
+            var pathEnv = Environment.GetEnvironmentVariable("Path");
+            if (String.IsNullOrEmpty(pathEnv)) 
+            { 
+                return Array.Empty<Win32>(); 
+            }
+
+            var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
+
+            var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
+
+            var programs = ExceptDisabledSource(toFilter.Distinct())
+                .Select(x => Extension(x) switch
+                {
+                    ShortcutExtension => LnkProgram(x),
+                    UrlExtension => UrlProgram(x),
+                    ExeExtension => ExeProgram(x),
+                    _ => Win32Program(x)
+                });
+            return programs;
+        }
+
+        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
@@ -550,6 +581,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     var startMenu = StartMenuPrograms(suffixes, protocols);
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
+                }
+
+                if (settings.EnablePATHSource)
+                {
+                    var path = PATHPrograms(settings.GetSuffixes());
+                    autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms);

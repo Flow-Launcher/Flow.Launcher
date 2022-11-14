@@ -66,6 +66,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        public bool EnablePATHSource
+        {
+            get => _settings.EnablePATHSource;
+            set
+            {
+                _settings.EnablePATHSource = value;
+                ReIndexing();
+            }
+        }
+
         public string CustomizedExplorerPath
         {
             get => _settings.CustomizedExplorer;
