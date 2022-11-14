@@ -402,7 +402,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static IEnumerable<Win32> PATHPrograms(string[] suffixes)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
             if (String.IsNullOrEmpty(pathEnv)) 
@@ -418,14 +418,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Select(x => Extension(x) switch
                 {
                     ShortcutExtension => LnkProgram(x),
-                    UrlExtension => UrlProgram(x),
+                    UrlExtension => UrlProgram(x, protocols),
                     ExeExtension => ExeProgram(x),
                     _ => Win32Program(x)
                 });
             return programs;
         }
 
-        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes)
+        private static IEnumerable<Win32> AppPathsPrograms(string[] suffixes, string[] protocols)
         {
             // https://msdn.microsoft.com/en-us/library/windows/desktop/ee872121
             const string appPaths = @"SOFTWARE\Microsoft\Windows\CurrentVersion\App Paths";
@@ -585,7 +585,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnablePATHSource)
                 {
-                    var path = PATHPrograms(settings.GetSuffixes());
+                    var path = PATHPrograms(settings.GetSuffixes(), protocols);
                     autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
