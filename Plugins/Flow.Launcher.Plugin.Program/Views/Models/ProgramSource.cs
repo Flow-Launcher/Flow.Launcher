@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
     /// </remarks>
     public class ProgramSource
     {
-        private string name;
+        private string name = string.Empty;
         private string loc = string.Empty;
         private string uniqueIdentifier = string.Empty;
 
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
             }
         }
 
-        public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
+        public string Name { get => name ; set => name = value ?? string.Empty; }
         public bool Enabled { get; set; } = true;
 
         public string UniqueIdentifier { get => uniqueIdentifier; 
@@ -43,7 +43,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         public ProgramSource(string name, string location, bool enabled, string uniqueIdentifier)
         {
             loc = location ?? string.Empty;
-            this.name = name;
+            Name = name;
             Enabled = enabled;
             UniqueIdentifier = uniqueIdentifier;
         }
@@ -58,11 +58,12 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
             loc = location ?? string.Empty;
             Enabled = enabled;
             UniqueIdentifier = location;  // For path comparison
+            Name = new DirectoryInfo(Location).Name;
         }
 
         public ProgramSource(IProgram source)
         {
-            loc = source.Location;
+            loc = source.Location ?? string.Empty;
             Name = source.Name;
             Enabled = source.Enabled;
             UniqueIdentifier = source.UniqueIdentifier;
