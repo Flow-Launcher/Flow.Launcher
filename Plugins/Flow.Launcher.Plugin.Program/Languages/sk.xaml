@@ -8,6 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_program_add">Pridať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Názov</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Povoliť</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Povolené</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Zakázať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Umiestnenie</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Všetky programy</system:String>
@@ -36,6 +37,10 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Prosím, zadajte zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Naozaj chcete odstrániť vybrané zdroje programov?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Iný zdroj programu s rovnakým umiestnením už existuje.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Zdroj programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Aktualizovať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Plugin Program bude indexovať iba súbory s vybranými príponami a súbory .url s vybranými protokolmi.</system:String>
