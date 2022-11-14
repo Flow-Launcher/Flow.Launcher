@@ -14,14 +14,14 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Typ súboru</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindexovať</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexovanie</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_source">Index Sources</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">Zdroje indexu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">Možnosti</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Ponuka Štart</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Ak je povolené, Flow načíta programy z ponuky Štart</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Databáza Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Ak je povolené, Flow načíta programy z databázy Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Ak je táto možnosť povolená, Flow načíta programy z premennej prostredia PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Skryť cestu k aplikácii</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Pre spustiteľné súbory ako sú UWP alebo odkazy nezobrazovať cestu k súborom</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Povoliť popis programu</system:String>
