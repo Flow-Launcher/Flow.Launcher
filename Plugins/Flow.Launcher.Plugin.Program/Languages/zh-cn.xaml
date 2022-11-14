@@ -14,10 +14,14 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes">文件类型</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">重新索引</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">索引中</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">索引开始菜单</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">Index Sources</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Start Menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">启用时搜索开始菜单中的程序</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">索引注册表</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">启用时搜索注册表中的程序</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">隐藏应用路径</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">隐藏诸如UWP，lnk 等可执行文件的路径</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
