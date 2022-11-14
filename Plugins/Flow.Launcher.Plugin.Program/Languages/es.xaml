@@ -37,10 +37,10 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor, seleccione la ruta del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">¿Está seguro que desea eliminar las fuentes del programa seleccionadas?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Ya existe otra fuente de programa con la misma ubicación.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Fuente de Programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Editar directorio y estado de esta fuente de programa.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Actualizar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">El complemento Programa sólo indexará archivos y direcciones .url con las extensiones y protocolos seleccionados.</system:String>
