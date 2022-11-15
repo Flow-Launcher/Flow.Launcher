@@ -76,7 +76,7 @@
 
   <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">
     <Message Text="Deleting runtimes folder" Importance="High" />
-    <Delete Files="$(TargetDir)\runtimes" />
+    <RemoveDir Directories="$(TargetDir)\runtimes" />
   </Target>
 
 </Project>
