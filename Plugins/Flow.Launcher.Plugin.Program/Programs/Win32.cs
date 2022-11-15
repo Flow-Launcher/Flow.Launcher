@@ -23,7 +23,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
     public class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
-        public string UniqueIdentifier { get => _uid; set => _uid = value.ToLowerInvariant(); }  // For path comparison
+        public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }  // For path comparison
         public string IcoPath { get; set; }
         public string FullPath { get; set; }
         public string LnkResolvedPath { get; set; }

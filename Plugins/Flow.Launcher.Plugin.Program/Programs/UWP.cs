@@ -277,7 +277,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         [Serializable]
         public class Application : IProgram
         {
-            public string UniqueIdentifier { get; set; }
+            private string _uid = string.Empty;
+            public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }
             public string DisplayName { get; set; }
             public string Description { get; set; }
             public string UserModelId { get; set; }
