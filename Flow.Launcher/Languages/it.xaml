@@ -90,6 +90,7 @@
     <system:String x:Key="plugin_query_time">Tempo ricerca:</system:String>
     <system:String x:Key="plugin_query_version">| Versione</system:String>
     <system:String x:Key="plugin_query_web">Sito Web</system:String>
+    <system:String x:Key="plugin_uninstall">Disinstalla</system:String>
 
 
     <!--  Setting Plugin Store  -->
