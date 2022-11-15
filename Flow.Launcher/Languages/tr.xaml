@@ -90,6 +90,7 @@
     <system:String x:Key="plugin_query_time">Sorgu Süresi:</system:String>
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
+    <system:String x:Key="plugin_uninstall">Kaldır</system:String>
 
 
     <!--  Setting Plugin Store  -->
