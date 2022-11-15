@@ -1,7 +1,8 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ToolGood.Words.Pinyin;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -61,7 +62,14 @@ namespace Flow.Launcher.Infrastructure
 
             query = query.Trim();
             TranslationMapping translationMapping;
-            (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+            if (!WordsHelper.HasChinese(query))
+            {
+                (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+            }
+            else
+            {
+                translationMapping = null;
+            }
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();
