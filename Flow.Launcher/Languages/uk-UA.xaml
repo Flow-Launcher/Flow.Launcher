@@ -90,6 +90,7 @@
     <system:String x:Key="plugin_query_time">Запит:</system:String>
     <system:String x:Key="plugin_query_version">| Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
+    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
