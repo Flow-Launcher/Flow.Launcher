@@ -553,7 +553,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     if (temp.Any())
                         return DistinctBy(temp, x => x.Description);
                     return g.Take(1);
-                }).ToArray();
+                });
         }
 
 
@@ -589,7 +589,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     autoIndexPrograms = autoIndexPrograms.Concat(path);
                 }
 
-                autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
+                autoIndexPrograms = ProgramsHasher(autoIndexPrograms).ToArray();
 
                 return programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
             }
