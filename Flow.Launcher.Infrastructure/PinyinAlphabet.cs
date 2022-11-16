@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure
 
         private List<int> originalIndexs = new List<int>();
         private List<int> translatedIndexs = new List<int>();
-        private int translaedLength = 0;
+        private int translatedLength = 0;
 
         public string key { get; private set; }
 
@@ -32,13 +32,13 @@ namespace Flow.Launcher.Infrastructure
             originalIndexs.Add(originalIndex);
             translatedIndexs.Add(translatedIndex);
             translatedIndexs.Add(translatedIndex + length);
-            translaedLength += length - 1;
+            translatedLength += length - 1;
         }
 
         public int MapToOriginalIndex(int translatedIndex)
         {
             if (translatedIndex > translatedIndexs.Last())
-                return translatedIndex - translaedLength - 1;
+                return translatedIndex - translatedLength - 1;
 
             int lowerBound = 0;
             int upperBound = originalIndexs.Count - 1;
