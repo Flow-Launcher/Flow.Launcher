@@ -2361,7 +2361,7 @@
                                     TextAlignment="left" />
 
                                 <StackPanel Grid.Row="1">
-                                    <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource flowlauncherHotkey}" />
@@ -2814,54 +2814,54 @@
                                     Style="{DynamicResource PageTitle}"
                                     Text="{DynamicResource about}"
                                     TextAlignment="left" />
-                                <StackPanel Orientation="Horizontal">
-                                    <Border
-                                        Width="200"
-                                        Height="120"
-                                        Margin="0,8,0,0"
-                                        Padding="24,24,24,24"
-                                        HorizontalAlignment="Left"
-                                        Style="{DynamicResource SettingGroupBox}">
-                                        <Grid>
-                                            <TextBlock
-                                                FontSize="14"
-                                                Foreground="{DynamicResource Color05B}"
-                                                Text="{DynamicResource version}"
-                                                TextWrapping="WrapWithOverflow" />
-                                            <TextBlock
-                                                HorizontalAlignment="Right"
-                                                VerticalAlignment="Bottom"
-                                                DockPanel.Dock="Bottom"
-                                                FontSize="22"
-                                                Foreground="{DynamicResource Color05B}"
-                                                Text="{Binding Version}"
-                                                TextWrapping="WrapWithOverflow" />
-                                        </Grid>
-                                    </Border>
-                                </StackPanel>
 
-                                <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+
+                                <Border Margin="0,9,0,0" Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource update}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                FontWeight="Bold"
+                                                Style="{DynamicResource SettingTitleLabel}"
+                                                Text="{Binding Version}" />
+                                            <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource version}" />
                                         </StackPanel>
                                         <Button
                                             Grid.Column="1"
-                                            Margin="0,0,-20,0"
+                                            Margin="0,0,-14,0"
                                             HorizontalAlignment="Right"
                                             Click="OnCheckUpdates"
                                             Content="{DynamicResource checkUpdates}"
                                             Style="{StaticResource AccentButtonStyle}" />
                                         <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe895;
+                                            &#xe946;
                                         </TextBlock>
                                     </ItemsControl>
                                 </Border>
 
+                                <Border Height="62" Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,-12,0"
+                                            VerticalAlignment="Center"
+                                            Style="{StaticResource SideTextAbout}">
+                                            <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{DynamicResource releaseNotes}" />
+                                            </Hyperlink>
+                                        </TextBlock>
+                                        <TextBlock Style="{StaticResource Glyph}">
+                                            &#xe8fd;
+                                        </TextBlock>
+                                    </ItemsControl>
+                                </Border>
 
                                 <Border
                                     Height="62"
-                                    Margin="0,4,0,0"
+                                    Margin="0,14,0,0"
                                     Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
@@ -2885,25 +2885,6 @@
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xeb41;
-                                        </TextBlock>
-                                    </ItemsControl>
-                                </Border>
-
-                                <Border Height="62" Style="{DynamicResource SettingGroupBox}">
-                                    <ItemsControl Style="{StaticResource SettingGrid}">
-                                        <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
-                                        </StackPanel>
-                                        <TextBlock
-                                            Margin="0,0,-12,0"
-                                            VerticalAlignment="Center"
-                                            Style="{StaticResource SideTextAbout}">
-                                            <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{DynamicResource releaseNotes}" />
-                                            </Hyperlink>
-                                        </TextBlock>
-                                        <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe8fd;
                                         </TextBlock>
                                     </ItemsControl>
                                 </Border>
@@ -2935,7 +2916,10 @@
                                     </ItemsControl>
                                 </Border>
 
-                                <Border Height="62" Style="{DynamicResource SettingGroupBox}">
+                                <Border
+                                    Height="62"
+                                    Margin="0,14,0,0"
+                                    Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Icons" />
@@ -2966,25 +2950,42 @@
                                             HorizontalAlignment="Right"
                                             Orientation="Horizontal">
                                             <Button
-                                                Margin="0,0,12,0"
-                                                Click="OpenWelcomeWindow"
-                                                Content="{DynamicResource welcomewindow}" />
-                                            <Button
-                                                Margin="0,0,12,0"
-                                                Click="OpenSettingFolder"
-                                                Content="{DynamicResource settingfolder}" />
-                                            <Button
                                                 Name="ClearLogFolderBtn"
                                                 Margin="0,0,12,0"
                                                 Click="ClearLogFolder"
                                                 Content="{Binding CheckLogFolder, UpdateSourceTrigger=PropertyChanged}" />
-                                            <Button Click="OpenLogFolder" Content="{DynamicResource logfolder}" />
+                                            <Button
+                                                Margin="0,0,8,0"
+                                                Content="&#xec7a;"
+                                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                                FontSize="20">
+                                                <ui:FlyoutService.Flyout>
+                                                    <ui:MenuFlyout>
+                                                        <MenuItem Click="OpenWelcomeWindow" Header="{DynamicResource welcomewindow}">
+                                                            <MenuItem.Icon>
+                                                                <ui:FontIcon Glyph="&#xe939;" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Click="OpenSettingFolder" Header="{DynamicResource settingfolder}">
+                                                            <MenuItem.Icon>
+                                                                <ui:FontIcon Glyph="&#xe8b7;" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                        <MenuItem Click="OpenLogFolder" Header="{DynamicResource logfolder}">
+                                                            <MenuItem.Icon>
+                                                                <ui:FontIcon Glyph="&#xe8b7;" />
+                                                            </MenuItem.Icon>
+                                                        </MenuItem>
+                                                    </ui:MenuFlyout>
+                                                </ui:FlyoutService.Flyout>
+                                            </Button>
                                         </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
-                                            &#xec7a;
+                                            &#xf12b;
                                         </TextBlock>
                                     </ItemsControl>
                                 </Border>
+
                                 <TextBlock
                                     Margin="14,20,0,0"
                                     HorizontalAlignment="Center"
@@ -2994,7 +2995,6 @@
                                     Foreground="{DynamicResource Color15B}"
                                     Text="{Binding ActivatedTimes, Mode=OneWay}"
                                     TextWrapping="WrapWithOverflow" />
-
                             </StackPanel>
                         </ScrollViewer>
                     </Border>
