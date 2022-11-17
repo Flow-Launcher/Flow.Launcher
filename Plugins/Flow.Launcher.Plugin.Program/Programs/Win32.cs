@@ -660,11 +660,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (settings.EnableStartMenuSource)
                 paths.AddRange(GetStartMenuPaths());
 
-            paths.AddRange(from source in settings.ProgramSources where source.Enabled select source.Location);
+            var customSources = GetCommonParents(settings.ProgramSources);
+            paths.AddRange(customSources);
 
+            var fileExtensionToWatch = settings.GetSuffixes();
             foreach (var directory in from path in paths where Directory.Exists(path) select path)
             {
-                WatchDirectory(directory);
+                WatchDirectory(directory, fileExtensionToWatch);
             }
 
             _ = Task.Run(MonitorDirectoryChangeAsync);
@@ -685,7 +687,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        public static void WatchDirectory(string directory)
+        public static void WatchDirectory(string directory, string[] extensions)
         {
             if (!Directory.Exists(directory))
             {
@@ -697,6 +699,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.EnableRaisingEvents = true;
             watcher.IncludeSubdirectories = true;
+            foreach(var extension in extensions) {
+                watcher.Filters.Add($"*.{extension}");
+            }
 
             Watchers.Add(watcher);
         }
