@@ -27,6 +27,11 @@ skip_branch_with_pr: true
 skip_commits:
   files:
     - '*.md'
+    
+cache:
+  - '%USERPROFILE%\.nuget\packages'
+  - '%LocalAppData%\NuGet\Cache'    # NuGet < v3
+  - '%LocalAppData%\NuGet\v3-cache' # NuGet v3
 
 image: Visual Studio 2022
 platform: Any CPU
