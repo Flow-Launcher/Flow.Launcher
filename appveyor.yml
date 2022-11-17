@@ -2,6 +2,7 @@ version: '1.9.5.{build}'
 
 init:
 - ps: |
+      echo Repo_Branch:$env:APPVEYOR_REPO_BRANCH
       echo BRANCH $env:APPVEYOR_REPO_BRANCH
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
