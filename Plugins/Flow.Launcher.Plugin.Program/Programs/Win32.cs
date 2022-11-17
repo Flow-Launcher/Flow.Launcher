@@ -364,7 +364,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive = true)
+        private static IEnumerable<string> EnmuerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -389,13 +389,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes, string[] protocols)
         {
             // Disabled custom sources are not in DisabledProgramSources
-            var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
-                            .Distinct()
-                            .AsParallel()
-                            .SelectMany(s => ProgramPaths(s.Location, suffixes));
+            var paths = directories.AsParallel()
+                            .SelectMany(s => EnmuerateProgramsInDir(s, suffixes));
 
             // Remove disabled programs in DisabledProgramSources
             var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
@@ -406,8 +404,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            var paths1 = ProgramPaths(directory1, suffixes);
-            var paths2 = ProgramPaths(directory2, suffixes);
+            var paths1 = EnmuerateProgramsInDir(directory1, suffixes);
+            var paths2 = EnmuerateProgramsInDir(directory2, suffixes);
 
             var toFilter = paths1.Concat(paths2);
 
@@ -426,7 +424,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
+            var toFilter = paths.AsParallel().SelectMany(p => EnmuerateProgramsInDir(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => GetProgramFromPath(x, protocols));
@@ -570,7 +568,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var suffixes = settings.GetSuffixes();
                 var protocols = settings.GetProtocols();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, suffixes, protocols);
+                // Disabled custom sources are not in DisabledProgramSources
+                var sources = settings.ProgramSources.Where(s => Directory.Exists(s.Location) && s.Enabled).Distinct();
+                var commonParents = GetCommonParents(sources);
+
+                var unregistered = UnregisteredPrograms(commonParents, suffixes, protocols);
 
                 programs = programs.Concat(unregistered);
 
@@ -705,7 +707,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
+        private static List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
         {
             // To avoid unnecessary io
             // like c:\windows and c:\windows\system32
