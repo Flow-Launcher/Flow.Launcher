@@ -6,7 +6,7 @@ init:
       echo BRANCH $env:APPVEYOR_REPO_BRANCH
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
-      if ($env:APPVEYOR_REPO_BRANCH -eq "test_release")
+      if ($env:APPVEYOR_PULL_REQUEST_HEAD_REPO_BRANCH -eq "test_release")
       {
         $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
       }
