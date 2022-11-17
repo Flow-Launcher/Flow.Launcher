@@ -379,12 +379,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes, string[] protocols)
         {
             // Disabled custom sources are not in DisabledProgramSources
-            var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
+            var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
+                            .Distinct()
                     .AsParallel()
-                    .SelectMany(s => ProgramPaths(s.Location, suffixes)))
-                    .Distinct();
+                            .SelectMany(s => ProgramPaths(s.Location, suffixes));
 
-            var programs = paths.Select(x => GetProgramFromPath(x, protocols));
+            // Remove disabled programs in DisabledProgramSources
+            var programs = ExceptDisabledSource(paths)
+                            
+                            .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -569,7 +572,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 programs = programs.Concat(unregistered);
 
-                var autoIndexPrograms = Enumerable.Empty<Win32>();
+                var autoIndexPrograms = Enumerable.Empty<Win32>(); // for single programs, not folders
 
                 if (settings.EnableRegistrySource)
                 {
