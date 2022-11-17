@@ -440,9 +440,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols, List<string> commonParents)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
-            if (String.IsNullOrEmpty(pathEnv)) 
-            { 
-                return Array.Empty<Win32>(); 
+            if (String.IsNullOrEmpty(pathEnv))
+            {
+                return Array.Empty<Win32>();
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
@@ -722,7 +722,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.EnableRaisingEvents = true;
             watcher.IncludeSubdirectories = true;
-            foreach(var extension in extensions) {
+            foreach (var extension in extensions)
+            {
                 watcher.Filters.Add($"*.{extension}");
             }
 
@@ -760,7 +761,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 foreach (var source in group)
                 {
                     if (parents.Any(p => IsSubPathOf(source.Location, p.Location) &&
-                                            source != p)) // TODO startwith not accurate
+                                            source != p))
                     {
                         parents.Remove(source);
                     }
