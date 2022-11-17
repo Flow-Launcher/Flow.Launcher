@@ -387,7 +387,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> EnmuerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
+        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -416,7 +416,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             // Disabled custom sources are not in DisabledProgramSources
             var paths = directories.AsParallel()
-                            .SelectMany(s => EnmuerateProgramsInDir(s, suffixes));
+                            .SelectMany(s => EnumerateProgramsInDir(s, suffixes));
 
             // Remove disabled programs in DisabledProgramSources
             var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
@@ -427,8 +427,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            var paths1 = EnmuerateProgramsInDir(directory1, suffixes);
-            var paths2 = EnmuerateProgramsInDir(directory2, suffixes);
+            var paths1 = EnumerateProgramsInDir(directory1, suffixes);
+            var paths2 = EnumerateProgramsInDir(directory2, suffixes);
 
             var toFilter = paths1.Concat(paths2);
 
@@ -449,7 +449,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             paths = paths.Where(x => commonParents.All(parent => !x.StartsWith(parent, StringComparison.OrdinalIgnoreCase)));
 
-            var toFilter = paths.AsParallel().SelectMany(p => EnmuerateProgramsInDir(p, suffixes, recursive: false));
+            var toFilter = paths.AsParallel().SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => GetProgramFromPath(x, protocols));
