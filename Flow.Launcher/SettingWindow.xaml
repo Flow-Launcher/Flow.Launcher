@@ -15,7 +15,7 @@
     Title="{DynamicResource flowlauncher_settings}"
     Width="{Binding SettingWindowWidth, Mode=TwoWay}"
     Height="{Binding SettingWindowHeight, Mode=TwoWay}"
-    MinWidth="900"
+    MinWidth="940"
     MinHeight="600"
     d:DataContext="{d:DesignInstance vm:SettingWindowViewModel}"
     Closed="OnClosed"
@@ -98,6 +98,7 @@
         <Style x:Key="SettingTitleLabel" TargetType="{x:Type TextBlock}">
             <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
             <Setter Property="Margin" Value="0,0,0,0" />
+            <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
 
         <Style x:Key="SettingSubTitleLabel" TargetType="{x:Type TextBlock}">
@@ -201,52 +202,46 @@
             </Setter>
             <!--#endregion-->
         </Style>
-        <Style TargetType="{x:Type TabItem}">
+        <Style x:Key="NavTabItem" TargetType="{x:Type TabItem}">
+            <Setter Property="DockPanel.Dock" Value="Top" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
-                        <Border>
-                            <Grid>
+                        <Grid>
+                            <Border
+                                x:Name="border"
+                                Height="40"
+                                Margin="14,4,8,4"
+                                Padding="0,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                Background="{DynamicResource Color01B}"
+                                CornerRadius="5">
                                 <Grid>
-                                    <Border
-                                        x:Name="Spacer"
-                                        Width="Auto"
-                                        Height="Auto"
-                                        Margin="14,4,8,4"
-                                        Padding="0,0,0,0"
-                                        BorderBrush="Transparent"
-                                        BorderThickness="0">
-                                        <Border
-                                            x:Name="border"
-                                            Height="40"
-                                            Background="{DynamicResource Color01B}"
-                                            CornerRadius="5">
-                                            <Grid>
-                                                <Canvas>
-                                                    <Rectangle
-                                                        x:Name="Bullet"
-                                                        Canvas.Left="0"
-                                                        Width="4"
-                                                        Height="18"
-                                                        Margin="0,11,0,11"
-                                                        Fill="{DynamicResource ToggleSwitchFillOn}"
-                                                        RadiusX="2"
-                                                        RadiusY="2"
-                                                        Visibility="Hidden" />
-                                                    <ContentPresenter
-                                                        x:Name="ContentSite"
-                                                        Margin="12,11,0,11"
-                                                        HorizontalAlignment="LEFT"
-                                                        VerticalAlignment="Center"
-                                                        ContentSource="Header"
-                                                        TextBlock.Foreground="#000" />
-                                                </Canvas>
-                                            </Grid>
-                                        </Border>
-                                    </Border>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="4" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Rectangle
+                                        x:Name="Bullet"
+                                        Grid.Column="0"
+                                        Width="4"
+                                        Height="18"
+                                        Margin="0,11,0,11"
+                                        Fill="{DynamicResource ToggleSwitchFillOn}"
+                                        RadiusX="2"
+                                        RadiusY="2"
+                                        Visibility="Hidden" />
+                                    <ContentPresenter
+                                        x:Name="ContentSite"
+                                        Grid.Column="1"
+                                        Margin="12,11,18,11"
+                                        HorizontalAlignment="Stretch"
+                                        VerticalAlignment="Center"
+                                        ContentSource="Header"
+                                        TextBlock.Foreground="#000" />
                                 </Grid>
-                            </Grid>
-                        </Border>
+                            </Border>
+                        </Grid>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="border" Property="Background" Value="{DynamicResource Color06B}" />
@@ -418,30 +413,61 @@
             </Style.Triggers>
         </Style>
         <!--  For Tab Header responsive Width  -->
-        <Style TargetType="{x:Type TabControl}">
+        <Style x:Key="NavTabControl" TargetType="{x:Type TabControl}">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="VerticalContentAlignment" Value="Top" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="1" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabControl}">
-                        <Grid>
+                        <Grid
+                            x:Name="templateRoot"
+                            ClipToBounds="true"
+                            KeyboardNavigation.TabNavigation="Local"
+                            SnapsToDevicePixels="true">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="2.2*" />
-                                <ColumnDefinition Width="7.8*" />
+                                <ColumnDefinition
+                                    x:Name="ColumnDefinition0"
+                                    Width="Auto"
+                                    MinWidth="230" />
+                                <ColumnDefinition x:Name="ColumnDefinition1" Width="7.5*" />
                             </Grid.ColumnDefinitions>
-                            <TabPanel
+                            <!--  here is the edit  -->
+                            <DockPanel
+                                x:Name="headerPanel"
+                                Grid.Row="0"
                                 Grid.Column="0"
-                                Margin="0,0,0,0"
+                                Margin="2,2,2,0"
                                 Panel.ZIndex="1"
-                                Background="{DynamicResource Color01B}"
-                                IsItemsHost="True" />
+                                Background="Transparent"
+                                IsItemsHost="true"
+                                KeyboardNavigation.TabIndex="1" />
                             <Border
+                                x:Name="contentPanel"
+                                Grid.Row="0"
                                 Grid.Column="1"
-                                BorderBrush="Black"
-                                BorderThickness="0"
-                                CornerRadius="0">
-                                <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                KeyboardNavigation.DirectionalNavigation="Contained"
+                                KeyboardNavigation.TabIndex="2"
+                                KeyboardNavigation.TabNavigation="Local">
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    Margin="{TemplateBinding Padding}"
+                                    ContentSource="SelectedContent"
+                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                             </Border>
                         </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -568,8 +594,9 @@
                 Grid.ColumnSpan="5"
                 Height="auto"
                 SelectedIndex="1"
+                Style="{DynamicResource NavTabControl}"
                 TabStripPlacement="Left">
-                <TabItem Style="{DynamicResource logo}">
+                <TabItem DockPanel.Dock="Top" Style="{DynamicResource logo}">
                     <TabItem.Header>
                         <Grid Margin="0,18,0,0">
                             <Grid.RowDefinitions>
@@ -591,7 +618,7 @@
                         </Grid>
                     </TabItem.Header>
                 </TabItem>
-                <TabItem>
+                <TabItem DockPanel.Dock="Top" Style="{DynamicResource NavTabItem}">
                     <!--  LEFT TAB WIDTH  -->
                     <TabItem.Header>
                         <Grid>
@@ -947,7 +974,7 @@
                         </VirtualizingStackPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem KeyDown="OnPluginSettingKeydown">
+                <TabItem KeyDown="OnPluginSettingKeydown" Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1368,7 +1395,7 @@
                 </TabItem>
 
                 <!--#region Plugin Store-->
-                <TabItem KeyDown="PluginStore_OnKeyDown">
+                <TabItem KeyDown="PluginStore_OnKeyDown" Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1721,7 +1748,7 @@
                 </TabItem>
                 <!--#endregion-->
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -1848,7 +1875,7 @@
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <TextBlock
-                                                    Width="100"
+                                                    Width="Auto"
                                                     Margin="0,0,8,2"
                                                     VerticalAlignment="Center"
                                                     Foreground="{DynamicResource Color05B}"
@@ -1856,7 +1883,7 @@
                                                     TextAlignment="Right" />
                                                 <Slider
                                                     Name="WindowWidthValue"
-                                                    Width="300"
+                                                    Width="250"
                                                     Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
@@ -2300,7 +2327,7 @@
                 </TabItem>
 
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -2323,23 +2350,7 @@
                         VirtualizingStackPanel.IsVirtualizing="True"
                         VirtualizingStackPanel.ScrollUnit="Pixel">
                         <Border>
-                            <Grid Margin="5,18,18,10">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="43" />
-                                    <RowDefinition Height="80" />
-                                    <RowDefinition Height="146" />
-
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="50" />
-
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="50" />
-
-                                    <RowDefinition Height="50" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
+                            <StackPanel Margin="5,18,18,10">
                                 <TextBlock
                                     Grid.Row="0"
                                     Margin="0,5,0,2"
@@ -2411,7 +2422,7 @@
                                             Style="{StaticResource SettingSeparatorStyle}" />
                                         <Border
                                             Margin="0"
-                                            Padding="0,10,0,0"
+                                            Padding="0,10,0,10"
                                             BorderThickness="0"
                                             Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
@@ -2434,7 +2445,7 @@
 
                                 <TextBlock
                                     Grid.Row="3"
-                                    Margin="0,0,12,2"
+                                    Margin="0,10,12,10"
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
                                     FontSize="14"
@@ -2459,7 +2470,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="540" Header="{DynamicResource customQuery}">
+                                            <GridViewColumn Width="430" Header="{DynamicResource customQuery}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate DataType="userSettings:CustomPluginHotkey">
                                                         <TextBlock Text="{Binding ActionKeyword}" />
@@ -2520,7 +2531,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="540" Header="{DynamicResource customShortcutExpansion}">
+                                            <GridViewColumn Width="430" Header="{DynamicResource customShortcutExpansion}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Value}" />
@@ -2579,7 +2590,7 @@
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
-                                            <GridViewColumn Width="540" Header="{DynamicResource builtinShortcutDescription}">
+                                            <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
                                                         <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
@@ -2589,13 +2600,13 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-                            </Grid>
+                            </StackPanel>
                         </Border>
                     </ScrollViewer>
                 </TabItem>
 
 
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -2771,7 +2782,7 @@
                         </Border>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem>
+                <TabItem Style="{DynamicResource NavTabItem}">
                     <TabItem.Header>
                         <Grid>
                             <Grid.ColumnDefinitions>
