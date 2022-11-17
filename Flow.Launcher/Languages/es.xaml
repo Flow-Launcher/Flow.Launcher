@@ -36,10 +36,10 @@
     <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
     <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
     <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Recordar última posición</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ratón enfocado en el centro de la pantalla</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ratón enfocado en el centro superior de la pantalla</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Ratón enfocado en esquina superior izquierda de la pantalla</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Ratón enfocado en esquina superior derecha de la pantalla</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Centro de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Arriba en el centro de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Arriba a la izquierda de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Arriba a la derecha de la pantalla enfocada con el ratón</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
