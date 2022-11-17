@@ -224,6 +224,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 return Default;
             }
+#if !DEBUG
+            catch (Exception e)
+            {
+                ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
+                                                "|An unexpected error occurred in the calling method Win32Program", e);
+
+                return Default;
+        }
+#endif
         }
 
         private static Win32 LnkProgram(string path)
@@ -270,16 +279,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                            "|Error caused likely due to trying to get the description of the program",
                     e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
             catch (FileNotFoundException e)
             {
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
                                 "|An unexpected error occurred in the calling method LnkProgram", e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
@@ -287,8 +294,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
                                                 "|An unexpected error occurred in the calling method LnkProgram", e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
 #endif
         }
@@ -342,6 +348,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     program.Description = info.FileDescription;
                 return program;
             }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
+                           $"|File not found when trying to load the program from {path}", e);
+
+                return Default;
+            }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
@@ -386,8 +399,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             // Remove disabled programs in DisabledProgramSources
             var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
-                            
-                            .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
