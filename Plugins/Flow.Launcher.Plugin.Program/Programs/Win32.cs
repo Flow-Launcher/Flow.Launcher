@@ -25,8 +25,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string Name { get; set; }
         public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }  // For path comparison
         public string IcoPath { get; set; }
+        /// <summary>
+        /// Path of the file. It's the path of .lnk or .url for .lnk and .url.
+        /// </summary>
         public string FullPath { get; set; }
+        /// <summary>
+        /// Path of the excutable for .lnk, or the URL for .url.
+        /// </summary>
         public string LnkResolvedPath { get; set; }
+        /// <summary>
+        /// Path of the actual executable file.
+        /// </summary>
+        public string ExecutablePath => LnkResolvedPath ?? FullPath;
+        public string WorkingDir => Directory.GetParent(ExecutablePath)?.FullName ?? string.Empty;
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
         public string Description { get; set; }
@@ -97,10 +108,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 matchResult.MatchData = new List<int>();
             }
 
+            string subtitle = string.Empty;
+            if (!Main._settings.HideAppsPath)
+            {
+                if (Extension(FullPath) == UrlExtension)
+                {
+                    subtitle = LnkResolvedPath;
+                }
+                else
+                {
+                    subtitle = FullPath;
+                }
+            }
+
             var result = new Result
             {
                 Title = title,
-                SubTitle = Main._settings.HideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
+                SubTitle = subtitle,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
@@ -116,8 +140,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                     var info = new ProcessStartInfo
                     {
-                        FileName = LnkResolvedPath ?? FullPath,
-                        WorkingDirectory = ParentDirectory,
+                        FileName = ExecutablePath,
+                        WorkingDirectory = WorkingDir,
                         UseShellExecute = true,
                         Verb = runAsAdmin ? "runas" : null
                     };
@@ -143,8 +167,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath,
-                            WorkingDirectory = ParentDirectory,
+                            FileName = ExecutablePath,
+                            WorkingDirectory = WorkingDir,
                             UseShellExecute = true
                         };
 
@@ -162,8 +186,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath,
-                            WorkingDirectory = ParentDirectory,
+                            FileName = ExecutablePath,
+                            WorkingDirectory = WorkingDir,
                             Verb = "runas",
                             UseShellExecute = true
                         };
@@ -250,8 +274,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var extension = Extension(target);
                     if (extension == ExeExtension && File.Exists(target))
                     {
-                        program.LnkResolvedPath = program.FullPath;
-                        program.FullPath = Path.GetFullPath(target).ToLowerInvariant();
+                        program.LnkResolvedPath = Path.GetFullPath(target);
                         program.ExecutableName = Path.GetFileName(target);
 
                         var description = _helper.description;
@@ -550,7 +573,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            return programs.GroupBy(p => p.FullPath.ToLowerInvariant())
+            return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
