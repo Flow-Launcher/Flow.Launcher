@@ -396,7 +396,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             .SelectMany(s => EnmuerateProgramsInDir(s, suffixes));
 
             // Remove disabled programs in DisabledProgramSources
-            var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
+            var programs = ExceptDisabledSource(paths)
+                .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -660,11 +661,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (settings.EnableStartMenuSource)
                 paths.AddRange(GetStartMenuPaths());
 
-            paths.AddRange(from source in settings.ProgramSources where source.Enabled select source.Location);
-
             foreach (var directory in from path in paths where Directory.Exists(path) select path)
             {
                 WatchDirectory(directory);
+            }
+
+            foreach (var directory in from source in settings.ProgramSources where Directory.Exists(source.Location) select source.Location)
+            {
+                WatchDirectory(directory, false);
             }
 
             _ = Task.Run(MonitorDirectoryChangeAsync);
@@ -685,7 +689,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        public static void WatchDirectory(string directory)
+        public static void WatchDirectory(string directory, bool recursive = true)
         {
             if (!Directory.Exists(directory))
             {
@@ -696,7 +700,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.Created += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.EnableRaisingEvents = true;
-            watcher.IncludeSubdirectories = true;
+            watcher.IncludeSubdirectories = recursive;
 
             Watchers.Add(watcher);
         }
