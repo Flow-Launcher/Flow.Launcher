@@ -102,7 +102,7 @@ namespace Flow.Launcher.Plugin.Program
                 await Task.WhenAll(a, b);
 
             Win32.WatchProgramUpdate(_settings);
-            _ = UWP.WatchPackageChange();
+            UWP.WatchPackageChange();
         }
 
         public static void IndexWin32Programs()
