@@ -445,7 +445,8 @@
                                 Panel.ZIndex="1"
                                 Background="Transparent"
                                 IsItemsHost="true"
-                                KeyboardNavigation.TabIndex="1" />
+                                KeyboardNavigation.TabIndex="1"
+                                LastChildFill="False" />
                             <Border
                                 x:Name="contentPanel"
                                 Grid.Row="0"
