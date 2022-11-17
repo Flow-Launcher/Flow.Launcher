@@ -737,6 +737,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
+        // https://stackoverflow.com/a/66877016
+        private static bool IsSubPathOf(string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(basePath, subPath);
+            return rel != "."
+                && rel != ".."
+                && !rel.StartsWith("../")
+                && !rel.StartsWith(@"..\")
+                && !Path.IsPathRooted(rel);
+        }
+
         private static List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
         {
             // To avoid unnecessary io
@@ -748,8 +759,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 HashSet<ProgramSource> parents = group.ToHashSet();
                 foreach (var source in group)
                 {
-                    if (parents.Any(p => source.Location.StartsWith(p.Location, StringComparison.OrdinalIgnoreCase) &&
-                                            source != p))
+                    if (parents.Any(p => IsSubPathOf(source.Location, p.Location) &&
+                                            source != p)) // TODO startwith not accurate
                     {
                         parents.Remove(source);
                     }
