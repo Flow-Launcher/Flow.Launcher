@@ -385,7 +385,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             .SelectMany(s => ProgramPaths(s.Location, suffixes));
 
             // Remove disabled programs in DisabledProgramSources
-            var programs = ExceptDisabledSource(paths)
+            var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
                             
                             .Select(x => GetProgramFromPath(x, protocols));
             return programs;
@@ -418,13 +418,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
-                .Select(x => Extension(x) switch
-                {
-                    ShortcutExtension => LnkProgram(x),
-                    UrlExtension => UrlProgram(x, protocols),
-                    ExeExtension => ExeProgram(x),
-                    _ => Win32Program(x)
-                });
+                .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
