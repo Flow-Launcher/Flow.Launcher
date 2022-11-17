@@ -2,9 +2,10 @@ version: '1.9.5.{build}'
 
 init:
 - ps: |
+      echo BRANCH $env:APPVEYOR_REPO_BRANCH
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
-      if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
+      if ($env:APPVEYOR_REPO_BRANCH -eq "test_release")
       {
         $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
       }
@@ -37,7 +38,7 @@ build:
   project: Flow.Launcher.sln
   verbosity: minimal
 test_script:
-  - dotnet test --no-build -c Release
+  - echo This is my custom test script
 after_test:
   - ps: .\Scripts\post_build.ps1
 
@@ -70,7 +71,7 @@ deploy:
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     force_update: true
     on:
-      branch: dev
+      branch: test_release
 
   - provider: GitHub
     release: v$(flowVersion)
