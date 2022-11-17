@@ -256,9 +256,11 @@ namespace Flow.Launcher
                 Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
                 Icon = gamemodeIcon
             };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
