@@ -414,7 +414,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols, List<string> commonParents)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
             if (String.IsNullOrEmpty(pathEnv)) 
@@ -423,6 +423,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
+
+            paths = paths.Where(x => commonParents.All(parent => !x.StartsWith(parent, StringComparison.OrdinalIgnoreCase)));
 
             var toFilter = paths.AsParallel().SelectMany(p => EnmuerateProgramsInDir(p, suffixes, recursive: false));
 
@@ -592,8 +594,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnablePATHSource)
                 {
-                    var path = PATHPrograms(settings.GetSuffixes(), protocols);
-                    autoIndexPrograms = autoIndexPrograms.Concat(path);
+                    var path = PATHPrograms(settings.GetSuffixes(), protocols, commonParents);
+                    programs = programs.Concat(path);
                 }
 
                 autoIndexPrograms = ProgramsHasher(autoIndexPrograms).ToArray();
