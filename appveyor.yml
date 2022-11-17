@@ -4,6 +4,10 @@ init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
+      if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
+      {
+        $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
+      }
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
@@ -56,6 +60,16 @@ deploy:
       secure: EwKxUgjI8VGouFq9fdhI68+uj42amAhwE65JixIbqx8VlqLbyEuW97CLjBBOIL0r
     on:
       APPVEYOR_REPO_TAG: true
+
+  - provider: GitHub
+    repository: Flow-Launcher/Prereleases
+    release: v$(prereleaseTag)
+    auth_token:
+      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
+    force_update: true
+    on:
+      branch: dev
 
   - provider: GitHub
     release: v$(flowVersion)
