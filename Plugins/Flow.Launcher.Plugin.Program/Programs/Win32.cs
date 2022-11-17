@@ -231,7 +231,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                                 "|An unexpected error occurred in the calling method Win32Program", e);
 
                 return Default;
-        }
+            }
 #endif
         }
 
@@ -394,7 +394,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             // Disabled custom sources are not in DisabledProgramSources
             var paths = sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
                             .Distinct()
-                    .AsParallel()
+                            .AsParallel()
                             .SelectMany(s => ProgramPaths(s.Location, suffixes));
 
             // Remove disabled programs in DisabledProgramSources
@@ -503,9 +503,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return Default;
 
             path = Environment.ExpandEnvironmentVariables(path);
-
-            if (!File.Exists(path))
-                return Default;
 
             return Extension(path) switch
             {
@@ -706,6 +703,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 fileSystemWatcher.Dispose();
             }
+        }
+
+        private List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
+        {
+            // To avoid unnecessary io
+            // like c:\windows and c:\windows\system32
+            var grouped = programSources.GroupBy(p => p.Location.ToLowerInvariant()[0]); // group by disk
+            List<string> result = new();
+            foreach (var group in grouped)
+            {
+                HashSet<ProgramSource> parents = group.ToHashSet();
+                foreach (var source in group)
+                {
+                    if (parents.Any(p => source.Location.StartsWith(p.Location, StringComparison.OrdinalIgnoreCase) &&
+                                            source != p))
+                    {
+                        parents.Remove(source);
+                    }
+                }
+                result.AddRange(parents.Select(x => x.Location));
+            }
+            return result.DistinctBy(x => x.ToLowerInvariant()).ToList();
         }
     }
 }
