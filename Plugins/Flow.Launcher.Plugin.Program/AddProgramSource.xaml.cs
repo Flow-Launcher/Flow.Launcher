@@ -9,11 +9,12 @@ namespace Flow.Launcher.Plugin.Program
     /// <summary>
     /// Interaction logic for AddProgramSource.xaml
     /// </summary>
-    public partial class AddProgramSource
+    public partial class AddProgramSource : Window
     {
         private PluginInitContext _context;
-        private Settings.ProgramSource _editing;
+        private ProgramSource _editing;
         private Settings _settings;
+        private bool update;
 
         public AddProgramSource(PluginInitContext context, Settings settings)
         {
@@ -21,14 +22,19 @@ namespace Flow.Launcher.Plugin.Program
             _context = context;
             _settings = settings;
             Directory.Focus();
+            Chkbox.IsChecked = true;
+            update = false;
+            btnAdd.Content = _context.API.GetTranslation("flowlauncher_plugin_program_add");
         }
 
-        public AddProgramSource(Settings.ProgramSource edit, Settings settings)
+        public AddProgramSource(PluginInitContext context, Settings settings, ProgramSource source)
         {
-            _editing = edit;
-            _settings = settings;
-
             InitializeComponent();
+            _context = context;
+            _editing = source;
+            _settings = settings;
+            update = true;
+            Chkbox.IsChecked = _editing.Enabled;
             Directory.Text = _editing.Location;
         }
 
@@ -47,34 +53,54 @@ namespace Flow.Launcher.Plugin.Program
             Close();
         }
 
-        private void ButtonAdd_OnClick(object sender, RoutedEventArgs e)
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            string s = Directory.Text;
-            if (!System.IO.Directory.Exists(s))
+            string path = Directory.Text;
+            bool modified = false;
+            if (!System.IO.Directory.Exists(path))
             {
                 System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
                 return;
             }
-            if (_editing == null)
+            if (!update)
             {
-                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier == Directory.Text))
+                if (!ProgramSetting.ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.OrdinalIgnoreCase)))
                 {
-                    var source = new ProgramSource
-                    {
-                        Location = Directory.Text,
-                        UniqueIdentifier = Directory.Text
-                    };
-
+                    var source = new ProgramSource(path);
+                    modified = true;
                     _settings.ProgramSources.Insert(0, source);
                     ProgramSetting.ProgramSettingDisplayList.Add(source);
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
+                    return;
                 }
             }
             else
             {
-                _editing.Location = Directory.Text;
+                // Separate checks to avoid changing UniqueIdentifier of UWP
+                if (!_editing.Location.Equals(path, System.StringComparison.OrdinalIgnoreCase))
+                {
+                    if (ProgramSetting.ProgramSettingDisplayList
+                            .Any(x => x.UniqueIdentifier.Equals(path, System.StringComparison.OrdinalIgnoreCase)))
+                    {
+                        // Check if the new location is used
+                        // No need to check win32 or uwp, just override them
+                        System.Windows.MessageBox.Show(_context.API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
+                        return;
+                    }
+                    modified = true;
+                    _editing.Location = path;  // Changes UniqueIdentifier internally
+                }
+                if (_editing.Enabled != Chkbox.IsChecked)
+                {
+                    modified = true;
+                    _editing.Enabled = Chkbox.IsChecked ?? true;
+                }
             }
 
-            DialogResult = true;
+            DialogResult = modified;
             Close();
         }
     }

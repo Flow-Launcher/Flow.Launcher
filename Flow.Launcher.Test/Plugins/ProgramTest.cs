@@ -19,7 +19,7 @@ namespace Flow.Launcher.Test.Plugins
             var app = new UWP.Application();
 
             // Act
-            var result = app.FormattedPriReferenceValue(packageName, rawPriReferenceValue);
+            var result = UWP.Application.FormattedPriReferenceValue(packageName, rawPriReferenceValue);
 
             // Assert
             Assert.IsTrue(result == expectedFormat, 
