@@ -103,9 +103,9 @@
     <system:String x:Key="installbtn">Inštalovať</system:String>
     <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
     <system:String x:Key="updatebtn">Aktualizovať</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin je už nainštalovaný</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
     <system:String x:Key="LabelNew">Nová verzia</system:String>
-    <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný v priebehu posledných 7 dní</system:String>
+    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
     <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
 
 
