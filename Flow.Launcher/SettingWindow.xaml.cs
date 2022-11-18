@@ -7,6 +7,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
+using Microsoft.VisualBasic;
 using ModernWpf;
 using ModernWpf.Controls;
 using System;
@@ -516,6 +517,15 @@ namespace Flow.Launcher
 
         private void PreviewClockAndDate(object sender, RoutedEventArgs e)
         {
+            if (DateFormat != null && TimeFormat != null)
+            {
+                viewModel.UpdateDateTimeDisplayList(DateFormat.SelectedIndex, TimeFormat.SelectedIndex);
+                DateFormat.Items.Refresh();
+                TimeFormat.Items.Refresh(); // selected = -1
+                // todo avoid recursion
+                DateFormat.SelectedIndex = viewModel.DateFormatIndex;
+                TimeFormat.SelectedIndex = viewModel.TimeFormatIndex;
+            }
             ClockDisplay();
         }
 
@@ -556,6 +566,7 @@ namespace Flow.Launcher
             }
             WindowState = settings.SettingWindowState;
         }
+
         public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);

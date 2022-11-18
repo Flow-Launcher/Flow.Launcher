@@ -2169,8 +2169,8 @@
                                                                 Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                ItemsSource="{Binding TimeFormatList}"
-                                                                SelectedValue="{Binding Settings.TimeFormat}"
+                                                                ItemsSource="{Binding TimeFormatDisplayList}"
+                                                                SelectedIndex="{Binding TimeFormatIndex, Mode=OneTime}"
                                                                 SelectionChanged="PreviewClockAndDate" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
@@ -2207,8 +2207,8 @@
                                                                 Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                ItemsSource="{Binding DateFormatList}"
-                                                                SelectedValue="{Binding Settings.DateFormat}"
+                                                                ItemsSource="{Binding DateFormatDisplayList}"
+                                                                SelectedIndex="{Binding DateFormatIndex, Mode=OneTime}"
                                                                 SelectionChanged="PreviewClockAndDate" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"

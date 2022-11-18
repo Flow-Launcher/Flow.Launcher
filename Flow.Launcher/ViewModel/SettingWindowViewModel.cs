@@ -21,6 +21,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -48,6 +49,13 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+            int tmp = 0;
+            TimeFormatIndex = (tmp = TimeFormatList.FindIndex(x => x.Equals(Settings.TimeFormat))) >= 0 ? tmp : 0;
+            DateFormatIndex = (tmp = DateFormatList.FindIndex(x => x.Equals(Settings.DateFormat))) >= 0 ? tmp : 0;
+
+            TimeFormatDisplayList = TimeFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
+            DateFormatDisplayList = DateFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
+            UpdateSettingsDateTimeFormat();  // just in case something wrong
         }
 
         public Settings Settings { get; set; }
@@ -422,8 +430,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-
-
         public class SearchWindowPosition
         {
             public string Display { get; set; }
@@ -469,6 +475,40 @@ namespace Flow.Launcher.ViewModel
             "dddd dd', 'MMMM",
             "dd', 'MMMM"
         };
+
+        public int TimeFormatIndex { get; set; } = 0;
+
+        public int DateFormatIndex { get; set; } = 0;
+
+        public List<string> TimeFormatDisplayList { get; set; } = null;
+
+        public List<string> DateFormatDisplayList { get; set; } = null;
+
+        public void UpdateSettingsDateTimeFormat()
+        {
+            Settings.DateFormat = DateFormatList[DateFormatIndex];
+            Settings.TimeFormat = TimeFormatList[TimeFormatIndex];
+        }
+
+        public void UpdateDateTimeDisplayList(int dateIndex, int timeIndex)
+        {
+            if (dateIndex == -1 || timeIndex == -1) 
+                return;
+            DateFormatIndex = dateIndex;
+            TimeFormatIndex = timeIndex;
+
+            for (int i = 0; i < TimeFormatList.Count; ++i)
+            {
+                TimeFormatDisplayList[i] = DateTime.Now.ToString(TimeFormatList[i], CultureInfo.CurrentCulture);
+            }
+
+            for (int i = 0; i < DateFormatList.Count; ++i)
+            {
+                DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
+            }
+
+            UpdateSettingsDateTimeFormat();
+        }
 
         public double WindowWidthSize
         {
