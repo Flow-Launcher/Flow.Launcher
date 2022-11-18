@@ -25,7 +25,7 @@
     <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Configuración</system:String>
     <system:String x:Key="general">General</system:String>
     <system:String x:Key="portableMode">Modo Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Guarda toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
@@ -144,6 +144,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Acceso directo</system:String>
     <system:String x:Key="customShortcutExpansion">Expandido</system:String>
@@ -161,6 +162,7 @@
     <system:String x:Key="windowWidthSizeToolTip">También puede ajustarlo rápidamente usando Ctrl+[y Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -184,6 +186,7 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentación</system:String>
     <system:String x:Key="version">Versión</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Ha activado Flow Launcher {0} veces</system:String>
     <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
     <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
