@@ -91,6 +91,7 @@
                 BorderThickness="1" />
             <StackPanel
                 Width="Auto"
+                Height="55"
                 Margin="60,6,0,0"
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
