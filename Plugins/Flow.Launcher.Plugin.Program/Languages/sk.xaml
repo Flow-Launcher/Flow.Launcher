@@ -59,7 +59,7 @@
         Vložte prípony súborov, ktoré chcete indexovať. Prípony by mali byť oddelené znakom ';'. (ex&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        Vložte protokoly súborov .url, ktoré chcete indexovať. Protokoly by mali byť oddelené znakom ';' a mali by končiť &quot;://&quot;. (ex&gt;ftp;netflix://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustiť ako iný používateľ</system:String>
