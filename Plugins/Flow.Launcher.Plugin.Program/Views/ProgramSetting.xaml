@@ -91,6 +91,7 @@
                 BorderThickness="1" />
             <StackPanel
                 Width="Auto"
+                Height="55"
                 Margin="60,6,0,0"
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
@@ -145,8 +146,8 @@
             DragEnter="programSourceView_DragEnter"
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
-            PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             MouseDoubleClick="programSourceView_MouseDoubleClick"
+            PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             SelectionChanged="programSourceView_SelectionChanged"
             SelectionMode="Extended">
             <ListView.View>
