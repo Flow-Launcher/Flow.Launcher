@@ -70,8 +70,6 @@ deploy:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     force_update: true
-    on:
-      branch: dev
 
   - provider: GitHub
     release: v$(flowVersion)
