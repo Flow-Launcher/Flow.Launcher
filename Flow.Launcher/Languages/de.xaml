@@ -103,9 +103,9 @@
     <system:String x:Key="installbtn">Install</system:String>
     <system:String x:Key="uninstallbtn">Deinstallieren</system:String>
     <system:String x:Key="updatebtn">Aktualisieren</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin ist bereits installiert</system:String>
     <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelNewToolTip">Dieses Plugin wurde innerhalb der letzten 7 Tage aktualisiert</system:String>
     <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
 
 
