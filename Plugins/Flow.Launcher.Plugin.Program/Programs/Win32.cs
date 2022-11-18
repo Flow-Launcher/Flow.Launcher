@@ -25,8 +25,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string Name { get; set; }
         public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }  // For path comparison
         public string IcoPath { get; set; }
+        /// <summary>
+        /// Path of the file. It's the path of .lnk or .url for .lnk and .url.
+        /// </summary>
         public string FullPath { get; set; }
+        /// <summary>
+        /// Path of the excutable for .lnk, or the URL for .url.
+        /// </summary>
         public string LnkResolvedPath { get; set; }
+        /// <summary>
+        /// Path of the actual executable file.
+        /// </summary>
+        public string ExecutablePath => LnkResolvedPath ?? FullPath;
+        public string WorkingDir => Directory.GetParent(ExecutablePath)?.FullName ?? string.Empty;
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
         public string Description { get; set; }
@@ -97,10 +108,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 matchResult.MatchData = new List<int>();
             }
 
+            string subtitle = string.Empty;
+            if (!Main._settings.HideAppsPath)
+            {
+                if (Extension(FullPath) == UrlExtension)
+                {
+                    subtitle = LnkResolvedPath;
+                }
+                else
+                {
+                    subtitle = FullPath;
+                }
+            }
+
             var result = new Result
             {
                 Title = title,
-                SubTitle = Main._settings.HideAppsPath ? string.Empty : LnkResolvedPath ?? FullPath,
+                SubTitle = subtitle,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
@@ -116,8 +140,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                     var info = new ProcessStartInfo
                     {
-                        FileName = LnkResolvedPath ?? FullPath,
-                        WorkingDirectory = ParentDirectory,
+                        FileName = ExecutablePath,
+                        WorkingDirectory = WorkingDir,
                         UseShellExecute = true,
                         Verb = runAsAdmin ? "runas" : null
                     };
@@ -143,8 +167,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath,
-                            WorkingDirectory = ParentDirectory,
+                            FileName = ExecutablePath,
+                            WorkingDirectory = WorkingDir,
                             UseShellExecute = true
                         };
 
@@ -162,8 +186,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath,
-                            WorkingDirectory = ParentDirectory,
+                            FileName = ExecutablePath,
+                            WorkingDirectory = WorkingDir,
                             Verb = "runas",
                             UseShellExecute = true
                         };
@@ -224,6 +248,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 return Default;
             }
+#if !DEBUG
+            catch (Exception e)
+            {
+                ProgramLogger.LogException($"|Win32|Win32Program|{path}" +
+                                                "|An unexpected error occurred in the calling method Win32Program", e);
+
+                return Default;
+            }
+#endif
         }
 
         private static Win32 LnkProgram(string path)
@@ -241,8 +274,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var extension = Extension(target);
                     if (extension == ExeExtension && File.Exists(target))
                     {
-                        program.LnkResolvedPath = program.FullPath;
-                        program.FullPath = Path.GetFullPath(target).ToLowerInvariant();
+                        program.LnkResolvedPath = Path.GetFullPath(target);
                         program.ExecutableName = Path.GetFileName(target);
 
                         var description = _helper.description;
@@ -270,16 +302,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                                            "|Error caused likely due to trying to get the description of the program",
                     e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
             catch (FileNotFoundException e)
             {
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
                                 "|An unexpected error occurred in the calling method LnkProgram", e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
 #if !DEBUG //Only do a catch all in production. This is so make developer aware of any unhandled exception and add the exception handling in.
             catch (Exception e)
@@ -287,8 +317,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
                                                 "|An unexpected error occurred in the calling method LnkProgram", e);
 
-                program.Valid = false;
-                return program;
+                return Default;
             }
 #endif
         }
@@ -342,6 +371,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     program.Description = info.FileDescription;
                 return program;
             }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
+                           $"|File not found when trying to load the program from {path}", e);
+
+                return Default;
+            }
             catch (Exception e) when (e is SecurityException || e is UnauthorizedAccessException)
             {
                 ProgramLogger.LogException($"|Win32|ExeProgram|{path}" +
@@ -351,7 +387,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> ProgramPaths(string directory, string[] suffixes, bool recursive = true)
+        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -376,15 +412,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<ProgramSource> sources, string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes, string[] protocols)
         {
             // Disabled custom sources are not in DisabledProgramSources
-            var paths = ExceptDisabledSource(sources.Where(s => Directory.Exists(s.Location) && s.Enabled)
-                    .AsParallel()
-                    .SelectMany(s => ProgramPaths(s.Location, suffixes)))
-                    .Distinct();
+            var paths = directories.AsParallel()
+                            .SelectMany(s => EnumerateProgramsInDir(s, suffixes));
 
-            var programs = paths.Select(x => GetProgramFromPath(x, protocols));
+            // Remove disabled programs in DisabledProgramSources
+            var programs = ExceptDisabledSource(paths).Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -392,8 +427,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
             var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            var paths1 = ProgramPaths(directory1, suffixes);
-            var paths2 = ProgramPaths(directory2, suffixes);
+            var paths1 = EnumerateProgramsInDir(directory1, suffixes);
+            var paths2 = EnumerateProgramsInDir(directory2, suffixes);
 
             var toFilter = paths1.Concat(paths2);
 
@@ -402,26 +437,22 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return programs;
         }
 
-        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols, List<string> commonParents)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
-            if (String.IsNullOrEmpty(pathEnv)) 
-            { 
-                return Array.Empty<Win32>(); 
+            if (String.IsNullOrEmpty(pathEnv))
+            {
+                return Array.Empty<Win32>();
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            var toFilter = paths.AsParallel().SelectMany(p => ProgramPaths(p, suffixes, recursive: false));
+            paths = paths.Where(x => commonParents.All(parent => !x.StartsWith(parent, StringComparison.OrdinalIgnoreCase)));
+
+            var toFilter = paths.AsParallel().SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
-                .Select(x => Extension(x) switch
-                {
-                    ShortcutExtension => LnkProgram(x),
-                    UrlExtension => UrlProgram(x, protocols),
-                    ExeExtension => ExeProgram(x),
-                    _ => Win32Program(x)
-                });
+                .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
@@ -496,9 +527,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             path = Environment.ExpandEnvironmentVariables(path);
 
-            if (!File.Exists(path))
-                return Default;
-
             return Extension(path) switch
             {
                 ShortcutExtension => LnkProgram(path),
@@ -545,7 +573,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            return programs.GroupBy(p => p.FullPath.ToLowerInvariant())
+            return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
@@ -553,7 +581,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     if (temp.Any())
                         return DistinctBy(temp, x => x.Description);
                     return g.Take(1);
-                }).ToArray();
+                });
         }
 
 
@@ -565,11 +593,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var suffixes = settings.GetSuffixes();
                 var protocols = settings.GetProtocols();
 
-                var unregistered = UnregisteredPrograms(settings.ProgramSources, suffixes, protocols);
+                // Disabled custom sources are not in DisabledProgramSources
+                var sources = settings.ProgramSources.Where(s => Directory.Exists(s.Location) && s.Enabled).Distinct();
+                var commonParents = GetCommonParents(sources);
+
+                var unregistered = UnregisteredPrograms(commonParents, suffixes, protocols);
 
                 programs = programs.Concat(unregistered);
 
-                var autoIndexPrograms = Enumerable.Empty<Win32>();
+                var autoIndexPrograms = Enumerable.Empty<Win32>(); // for single programs, not folders
 
                 if (settings.EnableRegistrySource)
                 {
@@ -585,11 +617,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (settings.EnablePATHSource)
                 {
-                    var path = PATHPrograms(settings.GetSuffixes(), protocols);
-                    autoIndexPrograms = autoIndexPrograms.Concat(path);
+                    var path = PATHPrograms(settings.GetSuffixes(), protocols, commonParents);
+                    programs = programs.Concat(path);
                 }
 
-                autoIndexPrograms = ProgramsHasher(autoIndexPrograms);
+                autoIndexPrograms = ProgramsHasher(autoIndexPrograms).ToArray();
 
                 return programs.Concat(autoIndexPrograms).Where(x => x.Valid).Distinct().ToArray();
             }
@@ -651,11 +683,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (settings.EnableStartMenuSource)
                 paths.AddRange(GetStartMenuPaths());
 
-            paths.AddRange(from source in settings.ProgramSources where source.Enabled select source.Location);
+            var customSources = GetCommonParents(settings.ProgramSources);
+            paths.AddRange(customSources);
 
+            var fileExtensionToWatch = settings.GetSuffixes();
             foreach (var directory in from path in paths where Directory.Exists(path) select path)
             {
-                WatchDirectory(directory);
+                WatchDirectory(directory, fileExtensionToWatch);
             }
 
             _ = Task.Run(MonitorDirectoryChangeAsync);
@@ -676,7 +710,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        public static void WatchDirectory(string directory)
+        public static void WatchDirectory(string directory, string[] extensions)
         {
             if (!Directory.Exists(directory))
             {
@@ -688,6 +722,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             watcher.Deleted += static (_, _) => indexQueue.Writer.TryWrite(default);
             watcher.EnableRaisingEvents = true;
             watcher.IncludeSubdirectories = true;
+            foreach (var extension in extensions)
+            {
+                watcher.Filters.Add($"*.{extension}");
+            }
 
             Watchers.Add(watcher);
         }
@@ -698,6 +736,39 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 fileSystemWatcher.Dispose();
             }
+        }
+
+        // https://stackoverflow.com/a/66877016
+        private static bool IsSubPathOf(string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(basePath, subPath);
+            return rel != "."
+                && rel != ".."
+                && !rel.StartsWith("../")
+                && !rel.StartsWith(@"..\")
+                && !Path.IsPathRooted(rel);
+        }
+
+        private static List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
+        {
+            // To avoid unnecessary io
+            // like c:\windows and c:\windows\system32
+            var grouped = programSources.GroupBy(p => p.Location.ToLowerInvariant()[0]); // group by disk
+            List<string> result = new();
+            foreach (var group in grouped)
+            {
+                HashSet<ProgramSource> parents = group.ToHashSet();
+                foreach (var source in group)
+                {
+                    if (parents.Any(p => IsSubPathOf(source.Location, p.Location) &&
+                                            source != p))
+                    {
+                        parents.Remove(source);
+                    }
+                }
+                result.AddRange(parents.Select(x => x.Location));
+            }
+            return result.DistinctBy(x => x.ToLowerInvariant()).ToList();
         }
     }
 }
