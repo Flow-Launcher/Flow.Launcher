@@ -7,6 +7,7 @@
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
@@ -208,15 +209,35 @@
                         </TextBox.CommandBindings>
                         <TextBox.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}" />
-                                <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}" />
-                                <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}" />
+                                <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8c6;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8c8;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe77f;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <Separator
                                     Margin="0"
                                     Padding="0,4,0,4"
                                     Background="{DynamicResource ContextSeparator}" />
-                                <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}" />
-                                <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}" />
+                                <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe713;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe711;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
