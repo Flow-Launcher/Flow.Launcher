@@ -15,37 +15,39 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
     /// </remarks>
     public class ProgramSource
     {
-        private string name;
+        private string name = string.Empty;
+        private string loc = string.Empty;
+        private string uniqueIdentifier = string.Empty;
 
-        private string loc;
         public string Location
         {
             get => loc;
             set
             {
-                loc = value;
-                UniqueIdentifier = value.ToLowerInvariant();
+                loc = value ?? string.Empty;
+                UniqueIdentifier = value;
             }
         }
-        public string Name { get => name ?? new DirectoryInfo(Location).Name; set => name = value; }
+
+        public string Name { get => name; set => name = value ?? string.Empty; }
         public bool Enabled { get; set; } = true;
 
-        public string UniqueIdentifier { get; private set; }
+        public string UniqueIdentifier
+        {
+            get => uniqueIdentifier;
+            private set
+            {
+                uniqueIdentifier = value == null ? string.Empty : value.ToLowerInvariant();
+            }
+        }
 
         [JsonConstructor]
         public ProgramSource(string name, string location, bool enabled, string uniqueIdentifier)
         {
-            loc = location;
-            this.name = name;
+            loc = location ?? string.Empty;
+            Name = name;
             Enabled = enabled;
-            if (location.Equals(uniqueIdentifier, StringComparison.OrdinalIgnoreCase))
-            {
-                UniqueIdentifier = location.ToLowerInvariant();  // To make sure old config can be reset to case-insensitive
-            }
-            else
-            {
-                UniqueIdentifier = uniqueIdentifier;  // For uwp apps
-            }
+            UniqueIdentifier = uniqueIdentifier;
         }
 
         /// <summary>
@@ -55,14 +57,15 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
         /// <param name="enabled">enabled</param>
         public ProgramSource(string location, bool enabled = true)
         {
-            loc = location;
+            loc = location ?? string.Empty;
             Enabled = enabled;
-            UniqueIdentifier = location.ToLowerInvariant();  // For path comparison
+            UniqueIdentifier = location;  // For path comparison
+            Name = new DirectoryInfo(Location).Name;
         }
 
         public ProgramSource(IProgram source)
         {
-            loc = source.Location;
+            loc = source.Location ?? string.Empty;
             Name = source.Name;
             Enabled = source.Enabled;
             UniqueIdentifier = source.UniqueIdentifier;
