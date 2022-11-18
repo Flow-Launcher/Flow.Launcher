@@ -25,7 +25,7 @@
     <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher 设置</system:String>
+    <system:String x:Key="flowlauncher_settings">设置</system:String>
     <system:String x:Key="general">通用</system:String>
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
@@ -144,6 +144,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
     <system:String x:Key="customQuery">查询</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expanded</system:String>
@@ -161,6 +162,7 @@
     <system:String x:Key="windowWidthSizeToolTip">您也可以使用 Ctrl+[ 和 Ctrl+] 快速调整它。</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -184,6 +186,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">文档</system:String>
     <system:String x:Key="version">版本</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">你已经激活了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">检查更新</system:String>
     <system:String x:Key="newVersionTips">发现新版本 {0}, 请重启 Flow Launcher</system:String>
