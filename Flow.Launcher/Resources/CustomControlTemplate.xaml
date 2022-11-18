@@ -1407,7 +1407,8 @@
                             Padding="{TemplateBinding Padding}"
                             BorderBrush="{DynamicResource ButtonInsideBorder}"
                             BorderThickness="{DynamicResource CustomButtonInsideBorderThickness}"
-                            CornerRadius="4">
+                            CornerRadius="4"
+                            SnapsToDevicePixels="True">
                             <ContentPresenter
                                 x:Name="ContentPresenter"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
