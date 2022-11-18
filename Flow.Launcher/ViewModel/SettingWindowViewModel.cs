@@ -463,7 +463,10 @@ namespace Flow.Launcher.ViewModel
             "dd'/'MM",
             "ddd MM'/'dd",
             "dddd MM'/'dd",
-            "dddd"
+            "dddd",
+            "ddd dd'/MM'",
+            "dddd dd'/MM'"
+
         };
 
         public double WindowWidthSize
