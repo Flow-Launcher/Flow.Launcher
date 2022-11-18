@@ -25,7 +25,7 @@
     <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
@@ -144,6 +144,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
     <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="customShortcut">Skratka</system:String>
     <system:String x:Key="customShortcutExpansion">Celý dopyt</system:String>
@@ -161,6 +162,7 @@
     <system:String x:Key="windowWidthSizeToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesov Ctrl + [ a Ctrl + ].</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -184,6 +186,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Dokumentácia</system:String>
     <system:String x:Key="version">Verzia</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
     <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
