@@ -130,9 +130,24 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#4bb44b" />
     </Style>
-    <Style x:Key="PreviewBorderStyle" BasedOn="{StaticResource BasePreviewBorderStyle}" TargetType="{x:Type Border}">
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="#b88f3a" />
-        <Setter Property="BorderThickness" Value="1 1 0 0" />
+        <Setter Property="BorderThickness" Value="1,1,0,0" />
         <Setter Property="Margin" Value="0" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#a09b8c" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#5b5a56" />
     </Style>
 </ResourceDictionary>
