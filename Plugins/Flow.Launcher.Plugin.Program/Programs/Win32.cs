@@ -447,9 +447,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            paths = paths.Where(x => commonParents.All(parent => !x.StartsWith(parent, StringComparison.OrdinalIgnoreCase)));
-
-            var toFilter = paths.AsParallel().SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
+            var toFilter = paths.Where(x => commonParents.All(parent => !IsSubPathOf(x, parent)))
+                                .AsParallel()
+                                .SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
             var programs = ExceptDisabledSource(toFilter.Distinct())
                 .Select(x => GetProgramFromPath(x, protocols));
