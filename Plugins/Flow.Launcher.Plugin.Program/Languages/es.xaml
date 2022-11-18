@@ -21,12 +21,12 @@
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando esté activado, Flow cargará los programas desde el menú de inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Registro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Cuando esté activado, Flow cargará los programas desde el registro</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH">RUTA</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Cuando se activa, Flow cargará los programas desde la variable de entorno RUTA</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">RUTA (PATH)</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Cuando esté activado, Flow cargará los programas desde la variable de entorno PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, oculta la ruta del archivo para que no sea visible</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description">Busca en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Si se desactiva, también se evitará que Flow busque a través de la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">Buscar en la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Cuando este desactivado, Flow evitará buscar a través de la descripción del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
 
