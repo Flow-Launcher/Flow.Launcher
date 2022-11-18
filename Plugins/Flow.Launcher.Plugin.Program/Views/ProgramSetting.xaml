@@ -11,7 +11,7 @@
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="120" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
@@ -145,8 +145,8 @@
             DragEnter="programSourceView_DragEnter"
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
-            PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             MouseDoubleClick="programSourceView_MouseDoubleClick"
+            PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             SelectionChanged="programSourceView_SelectionChanged"
             SelectionMode="Extended">
             <ListView.View>
