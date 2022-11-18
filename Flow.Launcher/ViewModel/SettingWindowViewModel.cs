@@ -464,8 +464,11 @@ namespace Flow.Launcher.ViewModel
             "ddd MM'/'dd",
             "dddd MM'/'dd",
             "dddd",
-            "ddd dd'/MM'",
-            "dddd dd'/MM'"
+            "ddd dd'/'MM",
+            "dddd dd'/'MM",
+            "dddd dd', 'MMMM",
+            "dddd DDDD', 'MMMM",
+            "dd', 'MMMM"
 
         };
 
