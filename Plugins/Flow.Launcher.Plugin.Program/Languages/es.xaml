@@ -59,7 +59,7 @@
         Inserta extensiones de archivo a indexar. Las extensiones deben estar separadas por ';'. (ejemplo&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        Inserta protocolos de direcciones .url a indexar. Los protocolos deben estar separados por ';'. (ejemplo&gt;ftp;netflix://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Ejecutar como usuario diferente</system:String>
