@@ -25,7 +25,7 @@
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher 설정</system:String>
+    <system:String x:Key="flowlauncher_settings">설정</system:String>
     <system:String x:Key="general">일반</system:String>
     <system:String x:Key="portableMode">포터블 모드</system:String>
     <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
@@ -144,6 +144,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
     <system:String x:Key="customQueryHotkey">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
     <system:String x:Key="customQuery">쿼리</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expanded</system:String>
@@ -161,6 +162,7 @@
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">플루언트 아이콘 사용</system:String>
     <system:String x:Key="useGlyphUIEffect">결과 및 일부 메뉴에서 플루언트 아이콘을 사용합니다.</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 프록시</system:String>
@@ -184,6 +186,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">문서</system:String>
     <system:String x:Key="version">버전</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
     <system:String x:Key="newVersionTips">새 버전({0})이 있습니다. Flow Launcher를 재시작하세요.</system:String>
