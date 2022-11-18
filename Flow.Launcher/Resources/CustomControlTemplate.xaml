@@ -2956,13 +2956,13 @@
                 <Setter TargetName="CheckGlyph" Property="Visibility" Value="Visible" />
             </Trigger>
             <Trigger Property="IsHighlighted" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource MenuFlyoutItemBackgroundPointerOver}" />
+                <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomContextHover}" />
                 <Setter TargetName="LayoutRoot" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
                 <Setter TargetName="KeyboardAcceleratorTextBlock" Property="Foreground" Value="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForegroundPointerOver}" />
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource MenuFlyoutItemBackgroundPressed}" />
+                <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource CustomContextClick}" />
                 <Setter TargetName="LayoutRoot" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
                 <Setter TargetName="KeyboardAcceleratorTextBlock" Property="Foreground" Value="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForegroundPressed}" />
