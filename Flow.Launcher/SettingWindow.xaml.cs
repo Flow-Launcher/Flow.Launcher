@@ -519,6 +519,10 @@ namespace Flow.Launcher
         {
             if (DateFormat != null && TimeFormat != null)
             {
+                if (DateFormat.SelectedIndex == -1 || TimeFormat.SelectedIndex == -1)
+                {
+                    return;
+                }
                 viewModel.UpdateDateTimeDisplayList(DateFormat.SelectedIndex, TimeFormat.SelectedIndex);
                 DateFormat.Items.Refresh();
                 TimeFormat.Items.Refresh(); // selected = -1

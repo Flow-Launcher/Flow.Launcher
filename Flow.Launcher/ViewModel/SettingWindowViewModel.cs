@@ -52,7 +52,7 @@ namespace Flow.Launcher.ViewModel
             int tmp = 0;
             TimeFormatIndex = (tmp = TimeFormatList.FindIndex(x => x.Equals(Settings.TimeFormat))) >= 0 ? tmp : 0;
             DateFormatIndex = (tmp = DateFormatList.FindIndex(x => x.Equals(Settings.DateFormat))) >= 0 ? tmp : 0;
-
+            // TODO: CurrentCulture may equal to settings.language when this is constructed
             TimeFormatDisplayList = TimeFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
             DateFormatDisplayList = DateFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
             UpdateSettingsDateTimeFormat();  // just in case something wrong
@@ -492,8 +492,6 @@ namespace Flow.Launcher.ViewModel
 
         public void UpdateDateTimeDisplayList(int dateIndex, int timeIndex)
         {
-            if (dateIndex == -1 || timeIndex == -1) 
-                return;
             DateFormatIndex = dateIndex;
             TimeFormatIndex = timeIndex;
 
