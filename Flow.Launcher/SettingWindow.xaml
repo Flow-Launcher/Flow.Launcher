@@ -2922,7 +2922,7 @@
                                     Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
-                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Icons" />
+                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource icons}" />
                                         </StackPanel>
                                         <TextBlock
                                             Margin="0,0,-12,0"

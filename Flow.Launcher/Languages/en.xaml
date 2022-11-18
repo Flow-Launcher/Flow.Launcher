@@ -188,6 +188,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
     <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
