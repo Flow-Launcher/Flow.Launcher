@@ -27,7 +27,9 @@
     Visibility="{Binding Visbility}"
     mc:Ignorable="d"
     PreviewMouseMove="ResultList_MouseMove"
-    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown">
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
+    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
+    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.ItemTemplate>
