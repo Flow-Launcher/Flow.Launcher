@@ -1203,7 +1203,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Plug-in para pesquisar nas definições do Windows</value>
+    <value>Plugin para pesquisar nas definições do Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
     <value>Definições do Windows</value>
