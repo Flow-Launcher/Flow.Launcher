@@ -39,6 +39,7 @@
     </Window.CommandBindings>
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
@@ -1820,9 +1821,17 @@
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
                                                     </Border>
-                                                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
-                                                        <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
-                                                        <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
+                                                    <StackPanel
+                                                            x:Name="ClockPanel"
+                                                            Style="{DynamicResource ClockPanel}">
+                                                        <TextBlock
+                                                            Style="{DynamicResource DateBox}"
+                                                            Text="{Binding DateText}"
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                        <TextBlock
+                                                            Style="{DynamicResource ClockBox}"
+                                                            Text="{Binding ClockText}"
+                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -2172,14 +2181,12 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding TimeFormatDisplayList}"
                                                                 SelectedIndex="{Binding TimeFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshDateTimeList"
-                                                                SelectionChanged="PreviewClockAndDate" />
+                                                                DropDownOpened="RefreshDateTimeList"/>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"
-                                                                Toggled="PreviewClockAndDate" />
+                                                                Style="{DynamicResource SideToggleSwitch}"/>
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xec92;
@@ -2211,14 +2218,12 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding DateFormatDisplayList}"
                                                                 SelectedIndex="{Binding DateFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshDateTimeList"
-                                                                SelectionChanged="PreviewClockAndDate" />
+                                                                DropDownOpened="RefreshDateTimeList"/>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"
-                                                                Toggled="PreviewClockAndDate" />
+                                                                Style="{DynamicResource SideToggleSwitch}"/>
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe787;

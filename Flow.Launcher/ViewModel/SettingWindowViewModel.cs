@@ -486,6 +486,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     timeFormatIndex = value;
                     Settings.TimeFormat = TimeFormatList[value];
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
                 }
             }
         }
@@ -500,9 +501,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     dateFormatIndex = value;
                     Settings.DateFormat = DateFormatList[value];
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
                 }
             }
         }
+
+        public string ClockText { get; private set; }
+
+        public string DateText { get; private set; }
 
         public List<string> TimeFormatDisplayList { get; set; } = null;
 
@@ -519,6 +525,9 @@ namespace Flow.Launcher.ViewModel
             {
                 DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
             }
+
+            ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+            DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
         }
 
         public double WindowWidthSize

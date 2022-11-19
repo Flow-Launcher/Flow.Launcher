@@ -517,34 +517,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
-        {
-            ClockDisplay();
-        }
-
-        public void ClockDisplay()
-        {
-            if (settings.UseClock)
-            {
-                ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
-            }
-            else
-            {
-                ClockBox.Visibility = Visibility.Collapsed;
-            }
-
-            if (settings.UseDate)
-            {
-                DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
-            }
-            else
-            {
-                DateBox.Visibility = Visibility.Collapsed;
-            }
-        }
-
         public void InitializePosition()
         {
             if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
