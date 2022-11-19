@@ -49,6 +49,12 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+            int tmp = 0;
+            TimeFormatIndex = (tmp = TimeFormatList.FindIndex(x => x.Equals(Settings.TimeFormat))) >= 0 ? tmp : 0;
+            DateFormatIndex = (tmp = DateFormatList.FindIndex(x => x.Equals(Settings.DateFormat))) >= 0 ? tmp : 0;
+            // TODO: CurrentCulture may not equal to settings.language when this is constructed
+            TimeFormatDisplayList = TimeFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
+            DateFormatDisplayList = DateFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
         }
 
         public Settings Settings { get; set; }
@@ -158,10 +164,7 @@ namespace Flow.Launcher.ViewModel
             {
                 var key = $"LastQuery{e}";
                 var display = _translater.GetTranslation(key);
-                var m = new LastQueryMode
-                {
-                    Display = display, Value = e,
-                };
+                var m = new LastQueryMode { Display = display, Value = e, };
                 modes.Add(m);
             }
             return modes;
@@ -352,6 +355,7 @@ namespace Flow.Launcher.ViewModel
             App.API.ShowMainWindow();
         }
 
+
         #endregion
 
         #region theme
@@ -416,7 +420,8 @@ namespace Flow.Launcher.ViewModel
                     var display = _translater.GetTranslation(key);
                     var m = new ColorScheme
                     {
-                        Display = display, Value = e,
+                        Display = display,
+                        Value = e,
                     };
                     modes.Add(m);
                 }
@@ -440,17 +445,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     var key = $"SearchWindowPosition{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new SearchWindowPosition
-                    {
-                        Display = display, Value = e,
-                    };
+                    var m = new SearchWindowPosition { Display = display, Value = e, };
                     modes.Add(m);
                 }
                 return modes;
             }
         }
 
-        public List<string> TimeFormatList { get; } = new()
+        public List<string> TimeFormatList { get; set; } = new List<string>()
         {
             "h:mm",
             "hh:mm",
@@ -462,7 +464,7 @@ namespace Flow.Launcher.ViewModel
             "hh:mm tt"
         };
 
-        public List<string> DateFormatList { get; } = new()
+        public List<string> DateFormatList { get; set; } = new List<string>()
         {
             "MM'/'dd dddd",
             "MM'/'dd ddd",
@@ -480,23 +482,33 @@ namespace Flow.Launcher.ViewModel
             "dd', 'MMMM"
         };
 
-        public string TimeFormat
+        private int timeFormatIndex = 0;
+        public int TimeFormatIndex
         {
-            get { return Settings.TimeFormat; }
+            get => timeFormatIndex;
             set
             {
-                Settings.TimeFormat = value;
-                OnPropertyChanged();
+                if (value != -1)
+                {
+                    timeFormatIndex = value;
+                    Settings.TimeFormat = TimeFormatList[value];
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+                }
             }
         }
 
-        public string DateFormat
+        private int dateFormatIndex = 0;
+        public int DateFormatIndex
         {
-            get { return Settings.DateFormat; }
-            set
-            {
-                Settings.DateFormat = value;
-                OnPropertyChanged();
+            get => dateFormatIndex;
+            set 
+            { 
+                if (value != -1)
+                {
+                    dateFormatIndex = value;
+                    Settings.DateFormat = DateFormatList[value];
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+                }
             }
         }
 
@@ -504,6 +516,31 @@ namespace Flow.Launcher.ViewModel
 
         public string DateText { get; private set; }
 
+        public List<string> TimeFormatDisplayList { get; set; } = null;
+
+        public List<string> DateFormatDisplayList { get; set; } = null;
+
+        public void UpdateDateDisplayList()
+        {
+            for (int i = 0; i < DateFormatList.Count; ++i)
+            {
+                DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
+            }
+            // TODO: CurrentCulture may not equal to settings.language 
+            // Cross thread issue?
+            DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+        }
+
+        public void UpdateTimeDisplayList()
+        {
+            for (int i = 0; i < TimeFormatList.Count; ++i)
+            {
+                TimeFormatDisplayList[i] = DateTime.Now.ToString(TimeFormatList[i], CultureInfo.CurrentCulture);
+            }
+            // TODO: CurrentCulture may not equal to settings.language 
+            // Cross thread issue?
+            ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+        }
 
         public double WindowWidthSize
         {
@@ -746,7 +783,7 @@ namespace Flow.Launcher.ViewModel
 
             string deleteWarning = string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
-                item.Key, item.Value);
+                    item.Key, item.Value);
             if (MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
@@ -827,22 +864,19 @@ namespace Flow.Launcher.ViewModel
         internal void ClearLogFolder()
         {
             var directory = new DirectoryInfo(
-                Path.Combine(
-                    DataLocation.DataDirectory(),
-                    Constant.Logs,
-                    Constant.Version));
+                                        Path.Combine(
+                                            DataLocation.DataDirectory(),
+                                            Constant.Logs,
+                                            Constant.Version));
 
             directory.EnumerateFiles()
-                .ToList()
-                .ForEach(x => x.Delete());
+                     .ToList()
+                     .ForEach(x => x.Delete());
         }
         internal string FormatBytes(long bytes)
         {
             const int scale = 1024;
-            string[] orders = new string[]
-            {
-                "GB", "MB", "KB", "Bytes"
-            };
+            string[] orders = new string[] { "GB", "MB", "KB", "Bytes" };
             long max = (long)Math.Pow(scale, orders.Length - 1);
 
             foreach (string order in orders)
@@ -854,7 +888,6 @@ namespace Flow.Launcher.ViewModel
             }
             return "0 Bytes";
         }
-
         #endregion
     }
 }
