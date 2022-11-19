@@ -783,7 +783,7 @@ namespace Flow.Launcher.ViewModel
 
             string deleteWarning = string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
-                    item?.Key, item?.Value);
+                    item.Key, item.Value);
             if (MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
