@@ -55,7 +55,7 @@ namespace Flow.Launcher.ViewModel
             // TODO: CurrentCulture may equal to settings.language when this is constructed
             TimeFormatDisplayList = TimeFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
             DateFormatDisplayList = DateFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
-            UpdateSettingsDateTimeFormat();  // just in case something wrong
+            //UpdateSettingsDateTimeFormat();  // just in case something wrong
         }
 
         public Settings Settings { get; set; }
@@ -64,7 +64,7 @@ namespace Flow.Launcher.ViewModel
         {
             await _updater.UpdateAppAsync(App.API, false);
         }
-        
+
         public bool AutoUpdates
         {
             get => Settings.AutoUpdates;
@@ -310,11 +310,11 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private  IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
+        private IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
         {
-            return list.Select(p=>new PluginStoreItemViewModel(p))
+            return list.Select(p => new PluginStoreItemViewModel(p))
                 .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
-                .ThenByDescending(p=>p.Category == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
                 .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
                 .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
                 .ToList();
@@ -348,10 +348,10 @@ namespace Flow.Launcher.ViewModel
 
         internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
         {
-            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0 
-                ? string.Empty 
+            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0
+                ? string.Empty
                 : plugin.Metadata.ActionKeywords[actionKeywordPosition];
-            
+
             App.API.ChangeQuery($"{actionKeyword} {queryToDisplay}");
             App.API.ShowMainWindow();
         }
@@ -476,9 +476,27 @@ namespace Flow.Launcher.ViewModel
             "dd', 'MMMM"
         };
 
-        public int TimeFormatIndex { get; set; } = 0;
+        private int timeFormatIndex = 0;
+        public int TimeFormatIndex
+        {
+            get => timeFormatIndex;
+            set
+            {
+                timeFormatIndex = value;
+                Settings.TimeFormat = TimeFormatList[TimeFormatIndex];
+            }
+        }
 
-        public int DateFormatIndex { get; set; } = 0;
+        private int dateFormatIndex = 0;
+        public int DateFormatIndex
+        {
+            get => dateFormatIndex;
+            set 
+            { 
+                dateFormatIndex = value; 
+                Settings.DateFormat = DateFormatList[DateFormatIndex]; 
+            }
+        }
 
         public List<string> TimeFormatDisplayList { get; set; } = null;
 
@@ -505,7 +523,7 @@ namespace Flow.Launcher.ViewModel
                 DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
             }
 
-            UpdateSettingsDateTimeFormat();
+            //UpdateSettingsDateTimeFormat();
         }
 
         public double WindowWidthSize
@@ -815,15 +833,15 @@ namespace Flow.Launcher.ViewModel
             }
         }
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
-        
+
         public string CheckLogFolder
         {
-            get 
+            get
             {
                 var dirInfo = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
                 long size = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
-                
-                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")" ;
+
+                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")";
             }
         }
 
