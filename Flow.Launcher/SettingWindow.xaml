@@ -2181,7 +2181,7 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding TimeFormatDisplayList}"
                                                                 SelectedIndex="{Binding TimeFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshDateTimeList"/>
+                                                                DropDownOpened="RefreshTimeList"/>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
@@ -2218,7 +2218,7 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding DateFormatDisplayList}"
                                                                 SelectedIndex="{Binding DateFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshDateTimeList"/>
+                                                                DropDownOpened="RefreshDateList"/>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"

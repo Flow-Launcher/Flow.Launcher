@@ -52,10 +52,9 @@ namespace Flow.Launcher.ViewModel
             int tmp = 0;
             TimeFormatIndex = (tmp = TimeFormatList.FindIndex(x => x.Equals(Settings.TimeFormat))) >= 0 ? tmp : 0;
             DateFormatIndex = (tmp = DateFormatList.FindIndex(x => x.Equals(Settings.DateFormat))) >= 0 ? tmp : 0;
-            // TODO: CurrentCulture may equal to settings.language when this is constructed
+            // TODO: CurrentCulture may not equal to settings.language when this is constructed
             TimeFormatDisplayList = TimeFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
             DateFormatDisplayList = DateFormatList.Select(x => DateTime.Now.ToString(x, CultureInfo.CurrentCulture)).ToList();
-            //UpdateSettingsDateTimeFormat();  // just in case something wrong
         }
 
         public Settings Settings { get; set; }
@@ -514,20 +513,26 @@ namespace Flow.Launcher.ViewModel
 
         public List<string> DateFormatDisplayList { get; set; } = null;
 
-        public void UpdateDateTimeDisplayList()
+        public void UpdateDateDisplayList()
+        {
+            for (int i = 0; i < DateFormatList.Count; ++i)
+            {
+                DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
+            }
+            // TODO: CurrentCulture may not equal to settings.language 
+            // Cross thread issue?
+            DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+        }
+
+        public void UpdateTimeDisplayList()
         {
             for (int i = 0; i < TimeFormatList.Count; ++i)
             {
                 TimeFormatDisplayList[i] = DateTime.Now.ToString(TimeFormatList[i], CultureInfo.CurrentCulture);
             }
-
-            for (int i = 0; i < DateFormatList.Count; ++i)
-            {
-                DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
-            }
-
+            // TODO: CurrentCulture may not equal to settings.language 
+            // Cross thread issue?
             ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
-            DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
         }
 
         public double WindowWidthSize

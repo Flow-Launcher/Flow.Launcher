@@ -46,7 +46,8 @@ namespace Flow.Launcher
             InitializePosition();
             InitializeComponent();
 
-            RefreshDateTimeListLogic(viewModel.DateFormatIndex, viewModel.TimeFormatIndex);
+            RefreshDateListInternal(viewModel.DateFormatIndex);
+            RefreshTimeListInternal(viewModel.TimeFormatIndex);
         }
 
         #region General
@@ -67,7 +68,6 @@ namespace Flow.Launcher
             pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
-            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -567,16 +567,26 @@ namespace Flow.Launcher
 
         }
 
-        private void RefreshDateTimeList(object sender, EventArgs e)
+        private void RefreshDateList(object sender, EventArgs e)
         {
-            RefreshDateTimeListLogic(DateFormat.SelectedIndex, TimeFormat.SelectedIndex);
+            RefreshDateListInternal(DateFormat.SelectedIndex);
         }
 
-        private void RefreshDateTimeListLogic(int dateIndex, int timeIndex)
+        private void RefreshDateListInternal(int index)
         {
-            viewModel.UpdateDateTimeDisplayList();
-            RefreshComboBox(DateFormat, dateIndex);
-            RefreshComboBox(TimeFormat, timeIndex);
+            viewModel.UpdateDateDisplayList();
+            RefreshComboBox(DateFormat, index);
+        }
+
+        private void RefreshTimeList(object sender, EventArgs e)
+        {
+            RefreshTimeListInternal(TimeFormat.SelectedIndex);
+        }
+
+        private void RefreshTimeListInternal(int index)
+        {
+            viewModel.UpdateTimeDisplayList();
+            RefreshComboBox(TimeFormat, index);
         }
 
         private static void RefreshComboBox(System.Windows.Controls.ComboBox box, int index)
