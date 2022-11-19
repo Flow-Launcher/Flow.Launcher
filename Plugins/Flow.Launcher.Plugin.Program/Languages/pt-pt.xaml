@@ -59,7 +59,7 @@
         Indique os sufixos dos ficheiros que pretende indexar. Deve separar os sufixos com ';'. (ex.: bat;py;doc)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        Indique os protocolos dos ficheiros .url que pretende indexar. Deve separar os protocolos com ';' e terminar com &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Executar com outro utilizador</system:String>
