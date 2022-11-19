@@ -1822,8 +1822,8 @@
                                                             Text="{DynamicResource hiThere}" />
                                                     </Border>
                                                     <StackPanel
-                                                            x:Name="ClockPanel"
-                                                            Style="{DynamicResource ClockPanel}">
+                                                        x:Name="ClockPanel"
+                                                        Style="{DynamicResource ClockPanel}">
                                                         <TextBlock
                                                             Style="{DynamicResource DateBox}"
                                                             Text="{Binding DateText}"
