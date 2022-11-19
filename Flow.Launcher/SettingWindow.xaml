@@ -44,6 +44,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
         <converters:TranlationConverter x:Key="TranlationConverter" />
+        <converters:DateTimeFormatToNowConverter x:Key="DateTimeFormatToNowConverter"></converters:DateTimeFormatToNowConverter>
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -2179,9 +2180,14 @@
                                                                 Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                ItemsSource="{Binding TimeFormatDisplayList}"
-                                                                SelectedIndex="{Binding TimeFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshTimeList"/>
+                                                                ItemsSource="{Binding TimeFormatList}"
+                                                                SelectedIndex="{Binding TimeFormat}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Converter={StaticResource DateTimeFormatToNowConverter}}"/>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ComboBox>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
@@ -2216,9 +2222,14 @@
                                                                 Margin="0,0,18,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                ItemsSource="{Binding DateFormatDisplayList}"
-                                                                SelectedIndex="{Binding DateFormatIndex, Mode=OneWayToSource}"
-                                                                DropDownOpened="RefreshDateList"/>
+                                                                ItemsSource="{Binding DateFormatList}"
+                                                                SelectedIndex="{Binding DateFormat}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Converter={StaticResource DateTimeFormatToNowConverter}}"/>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ComboBox>
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"

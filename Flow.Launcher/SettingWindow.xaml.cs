@@ -42,8 +42,6 @@ namespace Flow.Launcher
             InitializePosition();
             InitializeComponent();
 
-            RefreshDateListInternal(viewModel.DateFormatIndex);
-            RefreshTimeListInternal(viewModel.TimeFormatIndex);
         }
 
         #region General
@@ -561,28 +559,6 @@ namespace Flow.Launcher
                 storeClickedButton = null;
             };
 
-        }
-
-        private void RefreshDateList(object sender, EventArgs e)
-        {
-            RefreshDateListInternal(DateFormat.SelectedIndex);
-        }
-
-        private void RefreshDateListInternal(int index)
-        {
-            viewModel.UpdateDateDisplayList();
-            RefreshComboBox(DateFormat, index);
-        }
-
-        private void RefreshTimeList(object sender, EventArgs e)
-        {
-            RefreshTimeListInternal(TimeFormat.SelectedIndex);
-        }
-
-        private void RefreshTimeListInternal(int index)
-        {
-            viewModel.UpdateTimeDisplayList();
-            RefreshComboBox(TimeFormat, index);
         }
 
         private static void RefreshComboBox(System.Windows.Controls.ComboBox box, int index)
