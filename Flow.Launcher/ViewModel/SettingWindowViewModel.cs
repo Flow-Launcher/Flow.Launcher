@@ -454,9 +454,13 @@ namespace Flow.Launcher.ViewModel
 
         public List<string> TimeFormatList { get; set; } = new List<string>()
         {
+            "h:mm",
             "hh:mm",
+            "H:mm",
             "HH:mm",
+            "tt h:mm",
             "tt hh:mm",
+            "h:mm tt",
             "hh:mm tt"
         };
 
@@ -465,7 +469,10 @@ namespace Flow.Launcher.ViewModel
             "MM'/'dd dddd",
             "MM'/'dd ddd",
             "MM'/'dd",
+            "MM'-'dd",
+            "MMMM', 'dd",
             "dd'/'MM",
+            "dd'-'MM",
             "ddd MM'/'dd",
             "dddd MM'/'dd",
             "dddd",
