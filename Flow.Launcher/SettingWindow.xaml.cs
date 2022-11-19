@@ -45,6 +45,8 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
+
+            RefreshDateTimeListLogic(viewModel.DateFormatIndex, viewModel.TimeFormatIndex);
         }
 
         #region General
@@ -517,19 +519,6 @@ namespace Flow.Launcher
 
         private void PreviewClockAndDate(object sender, RoutedEventArgs e)
         {
-            if (DateFormat != null && TimeFormat != null)
-            {
-                if (DateFormat.SelectedIndex == -1 || TimeFormat.SelectedIndex == -1)
-                {
-                    return;
-                }
-                viewModel.UpdateDateTimeDisplayList(DateFormat.SelectedIndex, TimeFormat.SelectedIndex);
-                DateFormat.Items.Refresh();
-                TimeFormat.Items.Refresh(); // selected = -1
-                // todo avoid recursion
-                DateFormat.SelectedIndex = viewModel.DateFormatIndex;
-                TimeFormat.SelectedIndex = viewModel.TimeFormatIndex;
-            }
             ClockDisplay();
         }
 
@@ -604,6 +593,24 @@ namespace Flow.Launcher
                 storeClickedButton = null;
             };
 
+        }
+
+        private void RefreshDateTimeList(object sender, EventArgs e)
+        {
+            RefreshDateTimeListLogic(DateFormat.SelectedIndex, TimeFormat.SelectedIndex);
+        }
+
+        private void RefreshDateTimeListLogic(int dateIndex, int timeIndex)
+        {
+            viewModel.UpdateDateTimeDisplayList();
+            RefreshComboBox(DateFormat, dateIndex);
+            RefreshComboBox(TimeFormat, timeIndex);
+        }
+
+        private static void RefreshComboBox(System.Windows.Controls.ComboBox box, int index)
+        {
+            box.Items.Refresh();
+            box.SelectedIndex = index;
         }
     }
 }

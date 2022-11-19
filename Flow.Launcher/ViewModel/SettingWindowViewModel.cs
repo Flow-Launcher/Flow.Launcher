@@ -482,8 +482,11 @@ namespace Flow.Launcher.ViewModel
             get => timeFormatIndex;
             set
             {
-                timeFormatIndex = value;
-                Settings.TimeFormat = TimeFormatList[TimeFormatIndex];
+                if (value != -1)
+                {
+                    timeFormatIndex = value;
+                    Settings.TimeFormat = TimeFormatList[value];
+                }
             }
         }
 
@@ -493,8 +496,11 @@ namespace Flow.Launcher.ViewModel
             get => dateFormatIndex;
             set 
             { 
-                dateFormatIndex = value; 
-                Settings.DateFormat = DateFormatList[DateFormatIndex]; 
+                if (value != -1)
+                {
+                    dateFormatIndex = value;
+                    Settings.DateFormat = DateFormatList[value];
+                }
             }
         }
 
@@ -502,17 +508,8 @@ namespace Flow.Launcher.ViewModel
 
         public List<string> DateFormatDisplayList { get; set; } = null;
 
-        public void UpdateSettingsDateTimeFormat()
+        public void UpdateDateTimeDisplayList()
         {
-            Settings.DateFormat = DateFormatList[DateFormatIndex];
-            Settings.TimeFormat = TimeFormatList[TimeFormatIndex];
-        }
-
-        public void UpdateDateTimeDisplayList(int dateIndex, int timeIndex)
-        {
-            DateFormatIndex = dateIndex;
-            TimeFormatIndex = timeIndex;
-
             for (int i = 0; i < TimeFormatList.Count; ++i)
             {
                 TimeFormatDisplayList[i] = DateTime.Now.ToString(TimeFormatList[i], CultureInfo.CurrentCulture);
@@ -522,8 +519,6 @@ namespace Flow.Launcher.ViewModel
             {
                 DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
             }
-
-            //UpdateSettingsDateTimeFormat();
         }
 
         public double WindowWidthSize

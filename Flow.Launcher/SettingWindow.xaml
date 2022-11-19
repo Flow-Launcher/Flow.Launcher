@@ -1815,6 +1815,7 @@
                                                     </Grid.RowDefinitions>
                                                     <Border Grid.Row="0">
                                                         <TextBox
+                                                            x:Name="QueryTextBox"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
@@ -2170,7 +2171,8 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding TimeFormatDisplayList}"
-                                                                SelectedIndex="{Binding TimeFormatIndex, Mode=OneTime}"
+                                                                SelectedIndex="{Binding TimeFormatIndex, Mode=OneWayToSource}"
+                                                                DropDownOpened="RefreshDateTimeList"
                                                                 SelectionChanged="PreviewClockAndDate" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
@@ -2208,7 +2210,8 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding DateFormatDisplayList}"
-                                                                SelectedIndex="{Binding DateFormatIndex, Mode=OneTime}"
+                                                                SelectedIndex="{Binding DateFormatIndex, Mode=OneWayToSource}"
+                                                                DropDownOpened="RefreshDateTimeList"
                                                                 SelectionChanged="PreviewClockAndDate" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
