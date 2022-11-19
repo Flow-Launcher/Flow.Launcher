@@ -25,12 +25,17 @@
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
     Visibility="{Binding Visbility}"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    PreviewMouseMove="ResultList_MouseMove"
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
+    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
+    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button HorizontalAlignment="Stretch">
+            <Button
+                HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -84,7 +89,7 @@
                                 x:Name="ImageIcon"
                                 Width="{Binding IconXY}"
                                 Height="{Binding IconXY}"
-                                Margin="0,0,0,0"
+                                Margin="0,0,0,0" IsHitTestVisible="False"
                                 HorizontalAlignment="Center"
                                 Source="{Binding Image, TargetNullValue={x:Null}}"
                                 Stretch="Uniform"
@@ -136,7 +141,9 @@
                                 DockPanel.Dock="Left"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
-                                ToolTip="{Binding ShowTitleToolTip}">
+                                ToolTip="{Binding ShowTitleToolTip}"
+                                ToolTipService.ShowOnDisabled="True"
+                                IsEnabled="False">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.Title" />
@@ -147,10 +154,11 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
+                                IsEnabled="False"
+                                ToolTipService.ShowOnDisabled="True"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}" />
-
+                                ToolTip="{Binding ShowSubTitleToolTip}"/>
                         </Grid>
 
                     </Grid>

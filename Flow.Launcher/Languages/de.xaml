@@ -76,13 +76,13 @@
     <system:String x:Key="plugin_query_time">Abfragezeit:</system:String>
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Webseite</system:String>
-    <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
+    <system:String x:Key="uninstallbtn">Deinstallieren</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Erweiterungen laden</system:String>
     <system:String x:Key="refresh">Aktualisieren</system:String>
-    <system:String x:Key="install">Installieren</system:String>
+    <system:String x:Key="installbtn">Installieren</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Design</system:String>

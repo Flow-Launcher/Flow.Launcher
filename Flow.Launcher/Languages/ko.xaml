@@ -76,13 +76,13 @@
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
     <system:String x:Key="plugin_query_version">| 버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
-    <system:String x:Key="plugin_uninstall">제거</system:String>
+    <system:String x:Key="uninstallbtn">제거</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
     <system:String x:Key="refresh">새로고침</system:String>
-    <system:String x:Key="install">설치</system:String>
+    <system:String x:Key="installbtn">설치</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>

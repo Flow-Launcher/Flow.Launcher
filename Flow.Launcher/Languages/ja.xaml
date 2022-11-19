@@ -76,13 +76,13 @@
     <system:String x:Key="plugin_query_time">クエリ時間:</system:String>
     <system:String x:Key="plugin_query_version">| バージョン</system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
-    <system:String x:Key="plugin_uninstall">アンインストール</system:String>
+    <system:String x:Key="uninstallbtn">アンインストール</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">プラグインストア</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="install">Install</system:String>
+    <system:String x:Key="installbtn">Install</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">テーマ</system:String>

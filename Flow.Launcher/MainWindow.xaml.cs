@@ -20,8 +20,16 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Windows.Data;
+using System.Text;
+using DataObject = System.Windows.DataObject;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Windows.Threading;
+using System.Windows.Data;
+using ModernWpf.Controls;
+using System.Drawing;
+using System.Windows.Forms.Design.Behavior;
 
 namespace Flow.Launcher
 {
@@ -45,6 +53,7 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+            
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -54,6 +63,7 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -217,11 +227,12 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[5]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+
         }
 
         private void InitializeNotifyIcon()
@@ -233,31 +244,35 @@ namespace Flow.Launcher
                 Visible = !_settings.HideNotifyIcon
             };
             contextMenu = new ContextMenu();
-
-            var header = new MenuItem
-            {
-                Header = "Flow Launcher",
-                IsEnabled = false
-            };
+            var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +_settings.Hotkey + ")"
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
+            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode")
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
+            var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
+            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -265,7 +280,6 @@ namespace Flow.Launcher
             positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
-            contextMenu.Items.Add(header);
             contextMenu.Items.Add(open);
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             positionreset.ToolTip = InternationalizationManager.Instance.GetTranslation("PositionResetToolTip");
@@ -389,28 +403,6 @@ namespace Flow.Launcher
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
-        }
-
-        private void OnPreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender != null && e.OriginalSource != null)
-            {
-                var r = (ResultListBox)sender;
-                var d = (DependencyObject)e.OriginalSource;
-                var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-                var result = (ResultViewModel)item?.DataContext;
-                if (result != null)
-                {
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        _viewModel.OpenResultCommand.Execute(null);
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
-                    }
-                }
-            }
         }
 
         private void OnPreviewDragOver(object sender, DragEventArgs e)

@@ -76,13 +76,13 @@
     <system:String x:Key="plugin_query_time">Trvanie dopytu:</system:String>
     <system:String x:Key="plugin_query_version">| Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
-    <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
+    <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
-    <system:String x:Key="install">Inštalovať</system:String>
+    <system:String x:Key="installbtn">Inštalovať</system:String>
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
