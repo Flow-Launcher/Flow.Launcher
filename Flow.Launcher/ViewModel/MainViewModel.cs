@@ -323,7 +323,7 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public Settings Settings { get; }
-        public object ClockText { get; private set; }
+        public string ClockText { get; private set; }
         public string DateText { get; private set; }
 
         private async Task RegisterClockAndDateUpdateAsync()
