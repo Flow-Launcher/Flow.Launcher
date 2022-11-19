@@ -507,15 +507,6 @@ namespace Flow.Launcher.ViewModel
                 TimeFormatDisplayList[i] = DateTime.Now.ToString(TimeFormatList[i], CultureInfo.CurrentCulture);
             }
 
-            TimeFormatDisplayList[0] = DateTime.Now.ToString(TimeFormatList[0], CultureInfo.CurrentCulture) + " (h:mm)";
-            TimeFormatDisplayList[1] = DateTime.Now.ToString(TimeFormatList[1], CultureInfo.CurrentCulture) + " (hh:mm)";
-            TimeFormatDisplayList[2] = DateTime.Now.ToString(TimeFormatList[2], CultureInfo.CurrentCulture) + " (H:mm)";
-            TimeFormatDisplayList[3] = DateTime.Now.ToString(TimeFormatList[3], CultureInfo.CurrentCulture) + " (HH:mm)";
-            TimeFormatDisplayList[4] = DateTime.Now.ToString(TimeFormatList[4], CultureInfo.CurrentCulture) + " (tt h:mm)";
-            TimeFormatDisplayList[5] = DateTime.Now.ToString(TimeFormatList[5], CultureInfo.CurrentCulture) + " (tt hh:mm)";
-            TimeFormatDisplayList[6] = DateTime.Now.ToString(TimeFormatList[6], CultureInfo.CurrentCulture) + " (h:mm tt)";
-            TimeFormatDisplayList[7] = DateTime.Now.ToString(TimeFormatList[6], CultureInfo.CurrentCulture) + " (hh:mm tt)";
-
             for (int i = 0; i < DateFormatList.Count; ++i)
             {
                 DateFormatDisplayList[i] = DateTime.Now.ToString(DateFormatList[i], CultureInfo.CurrentCulture);
