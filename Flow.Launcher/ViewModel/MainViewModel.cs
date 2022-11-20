@@ -78,12 +78,22 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(Settings);
-            Results = new ResultsViewModel(Settings);
-            History = new ResultsViewModel(Settings);
+            InitializeKeyCommands();
+
+            ContextMenu = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            Results = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            History = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
             _selectedResults = Results;
 
-            InitializeKeyCommands();
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
@@ -200,14 +210,9 @@ namespace Flow.Launcher.ViewModel
                 PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
             });
             OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(async index =>
+            OpenResultCommand = new AsyncRelayCommand(async _ =>
             {
                 var results = SelectedResults;
-
-                if (index != null)
-                {
-                    results.SelectedIndex = int.Parse(index.ToString()!);
-                }
 
                 var result = results.SelectedItem?.Result;
                 if (result == null)
@@ -365,9 +370,9 @@ namespace Flow.Launcher.ViewModel
         {
             if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
             {
-                Settings.WindowSize = 1920;        
+                Settings.WindowSize = 1920;
             }
-            else 
+            else
             {
                 Settings.WindowSize += 100;
                 Settings.WindowLeft -= 50;
@@ -650,7 +655,7 @@ namespace Flow.Launcher.ViewModel
 
             if (currentCancellationToken.IsCancellationRequested)
                 return;
-            
+
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
