@@ -1,6 +1,5 @@
 ﻿using Droplex;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -15,13 +14,23 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public class PluginEnvironment
     {
-        private const string PythonExecutable = "pythonw.exe";
-        
-        private const string NodeExecutable = "node.exe";
+        private const string environments = "Environments";
 
-        private const string PythonEnv = "Python";
+        private const string python = "Python";
 
-        private const string NodeEnv = "Node.js";
+        private static string pythonEnvDirPath = Path.Combine(DataLocation.DataDirectory(), environments, python);
+
+        private static string pythonDirPath = Path.Combine(pythonEnvDirPath, "PythonEmbeddable-v3.8.9");
+
+        private string pythonFilePath = Path.Combine(pythonDirPath, "pythonw.exe");
+
+        private const string nodejs = "Node.js";
+
+        private static string nodeEnvDirPath = Path.Combine(DataLocation.DataDirectory(), environments, nodejs);
+
+        private static string nodeDirPath = Path.Combine(nodeEnvDirPath, "Node-v16.18.0");
+
+        private string nodeFilePath = Path.Combine(nodeDirPath, $"node-v16.18.0-win-x64\\node.exe");
 
         private List<PluginMetadata> pluginMetadataList;
 
@@ -35,17 +44,17 @@ namespace Flow.Launcher.Core.ExternalPlugins
         //TODO: CHECK IF NEED TO RESET PATH AFTER FLOW UPDATE
         internal IEnumerable<PluginPair> PythonSetup()
         {
-            return Setup(AllowedLanguage.Python, PythonEnv);
+            return Setup(AllowedLanguage.Python, python);
         }
 
         internal IEnumerable<PluginPair> TypeScriptSetup()
         {
-            return Setup(AllowedLanguage.TypeScript, NodeEnv);
+            return Setup(AllowedLanguage.TypeScript, nodejs);
         }
 
         internal IEnumerable<PluginPair> JavaScriptSetup()
         {
-            return Setup(AllowedLanguage.JavaScript, NodeEnv);
+            return Setup(AllowedLanguage.JavaScript, nodejs);
         }
 
         private IEnumerable<PluginPair> Setup(string languageType, string environment)
@@ -59,13 +68,31 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 case AllowedLanguage.Python:
                     if (!string.IsNullOrEmpty(pluginSettings.PythonFilePath) && FilesFolders.FileExists(pluginSettings.PythonFilePath))
+                    {
+                        EnsureLatestInstalled(
+                            pythonFilePath,
+                            pluginSettings.PythonFilePath,
+                            pythonEnvDirPath,
+                            languageType);
+
                         return SetPathForPluginPairs(pluginSettings.PythonFilePath, languageType);
+                    }
+
                     break;
 
                 case AllowedLanguage.TypeScript:
                 case AllowedLanguage.JavaScript:
                     if (!string.IsNullOrEmpty(pluginSettings.NodeFilePath) && FilesFolders.FileExists(pluginSettings.NodeFilePath))
+                    {
+                        EnsureLatestInstalled(
+                            nodeFilePath,
+                            pluginSettings.NodeFilePath,
+                            nodeEnvDirPath,
+                            languageType);
+
                         return SetPathForPluginPairs(pluginSettings.NodeFilePath, languageType);
+                    }
+
                     break;
 
                 default:
@@ -134,33 +161,40 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         private void InstallEnvironment(string languageType)
         {
-            var environments = "Environments";
-
             switch (languageType)
             {
                 case AllowedLanguage.Python:
-                    var pythonDirPath = Path.Combine(DataLocation.DataDirectory(), environments, "PythonEmbeddable");
                     FilesFolders.RemoveFolderIfExists(pythonDirPath);
 
                     // Python 3.8.9 is used for Windows 7 compatibility
                     DroplexPackage.Drop(App.python_3_8_9_embeddable, pythonDirPath).Wait();
 
-                    pluginSettings.PythonFilePath = Path.Combine(pythonDirPath, PythonExecutable);
+                    pluginSettings.PythonFilePath = pythonFilePath;
                     break;
 
                 case AllowedLanguage.TypeScript:
                 case AllowedLanguage.JavaScript:
-                    var nodeDirPath = Path.Combine(DataLocation.DataDirectory(), environments, "Node");
                     FilesFolders.RemoveFolderIfExists(nodeDirPath);
 
                     DroplexPackage.Drop(App.nodejs_16_18_0, nodeDirPath).Wait();
 
-                    pluginSettings.NodeFilePath = Path.Combine(nodeDirPath, $"node-v16.18.0-win-x64\\{NodeExecutable}");
+                    pluginSettings.NodeFilePath = nodeFilePath;
                     break;
 
                 default:
                     break;
             }
+        }
+
+        private void EnsureLatestInstalled(string expectedPath, string currentPath, string installedDirPath, string languagType)
+        {
+            if (expectedPath == currentPath)
+                return;
+
+            FilesFolders.RemoveFolderIfExists(installedDirPath);
+
+            InstallEnvironment(languagType);
+
         }
 
         private IEnumerable<PluginPair> SetPathForPluginPairs(string filePath, string languageToSet)

@@ -28,6 +28,7 @@ using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
 using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
+using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
