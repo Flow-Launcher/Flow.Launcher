@@ -2175,6 +2175,12 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="0,0,10,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Foreground="{DynamicResource Color04B}"
+                                                                Text="{Binding ClockText}" />
                                                             <ComboBox
                                                                 x:Name="TimeFormat"
                                                                 Grid.Column="2"
@@ -2211,6 +2217,12 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="0,0,10,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Foreground="{DynamicResource Color04B}"
+                                                                Text="{Binding DateText}" />
                                                             <ComboBox
                                                                 x:Name="DateFormat"
                                                                 Grid.Column="2"
