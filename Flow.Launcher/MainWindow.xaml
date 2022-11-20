@@ -248,13 +248,15 @@
                         IsHitTestVisible="False"
                         Style="{DynamicResource ClockPanel}">
                         <TextBlock
-                            Style="{DynamicResource DateBox}"
-                            Text="{Binding DateText}"
-                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                        <TextBlock
+                            x:Name="ClockBox"
                             Style="{DynamicResource ClockBox}"
                             Text="{Binding ClockText}"
                             Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock
+                            x:Name="DateBox"
+                            Style="{DynamicResource DateBox}"
+                            Text="{Binding DateText}"
+                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </StackPanel>
 
                     <Canvas Style="{DynamicResource SearchIconPosition}">

@@ -1823,15 +1823,18 @@
                                                     </Border>
                                                     <StackPanel
                                                         x:Name="ClockPanel"
+                                                        IsHitTestVisible="False"
                                                         Style="{DynamicResource ClockPanel}">
                                                         <TextBlock
-                                                            Style="{DynamicResource DateBox}"
-                                                            Text="{Binding DateText}"
-                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                                        <TextBlock
+                                                            x:Name="ClockBox"
                                                             Style="{DynamicResource ClockBox}"
                                                             Text="{Binding ClockText}"
                                                             Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                        <TextBlock
+                                                            x:Name="DateBox"
+                                                            Style="{DynamicResource DateBox}"
+                                                            Text="{Binding DateText}"
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -2180,13 +2183,12 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding TimeFormatList}"
-                                                                SelectedItem="{Binding TimeFormat}">
-                                                            </ComboBox>
+                                                                SelectedItem="{Binding TimeFormat}" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"/>
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xec92;
@@ -2217,13 +2219,12 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding DateFormatList}"
-                                                                SelectedItem="{Binding DateFormat}">
-                                                            </ComboBox>
+                                                                SelectedItem="{Binding DateFormat}" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"/>
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe787;

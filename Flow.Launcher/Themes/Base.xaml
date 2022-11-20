@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
-    
+
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
@@ -90,18 +90,28 @@
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
     <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,2,0" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DateBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="BaseDateBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <Style
@@ -120,6 +130,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource BaseClockPanel}"
         TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Vertical" />
         <Setter Property="Margin" Value="0,0,66,0" />
         <Setter Property="Visibility" Value="Visible" />
         <Style.Triggers>
