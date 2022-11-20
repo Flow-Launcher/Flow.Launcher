@@ -85,6 +85,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
+
         public bool StartFlowLauncherOnSystemStartup
         {
             get => Settings.StartFlowLauncherOnSystemStartup;
