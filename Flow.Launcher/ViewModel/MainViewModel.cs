@@ -23,6 +23,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -326,6 +327,7 @@ namespace Flow.Launcher.ViewModel
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
 
+        public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
         private async Task RegisterClockAndDateUpdateAsync()
         {
             var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
@@ -333,9 +335,9 @@ namespace Flow.Launcher.ViewModel
             while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
             {
                 if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat);
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, cultureInfo);
                 if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat);
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, cultureInfo);
             }
         }
         public ResultsViewModel Results { get; private set; }
