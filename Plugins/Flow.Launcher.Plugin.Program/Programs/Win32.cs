@@ -26,11 +26,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }  // For path comparison
         public string IcoPath { get; set; }
         /// <summary>
-        /// Path of the file. It's the path of .lnk or .url for .lnk and .url.
+        /// Path of the file. It's the path of .lnk and .url for .lnk and .url files.
         /// </summary>
         public string FullPath { get; set; }
         /// <summary>
-        /// Path of the excutable for .lnk, or the URL for .url.
+        /// Path of the excutable for .lnk, or the URL for .url. Arguments are included if any.
         /// </summary>
         public string LnkResolvedPath { get; set; }
         /// <summary>
@@ -185,7 +185,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = ExecutablePath,
+                            FileName = FullPath,
                             WorkingDirectory = ParentDirectory,
                             Verb = "runas",
                             UseShellExecute = true
@@ -274,6 +274,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         program.LnkResolvedPath = Path.GetFullPath(target);
                         program.ExecutableName = Path.GetFileName(target);
+
+                        var args = _helper.arguments;
+                        if(!string.IsNullOrEmpty(args))
+                        {
+                            program.LnkResolvedPath += " " + args;
+                        }
 
                         var description = _helper.description;
                         if (!string.IsNullOrEmpty(description))
