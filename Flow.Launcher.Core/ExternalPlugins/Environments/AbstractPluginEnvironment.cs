@@ -45,7 +45,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
-                EnsureLatestInstalled(ExecutablePath, PluginsSettingsFilePath, EnvPath);
+                // Ensure latest only if user is using Flow's environment setup.
+                if (PluginsSettingsFilePath.StartsWith(EnvPath, StringComparison.OrdinalIgnoreCase))
+                    EnsureLatestInstalled(ExecutablePath, PluginsSettingsFilePath, EnvPath);
 
                 return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
             }
