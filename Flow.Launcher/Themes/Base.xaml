@@ -79,18 +79,18 @@
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
-    <Style x:Key="BaseClockPosition" TargetType="{x:Type Canvas}" />
+    <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
 
     <Style x:Key="BaseClockPanel" TargetType="{x:Type StackPanel}">
         <Setter Property="Orientation" Value="Horizontal" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="Margin" Value="0,0,14,0" />
+        <Setter Property="Margin" Value="0,0,66,0" />
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
     <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="20" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -131,8 +131,7 @@
         BasedOn="{StaticResource BaseClockPanel}"
         TargetType="{x:Type StackPanel}">
         <Setter Property="Orientation" Value="Vertical" />
-        <Setter Property="Margin" Value="0,0,66,0" />
-        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -140,30 +139,19 @@
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                 </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
                 <MultiDataTrigger.EnterActions>
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.0"
-                                To="1.0"
-                                Duration="0:0:0.2" />
+                                To="1"
+                                Duration="0:0:0.25" />
                         </Storyboard>
                     </BeginStoryboard>
                 </MultiDataTrigger.EnterActions>
-                <MultiDataTrigger.ExitActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation
-                                Storyboard.TargetProperty="Opacity"
-                                To="0.0"
-                                Duration="0:0:0.2" />
-                        </Storyboard>
-                    </BeginStoryboard>
-                </MultiDataTrigger.ExitActions>
-
             </MultiDataTrigger>
-
         </Style.Triggers>
 
     </Style>
@@ -378,6 +366,12 @@
         <Setter Property="Margin" Value="0,2,18,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style
+        x:Key="ClockPanelPosition"
+        BasedOn="{StaticResource BaseClockPanelPosition}"
+        TargetType="{x:Type Canvas}">
+        <Setter Property="Margin" Value="0,2,66,0" />
     </Style>
     <Style
         x:Key="ItemHotkeyStyle"
