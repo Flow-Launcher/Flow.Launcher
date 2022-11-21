@@ -8,6 +8,8 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
+using JetBrains.Annotations;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -49,6 +51,9 @@ namespace Flow.Launcher.ViewModel
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visbility { get; set; } = Visibility.Collapsed;
+        
+        public ICommand RightClickResultCommand { get; init; }
+        public ICommand LeftClickResultCommand { get; init; }
 
         #endregion
 
