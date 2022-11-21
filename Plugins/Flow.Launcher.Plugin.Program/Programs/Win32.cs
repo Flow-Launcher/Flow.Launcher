@@ -220,8 +220,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Name;
         }
 
-        public static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
-
+        private static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
 
         private static Win32 Win32Program(string path)
         {
