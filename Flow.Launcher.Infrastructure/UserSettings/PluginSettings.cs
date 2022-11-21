@@ -5,23 +5,23 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class PluginsSettings : BaseModel
     {
-        private string pythonFilePath;
-        public string PythonFilePath {
-            get { return pythonFilePath; }
+        private string pythonExecutablePath;
+        public string PythonExecutablePath {
+            get { return pythonExecutablePath; }
             set
             {
-                pythonFilePath = value;
+                pythonExecutablePath = value;
                 Constant.PythonPath = value;
             }
         }
 
-        private string nodeFilePath;
-        public string NodeFilePath
+        private string nodeExecutablePath;
+        public string NodeExecutablePath
         {
-            get { return nodeFilePath; }
+            get { return nodeExecutablePath; }
             set 
             {
-                nodeFilePath = value;
+                nodeExecutablePath = value;
                 Constant.NodePath = value;
             }
         }

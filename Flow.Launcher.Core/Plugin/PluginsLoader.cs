@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -14,16 +14,16 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
-        public const string PythonExecutable = "pythonw.exe";
-
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
             
-            var pluginEnv = new PluginEnvironment(metadatas, settings);
-            var pythonPlugins = pluginEnv.PythonSetup();
-            var tsPlugins = pluginEnv.TypeScriptSetup();
-            var jsPlugins = pluginEnv.JavaScriptSetup();
+            var pythonEnv = new PythonEnvironment(metadatas, settings);
+            var tsEnv = new TypeScriptEnvironment(metadatas, settings);
+            var jsEnv = new JavaScriptEnvironment(metadatas, settings);
+            var pythonPlugins = pythonEnv.Setup();
+            var tsPlugins = tsEnv.Setup();
+            var jsPlugins = jsEnv.Setup();
             
             var executablePlugins = ExecutablePlugins(metadatas);
             

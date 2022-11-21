@@ -944,11 +944,11 @@
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.PythonFilePath, TargetNullValue='None'}" />
+                                            Text="{Binding Settings.PluginSettings.PythonExecutablePath, TargetNullValue='None'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,10,18,10"
-                                            Click="OnSelectPythonFilePathClick"
+                                            Click="OnSelectPythonPathClick"
                                             Content="{DynamicResource select}" />
                                     </StackPanel>
                                 </ItemsControl>
@@ -963,11 +963,11 @@
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.NodeFilePath, TargetNullValue='None'}" />
+                                            Text="{Binding Settings.PluginSettings.NodeExecutablePath, TargetNullValue='None'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,10,18,10"
-                                            Click="OnSelectNodeFilePathClick"
+                                            Click="OnSelectNodePathClick"
                                             Content="{DynamicResource select}" />
                                     </StackPanel>
                                 </ItemsControl>

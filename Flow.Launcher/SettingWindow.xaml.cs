@@ -10,25 +10,20 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ModernWpf.Controls;
 using System;
-using System.Drawing.Printing;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
-using OpenFileDialog = System.Windows.Forms.OpenFileDialog;
-using Flow.Launcher.Core.ExternalPlugins;
 
 namespace Flow.Launcher
 {
@@ -69,23 +64,23 @@ namespace Flow.Launcher
             ClockDisplay();
         }
 
-        private void OnSelectPythonFilePathClick(object sender, RoutedEventArgs e)
+        private void OnSelectPythonPathClick(object sender, RoutedEventArgs e)
         {
-            var selectedFile = PluginEnvironment.GetFileFromDialog(
+            var selectedFile = viewModel.GetFileFromDialog(
                                     InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
                                     "Python|pythonw.exe");
 
             if (!string.IsNullOrEmpty(selectedFile))
-                settings.PluginSettings.PythonFilePath = selectedFile;
+                settings.PluginSettings.PythonExecutablePath = selectedFile;
         }
 
-        private void OnSelectNodeFilePathClick(object sender, RoutedEventArgs e)
+        private void OnSelectNodePathClick(object sender, RoutedEventArgs e)
         {
-            var selectedFile = PluginEnvironment.GetFileFromDialog(
+            var selectedFile = viewModel.GetFileFromDialog(
                                     InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"));
 
             if (!string.IsNullOrEmpty(selectedFile))
-                settings.PluginSettings.NodeFilePath = selectedFile;
+                settings.PluginSettings.NodeExecutablePath = selectedFile;
         }
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
