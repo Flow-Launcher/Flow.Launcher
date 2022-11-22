@@ -27,7 +27,9 @@
     Visibility="{Binding Visbility}"
     mc:Ignorable="d"
     PreviewMouseMove="ResultList_MouseMove"
-    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown">
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
+    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
+    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.ItemTemplate>
@@ -137,10 +139,11 @@
                                 x:Name="Title"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
-                                IsHitTestVisible="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
-                                ToolTip="{Binding ShowTitleToolTip}">
+                                ToolTip="{Binding ShowTitleToolTip}"
+                                ToolTipService.ShowOnDisabled="True"
+                                IsEnabled="False">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.Title" />
@@ -151,11 +154,11 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                IsHitTestVisible="False"
+                                IsEnabled="False"
+                                ToolTipService.ShowOnDisabled="True"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}" />
-
+                                ToolTip="{Binding ShowSubTitleToolTip}"/>
                         </Grid>
 
                     </Grid>
