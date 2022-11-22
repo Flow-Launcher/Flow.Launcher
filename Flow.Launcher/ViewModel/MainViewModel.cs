@@ -241,10 +241,13 @@ namespace Flow.Launcher.ViewModel
             }
         }
         [RelayCommand]
-        private async Task OpenResult()
+        private async Task OpenResultAsync(string index)
         {
             var results = SelectedResults;
-
+            if (index is not null)
+            {
+                results.SelectedIndex = int.Parse(index);
+            }
             var result = results.SelectedItem?.Result;
             if (result == null)
             {
