@@ -283,7 +283,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectHelp()
         {
-            PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
+            PluginManager.API.OpenUrl("https://www.flowlauncher.com/docs/#/usage-tips");
         }
 
         [RelayCommand]
