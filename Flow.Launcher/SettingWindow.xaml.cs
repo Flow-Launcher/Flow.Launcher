@@ -560,11 +560,5 @@ namespace Flow.Launcher
             };
 
         }
-
-        private static void RefreshComboBox(System.Windows.Controls.ComboBox box, int index)
-        {
-            box.Items.Refresh();
-            box.SelectedIndex = index;
-        }
     }
 }
