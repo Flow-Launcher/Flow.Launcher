@@ -37,7 +37,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// Path of the actual executable file.
         /// </summary>
         public string ExecutablePath => LnkResolvedPath ?? FullPath;
-        public string WorkingDir => Directory.GetParent(ExecutablePath)?.FullName ?? string.Empty;
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
         public string Description { get; set; }
@@ -140,8 +139,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                     var info = new ProcessStartInfo
                     {
-                        FileName = ExecutablePath,
-                        WorkingDirectory = WorkingDir,
+                        FileName = FullPath,
+                        WorkingDirectory = ParentDirectory,
                         UseShellExecute = true,
                         Verb = runAsAdmin ? "runas" : null
                     };
@@ -167,8 +166,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = ExecutablePath,
-                            WorkingDirectory = WorkingDir,
+                            FileName = FullPath,
+                            WorkingDirectory = ParentDirectory,
                             UseShellExecute = true
                         };
 
@@ -187,7 +186,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var info = new ProcessStartInfo
                         {
                             FileName = ExecutablePath,
-                            WorkingDirectory = WorkingDir,
+                            WorkingDirectory = ParentDirectory,
                             Verb = "runas",
                             UseShellExecute = true
                         };
@@ -221,8 +220,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Name;
         }
 
-        public static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
-
+        private static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
 
         private static Win32 Win32Program(string path)
         {
@@ -573,6 +571,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
+            // TODO: Unable to distinguish multiple lnks to the same excutable but with different params
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
