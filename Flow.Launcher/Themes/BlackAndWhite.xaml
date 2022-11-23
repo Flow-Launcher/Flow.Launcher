@@ -164,6 +164,12 @@
     <Thickness x:Key="ItemMargin">0</Thickness>
     <Thickness x:Key="ResultMargin">0 0 0 4</Thickness>
     <Style
+        x:Key="ClockPanel"
+        BasedOn="{StaticResource ClockPanel}"
+        TargetType="{x:Type StackPanel}">
+        <Setter Property="Margin" Value="0,0,54,0" />
+    </Style>
+    <Style
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">

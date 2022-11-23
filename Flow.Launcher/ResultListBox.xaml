@@ -134,13 +134,15 @@
                         <Grid
                             Grid.Column="1"
                             Margin="6,0,10,0"
-                            HorizontalAlignment="Stretch">
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
                             <ProgressBar
                                 x:Name="progressbarResult"
+                                Grid.Row="0"
                                 Foreground="{Binding Result.ProgressBarColor}"
                                 Value="{Binding ResultProgress, Mode=OneWay}">
                                 <ProgressBar.Style>
@@ -156,6 +158,7 @@
                             </ProgressBar>
                             <TextBlock
                                 x:Name="Title"
+                                Grid.Row="0"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
                                 IsEnabled="False"
