@@ -136,7 +136,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     path = Path.Combine(Constant.ProgramDirectory, "Images", Path.GetFileName(path));
                 }
 
-                imageResult = GetThumbnailResult(ref path, loadFullImage);
+                imageResult = await Task.Run(() => GetThumbnailResult(ref path, loadFullImage));
             }
             catch (System.Exception e)
             {
