@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     MaxHeight="{Binding MaxHeight}"
-    Margin="{Binding Margin}"
+    Margin="{DynamicResource ResultMargin}"
     HorizontalContentAlignment="Stretch"
     d:DataContext="{d:DesignInstance vm:ResultsViewModel}"
     d:DesignHeight="100"
@@ -17,6 +17,10 @@
     ItemsSource="{Binding Results}"
     KeyboardNavigation.DirectionalNavigation="Cycle"
     PreviewMouseDown="ListBox_PreviewMouseDown"
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
+    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
+    PreviewMouseMove="ResultList_MouseMove"
+    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown"
     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
     SelectionChanged="OnSelectionChanged"
@@ -25,17 +29,12 @@
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
     Visibility="{Binding Visbility}"
-    mc:Ignorable="d"
-    PreviewMouseMove="ResultList_MouseMove"
-    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
-    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
-    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown">
+    mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button
-                HorizontalAlignment="Stretch">
+            <Button HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -89,13 +88,17 @@
                                 x:Name="ImageIcon"
                                 Width="{Binding IconXY}"
                                 Height="{Binding IconXY}"
-                                Margin="0,0,0,0" IsHitTestVisible="False"
+                                Margin="0,0,0,0"
                                 HorizontalAlignment="Center"
+                                IsHitTestVisible="False"
                                 Source="{Binding Image, TargetNullValue={x:Null}}"
                                 Stretch="Uniform"
                                 Visibility="{Binding ShowIcon}">
                                 <Image.Clip>
-                                    <EllipseGeometry RadiusX="{Binding IconRadius}" RadiusY="{Binding IconRadius}" Center="16 16"/>
+                                    <EllipseGeometry
+                                        Center="16 16"
+                                        RadiusX="{Binding IconRadius}"
+                                        RadiusY="{Binding IconRadius}" />
                                 </Image.Clip>
                             </Image>
                         </Border>
@@ -104,6 +107,7 @@
                             BorderBrush="Transparent"
                             BorderThickness="0">
                             <TextBlock
+                                x:Name="GlyphIcon"
                                 Grid.Column="0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"
@@ -125,11 +129,11 @@
                                 Foreground="{Binding Result.ProgressBarColor}"
                                 Value="{Binding ResultProgress, Mode=OneWay}">
                                 <ProgressBar.Style>
-                                    <Style TargetType="ProgressBar" BasedOn="{StaticResource ProgressBarResult}">
-                                        <Setter Property="Visibility" Value="Visible"/>
+                                    <Style BasedOn="{StaticResource ProgressBarResult}" TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Visible" />
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Result.ProgressBar}" Value="{x:Null}">
-                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
@@ -139,11 +143,11 @@
                                 x:Name="Title"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
+                                IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
                                 ToolTip="{Binding ShowTitleToolTip}"
-                                ToolTipService.ShowOnDisabled="True"
-                                IsEnabled="False">
+                                ToolTipService.ShowOnDisabled="True">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.Title" />
@@ -155,10 +159,10 @@
                                 x:Name="SubTitle"
                                 Grid.Row="1"
                                 IsEnabled="False"
-                                ToolTipService.ShowOnDisabled="True"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}"/>
+                                ToolTip="{Binding ShowSubTitleToolTip}"
+                                ToolTipService.ShowOnDisabled="True" />
                         </Grid>
 
                     </Grid>
@@ -171,6 +175,7 @@
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
                     <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
                     <Setter TargetName="ImageIcon" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
+                    <Setter TargetName="GlyphIcon" Property="Style" Value="{DynamicResource ItemGlyphSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -189,8 +194,10 @@
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border
                             x:Name="Bd"
+                            Margin="{DynamicResource ItemMargin}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{DynamicResource ItemRadius}"
                             SnapsToDevicePixels="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
