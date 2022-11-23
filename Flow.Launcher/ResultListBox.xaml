@@ -60,14 +60,14 @@
                         <StackPanel
                             Grid.Column="2"
                             Margin="0,0,10,0"
+                            VerticalAlignment="Center"
                             Visibility="{Binding ShowOpenResultHotkey}">
                             <TextBlock
                                 x:Name="Hotkey"
                                 Margin="12,0,12,0"
-                                Padding="0,10,0,10"
+                                Padding="0,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Opacity="0.8"
                                 Style="{DynamicResource ItemHotkeyStyle}">
                                 <TextBlock.Visibility>
                                     <Binding Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
@@ -80,42 +80,57 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                        <Border
-                            Margin="9,0,0,0"
-                            BorderBrush="Transparent"
-                            BorderThickness="0">
-                            <Image
-                                x:Name="ImageIcon"
-                                Width="{Binding IconXY}"
-                                Height="{Binding IconXY}"
-                                Margin="0,0,0,0"
-                                HorizontalAlignment="Center"
-                                IsHitTestVisible="False"
-                                Source="{Binding Image, TargetNullValue={x:Null}}"
-                                Stretch="Uniform"
-                                Visibility="{Binding ShowIcon}">
-                                <Image.Clip>
-                                    <EllipseGeometry
-                                        Center="16 16"
-                                        RadiusX="{Binding IconRadius}"
-                                        RadiusY="{Binding IconRadius}" />
-                                </Image.Clip>
-                            </Image>
-                        </Border>
-                        <Border
-                            Margin="9,0,0,0"
-                            BorderBrush="Transparent"
-                            BorderThickness="0">
-                            <TextBlock
-                                x:Name="GlyphIcon"
+
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Border
+                                x:Name="Bullet"
                                 Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontFamily="{Binding Glyph.FontFamily}"
-                                Style="{DynamicResource ItemGlyph}"
-                                Text="{Binding Glyph.Glyph}"
-                                Visibility="{Binding ShowGlyph}" />
-                        </Border>
+                                Style="{DynamicResource BulletStyle}" />
+
+                            <Border
+                                Grid.Column="1"
+                                Margin="9,0,0,0"
+                                BorderBrush="Transparent"
+                                BorderThickness="1">
+                                <Image
+                                    x:Name="ImageIcon"
+                                    Width="{Binding IconXY}"
+                                    Height="{Binding IconXY}"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
+                                    Source="{Binding Image, TargetNullValue={x:Null}}"
+                                    Stretch="Uniform"
+                                    Visibility="{Binding ShowIcon}">
+                                    <Image.Clip>
+                                        <EllipseGeometry
+                                            Center="16 16"
+                                            RadiusX="{Binding IconRadius}"
+                                            RadiusY="{Binding IconRadius}" />
+                                    </Image.Clip>
+                                </Image>
+                            </Border>
+                            <Border
+                                Grid.Column="1"
+                                Margin="9,0,0,0"
+                                BorderBrush="Transparent"
+                                BorderThickness="0">
+                                <TextBlock
+                                    x:Name="GlyphIcon"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{Binding Glyph.FontFamily}"
+                                    Style="{DynamicResource ItemGlyph}"
+                                    Text="{Binding Glyph.Glyph}"
+                                    Visibility="{Binding ShowGlyph}" />
+                            </Border>
+                        </Grid>
+
                         <Grid
                             Grid.Column="1"
                             Margin="6,0,10,0"
@@ -171,6 +186,7 @@
             <!--  a result item height is 52 including margin  -->
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="Bullet" Property="Style" Value="{DynamicResource ItemBulletSelectedStyle}" />
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
                     <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
