@@ -62,7 +62,7 @@
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
-    <system:String x:Key="ShouldUsePinyin">启动拼音搜索</system:String>
+    <system:String x:Key="ShouldUsePinyin">启用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
@@ -103,9 +103,9 @@
     <system:String x:Key="installbtn">安装</system:String>
     <system:String x:Key="uninstallbtn">卸载</system:String>
     <system:String x:Key="updatebtn">更新</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
+    <system:String x:Key="LabelInstalledToolTip">此插件已安装</system:String>
     <system:String x:Key="LabelNew">新版本</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
 
 
@@ -144,9 +144,9 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
+    <system:String x:Key="builtinShortcuts">内置捷径</system:String>
     <system:String x:Key="customQuery">查询</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcut">捷径</system:String>
     <system:String x:Key="customShortcutExpansion">Expanded</system:String>
     <system:String x:Key="builtinShortcutDescription">描述</system:String>
     <system:String x:Key="delete">删除</system:String>
@@ -155,14 +155,14 @@
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_clipboard_description">从剪贴板获取文本。</system:String>
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>
     <system:String x:Key="windowWidthSizeToolTip">您也可以使用 Ctrl+[ 和 Ctrl+] 快速调整它。</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 图标</system:String>
     <system:String x:Key="useGlyphUIEffect">在支持时在选项中显示 Segoe Fluent 图标</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">按下按键</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -186,7 +186,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">文档</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">图标</system:String>
     <system:String x:Key="about_activate_times">你已经激活了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">检查更新</system:String>
     <system:String x:Key="newVersionTips">发现新版本 {0}, 请重启 Flow Launcher</system:String>
@@ -250,7 +250,7 @@
     <system:String x:Key="update">更新</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
     <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
