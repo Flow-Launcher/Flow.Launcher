@@ -123,6 +123,7 @@
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="#71114b" />
     </Style>
 </ResourceDictionary>
