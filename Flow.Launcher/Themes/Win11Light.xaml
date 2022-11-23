@@ -175,6 +175,7 @@
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#acacac" />
+        <Setter Property="FontSize" Value="22" />
     </Style>
     <Style
         x:Key="DateBox"
