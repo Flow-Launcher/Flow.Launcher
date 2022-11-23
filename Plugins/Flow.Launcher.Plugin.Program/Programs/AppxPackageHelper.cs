@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
-using Windows.Storage;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
     public class AppxPackageHelper
     {
         // This function returns a list of attributes of applications
-        public List<IAppxManifestApplication> getAppsFromManifest(IStream stream)
+        public static List<IAppxManifestApplication> GetAppsFromManifest(IStream stream)
         {
+            IAppxFactory appxFactory = (IAppxFactory)new AppxFactory();
             List<IAppxManifestApplication> apps = new List<IAppxManifestApplication>();
-            var appxFactory = new AppxFactory();
-            var reader = ((IAppxFactory)appxFactory).CreateManifestReader(stream);
+            var reader = appxFactory.CreateManifestReader(stream);
             var manifestApps = reader.GetApplications();
             while (manifestApps.GetHasCurrent())
             {

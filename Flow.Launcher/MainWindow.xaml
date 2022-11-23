@@ -6,6 +6,7 @@
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
@@ -80,30 +81,26 @@
             Command="{Binding LoadContextMenuCommand}" />
         <KeyBinding Key="Left"
             Command="{Binding EscCommand}" />
-        <KeyBinding
-            Key="H"
+        <KeyBinding Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
-        <KeyBinding
-            Key="OemCloseBrackets"
+        <KeyBinding Key="Right"
+            Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Key="Left"
+            Command="{Binding EscCommand}" />
+        <KeyBinding Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="OemOpenBrackets"
+        <KeyBinding Key="OemOpenBrackets"
             Command="{Binding DecreaseWidthCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="OemPlus"
+        <KeyBinding Key="OemPlus"
             Command="{Binding IncreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="OemMinus"
+        <KeyBinding Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="H"
+        <KeyBinding Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
         <KeyBinding Key="Enter"
@@ -195,32 +192,51 @@
                         <TextBox.ContextMenu>
                             <ContextMenu>
                                 <MenuItem Command="ApplicationCommands.Cut"
-                                    Header="{DynamicResource cut}" />
+                                    Header="{DynamicResource cut}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8c6;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Command="ApplicationCommands.Copy"
-                                    Header="{DynamicResource copy}" />
+                                    Header="{DynamicResource copy}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8c8;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Command="ApplicationCommands.Paste"
-                                    Header="{DynamicResource paste}" />
+                                    Header="{DynamicResource paste}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe77f;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <Separator Margin="0"
                                     Padding="0,4,0,4"
                                     Background="{DynamicResource ContextSeparator}" />
                                 <MenuItem Click="OnContextMenusForSettingsClick"
-                                    Header="{DynamicResource flowlauncher_settings}" />
+                                    Header="{DynamicResource flowlauncher_settings}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe713;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem Command="{Binding EscCommand}"
-                                    Header="{DynamicResource closeWindow}" />
+                                    Header="{DynamicResource closeWindow}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe711;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                             </ContextMenu>
                         </TextBox.ContextMenu>
                     </TextBox>
 
                     <StackPanel x:Name="ClockPanel"
-                        Style="{DynamicResource ClockPanel}"
-                        IsHitTestVisible="False">
-                        <TextBlock
-                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Style="{DynamicResource DateBox}"
-                            Text="{Binding DateText}" />
+                        IsHitTestVisible="False"
+                        Style="{DynamicResource ClockPanel}">
+                        <TextBlock Style="{DynamicResource DateBox}"
+                            Text="{Binding DateText}"
+                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <TextBlock Style="{DynamicResource ClockBox}"
-                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}"
-                            Text="{Binding ClockText}"/>
+                            Text="{Binding ClockText}"
+                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
                     </StackPanel>
 
                     <Canvas Style="{DynamicResource SearchIconPosition}">
@@ -299,7 +315,8 @@
                     <ContentControl>
                         <flowlauncher:ResultListBox x:Name="ResultListBox"
                             DataContext="{Binding Results}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                            RightClickResultCommand="{Binding RightClickResultCommand}" />
                     </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
@@ -316,7 +333,8 @@
                     <ContentControl>
                         <flowlauncher:ResultListBox x:Name="ContextMenu"
                             DataContext="{Binding ContextMenu}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                            RightClickResultCommand="{Binding RightClickResultCommand}" />
                     </ContentControl>
                 </Border>
                 <Border Style="{DynamicResource WindowRadius}">
@@ -333,7 +351,8 @@
                     <ContentControl>
                         <flowlauncher:ResultListBox x:Name="History"
                             DataContext="{Binding History}"
-                            PreviewMouseDown="OnPreviewMouseButtonDown" />
+                            LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                            RightClickResultCommand="{Binding RightClickResultCommand}" />
                     </ContentControl>
                 </Border>
             </StackPanel>

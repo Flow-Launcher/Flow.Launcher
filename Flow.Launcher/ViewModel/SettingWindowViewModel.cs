@@ -19,10 +19,12 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class SettingWindowViewModel : BaseModel
+    public partial class SettingWindowViewModel : BaseModel
     {
         private readonly Updater _updater;
         private readonly IPortable _portable;
@@ -212,10 +214,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public List<string> OpenResultModifiersList => new List<string> { KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}" };
+        public List<string> OpenResultModifiersList => new List<string>
+        {
+            KeyConstant.Alt,
+            KeyConstant.Ctrl,
+            $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
+        };
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
 
         public string TestProxy()
         {
@@ -275,7 +285,10 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p })
+                    .Select(p => new PluginViewModel
+                    {
+                        PluginPair = p
+                    })
                     .ToList();
                 return metadatas;
             }
@@ -318,7 +331,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public async Task RefreshExternalPluginsAsync()
+        [RelayCommand]
+        private async Task RefreshExternalPluginsAsync()
         {
             await PluginsManifest.UpdateManifestAsync();
             OnPropertyChanged(nameof(ExternalPlugins));
@@ -397,7 +411,11 @@ namespace Flow.Launcher.ViewModel
                 {
                     var key = $"ColorScheme{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new ColorScheme { Display = display, Value = e, };
+                    var m = new ColorScheme
+                    {
+                        Display = display,
+                        Value = e,
+                    };
                     modes.Add(m);
                 }
                 return modes;
@@ -519,8 +537,13 @@ namespace Flow.Launcher.ViewModel
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.StreamSource = memStream;
+                    bitmap.DecodePixelWidth = 800;
+                    bitmap.DecodePixelHeight = 600;
                     bitmap.EndInit();
-                    var brush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+                    var brush = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
                     return brush;
                 }
                 else
@@ -548,19 +571,19 @@ namespace Flow.Launcher.ViewModel
                     {
                         Title = "WebSearch",
                         SubTitle = "Search the web with different search engine support",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
                         Title = "Program",
                         SubTitle = "Launch programs as admin or a different user",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
                         Title = "ProcessKiller",
                         SubTitle = "Terminate unwanted processes",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
                 var vm = new ResultsViewModel(Settings);
@@ -574,8 +597,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
                 {
                     var font = new FontFamily(Settings.QueryBoxFont);
                     return font;
@@ -602,7 +625,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.QueryBoxFontStyle,
                         Settings.QueryBoxFontWeight,
                         Settings.QueryBoxFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -619,8 +642,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
                 {
                     var font = new FontFamily(Settings.ResultFont);
                     return font;
@@ -647,7 +670,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.ResultFontStyle,
                         Settings.ResultFontWeight,
                         Settings.ResultFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -669,6 +692,65 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region shortcut
+
+        public CustomShortcutModel? SelectedCustomShortcut { get; set; }
+
+        public void DeleteSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+
+            string deleteWarning = string.Format(
+                InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
+                    item?.Key, item?.Value);
+            if (MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Settings.CustomShortcuts.Remove(item);
+            }
+        }
+
+        public bool EditSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return false;
+            }
+
+            var shortcutSettingWindow = new CustomShortcutSetting(item.Key, item.Value, this);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                item.Key = shortcutSettingWindow.Key;
+                item.Value = shortcutSettingWindow.Value;
+                return true;
+            }
+            return false;
+        }
+
+        public void AddCustomShortcut()
+        {
+            var shortcutSettingWindow = new CustomShortcutSetting(this);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                var shortcut = new CustomShortcutModel(shortcutSettingWindow.Key, shortcutSettingWindow.Value);
+                Settings.CustomShortcuts.Add(shortcut);
+            }
+        }
+
+        public bool ShortcutExists(string key)
+        {
+            return Settings.CustomShortcuts.Any(x => x.Key == key) || Settings.BuiltinShortcuts.Any(x => x.Key == key);
+        }
+
+        #endregion
+
         #region about
 
         public string Website => Constant.Website;
@@ -676,7 +758,20 @@ namespace Flow.Launcher.ViewModel
         public string Documentation => Constant.Documentation;
         public string Docs => Constant.Docs;
         public string Github => Constant.GitHub;
-        public static string Version => Constant.Version;
+        public string Version
+        {
+            get
+            {
+                if (Constant.Version == "1.0.0")
+                {
+                    return Constant.Dev;
+                }
+                else
+                {
+                    return Constant.Version;
+                }
+            }
+        }
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
         
         public string CheckLogFolder
