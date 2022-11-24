@@ -55,7 +55,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="60" />
                             <ColumnDefinition Width="9*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" MinWidth="8" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
                             Grid.Column="2"
@@ -164,6 +164,7 @@
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
+                                TextTrimming="CharacterEllipsis"
                                 ToolTip="{Binding ShowTitleToolTip}"
                                 ToolTipService.ShowOnDisabled="True">
                                 <vm:ResultsViewModel.FormattedText>
@@ -179,6 +180,7 @@
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
+                                TextTrimming="CharacterEllipsis"
                                 ToolTip="{Binding ShowSubTitleToolTip}"
                                 ToolTipService.ShowOnDisabled="True" />
                         </Grid>
