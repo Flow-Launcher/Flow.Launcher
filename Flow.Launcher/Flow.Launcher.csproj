@@ -47,10 +47,11 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Page Remove="Themes\Circle Light.xaml" />
+    <Page Remove="Themes\Circle System.xaml" />
     <Page Remove="Themes\DarkCyan.xaml" />
     <Page Remove="Themes\Gray.xaml" />
     <Page Remove="Themes\Light Bullet.xaml" />
-    <Page Remove="Themes\Light Circle.xaml" />
     <Page Remove="Themes\Midnight.xaml" />
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
     <Page Remove="Themes\Ubuntu.xaml" />
