@@ -65,15 +65,9 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
             Settings.PropertyChanged += (_, args) =>
             {
-                if (args.PropertyName == nameof(Settings.WindowSize))
-                {
-                }
                 switch (args.PropertyName) {
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
-                        break;
-                    case nameof(Settings.Language):
-                        Culture = new CultureInfo(Settings.Language);
                         break;
                 }
             };
@@ -106,8 +100,6 @@ namespace Flow.Launcher.ViewModel
             RegisterClockAndDateUpdateAsync();
 
             SetOpenResultModifiers();
-
-            Culture = new CultureInfo(Settings.Language);
         }
 
         private void RegisterViewUpdate()
@@ -343,7 +335,7 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
-        public CultureInfo Culture { get; set; }
+        public CultureInfo Culture => InternationalizationManager.Instance.CurrentCulture;
 
         private async Task RegisterClockAndDateUpdateAsync()
         {

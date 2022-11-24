@@ -56,14 +56,12 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(ClockText));
                         break;
                     case nameof(Settings.Language):
-                        Culture = new CultureInfo(Settings.Language);
                         OnPropertyChanged(nameof(ClockText));
                         OnPropertyChanged(nameof(DateText));
                         break;
                 }
             };
 
-            Culture = new CultureInfo(Settings.Language);
         }
 
         public Settings Settings { get; set; }
@@ -87,7 +85,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public CultureInfo Culture { get; private set; }
+        public CultureInfo Culture => InternationalizationManager.Instance.CurrentCulture;
 
         public bool StartFlowLauncherOnSystemStartup
         {

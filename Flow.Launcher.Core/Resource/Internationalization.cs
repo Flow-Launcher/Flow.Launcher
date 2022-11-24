@@ -17,6 +17,7 @@ namespace Flow.Launcher.Core.Resource
     public class Internationalization
     {
         public Settings Settings { get; set; }
+        public CultureInfo CurrentCulture { get; private set; }
         private const string Folder = "Languages";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
@@ -62,6 +63,7 @@ namespace Flow.Launcher.Core.Resource
         {
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
+            CurrentCulture = new CultureInfo("en");
         }
 
         public void ChangeLanguage(string languageCode)
@@ -96,9 +98,12 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            Settings.Language = language.LanguageCode;
             CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            CurrentCulture = CultureInfo.CurrentCulture;
+
+            // Raise event after this.CurrentCulture is set
+            Settings.Language = language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
