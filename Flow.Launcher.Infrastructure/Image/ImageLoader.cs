@@ -113,10 +113,12 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     return new ImageResult(DefaultImage, ImageType.Error);
                 }
+
                 if (ImageCache.ContainsKey(path, loadFullImage))
                 {
                     return new ImageResult(ImageCache[path, loadFullImage], ImageType.Cache);
                 }
+
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
                     && (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
                 {
@@ -129,11 +131,6 @@ namespace Flow.Launcher.Infrastructure.Image
                     var imageSource = new BitmapImage(new Uri(path));
                     imageSource.Freeze();
                     return new ImageResult(imageSource, ImageType.Data);
-                }
-
-                if (!Path.IsPathRooted(path))
-                {
-                    path = Path.Combine(Constant.ProgramDirectory, "Images", Path.GetFileName(path));
                 }
 
                 imageResult = await Task.Run(() => GetThumbnailResult(ref path, loadFullImage));
