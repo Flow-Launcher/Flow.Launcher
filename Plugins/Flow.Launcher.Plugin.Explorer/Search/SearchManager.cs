@@ -99,6 +99,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 results.Add(ResultManager.CreateResult(query, search));
             }
 
+            results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
+                excludedPath => r.SubTitle.StartsWith(excludedPath.Path, StringComparison.OrdinalIgnoreCase)));
+
             return results.ToList();
         }
 
