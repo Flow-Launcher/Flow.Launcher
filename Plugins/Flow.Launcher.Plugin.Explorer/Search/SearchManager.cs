@@ -1,7 +1,6 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -31,12 +30,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             public bool Equals(Result x, Result y)
             {
-                return x.SubTitle == y.SubTitle;
+                return x.Title == y.Title && x.SubTitle == y.SubTitle;
             }
 
             public int GetHashCode(Result obj)
             {
-                return obj.SubTitle?.GetHashCode() ?? 0;
+                return HashCode.Combine(obj.Title.GetHashCode(), obj.SubTitle?.GetHashCode() ?? 0);
             }
         }
 
