@@ -24,7 +24,8 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Foreground" Value="Transparent" />
+        <Setter Property="Foreground" Value="#ebebeb" />
+        <Setter Property="Opacity" Value="0.2" />
     </Style>
 
     <Style

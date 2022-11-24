@@ -18,7 +18,6 @@
         <Setter Property="SelectionBrush" Value="#0a68d8" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="Foreground" Value="#000000" />
-        <Setter Property="Background" Value="#dddddd" />
         <Setter Property="CaretBrush" Value="#000000" />
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="0" />
