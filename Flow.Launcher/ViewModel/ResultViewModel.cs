@@ -173,8 +173,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            var i = await ImageLoader.LoadAsync(imagePath, loadFullImage);
-            Image = i;
+            Image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         public Result Result { get; }
