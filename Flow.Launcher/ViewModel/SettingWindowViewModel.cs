@@ -499,14 +499,14 @@ namespace Flow.Launcher.ViewModel
 
         public string TimeFormat
         {
-            get { return Settings.TimeFormat; }
-            set { Settings.TimeFormat = value; }
+            get => Settings.TimeFormat;
+            set => Settings.TimeFormat = value;
         }
 
         public string DateFormat
         {
-            get { return Settings.DateFormat; }
-            set { Settings.DateFormat = value; }
+            get => Settings.DateFormat;
+            set => Settings.DateFormat = value;
         }
 
         public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
