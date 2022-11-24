@@ -17,6 +17,7 @@
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#999aa3" />
+        <Setter Property="Padding" Value="0,4,50,0" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Height" Value="38" />
     </Style>
@@ -26,6 +27,7 @@
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Padding" Value="0,4,50,0" />
         <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="#d9d9d9" />
