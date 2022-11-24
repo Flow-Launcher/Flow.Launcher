@@ -62,8 +62,8 @@
     <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>
     <system:String x:Key="querySearchPrecision">Precisão da consulta</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
-    <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Permitir Pinyin para a pesquisa. Pinyin é o sistema padrão da ortografia romanizada para tradução de mandarim</system:String>
+    <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,7 +147,7 @@
     <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
-    <system:String x:Key="customShortcutExpansion">Expandido</system:String>
+    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
     <system:String x:Key="builtinShortcutDescription">Descrição</system:String>
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
