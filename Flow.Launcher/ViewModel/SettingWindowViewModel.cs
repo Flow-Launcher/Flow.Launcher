@@ -56,11 +56,14 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(ClockText));
                         break;
                     case nameof(Settings.Language):
+                        Culture = new CultureInfo(Settings.Language);
                         OnPropertyChanged(nameof(ClockText));
                         OnPropertyChanged(nameof(DateText));
                         break;
                 }
             };
+
+            Culture = new CultureInfo(Settings.Language);
         }
 
         public Settings Settings { get; set; }
@@ -84,7 +87,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
+        public CultureInfo Culture { get; private set; }
 
         public bool StartFlowLauncherOnSystemStartup
         {
@@ -506,10 +509,9 @@ namespace Flow.Launcher.ViewModel
             set { Settings.DateFormat = value; }
         }
 
-        public string ClockText => DateTime.Now.ToString(TimeFormat, cultureInfo);
+        public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
 
-        public string DateText => DateTime.Now.ToString(DateFormat, cultureInfo);
-
+        public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
         public double WindowWidthSize
         {
