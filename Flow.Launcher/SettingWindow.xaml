@@ -1,4 +1,4 @@
-<Window
+﻿<Window
     x:Class="Flow.Launcher.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -2848,13 +2848,30 @@
                                                 Text="{Binding Version}" />
                                             <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource version}" />
                                         </StackPanel>
-                                        <Button
-                                            Grid.Column="1"
-                                            Margin="0,0,-14,0"
-                                            HorizontalAlignment="Right"
-                                            Click="OnCheckUpdates"
-                                            Content="{DynamicResource checkUpdates}"
-                                            Style="{StaticResource AccentButtonStyle}" />
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button
+                                                Margin="0,0,10,0"
+                                                HorizontalAlignment="Right"
+                                                Click="OnCheckUpdates"
+                                                Content="{DynamicResource checkUpdates}" />
+                                            <Button
+                                                Margin="0,0,14,0"
+                                                Padding="0"
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource AccentButtonStyle}">
+                                                <Hyperlink
+                                                    NavigateUri="{Binding SponsorPage, Mode=OneWay}"
+                                                    RequestNavigate="OnRequestNavigate"
+                                                    TextDecorations="None">
+
+                                                    <TextBlock
+                                                        Padding="10,5,10,5"
+                                                        Foreground="White"
+                                                        Text="{DynamicResource BecomeASponsor}" />
+                                                </Hyperlink>
+                                            </Button>
+
+                                        </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xe946;
                                         </TextBlock>

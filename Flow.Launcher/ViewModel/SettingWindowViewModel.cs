@@ -799,6 +799,7 @@ namespace Flow.Launcher.ViewModel
         #region about
 
         public string Website => Constant.Website;
+        public string SponsorPage => Constant.SponsorPage;
         public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
         public string Docs => Constant.Docs;
