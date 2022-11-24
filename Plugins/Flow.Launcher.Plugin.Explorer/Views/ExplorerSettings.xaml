@@ -161,11 +161,6 @@
                 <StackPanel Grid.Row="0" Margin="30,10,0,0">
                     <StackPanel>
                         <StackPanel Orientation="Vertical">
-                            <StackPanel.Resources>
-                                <DataTemplate x:Key="EnumBindingModelItemTemplate">
-                                    <TextBlock Text="{Binding Description}" />
-                                </DataTemplate>
-                            </StackPanel.Resources>
                             <CheckBox
                                 Margin="0,10,0,0"
                                 Content="{DynamicResource plugin_explorer_usewindowsindexfordirectorysearch}"
@@ -275,9 +270,9 @@
                                         Margin="10,15,10,10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        ItemTemplate="{StaticResource EnumBindingModelItemTemplate}"
                                         ItemsSource="{Binding IndexSearchEngines}"
-                                        SelectedItem="{Binding SelectedIndexSearchEngine}" />
+                                        SelectedItem="{Binding SelectedIndexSearchEngine}"
+                                        DisplayMemberPath="Description"/>
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
@@ -292,9 +287,9 @@
                                         Margin="10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        ItemTemplate="{StaticResource EnumBindingModelItemTemplate}"
                                         ItemsSource="{Binding ContentIndexSearchEngines}"
-                                        SelectedItem="{Binding SelectedContentSearchEngine}" />
+                                        SelectedItem="{Binding SelectedContentSearchEngine}" 
+                                        DisplayMemberPath="Description"/>
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
@@ -309,8 +304,8 @@
                                         Margin="10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        ItemTemplate="{StaticResource EnumBindingModelItemTemplate}"
                                         ItemsSource="{Binding PathEnumerationEngines}"
+                                        DisplayMemberPath="Description"
                                         SelectedItem="{Binding SelectedPathEnumerationEngine}" />
                                 </Grid>
                             </StackPanel>
