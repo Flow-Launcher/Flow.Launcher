@@ -39,6 +39,7 @@
     </Window.CommandBindings>
 
     <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
@@ -1815,13 +1816,25 @@
                                                     </Grid.RowDefinitions>
                                                     <Border Grid.Row="0">
                                                         <TextBox
+                                                            x:Name="QueryTextBox"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
                                                     </Border>
-                                                    <StackPanel x:Name="ClockPanel" Style="{DynamicResource ClockPanel}">
-                                                        <TextBlock x:Name="DateBox" Style="{DynamicResource DateBox}" />
-                                                        <TextBlock x:Name="ClockBox" Style="{DynamicResource ClockBox}" />
+                                                    <StackPanel
+                                                        x:Name="ClockPanel"
+                                                        IsHitTestVisible="False"
+                                                        Style="{DynamicResource ClockPanel}">
+                                                        <TextBlock
+                                                            x:Name="ClockBox"
+                                                            Style="{DynamicResource ClockBox}"
+                                                            Text="{Binding ClockText}"
+                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                        <TextBlock
+                                                            x:Name="DateBox"
+                                                            Style="{DynamicResource DateBox}"
+                                                            Text="{Binding DateText}"
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -2162,6 +2175,12 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="0,0,10,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Foreground="{DynamicResource Color04B}"
+                                                                Text="{Binding ClockText}" />
                                                             <ComboBox
                                                                 x:Name="TimeFormat"
                                                                 Grid.Column="2"
@@ -2170,14 +2189,12 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding TimeFormatList}"
-                                                                SelectedValue="{Binding Settings.TimeFormat}"
-                                                                SelectionChanged="PreviewClockAndDate" />
+                                                                SelectedItem="{Binding TimeFormat}" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseClock, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"
-                                                                Toggled="PreviewClockAndDate" />
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xec92;
@@ -2200,6 +2217,12 @@
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Margin="0,0,10,0"
+                                                                VerticalAlignment="Center"
+                                                                FontSize="14"
+                                                                Foreground="{DynamicResource Color04B}"
+                                                                Text="{Binding DateText}" />
                                                             <ComboBox
                                                                 x:Name="DateFormat"
                                                                 Grid.Column="2"
@@ -2208,14 +2231,12 @@
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding DateFormatList}"
-                                                                SelectedValue="{Binding Settings.DateFormat}"
-                                                                SelectionChanged="PreviewClockAndDate" />
+                                                                SelectedItem="{Binding DateFormat}" />
                                                             <ui:ToggleSwitch
                                                                 IsOn="{Binding UseDate, Mode=TwoWay}"
                                                                 OffContent="{DynamicResource disable}"
                                                                 OnContent="{DynamicResource enable}"
-                                                                Style="{DynamicResource SideToggleSwitch}"
-                                                                Toggled="PreviewClockAndDate" />
+                                                                Style="{DynamicResource SideToggleSwitch}" />
                                                         </StackPanel>
                                                         <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe787;

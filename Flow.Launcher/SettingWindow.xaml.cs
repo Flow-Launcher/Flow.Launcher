@@ -10,17 +10,14 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ModernWpf.Controls;
 using System;
-using System.Drawing.Printing;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -44,6 +41,7 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
+
         }
 
         #region General
@@ -64,7 +62,6 @@ namespace Flow.Launcher
             pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
-            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -514,34 +511,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
-        {
-            ClockDisplay();
-        }
-
-        public void ClockDisplay()
-        {
-            if (settings.UseClock)
-            {
-                ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
-            }
-            else
-            {
-                ClockBox.Visibility = Visibility.Collapsed;
-            }
-
-            if (settings.UseDate)
-            {
-                DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
-            }
-            else
-            {
-                DateBox.Visibility = Visibility.Collapsed;
-            }
-        }
-
         public void InitializePosition()
         {
             if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
@@ -556,6 +525,7 @@ namespace Flow.Launcher
             }
             WindowState = settings.SettingWindowState;
         }
+
         public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
