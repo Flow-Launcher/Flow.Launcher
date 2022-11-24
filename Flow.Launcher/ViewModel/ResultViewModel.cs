@@ -15,7 +15,7 @@ namespace Flow.Launcher.ViewModel
     public class ResultViewModel : BaseModel
     {
         private static PrivateFontCollection fontCollection = new();
-        private static Dictionary<string, string> fonts = new(); 
+        private static Dictionary<string, string> fonts = new();
 
         public ResultViewModel(Result result, Settings settings)
         {
@@ -173,7 +173,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            var i = await Task.Run(async () => await ImageLoader.LoadAsync(imagePath, loadFullImage));
+            var i = await ImageLoader.LoadAsync(imagePath, loadFullImage);
             Image = i;
         }
 
