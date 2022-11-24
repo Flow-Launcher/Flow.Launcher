@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,6 +27,13 @@ using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Windows.Threading;
 using System.Windows.Data;
+using ModernWpf.Controls;
+using System.Drawing;
+using System.Windows.Forms.Design.Behavior;
+using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
+using Microsoft.VisualBasic.Devices;
+using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
 
 namespace Flow.Launcher
 {
@@ -102,7 +109,6 @@ namespace Flow.Launcher
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
-
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -224,11 +230,12 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
-            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            ((MenuItem)menu.Items[5]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+
         }
 
         private void InitializeNotifyIcon()
@@ -239,32 +246,38 @@ namespace Flow.Launcher
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
+
             contextMenu = new ContextMenu();
 
-            var header = new MenuItem
-            {
-                Header = "Flow Launcher",
-                IsEnabled = false
-            };
+            var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +_settings.Hotkey + ")"
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
+            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode")
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset")
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
+            var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
+            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -272,10 +285,11 @@ namespace Flow.Launcher
             positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
-            contextMenu.Items.Add(header);
-            contextMenu.Items.Add(open);
+
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
             positionreset.ToolTip = InternationalizationManager.Instance.GetTranslation("PositionResetToolTip");
+
+            contextMenu.Items.Add(open);
             contextMenu.Items.Add(gamemode);
             contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
@@ -352,11 +366,14 @@ namespace Flow.Launcher
 
             _animating = true;
             UpdatePosition();
-            Storyboard sb = new Storyboard();
+
+            Storyboard windowsb = new Storyboard();
+            Storyboard clocksb = new Storyboard();
             Storyboard iconsb = new Storyboard();
-            CircleEase easing = new CircleEase();  // or whatever easing class you want
+            CircleEase easing = new CircleEase();
             easing.EasingMode = EasingMode.EaseInOut;
-            var da = new DoubleAnimation
+
+            var WindowOpacity = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
@@ -364,60 +381,81 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.Stop
             };
 
-            var da2 = new DoubleAnimation
+            var WindowMotion = new DoubleAnimation
             {
                 From = Top + 10,
                 To = Top,
                 Duration = TimeSpan.FromSeconds(0.25),
                 FillBehavior = FillBehavior.Stop
             };
-                var da3 = new DoubleAnimation
-                {
+            var IconMotion = new DoubleAnimation
+            {
                     From = 12,
                     To = 0,
                     EasingFunction = easing,
                     Duration = TimeSpan.FromSeconds(0.36),
                     FillBehavior = FillBehavior.Stop
-                };
-            Storyboard.SetTarget(da, this);
-            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
-            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-            Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
-            sb.Children.Add(da);
-            sb.Children.Add(da2);
-            iconsb.Children.Add(da3);
-            sb.Completed += (_, _) => _animating = false;
+            };
+
+            var ClockOpacity = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+            double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
+            var IconOpacity = new DoubleAnimation
+            {
+                From = 0,
+                To = TargetIconOpacity,
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            double right = ClockPanel.Margin.Right;
+            var thicknessAnimation = new ThicknessAnimation
+            {
+                From = new Thickness(0, 12, right, 0),
+                To = new Thickness(0, 0, right, 0),
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
+            Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
+            Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
+            Storyboard.SetTarget(WindowOpacity, this);
+            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
+            Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
+
+            clocksb.Children.Add(thicknessAnimation);
+            clocksb.Children.Add(ClockOpacity);
+            windowsb.Children.Add(WindowOpacity);
+            windowsb.Children.Add(WindowMotion);
+            iconsb.Children.Add(IconMotion);
+            iconsb.Children.Add(IconOpacity);
+
+            windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+
+            if (QueryTextBox.Text.Length == 0)
+            {
+                clocksb.Begin(ClockPanel);
+            }
             iconsb.Begin(SearchIcon);
-            sb.Begin(FlowMainWindow);
+            windowsb.Begin(FlowMainWindow);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
-        }
-
-        private void OnPreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender != null && e.OriginalSource != null)
-            {
-                var r = (ResultListBox)sender;
-                var d = (DependencyObject)e.OriginalSource;
-                var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-                var result = (ResultViewModel)item?.DataContext;
-                if (result != null)
-                {
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        _viewModel.OpenResultCommand.Execute(null);
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
-                    }
-                }
-            }
         }
 
         private void OnPreviewDragOver(object sender, DragEventArgs e)

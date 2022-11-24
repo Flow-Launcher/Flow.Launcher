@@ -10,58 +10,89 @@
     mc:Ignorable="d">
     <Grid Margin="0">
         <Grid.RowDefinitions>
-            <RowDefinition Height="170" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="60" />
         </Grid.RowDefinitions>
+        <DockPanel
+            Margin="70,10,0,8"
+            HorizontalAlignment="Stretch"
+            LastChildFill="True">
+            <TextBlock
+                MinWidth="120"
+                Margin="0,5,10,0"
+                Text="{DynamicResource flowlauncher_plugin_program_index_source}" />
+            <WrapPanel
+                Width="Auto"
+                Margin="0,0,14,0"
+                HorizontalAlignment="Right"
+                DockPanel.Dock="Right">
+                <CheckBox
+                    Name="StartMenuEnabled"
+                    Margin="12,0,12,0"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_start}"
+                    IsChecked="{Binding EnableStartMenuSource}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
+                <CheckBox
+                    Name="RegistryEnabled"
+                    Margin="12,0,12,0"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
+                    IsChecked="{Binding EnableRegistrySource}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
+
+                <CheckBox
+                    Name="PATHEnabled"
+                    Margin="12,0,12,0"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_PATH}"
+                    IsChecked="{Binding EnablePATHSource}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_PATH_tooltip}" />
+            </WrapPanel>
+        </DockPanel>
+
         <StackPanel
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Vertical">
-            <StackPanel Width="Auto" Orientation="Vertical">
-                <StackPanel Width="Auto" Orientation="Horizontal">
-                    <CheckBox
-                        Name="StartMenuEnabled"
-                        Width="220"
-                        Margin="70,8,10,8"
-                        Content="{DynamicResource flowlauncher_plugin_program_index_start}"
-                        IsChecked="{Binding EnableStartMenuSource}"
-                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_start_tooltip}" />
-                    <CheckBox
-                        Name="RegistryEnabled"
-                        Margin="70,8,10,8"
-                        Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
-                        IsChecked="{Binding EnableRegistrySource}"
-                        ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
-                </StackPanel>
-
-                <Separator
-                    Height="1"
-                    BorderBrush="{DynamicResource Color03B}"
-                    BorderThickness="1" />
-                <StackPanel Width="Auto" Orientation="Horizontal">
+            <Separator
+                Height="1"
+                BorderBrush="{DynamicResource Color03B}"
+                BorderThickness="1" />
+            <DockPanel
+                Margin="70,10,0,8"
+                HorizontalAlignment="Stretch"
+                LastChildFill="True">
+                <TextBlock
+                    MinWidth="120"
+                    Margin="0,5,10,0"
+                    Text="{DynamicResource flowlauncher_plugin_program_index_option}" />
+                <WrapPanel
+                    Width="Auto"
+                    Margin="0,0,14,0"
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right">
                     <CheckBox
                         Name="HideLnkEnabled"
-                        Width="220"
-                        Margin="70,8,10,8"
+                        Margin="12,0,12,0"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
                         IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
                         Name="DescriptionEnabled"
-                        Margin="70,8,10,8"
+                        Margin="12,0,12,0"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
-                </StackPanel>
-                <Separator
-                    Height="1"
-                    BorderBrush="{DynamicResource Color03B}"
-                    BorderThickness="1" />
-            </StackPanel>
+                </WrapPanel>
+            </DockPanel>
+            <Separator
+                Height="1"
+                BorderBrush="{DynamicResource Color03B}"
+                BorderThickness="1" />
             <StackPanel
                 Width="Auto"
-                Margin="10,6,0,0"
+                Height="55"
+                Margin="60,6,0,0"
                 HorizontalAlignment="Left"
                 Orientation="Horizontal">
                 <Button
@@ -107,15 +138,17 @@
         </StackPanel>
         <ListView
             x:Name="programSourceView"
-            Grid.Row="1"
-            Margin="20,0,20,0"
+            Grid.Row="2"
+            Margin="70,0,20,0"
             AllowDrop="True"
             BorderBrush="DarkGray"
             BorderThickness="1"
             DragEnter="programSourceView_DragEnter"
             Drop="programSourceView_Drop"
             GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler"
+            MouseDoubleClick="programSourceView_MouseDoubleClick"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
+            SelectionChanged="programSourceView_SelectionChanged"
             SelectionMode="Extended">
             <ListView.View>
                 <GridView>
@@ -126,7 +159,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enable}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock
@@ -147,7 +180,7 @@
             </ListView.View>
         </ListView>
         <DockPanel
-            Grid.Row="2"
+            Grid.Row="3"
             Grid.RowSpan="1"
             Margin="0,0,20,10">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -173,66 +206,3 @@
         </DockPanel>
     </Grid>
 </UserControl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

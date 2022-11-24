@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,8 +60,13 @@ namespace Flow.Launcher.Infrastructure
                 return new MatchResult(false, UserSettingSearchPrecision);
 
             query = query.Trim();
-            TranslationMapping translationMapping;
-            (stringToCompare, translationMapping) = _alphabet?.Translate(stringToCompare) ?? (stringToCompare, null);
+            TranslationMapping translationMapping = null;
+            if (_alphabet is not null && !_alphabet.CanBeTranslated(query))
+            {
+                // We assume that if a query can be translated (containing characters of a language, like Chinese)
+                // it actually means user doesn't want it to be translated to English letters.
+                (stringToCompare, translationMapping) = _alphabet.Translate(stringToCompare);
+            }
 
             var currentAcronymQueryIndex = 0;
             var acronymMatchData = new List<int>();

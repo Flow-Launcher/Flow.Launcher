@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.IO;
 using Accessibility;
 using System.Runtime.InteropServices.ComTypes;
-using System.Security.Policy;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -100,8 +97,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         // To initialize the app description
-        public String description = String.Empty;
-
+        public string description = string.Empty;
+        public string arguments = string.Empty;
 
         // Retrieve the target path using Shell Link
         public string retrieveTargetPath(string path)
@@ -125,13 +122,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 buffer = new StringBuilder(MAX_PATH);
                 ((IShellLinkW)link).GetDescription(buffer, MAX_PATH);
                 description = buffer.ToString();
+
+                buffer.Clear();
+                ((IShellLinkW)link).GetArguments(buffer, MAX_PATH);
+                arguments = buffer.ToString();
             }
             
             // To release unmanaged memory
             Marshal.ReleaseComObject(link);
 
             return target;
-
         }
     }
 }

@@ -115,7 +115,11 @@ namespace Flow.Launcher.Core.Resource
             if (languageToSet != AvailableLanguages.Chinese && languageToSet != AvailableLanguages.Chinese_TW)
                 return false;
 
-            if (MessageBox.Show("Do you want to turn on search with Pinyin?", string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            // No other languages should show the following text so just make it hard-coded
+            // "Do you want to search with pinyin?"
+            string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？" ;
+
+            if (MessageBox.Show(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;
