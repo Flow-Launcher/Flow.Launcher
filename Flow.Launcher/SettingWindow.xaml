@@ -2863,7 +2863,6 @@
                                                     NavigateUri="{Binding SponsorPage, Mode=OneWay}"
                                                     RequestNavigate="OnRequestNavigate"
                                                     TextDecorations="None">
-
                                                     <TextBlock
                                                         Padding="10,5,10,5"
                                                         Foreground="White"
