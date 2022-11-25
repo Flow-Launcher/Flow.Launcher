@@ -414,6 +414,7 @@
     </Style>
 
     <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed" />
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
@@ -477,20 +478,19 @@
 
     <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8f8f8f" />
-        <Setter Property="FontSize" Value="18" />
-        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="10" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
     <Style x:Key="BasePreviewItemSubTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8f8f8f" />
-        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Normal" />
         <Setter Property="Margin" Value="0,2,0,10" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="LineHeight" Value="18" />
-        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextAlignment" Value="Left" />
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
