@@ -21,9 +21,11 @@
     <system:String x:Key="textTitle">Texto</system:String>
     <system:String x:Key="GameMode">Modo Juego</system:String>
     <system:String x:Key="GameModeToolTip">Suspende el uso de atajos de teclado.</system:String>
+    <system:String x:Key="PositionReset">Restablecer posición</system:String>
+    <system:String x:Key="PositionResetToolTip">Restablece la posición de la ventana de búsqueda</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Configuración de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Configuración</system:String>
     <system:String x:Key="general">General</system:String>
     <system:String x:Key="portableMode">Modo Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Guarda toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
@@ -31,7 +33,13 @@
     <system:String x:Key="setAutoStartFailed">Error de configuración de arranque al iniciar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
+    <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
     <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Recordar última posición</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Centro de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Arriba en el centro de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Arriba a la izquierda de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Arriba a la derecha de la pantalla enfocada con el ratón</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
@@ -39,6 +47,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
+    <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
@@ -53,11 +62,15 @@
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Utilizar Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino</system:String>
+    <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Buscar complemento</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F para buscar complementos</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No se han encontrado resultados</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Por favor, intente una búsqueda diferente.</system:String>
     <system:String x:Key="plugin">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
@@ -66,12 +79,12 @@
     <system:String x:Key="actionKeywords">Palabra clave de acción</system:String>
     <system:String x:Key="currentActionKeywords">Palabra clave de acción actual</system:String>
     <system:String x:Key="newActionKeyword">Nueva palabra clave de acción</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Cambia las palabras clave de acción</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Cambia la palabra clave de acción</system:String>
     <system:String x:Key="currentPriority">Prioridad actual</system:String>
     <system:String x:Key="newPriority">Nueva prioridad</system:String>
     <system:String x:Key="priority">Prioridad</system:String>
     <system:String x:Key="priorityToolTip">Cambiar la prioridad de los resultados del complemento</system:String>
-    <system:String x:Key="pluginDirectory">Carpeta de complementos</system:String>
+    <system:String x:Key="pluginDirectory">Carpeta del complemento</system:String>
     <system:String x:Key="author">por</system:String>
     <system:String x:Key="plugin_init_time">Tiempo de inicio:</system:String>
     <system:String x:Key="plugin_query_time">Tiempo de consulta:</system:String>
@@ -82,8 +95,20 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado recientemente</system:String>
+    <system:String x:Key="pluginStore_None">Complementos</system:String>
+    <system:String x:Key="pluginStore_Installed">Instalado</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
-    <system:String x:Key="install">Instalar</system:String>
+    <system:String x:Key="installbtn">Instalar</system:String>
+    <system:String x:Key="uninstallbtn">Desinstalar</system:String>
+    <system:String x:Key="updatebtn">Actualizar</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Complemento ya instalado</system:String>
+    <system:String x:Key="LabelNew">Nueva versión</system:String>
+    <system:String x:Key="LabelNewToolTip">Este complemento ha sido actualizado en los últimos 7 días</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Nueva actualización disponible</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -96,7 +121,7 @@
     <system:String x:Key="opacity">Opacidad</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">El tema {0} no existe, activando el tema por defecto</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Fallo al cargar el tema {0}, activando el tema predeterminado</system:String>
-    <system:String x:Key="ThemeFolder">Carpeta de temas</system:String>
+    <system:String x:Key="ThemeFolder">Carpeta de temas del usuario</system:String>
     <system:String x:Key="OpenThemeFolder">Abrir carpeta de temas</system:String>
     <system:String x:Key="ColorScheme">Esquema de colores</system:String>
     <system:String x:Key="ColorSchemeSystem">Predeterminado del sistema</system:String>
@@ -106,9 +131,11 @@
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Usar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="Clock">Reloj</system:String>
+    <system:String x:Key="Date">Fecha</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Atajo de teclado</system:String>
+    <system:String x:Key="hotkey">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
@@ -116,17 +143,26 @@
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
+    <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="builtinShortcuts">Accesos directos integrados</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
+    <system:String x:Key="customShortcut">Acceso directo</system:String>
+    <system:String x:Key="customShortcutExpansion">Expansión</system:String>
+    <system:String x:Key="builtinShortcutDescription">Descripción</system:String>
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado del complemento {0}?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">También puede ajustarlo rápidamente usando Ctrl+[y Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -150,8 +186,10 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Documentación</system:String>
     <system:String x:Key="version">Versión</system:String>
+    <system:String x:Key="icons">Iconos</system:String>
     <system:String x:Key="about_activate_times">Ha activado Flow Launcher {0} veces</system:String>
     <system:String x:Key="checkUpdates">Buscar actualizaciones</system:String>
+    <system:String x:Key="BecomeASponsor">Hágase Patrocinador</system:String>
     <system:String x:Key="newVersionTips">La nueva versión {0} está disponible, ¿desea reiniciar Flow Launcher para actualizar?</system:String>
     <system:String x:Key="checkUpdatesFailed">La comprobación de las actualizaciones ha fallado, por favor, compruebe la configuración de su proxy y conexión a api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -212,6 +250,12 @@
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
     <system:String x:Key="update">Actualizar</system:String>
 
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Introduzca acceso directo para mostrar directamente la consulta especificada.</system:String>
+    <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
+    <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
+
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Atajo de teclado no disponible</system:String>
 
@@ -267,7 +311,7 @@
     <system:String x:Key="Welcome_Page4_Title">Palabra clave de acción y comandos</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Busque en la web, inicie aplicaciones o ejecute diversas funciones mediante los complementos de Flow Launcher. Algunas funciones comienzan con una palabra clave de acción y, si es necesario, pueden utilizarse sin ellas. Pruebe las siguientes consultas en Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Iniciemos Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Terminado. Disfruta de Flow Launcher. No olvides el atajo de teclado para empezar :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Finalizado. Disfrute de Flow Launcher. No olvide utilizar el atajo de teclado para iniciar :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
