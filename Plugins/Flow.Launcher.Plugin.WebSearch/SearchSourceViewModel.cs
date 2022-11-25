@@ -2,6 +2,7 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -57,9 +58,9 @@ namespace Flow.Launcher.Plugin.WebSearch
             return Directory.GetParent(fullPathToSelectedImage).ToString() == Main.DefaultImagesDirectory;
         }
 
-        internal ImageSource LoadPreviewIcon(string pathToPreviewIconImage)
+        internal async ValueTask<ImageSource> LoadPreviewIconAsync(string pathToPreviewIconImage)
         {
-            return ImageLoader.Load(pathToPreviewIconImage);
+            return await ImageLoader.LoadAsync(pathToPreviewIconImage);
         }
     }
 }
