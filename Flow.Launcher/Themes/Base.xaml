@@ -87,6 +87,8 @@
         <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="600" />
