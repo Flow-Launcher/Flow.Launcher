@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure.Http
                             var userName when string.IsNullOrEmpty(userName) =>
                                 (new Uri($"http://{Proxy.Server}:{Proxy.Port}"), null),
                             _ => (new Uri($"http://{Proxy.Server}:{Proxy.Port}"),
-                                    new NetworkCredential(Proxy.UserName, Proxy.Password))
+                                new NetworkCredential(Proxy.UserName, Proxy.Password))
                         },
                         _ => (null, null)
                     },
@@ -79,7 +79,7 @@ namespace Flow.Launcher.Infrastructure.Http
                     _ => throw new ArgumentOutOfRangeException()
                 };
             }
-            catch(UriFormatException e)
+            catch (UriFormatException e)
             {
                 API.ShowMsg("Please try again", "Unable to parse Http Proxy");
                 Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Infrastructure.Http
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream);
+                    await response.Content.CopyToAsync(fileStream, token);
                 }
                 else
                 {
@@ -117,7 +117,7 @@ namespace Flow.Launcher.Infrastructure.Http
         public static Task<string> GetAsync([NotNull] string url, CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            return GetAsync(new Uri(url.Replace("#", "%23")), token);
+            return GetAsync(new Uri(url), token);
         }
 
         /// <summary>
@@ -130,36 +130,57 @@ namespace Flow.Launcher.Infrastructure.Http
         {
             Log.Debug($"|Http.Get|Url <{url}>");
             using var response = await client.GetAsync(url, token);
-            var content = await response.Content.ReadAsStringAsync();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                return content;
-            }
-            else
+            var content = await response.Content.ReadAsStringAsync(token);
+            if (response.StatusCode != HttpStatusCode.OK)
             {
                 throw new HttpRequestException(
                     $"Error code <{response.StatusCode}> with content <{content}> returned from <{url}>");
             }
+
+            return content;
         }
 
         /// <summary>
-        /// Asynchrously get the result as stream from url.
+        /// Send a GET request to the specified Uri with an HTTP completion option and a cancellation token as an asynchronous operation.
+        /// </summary>
+        /// <param name="url">The Uri the request is sent to.</param>
+        /// <param name="completionOption">An HTTP completion option value that indicates when the operation should be considered completed.</param>
+        /// <param name="token">A cancellation token that can be used by other objects or threads to receive notice of cancellation</param>
+        /// <returns></returns>
+        public static Task<Stream> GetStreamAsync([NotNull] string url,
+            CancellationToken token = default) => GetStreamAsync(new Uri(url), token);
+
+
+        /// <summary>
+        /// Send a GET request to the specified Uri with an HTTP completion option and a cancellation token as an asynchronous operation.
         /// </summary>
         /// <param name="url"></param>
+        /// <param name="token"></param>
         /// <returns></returns>
-        public static async Task<Stream> GetStreamAsync([NotNull] string url, CancellationToken token = default)
+        public static async Task<Stream> GetStreamAsync([NotNull] Uri url,
+            CancellationToken token = default)
         {
             Log.Debug($"|Http.Get|Url <{url}>");
-            var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
-            return await response.Content.ReadAsStreamAsync();
+            return await client.GetStreamAsync(url, token);
+        }
+
+        public static async Task<HttpResponseMessage> GetResponseAsync(string url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+            CancellationToken token = default)
+            => await GetResponseAsync(new Uri(url), completionOption, token);
+
+        public static async Task<HttpResponseMessage> GetResponseAsync([NotNull] Uri url, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead,
+            CancellationToken token = default)
+        {
+            Log.Debug($"|Http.Get|Url <{url}>");
+            return await client.GetAsync(url, completionOption, token);
         }
 
         /// <summary>
         /// Asynchrously send an HTTP request.
         /// </summary>
-        public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken token = default)
+        public static async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, HttpCompletionOption completionOption = HttpCompletionOption.ResponseContentRead, CancellationToken token = default)
         {
-            return await client.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
+            return await client.SendAsync(request, completionOption, token);
         }
     }
 }

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
+using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
@@ -51,6 +51,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double SettingWindowTop { get; set; }
         public double SettingWindowLeft { get; set; }
+        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
         public int CustomExplorerIndex { get; set; } = 0;
 
@@ -129,8 +130,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 PrivateArg = "-private",
                 EnablePrivate = false,
                 Editable = false
-            }
-            ,
+            },
             new()
             {
                 Name = "MS Edge",
@@ -185,6 +185,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
 
         public ObservableCollection<CustomPluginHotkey> CustomPluginHotkeys { get; set; } = new ObservableCollection<CustomPluginHotkey>();
+
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
+
+        [JsonIgnore]
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<BuiltinShortcutModel>() { 
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText)
+        };
 
         public bool DontPromptUpdateMsg { get; set; }
         public bool EnableUpdateLog { get; set; }

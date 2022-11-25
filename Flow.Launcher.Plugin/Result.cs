@@ -37,7 +37,11 @@ namespace Flow.Launcher.Plugin
         /// user's clipboard when Ctrl + C is pressed on a result. If the text is a file/directory path
         /// flow will copy the actual file/folder instead of just the path text.
         /// </summary>
-        public string CopyText { get; set; } = string.Empty;
+        public string CopyText
+        {
+            get => string.IsNullOrEmpty(_copyText) ? SubTitle : _copyText;
+            set => _copyText = value;
+        }
 
         /// <summary>
         /// This holds the text which can be provided by plugin to help Flow autocomplete text
@@ -56,9 +60,14 @@ namespace Flow.Launcher.Plugin
             get { return _icoPath; }
             set
             {
-                if (!string.IsNullOrEmpty(PluginDirectory) && !Path.IsPathRooted(value))
+                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
+                if (!string.IsNullOrEmpty(value)
+                    && !string.IsNullOrEmpty(PluginDirectory)
+                    && !Path.IsPathRooted(value)
+                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(value, IcoPath);
+                    _icoPath = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
@@ -81,6 +90,7 @@ namespace Flow.Launcher.Plugin
         /// Delegate to Get Image Source
         /// </summary>
         public IconDelegate Icon;
+        private string _copyText = string.Empty;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
@@ -135,10 +145,11 @@ namespace Flow.Launcher.Plugin
             set
             {
                 _pluginDirectory = value;
-                if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath))
-                {
-                    IcoPath = Path.Combine(value, IcoPath);
-                }
+
+                // When the Result object is returned from the query call, PluginDirectory is not provided until
+                // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
+                // we need to update (only if not Uri path) the IcoPath with the full absolute path so the image can be loaded.
+                IcoPath = _icoPath;
             }
         }
 

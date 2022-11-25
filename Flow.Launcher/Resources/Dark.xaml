@@ -65,9 +65,12 @@
 
     <SolidColorBrush x:Key="CustomContextBorder" Color="#1b1b1b" />
     <SolidColorBrush x:Key="CustomContextBackground" Color="#2b2b2b" />
-    <SolidColorBrush x:Key="CustomContextHover" Color="#3c3c3c" />
+    <SolidColorBrush x:Key="CustomContextHover" Color="#3a3a3a" />
+    <SolidColorBrush x:Key="CustomContextClick" Color="#353535" />
     <SolidColorBrush x:Key="CustomContextDisabled" Color="#868686" />
     <SolidColorBrush x:Key="ContextSeparator" Color="#3c3c3c" />
+
+    <SolidColorBrush x:Key="HoverStoreGrid2">#272727</SolidColorBrush>
 
     <Color x:Key="Color01">#202020</Color>
     <Color x:Key="Color02">#2b2b2b</Color>
