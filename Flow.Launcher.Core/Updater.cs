@@ -79,7 +79,7 @@ namespace Flow.Launcher.Core
                     await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
-                var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
+                var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
@@ -137,10 +137,10 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        public string NewVersinoTips(string version)
+        public string NewVersionTips(string version)
         {
-            var translater = InternationalizationManager.Instance;
-            var tips = string.Format(translater.GetTranslation("newVersionTips"), version);
+            var translator = InternationalizationManager.Instance;
+            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
 
             return tips;
         }
