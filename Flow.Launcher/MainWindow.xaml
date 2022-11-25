@@ -328,7 +328,10 @@
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="0.75*" MinWidth="250" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="ResultArea" Grid.Column="0">
+                    <StackPanel
+                        x:Name="ResultArea"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2">
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">

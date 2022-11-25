@@ -762,7 +762,7 @@
                                         Style="{DynamicResource SideControlCheckBox}"
                                         ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe8ff;
+                                        &#xe8a1;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>

@@ -106,6 +106,7 @@ namespace Flow.Launcher
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             InitializePosition();
+            PreviewReset();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
