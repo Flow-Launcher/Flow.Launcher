@@ -23,6 +23,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly bool EnableImageHash = true;
         public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
         public const int SmallIconSize = 32;
+        public const int FullIconSize = 256;
 
 
         private static readonly string[] ImageExtensions =
@@ -217,7 +218,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 else
                 {
                     type = ImageType.File;
-                    image = GetThumbnail(path, ThumbnailOptions.None);
+                    image = GetThumbnail(path, ThumbnailOptions.None, loadFullImage ? FullIconSize : SmallIconSize);
                 }
             }
             else
@@ -234,12 +235,12 @@ namespace Flow.Launcher.Infrastructure.Image
             return new ImageResult(image, type);
         }
 
-        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly)
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly, int size = SmallIconSize)
         {
             return WindowsThumbnailProvider.GetThumbnail(
                 path,
-                Constant.ThumbnailSize,
-                Constant.ThumbnailSize,
+                size,
+                size,
                 option);
         }
 
