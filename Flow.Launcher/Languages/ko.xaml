@@ -331,7 +331,7 @@
     <system:String x:Key="RecommendWeatherDesc">구글 날씨 검색</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">쉘 명령어</system:String>
-    <system:String x:Key="RecommendBluetooth">블루투스</system:String>
+    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">윈도우 블루투스 설정</system:String>
     <system:String x:Key="RecommendAcronyms">스메</system:String>
     <system:String x:Key="RecommendAcronymsDesc">스티커 메모</system:String>
