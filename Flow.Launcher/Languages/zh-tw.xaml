@@ -331,7 +331,7 @@
     <system:String x:Key="RecommendWeatherDesc">Google 搜索的天氣結果</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell 指令</system:String>
-    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetooth">s 藍牙</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Windows 設定中的藍牙</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">便利貼</system:String>
