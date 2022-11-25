@@ -3,18 +3,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
-
+    <CornerRadius x:Key="ItemRadius">0</CornerRadius>
+    <Thickness x:Key="ItemMargin">0</Thickness>
+    <Thickness x:Key="ResultMargin">0</Thickness>
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
+
+    <Style x:Key="BaseBulletStyle" TargetType="{x:Type Border}" />
+    <Style
+        x:Key="BulletStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+    <Style
+        x:Key="ItemBulletSelectedStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Margin" Value="16,7,0,7" />
         <Setter Property="Padding" Value="0,4,68,0" />
-        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
@@ -48,6 +62,13 @@
     </Style>
 
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
+    <Style x:Key="BaseQueryBoxBgStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="0,2,0,0" />
+    </Style>
+    <Style
+        x:Key="QueryBoxBgStyle"
+        BasedOn="{StaticResource BaseQueryBoxBgStyle}"
+        TargetType="{x:Type Border}" />
     <Style
         x:Key="BaseQuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
@@ -66,6 +87,8 @@
         <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="600" />
@@ -189,6 +212,14 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
     <Style x:Key="BaseGlyphStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+    <Style x:Key="BaseGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -389,4 +420,15 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
+    <Style
+        x:Key="ItemGlyphSelectedStyle"
+        BasedOn="{StaticResource BaseGlyphSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+
 </ResourceDictionary>

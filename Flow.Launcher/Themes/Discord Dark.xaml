@@ -16,7 +16,6 @@
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="#dcddde" />
-        <Setter Property="Background" Value="#36393f" />
         <Setter Property="CaretBrush" Value="#ffffff" />
         <Setter Property="SelectionBrush" Value="#0a68d8" />
         <Setter Property="Height" Value="42" />
