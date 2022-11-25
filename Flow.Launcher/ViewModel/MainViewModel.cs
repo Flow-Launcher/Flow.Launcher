@@ -335,7 +335,7 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
-        public CultureInfo Culture => InternationalizationManager.Instance.CurrentCulture;
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         private async Task RegisterClockAndDateUpdateAsync()
         {

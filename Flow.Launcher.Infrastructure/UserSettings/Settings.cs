@@ -6,7 +6,6 @@ using System.Text.Json.Serialization;
 using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings

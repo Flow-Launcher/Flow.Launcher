@@ -85,7 +85,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public CultureInfo Culture => InternationalizationManager.Instance.CurrentCulture;
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         public bool StartFlowLauncherOnSystemStartup
         {

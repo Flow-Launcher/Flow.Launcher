@@ -17,7 +17,6 @@ namespace Flow.Launcher.Core.Resource
     public class Internationalization
     {
         public Settings Settings { get; set; }
-        public CultureInfo CurrentCulture { get; private set; }
         private const string Folder = "Languages";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
@@ -63,7 +62,6 @@ namespace Flow.Launcher.Core.Resource
         {
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
-            CurrentCulture = new CultureInfo("en");
         }
 
         public void ChangeLanguage(string languageCode)
@@ -98,11 +96,15 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
+            // Culture of this thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows
+            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
-            CurrentCulture = CultureInfo.CurrentCulture;
+            // App domain
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture;
 
-            // Raise event after this.CurrentCulture is set
+            // Raise event after culture is set
             Settings.Language = language.LanguageCode;
             _ = Task.Run(() =>
             {
@@ -191,7 +193,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.DefaultThreadCurrentCulture);
                 }
                 catch (Exception e)
                 {

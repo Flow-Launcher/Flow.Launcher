@@ -52,7 +52,8 @@ namespace Flow.Launcher.Converters
 
                 // Check if Text will be larger then our QueryTextBox
                 System.Windows.Media.Typeface typeface = new Typeface(QueryTextBox.FontFamily, QueryTextBox.FontStyle, QueryTextBox.FontWeight, QueryTextBox.FontStretch);
-                System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
+                // TODO: Obsolete warning?
+                System.Windows.Media.FormattedText ft = new FormattedText(QueryTextBox.Text, System.Globalization.CultureInfo.DefaultThreadCurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, QueryTextBox.FontSize, Brushes.Black);
 
                 var offset = QueryTextBox.Padding.Right;
 
