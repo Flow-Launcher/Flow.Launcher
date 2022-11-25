@@ -20,47 +20,51 @@ namespace Flow.Launcher.ViewModel
 
         public ResultViewModel(Result result, Settings settings)
         {
-            if (result != null)
+            Settings = settings;
+
+            if (result == null)
             {
-                Result = result;
+                return;
+            }
+            Result = result;
 
-                if (Result.Glyph is { FontFamily: not null } glyph)
+            PreviewExtension = Path.GetExtension(result.PreviewImage ?? result.IcoPath);
+
+            if (Result.Glyph is { FontFamily: not null } glyph)
+            {
+                // Checks if it's a system installed font, which does not require path to be provided. 
+                if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
                 {
-                    // Checks if it's a system installed font, which does not require path to be provided. 
-                    if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
+                    string fontFamilyPath = glyph.FontFamily;
+
+                    if (!Path.IsPathRooted(fontFamilyPath))
                     {
-                        string fontFamilyPath = glyph.FontFamily;
+                        fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
+                    }
 
-                        if (!Path.IsPathRooted(fontFamilyPath))
+                    if (fonts.ContainsKey(fontFamilyPath))
+                    {
+                        Glyph = glyph with
                         {
-                            fontFamilyPath = Path.Combine(Result.PluginDirectory, fontFamilyPath);
-                        }
-
-                        if (fonts.ContainsKey(fontFamilyPath))
-                        {
-                            Glyph = glyph with
-                            {
-                                FontFamily = fonts[fontFamilyPath]
-                            };
-                        }
-                        else
-                        {
-                            fontCollection.AddFontFile(fontFamilyPath);
-                            fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
-                            Glyph = glyph with
-                            {
-                                FontFamily = fonts[fontFamilyPath]
-                            };
-                        }
+                            FontFamily = fonts[fontFamilyPath]
+                        };
                     }
                     else
                     {
-                        Glyph = glyph;
+                        fontCollection.AddFontFile(fontFamilyPath);
+                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        Glyph = glyph with
+                        {
+                            FontFamily = fonts[fontFamilyPath]
+                        };
                     }
+                }
+                else
+                {
+                    Glyph = glyph;
                 }
             }
 
-            Settings = settings;
         }
 
         private Settings Settings { get; }
@@ -164,6 +168,13 @@ namespace Flow.Launcher.ViewModel
             }
             private set => previewImage = value;
         }
+
+        public string PreviewExtension { get; set; }
+
+        public bool PreviewIsImageOrVideo => PreviewExtension is ".jpg"
+            or ".png"
+            or ".gif"
+            or ".mp4";
 
         public GlyphInfo Glyph { get; set; }
 
