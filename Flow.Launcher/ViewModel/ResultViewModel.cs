@@ -29,6 +29,11 @@ namespace Flow.Launcher.ViewModel
             Result = result;
 
             PreviewExtension = Path.GetExtension(result.PreviewImage ?? result.IcoPath);
+            if (PreviewExtension != null)
+            {
+                PreviewExtension = PreviewExtension.ToLowerInvariant();
+
+            }
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
@@ -173,7 +178,11 @@ namespace Flow.Launcher.ViewModel
 
         public bool PreviewIsImageOrVideo => PreviewExtension is ".jpg"
             or ".png"
+            or ".avi"
+            or ".mkv"
+            or ".bmp"
             or ".gif"
+            or ".wmv"
             or ".mp4";
 
         public GlyphInfo Glyph { get; set; }
