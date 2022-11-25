@@ -61,6 +61,7 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+
         }
 
         public Settings Settings { get; set; }
@@ -84,7 +85,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         public bool StartFlowLauncherOnSystemStartup
         {
@@ -371,6 +372,7 @@ namespace Flow.Launcher.ViewModel
         #region theme
 
         public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
+        public static string ThemeGallery => @"https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
         public string SelectedTheme
         {
@@ -496,20 +498,19 @@ namespace Flow.Launcher.ViewModel
 
         public string TimeFormat
         {
-            get { return Settings.TimeFormat; }
-            set { Settings.TimeFormat = value; }
+            get => Settings.TimeFormat;
+            set => Settings.TimeFormat = value;
         }
 
         public string DateFormat
         {
-            get { return Settings.DateFormat; }
-            set { Settings.DateFormat = value; }
+            get => Settings.DateFormat;
+            set => Settings.DateFormat = value;
         }
 
-        public string ClockText => DateTime.Now.ToString(TimeFormat, cultureInfo);
+        public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
 
-        public string DateText => DateTime.Now.ToString(DateFormat, cultureInfo);
-
+        public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
         public double WindowWidthSize
         {

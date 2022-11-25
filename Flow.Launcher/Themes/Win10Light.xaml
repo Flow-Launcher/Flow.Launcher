@@ -18,11 +18,9 @@
         <Setter Property="SelectionBrush" Value="#0a68d8" />
         <Setter Property="FontSize" Value="24" />
         <Setter Property="Foreground" Value="#000000" />
-        <Setter Property="Background" Value="#dddddd" />
         <Setter Property="CaretBrush" Value="#000000" />
         <Setter Property="BorderBrush" Value="Black" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="FontSize" Value="28" />
         <Setter Property="Height" Value="42" />
         <Setter Property="Padding" Value="0,4,66,0" />
     </Style>
@@ -32,7 +30,7 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="Background" Value="#dddddd" />
         <Setter Property="Foreground" Value="#c6c6c6" />
-        <Setter Property="FontSize" Value="28" />
+        <Setter Property="FontSize" Value="24" />
         <Setter Property="Padding" Value="0,4,66,0" />
         <Setter Property="Height" Value="42" />
     </Style>

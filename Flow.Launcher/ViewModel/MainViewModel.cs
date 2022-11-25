@@ -65,9 +65,10 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
             Settings.PropertyChanged += (_, args) =>
             {
-                if (args.PropertyName == nameof(Settings.WindowSize))
-                {
-                    OnPropertyChanged(nameof(MainWindowWidth));
+                switch (args.PropertyName) {
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(MainWindowWidth));
+                        break;
                 }
             };
 
@@ -334,8 +335,8 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
-        public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
         private async Task RegisterClockAndDateUpdateAsync()
         {
             var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
@@ -343,11 +344,12 @@ namespace Flow.Launcher.ViewModel
             while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
             {
                 if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, cultureInfo);
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, Culture);
                 if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat, cultureInfo);
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, Culture);
             }
         }
+
         public ResultsViewModel Results { get; private set; }
 
         public ResultsViewModel ContextMenu { get; private set; }

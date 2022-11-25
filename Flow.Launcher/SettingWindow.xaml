@@ -39,11 +39,10 @@
     </Window.CommandBindings>
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
-        <converters:TranlationConverter x:Key="TranlationConverter" />
+        <converters:TranlationConverter x:Key="TranslationConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -1824,17 +1823,18 @@
                                                     <StackPanel
                                                         x:Name="ClockPanel"
                                                         IsHitTestVisible="False"
-                                                        Style="{DynamicResource ClockPanel}">
+                                                        Style="{DynamicResource ClockPanel}"
+                                                        Visibility="Visible">
                                                         <TextBlock
                                                             x:Name="ClockBox"
                                                             Style="{DynamicResource ClockBox}"
                                                             Text="{Binding ClockText}"
-                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                         <TextBlock
                                                             x:Name="DateBox"
                                                             Style="{DynamicResource DateBox}"
                                                             Text="{Binding DateText}"
-                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -2012,8 +2012,8 @@
                                             Margin="10"
                                             HorizontalAlignment="Right"
                                             DockPanel.Dock="Top">
-                                            <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{DynamicResource howToCreateTheme}" />
+                                            <Hyperlink NavigateUri="{Binding ThemeGallery, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{DynamicResource browserMoreThemes}" />
                                             </Hyperlink>
                                         </TextBlock>
                                     </Border>
@@ -2323,7 +2323,7 @@
                                             </ItemsControl>
                                         </Border>
 
-                                        <Border Margin="0,0,0,18" Style="{DynamicResource SettingGroupBox}">
+                                        <Border Margin="0,0,0,0" Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ThemeFolder}" />
@@ -2340,6 +2340,16 @@
                                                     &#xe838;
                                                 </TextBlock>
                                             </ItemsControl>
+                                        </Border>
+                                        <Border>
+                                            <TextBlock
+                                                Margin="10,10,10,18"
+                                                HorizontalAlignment="Right"
+                                                DockPanel.Dock="Top">
+                                                <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource howToCreateTheme}" />
+                                                </Hyperlink>
+                                            </TextBlock>
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>
@@ -2615,7 +2625,7 @@
                                             <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
+                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
