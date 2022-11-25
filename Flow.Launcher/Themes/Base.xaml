@@ -478,7 +478,8 @@
 
     <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8f8f8f" />
-        <Setter Property="FontSize" Value="10" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="0,6,0,0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -487,7 +488,7 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Margin" Value="0,2,0,10" />
+        <Setter Property="Margin" Value="0,6,0,10" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="LineHeight" Value="18" />
         <Setter Property="TextAlignment" Value="Left" />
