@@ -210,7 +210,7 @@
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
                                 </TextBox.CommandBindings>
                                 <TextBox.ContextMenu>
-                                    <ContextMenu>
+                                    <ContextMenu MinWidth="160">
                                         <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe8c6;" />
