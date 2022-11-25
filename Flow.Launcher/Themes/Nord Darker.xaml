@@ -13,7 +13,6 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#2e3440" />
         <Setter Property="Foreground" Value="#eceff4" />
         <Setter Property="FontSize" Value="30" />
     </Style>

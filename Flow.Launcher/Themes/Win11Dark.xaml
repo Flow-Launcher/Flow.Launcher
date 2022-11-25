@@ -17,7 +17,6 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="SelectionBrush" Value="#4a5459" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#202020" />
         <Setter Property="Foreground" Value="#FFFFFF" />
         <Setter Property="CaretBrush" Value="#FFFFFF" />
         <Setter Property="FontSize" Value="26" />
