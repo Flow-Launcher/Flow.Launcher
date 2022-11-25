@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything;
 
-public class EverythingDownloadHelper
+public static class EverythingDownloadHelper
 {
     public static async Task<string> PromptDownloadIfNotInstallAsync(string installedLocation, IPublicAPI api)
     {
@@ -21,15 +21,17 @@ public class EverythingDownloadHelper
 
         installedLocation = GetInstalledPath();
 
-        if (string.IsNullOrEmpty(installedLocation) &&
-            System.Windows.Forms.MessageBox.Show(
-                string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
-                api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-                System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+        if (string.IsNullOrEmpty(installedLocation))
         {
             // Solves single thread apartment (STA) mode requirement error when using OpenFileDialog
             var t = new Thread(() =>
             {
+                if (System.Windows.Forms.MessageBox.Show(
+                        string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
+                        api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
+                        System.Windows.Forms.MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
+                    return;
+
                 var dlg = new System.Windows.Forms.OpenFileDialog
                 {
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
@@ -51,7 +53,7 @@ public class EverythingDownloadHelper
         {
             return installedLocation;
         }
-        
+
         api.ShowMsg(api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
             api.GetTranslation("flowlauncher_plugin_everything_installing_subtitle"), "", useMainWindowAsOwner: false);
 

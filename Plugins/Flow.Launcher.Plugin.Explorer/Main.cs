@@ -81,25 +81,28 @@ namespace Flow.Launcher.Plugin.Explorer
             try
             {
                 return await searchManager.SearchAsync(query, token);
-
             }
-            catch (Exception e) when (e is SearchException or SearchException)
+            catch (Exception e) when (e is SearchException or EngineNotAvailableException)
             {
                 return new List<Result>
                 {
                     new()
                     {
                         Title = e.Message,
-                        SubTitle = e is EngineNotAvailableException engineException
-                            ? engineException.Resolution
+                        SubTitle = e is EngineNotAvailableException { Resolution: { } resolution }
+                            ? resolution
                             : "Enter to copy the message to clipboard",
                         Score = 501,
-                        IcoPath = Constants.ExplorerIconImagePath,
-                        Action = _ =>
-                        {
-                            Clipboard.SetDataObject(e.ToString());
-                            return true;
-                        }
+                        IcoPath = e is EngineNotAvailableException { ErrorIcon: { } iconPath }
+                            ? iconPath
+                            : Constants.GeneralSearchErrorImagePath,
+                        AsyncAction = e is EngineNotAvailableException {Action: { } action}
+                            ? action
+                            : _ =>
+                            {
+                                Clipboard.SetDataObject(e.ToString());
+                                return new ValueTask<bool>(true);
+                            }
                     }
                 };
             }

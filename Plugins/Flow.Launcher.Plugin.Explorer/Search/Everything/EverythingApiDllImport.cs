@@ -77,7 +77,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         [DllImport(DLL)]
         internal static extern int Everything_GetNumFileResults();
-
+        
+        [DllImport(DLL)]
+        internal static extern int Everything_GetMajorVersion();
+        
         [DllImport(DLL)]
         internal static extern int Everything_GetNumFolderResults();
 

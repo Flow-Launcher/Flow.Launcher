@@ -18,6 +18,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string QuickAccessImagePath = "Images\\quickaccess.png";
         internal const string RemoveQuickAccessImagePath = "Images\\removequickaccess.png";
         internal const string ShowContextMenuImagePath = "Images\\contextmenu.png";
+        internal const string EverythingErrorImagePath = "Images\\everything_error.png";
+        internal const string IndexSearchWarningImagePath = "Images\\index_error.png";
+        internal const string WindowsIndexErrorImagePath = "Images\\index_error2.png";
+        internal const string GeneralSearchErrorImagePath = "Images\\robot_error.png";
 
 
         internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";

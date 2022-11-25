@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms.Design;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
@@ -87,6 +89,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return fastSortOptionEnabled;
         }
 
+        public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
+        {
+            await _semaphore.WaitAsync(token);
+            EverythingApiDllImport.Everything_GetMajorVersion();
+            var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
+            _semaphore.Release();
+            return result;
+        }
+
         /// <summary>
         /// Searches the specified key word and reset the everything API afterwards
         /// </summary>
@@ -101,21 +112,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
-            
+
             await _semaphore.WaitAsync(token);
-            
+
             if (token.IsCancellationRequested)
                 yield break;
-            
+
             try
             {
-                
+
                 if (option.Keyword.StartsWith("@"))
                 {
                     EverythingApiDllImport.Everything_SetRegex(true);
                     option.Keyword = option.Keyword[1..];
                 }
-                
+
                 var builder = new StringBuilder();
                 builder.Append(option.Keyword);
 
