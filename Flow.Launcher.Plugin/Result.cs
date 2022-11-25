@@ -60,9 +60,14 @@ namespace Flow.Launcher.Plugin
             get { return _icoPath; }
             set
             {
-                if (!string.IsNullOrEmpty(PluginDirectory) && !Path.IsPathRooted(value))
+                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
+                if (!string.IsNullOrEmpty(value)
+                    && !string.IsNullOrEmpty(PluginDirectory)
+                    && !Path.IsPathRooted(value)
+                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(value, IcoPath);
+                    _icoPath = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
@@ -140,10 +145,11 @@ namespace Flow.Launcher.Plugin
             set
             {
                 _pluginDirectory = value;
-                if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath))
-                {
-                    IcoPath = Path.Combine(value, IcoPath);
-                }
+
+                // When the Result object is returned from the query call, PluginDirectory is not provided until
+                // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
+                // we need to update (only if not Uri path) the IcoPath with the full absolute path so the image can be loaded.
+                IcoPath = _icoPath;
             }
         }
 
