@@ -409,7 +409,7 @@
                                         Source="{Binding PreviewImage}"
                                         Visibility="{Binding ShowIcon}" />
                                     <TextBlock
-                                        x:Name="Title"
+                                        x:Name="PreviewTitle"
                                         HorizontalAlignment="Stretch"
                                         Style="{DynamicResource PreviewItemTitleStyle}"
                                         Text="{Binding Result.Title}"
@@ -417,9 +417,9 @@
                                         TextWrapping="Wrap" />
                                 </StackPanel>
                                 <StackPanel Grid.Row="1">
-                                    <Separator Margin="0,15,0,5" Background="{Binding ElementName=MiddleSeparator, Path=Fill}" />
+                                    <Separator Style="{DynamicResource PreviewSep}" />
                                     <TextBlock
-                                        x:Name="SubTitle"
+                                        x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                                         Text="{Binding Result.SubTitle}" />
                                 </StackPanel>

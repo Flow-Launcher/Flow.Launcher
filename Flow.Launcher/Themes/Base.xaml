@@ -406,6 +406,16 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0,0,10,10" />
     </Style>
+    <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />
+        <Setter Property="Margin" Value="0,15,0,5" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style
         x:Key="PreviewBorderStyle"
         BasedOn="{StaticResource BasePreviewBorderStyle}"
