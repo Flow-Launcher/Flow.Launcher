@@ -13,12 +13,17 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style
+        x:Key="ItemGlyphSelectedStyle"
+        BasedOn="{StaticResource BaseGlyphStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+    </Style>
+    <Style
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="SelectionBrush" Value="{DynamicResource QuerySelectionBrush}" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="{DynamicResource Color01B}" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
         <Setter Property="FontSize" Value="26" />

@@ -9,7 +9,6 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#161614" />
         <Setter Property="Foreground" Value="#b88f3a" />
         <Setter Property="CaretBrush" Value="#b88f3a" />
         <Setter Property="Padding" Value="0,0,66,0" />
@@ -51,6 +50,14 @@
         BasedOn="{StaticResource BasePendingLineStyle}"
         TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="#32EC32" />
+    </Style>
+    <Style
+        x:Key="SeparatorStyle"
+        BasedOn="{StaticResource BaseSeparatorStyle}"
+        TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="#785a28" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="0,0,0,0" />
     </Style>
     <Style
         x:Key="ItemTitleStyle"

@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             Initilize(sources, context, Action.Add);
         }
 
-        private void Initilize(IList<SearchSource> sources, PluginInitContext context, Action action)
+        private async void Initilize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
             DataContext = _viewModel;
@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
             _viewModel.SetupCustomImagesDirectory();
 
-            imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(_searchSource.IconPath);
+            imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(_searchSource.IconPath);
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -125,7 +125,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             }
         }
 
-        private void OnSelectIconClick(object sender, RoutedEventArgs e)
+        private async void OnSelectIconClick(object sender, RoutedEventArgs e)
         {
             const string filter = "Image files (*.jpg, *.jpeg, *.gif, *.png, *.bmp) |*.jpg; *.jpeg; *.gif; *.png; *.bmp";
             var dialog = new OpenFileDialog {InitialDirectory = Main.CustomImagesDirectory, Filter = filter};
@@ -140,7 +140,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
                         MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
-                    imgPreviewIcon.Source = _viewModel.LoadPreviewIcon(selectedNewIconImageFullPath);
+                    imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }
             }
         }
