@@ -202,8 +202,10 @@ namespace Flow.Launcher.ViewModel
         private async ValueTask LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
+            var loadFullImage = (Path.GetExtension(imagePath) ?? "").Equals(".url", StringComparison.OrdinalIgnoreCase);
             // We need to modify the property not field here to trigger the OnPropertyChanged event
-            PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+            //PreviewImage = await Task.Run(() => ImageLoader.Load(imagePath, true)).ConfigureAwait(false);
+            PreviewImage = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         public Result Result { get; }
