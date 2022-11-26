@@ -12,14 +12,14 @@
     <system:String x:Key="flowlauncher_plugin_program_disable">Désactiver</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Emplacement</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Tous les programmes</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">Type de fichier</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Réindexer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexation</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">Index Sources</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">Options</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Start Menu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Lorsque cette option est activée, Flow chargera les programmes depuis le menu de démarrage</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registre</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Lorsque cette option est activée, Flow chargera les programmes depuis le registre</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
