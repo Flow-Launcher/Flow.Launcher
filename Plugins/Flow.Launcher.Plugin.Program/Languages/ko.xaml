@@ -37,7 +37,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">프로그램 검색 출처를 선택하세요</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">선택하신 프로그램 출처를 삭제하시겠습니까?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location alreaday exists.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
