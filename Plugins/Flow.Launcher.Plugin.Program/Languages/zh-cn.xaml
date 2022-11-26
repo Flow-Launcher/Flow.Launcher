@@ -37,7 +37,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">请先选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">相同位置存在另一个程序源。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">程序源</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">编辑此程序源的目录和状态。</system:String>
