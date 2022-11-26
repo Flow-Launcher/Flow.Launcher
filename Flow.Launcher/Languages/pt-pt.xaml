@@ -34,7 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Memorizar última posição</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ecrã do rato - Centro</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ecrã do rato - Centro, cima</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Ecrã do rato - Esquerda, cima</system:String>
@@ -143,7 +143,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
     <system:String x:Key="customQueryHotkey">Tecla de atalho personalizada</system:String>
     <system:String x:Key="customQueryShortcut">Atalho de consulta personalizada</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Atalho nativo</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
     <system:String x:Key="customShortcutExpansion">Expansão</system:String>
@@ -242,7 +242,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Prima uma tecla de atalho personalizada para abrir Flow Launcher e escrever automaticamente a pesquisa.</system:String>
     <system:String x:Key="preview">Antevisão</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla de atalho indisponível, por favor escolha outra</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla de atalho inválida</system:String>
