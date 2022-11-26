@@ -140,7 +140,7 @@ namespace Flow.Launcher.ViewModel
         private volatile bool ImageLoaded;
         private volatile bool PreviewImageLoaded;
 
-        private ImageSource image = ImageLoader.DefaultImage;
+        private ImageSource image = ImageLoader.LoadingImage;
         private ImageSource previewImage = ImageLoader.DefaultImage;
 
         public ImageSource Image
@@ -209,7 +209,7 @@ namespace Flow.Launcher.ViewModel
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = await ImageLoader.LoadAsync(imagePath, loadFullImage);
+                image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
                 return;
             }
 
