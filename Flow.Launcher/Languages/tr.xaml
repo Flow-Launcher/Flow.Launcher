@@ -62,8 +62,8 @@
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Sorgu Arama Hassasiyeti</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum maç puanını değiştirir.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
+    <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölge efektine izin verilmez</system:String>
 
     <!--  Setting Plugin  -->
