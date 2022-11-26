@@ -714,7 +714,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var converted = ColorConverter.ConvertFromString(BackgroundColor);
                     if (converted != null)
                     {
-                        var color = (Color)converted;
+                        var color = Colors.Transparent; 
                         var brush = new SolidColorBrush(color);
                         var pen = new Pen(brush, 1);
                         var backgroundArea = new Rect(0, 0, width, width);
