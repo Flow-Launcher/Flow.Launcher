@@ -34,7 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="SearchWindowPosition">Pozícia vyhľadávacieho okna</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">Obrazovka zameraná na myš – Stred</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Obrazovka zameraná na myš – Hore v strede</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Obrazovka zameraná na myš – Vľavo hore</system:String>
@@ -143,7 +143,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
     <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
     <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
-    <system:String x:Key="builtinShortcuts">Zabudované skratky</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="customShortcut">Skratka</system:String>
     <system:String x:Key="customShortcutExpansion">Rozšírenie</system:String>
@@ -243,7 +243,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
