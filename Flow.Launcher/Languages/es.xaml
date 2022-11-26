@@ -143,7 +143,7 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
-    <system:String x:Key="builtinShortcuts">Accesos directos integrados</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Acceso directo</system:String>
     <system:String x:Key="customShortcutExpansion">Expansión</system:String>
@@ -243,7 +243,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para insertar automáticamente la consulta especificada.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
