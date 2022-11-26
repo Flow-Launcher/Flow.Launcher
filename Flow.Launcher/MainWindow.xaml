@@ -429,7 +429,7 @@
                             </Grid>
                         </Border>
                         <ContentControl Content="{Binding Result.PreviewPanel.Value}"
-                            Visibility="{Binding ShowCustomizedPrewview}" />
+                            Visibility="{Binding ShowCustomizedPreview}" />
                     </Grid>
                 </Grid>
             </StackPanel>

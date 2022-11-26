@@ -32,8 +32,8 @@ namespace Flow.Launcher.ViewModel
             if (PreviewExtension != null)
             {
                 PreviewExtension = PreviewExtension.ToLowerInvariant();
-
             }
+            else if ()
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
@@ -79,7 +79,7 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
 
-        public Visibility ShowCustomizedPrewview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility ShowIcon
         {
