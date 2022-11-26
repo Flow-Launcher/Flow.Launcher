@@ -1203,7 +1203,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="PluginDescription" xml:space="preserve">
-    <value>Plug-in para pesquisar nas definições do Windows</value>
+    <value>Plugin para pesquisar nas definições do Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
     <value>Definições do Windows</value>
@@ -1749,7 +1749,7 @@
     <value>Opções de transmissão multimédia</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>Obrigar a que um tipo de ficheiro seja aberto com um programa específico</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
     <value>Alterar voz do narrador</value>
@@ -1773,10 +1773,10 @@
     <value>Encontrar e corrigir problemas</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Alterar definições para conteúdo recebido através de "Toque e enviar"</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>Alterar definições padrão para multimédia e dispositivos</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Print the speech reference card</value>
@@ -1785,7 +1785,7 @@
     <value>Calibrar ecrã</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
-    <value>Manage file encryption certificates</value>
+    <value>Gerir certificados de cifra de ficheiros</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
     <value>Ver mensagens recentes sobre o computador</value>
@@ -1821,10 +1821,10 @@
     <value>Ver tipos de letra instalados</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
-    <value>Change the way currency is displayed</value>
+    <value>Alterar modo de exibição das moedas</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>Editar política do grupo</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
     <value>Gerir extensões do navegador</value>
@@ -1863,16 +1863,16 @@
     <value>Ver computadores e dispositivos de rede</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
-    <value>Install a program from the network</value>
+    <value>Instalar um programa a partir da rede</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
-    <value>View scanners and cameras</value>
+    <value>Ver digitalizadores e câmaras</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
     <value>Microsoft IME Register Word (Japanese)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Restaurar ficheiros com o Histórico de ficheiros</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
     <value>Turn On-Screen keyboard on or off</value>
@@ -1881,7 +1881,7 @@
     <value>Bloquear ou permitir cookies de terceiros</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Localizar e corrigir problemas com gravação de áudio</value>
+    <value>Encontrar e corrigir problemas com gravação de áudio</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
     <value>Criar uma unidade de recuperação</value>
@@ -1962,13 +1962,13 @@
     <value>Start or stop using AutoPlay for all media and devices</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Alterar definições de manutenção automática</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
     <value>Specify single- or double-click to open</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Utilizadores que podem utilizar o ambiente de trabalho remoto</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
     <value>Show which programs are installed on your computer</value>
@@ -1977,7 +1977,7 @@
     <value>Allow remote access to your computer</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
-    <value>View advanced system settings</value>
+    <value>Ver definições avançadas do sistema</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
     <value>Como instalar um programa</value>
@@ -2167,10 +2167,10 @@
     <value>Editar variáveis de ambiente do seu utilizador</value>
   </data>
   <data name="OptimiseVisualDisplay" xml:space="preserve">
-    <value>Optimise visual display</value>
+    <value>Otimizar exibição visual</value>
   </data>
   <data name="ChangeMouseClickSettings" xml:space="preserve">
-    <value>Change mouse click settings</value>
+    <value>Alterar definições ddo clique do rato</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
     <value>Change advanced colour management settings for displays, scanners and printers</value>
@@ -2182,7 +2182,7 @@
     <value>Clear disk space by deleting unnecessary files</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
-    <value>View devices and printers</value>
+    <value>Ver dispositivos e impressoras</value>
   </data>
   <data name="PrivateCharacterEditor" xml:space="preserve">
     <value>Private Character Editor</value>
@@ -2368,7 +2368,7 @@
     <value>Ativar ou desativar a proteção de ecrã</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Localizar e corrigir problemas com as atualizações</value>
+    <value>Encontrar e corrigir problemas com as atualizações</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
     <value>Alterar definições Bluethooth</value>
@@ -2386,7 +2386,7 @@
     <value>Adicionar um dispositivo</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Localizar e corrigir problemas com a pesquisa Windows</value>
+    <value>Encontrar e corrigir problemas com a pesquisa Windows</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
     <value>Escolher um plano de energia</value>
@@ -2407,13 +2407,13 @@
     <value>Change PC wake-up settings</value>
   </data>
   <data name="ManageNetworkPasswords" xml:space="preserve">
-    <value>Manage network passwords</value>
+    <value>Gerir palavras-passe de rede</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
     <value>Alterar métodos de entrada</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
-    <value>Manage advanced sharing settings</value>
+    <value>Gerir definições avançadas de partilha</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
     <value>Alterar definições da bateria</value>
@@ -2425,16 +2425,16 @@
     <value>Bloquear ou desbloquear a barra de tarefas</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Manage Web Credentials</value>
+    <value>Gerir credenciais Web</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>Alterar fuso horário</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>Iniciar reconhecimento de voz</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>Ver atualizações instaladas</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
     <value>What's happened to the Quick Launch toolbar?</value>
@@ -2446,10 +2446,10 @@
     <value>Adjust settings before giving a presentation</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
-    <value>Scan a document or picture</value>
+    <value>Digitalizar um documento ou imagem</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
-    <value>Change the way measurements are displayed</value>
+    <value>Alterar modo de exibição das medidas</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
     <value>Press key combinations one at a time</value>
@@ -2497,7 +2497,7 @@
     <value>View system resource usage in Task Manager</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
-    <value>Create an account</value>
+    <value>Criar uma conta</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
     <value>Obter mais funcionalidades com uma nova edição Windows</value>
