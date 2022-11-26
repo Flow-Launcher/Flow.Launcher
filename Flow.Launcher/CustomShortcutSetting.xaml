@@ -103,7 +103,9 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
+                            Width="180"
                             Margin="10"
+                            HorizontalAlignment="Left"
                             Text="{Binding Key}" />
                         <TextBlock
                             Grid.Row="1"
