@@ -34,8 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
     <system:String x:Key="SearchWindowPosition">搜索窗口位置</system:String>
-    <system:String x:Key="rememberLastLocation">记住上次启动位置</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">记住上次的设置</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">鼠标所在的屏幕 - 中央</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">鼠标所在的屏幕 - 顶部中央</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">鼠标所在的屏幕 - 左上角</system:String>
