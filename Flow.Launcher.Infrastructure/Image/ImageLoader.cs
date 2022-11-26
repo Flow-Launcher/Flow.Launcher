@@ -23,7 +23,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly bool EnableImageHash = true;
         public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
-        public const int SmallIconSize = 32;
+        public const int SmallIconSize = 64;
         public const int FullIconSize = 256;
 
 
