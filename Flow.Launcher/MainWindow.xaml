@@ -1,4 +1,5 @@
-<Window x:Class="Flow.Launcher.MainWindow"
+<Window
+    x:Class="Flow.Launcher.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
@@ -38,147 +39,166 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     </Window.Resources>
     <Window.InputBindings>
-        <KeyBinding Key="Escape"
-            Command="{Binding EscCommand}" />
-        <KeyBinding Key="F1"
-            Command="{Binding StartHelpCommand}" />
-        <KeyBinding Key="F5"
-            Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab"
-            Command="{Binding AutocompleteQueryCommand}" />
-        <KeyBinding Key="Tab"
+        <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
+        <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
+        <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
+        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
+        <KeyBinding
+            Key="Tab"
             Command="{Binding AutocompleteQueryCommand}"
             Modifiers="Shift" />
-        <KeyBinding Key="I"
+        <KeyBinding
+            Key="I"
             Command="{Binding OpenSettingCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="N"
+        <KeyBinding
+            Key="N"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="J"
+        <KeyBinding
+            Key="J"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="D"
+        <KeyBinding
+            Key="D"
             Command="{Binding SelectNextPageCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="P"
+        <KeyBinding
+            Key="P"
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="K"
+        <KeyBinding
+            Key="K"
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="U"
+        <KeyBinding
+            Key="U"
             Command="{Binding SelectPrevPageCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Home"
+        <KeyBinding
+            Key="Home"
             Command="{Binding SelectFirstResultCommand}"
             Modifiers="Alt" />
-        <KeyBinding Key="O"
+        <KeyBinding
+            Key="O"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right"
-            Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left"
-            Command="{Binding EscCommand}" />
-        <KeyBinding Key="H"
+        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
+        <KeyBinding
+            Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right"
-            Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left"
-            Command="{Binding EscCommand}" />
-        <KeyBinding Key="OemCloseBrackets"
+        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
+        <KeyBinding
+            Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
             Modifiers="Control" />
-        <KeyBinding Key="OemOpenBrackets"
+        <KeyBinding
+            Key="OemOpenBrackets"
             Command="{Binding DecreaseWidthCommand}"
             Modifiers="Control" />
-        <KeyBinding Key="OemPlus"
+        <KeyBinding
+            Key="OemPlus"
             Command="{Binding IncreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding Key="OemMinus"
+        <KeyBinding
+            Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding Key="H"
+        <KeyBinding
+            Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Enter"
+        <KeyBinding
+            Key="Enter"
             Command="{Binding OpenResultCommand}"
             Modifiers="Ctrl+Shift" />
-        <KeyBinding Key="Enter"
+        <KeyBinding
+            Key="Enter"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Shift" />
-        <KeyBinding Key="Enter"
-            Command="{Binding OpenResultCommand}" />
-        <KeyBinding Key="Enter"
+        <KeyBinding Key="Enter" Command="{Binding OpenResultCommand}" />
+        <KeyBinding
+            Key="Enter"
             Command="{Binding OpenResultCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Enter"
+        <KeyBinding
+            Key="Enter"
             Command="{Binding OpenResultCommand}"
             Modifiers="Alt" />
-        <KeyBinding Key="D1"
+        <KeyBinding
+            Key="D1"
             Command="{Binding OpenResultCommand}"
             CommandParameter="0"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D2"
+        <KeyBinding
+            Key="D2"
             Command="{Binding OpenResultCommand}"
             CommandParameter="1"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D3"
+        <KeyBinding
+            Key="D3"
             Command="{Binding OpenResultCommand}"
             CommandParameter="2"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D4"
+        <KeyBinding
+            Key="D4"
             Command="{Binding OpenResultCommand}"
             CommandParameter="3"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D5"
+        <KeyBinding
+            Key="D5"
             Command="{Binding OpenResultCommand}"
             CommandParameter="4"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D6"
+        <KeyBinding
+            Key="D6"
             Command="{Binding OpenResultCommand}"
             CommandParameter="5"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D7"
+        <KeyBinding
+            Key="D7"
             Command="{Binding OpenResultCommand}"
             CommandParameter="6"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D8"
+        <KeyBinding
+            Key="D8"
             Command="{Binding OpenResultCommand}"
             CommandParameter="7"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D9"
+        <KeyBinding
+            Key="D9"
             Command="{Binding OpenResultCommand}"
             CommandParameter="8"
             Modifiers="{Binding OpenResultCommandModifiers}" />
-        <KeyBinding Key="D0"
+        <KeyBinding
+            Key="D0"
             Command="{Binding OpenResultCommand}"
             CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
     </Window.InputBindings>
     <Grid>
-        <Border MouseDown="OnMouseDown"
-            Style="{DynamicResource WindowBorderStyle}">
+        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
                         <Grid>
-                            <TextBox x:Name="QueryTextSuggestionBox"
+                            <TextBox
+                                x:Name="QueryTextSuggestionBox"
                                 IsEnabled="False"
                                 Style="{DynamicResource QuerySuggestionBoxStyle}">
                                 <TextBox.Text>
                                     <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                        <Binding ElementName="QueryTextBox"
-                                            Mode="OneTime" />
-                                        <Binding ElementName="ResultListBox"
-                                            Path="SelectedItem" />
-                                        <Binding ElementName="QueryTextBox"
-                                            Path="Text" />
+                                        <Binding ElementName="QueryTextBox" Mode="OneTime" />
+                                        <Binding ElementName="ResultListBox" Path="SelectedItem" />
+                                        <Binding ElementName="QueryTextBox" Path="Text" />
                                     </MultiBinding>
                                 </TextBox.Text>
                             </TextBox>
-                            <TextBox x:Name="QueryTextBox"
+                            <TextBox
+                                x:Name="QueryTextBox"
                                 AllowDrop="True"
                                 PreviewDragOver="OnPreviewDragOver"
                                 PreviewKeyUp="QueryTextBox_KeyUp"
@@ -186,40 +206,35 @@
                                 Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 Visibility="Visible">
                                 <TextBox.CommandBindings>
-                                    <CommandBinding Command="ApplicationCommands.Copy"
-                                        Executed="OnCopy" />
+                                    <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
                                 </TextBox.CommandBindings>
                                 <TextBox.ContextMenu>
                                     <ContextMenu MinWidth="160">
-                                        <MenuItem Command="ApplicationCommands.Cut"
-                                            Header="{DynamicResource cut}">
+                                        <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe8c6;" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Command="ApplicationCommands.Copy"
-                                            Header="{DynamicResource copy}">
+                                        <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe8c8;" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Command="ApplicationCommands.Paste"
-                                            Header="{DynamicResource paste}">
+                                        <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe77f;" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <Separator Margin="0"
+                                        <Separator
+                                            Margin="0"
                                             Padding="0,4,0,4"
                                             Background="{DynamicResource ContextSeparator}" />
-                                        <MenuItem Click="OnContextMenusForSettingsClick"
-                                            Header="{DynamicResource flowlauncher_settings}">
+                                        <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe713;" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <MenuItem Command="{Binding EscCommand}"
-                                            Header="{DynamicResource closeWindow}">
+                                        <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
                                             <MenuItem.Icon>
                                                 <ui:FontIcon Glyph="&#xe711;" />
                                             </MenuItem.Icon>
@@ -229,21 +244,25 @@
                             </TextBox>
                         </Grid>
                     </Border>
-                    <StackPanel x:Name="ClockPanel"
+                    <StackPanel
+                        x:Name="ClockPanel"
                         IsHitTestVisible="False"
                         Style="{DynamicResource ClockPanel}">
-                        <TextBlock x:Name="ClockBox"
+                        <TextBlock
+                            x:Name="ClockBox"
                             Style="{DynamicResource ClockBox}"
                             Text="{Binding ClockText}"
                             Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <TextBlock x:Name="DateBox"
+                        <TextBlock
+                            x:Name="DateBox"
                             Style="{DynamicResource DateBox}"
                             Text="{Binding DateText}"
                             Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
                     <Border>
                         <Grid>
-                            <Image x:Name="PluginActivationIcon"
+                            <Image
+                                x:Name="PluginActivationIcon"
                                 Width="32"
                                 Height="32"
                                 Margin="0,0,18,0"
@@ -255,7 +274,8 @@
                                 Stretch="Uniform"
                                 Style="{DynamicResource PluginActivationIcon}" />
                             <Canvas Style="{DynamicResource SearchIconPosition}">
-                                <Path Name="SearchIcon"
+                                <Path
+                                    Name="SearchIcon"
                                     Margin="0"
                                     Data="{DynamicResource SearchIconImg}"
                                     Stretch="Fill"
@@ -270,33 +290,28 @@
                     <ContentControl>
                         <ContentControl.Style>
                             <Style TargetType="ContentControl">
-                                <Setter Property="Visibility"
-                                    Value="Collapsed" />
+                                <Setter Property="Visibility" Value="Collapsed" />
                                 <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}"
-                                        Value="Visible">
-                                        <Setter Property="Visibility"
-                                            Value="Visible" />
+                                    <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}"
-                                        Value="Visible">
-                                        <Setter Property="Visibility"
-                                            Value="Visible" />
+                                    <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}"
-                                        Value="Visible">
-                                        <Setter Property="Visibility"
-                                            Value="Visible" />
+                                    <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
+                                        <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </ContentControl.Style>
-                        <Rectangle Name="MiddleSeparator"
+                        <Rectangle
+                            Name="MiddleSeparator"
                             Width="Auto"
                             HorizontalAlignment="Stretch"
                             Style="{DynamicResource SeparatorStyle}" />
                     </ContentControl>
-                    <Line x:Name="ProgressBar"
+                    <Line
+                        x:Name="ProgressBar"
                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
                         Height="2"
                         HorizontalAlignment="Right"
@@ -311,25 +326,23 @@
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="0.75*"
-                            MinWidth="250" />
+                        <ColumnDefinition Width="0.75*" MinWidth="250" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel x:Name="ResultArea"
+                    <StackPanel
+                        x:Name="ResultArea"
                         Grid.Column="0"
                         Grid.ColumnSpan="2">
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius"
-                                        RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                                 </MultiBinding>
                             </Border.Clip>
                             <ContentControl>
-                                <flowlauncher:ResultListBox x:Name="ResultListBox"
+                                <flowlauncher:ResultListBox
+                                    x:Name="ResultListBox"
                                     DataContext="{Binding Results}"
                                     LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                     RightClickResultCommand="{Binding RightClickResultCommand}" />
@@ -338,16 +351,14 @@
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius"
-                                        RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                                 </MultiBinding>
                             </Border.Clip>
                             <ContentControl>
-                                <flowlauncher:ResultListBox x:Name="ContextMenu"
+                                <flowlauncher:ResultListBox
+                                    x:Name="ContextMenu"
                                     DataContext="{Binding ContextMenu}"
                                     LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                     RightClickResultCommand="{Binding RightClickResultCommand}" />
@@ -356,43 +367,52 @@
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight"
-                                        RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius"
-                                        RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
                                 </MultiBinding>
                             </Border.Clip>
                             <ContentControl>
-                                <flowlauncher:ResultListBox x:Name="History"
+                                <flowlauncher:ResultListBox
+                                    x:Name="History"
                                     DataContext="{Binding History}"
                                     LeftClickResultCommand="{Binding LeftClickResultCommand}"
                                     RightClickResultCommand="{Binding RightClickResultCommand}" />
                             </ContentControl>
                         </Border>
                     </StackPanel>
-                    <Grid x:Name="Preview"
+                    <Grid
+                        x:Name="Preview"
                         Grid.Column="1"
                         VerticalAlignment="Stretch"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                         DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
                         Style="{DynamicResource PreviewArea}"
                         Visibility="Collapsed">
-                        <Border Style="{DynamicResource PreviewBorderStyle}"
-                            Visibility="{Binding ShowDefaultPreview}">
-                            <Grid Margin="20,0,10,0"
+                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowDefaultPreview}">
+                            <Grid
+                                Margin="20,0,10,0"
                                 VerticalAlignment="Top"
                                 Background="Transparent">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"
-                                        MinHeight="240" />
+                                    <RowDefinition Height="Auto" MinHeight="240" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <StackPanel Grid.Row="0"
-                                    Grid.Column="0"
-                                    VerticalAlignment="Center">
-                                    <Image x:Name="ImageIcon"
+                                <Grid Grid.Row="0" VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        x:Name="PreviewGlyphIcon"
+                                        Grid.Row="0"
+                                        FontFamily="{Binding Glyph.FontFamily}"
+                                        Style="{DynamicResource PreviewGlyph}"
+                                        Text="{Binding Glyph.Glyph}"
+                                        Visibility="{Binding ShowGlyph}" />
+                                    <Image
+                                        x:Name="PreviewImageIcon"
+                                        Grid.Row="0"
                                         MinHeight="128"
                                         MaxHeight="400"
                                         Margin="0,10,0,4"
@@ -401,35 +421,34 @@
                                         Visibility="{Binding ShowIcon}">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
-                                                <Setter Property="MaxWidth"
-                                                    Value="128" />
+                                                <Setter Property="MaxWidth" Value="128" />
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding PreviewIsImageOrVideo}"
-                                                        Value="True">
-                                                        <Setter Property="MaxWidth"
-                                                            Value="{Binding ElementName=Preview, Path=ActualWidth}" />
+                                                    <DataTrigger Binding="{Binding PreviewIsImageOrVideo}" Value="True">
+                                                        <Setter Property="MaxWidth" Value="{Binding ElementName=Preview, Path=ActualWidth}" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </Image.Style>
                                     </Image>
-                                    <TextBlock x:Name="PreviewTitle"
+                                    <TextBlock
+                                        x:Name="PreviewTitle"
+                                        Grid.Row="1"
                                         HorizontalAlignment="Stretch"
                                         Style="{DynamicResource PreviewItemTitleStyle}"
                                         Text="{Binding Result.Title}"
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
-                                </StackPanel>
+                                </Grid>
                                 <StackPanel Grid.Row="1">
                                     <Separator Style="{DynamicResource PreviewSep}" />
-                                    <TextBlock x:Name="PreviewSubTitle"
+                                    <TextBlock
+                                        x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                                         Text="{Binding Result.SubTitle}" />
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <ContentControl Content="{Binding Result.PreviewPanel.Value}"
-                            Visibility="{Binding ShowCustomizedPreview}" />
+                        <ContentControl Content="{Binding Result.PreviewPanel.Value}" Visibility="{Binding ShowCustomizedPreview}" />
                     </Grid>
                 </Grid>
             </StackPanel>

@@ -156,6 +156,7 @@
         <Setter Property="Foreground" Value="#808dd5" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="-4,0,0,0" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Height" Value="25" />
         <Setter Property="FontSize" Value="25" />
