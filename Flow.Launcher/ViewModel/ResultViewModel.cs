@@ -141,7 +141,7 @@ namespace Flow.Launcher.ViewModel
         private volatile bool PreviewImageLoaded;
 
         private ImageSource image = ImageLoader.LoadingImage;
-        private ImageSource previewImage = ImageLoader.DefaultImage;
+        private ImageSource previewImage = ImageLoader.LoadingImage;
 
         public ImageSource Image
         {
