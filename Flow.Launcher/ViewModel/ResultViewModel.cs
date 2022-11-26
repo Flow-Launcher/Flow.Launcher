@@ -33,7 +33,6 @@ namespace Flow.Launcher.ViewModel
             {
                 PreviewExtension = PreviewExtension.ToLowerInvariant();
             }
-            else if ()
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
@@ -222,7 +221,16 @@ namespace Flow.Launcher.ViewModel
         private async Task LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
-            PreviewImage = await ImageLoader.LoadAsync(imagePath, true).ConfigureAwait(false);
+            if (imagePath == null && Result.Icon != null)
+            {
+                // For UWP programs from program plugin
+                // TODO: Consider https://github.com/Flow-Launcher/Flow.Launcher/pull/1492#issuecomment-1304829947
+                PreviewImage = Result.Icon();
+            }
+            else
+            {
+                PreviewImage = await ImageLoader.LoadAsync(imagePath, true).ConfigureAwait(false);
+            }
         }
 
         public Result Result { get; }
