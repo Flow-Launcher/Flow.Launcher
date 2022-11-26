@@ -6,12 +6,12 @@
     Title="{DynamicResource customeQueryShortcutTitle}"
     Width="530"
     Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    WindowStartupLocation="CenterScreen"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -76,10 +76,14 @@
                         Text="{DynamicResource customeQueryShortcutTips}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
+                    <Image
+                        Width="478"
+                        Margin="0,20,0,0"
+                        Source="/Images/illustration_02.png" />
                 </StackPanel>
 
-                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                    <Grid Width="470">
+                <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                    <Grid Width="478">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -99,9 +103,10 @@
                         <TextBox
                             Grid.Row="0"
                             Grid.Column="1"
+                            Width="180"
                             Margin="10"
-                            Text="{Binding Key}"
-                            />
+                            HorizontalAlignment="Left"
+                            Text="{Binding Key}" />
                         <TextBlock
                             Grid.Row="1"
                             Grid.Column="0"
@@ -124,10 +129,10 @@
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 x:Name="tbExpand"
-                                Margin="10"
+                                Margin="10,0,10,0"
                                 HorizontalAlignment="Stretch"
-                                Text="{Binding Value}"
-                                VerticalAlignment="Center" />
+                                VerticalAlignment="Center"
+                                Text="{Binding Value}" />
                         </DockPanel>
                     </Grid>
                 </StackPanel>
@@ -135,7 +140,7 @@
         </StackPanel>
         <Border
             Grid.Row="1"
-            Margin="0,14,0,0"
+            Margin="0,10,0,0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0">
