@@ -28,7 +28,7 @@ namespace Flow.Launcher.ViewModel
             }
             Result = result;
 
-            PreviewExtension = Path.GetExtension(result.PreviewImage ?? result.IcoPath);
+            PreviewExtension = Path.GetExtension(result.PreviewImage ?? result.SubTitle);
             if (PreviewExtension != null)
             {
                 PreviewExtension = PreviewExtension.ToLowerInvariant();
