@@ -34,8 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
     <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
-    <system:String x:Key="rememberLastLocation">Recordar última posición de Flow Launcher</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Recordar última posición</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">Centro de la pantalla enfocada con el ratón</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Arriba en el centro de la pantalla enfocada con el ratón</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Arriba a la izquierda de la pantalla enfocada con el ratón</system:String>
