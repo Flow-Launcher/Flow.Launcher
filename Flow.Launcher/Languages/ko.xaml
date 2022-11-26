@@ -185,7 +185,7 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">문서</system:String>
     <system:String x:Key="version">버전</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">아이콘</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher를 {0}번 실행했습니다.</system:String>
     <system:String x:Key="checkUpdates">업데이트 확인</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
