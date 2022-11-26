@@ -37,7 +37,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Prosím, zadajte zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Naozaj chcete odstrániť vybrané zdroje programov?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Iný zdroj programu s rovnakým umiestnením už existuje.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Upraviť priečinok a stav tohto zdroja programu.</system:String>
