@@ -34,8 +34,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
     <system:String x:Key="SearchWindowPosition">Pozícia vyhľadávacieho okna</system:String>
-    <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenter">Obrazovka zameraná na myš – Stred</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Obrazovka zameraná na myš – Hore v strede</system:String>
     <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Obrazovka zameraná na myš – Vľavo hore</system:String>
