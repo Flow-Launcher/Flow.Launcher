@@ -243,7 +243,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de Acceso Personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Presione la tecla de acceso personalizada para insertar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla no disponible, por favor seleccione una nueva tecla de acceso directo</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla de acceso directo al plugin inválida</system:String>
