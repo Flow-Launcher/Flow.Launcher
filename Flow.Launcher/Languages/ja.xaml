@@ -25,7 +25,7 @@
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">設</system:String>
+    <system:String x:Key="flowlauncher_settings">設定</system:String>
     <system:String x:Key="general">一般</system:String>
     <system:String x:Key="portableMode">Portable Mode</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
