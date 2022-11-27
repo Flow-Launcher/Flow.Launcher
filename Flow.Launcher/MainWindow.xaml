@@ -448,7 +448,9 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <ContentControl Content="{Binding Result.PreviewPanel.Value}" Visibility="{Binding ShowCustomizedPreview}" />
+                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowCustomizedPreview}">
+                            <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
+                        </Border>
                     </Grid>
                 </Grid>
             </StackPanel>
