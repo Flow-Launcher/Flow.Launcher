@@ -61,6 +61,8 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
+                _updater.PreStartSetupAfterAppUpdate(_settings);
+
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -135,12 +137,12 @@ namespace Flow.Launcher
                     var timer = new Timer(1000 * 60 * 60 * 5);
                     timer.Elapsed += async (s, e) =>
                     {
-                        await _updater.UpdateAppAsync(API);
+                        await _updater.UpdateAppAsync(API, _settings);
                     };
                     timer.Start();
 
                     // check updates on startup
-                    await _updater.UpdateAppAsync(API);
+                    await _updater.UpdateAppAsync(API, _settings);
                 }
             });
         }

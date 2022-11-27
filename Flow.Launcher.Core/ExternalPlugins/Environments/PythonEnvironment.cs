@@ -13,7 +13,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override string EnvName => "Python";
 
-        internal override string EnvPath => Path.Combine(DataLocation.DataDirectory(), Environments, EnvName);
+        internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironments, EnvName);
 
         internal override string InstallPath => Path.Combine(EnvPath, "PythonEmbeddable-v3.8.9");
 

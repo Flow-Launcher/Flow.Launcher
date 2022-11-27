@@ -14,8 +14,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         internal abstract string Language { get; }
 
-        internal const string Environments = "Environments";
-
         internal abstract string EnvName { get; }
 
         internal abstract string EnvPath { get; }
@@ -37,7 +35,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             PluginMetadataList = pluginMetadataList;
             PluginSettings = pluginSettings;
         }
-        //TODO: CHECK IF NEED TO RESET PATH AFTER FLOW UPDATE
+
         internal IEnumerable<PluginPair> Setup()
         {
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -31,5 +31,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
         public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), "Settings", Constant.Plugins);
+
+        public static readonly string PluginEnvironments = Path.Combine(DataDirectory(), "Environments");
     }
 }
