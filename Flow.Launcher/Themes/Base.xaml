@@ -406,8 +406,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="0,0,10,10" />
     </Style>
-    <Style x:Key="PreviewGlyph" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{Binding ElementName=ItemGlyphSelectedStyle, Path=Fill}" />
+    <Style x:Key="BasePreviewGlyph" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#555555" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="100" />
@@ -415,6 +415,10 @@
         <Setter Property="Height" Value="Auto" />
         <Setter Property="MaxHeight" Value="128" />
     </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}" />
     <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
         <Setter Property="Visibility" Value="Visible" />
         <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />

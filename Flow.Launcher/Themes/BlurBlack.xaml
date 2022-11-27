@@ -162,4 +162,10 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFFFFF" />
     </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FFFFFFFF" />
+    </Style>
 </ResourceDictionary>
