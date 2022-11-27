@@ -413,11 +413,12 @@
                                     <Image
                                         x:Name="PreviewImageIcon"
                                         Grid.Row="0"
-                                        MinHeight="128"
+                                        MinHeight="48"
                                         MaxHeight="400"
                                         Margin="0,10,0,4"
                                         HorizontalAlignment="Center"
                                         Source="{Binding PreviewImage}"
+                                        StretchDirection="DownOnly"
                                         Visibility="{Binding ShowIcon}">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
