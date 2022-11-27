@@ -176,7 +176,7 @@ namespace Flow.Launcher.ViewModel
 
         public bool PreviewIsImageOrVideo { get; set; } = false;
 
-        public bool IsMedia(string extension)
+        public static bool IsMedia(string extension)
         {
             return extension is ".jpg"
                 or ".png"
