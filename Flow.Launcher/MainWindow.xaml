@@ -413,7 +413,6 @@
                                     <Image
                                         x:Name="PreviewImageIcon"
                                         Grid.Row="0"
-                                        MinHeight="48"
                                         MaxHeight="400"
                                         Margin="0,10,0,4"
                                         HorizontalAlignment="Center"
