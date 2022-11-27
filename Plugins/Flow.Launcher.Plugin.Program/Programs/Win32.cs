@@ -26,18 +26,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }  // For path comparison
         public string IcoPath { get; set; }
         /// <summary>
-        /// Path of the file. It's the path of .lnk or .url for .lnk and .url.
+        /// Path of the file. It's the path of .lnk and .url for .lnk and .url files.
         /// </summary>
         public string FullPath { get; set; }
         /// <summary>
-        /// Path of the excutable for .lnk, or the URL for .url.
+        /// Path of the excutable for .lnk, or the URL for .url. Arguments are included if any.
         /// </summary>
         public string LnkResolvedPath { get; set; }
         /// <summary>
         /// Path of the actual executable file.
         /// </summary>
         public string ExecutablePath => LnkResolvedPath ?? FullPath;
-        public string WorkingDir => Directory.GetParent(ExecutablePath)?.FullName ?? string.Empty;
         public string ParentDirectory { get; set; }
         public string ExecutableName { get; set; }
         public string Description { get; set; }
@@ -140,8 +139,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                     var info = new ProcessStartInfo
                     {
-                        FileName = ExecutablePath,
-                        WorkingDirectory = WorkingDir,
+                        FileName = FullPath,
+                        WorkingDirectory = ParentDirectory,
                         UseShellExecute = true,
                         Verb = runAsAdmin ? "runas" : null
                     };
@@ -167,8 +166,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = ExecutablePath,
-                            WorkingDirectory = WorkingDir,
+                            FileName = FullPath,
+                            WorkingDirectory = ParentDirectory,
                             UseShellExecute = true
                         };
 
@@ -186,8 +185,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = ExecutablePath,
-                            WorkingDirectory = WorkingDir,
+                            FileName = FullPath,
+                            WorkingDirectory = ParentDirectory,
                             Verb = "runas",
                             UseShellExecute = true
                         };
@@ -221,8 +220,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return Name;
         }
 
-        public static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
-
+        private static List<FileSystemWatcher> Watchers = new List<FileSystemWatcher>();
 
         private static Win32 Win32Program(string path)
         {
@@ -276,6 +274,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         program.LnkResolvedPath = Path.GetFullPath(target);
                         program.ExecutableName = Path.GetFileName(target);
+
+                        var args = _helper.arguments;
+                        if(!string.IsNullOrEmpty(args))
+                        {
+                            program.LnkResolvedPath += " " + args;
+                        }
 
                         var description = _helper.description;
                         if (!string.IsNullOrEmpty(description))
@@ -573,6 +577,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
+            // TODO: Unable to distinguish multiple lnks to the same excutable but with different params
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>

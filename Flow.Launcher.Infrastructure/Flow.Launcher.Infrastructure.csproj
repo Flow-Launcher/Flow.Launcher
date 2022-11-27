@@ -64,16 +64,5 @@
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="pinyindb\pinyin_gwoyeu_mapping.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="pinyindb\pinyin_mapping.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="pinyindb\unicode_to_hanyu_pinyin.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   
 </Project>
