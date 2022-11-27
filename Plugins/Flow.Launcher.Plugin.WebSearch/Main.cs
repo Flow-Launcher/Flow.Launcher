@@ -11,6 +11,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
+using Microsoft.Web.WebView2.Core;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -74,10 +75,10 @@ namespace Flow.Launcher.Plugin.WebSearch
                         IcoPath = searchSource.IconPath,
                         ActionKeywordAssigned = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? string.Empty : searchSource.ActionKeyword,
                         Score = score,
+                        PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)))),
                         Action = c =>
                         {
                             _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
-
                             return true;
                         }
                     };
@@ -151,12 +152,13 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             return Task.Run(Init);
 
-            void Init()
+            async Task Init()
             {
                 _context = context;
 
                 _settings = _context.API.LoadSettingJsonStorage<Settings>();
                 _viewModel = new SettingsViewModel(_settings);
+                
 
                 var pluginDirectory = _context.CurrentPluginMetadata.PluginDirectory;
                 var bundledImagesDirectory = Path.Combine(pluginDirectory, Images);
