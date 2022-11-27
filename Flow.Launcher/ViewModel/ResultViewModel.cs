@@ -28,10 +28,11 @@ namespace Flow.Launcher.ViewModel
             }
             Result = result;
 
-            PreviewExtension = Path.GetExtension(result.PreviewImage ?? result.SubTitle);
-            if (PreviewExtension != null)
+            var extension = Path.GetExtension(result.PreviewImage);
+            if (!string.IsNullOrEmpty(extension))
             {
-                PreviewExtension = PreviewExtension.ToLowerInvariant();
+                // only when explicitly specified PreviewImage
+                PreviewIsImageOrVideo = IsMedia(extension.ToLowerInvariant());
             }
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -173,18 +174,21 @@ namespace Flow.Launcher.ViewModel
             private set => previewImage = value;
         }
 
-        public string PreviewExtension { get; set; }
+        public bool PreviewIsImageOrVideo { get; set; } = false;
 
-        public bool PreviewIsImageOrVideo => PreviewExtension is ".jpg"
-            or ".png"
-            or ".avi"
-            or ".mkv"
-            or ".bmp"
-            or ".gif"
-            or ".wmv"
-            or ".mp3"
-            or ".flac"
-            or ".mp4";
+        public bool IsMedia(string extension)
+        {
+            return extension is ".jpg"
+                or ".png"
+                or ".avi"
+                or ".mkv"
+                or ".bmp"
+                or ".gif"
+                or ".wmv"
+                or ".mp3"
+                or ".flac"
+                or ".mp4";
+        }
 
         public GlyphInfo Glyph { get; set; }
 
