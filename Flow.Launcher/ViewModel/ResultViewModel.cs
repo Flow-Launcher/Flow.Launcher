@@ -182,6 +182,8 @@ namespace Flow.Launcher.ViewModel
             or ".bmp"
             or ".gif"
             or ".wmv"
+            or ".mp3"
+            or ".flac"
             or ".mp4";
 
         public GlyphInfo Glyph { get; set; }
