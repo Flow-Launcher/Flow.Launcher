@@ -427,7 +427,6 @@
                         <Grid
                             x:Name="templateRoot"
                             ClipToBounds="true"
-                            KeyboardNavigation.TabNavigation="Local"
                             SnapsToDevicePixels="true">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition
@@ -444,31 +443,13 @@
                                 Margin="2,2,2,0"
                                 Panel.ZIndex="1"
                                 Background="Transparent"
-                                IsItemsHost="true"
-                                KeyboardNavigation.TabIndex="1"
+                                IsItemsHost="true"                                
                                 LastChildFill="False" />
                             <Border
-                                x:Name="contentPanel"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                KeyboardNavigation.DirectionalNavigation="Contained"
-                                KeyboardNavigation.TabIndex="2"
-                                KeyboardNavigation.TabNavigation="Local">
-                                <ContentPresenter
-                                    x:Name="PART_SelectedContentHost"
-                                    Margin="{TemplateBinding Padding}"
-                                    ContentSource="SelectedContent"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                Grid.Column="1">
+                                <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
                             </Border>
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

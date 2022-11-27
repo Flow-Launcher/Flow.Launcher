@@ -21,9 +21,11 @@
     <system:String x:Key="textTitle">Tekst</system:String>
     <system:String x:Key="GameMode">Spelmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
+    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher Instellingen</system:String>
+    <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
     <system:String x:Key="general">Algemeen</system:String>
     <system:String x:Key="portableMode">Draagbare Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Alle instellingen en gebruikersgegevens opslaan in één map (Nuttig bij het gebruik van verwijderbare schijven of cloud services).</system:String>
@@ -31,7 +33,12 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
-    <system:String x:Key="rememberLastLocation">Herinner laatste opstart locatie</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">Taal</system:String>
     <system:String x:Key="lastQueryMode">Laatste Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Toon/Verberg vorige resultaten wanneer Flow Launcher wordt gereactiveerd.</system:String>
@@ -39,6 +46,7 @@
     <system:String x:Key="LastQuerySelected">Selecteer laatste zoekopdracht</system:String>
     <system:String x:Key="LastQueryEmpty">Laatste zoekopdracht verwijderen</system:String>
     <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in fullscreen mode</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">De activatie van Flow Launcher uitschakelen als er een applicatie actief is die zich in een volledig scherm bevind (Aanbevolen voor spellen).</system:String>
     <system:String x:Key="defaultFileManager">Standaard Bestandsbeheerder</system:String>
@@ -54,10 +62,14 @@
     <system:String x:Key="querySearchPrecision">Zoekopdracht nauwkeurigheid</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Wijzigt de minimale overeenkomst-score die vereist is voor resultaten.</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Zoek meer plugins</system:String>
     <system:String x:Key="enable">Aan</system:String>
@@ -77,13 +89,25 @@
     <system:String x:Key="plugin_query_time">Query tijd:</system:String>
     <system:String x:Key="plugin_query_version">| Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
-    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
-    <system:String x:Key="installbtn">Installeren</system:String>
+    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="updatebtn">Update</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
@@ -106,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Een klein geluid afspelen wanneer het zoekvenster wordt geopend</system:String>
     <system:String x:Key="Animation">Animatie</system:String>
     <system:String x:Key="AnimationTip">Animatie gebruiken in UI</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
@@ -116,17 +142,26 @@
     <system:String x:Key="showOpenResultHotkey">Sneltoets weergeven</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="builtinShortcutDescription">Description</system:String>
     <system:String x:Key="delete">Verwijder</system:String>
     <system:String x:Key="edit">Bewerken</system:String>
     <system:String x:Key="add">Toevoegen</system:String>
     <system:String x:Key="pleaseSelectAnItem">Selecteer een item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Weet u zeker dat je {0} plugin sneltoets wilt verwijderen?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
@@ -150,8 +185,10 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Versie</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">U heeft Flow Launcher {0} keer opgestart</system:String>
     <system:String x:Key="checkUpdates">Zoek naar Updates</system:String>
+    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nieuwe versie {0} beschikbaar, start Flow Launcher opnieuw op</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -206,11 +243,17 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Sneltoets</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Voorbeeld</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Sneltoets is niet beschikbaar, selecteer een nieuwe sneltoets</system:String>
     <system:String x:Key="invalidPluginHotkey">Ongeldige plugin sneltoets</system:String>
     <system:String x:Key="update">Update</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Sneltoets niet beschikbaar</system:String>
