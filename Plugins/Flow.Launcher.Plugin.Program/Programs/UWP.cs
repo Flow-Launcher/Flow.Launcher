@@ -699,10 +699,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var logoPath = TryToFindLogo(uri, path);
                 if (String.IsNullOrEmpty(logoPath))
                 {
+                    var tmp = Path.Combine(Package.Location, "Assets", uri);
+                    if (!path.Equals(tmp, StringComparison.OrdinalIgnoreCase))
+                    {
                     // TODO: Don't know why, just keep it at the moment
                     // Maybe on older version of Windows 10?
                     // for C:\Windows\MiracastView etc
-                    return TryToFindLogo(uri, Path.Combine(Package.Location, "Assets", uri));
+                        return TryToFindLogo(uri, tmp);
+                    }
                 }
                 return logoPath;
 
