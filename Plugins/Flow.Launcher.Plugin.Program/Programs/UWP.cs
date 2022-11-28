@@ -374,11 +374,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string Name => DisplayName;
             public string Location { get; set; }
 
-            public bool Enabled { get; set; }
+            public bool Enabled { get; set; } = false;
             public bool CanRunElevated { get; set; } = false;
             public string LogoPath { get; set; } = string.Empty;
-
-            public Application() { }
 
             public Application(AppListEntry appListEntry, UWP package)
             {
@@ -563,26 +561,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //    CanRunElevated = CanApplicationRunElevated();
             //}
 
-            private bool CanApplicationRunElevated()
-            {
-                if (EntryPoint == "Windows.FullTrustApplication")
-                {
-                    return true;
-                }
+            //private bool CanApplicationRunElevated()
+            //{
+            //    if (EntryPoint == "Windows.FullTrustApplication")
+            //    {
+            //        return true;
+            //    }
 
-                var manifest = Location + "\\AppxManifest.xml";
-                if (File.Exists(manifest))
-                {
-                    var file = File.ReadAllText(manifest);
+            //    var manifest = Location + "\\AppxManifest.xml";
+            //    if (File.Exists(manifest))
+            //    {
+            //        var file = File.ReadAllText(manifest);
 
-                    if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
+            //        if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
+            //        {
+            //            return true;
+            //        }
+            //    }
 
-                return false;
-            }
+            //    return false;
+            //}
 
             internal static bool IfAppCanRunElevated(XmlNode appNode, XmlNamespaceManager namespaceManager)
             {
@@ -596,62 +594,62 @@ namespace Flow.Launcher.Plugin.Program.Programs
                        trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
             }
 
-            internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
-            {
-                if (string.IsNullOrWhiteSpace(rawReferenceValue) || !rawReferenceValue.StartsWith("ms-resource:"))
-                    return rawReferenceValue;
+            //internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
+            //{
+            //    if (string.IsNullOrWhiteSpace(rawReferenceValue) || !rawReferenceValue.StartsWith("ms-resource:"))
+            //        return rawReferenceValue;
 
-                var formattedPriReference = FormattedPriReferenceValue(packageName, rawReferenceValue);
+            //    var formattedPriReference = FormattedPriReferenceValue(packageName, rawReferenceValue);
 
-                var outBuffer = new StringBuilder(128);
-                string source = $"@{{{packageFullName}? {formattedPriReference}}}";
-                var capacity = (uint)outBuffer.Capacity;
-                var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
-                if (hResult == Hresult.Ok)
-                {
-                    var loaded = outBuffer.ToString();
-                    if (!string.IsNullOrEmpty(loaded))
-                    {
-                        return loaded;
-                    }
-                    else
-                    {
-                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Can't load null or empty result "
-                                                   + $"pri {source} in uwp location {Location}", new NullReferenceException());
-                        return string.Empty;
-                    }
-                }
-                else
-                {
-                    var e = Marshal.GetExceptionForHR((int)hResult);
-                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Load pri failed {source} with HResult {hResult} and location {Location}", e);
-                    return string.Empty;
-                }
-            }
+            //    var outBuffer = new StringBuilder(128);
+            //    string source = $"@{{{packageFullName}? {formattedPriReference}}}";
+            //    var capacity = (uint)outBuffer.Capacity;
+            //    var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
+            //    if (hResult == Hresult.Ok)
+            //    {
+            //        var loaded = outBuffer.ToString();
+            //        if (!string.IsNullOrEmpty(loaded))
+            //        {
+            //            return loaded;
+            //        }
+            //        else
+            //        {
+            //            ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Can't load null or empty result "
+            //                                       + $"pri {source} in uwp location {Location}", new NullReferenceException());
+            //            return string.Empty;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        var e = Marshal.GetExceptionForHR((int)hResult);
+            //        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Load pri failed {source} with HResult {hResult} and location {Location}", e);
+            //        return string.Empty;
+            //    }
+            //}
 
-            public static string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
-            {
-                const string prefix = "ms-resource:";
+            //public static string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
+            //{
+            //    const string prefix = "ms-resource:";
 
-                if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
-                    return rawPriReferenceValue;
+            //    if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
+            //        return rawPriReferenceValue;
 
-                string key = rawPriReferenceValue.Substring(prefix.Length);
-                if (key.StartsWith("//"))
-                    return $"{prefix}{key}";
+            //    string key = rawPriReferenceValue.Substring(prefix.Length);
+            //    if (key.StartsWith("//"))
+            //        return $"{prefix}{key}";
 
-                if (!key.StartsWith("/"))
-                {
-                    key = $"/{key}";
-                }
+            //    if (!key.StartsWith("/"))
+            //    {
+            //        key = $"/{key}";
+            //    }
 
-                if (!key.ToLower().Contains("resources"))
-                {
-                    key = $"/Resources{key}";
-                }
+            //    if (!key.ToLower().Contains("resources"))
+            //    {
+            //        key = $"/Resources{key}";
+            //    }
 
-                return $"{prefix}//{packageName}{key}";
-            }
+            //    return $"{prefix}//{packageName}{key}";
+            //}
 
             internal void InitLogoPathFromUri(string uri)
             {
@@ -881,26 +879,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Unknown
         }
 
-        [Flags]
-        private enum Stgm : uint
-        {
-            Read = 0x0,
-            ShareExclusive = 0x10,
-            ShareDenyNone = 0x40
-        }
+        //[Flags]
+        //private enum Stgm : uint
+        //{
+        //    Read = 0x0,
+        //    ShareExclusive = 0x10,
+        //    ShareDenyNone = 0x40
+        //}
 
-        private enum Hresult : uint
-        {
-            Ok = 0x0000,
-        }
+        //private enum Hresult : uint
+        //{
+        //    Ok = 0x0000,
+        //}
 
-        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
-        private static extern Hresult SHCreateStreamOnFileEx(string fileName, Stgm grfMode, uint attributes, bool create,
-            IStream reserved, out IStream stream);
+        //[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+        //private static extern Hresult SHCreateStreamOnFileEx(string fileName, Stgm grfMode, uint attributes, bool create,
+        //    IStream reserved, out IStream stream);
 
-        [DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
-        private static extern Hresult SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, uint cchOutBuf,
-            IntPtr ppvReserved);
+        //[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
+        //private static extern Hresult SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, uint cchOutBuf,
+        //    IntPtr ppvReserved);
 
     }
 }
