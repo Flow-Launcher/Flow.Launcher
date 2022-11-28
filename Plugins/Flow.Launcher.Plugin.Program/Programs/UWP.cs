@@ -32,7 +32,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public Application[] Apps { get; set; } = Array.Empty<Application>();
 
-        //public PackageVersion Version { get; set; }
 
         public UWP(Package package)
         {
@@ -99,7 +98,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode, namespaceManager);
 
                         var visualElement = appNode.SelectSingleNode($"//*[name()='uap:VisualElements']", namespaceManager);
-                        var logoUri = visualElement.Attributes[logoName]?.Value;
+                        var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri);
                     }
                 }
@@ -110,7 +109,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                        "|Unexpected exception occurs when trying to construct a Application from package"
                        + $"{FullName} from location {Location}", e);
             }
-
         }
 
         private XmlDocument GetManifestXml()
@@ -635,7 +633,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         var logoNamePrefix = Path.GetFileNameWithoutExtension(uri); // e.g Square44x44
                         var logoDir = Path.GetDirectoryName(path);  // e.g ..\..\Assets
-                        if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
+                        if (String.IsNullOrEmpty(logoNamePrefix) || !Directory.Exists(logoDir))
                         {
                             // Known issue: Edge always triggers it since logo is not at uri
                             ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
