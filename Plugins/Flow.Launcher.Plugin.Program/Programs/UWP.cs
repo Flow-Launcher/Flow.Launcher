@@ -40,10 +40,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Name = package.Id.Name;
             FullName = package.Id.FullName;
             FamilyName = package.Id.FamilyName;
-            InitAppsInPackage(package);
         }
 
-        private void InitAppsInPackage(Package package)
+        public void InitAppsInPackage(Package package)
         {
             var applist = new List<Application>();
             // WinRT
@@ -195,6 +194,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     try
                     {
                         u = new UWP(p);
+                        u.InitAppsInPackage(p);
                     }
 #if !DEBUG
                     catch (Exception e)
@@ -245,22 +245,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var ps = m.FindPackagesForUser(id);
                 ps = ps.Where(p =>
                 {
-                    bool valid;
                     try
                     {
                         var f = p.IsFramework;
                         var d = p.IsDevelopmentMode;
                         var path = p.InstalledLocation.Path;
-                        valid = !f && !d && !string.IsNullOrEmpty(path);
+                        return !f && !d && !string.IsNullOrEmpty(path);
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"id", "An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occured and "
                                                                                         + $"unable to verify if package is valid", e);
                         return false;
                     }
-
-                    return valid;
                 });
                 return ps;
             }
