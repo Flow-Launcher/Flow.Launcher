@@ -8,7 +8,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} od {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Inštalovať plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Inštaluje sa plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Stiahnuť a nainštalovať {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin bol úspešne nainštalovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
