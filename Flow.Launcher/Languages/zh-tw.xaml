@@ -114,6 +114,14 @@
     <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
     <system:String x:Key="howToCreateTheme">如何創建一個主題</system:String>
     <system:String x:Key="hiThere">你好呀</system:String>
+    <system:String x:Key="SampleTitleExplorer">檔案總管</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
+    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleProgram">程式</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">查詢框字體</system:String>
     <system:String x:Key="resultItemFont">結果項字體</system:String>
     <system:String x:Key="windowMode">視窗模式</system:String>
