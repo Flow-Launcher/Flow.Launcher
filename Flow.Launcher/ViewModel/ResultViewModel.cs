@@ -32,7 +32,7 @@ namespace Flow.Launcher.ViewModel
             if (!string.IsNullOrEmpty(extension))
             {
                 // only when explicitly specified PreviewImage
-                PreviewIsImageOrVideo = IsMedia(extension.ToLowerInvariant());
+                UseBigThumbnail = IsMedia(extension.ToLowerInvariant());
             }
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -174,7 +174,10 @@ namespace Flow.Launcher.ViewModel
             private set => previewImage = value;
         }
 
-        public bool PreviewIsImageOrVideo { get; set; } = false;
+        /// <summary>
+        /// Determines if to use the full width of the preview panel
+        /// </summary>
+        public bool UseBigThumbnail { get; set; } = false;
 
         public static bool IsMedia(string extension)
         {
