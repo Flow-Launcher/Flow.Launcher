@@ -57,17 +57,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     try
                     {
-                        var tmp = new Application()
-                        {
-                            UserModelId = app.AppUserModelId,
-                            UniqueIdentifier = app.AppUserModelId,
-                            DisplayName = app.DisplayInfo.DisplayName,
-                            Description = app.DisplayInfo.Description,
-                            Package = this,
-                            Enabled = true,
-                        };
+                        var tmp = new Application(app);
                         applist.Add(tmp);
-                        tmp.LogoStream = app.DisplayInfo.GetLogo(new Windows.Foundation.Size(44, 44)); // todo too small
                     }
                     catch (Exception e)
                     {
@@ -76,13 +67,43 @@ namespace Flow.Launcher.Plugin.Program.Programs
                      }
                 }
                 Apps = applist.ToArray();
-                SetApplicationsCanRunElevated();
+
+                // From powertoys run
+                var xmlDoc = GetManifestXml();
+                if (xmlDoc == null)
+                {
+                    return;
+                }
+
+                var xmlRoot = xmlDoc.DocumentElement;
+                var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+                namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
+                namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
+                namespaceManager.AddNamespace("uap10", "http://schemas.microsoft.com/appx/manifest/uap/windows10/10");
+
+                var allowElevationNode = xmlRoot.SelectSingleNode("//*[local-name()='Capability' and @Name='allowElevation']", namespaceManager);
+                bool packageCanElevate = allowElevationNode != null;
+
+                var appsNode = xmlRoot.SelectSingleNode("Applications", namespaceManager);
+                foreach (var app in Apps)
+                {
+                    // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
+                    // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
+                    var id = app.UserModelId.Split('!')[1];
+                    var appNode = appsNode.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}']", namespaceManager);
+                    if (appNode != null)
+                    {
+                        //TODO
+                        app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode, namespaceManager);
+                    }
+                }
             }
             catch (Exception e)
             {
                 // TODO Logging
                 Apps = Array.Empty<Application>();
             }
+
         }
 
         private XmlDocument GetManifestXml()
