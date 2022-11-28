@@ -19,8 +19,8 @@ using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Channels;
-using Windows.Storage.Streams;
 using System.Xml;
+using Windows.ApplicationModel.Core;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -57,14 +57,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     try
                     {
-                        var tmp = new Application(app);
+                        var tmp = new Application(app, this);
                         applist.Add(tmp);
                     }
                     catch (Exception e)
                     {
                         // TODO Logging
                         // Seems like logos for all games are missing?
-                     }
+                    }
                 }
                 Apps = applist.ToArray();
 
@@ -128,50 +128,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private void SetApplicationsCanRunElevated()
-        {
-            // From powertoys run
-            var xmlDoc = GetManifestXml();
-            if (xmlDoc == null) 
-            { 
-                return; 
-            }
-
-            var xmlRoot = xmlDoc.DocumentElement;
-            var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
-            namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
-            namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
-            namespaceManager.AddNamespace("uap10", "http://schemas.microsoft.com/appx/manifest/uap/windows10/10");
-
-            var rescapNode = xmlRoot.SelectSingleNode("//*[local-name()='Capability' and @Name='allowElevation']", namespaceManager);
-            
-            if (rescapNode != null)
-            {
-                // For all apps in this package
-                foreach(var app in Apps)
-                {
-                    app.CanRunElevated = true;
-                }
-            }
-            else
-            {
-                foreach (var app in Apps)
-                {
-                    // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
-                    // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
-                    var id = app.UserModelId.Split('!')[1];
-                    var entryPointNode = xmlRoot.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}' and @EntryPoint]", namespaceManager);
-                    var trustLevelNode = xmlRoot.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}' and @uap10:TrustLevel]", namespaceManager); 
-
-                    if (trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL" ||
-                        entryPointNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication")
-                    {
-                        app.CanRunElevated = true;
-                    }
-                }
-            }
-        }
-
         private void InitializeAppInfo()
         {
             var path = Path.Combine(Location, "AppxManifest.xml");
@@ -188,7 +144,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
 
                 Apps = _apps.Select(x => new Application(x, this))
-                            .Where(a => !string.IsNullOrEmpty(a.UserModelId) 
+                            .Where(a => !string.IsNullOrEmpty(a.UserModelId)
                                     && !string.IsNullOrEmpty(a.DisplayName))
                             .ToArray();
             }
@@ -377,7 +333,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     PackageChangeChannel.Reader.TryRead(out _);
                     await Task.Run(Main.IndexUwpPrograms);
                 }
-                
+
             }
         }
 
@@ -415,28 +371,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             public string EntryPoint { get; set; }
             public string Name => DisplayName;
-            public string Location => Package.Location;
+            public string Location { get; set; }
 
             public bool Enabled { get; set; }
             public bool CanRunElevated { get; set; } = false;
 
             public string LogoUri { get; set; }
             public string LogoPath { get; set; }
-            public UWP Package { get; set; }
-
-            [NonSerialized]
-            private RandomAccessStreamReference logoStream = null;
-            public RandomAccessStreamReference LogoStream { get => logoStream; set => logoStream = value; }
 
             public Application() { }
 
-            public Application(AppListEntry appListEntry)
+            public Application(AppListEntry appListEntry, UWP package)
             {
                 UserModelId = appListEntry.AppUserModelId;
                 UniqueIdentifier = appListEntry.AppUserModelId;
                 DisplayName = appListEntry.DisplayInfo.DisplayName;
                 Description = appListEntry.DisplayInfo.Description;
-                //Package = package;
+                Location = package.Location;
                 Enabled = true;
             }
 
@@ -478,7 +429,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var result = new Result
                 {
                     Title = title,
-                    SubTitle = Main._settings.HideAppsPath ? string.Empty : Package.Location,
+                    SubTitle = Main._settings.HideAppsPath ? string.Empty : Location,
                     Icon = Logo,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
@@ -525,7 +476,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         Title = api.GetTranslation("flowlauncher_plugin_program_open_containing_folder"),
                         Action = _ =>
                         {
-                            Main.Context.API.OpenDirectory(Package.Location);
+                            Main.Context.API.OpenDirectory(Location);
 
                             return true;
                         },
@@ -577,7 +528,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 var info = new ProcessStartInfo(command)
                 {
-                    UseShellExecute = true, Verb = "runas",
+                    UseShellExecute = true,
+                    Verb = "runas",
                 };
 
                 Main.StartProcess(Process.Start, info);
@@ -601,7 +553,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 BackgroundColor = tmpBackgroundColor;
                 EntryPoint = tmpEntryPoint;
 
-                Package = package;
+                Location = package.Location;
 
                 DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
                 Description = ResourceFromPri(package.FullName, package.Name, Description);
@@ -619,7 +571,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     return true;
                 }
 
-                var manifest = Package.Location + "\\AppxManifest.xml";
+                var manifest = Location + "\\AppxManifest.xml";
                 if (File.Exists(manifest))
                 {
                     var file = File.ReadAllText(manifest);
@@ -665,15 +617,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Can't load null or empty result "
-                                                   + $"pri {source} in uwp location {Package.Location}", new NullReferenceException());
+                        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Can't load null or empty result "
+                                                   + $"pri {source} in uwp location {Location}", new NullReferenceException());
                         return string.Empty;
                     }
                 }
                 else
                 {
                     var e = Marshal.GetExceptionForHR((int)hResult);
-                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Package.Location}|Load pri failed {source} with HResult {hResult} and location {Package.Location}", e);
+                    ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Load pri failed {source} with HResult {hResult} and location {Location}", e);
                     return string.Empty;
                 }
             }
@@ -735,17 +687,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 // windows 8.1 https://msdn.microsoft.com/en-us/library/windows/apps/hh965372.aspx#target_size
                 // windows 8 https://msdn.microsoft.com/en-us/library/windows/apps/br211475.aspx
 
-                string path = Path.Combine(Package.Location, uri);
+                string path = Path.Combine(Location, uri);
 
                 var logoPath = TryToFindLogo(uri, path);
                 if (String.IsNullOrEmpty(logoPath))
                 {
-                    var tmp = Path.Combine(Package.Location, "Assets", uri);
+                    var tmp = Path.Combine(Location, "Assets", uri);
                     if (!path.Equals(tmp, StringComparison.OrdinalIgnoreCase))
                     {
-                    // TODO: Don't know why, just keep it at the moment
-                    // Maybe on older version of Windows 10?
-                    // for C:\Windows\MiracastView etc
+                        // TODO: Don't know why, just keep it at the moment
+                        // Maybe on older version of Windows 10?
+                        // for C:\Windows\MiracastView etc
                         return TryToFindLogo(uri, tmp);
                     }
                 }
@@ -766,8 +718,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         if (String.IsNullOrEmpty(logoNamePrefix) || String.IsNullOrEmpty(logoDir) || !Directory.Exists(logoDir))
                         {
                             // Known issue: Edge always triggers it since logo is not at uri
-                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                               $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Package.Location}", new FileNotFoundException());
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
+                               $"|{UserModelId} can't find logo uri for {uri} in package location (logo name or directory not found): {Location}", new FileNotFoundException());
                             return string.Empty;
                         }
 
@@ -785,7 +737,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var selected = logos.FirstOrDefault();
                         var closest = selected;
                         int min = int.MaxValue;
-                        foreach(var logo in logos)
+                        foreach (var logo in logos)
                         {
 
                             var imageStream = File.OpenRead(logo);
@@ -793,7 +745,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             var height = decoder.Frames[0].PixelHeight;
                             var width = decoder.Frames[0].PixelWidth;
                             int pixelCountDiff = Math.Abs(height * width - 1936); // 44*44=1936
-                            if(pixelCountDiff < min)
+                            if (pixelCountDiff < min)
                             {
                                 // try to find the closest to 44x44 logo
                                 closest = logo;
@@ -810,16 +762,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                         else
                         {
-                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
-                                                       $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Package.Location}", new FileNotFoundException());
+                            ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
+                                                       $"|{UserModelId} can't find logo uri for {uri} in package location (can't find specified logo): {Location}", new FileNotFoundException());
                             return string.Empty;
                         }
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Package.Location}" +
+                        ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
                                                    $"|Unable to find extension from {uri} for {UserModelId} " +
-                                                   $"in package location {Package.Location}", new FileNotFoundException());
+                                                   $"in package location {Location}", new FileNotFoundException());
                         return string.Empty;
                     }
                 }
@@ -835,20 +787,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 plated.Freeze();
                 return plated;
             }
-
-            public async Task<ImageSource> LogoAsync()
-            {
-                var stream = await LogoStream.OpenReadAsync();
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = stream.AsStream();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                var logo = PlatedImage(image);
-                logo.Freeze();
-                return logo;
-            }
-
             private BitmapImage ImageFromPath(string path)
             {
                 // TODO: Consider using infrastructure.image.imageloader?
@@ -866,7 +804,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
                                                $"|Unable to get logo for {UserModelId} from {path} and" +
-                                               $" located in {Package.Location}", new FileNotFoundException());
+                                               $" located in {Location}", new FileNotFoundException());
                     return new BitmapImage(new Uri(Constant.MissingImgIcon));
                 }
             }
@@ -913,9 +851,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     else
                     {
-                        ProgramLogger.LogException($"|UWP|PlatedImage|{Package.Location}" +
+                        ProgramLogger.LogException($"|UWP|PlatedImage|{Location}" +
                                                    $"|Unable to convert background string {BackgroundColor} " +
-                                                   $"to color for {Package.Location}", new InvalidOperationException());
+                                                   $"to color for {Location}", new InvalidOperationException());
 
                         return new BitmapImage(new Uri(Constant.MissingImgIcon));
                     }
