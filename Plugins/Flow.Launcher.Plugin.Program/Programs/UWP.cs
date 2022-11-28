@@ -19,6 +19,8 @@ using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Channels;
+using Windows.Storage.Streams;
+using System.Xml;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -30,7 +32,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string FamilyName { get; }
         public string Location { get; set; }
 
-        public Application[] Apps { get; set; }
+        public Application[] Apps { get; set; } = Array.Empty<Application>();
 
         public PackageVersion Version { get; set; }
 
@@ -40,7 +42,113 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Name = package.Id.Name;
             FullName = package.Id.FullName;
             FamilyName = package.Id.FamilyName;
-            InitializeAppInfo();
+            //InitializeAppInfo();
+            InitAppsInPackage(package);
+        }
+
+        private void InitAppsInPackage(Package package)
+        {
+            var applist = new List<Application>();
+            try
+            {
+                var appListEntries = package.GetAppListEntries();
+                int count = appListEntries.Count;
+                foreach (var app in appListEntries)
+                {
+                    try
+                    {
+                        var tmp = new Application()
+                        {
+                            UserModelId = app.AppUserModelId,
+                            UniqueIdentifier = app.AppUserModelId,
+                            DisplayName = app.DisplayInfo.DisplayName,
+                            Description = app.DisplayInfo.Description,
+                            Package = this,
+                            Enabled = true,
+                        };
+                        applist.Add(tmp);
+                        tmp.LogoStream = app.DisplayInfo.GetLogo(new Windows.Foundation.Size(44, 44)); // todo too small
+                    }
+                    catch (Exception e)
+                    {
+                        // TODO Logging
+                        // Seems like logos for all games are missing?
+                     }
+                }
+                Apps = applist.ToArray();
+                SetApplicationsCanRunElevated();
+            }
+            catch (Exception e)
+            {
+                // TODO Logging
+                Apps = Array.Empty<Application>();
+            }
+        }
+
+        private XmlDocument GetManifestXml()
+        {
+            var manifest = Path.Combine(Location, "AppxManifest.xml");
+            try
+            {
+                var file = File.ReadAllText(manifest);
+                var xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(file);
+                return xmlDoc;
+            }
+            catch (FileNotFoundException e)
+            {
+                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "AppxManifest.xml not found.", e);
+                return null;
+            }
+            catch (Exception e)
+            {
+                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "An unexpected error occured and unable to parse AppxManifest.xml", e);
+                return null;
+            }
+        }
+
+        private void SetApplicationsCanRunElevated()
+        {
+            // From powertoys run
+            var xmlDoc = GetManifestXml();
+            if (xmlDoc == null) 
+            { 
+                return; 
+            }
+
+            var xmlRoot = xmlDoc.DocumentElement;
+            var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
+            namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
+            namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
+            namespaceManager.AddNamespace("uap10", "http://schemas.microsoft.com/appx/manifest/uap/windows10/10");
+
+            var rescapNode = xmlRoot.SelectSingleNode("//*[local-name()='Capability' and @Name='allowElevation']", namespaceManager);
+            
+            if (rescapNode != null)
+            {
+                // For all apps in this package
+                foreach(var app in Apps)
+                {
+                    app.CanRunElevated = true;
+                }
+            }
+            else
+            {
+                foreach (var app in Apps)
+                {
+                    // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
+                    // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
+                    var id = app.UserModelId.Split('!')[1];
+                    var entryPointNode = xmlRoot.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}' and @EntryPoint]", namespaceManager);
+                    var trustLevelNode = xmlRoot.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}' and @uap10:TrustLevel]", namespaceManager); 
+
+                    if (trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL" ||
+                        entryPointNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication")
+                    {
+                        app.CanRunElevated = true;
+                    }
+                }
+            }
         }
 
         private void InitializeAppInfo()
@@ -282,7 +390,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string DisplayName { get; set; }
             public string Description { get; set; }
             public string UserModelId { get; set; }
-            public string BackgroundColor { get; set; }
+            public string BackgroundColor { get; set; } = "transparent";
 
             public string EntryPoint { get; set; }
             public string Name => DisplayName;
@@ -291,9 +399,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public bool Enabled { get; set; }
             public bool CanRunElevated { get; set; }
 
+            public bool CanRunElevated { get; set; } = false;
+
             public string LogoUri { get; set; }
             public string LogoPath { get; set; }
             public UWP Package { get; set; }
+
+            [NonSerialized]
+            private RandomAccessStreamReference logoStream = null;
+            public RandomAccessStreamReference LogoStream { get => logoStream; set => logoStream = value; }
 
             public Application() { }
 
@@ -677,6 +791,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return plated;
             }
 
+            public async Task<ImageSource> LogoAsync()
+            {
+                var stream = await LogoStream.OpenReadAsync();
+                BitmapImage image = new BitmapImage();
+                image.BeginInit();
+                image.StreamSource = stream.AsStream();
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.EndInit();
+                var logo = PlatedImage(image);
+                logo.Freeze();
+                return logo;
+            }
 
             private BitmapImage ImageFromPath(string path)
             {
