@@ -365,14 +365,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             private string _uid = string.Empty;
             public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); }
-            public string DisplayName { get; set; }
-            public string Description { get; set; }
-            public string UserModelId { get; set; }
-            public string BackgroundColor { get; set; } = "transparent";
-
-            public string EntryPoint { get; set; }
+            public string DisplayName { get; set; } = string.Empty;
+            public string Description { get; set; } = string.Empty;
+            public string UserModelId { get; set; } = string.Empty;
+            public string BackgroundColor { get; set; } = string.Empty;
             public string Name => DisplayName;
-            public string Location { get; set; }
+            public string Location { get; set; } = string.Empty;
 
             public bool Enabled { get; set; } = false;
             public bool CanRunElevated { get; set; } = false;
