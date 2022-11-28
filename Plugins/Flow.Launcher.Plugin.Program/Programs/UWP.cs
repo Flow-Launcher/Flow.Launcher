@@ -10,14 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Management.Deployment;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.Program.Logger;
 using Rect = System.Windows.Rect;
 using Flow.Launcher.Plugin.SharedModels;
-using Flow.Launcher.Infrastructure.Logger;
 using System.Threading.Channels;
 using System.Xml;
 using Windows.ApplicationModel.Core;
@@ -34,7 +32,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public Application[] Apps { get; set; } = Array.Empty<Application>();
 
-        public PackageVersion Version { get; set; }
+        //public PackageVersion Version { get; set; }
 
         public UWP(Package package)
         {
@@ -42,32 +40,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Name = package.Id.Name;
             FullName = package.Id.FullName;
             FamilyName = package.Id.FamilyName;
-            //InitializeAppInfo();
             InitAppsInPackage(package);
         }
 
         private void InitAppsInPackage(Package package)
         {
             var applist = new List<Application>();
+            // WinRT
+            var appListEntries = package.GetAppListEntries();
+            foreach (var app in appListEntries)
+            {
+                try
+                {
+                    var tmp = new Application(app, this);
+                    applist.Add(tmp);
+                }
+                catch (Exception e)
+                {
+                    // TODO Logging
+                }
+            }
+            Apps = applist.ToArray();
+
             try
             {
-                var appListEntries = package.GetAppListEntries();
-                int count = appListEntries.Count;
-                foreach (var app in appListEntries)
-                {
-                    try
-                    {
-                        var tmp = new Application(app, this);
-                        applist.Add(tmp);
-                    }
-                    catch (Exception e)
-                    {
-                        // TODO Logging
-                        // Seems like logos for all games are missing?
-                    }
-                }
-                Apps = applist.ToArray();
-
                 // From powertoys run
                 var xmlDoc = GetManifestXml();
                 if (xmlDoc == null)
@@ -76,32 +72,36 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 var xmlRoot = xmlDoc.DocumentElement;
+                var packageVersion = GetPackageVersionFromManifest(xmlRoot);
+                var logoName = logoNameFromNamespace[packageVersion];
+
                 var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
                 namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
                 namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
                 namespaceManager.AddNamespace("uap10", "http://schemas.microsoft.com/appx/manifest/uap/windows10/10");
 
-                var allowElevationNode = xmlRoot.SelectSingleNode("//*[local-name()='Capability' and @Name='allowElevation']", namespaceManager);
+                var allowElevationNode = xmlRoot.SelectSingleNode("//*[name()='rescap:Capability' and @Name='allowElevation']", namespaceManager);
                 bool packageCanElevate = allowElevationNode != null;
 
-                var appsNode = xmlRoot.SelectSingleNode("Applications", namespaceManager);
+                var appsNode = xmlRoot.SelectSingleNode("//*[name()='Applications']", namespaceManager);
                 foreach (var app in Apps)
                 {
                     // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
                     // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
                     var id = app.UserModelId.Split('!')[1];
-                    var appNode = appsNode.SelectSingleNode($"//*[local-name()='Application' and @Id='{id}']", namespaceManager);
+                    var appNode = appsNode?.SelectSingleNode($"//*[name()='Application' and @Id='{id}']", namespaceManager);
                     if (appNode != null)
                     {
-                        //TODO
                         app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode, namespaceManager);
+                        var visualElement = appNode.SelectSingleNode($"//*[name()='uap:VisualElements']", namespaceManager);
+                        var logoUri = visualElement.Attributes[logoName]?.Value;
+                        app.InitLogoPathFromUri(logoUri);
                     }
                 }
             }
             catch (Exception e)
             {
                 // TODO Logging
-                Apps = Array.Empty<Application>();
             }
 
         }
@@ -128,68 +128,72 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private void InitializeAppInfo()
-        {
-            var path = Path.Combine(Location, "AppxManifest.xml");
+        //private void InitializeAppInfo()
+        //{
+        //    var path = Path.Combine(Location, "AppxManifest.xml");
 
-            var namespaces = XmlNamespaces(path);
-            InitPackageVersion(namespaces);
+        //    var namespaces = XmlNamespaces(path);
+        //    InitPackageVersion(namespaces);
 
-            const uint noAttribute = 0x80;
-            const Stgm nonExclusiveRead = Stgm.Read | Stgm.ShareDenyNone;
-            var hResult = SHCreateStreamOnFileEx(path, nonExclusiveRead, noAttribute, false, null, out IStream stream);
+        //    const uint noAttribute = 0x80;
+        //    const Stgm nonExclusiveRead = Stgm.Read | Stgm.ShareDenyNone;
+        //    var hResult = SHCreateStreamOnFileEx(path, nonExclusiveRead, noAttribute, false, null, out IStream stream);
 
-            if (hResult == Hresult.Ok)
-            {
-                List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
+        //    if (hResult == Hresult.Ok)
+        //    {
+        //        List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
 
-                Apps = _apps.Select(x => new Application(x, this))
-                            .Where(a => !string.IsNullOrEmpty(a.UserModelId)
-                                    && !string.IsNullOrEmpty(a.DisplayName))
-                            .ToArray();
-            }
-            else
-            {
-                var e = Marshal.GetExceptionForHR((int)hResult);
-                ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
-                                           "|Error caused while trying to get the details of the UWP program", e);
+        //        Apps = _apps.Select(x => new Application(x, this))
+        //                    .Where(a => !string.IsNullOrEmpty(a.UserModelId)
+        //                            && !string.IsNullOrEmpty(a.DisplayName))
+        //                    .ToArray();
+        //    }
+        //    else
+        //    {
+        //        var e = Marshal.GetExceptionForHR((int)hResult);
+        //        ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
+        //                                   "|Error caused while trying to get the details of the UWP program", e);
 
-                Apps = Array.Empty<Application>();
-            }
+        //        Apps = Array.Empty<Application>();
+        //    }
 
-            if (stream != null && Marshal.ReleaseComObject(stream) > 0)
-            {
-                Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
-            }
-        }
+        //    if (stream != null && Marshal.ReleaseComObject(stream) > 0)
+        //    {
+        //        Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
+        //    }
+        //}
 
         /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
-        private static string[] XmlNamespaces(string path)
+        private PackageVersion GetPackageVersionFromManifest(XmlElement xmlRoot)
         {
-            XDocument z = XDocument.Load(path);
-            if (z.Root != null)
+            if (xmlRoot != null)
             {
-                var namespaces = z.Root.Attributes().Where(a => a.IsNamespaceDeclaration).GroupBy(
-                    a => a.Name.Namespace == XNamespace.None ? string.Empty : a.Name.LocalName,
-                    a => XNamespace.Get(a.Value)
-                ).Select(
-                    g => g.First().ToString()
-                ).ToArray();
-                return namespaces;
+
+                var namespaces = xmlRoot.Attributes;
+                foreach (XmlAttribute ns in namespaces)
+                {
+                    if (versionFromNamespace.TryGetValue(ns.Value, out var packageVersion))
+                    {
+                        return packageVersion;
+                    }
+                }
+
+                ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
+                       "|Trying to get the package version of the UWP program, but an unknown UWP appmanifest version  "
+                       + $"{FullName} from location {Location} is returned.", new FormatException());
+                return PackageVersion.Unknown;
             }
             else
             {
-                ProgramLogger.LogException($"|UWP|XmlNamespaces|{path}" +
-                                           $"|Error occured while trying to get the XML from {path}", new ArgumentNullException());
-
-                return Array.Empty<string>();
+                ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
+                       "|Can't parse AppManifest.xml"
+                       + $"{FullName} from location {Location} is returned.", new ArgumentNullException(nameof(xmlRoot)));
+                return PackageVersion.Unknown;
             }
         }
 
-        private void InitPackageVersion(string[] namespaces)
+        private static readonly Dictionary<string, PackageVersion> versionFromNamespace = new()
         {
-            var versionFromNamespace = new Dictionary<string, PackageVersion>
-            {
                 {
                     "http://schemas.microsoft.com/appx/manifest/foundation/windows10", PackageVersion.Windows10
                 },
@@ -199,23 +203,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     "http://schemas.microsoft.com/appx/2010/manifest", PackageVersion.Windows8
                 },
-            };
+        };
 
-            foreach (var n in versionFromNamespace.Keys)
+        private static readonly Dictionary<PackageVersion, string> logoNameFromNamespace = new()
+        {
             {
-                if (namespaces.Contains(n))
-                {
-                    Version = versionFromNamespace[n];
-                    return;
-                }
-            }
-
-            ProgramLogger.LogException($"|UWP|XmlNamespaces|{Location}" +
-                                       "|Trying to get the package version of the UWP program, but a unknown UWP appmanifest version  "
-                                       + $"{FullName} from location {Location} is returned.", new FormatException());
-
-            Version = PackageVersion.Unknown;
-        }
+                PackageVersion.Windows10, "Square44x44Logo"
+            },
+            {
+                PackageVersion.Windows81, "Square30x30Logo"
+            },
+            {
+                PackageVersion.Windows8, "SmallLogo"
+            },
+        };
 
         public static Application[] All()
         {
@@ -375,9 +376,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             public bool Enabled { get; set; }
             public bool CanRunElevated { get; set; } = false;
-
-            public string LogoUri { get; set; }
-            public string LogoPath { get; set; }
+            public string LogoPath { get; set; } = string.Empty;
 
             public Application() { }
 
@@ -535,34 +534,34 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Main.StartProcess(Process.Start, info);
             }
 
-            public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
-            {
-                // This is done because we cannot use the keyword 'out' along with a property
+            //public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
+            //{
+            //    // This is done because we cannot use the keyword 'out' along with a property
 
-                manifestApp.GetAppUserModelId(out string tmpUserModelId);
-                manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
-                manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
-                manifestApp.GetStringValue("Description", out string tmpDescription);
-                manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
-                manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
+            //    manifestApp.GetAppUserModelId(out string tmpUserModelId);
+            //    manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
+            //    manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
+            //    manifestApp.GetStringValue("Description", out string tmpDescription);
+            //    manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
+            //    manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
 
-                UserModelId = tmpUserModelId;
-                UniqueIdentifier = tmpUniqueIdentifier;
-                DisplayName = tmpDisplayName;
-                Description = tmpDescription;
-                BackgroundColor = tmpBackgroundColor;
-                EntryPoint = tmpEntryPoint;
+            //    UserModelId = tmpUserModelId;
+            //    UniqueIdentifier = tmpUniqueIdentifier;
+            //    DisplayName = tmpDisplayName;
+            //    Description = tmpDescription;
+            //    BackgroundColor = tmpBackgroundColor;
+            //    EntryPoint = tmpEntryPoint;
 
-                Location = package.Location;
+            //    Location = package.Location;
 
-                DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
-                Description = ResourceFromPri(package.FullName, package.Name, Description);
-                LogoUri = LogoUriFromManifest(manifestApp);
-                LogoPath = LogoPathFromUri(LogoUri);
+            //    DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
+            //    Description = ResourceFromPri(package.FullName, package.Name, Description);
+            //    LogoUri = LogoUriFromManifest(manifestApp);
+            //    LogoPath = LogoPathFromUri(LogoUri);
 
-                Enabled = true;
-                CanRunElevated = CanApplicationRunElevated();
-            }
+            //    Enabled = true;
+            //    CanRunElevated = CanApplicationRunElevated();
+            //}
 
             private bool CanApplicationRunElevated()
             {
@@ -654,38 +653,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return $"{prefix}//{packageName}{key}";
             }
 
-            internal string LogoUriFromManifest(AppxPackageHelper.IAppxManifestApplication app)
-            {
-                var logoKeyFromVersion = new Dictionary<PackageVersion, string>
-                {
-                    {
-                        PackageVersion.Windows10, "Square44x44Logo"
-                    },
-                    {
-                        PackageVersion.Windows81, "Square30x30Logo"
-                    },
-                    {
-                        PackageVersion.Windows8, "SmallLogo"
-                    },
-                };
-                if (logoKeyFromVersion.ContainsKey(Package.Version))
-                {
-                    var key = logoKeyFromVersion[Package.Version];
-                    _ = app.GetStringValue(key, out string logoUri);
-                    return logoUri;
-                }
-                else
-                {
-                    return string.Empty;
-                }
-            }
-
-            internal string LogoPathFromUri(string uri)
+            internal void InitLogoPathFromUri(string uri)
             {
                 // all https://msdn.microsoft.com/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets
                 // windows 10 https://msdn.microsoft.com/en-us/library/windows/apps/dn934817.aspx
                 // windows 8.1 https://msdn.microsoft.com/en-us/library/windows/apps/hh965372.aspx#target_size
                 // windows 8 https://msdn.microsoft.com/en-us/library/windows/apps/br211475.aspx
+
+                if (string.IsNullOrWhiteSpace(uri))
+                {
+                    throw new ArgumentException("uri");
+                }
 
                 string path = Path.Combine(Location, uri);
 
@@ -698,10 +676,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // TODO: Don't know why, just keep it at the moment
                         // Maybe on older version of Windows 10?
                         // for C:\Windows\MiracastView etc
-                        return TryToFindLogo(uri, tmp);
+                        logoPath = TryToFindLogo(uri, tmp);
+                        if (!String.IsNullOrEmpty(logoPath))
+                        {
+                            LogoPath = logoPath;
+                        }
                     }
                 }
-                return logoPath;
+                else
+                {
+                    LogoPath = logoPath;
+                }
 
                 string TryToFindLogo(string uri, string path)
                 {
