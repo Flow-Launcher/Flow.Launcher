@@ -56,7 +56,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
                 catch (Exception e)
                 {
-                    // TODO Logging
+                    ProgramLogger.LogException($"|UWP|InitAppsInPackage|{Location}" +
+                           "|Unexpected exception occurs when trying to construct a Application from package"
+                           + $"{FullName} from location {Location}", e);
                 }
             }
             Apps = applist.ToArray();
@@ -72,7 +74,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 var xmlRoot = xmlDoc.DocumentElement;
                 var packageVersion = GetPackageVersionFromManifest(xmlRoot);
-                var logoName = logoNameFromNamespace[packageVersion];
+                if (!logoNameFromVersion.TryGetValue(packageVersion, out string logoName))
+                {
+                    return;
+                }
 
                 var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
                 namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
@@ -92,15 +97,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     if (appNode != null)
                     {
                         app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode, namespaceManager);
+
                         var visualElement = appNode.SelectSingleNode($"//*[name()='uap:VisualElements']", namespaceManager);
                         var logoUri = visualElement.Attributes[logoName]?.Value;
-                        app.InitLogoPathFromUri(logoUri);
+                        app.LogoPath = app.LogoPathFromUri(logoUri);
                     }
                 }
             }
             catch (Exception e)
             {
-                // TODO Logging
+                ProgramLogger.LogException($"|UWP|InitAppsInPackage|{Location}" +
+                       "|Unexpected exception occurs when trying to construct a Application from package"
+                       + $"{FullName} from location {Location}", e);
             }
 
         }
@@ -143,15 +151,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
-                       "|Trying to get the package version of the UWP program, but an unknown UWP appmanifest version  "
-                       + $"{FullName} from location {Location} is returned.", new FormatException());
+                       "|Trying to get the package version of the UWP program, but an unknown UWP appmanifest version in package "
+                       + $"{FullName} from location {Location}", new FormatException());
                 return PackageVersion.Unknown;
             }
             else
             {
                 ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
-                       "|Can't parse AppManifest.xml"
-                       + $"{FullName} from location {Location} is returned.", new ArgumentNullException(nameof(xmlRoot)));
+                       "|Can't parse AppManifest.xml of package "
+                       + $"{FullName} from location {Location}", new ArgumentNullException(nameof(xmlRoot)));
                 return PackageVersion.Unknown;
             }
         }
@@ -169,7 +177,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 },
         };
 
-        private static readonly Dictionary<PackageVersion, string> logoNameFromNamespace = new()
+        private static readonly Dictionary<PackageVersion, string> logoNameFromVersion = new()
         {
             {
                 PackageVersion.Windows10, "Square44x44Logo"
