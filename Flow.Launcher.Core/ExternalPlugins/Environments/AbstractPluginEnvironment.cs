@@ -5,6 +5,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -40,6 +41,14 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         {
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
                 return new List<PluginPair>();
+
+            // TODO: Remove. This is backwards compatibility for 1.10.0 release- changed PythonEmbeded to Environments/Python
+            if (!string.IsNullOrEmpty(PluginSettings.PythonDirectory) && PluginSettings.PythonDirectory.StartsWith(Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable")))
+            {
+                FilesFolders.RemoveFolderIfExists(PluginSettings.PythonDirectory);
+                InstallEnvironment();
+                PluginSettings.PythonDirectory = string.Empty;
+            }
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {

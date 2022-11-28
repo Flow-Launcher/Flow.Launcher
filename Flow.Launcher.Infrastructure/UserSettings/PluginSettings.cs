@@ -26,6 +26,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
+        // TODO: Remove. This is backwards compatibility for 1.10.0 release.
+        public string PythonDirectory { get; set; }
+
         public Dictionary<string, Plugin> Plugins { get; set; } = new Dictionary<string, Plugin>();
 
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)
