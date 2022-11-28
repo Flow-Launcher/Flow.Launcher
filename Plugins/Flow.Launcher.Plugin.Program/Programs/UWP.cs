@@ -78,7 +78,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     return;
                 }
-
+                
                 var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
                 namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
                 namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
@@ -593,7 +593,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //    return $"{prefix}//{packageName}{key}";
             //}
 
-            internal void InitLogoPathFromUri(string uri)
+            internal string LogoPathFromUri(string uri)
             {
                 // all https://msdn.microsoft.com/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets
                 // windows 10 https://msdn.microsoft.com/en-us/library/windows/apps/dn934817.aspx
@@ -602,13 +602,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 if (string.IsNullOrWhiteSpace(uri))
                 {
-                    throw new ArgumentException("uri");
+                    ProgramLogger.LogException($"|UWP|LogoPathFromUri|{Location}" +
+                                        $"|{UserModelId} 's logo uri is null or empty: {Location}", new ArgumentException("uri"));
+                    return string.Empty;
                 }
 
                 string path = Path.Combine(Location, uri);
 
                 var logoPath = TryToFindLogo(uri, path);
-                if (String.IsNullOrEmpty(logoPath))
+                if (logoPath == string.Empty)
                 {
                     var tmp = Path.Combine(Location, "Assets", uri);
                     if (!path.Equals(tmp, StringComparison.OrdinalIgnoreCase))
@@ -616,17 +618,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // TODO: Don't know why, just keep it at the moment
                         // Maybe on older version of Windows 10?
                         // for C:\Windows\MiracastView etc
-                        logoPath = TryToFindLogo(uri, tmp);
-                        if (!String.IsNullOrEmpty(logoPath))
-                        {
-                            LogoPath = logoPath;
-                        }
+                        return TryToFindLogo(uri, tmp);
                     }
                 }
-                else
-                {
-                    LogoPath = logoPath;
-                }
+                return logoPath;
 
                 string TryToFindLogo(string uri, string path)
                 {
@@ -714,7 +709,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             private BitmapImage ImageFromPath(string path)
             {
-                // TODO: Consider using infrastructure.image.imageloader?
                 if (File.Exists(path))
                 {
                     var image = new BitmapImage();
