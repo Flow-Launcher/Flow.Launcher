@@ -128,41 +128,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        //private void InitializeAppInfo()
-        //{
-        //    var path = Path.Combine(Location, "AppxManifest.xml");
-
-        //    var namespaces = XmlNamespaces(path);
-        //    InitPackageVersion(namespaces);
-
-        //    const uint noAttribute = 0x80;
-        //    const Stgm nonExclusiveRead = Stgm.Read | Stgm.ShareDenyNone;
-        //    var hResult = SHCreateStreamOnFileEx(path, nonExclusiveRead, noAttribute, false, null, out IStream stream);
-
-        //    if (hResult == Hresult.Ok)
-        //    {
-        //        List<AppxPackageHelper.IAppxManifestApplication> _apps = AppxPackageHelper.GetAppsFromManifest(stream);
-
-        //        Apps = _apps.Select(x => new Application(x, this))
-        //                    .Where(a => !string.IsNullOrEmpty(a.UserModelId)
-        //                            && !string.IsNullOrEmpty(a.DisplayName))
-        //                    .ToArray();
-        //    }
-        //    else
-        //    {
-        //        var e = Marshal.GetExceptionForHR((int)hResult);
-        //        ProgramLogger.LogException($"|UWP|InitializeAppInfo|{path}" +
-        //                                   "|Error caused while trying to get the details of the UWP program", e);
-
-        //        Apps = Array.Empty<Application>();
-        //    }
-
-        //    if (stream != null && Marshal.ReleaseComObject(stream) > 0)
-        //    {
-        //        Log.Error("Flow.Launcher.Plugin.Program.Programs.UWP", "AppxManifest.xml was leaked");
-        //    }
-        //}
-
         /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
         private PackageVersion GetPackageVersionFromManifest(XmlElement xmlRoot)
         {
@@ -425,7 +390,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     Title = title,
                     SubTitle = Main._settings.HideAppsPath ? string.Empty : Location,
-                    Icon = Logo,
+                    //Icon = Logo,
+                    IcoPath = LogoPath,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
                     ContextData = this,
