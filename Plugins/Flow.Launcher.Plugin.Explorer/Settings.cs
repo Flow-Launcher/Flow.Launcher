@@ -19,9 +19,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
 
-        // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
-        public ObservableCollection<AccessLink> QuickFolderAccessLinks { get; set; } = new();
-
         public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 
         public string EditorPath { get; set; } = "";
