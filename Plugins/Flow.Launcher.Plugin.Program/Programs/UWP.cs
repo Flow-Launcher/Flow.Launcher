@@ -404,20 +404,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             !e.SpecialKeyState.WinPressed
                             );
 
-                        if (elevated && CanRunElevated)
+                        bool shouldRunElevated = elevated && CanRunElevated;
+                        _ = Task.Run(() => Launch(shouldRunElevated)).ConfigureAwait(false);
+                        if (elevated && !shouldRunElevated)
                         {
-                            LaunchElevated();
-                        }
-                        else
-                        {
-                            Launch(api);
-
-                            if (elevated)
-                            {
-                                var title = "Plugin: Program";
-                                var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
-                                api.ShowMsg(title, message, string.Empty);
-                            }
+                            var title = "Plugin: Program";
+                            var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
+                            api.ShowMsg(title, message, string.Empty);
                         }
 
                         return true;
@@ -452,7 +445,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         Title = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator"),
                         Action = _ =>
                         {
-                            LaunchElevated();
+                            Task.Run(() => Launch(true)).ConfigureAwait(false);
                             return true;
                         },
                         IcoPath = "Images/cmd.png"
@@ -462,35 +455,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return contextMenus;
             }
 
-            private async void Launch(IPublicAPI api)
+            private void Launch(bool elevated=false)
             {
-                var appManager = new ApplicationActivationHelper.ApplicationActivationManager();
-                const string noArgs = "";
-                const ApplicationActivationHelper.ActivateOptions noFlags = ApplicationActivationHelper.ActivateOptions.None;
-                await Task.Run(() =>
-                {
-                    try
-                    {
-                        _ = appManager.ActivateApplication(UserModelId, noArgs, noFlags, out _);
-                    }
-                    catch (Exception)
-                    {
-                        var name = "Plugin: Program";
-                        var message = $"Can't start UWP: {DisplayName}";
-                        api.ShowMsg(name, message, string.Empty);
-                    }
-                });
-            }
-
-            private void LaunchElevated()
-            {
-                string command = "shell:AppsFolder\\" + UniqueIdentifier;
+                string command = "shell:AppsFolder\\" + UserModelId;
                 command = Environment.ExpandEnvironmentVariables(command.Trim());
 
                 var info = new ProcessStartInfo(command)
                 {
                     UseShellExecute = true,
-                    Verb = "runas",
+                    Verb = elevated ? "runas" : ""
                 };
 
                 Main.StartProcess(Process.Start, info);
