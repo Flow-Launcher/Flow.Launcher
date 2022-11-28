@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Security.Principal;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -77,7 +74,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     return;
                 }
-                
+
                 var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
                 namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
                 namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
@@ -393,7 +390,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     Title = title,
                     SubTitle = Main._settings.HideAppsPath ? string.Empty : Location,
-                    //Icon = Logo,
                     IcoPath = LogoPath,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
@@ -458,7 +454,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return contextMenus;
             }
 
-            private void Launch(bool elevated=false)
+            private void Launch(bool elevated = false)
             {
                 string command = "shell:AppsFolder\\" + UserModelId;
                 command = Environment.ExpandEnvironmentVariables(command.Trim());
@@ -472,56 +468,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Main.StartProcess(Process.Start, info);
             }
 
-            //public Application(AppxPackageHelper.IAppxManifestApplication manifestApp, UWP package)
-            //{
-            //    // This is done because we cannot use the keyword 'out' along with a property
-
-            //    manifestApp.GetAppUserModelId(out string tmpUserModelId);
-            //    manifestApp.GetAppUserModelId(out string tmpUniqueIdentifier);
-            //    manifestApp.GetStringValue("DisplayName", out string tmpDisplayName);
-            //    manifestApp.GetStringValue("Description", out string tmpDescription);
-            //    manifestApp.GetStringValue("BackgroundColor", out string tmpBackgroundColor);
-            //    manifestApp.GetStringValue("EntryPoint", out string tmpEntryPoint);
-
-            //    UserModelId = tmpUserModelId;
-            //    UniqueIdentifier = tmpUniqueIdentifier;
-            //    DisplayName = tmpDisplayName;
-            //    Description = tmpDescription;
-            //    BackgroundColor = tmpBackgroundColor;
-            //    EntryPoint = tmpEntryPoint;
-
-            //    Location = package.Location;
-
-            //    DisplayName = ResourceFromPri(package.FullName, package.Name, DisplayName);
-            //    Description = ResourceFromPri(package.FullName, package.Name, Description);
-            //    LogoUri = LogoUriFromManifest(manifestApp);
-            //    LogoPath = LogoPathFromUri(LogoUri);
-
-            //    Enabled = true;
-            //    CanRunElevated = CanApplicationRunElevated();
-            //}
-
-            //private bool CanApplicationRunElevated()
-            //{
-            //    if (EntryPoint == "Windows.FullTrustApplication")
-            //    {
-            //        return true;
-            //    }
-
-            //    var manifest = Location + "\\AppxManifest.xml";
-            //    if (File.Exists(manifest))
-            //    {
-            //        var file = File.ReadAllText(manifest);
-
-            //        if (file.Contains("TrustLevel=\"mediumIL\"", StringComparison.OrdinalIgnoreCase))
-            //        {
-            //            return true;
-            //        }
-            //    }
-
-            //    return false;
-            //}
-
             internal static bool IfAppCanRunElevated(XmlNode appNode, XmlNamespaceManager namespaceManager)
             {
                 // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
@@ -533,63 +479,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 return entryPointNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication" ||
                        trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
             }
-
-            //internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
-            //{
-            //    if (string.IsNullOrWhiteSpace(rawReferenceValue) || !rawReferenceValue.StartsWith("ms-resource:"))
-            //        return rawReferenceValue;
-
-            //    var formattedPriReference = FormattedPriReferenceValue(packageName, rawReferenceValue);
-
-            //    var outBuffer = new StringBuilder(128);
-            //    string source = $"@{{{packageFullName}? {formattedPriReference}}}";
-            //    var capacity = (uint)outBuffer.Capacity;
-            //    var hResult = SHLoadIndirectString(source, outBuffer, capacity, IntPtr.Zero);
-            //    if (hResult == Hresult.Ok)
-            //    {
-            //        var loaded = outBuffer.ToString();
-            //        if (!string.IsNullOrEmpty(loaded))
-            //        {
-            //            return loaded;
-            //        }
-            //        else
-            //        {
-            //            ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Can't load null or empty result "
-            //                                       + $"pri {source} in uwp location {Location}", new NullReferenceException());
-            //            return string.Empty;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        var e = Marshal.GetExceptionForHR((int)hResult);
-            //        ProgramLogger.LogException($"|UWP|ResourceFromPri|{Location}|Load pri failed {source} with HResult {hResult} and location {Location}", e);
-            //        return string.Empty;
-            //    }
-            //}
-
-            //public static string FormattedPriReferenceValue(string packageName, string rawPriReferenceValue)
-            //{
-            //    const string prefix = "ms-resource:";
-
-            //    if (string.IsNullOrWhiteSpace(rawPriReferenceValue) || !rawPriReferenceValue.StartsWith(prefix))
-            //        return rawPriReferenceValue;
-
-            //    string key = rawPriReferenceValue.Substring(prefix.Length);
-            //    if (key.StartsWith("//"))
-            //        return $"{prefix}{key}";
-
-            //    if (!key.StartsWith("/"))
-            //    {
-            //        key = $"/{key}";
-            //    }
-
-            //    if (!key.ToLower().Contains("resources"))
-            //    {
-            //        key = $"/Resources{key}";
-            //    }
-
-            //    return $"{prefix}//{packageName}{key}";
-            //}
 
             internal string LogoPathFromUri(string uri)
             {
@@ -812,27 +701,5 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Windows8,
             Unknown
         }
-
-        //[Flags]
-        //private enum Stgm : uint
-        //{
-        //    Read = 0x0,
-        //    ShareExclusive = 0x10,
-        //    ShareDenyNone = 0x40
-        //}
-
-        //private enum Hresult : uint
-        //{
-        //    Ok = 0x0000,
-        //}
-
-        //[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
-        //private static extern Hresult SHCreateStreamOnFileEx(string fileName, Stgm grfMode, uint attributes, bool create,
-        //    IStream reserved, out IStream stream);
-
-        //[DllImport("shlwapi.dll", CharSet = CharSet.Unicode)]
-        //private static extern Hresult SHLoadIndirectString(string pszSource, StringBuilder pszOutBuf, uint cchOutBuf,
-        //    IntPtr ppvReserved);
-
     }
 }
