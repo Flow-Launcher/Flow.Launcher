@@ -56,8 +56,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool QuickAccessKeywordEnabled { get; set; }
 
-        public bool LaunchHidden { get; set; } = false;
-
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 

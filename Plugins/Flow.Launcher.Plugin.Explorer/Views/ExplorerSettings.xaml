@@ -171,11 +171,6 @@
                                 HorizontalAlignment="Left"
                                 Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
                                 IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
-                            <CheckBox
-                                Margin="0,10,0,0"
-                                HorizontalAlignment="Left"
-                                Content="{DynamicResource plugin_explorer_launch_hidden}"
-                                IsChecked="{Binding Settings.LaunchHidden}" />
                             <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
