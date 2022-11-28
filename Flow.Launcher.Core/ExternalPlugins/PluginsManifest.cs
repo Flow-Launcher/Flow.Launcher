@@ -29,13 +29,13 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
                 request.Headers.Add("If-None-Match", latestEtag);
 
-                var response = await Http.SendAsync(request, token).ConfigureAwait(false);
+                using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
 
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
                     Log.Info($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Fetched plugins from manifest repo");
 
-                    var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
+                    await using var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
 
                     UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
 

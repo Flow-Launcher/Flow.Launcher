@@ -61,6 +61,7 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+
         }
 
         public Settings Settings { get; set; }
@@ -84,7 +85,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public CultureInfo cultureInfo => new CultureInfo(Settings.Language);
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         public bool StartFlowLauncherOnSystemStartup
         {
@@ -371,6 +372,7 @@ namespace Flow.Launcher.ViewModel
         #region theme
 
         public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
+        public static string ThemeGallery => @"https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
         public string SelectedTheme
         {
@@ -496,20 +498,19 @@ namespace Flow.Launcher.ViewModel
 
         public string TimeFormat
         {
-            get { return Settings.TimeFormat; }
-            set { Settings.TimeFormat = value; }
+            get => Settings.TimeFormat;
+            set => Settings.TimeFormat = value;
         }
 
         public string DateFormat
         {
-            get { return Settings.DateFormat; }
-            set { Settings.DateFormat = value; }
+            get => Settings.DateFormat;
+            set => Settings.DateFormat = value;
         }
 
-        public string ClockText => DateTime.Now.ToString(TimeFormat, cultureInfo);
+        public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
 
-        public string DateText => DateTime.Now.ToString(DateFormat, cultureInfo);
-
+        public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
         public double WindowWidthSize
         {
@@ -608,26 +609,26 @@ namespace Flow.Launcher.ViewModel
                 {
                     new Result
                     {
-                        Title = "Explorer",
-                        SubTitle = "Search for files, folders and file contents",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleExplorer"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleExplorer"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png")
                     },
                     new Result
                     {
-                        Title = "WebSearch",
-                        SubTitle = "Search the web with different search engine support",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
-                        Title = "Program",
-                        SubTitle = "Launch programs as admin or a different user",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
-                        Title = "ProcessKiller",
-                        SubTitle = "Terminate unwanted processes",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
@@ -799,6 +800,7 @@ namespace Flow.Launcher.ViewModel
         #region about
 
         public string Website => Constant.Website;
+        public string SponsorPage => Constant.SponsorPage;
         public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
         public string Docs => Constant.Docs;

@@ -21,9 +21,11 @@
     <system:String x:Key="textTitle">Testo</system:String>
     <system:String x:Key="GameMode">Modalità gioco</system:String>
     <system:String x:Key="GameModeToolTip">Sospendere l'uso dei tasti di scelta rapida.</system:String>
+    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Impostaizoni Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Impostazioni</system:String>
     <system:String x:Key="general">Generale</system:String>
     <system:String x:Key="portableMode">Modalità portatile</system:String>
     <system:String x:Key="portableModeToolTIp">Memorizzare tutte le impostazioni e i dati dell'utente in un'unica cartella (utile se utilizzato con unità rimovibili o servizi cloud).</system:String>
@@ -31,7 +33,12 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Non mostrare le notifiche per una nuova versione</system:String>
-    <system:String x:Key="rememberLastLocation">Ricorda l'ultima posizione di avvio del launcher</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">Lingua</system:String>
     <system:String x:Key="lastQueryMode">Comportamento ultima ricerca</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostra/nasconde i risultati precedenti quando Flow Launcher viene riattivato.</system:String>
@@ -39,6 +46,7 @@
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignora i tasti di scelta rapida in applicazione a schermo pieno</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disattivare l'attivazione di Flow Launcher quando è attiva un'applicazione a schermo intero (consigliato per i giochi).</system:String>
     <system:String x:Key="defaultFileManager">Gestore File predefinito</system:String>
@@ -54,10 +62,14 @@
     <system:String x:Key="querySearchPrecision">Precisione di ricerca delle query</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifica il punteggio minimo richiesto per i risultati.</system:String>
     <system:String x:Key="ShouldUsePinyin">Dovrebbe usare il Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effetto ombra non è consentito mentre il tema corrente ha un effetto di sfocatura abilitato</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Cerca altri plugins</system:String>
     <system:String x:Key="enable">Attivo</system:String>
@@ -77,13 +89,25 @@
     <system:String x:Key="plugin_query_time">Tempo ricerca:</system:String>
     <system:String x:Key="plugin_query_version">| Versione</system:String>
     <system:String x:Key="plugin_query_web">Sito Web</system:String>
-    <system:String x:Key="uninstallbtn">Disinstalla</system:String>
+    <system:String x:Key="plugin_uninstall">Disinstalla</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Negozio dei Plugin</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Aggiorna</system:String>
     <system:String x:Key="installbtn">Installa</system:String>
+    <system:String x:Key="uninstallbtn">Disinstalla</system:String>
+    <system:String x:Key="updatebtn">Aggiorna</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -106,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Riproduce un piccolo suono all'apertura della finestra di ricerca</system:String>
     <system:String x:Key="Animation">Animazione</system:String>
     <system:String x:Key="AnimationTip">Usa l'animazione nell'interfaccia utente</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tasti scelta rapida</system:String>
@@ -116,17 +142,26 @@
     <system:String x:Key="showOpenResultHotkey">Mostra tasto di scelta rapida</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Tasti scelta rapida per ricerche personalizzate</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="builtinShortcutDescription">Description</system:String>
     <system:String x:Key="delete">Cancella</system:String>
     <system:String x:Key="edit">Modifica</system:String>
     <system:String x:Key="add">Aggiungi</system:String>
     <system:String x:Key="pleaseSelectAnItem">Selezionare un oggetto</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Volete cancellare il tasto di scelta rapida per il plugin {0}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Proxy HTTP</system:String>
@@ -150,8 +185,10 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Documentazione</system:String>
     <system:String x:Key="version">Versione</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Hai usato Flow Launcher {0} volte</system:String>
     <system:String x:Key="checkUpdates">Cerca aggiornamenti</system:String>
+    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
     <system:String x:Key="newVersionTips">Una nuova versione {0} è disponibile, riavvia Flow Launcher per favore.</system:String>
     <system:String x:Key="checkUpdatesFailed">Ricerca aggiornamenti fallita, per favore controlla la tua connessione e le eventuali impostazioni proxy per api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -206,11 +243,17 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tasti scelta rapida per ricerche personalizzate</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Anteprima</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tasto di scelta rapida non disponibile, per favore scegli un nuovo tasto di scelta rapida</system:String>
     <system:String x:Key="invalidPluginHotkey">Tasto di scelta rapida plugin non valido</system:String>
     <system:String x:Key="update">Aggiorna</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Tasto di scelta rapida non disponibile</system:String>
@@ -287,7 +330,7 @@
     <system:String x:Key="RecommendWeatherDesc">Meteo nel risultato di Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Comando Della shell</system:String>
-    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>

@@ -21,9 +21,11 @@
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Herný režim</system:String>
     <system:String x:Key="GameModeToolTip">Pozastaviť používanie klávesových skratiek.</system:String>
+    <system:String x:Key="PositionReset">Resetovať pozíciu</system:String>
+    <system:String x:Key="PositionResetToolTip">Resetovať pozíciu vyhľadávacieho okna</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Nastavenia Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_settings">Nastavenia</system:String>
     <system:String x:Key="general">Všeobecné</system:String>
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
@@ -31,7 +33,12 @@
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
-    <system:String x:Key="rememberLastLocation">Zapamätať si posledné umiestnenie</system:String>
+    <system:String x:Key="SearchWindowPosition">Pozícia vyhľadávacieho okna</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Zapamätať si poslednú pozíciu</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Obrazovka zameraná na myš – Stred</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Obrazovka zameraná na myš – Hore v strede</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Obrazovka zameraná na myš – Vľavo hore</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Obrazovka zameraná na myš – Vpravo hore</system:String>
     <system:String x:Key="language">Jazyk</system:String>
     <system:String x:Key="lastQueryMode">Posledné vyhľadávanie</system:String>
     <system:String x:Key="lastQueryModeToolTip">Zobrazí/skryje predchádzajúce výsledky pri opätovnej aktivácii Flow Launchera.</system:String>
@@ -39,6 +46,7 @@
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Zakázať aktiváciu Flow Launchera, keď je aktívna aplikácia na celú obrazovku (odporúčané pre hry).</system:String>
     <system:String x:Key="defaultFileManager">Predvolený správca súborov</system:String>
@@ -53,11 +61,15 @@
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Použiť Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou Pinyin. Pinyin je štandardný systém romanizovaného pravopisu pre transliteráciu čínštiny</system:String>
+    <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Vyhľadať plugin Ctrl+F</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">Nenašli sa žiadne výsledky</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Skúste použiť iné vyhľadávanie.</system:String>
     <system:String x:Key="plugin">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zapnuté</system:String>
@@ -71,19 +83,31 @@
     <system:String x:Key="newPriority">Nová priorita</system:String>
     <system:String x:Key="priority">Priorita</system:String>
     <system:String x:Key="priorityToolTip">Zmena priority výsledkov pluginu</system:String>
-    <system:String x:Key="pluginDirectory">Priečinok s pluginmi</system:String>
+    <system:String x:Key="pluginDirectory">Priečinok pluginu</system:String>
     <system:String x:Key="author">od</system:String>
     <system:String x:Key="plugin_init_time">Inicializácia:</system:String>
     <system:String x:Key="plugin_query_time">Trvanie dopytu:</system:String>
     <system:String x:Key="plugin_query_version">| Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
-    <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
+    <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nová verzia</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
+    <system:String x:Key="pluginStore_None">Pluginy</system:String>
+    <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
+    <system:String x:Key="uninstallbtn">Odinštalovať</system:String>
+    <system:String x:Key="updatebtn">Aktualizovať</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin je už nainštalovaný</system:String>
+    <system:String x:Key="LabelNew">Nová verzia</system:String>
+    <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný za posledných 7 dní</system:String>
+    <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -100,12 +124,14 @@
     <system:String x:Key="OpenThemeFolder">Otvoriť priečinok s motívmi</system:String>
     <system:String x:Key="ColorScheme">Farebná schéma</system:String>
     <system:String x:Key="ColorSchemeSystem">Predvolené systémom</system:String>
-    <system:String x:Key="ColorSchemeLight">Svetlý</system:String>
-    <system:String x:Key="ColorSchemeDark">Tmavý</system:String>
+    <system:String x:Key="ColorSchemeLight">Svetlá</system:String>
+    <system:String x:Key="ColorSchemeDark">Tmavá</system:String>
     <system:String x:Key="SoundEffect">Zvukový efekt</system:String>
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
     <system:String x:Key="AnimationTip">Animovať používateľské rozhranie</system:String>
+    <system:String x:Key="Clock">Hodiny</system:String>
+    <system:String x:Key="Date">Dátum</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
@@ -116,17 +142,26 @@
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
     <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
+    <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="builtinShortcuts">Vstavané skratky</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
+    <system:String x:Key="customShortcut">Skratka</system:String>
+    <system:String x:Key="customShortcutExpansion">Rozšírenie</system:String>
+    <system:String x:Key="builtinShortcutDescription">Popis</system:String>
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
     <system:String x:Key="add">Pridať</system:String>
     <system:String x:Key="pleaseSelectAnItem">Vyberte položku, prosím</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Naozaj chcete odstrániť skratku: {0} pre dopyt {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Kopírovať text do schránky.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Šírka okna</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesov Ctrl + [ a Ctrl + ].</system:String>
     <system:String x:Key="useGlyphUI">Použiť ikony Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Použiť ikony Segoe Fluent, ak sú podporované</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Stlačte kláves</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -150,8 +185,10 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Dokumentácia</system:String>
     <system:String x:Key="version">Verzia</system:String>
+    <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Flow Launcher bol aktivovaný {0}-krát</system:String>
     <system:String x:Key="checkUpdates">Vyhľadať aktualizácie</system:String>
+    <system:String x:Key="BecomeASponsor">Stať sa sponzorom</system:String>
     <system:String x:Key="newVersionTips">Je dostupná nová verzia {0}, chcete reštartovať Flow Launcher, aby sa mohol aktualizovať?</system:String>
     <system:String x:Key="checkUpdatesFailed">Vyhľadávanie aktualizácií zlyhalo, prosím, skontrolujte pripojenie na internet a nastavenie proxy server k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -206,11 +243,17 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Stlačením klávesovej skratky sa automaticky vloží zadaný výraz.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Laucher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Zadajte skratku, ktorá automaticky vloží konkrétny dopyt.</system:String>
+    <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
+    <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Klávesová skratka je nedostupná</system:String>
@@ -287,7 +330,7 @@
     <system:String x:Key="RecommendWeatherDesc">Počasie na Googli</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Príkazový riadok</system:String>
-    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth v nastaveniach Windowsu</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>

@@ -171,12 +171,10 @@ namespace Flow.Launcher.ViewModel
             switch (Visbility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness { Top = 0 };
                     SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
-                    Margin = new Thickness { Top = 0 };
                     Visbility = Visibility.Collapsed;
                     break;
             }

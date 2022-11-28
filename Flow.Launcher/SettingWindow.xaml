@@ -1,4 +1,4 @@
-<Window
+﻿<Window
     x:Class="Flow.Launcher.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -39,11 +39,10 @@
     </Window.CommandBindings>
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
-        <converters:TranlationConverter x:Key="TranlationConverter" />
+        <converters:TranlationConverter x:Key="TranslationConverter" />
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -428,7 +427,6 @@
                         <Grid
                             x:Name="templateRoot"
                             ClipToBounds="true"
-                            KeyboardNavigation.TabNavigation="Local"
                             SnapsToDevicePixels="true">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition
@@ -446,30 +444,11 @@
                                 Panel.ZIndex="1"
                                 Background="Transparent"
                                 IsItemsHost="true"
-                                KeyboardNavigation.TabIndex="1"
                                 LastChildFill="False" />
-                            <Border
-                                x:Name="contentPanel"
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                KeyboardNavigation.DirectionalNavigation="Contained"
-                                KeyboardNavigation.TabIndex="2"
-                                KeyboardNavigation.TabNavigation="Local">
-                                <ContentPresenter
-                                    x:Name="PART_SelectedContentHost"
-                                    Margin="{TemplateBinding Padding}"
-                                    ContentSource="SelectedContent"
-                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Border Grid.Column="1">
+                                <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
                             </Border>
                         </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter TargetName="templateRoot" Property="TextElement.Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -1799,7 +1778,12 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
-                                        <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
+                                        <Border
+                                            Width="{Binding WindowWidthSize}"
+                                            Margin="0"
+                                            SnapsToDevicePixels="True"
+                                            Style="{DynamicResource WindowBorderStyle}"
+                                            UseLayoutRounding="True">
                                             <Border Style="{DynamicResource WindowRadius}">
                                                 <Border.Clip>
                                                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -1817,6 +1801,7 @@
                                                     <Border Grid.Row="0">
                                                         <TextBox
                                                             x:Name="QueryTextBox"
+                                                            IsHitTestVisible="False"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
@@ -1824,17 +1809,18 @@
                                                     <StackPanel
                                                         x:Name="ClockPanel"
                                                         IsHitTestVisible="False"
-                                                        Style="{DynamicResource ClockPanel}">
+                                                        Style="{DynamicResource ClockPanel}"
+                                                        Visibility="Visible">
                                                         <TextBlock
                                                             x:Name="ClockBox"
                                                             Style="{DynamicResource ClockBox}"
                                                             Text="{Binding ClockText}"
-                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                         <TextBlock
                                                             x:Name="DateBox"
                                                             Style="{DynamicResource DateBox}"
                                                             Text="{Binding DateText}"
-                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -1853,7 +1839,10 @@
                                                     </Border>
 
                                                     <ContentControl Grid.Row="2">
-                                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
+                                                        <flowlauncher:ResultListBox
+                                                            DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                            IsHitTestVisible="False"
+                                                            Visibility="Visible" />
                                                     </ContentControl>
 
                                                 </Grid>
@@ -2012,8 +2001,8 @@
                                             Margin="10"
                                             HorizontalAlignment="Right"
                                             DockPanel.Dock="Top">
-                                            <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                                                <Run Text="{DynamicResource howToCreateTheme}" />
+                                            <Hyperlink NavigateUri="{Binding ThemeGallery, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                <Run Text="{DynamicResource browserMoreThemes}" />
                                             </Hyperlink>
                                         </TextBlock>
                                     </Border>
@@ -2323,7 +2312,7 @@
                                             </ItemsControl>
                                         </Border>
 
-                                        <Border Margin="0,0,0,18" Style="{DynamicResource SettingGroupBox}">
+                                        <Border Margin="0,0,0,0" Style="{DynamicResource SettingGroupBox}">
                                             <ItemsControl Style="{StaticResource SettingGrid}">
                                                 <StackPanel Style="{StaticResource TextPanel}">
                                                     <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ThemeFolder}" />
@@ -2340,6 +2329,16 @@
                                                     &#xe838;
                                                 </TextBlock>
                                             </ItemsControl>
+                                        </Border>
+                                        <Border>
+                                            <TextBlock
+                                                Margin="10,10,10,18"
+                                                HorizontalAlignment="Right"
+                                                DockPanel.Dock="Top">
+                                                <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                                    <Run Text="{DynamicResource howToCreateTheme}" />
+                                                </Hyperlink>
+                                            </TextBlock>
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>
@@ -2615,7 +2614,7 @@
                                             <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranlationConverter}}" />
+                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -2848,13 +2847,29 @@
                                                 Text="{Binding Version}" />
                                             <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource version}" />
                                         </StackPanel>
-                                        <Button
-                                            Grid.Column="1"
-                                            Margin="0,0,-14,0"
-                                            HorizontalAlignment="Right"
-                                            Click="OnCheckUpdates"
-                                            Content="{DynamicResource checkUpdates}"
-                                            Style="{StaticResource AccentButtonStyle}" />
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <Button
+                                                Margin="0,0,10,0"
+                                                HorizontalAlignment="Right"
+                                                Click="OnCheckUpdates"
+                                                Content="{DynamicResource checkUpdates}" />
+                                            <Button
+                                                Margin="0,0,14,0"
+                                                Padding="0"
+                                                HorizontalAlignment="Right"
+                                                Style="{StaticResource AccentButtonStyle}">
+                                                <Hyperlink
+                                                    NavigateUri="{Binding SponsorPage, Mode=OneWay}"
+                                                    RequestNavigate="OnRequestNavigate"
+                                                    TextDecorations="None">
+                                                    <TextBlock
+                                                        Padding="10,5,10,5"
+                                                        Foreground="White"
+                                                        Text="{DynamicResource BecomeASponsor}" />
+                                                </Hyperlink>
+                                            </Button>
+
+                                        </StackPanel>
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xe946;
                                         </TextBlock>
