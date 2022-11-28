@@ -309,12 +309,6 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        public bool UseWindowsIndexForDirectorySearch
-        {
-            get => Settings.UseWindowsIndexForDirectorySearch;
-            set => Settings.UseWindowsIndexForDirectorySearch = value;
-        }
-
         private ICommand _openEditorPathCommand;
 
         public ICommand OpenEditorPath => _openEditorPathCommand ??= new RelayCommand(_ =>

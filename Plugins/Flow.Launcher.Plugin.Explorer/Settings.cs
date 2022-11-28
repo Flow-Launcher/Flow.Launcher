@@ -30,8 +30,6 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool ShowWindowsContextMenu { get; set; } = true;
 
-        public bool UseWindowsIndexForDirectorySearch { get; set; } = false;
-
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -100,7 +98,7 @@ namespace Flow.Launcher.Plugin.Explorer
             [Description("plugin_explorer_engine_everything")]
             Everything,
             [Description("plugin_explorer_path_enumeration_engine_none")]
-            Direct
+            DirectEnumeration
         }
 
         public enum IndexSearchEngineOption
