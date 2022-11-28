@@ -418,8 +418,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string Location => Package.Location;
 
             public bool Enabled { get; set; }
-            public bool CanRunElevated { get; set; }
-
             public bool CanRunElevated { get; set; } = false;
 
             public string LogoUri { get; set; }
