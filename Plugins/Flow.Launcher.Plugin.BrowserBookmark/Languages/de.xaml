@@ -19,4 +19,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Pfad zum Datenverzeichnis</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Hinzufügen</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Löschen</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
 </ResourceDictionary>
