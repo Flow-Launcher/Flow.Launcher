@@ -411,6 +411,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             public Application() { }
 
+            public Application(AppListEntry appListEntry)
+            {
+                UserModelId = appListEntry.AppUserModelId;
+                UniqueIdentifier = appListEntry.AppUserModelId;
+                DisplayName = appListEntry.DisplayInfo.DisplayName;
+                Description = appListEntry.DisplayInfo.Description;
+                //Package = package;
+                Enabled = true;
+            }
+
             public Result Result(string query, IPublicAPI api)
             {
                 string title;
@@ -602,6 +612,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 return false;
+            }
+
+            internal static bool IfAppCanRunElevated(XmlNode appNode, XmlNamespaceManager namespaceManager)
+            {
+                // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
+                // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
+
+                var entryPointNode = appNode.SelectSingleNode($"//*[local-name()='Application' and @EntryPoint]", namespaceManager);
+                var trustLevelNode = appNode.SelectSingleNode($"//*[local-name()='Application' and @uap10:TrustLevel]", namespaceManager);
+
+                return entryPointNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication" ||
+                       trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
             }
 
             internal string ResourceFromPri(string packageFullName, string packageName, string rawReferenceValue)
