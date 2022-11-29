@@ -75,25 +75,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 var namespaceManager = new XmlNamespaceManager(xmlDoc.NameTable);
-                namespaceManager.AddNamespace("", "http://schemas.microsoft.com/appx/manifest/foundation/windows10");
+                namespaceManager.AddNamespace("d", "http://schemas.microsoft.com/appx/manifest/foundation/windows10"); // still need a name
                 namespaceManager.AddNamespace("rescap", "http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities");
                 namespaceManager.AddNamespace("uap10", "http://schemas.microsoft.com/appx/manifest/uap/windows10/10");
 
-                var allowElevationNode = xmlRoot.SelectSingleNode("//*[name()='rescap:Capability' and @Name='allowElevation']", namespaceManager);
+                var allowElevationNode = xmlRoot.SelectSingleNode("//rescap:Capability[@Name='allowElevation']", namespaceManager);
                 bool packageCanElevate = allowElevationNode != null;
 
-                var appsNode = xmlRoot.SelectSingleNode("//*[name()='Applications']", namespaceManager);
+                var appsNode = xmlRoot.SelectSingleNode("d:Applications", namespaceManager);
                 foreach (var app in Apps)
                 {
                     // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
                     // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
                     var id = app.UserModelId.Split('!')[1];
-                    var appNode = appsNode?.SelectSingleNode($"//*[name()='Application' and @Id='{id}']", namespaceManager);
+                    var appNode = appsNode?.SelectSingleNode($"d:Application[@Id='{id}']", namespaceManager);
                     if (appNode != null)
                     {
-                        app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode, namespaceManager);
+                        app.CanRunElevated = packageCanElevate || Application.IfAppCanRunElevated(appNode);
 
-                        var visualElement = appNode.SelectSingleNode($"//*[name()='uap:VisualElements']", namespaceManager);
+                        // local name to fit all versions
+                        var visualElement = appNode.SelectSingleNode($"*[local-name()='VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri, (32, 32));
                         var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
@@ -131,8 +132,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        /// http://www.hanselman.com/blog/GetNamespacesFromAnXMLDocumentWithXPathDocumentAndLINQToXML.aspx
-        private PackageVersion GetPackageVersionFromManifest(XmlElement xmlRoot)
+        private PackageVersion GetPackageVersionFromManifest(XmlNode xmlRoot)
         {
             if (xmlRoot != null)
             {
@@ -483,16 +483,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Main.StartProcess(Process.Start, info);
             }
 
-            internal static bool IfAppCanRunElevated(XmlNode appNode, XmlNamespaceManager namespaceManager)
+            internal static bool IfAppCanRunElevated(XmlNode appNode)
             {
                 // According to https://learn.microsoft.com/windows/apps/desktop/modernize/grant-identity-to-nonpackaged-apps#create-a-package-manifest-for-the-sparse-package
                 // and https://learn.microsoft.com/uwp/schemas/appxpackage/uapmanifestschema/element-application#attributes
 
-                var entryPointNode = appNode.SelectSingleNode($"//*[local-name()='Application' and @EntryPoint]", namespaceManager);
-                var trustLevelNode = appNode.SelectSingleNode($"//*[local-name()='Application' and @uap10:TrustLevel]", namespaceManager);
-
-                return entryPointNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication" ||
-                       trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
+                return appNode?.Attributes["EntryPoint"]?.Value == "Windows.FullTrustApplication" ||
+                       appNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
             }
 
             internal string LogoPathFromUri(string uri, (int, int) desiredSize)
