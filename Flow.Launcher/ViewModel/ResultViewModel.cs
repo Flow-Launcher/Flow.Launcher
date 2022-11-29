@@ -173,50 +173,53 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async Task LoadImageAsync()
+        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon, bool loadFullImage)
         {
-            var imagePath = Result.IcoPath;
-            if (string.IsNullOrEmpty(imagePath) && Result.Icon != null)
+            if (string.IsNullOrEmpty(imagePath) && icon != null)
             {
                 try
                 {
-                    image = Result.Icon();
-                    return;
+                    var image = await Task.Run(() => icon()).ConfigureAwait(false);
+                    return image;
                 }
                 catch (Exception e)
                 {
                     Log.Exception(
-                        $"|ResultViewModel.Image|IcoPath is empty and exception when calling Icon() for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
+                        $"|ResultViewModel.LoadImageInternalAsync|IcoPath is empty and exception when calling IconDelegate for result <{Result.Title}> of plugin <{Result.PluginDirectory}>",
                         e);
                 }
             }
 
-            var loadFullImage = (Path.GetExtension(imagePath) ?? "").Equals(".url", StringComparison.OrdinalIgnoreCase);
-
-            if (ImageLoader.CacheContainImage(imagePath))
-            {
-                // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
-                return;
-            }
-
-            // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+            return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
+        private async Task LoadImageAsync()
+        {
+            var imagePath = Result.IcoPath;
+            var iconDelegate = Result.Icon;
+            if (ImageLoader.CacheContainImage(imagePath, false))
+            {
+                image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                Image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+            }
+        }
 
         private async Task LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
-            if (imagePath == null && Result.Icon != null)
+            var iconDelegate = Result.Icon;
+            if (ImageLoader.CacheContainImage(imagePath, true))
             {
-                // For UWP programs from program plugin
-                // TODO: Consider https://github.com/Flow-Launcher/Flow.Launcher/pull/1492#issuecomment-1304829947
-                PreviewImage = Result.Icon();
+                previewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
             }
             else
             {
-                PreviewImage = await ImageLoader.LoadAsync(imagePath, true).ConfigureAwait(false);
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
             }
         }
 
