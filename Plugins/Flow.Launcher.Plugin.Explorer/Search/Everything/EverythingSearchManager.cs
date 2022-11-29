@@ -24,26 +24,40 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async ValueTask ThrowIfEverythingNotAvailableAsync(CancellationToken token = default)
         {
-            if (!await EverythingApi.IsEverythingRunningAsync(token))
-                throw new EngineNotAvailableException(
-                    Enum.GetName(Settings.IndexSearchEngineOption.Everything),
-                    "Click to Open or Download Everything",
-                    "Everything is not running.",
-                    async _ =>
+            try
+            {
+                if (!await EverythingApi.IsEverythingRunningAsync(token))
+                    throw new EngineNotAvailableException(
+                        Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
+                        Main.Context.API.GetTranslation("flowlauncher_plugin_everything_click_to_launch_or_install"),
+                        Main.Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running"),
+                        ClickToInstallEverything)
                     {
-                        var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
-                        if (installedPath == null)
-                        {
-                            Main.Context.API.ShowMsgError("Unable to find Everything.exe");
-                            return false;
-                        }
-                        Settings.EverythingInstalledPath = installedPath;
-                        Process.Start(installedPath, "-startup");
-                        return true;
-                    })
+                        ErrorIcon = Constants.EverythingErrorImagePath
+                    };
+            }
+            catch (DllNotFoundException e)
+            {
+                throw new EngineNotAvailableException(
+                    Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
+                    "Please check whether your system is x86 or x64",
+                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue"))
                 {
-                    ErrorIcon = Constants.EverythingErrorImagePath
+                    ErrorIcon = Constants.GeneralSearchErrorImagePath
                 };
+            }
+        }
+        private async ValueTask<bool> ClickToInstallEverything(ActionContext _)
+        {
+            var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
+            if (installedPath == null)
+            {
+                Main.Context.API.ShowMsgError("Unable to find Everything.exe");
+                return false;
+            }
+            Settings.EverythingInstalledPath = installedPath;
+            Process.Start(installedPath, "-startup");
+            return true;
         }
 
         public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)

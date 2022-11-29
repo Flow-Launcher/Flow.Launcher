@@ -91,11 +91,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
         {
-            await _semaphore.WaitAsync(token);
-            EverythingApiDllImport.Everything_GetMajorVersion();
-            var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
-            _semaphore.Release();
-            return result;
+            try
+            {
+                await _semaphore.WaitAsync(token);
+                EverythingApiDllImport.Everything_GetMajorVersion(); 
+                var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
+                return result;
+            }
+            finally
+            {
+                _semaphore.Release();
+            }
         }
 
         /// <summary>

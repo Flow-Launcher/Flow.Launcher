@@ -1,20 +1,14 @@
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
-using System.Windows.Input;
-using System.Windows.Media;
 using DataFormats = System.Windows.DataFormats;
 using DragDropEffects = System.Windows.DragDropEffects;
 using DragEventArgs = System.Windows.DragEventArgs;
-using ListView = System.Windows.Controls.ListView;
-using MessageBox = System.Windows.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
@@ -90,38 +84,6 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 tbFastSortWarning.Visibility = viewModel.FastSortWarningVisibility;
                 tbFastSortWarning.Text = viewModel.SortOptionWarningMessage;
-            }
-        }
-        private void SettingExpander_OnExpanded(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Expander expander)
-                return;
-
-            var parentContainer = VisualTreeHelper.GetParent(expander);
-
-            if (parentContainer is not StackPanel stackPanel)
-                return;
-
-            foreach (UIElement child in stackPanel.Children)
-            {
-                if (child != expander)
-                    child.Visibility = Visibility.Collapsed;
-            }
-        }
-        private void SettingExpander_OnCollapsed(object sender, RoutedEventArgs e)
-        {
-            if (sender is not Expander expander)
-                return;
-
-            var parentContainer = VisualTreeHelper.GetParent(expander);
-
-            if (parentContainer is not StackPanel stackPanel)
-                return;
-
-            foreach (UIElement child in stackPanel.Children)
-            {
-                if (child != expander)
-                    child.Visibility = Visibility.Visible;
             }
         }
         private void LbxAccessLinks_OnDrop(object sender, DragEventArgs e)

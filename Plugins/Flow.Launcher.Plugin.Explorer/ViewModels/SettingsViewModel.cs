@@ -369,6 +369,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     // update the message to let user know in the settings panel.
                     return Visibility.Visible;
                 }
+                catch (DllNotFoundException)
+                {
+                    return Visibility.Collapsed;
+                }
             }
         }
         public string SortOptionWarningMessage
@@ -385,6 +389,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                 catch (IPCErrorException)
                 {
                     return Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running");
+                }
+                catch (DllNotFoundException)
+                {
+                    return Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue");
                 }
             }
         }
