@@ -548,21 +548,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             return string.Empty;
                         }
 
-                        var files = Directory.EnumerateFiles(logoDir);
+                        var logos = Directory.EnumerateFiles(logoDir, $"{logoNamePrefix}*{extension}");
 
                         // Currently we don't care which one to choose
                         // Just ignore all qualifiers
                         // select like logo.[xxx_yyy].png
                         // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
-                        var logos = files.Where(file =>
-                            Path.GetFileName(file)?.StartsWith(logoNamePrefix, StringComparison.OrdinalIgnoreCase) ?? false
-                            && extension.Equals(Path.GetExtension(file), StringComparison.OrdinalIgnoreCase)
-                        );
 
                         var selected = logos.FirstOrDefault();
                         var closest = selected;
                         int min = int.MaxValue;
-                        // TODO in one iterartion find preview and logo
                         foreach (var logo in logos)
                         {
 
