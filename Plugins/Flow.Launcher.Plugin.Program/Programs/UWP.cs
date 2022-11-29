@@ -333,7 +333,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public string DisplayName { get; set; } = string.Empty;
             public string Description { get; set; } = string.Empty;
             public string UserModelId { get; set; } = string.Empty;
-            public string BackgroundColor { get; set; } = string.Empty;
+            //public string BackgroundColor { get; set; } = string.Empty; // preserve for future use
             public string Name => DisplayName;
             public string Location { get; set; } = string.Empty;
 
@@ -585,92 +585,96 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
 
-            public ImageSource Logo()
-            {
-                var logo = ImageFromPath(LogoPath);
-                var plated = PlatedImage(logo);  // TODO: maybe get plated directly from app package?
+            #region logo legacy 
+            // preserve for potential future use
 
-                // todo magic! temp fix for cross thread object
-                plated.Freeze();
-                return plated;
-            }
-            private BitmapImage ImageFromPath(string path)
-            {
-                if (File.Exists(path))
-                {
-                    var image = new BitmapImage();
-                    image.BeginInit();
-                    image.UriSource = new Uri(path);
-                    image.CacheOption = BitmapCacheOption.OnLoad;
-                    image.EndInit();
-                    image.Freeze();
-                    return image;
-                }
-                else
-                {
-                    ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
-                                               $"|Unable to get logo for {UserModelId} from {path} and" +
-                                               $" located in {Location}", new FileNotFoundException());
-                    return new BitmapImage(new Uri(Constant.MissingImgIcon));
-                }
-            }
+            //public ImageSource Logo()
+            //{
+            //    var logo = ImageFromPath(LogoPath);
+            //    var plated = PlatedImage(logo);  // TODO: maybe get plated directly from app package?
 
-            private ImageSource PlatedImage(BitmapImage image)
-            {
-                if (!string.IsNullOrEmpty(BackgroundColor) && BackgroundColor != "transparent")
-                {
-                    var width = image.Width;
-                    var height = image.Height;
-                    var x = 0;
-                    var y = 0;
+            //    // todo magic! temp fix for cross thread object
+            //    plated.Freeze();
+            //    return plated;
+            //}
+            //private BitmapImage ImageFromPath(string path)
+            //{
+            //    if (File.Exists(path))
+            //    {
+            //        var image = new BitmapImage();
+            //        image.BeginInit();
+            //        image.UriSource = new Uri(path);
+            //        image.CacheOption = BitmapCacheOption.OnLoad;
+            //        image.EndInit();
+            //        image.Freeze();
+            //        return image;
+            //    }
+            //    else
+            //    {
+            //        ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
+            //                                   $"|Unable to get logo for {UserModelId} from {path} and" +
+            //                                   $" located in {Location}", new FileNotFoundException());
+            //        return new BitmapImage(new Uri(Constant.MissingImgIcon));
+            //    }
+            //}
 
-                    var group = new DrawingGroup();
+            //private ImageSource PlatedImage(BitmapImage image)
+            //{
+            //    if (!string.IsNullOrEmpty(BackgroundColor) && BackgroundColor != "transparent")
+            //    {
+            //        var width = image.Width;
+            //        var height = image.Height;
+            //        var x = 0;
+            //        var y = 0;
 
-                    var converted = ColorConverter.ConvertFromString(BackgroundColor);
-                    if (converted != null)
-                    {
-                        var color = (Color)converted;
-                        var brush = new SolidColorBrush(color);
-                        var pen = new Pen(brush, 1);
-                        var backgroundArea = new Rect(0, 0, width, width);
-                        var rectabgle = new RectangleGeometry(backgroundArea);
-                        var rectDrawing = new GeometryDrawing(brush, pen, rectabgle);
-                        group.Children.Add(rectDrawing);
+            //        var group = new DrawingGroup();
 
-                        var imageArea = new Rect(x, y, image.Width, image.Height);
-                        var imageDrawing = new ImageDrawing(image, imageArea);
-                        group.Children.Add(imageDrawing);
+            //        var converted = ColorConverter.ConvertFromString(BackgroundColor);
+            //        if (converted != null)
+            //        {
+            //            var color = (Color)converted;
+            //            var brush = new SolidColorBrush(color);
+            //            var pen = new Pen(brush, 1);
+            //            var backgroundArea = new Rect(0, 0, width, width);
+            //            var rectabgle = new RectangleGeometry(backgroundArea);
+            //            var rectDrawing = new GeometryDrawing(brush, pen, rectabgle);
+            //            group.Children.Add(rectDrawing);
 
-                        // http://stackoverflow.com/questions/6676072/get-system-drawing-bitmap-of-a-wpf-area-using-visualbrush
-                        var visual = new DrawingVisual();
-                        var context = visual.RenderOpen();
-                        context.DrawDrawing(group);
-                        context.Close();
-                        const int dpiScale100 = 96;
-                        var bitmap = new RenderTargetBitmap(
-                            Convert.ToInt32(width), Convert.ToInt32(height),
-                            dpiScale100, dpiScale100,
-                            PixelFormats.Pbgra32
-                        );
-                        bitmap.Render(visual);
-                        return bitmap;
-                    }
-                    else
-                    {
-                        ProgramLogger.LogException($"|UWP|PlatedImage|{Location}" +
-                                                   $"|Unable to convert background string {BackgroundColor} " +
-                                                   $"to color for {Location}", new InvalidOperationException());
+            //            var imageArea = new Rect(x, y, image.Width, image.Height);
+            //            var imageDrawing = new ImageDrawing(image, imageArea);
+            //            group.Children.Add(imageDrawing);
 
-                        return new BitmapImage(new Uri(Constant.MissingImgIcon));
-                    }
-                }
-                else
-                {
-                    // todo use windows theme as background
-                    return image;
-                }
-            }
+            //            // http://stackoverflow.com/questions/6676072/get-system-drawing-bitmap-of-a-wpf-area-using-visualbrush
+            //            var visual = new DrawingVisual();
+            //            var context = visual.RenderOpen();
+            //            context.DrawDrawing(group);
+            //            context.Close();
+            //            const int dpiScale100 = 96;
+            //            var bitmap = new RenderTargetBitmap(
+            //                Convert.ToInt32(width), Convert.ToInt32(height),
+            //                dpiScale100, dpiScale100,
+            //                PixelFormats.Pbgra32
+            //            );
+            //            bitmap.Render(visual);
+            //            return bitmap;
+            //        }
+            //        else
+            //        {
+            //            ProgramLogger.LogException($"|UWP|PlatedImage|{Location}" +
+            //                                       $"|Unable to convert background string {BackgroundColor} " +
+            //                                       $"to color for {Location}", new InvalidOperationException());
 
+            //            return new BitmapImage(new Uri(Constant.MissingImgIcon));
+            //        }
+            //    }
+            //    else
+            //    {
+            //        // todo use windows theme as background
+            //        return image;
+            //    }
+            //}
+
+            #endregion
             public override string ToString()
             {
                 return $"{DisplayName}: {Description}";
