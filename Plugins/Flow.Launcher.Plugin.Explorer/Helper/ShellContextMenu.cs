@@ -103,8 +103,8 @@ namespace Peter
 
             if (_oContextMenu != null &&
                 m.Msg == (int)WM.MENUSELECT &&
-                ((int)ShellHelper.HiWord(m.WParam) & (int)MFT.SEPARATOR) == 0 &&
-                ((int)ShellHelper.HiWord(m.WParam) & (int)MFT.POPUP) == 0)
+                (ShellHelper.HiWord(m.WParam) & (ulong)MFT.SEPARATOR) == 0 &&
+                (ShellHelper.HiWord(m.WParam) & (ulong)MFT.POPUP) == 0)
             {
                 string info = string.Empty;
 
@@ -1590,12 +1590,12 @@ namespace Peter
         /// </summary>
         /// <param name="ptr">The pointer to the WParam</param>
         /// <returns>The unsigned integer for the High Word</returns>
-        public static uint HiWord(IntPtr ptr)
+        public static ulong HiWord(IntPtr ptr)
         {
             if (((ulong)ptr & 0x80000000) == 0x80000000)
-                return (uint)((ulong)ptr >> 16);
+                return ((ulong)ptr >> 16);
             else
-                return (uint)(((ulong)ptr >> 16) & 0xffff);
+                return (((ulong)ptr >> 16) & 0xffff);
         }
 
         /// <summary>
@@ -1603,9 +1603,9 @@ namespace Peter
         /// </summary>
         /// <param name="ptr">The pointer to the WParam</param>
         /// <returns>The unsigned integer for the Low Word</returns>
-        public static uint LoWord(IntPtr ptr)
+        public static ulong LoWord(IntPtr ptr)
         {
-            return (uint)ptr & 0xffff;
+            return (ulong)ptr & 0xffff;
         }
 
         #endregion
