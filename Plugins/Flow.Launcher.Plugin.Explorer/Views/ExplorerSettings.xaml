@@ -285,7 +285,7 @@
                                         Grid.Column="0"
                                         Margin="0,0,10,0"
                                         VerticalAlignment="Center"
-                                        Text="{DynamicResource plugin_explorer_Path_Enumeration_Engine}"
+                                        Text="{DynamicResource plugin_explorer_Directory_Recursive_Search_Engine}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
                                     <ComboBox
                                         Grid.Row="2"
