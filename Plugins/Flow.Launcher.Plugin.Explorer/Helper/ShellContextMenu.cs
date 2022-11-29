@@ -103,12 +103,12 @@ namespace Peter
 
             if (_oContextMenu != null &&
                 m.Msg == (int)WM.MENUSELECT &&
-                (ShellHelper.HiWord(m.WParam) & (ulong)MFT.SEPARATOR) == 0 &&
-                (ShellHelper.HiWord(m.WParam) & (ulong)MFT.POPUP) == 0)
+                (ShellHelper.HiWord(m.WParam) & (nint)MFT.SEPARATOR) == 0 &&
+                (ShellHelper.HiWord(m.WParam) & (nint)MFT.POPUP) == 0)
             {
                 string info = string.Empty;
 
-                if (ShellHelper.LoWord(m.WParam) == (int)CMD_CUSTOM.ExpandCollapse)
+                if (ShellHelper.LoWord(m.WParam) == (nint)CMD_CUSTOM.ExpandCollapse)
                     info = "Expands or collapses the current selected item";
                 else
                 {
@@ -1590,12 +1590,12 @@ namespace Peter
         /// </summary>
         /// <param name="ptr">The pointer to the WParam</param>
         /// <returns>The unsigned integer for the High Word</returns>
-        public static ulong HiWord(IntPtr ptr)
+        public static nint HiWord(IntPtr ptr)
         {
-            if (((ulong)ptr & 0x80000000) == 0x80000000)
-                return ((ulong)ptr >> 16);
+            if (((nint)ptr & 0x80000000) == 0x80000000)
+                return ((nint)ptr >> 16);
             else
-                return (((ulong)ptr >> 16) & 0xffff);
+                return (((nint)ptr >> 16) & 0xffff);
         }
 
         /// <summary>
@@ -1603,9 +1603,9 @@ namespace Peter
         /// </summary>
         /// <param name="ptr">The pointer to the WParam</param>
         /// <returns>The unsigned integer for the Low Word</returns>
-        public static ulong LoWord(IntPtr ptr)
+        public static nint LoWord(IntPtr ptr)
         {
-            return (ulong)ptr & 0xffff;
+            return (nint)ptr & 0xffff;
         }
 
         #endregion
