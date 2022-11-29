@@ -50,7 +50,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 || ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
                 || ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
             {
-                if (string.IsNullOrEmpty(query.Search))
+                if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
                     return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
 
                 var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
