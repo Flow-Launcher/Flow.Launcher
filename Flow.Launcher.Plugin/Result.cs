@@ -82,9 +82,14 @@ namespace Flow.Launcher.Plugin
         public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
-        /// Full image used for preview window
+        /// Full image used for preview panel
         /// </summary>
-        public string PreviewImage { get; set; }
+        public string PreviewImage { get; set; } = null;
+
+        /// <summary>
+        /// Determines if the preview image should occupy the full width of the preveiw panel.
+        /// </summary>
+        public bool UseBigThumbnail { get; set; } = false;
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
@@ -234,5 +239,23 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <default>#26a0da (blue)</default>
         public string ProgressBarColor { get; set; } = "#26a0da";
+
+        /// <summary>
+        /// Suggests a result's file extension should use full width of the default preview panel.
+        /// </summary>
+        /// <param name="extension">File extension. Dot included.</param>
+        public static bool ShouldUseBigThumbnail(string extension)
+        {
+            return extension is ".jpg"
+                or ".png"
+                or ".avi"
+                or ".mkv"
+                or ".bmp"
+                or ".gif"
+                or ".wmv"
+                or ".mp3"
+                or ".flac"
+                or ".mp4";
+        }
     }
 }

@@ -9,7 +9,6 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -27,13 +26,6 @@ namespace Flow.Launcher.ViewModel
                 return;
             }
             Result = result;
-
-            var extension = Path.GetExtension(result.PreviewImage);
-            if (!string.IsNullOrEmpty(extension))
-            {
-                // only when explicitly specified PreviewImage
-                UseBigThumbnail = IsMedia(extension.ToLowerInvariant());
-            }
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
@@ -177,21 +169,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// Determines if to use the full width of the preview panel
         /// </summary>
-        public bool UseBigThumbnail { get; set; } = false;
-
-        public static bool IsMedia(string extension)
-        {
-            return extension is ".jpg"
-                or ".png"
-                or ".avi"
-                or ".mkv"
-                or ".bmp"
-                or ".gif"
-                or ".wmv"
-                or ".mp3"
-                or ".flac"
-                or ".mp4";
-        }
+        public bool UseBigThumbnail => Result.UseBigThumbnail;
 
         public GlyphInfo Glyph { get; set; }
 
