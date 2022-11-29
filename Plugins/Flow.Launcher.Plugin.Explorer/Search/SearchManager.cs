@@ -172,14 +172,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
-            if (retrievedDirectoryPath.EndsWith(":\\"))
-            {
-                results.Add(ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, useIndexSearch));
-            }
-            else
-            {
-                results.Add(ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, useIndexSearch));
-            }
+            results.Add(retrievedDirectoryPath.EndsWith(":\\") 
+                ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, useIndexSearch)
+                : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, useIndexSearch));
 
             if (token.IsCancellationRequested)
                 return new List<Result>();
@@ -188,7 +183,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var recursiveIndicatorIndex = query.Search.IndexOf('>');
 
-            if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.Direct)
+            if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.DirectEnumeration)
             {
                 directoryResult =
                     await Settings.PathEnumerator.EnumerateAsync(
@@ -228,15 +223,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var pathToDirectory = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
-            if (!Settings.UseWindowsIndexForDirectorySearch)
-                return false;
-
-            if (Settings.IndexSearchExcludedSubdirectoryPaths
-                .Any(x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory)
-                    .StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)))
-                return false;
-
-            return WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
+            return !Settings.IndexSearchExcludedSubdirectoryPaths.Any(
+                x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)) 
+                   && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
     }
 }

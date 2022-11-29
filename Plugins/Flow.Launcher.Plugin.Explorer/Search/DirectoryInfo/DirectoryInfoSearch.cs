@@ -19,9 +19,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
                 return DirectorySearch(new EnumerationOptions
                 {
                     RecurseSubdirectories = true
-                }, query, search, criteria, token);
+                }, search, criteria, token);
 
-            return DirectorySearch(new EnumerationOptions(), query, search, criteria,
+            return DirectorySearch(new EnumerationOptions(), search, criteria,
                 token); // null will be passed as default
         }
 
@@ -44,7 +44,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             return incompleteName;
         }
 
-        private static IEnumerable<SearchResult> DirectorySearch(EnumerationOptions enumerationOption, Query query, string search,
+        private static IEnumerable<SearchResult> DirectorySearch(EnumerationOptions enumerationOption, string search,
             string searchCriteria, CancellationToken token)
         {
             var results = new List<SearchResult>();
