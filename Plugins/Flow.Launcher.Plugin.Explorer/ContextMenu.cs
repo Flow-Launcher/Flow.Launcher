@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer
             var contextMenus = new List<Result>();
             if (selectedResult.ContextData is SearchResult record)
             {
-                if (record.Type == ResultType.File)
+                if (record.Type == ResultType.File && !string.IsNullOrEmpty(Settings.EditorPath))
                     contextMenus.Add(CreateOpenWithEditorResult(record));
 
                 if (record.Type == ResultType.Folder && record.WindowsIndexed)
