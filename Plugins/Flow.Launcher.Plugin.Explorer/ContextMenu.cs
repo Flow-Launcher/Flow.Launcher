@@ -49,7 +49,10 @@ namespace Flow.Launcher.Plugin.Explorer
                 }
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
-                contextMenus.Add(CreateOpenWindowsIndexingOptions());
+                if (record.WindowsIndexed)
+                {
+                    contextMenus.Add(CreateOpenWindowsIndexingOptions());
+                }
 
                 if (record.ShowIndexState)
                     contextMenus.Add(new Result
