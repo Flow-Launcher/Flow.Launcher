@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 
             var queriedAccessLinks =
                 accessLinks
-                .Where(x => x.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
+                .Where(x => x.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || x.Path.Contains(search, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Name);
 
