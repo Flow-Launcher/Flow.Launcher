@@ -191,12 +191,14 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            // TODO still needed after #1351?
             var loadFullImage = (Path.GetExtension(imagePath) ?? "").Equals(".url", StringComparison.OrdinalIgnoreCase);
 
+            // TODO should use loadFullImage to hit cache?
             if (ImageLoader.CacheContainImage(imagePath))
             {
                 // will get here either when icoPath has value\icon delegate is null\when had exception in delegate
-                image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+                Image = await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
                 return;
             }
 
