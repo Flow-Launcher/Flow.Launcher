@@ -70,7 +70,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 var xmlRoot = xmlDoc.DocumentElement;
                 var packageVersion = GetPackageVersionFromManifest(xmlRoot);
-                if (!logoNameFromVersion.TryGetValue(packageVersion, out string logoName))
+                if (!smallLogoNameFromVersion.TryGetValue(packageVersion, out string logoName) ||
+                    !bigLogoNameFromVersion.TryGetValue(packageVersion, out string bigLogoName))
                 {
                     return;
                 }
@@ -96,7 +97,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                         var visualElement = appNode.SelectSingleNode($"//*[name()='uap:VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
-                        app.LogoPath = app.LogoPathFromUri(logoUri);
+                        app.LogoPath = app.LogoPathFromUri(logoUri, (32, 32));
+                        var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
+                        app.PreviewImagePath = app.LogoPathFromUri(previewUri, (128, 128));
                     }
                 }
             }
@@ -172,7 +175,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 },
         };
 
-        private static readonly Dictionary<PackageVersion, string> logoNameFromVersion = new()
+        private static readonly Dictionary<PackageVersion, string> smallLogoNameFromVersion = new()
         {
             {
                 PackageVersion.Windows10, "Square44x44Logo"
@@ -182,6 +185,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
             },
             {
                 PackageVersion.Windows8, "SmallLogo"
+            },
+        };
+
+        private static readonly Dictionary<PackageVersion, string> bigLogoNameFromVersion = new()
+        {
+            {
+                PackageVersion.Windows10, "Square150x150Logo"
+            },
+            {
+                PackageVersion.Windows81, "Square150x150Logo"
+            },
+            {
+                PackageVersion.Windows8, "Logo"
             },
         };
 
@@ -340,6 +356,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public bool Enabled { get; set; } = false;
             public bool CanRunElevated { get; set; } = false;
             public string LogoPath { get; set; } = string.Empty;
+            public string PreviewImagePath { get; set; } = string.Empty;
 
             public Application(AppListEntry appListEntry, UWP package)
             {
@@ -480,7 +497,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                        trustLevelNode?.Attributes["uap10:TrustLevel"]?.Value == "mediumIL";
             }
 
-            internal string LogoPathFromUri(string uri)
+            internal string LogoPathFromUri(string uri, (int, int) desiredSize)
             {
                 // all https://msdn.microsoft.com/windows/uwp/controls-and-patterns/tiles-and-notifications-app-assets
                 // windows 10 https://msdn.microsoft.com/en-us/library/windows/apps/dn934817.aspx
@@ -496,7 +513,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 string path = Path.Combine(Location, uri);
 
-                var logoPath = TryToFindLogo(uri, path);
+                var pxCount = desiredSize.Item1 * desiredSize.Item2;
+                var logoPath = TryToFindLogo(uri, path, pxCount);
                 if (logoPath == string.Empty)
                 {
                     var tmp = Path.Combine(Location, "Assets", uri);
@@ -505,12 +523,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // TODO: Don't know why, just keep it at the moment
                         // Maybe on older version of Windows 10?
                         // for C:\Windows\MiracastView etc
-                        return TryToFindLogo(uri, tmp);
+                        return TryToFindLogo(uri, tmp, pxCount);
                     }
                 }
                 return logoPath;
 
-                string TryToFindLogo(string uri, string path)
+                string TryToFindLogo(string uri, string path, int px)
                 {
                     var extension = Path.GetExtension(path);
                     if (extension != null)
@@ -544,6 +562,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var selected = logos.FirstOrDefault();
                         var closest = selected;
                         int min = int.MaxValue;
+                        // TODO in one iterartion find preview and logo
                         foreach (var logo in logos)
                         {
 
@@ -551,13 +570,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                             var decoder = BitmapDecoder.Create(imageStream, BitmapCreateOptions.IgnoreColorProfile, BitmapCacheOption.None);
                             var height = decoder.Frames[0].PixelHeight;
                             var width = decoder.Frames[0].PixelWidth;
-                            int pixelCountDiff = Math.Abs(height * width - 1936); // 44*44=1936
+                            int pixelCountDiff = Math.Abs(height * width - px);
                             if (pixelCountDiff < min)
                             {
-                                // try to find the closest to 44x44 logo
+                                // try to find the closest to desired size
                                 closest = logo;
                                 if (pixelCountDiff == 0)
-                                    break;  // found 44x44
+                                    break;  // found
                                 min = pixelCountDiff;
                             }
                         }
