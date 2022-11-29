@@ -96,7 +96,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // local name to fit all versions
                         var visualElement = appNode.SelectSingleNode($"*[local-name()='VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
-                        app.LogoPath = app.LogoPathFromUri(logoUri, (32, 32));
+                        app.LogoPath = app.LogoPathFromUri(logoUri, (64, 64));
                         var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
                         app.PreviewImagePath = app.LogoPathFromUri(previewUri, (128, 128));
                     }
