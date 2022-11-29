@@ -8,7 +8,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} por {1} {2}{3}¿Desea desinstalar este complemento? Después de la desinstalación Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} por {1} {2}{3}¿Desea instalar este complemento? Después de la instalación Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
