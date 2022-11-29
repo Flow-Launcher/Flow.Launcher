@@ -8,7 +8,7 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende desinstalar este plugin? Após a desinstalação, Flow Launcher será reiniciado.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende instalar este plugin? Após a instalação, Flow Launcher será reiniciado.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalador de plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando plugin...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descarregar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalador de plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin instalado com sucesso. Por favor aguarde, estamos a reiniciar Flow launcher...</system:String>
