@@ -250,7 +250,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             }
 
                             return false;
-                        }
+                        },
                     });
                 }
 
