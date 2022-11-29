@@ -180,7 +180,7 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    image = Result.Icon();
+                    Image = await Task.Run(() => Result.Icon()).ConfigureAwait(false);
                     return;
                 }
                 catch (Exception e)
@@ -210,9 +210,7 @@ namespace Flow.Launcher.ViewModel
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
             if (imagePath == null && Result.Icon != null)
             {
-                // For UWP programs from program plugin
-                // TODO: Consider https://github.com/Flow-Launcher/Flow.Launcher/pull/1492#issuecomment-1304829947
-                PreviewImage = Result.Icon();
+                PreviewImage = await Task.Run(() => Result.Icon()).ConfigureAwait(false);
             }
             else
             {
