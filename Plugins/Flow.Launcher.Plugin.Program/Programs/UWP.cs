@@ -421,7 +421,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         _ = Task.Run(() => Launch(shouldRunElevated)).ConfigureAwait(false);
                         if (elevated && !shouldRunElevated)
                         {
-                            var title = "Plugin: Program";
+                            var title = api.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
                             var message = api.GetTranslation("flowlauncher_plugin_program_run_as_administrator_not_supported_message");
                             api.ShowMsg(title, message, string.Empty);
                         }
