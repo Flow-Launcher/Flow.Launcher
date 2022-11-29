@@ -69,36 +69,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             switch (isPathSearch)
             {
                 case true
-                    when (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)):
+                    when ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
+                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
+                    
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+                    
                     return results.ToList();
-                    break;
-                case false when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
-                {
-                    // A backdoor to prevent everything to do content search
+
+                case false 
+                    when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
+                
+                    // Intentionally require enabling of Everything's content search due to its slowness
                     if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
-                    {
                         return EverythingContentSearchResult(query);
-                    }
+                    
                     searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
+                    
                     break;
-                }
+                
                 case false:
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                    
                     break;
             }
 
-
             if (searchResults == null)
-            {
                 return results.ToList();
-            }
 
             await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
-            {
                 results.Add(ResultManager.CreateResult(query, search));
-            }
 
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                 excludedPath => r.SubTitle.StartsWith(excludedPath.Path, StringComparison.OrdinalIgnoreCase)));
