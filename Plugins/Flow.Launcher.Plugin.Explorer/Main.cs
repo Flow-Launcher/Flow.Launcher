@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Storage;
+﻿using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
@@ -41,14 +41,6 @@ namespace Flow.Launcher.Plugin.Explorer
             Settings = context.API.LoadSettingJsonStorage<Settings>();
 
             viewModel = new SettingsViewModel(context, Settings);
-
-
-            // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
-            if (Settings.QuickFolderAccessLinks.Any())
-            {
-                Settings.QuickAccessLinks = Settings.QuickFolderAccessLinks;
-                Settings.QuickFolderAccessLinks = new();
-            }
 
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
