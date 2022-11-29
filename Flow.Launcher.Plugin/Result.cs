@@ -241,7 +241,7 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Suggests a result's file extension should use full width of the default preview panel.
+        /// Suggests the preview image of result should use full width of the default preview panel by result's file extension.
         /// </summary>
         /// <param name="extension">File extension. Dot included.</param>
         public static bool ShouldUseBigThumbnail(string extension)
