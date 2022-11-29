@@ -59,7 +59,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             try
             {
-                // From powertoys run
                 var xmlDoc = GetManifestXml();
                 if (xmlDoc == null)
                 {
