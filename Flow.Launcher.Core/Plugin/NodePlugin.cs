@@ -17,8 +17,6 @@ namespace Flow.Launcher.Core.Plugin
     {
         private readonly ProcessStartInfo _startInfo;
 
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
-
         public NodePlugin(string filename)
         {
             _startInfo = new ProcessStartInfo

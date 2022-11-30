@@ -34,10 +34,6 @@ namespace Flow.Launcher.Core.Plugin
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
 
-        /// <summary>
-        /// The language this JsonRPCPlugin support
-        /// </summary>
-        public abstract string SupportedLanguage { get; set; }
         protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 

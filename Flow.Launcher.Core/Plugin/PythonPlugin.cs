@@ -11,7 +11,6 @@ namespace Flow.Launcher.Core.Plugin
     internal class PythonPlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
         public PythonPlugin(string filename)
         {
