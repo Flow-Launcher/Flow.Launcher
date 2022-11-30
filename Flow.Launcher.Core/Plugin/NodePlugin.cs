@@ -17,7 +17,6 @@ namespace Flow.Launcher.Core.Plugin
     {
         private readonly ProcessStartInfo _startInfo;
 
-        // TODO: Remove all, not used
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
 
         public NodePlugin(string filename)
@@ -39,9 +38,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
-        { 
-            // CONTEXT MENU NOT WORKING ??
-            
+        {
             // since this is not static, request strings will build up in ArgumentList if index is not specified
             _startInfo.ArgumentList[1] = rpcRequest.ToString();
             return Execute(_startInfo);

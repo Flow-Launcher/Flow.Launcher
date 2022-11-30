@@ -4,6 +4,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin;
 using System.IO;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -29,6 +30,15 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath).Wait();
 
             PluginsSettingsFilePath = ExecutablePath;
+        }
+
+        internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)
+        {
+            return new PluginPair
+            {
+                Plugin = new NodePlugin(filePath),
+                Metadata = metadata
+            };
         }
     }
 }

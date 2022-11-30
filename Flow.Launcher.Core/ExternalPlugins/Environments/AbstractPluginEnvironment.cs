@@ -112,6 +112,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         }
 
+        internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
+
         private IEnumerable<PluginPair> SetPathForPluginPairs(string filePath, string languageToSet)
         {
             var pluginPairs = new List<PluginPair>();
@@ -119,13 +121,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             foreach (var metadata in PluginMetadataList)
             {
                 if (metadata.Language.Equals(languageToSet, StringComparison.OrdinalIgnoreCase))
-                {
-                    pluginPairs.Add(new PluginPair
-                    {
-                        Plugin = new PythonPlugin(filePath),
-                        Metadata = metadata
-                    });
-                }
+                    pluginPairs.Add(CreatePluginPair(filePath, metadata));
             }
 
             return pluginPairs;

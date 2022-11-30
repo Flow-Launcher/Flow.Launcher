@@ -1,4 +1,5 @@
 ﻿using Droplex;
+using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -33,6 +34,15 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             DroplexPackage.Drop(App.python_3_8_9_embeddable, InstallPath).Wait();
 
             PluginsSettingsFilePath = ExecutablePath;
+        }
+
+        internal override PluginPair CreatePluginPair(string filePath, PluginMetadata metadata)
+        {
+            return new PluginPair
+            {
+                Plugin = new PythonPlugin(filePath),
+                Metadata = metadata
+            };
         }
     }
 }
