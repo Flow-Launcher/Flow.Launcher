@@ -68,7 +68,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void UpdateApp()
         {
-            await _updater.UpdateAppAsync(App.API, Settings, false);
+            await _updater.UpdateAppAsync(App.API, false);
         }
 
         public bool AutoUpdates

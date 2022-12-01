@@ -17,7 +17,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
-using Flow.Launcher.Core.ExternalPlugins.Environments;
 
 namespace Flow.Launcher.Core
 {
@@ -32,7 +31,7 @@ namespace Flow.Launcher.Core
 
         private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
 
-        public async Task UpdateAppAsync(IPublicAPI api, Settings settings, bool silentUpdate = true)
+        public async Task UpdateAppAsync(IPublicAPI api, bool silentUpdate = true)
         {
             await UpdateLock.WaitAsync();
             try
@@ -74,8 +73,6 @@ namespace Flow.Launcher.Core
                         MessageBox.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
-
-                    AbstractPluginEnvironment.IndicatePluginEnvPathsUpdate(settings, newReleaseVersion.ToString());
                 }
                 else
                 {

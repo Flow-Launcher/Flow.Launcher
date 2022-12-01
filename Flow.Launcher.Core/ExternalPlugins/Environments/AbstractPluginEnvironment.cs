@@ -157,56 +157,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
         }
 
-        public static void IndicatePluginEnvPathsUpdate(Settings settings, string newVer)
-        {
-            var appVer = $"app-{newVer}";
-            var updatePythonIndicatorFilePath
-                = Regex.Replace(Path.Combine(DataLocation.PluginEnvironments, updatePythonIndicatorFilename), appDataRegex, appVer);
-            var updateNodeIndicatorFilePath
-                = Regex.Replace(Path.Combine(DataLocation.PluginEnvironments, updateNodeIndicatorFilename), appDataRegex, appVer);
-
-            if (!string.IsNullOrEmpty(settings.PluginSettings.PythonExecutablePath)
-                && settings.PluginSettings.PythonExecutablePath.StartsWith(DataLocation.PluginEnvironments))
-                using (var _ = File.CreateText(updatePythonIndicatorFilePath)) { }
-
-            if (!string.IsNullOrEmpty(settings.PluginSettings.NodeExecutablePath)
-                && settings.PluginSettings.NodeExecutablePath.StartsWith(DataLocation.PluginEnvironments))
-                using (var _ = File.CreateText(updateNodeIndicatorFilePath)) { }
-        }
-
+        /// <summary>
+        /// After app updated while in portable mode or switched between portable/roaming mode,
+        /// need to update each plugin's executable path so user will not be prompted again to reinstall the environments.
+        /// </summary>
+        /// <param name="settings"></param>
         public static void PreStartPluginFilePathCorrection(Settings settings)
         {
-            PreStartCorrectionAfterUpdate(settings);
-            PreStartCorrectionAfterModeChange(settings);
-        }
-
-        private static void PreStartCorrectionAfterUpdate(Settings settings)
-        {
-            // After updating flow, update plugin env paths.
-            var appVer = $"app-{Constant.Version}";
-            var updatePythonIndicatorFilePath = Path.Combine(DataLocation.PluginEnvironments, updatePythonIndicatorFilename);
-            var updateNodeIndicatorFilePath = Path.Combine(DataLocation.PluginEnvironments, updateNodeIndicatorFilename);
-
-            if (File.Exists(updatePythonIndicatorFilePath))
-            {
-                settings.PluginSettings.PythonExecutablePath
-                    = Regex.Replace(settings.PluginSettings.PythonExecutablePath, appDataRegex, appVer);
-
-                File.Delete(updatePythonIndicatorFilePath);
-            }
-
-            if (File.Exists(updateNodeIndicatorFilePath))
-            {
-                settings.PluginSettings.NodeExecutablePath
-                    = Regex.Replace(settings.PluginSettings.NodeExecutablePath, appDataRegex, appVer);
-
-                File.Delete(updateNodeIndicatorFilePath);
-            }
-        }
-
-        private static void PreStartCorrectionAfterModeChange(Settings settings)
-        {
-            // After enabling/disabling portable mode, update plugin env paths.
             if (DataLocation.PortableDataLocationInUse())
             {
                 // When user is using portable but has moved flow to a different location
@@ -251,6 +208,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         private static bool IsUsingPortablePath(string filePath, string pluginEnvironmentName)
         {
+            // DataLocation.PortableDataPath returns the current portable path, this determines if an out
+            // of date path is also a portable path.
             var portableAppEnvLocation = $"UserData\\{DataLocation.PluginEnvironments}\\{pluginEnvironmentName}";
 
             return filePath.Contains(portableAppEnvLocation);
