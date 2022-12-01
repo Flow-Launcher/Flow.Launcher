@@ -135,8 +135,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 new()
                 {
                     Title = "Do you want to enable content search for Everything?",
-                    SubTitle = "It can be super slow without index (which is only supported in Everything 1.5+)",
-                    IcoPath = "Images/search.png",
+                    SubTitle = "It can be very slow without index (which is only supported in Everything v1.5+)",
+                    IcoPath = "Images/index_error.png",
                     Action = c =>
                     {
                         Settings.EnableEverythingContentSearch = true;
