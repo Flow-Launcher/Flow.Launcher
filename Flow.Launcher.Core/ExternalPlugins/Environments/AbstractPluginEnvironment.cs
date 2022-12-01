@@ -162,7 +162,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         /// need to update each plugin's executable path so user will not be prompted again to reinstall the environments.
         /// </summary>
         /// <param name="settings"></param>
-        public static void PreStartPluginFilePathCorrection(Settings settings)
+        public static void PreStartPluginExecutablePathUpdate(Settings settings)
         {
             if (DataLocation.PortableDataLocationInUse())
             {

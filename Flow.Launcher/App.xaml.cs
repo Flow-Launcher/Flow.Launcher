@@ -62,7 +62,7 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
-                AbstractPluginEnvironment.PreStartPluginFilePathCorrection(_settings);
+                AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
