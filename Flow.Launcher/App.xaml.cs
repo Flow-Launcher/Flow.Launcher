@@ -6,6 +6,7 @@ using System.Timers;
 using System.Windows;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -61,7 +62,7 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
-                _updater.PreStartSetupAfterAppUpdate(_settings);
+                AbstractPluginEnvironment.PreStartPluginFilePathCorrection(_settings);
 
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);

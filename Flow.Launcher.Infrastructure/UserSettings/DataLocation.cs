@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
@@ -32,6 +28,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
         public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), "Settings", Constant.Plugins);
 
-        public static readonly string PluginEnvironments = Path.Combine(DataDirectory(), "Environments");
+        public const string PythonEnvironmentName = "Python";
+        public const string NodeEnvironmentName = "Node.js";
+        public const string PluginEnvironments = "Environments";
+        public static readonly string PluginEnvironmentsPath = Path.Combine(DataDirectory(), PluginEnvironments);
     }
 }

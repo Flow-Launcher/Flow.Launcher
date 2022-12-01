@@ -12,9 +12,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         internal override string Language => AllowedLanguage.TypeScript;
 
-        internal override string EnvName => "Node.js";
+        internal override string EnvName => DataLocation.NodeEnvironmentName;
 
-        internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironments, EnvName);
+        internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironmentsPath, EnvName);
 
         internal override string InstallPath => Path.Combine(EnvPath, "Node-v16.18.0");
         internal override string ExecutablePath => Path.Combine(InstallPath, "node-v16.18.0-win-x64\\node.exe");

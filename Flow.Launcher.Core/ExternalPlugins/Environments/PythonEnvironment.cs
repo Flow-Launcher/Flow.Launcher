@@ -12,9 +12,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
     {
         internal override string Language => AllowedLanguage.Python;
 
-        internal override string EnvName => "Python";
+        internal override string EnvName => DataLocation.PythonEnvironmentName;
 
-        internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironments, EnvName);
+        internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironmentsPath, EnvName);
 
         internal override string InstallPath => Path.Combine(EnvPath, "PythonEmbeddable-v3.8.9");
 

@@ -17,20 +17,13 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
-using System.IO;
-using System.Text.RegularExpressions;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
 
 namespace Flow.Launcher.Core
 {
     public class Updater
     {
         public string GitHubRepository { get; }
-
-        private string updatePythonIndicatorFilename = ".updatePythonPath";
-
-        private string updateNodeIndicatorFilename = ".updateNodePath";
-
-        private string appDataRegex = @"app-\d\.\d\.\d";
 
         public Updater(string gitHubRepository)
         {
@@ -82,7 +75,7 @@ namespace Flow.Launcher.Core
                             DataLocation.PortableDataPath,
                             targetDestination));
 
-                    UpdatePluginEnvPaths(settings, newReleaseVersion.ToString());
+                    AbstractPluginEnvironment.IndicatePluginEnvPathsUpdate(settings, newReleaseVersion.ToString());
                 }
                 else
                 {
@@ -153,46 +146,6 @@ namespace Flow.Launcher.Core
             var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
 
             return tips;
-        }
-
-        private void UpdatePluginEnvPaths(Settings settings, string newVer)
-        {
-            var appVer = $"app-{newVer}";
-            var updatePythonIndicatorFilePath 
-                = Regex.Replace(Path.Combine(DataLocation.PluginEnvironments, updatePythonIndicatorFilename), appDataRegex, appVer);
-            var updateNodeIndicatorFilePath 
-                = Regex.Replace(Path.Combine(DataLocation.PluginEnvironments, updateNodeIndicatorFilename), appDataRegex, appVer);
-
-            if (!string.IsNullOrEmpty(settings.PluginSettings.PythonExecutablePath)
-                && settings.PluginSettings.PythonExecutablePath.StartsWith(DataLocation.PluginEnvironments))
-                using (var _ = File.CreateText(updatePythonIndicatorFilePath)){}
-
-            if (!string.IsNullOrEmpty(settings.PluginSettings.NodeExecutablePath)
-                && settings.PluginSettings.NodeExecutablePath.StartsWith(DataLocation.PluginEnvironments))
-                using (var _ = File.CreateText(updateNodeIndicatorFilePath)) { }
-        }
-
-        public void PreStartSetupAfterAppUpdate(Settings settings)
-        {
-            var appVer = $"app-{Constant.Version}";
-            var updatePythonIndicatorFilePath = Path.Combine(DataLocation.PluginEnvironments, updatePythonIndicatorFilename);
-            var updateNodeIndicatorFilePath = Path.Combine(DataLocation.PluginEnvironments, updateNodeIndicatorFilename);
-
-            if (File.Exists(updatePythonIndicatorFilePath))
-            {
-                settings.PluginSettings.PythonExecutablePath
-                    = Regex.Replace(settings.PluginSettings.PythonExecutablePath, appDataRegex, appVer);
-
-                File.Delete(updatePythonIndicatorFilePath);
-            }
-
-            if (File.Exists(updateNodeIndicatorFilePath))
-            {
-                settings.PluginSettings.NodeExecutablePath
-                    = Regex.Replace(settings.PluginSettings.NodeExecutablePath, appDataRegex, appVer);
-
-                File.Delete(updateNodeIndicatorFilePath);
-            }
         }
     }
 }
