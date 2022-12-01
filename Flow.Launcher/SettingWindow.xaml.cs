@@ -562,5 +562,15 @@ namespace Flow.Launcher
             };
 
         }
+
+        private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginStoreFilterTxb);
+        }
+
+        private void Plugin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginFilterTxb);
+        }
     }
 }
