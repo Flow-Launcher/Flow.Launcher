@@ -270,6 +270,10 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://appwrite.io">
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
+  
+  <a href="https://github.com/itsonlyfrans">
+    <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
+  </a>
 </p>
 
 <p align="left">

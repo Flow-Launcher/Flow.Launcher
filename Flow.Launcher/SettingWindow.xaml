@@ -443,10 +443,9 @@
                                 Margin="2,2,2,0"
                                 Panel.ZIndex="1"
                                 Background="Transparent"
-                                IsItemsHost="true"                                
+                                IsItemsHost="true"
                                 LastChildFill="False" />
-                            <Border
-                                Grid.Column="1">
+                            <Border Grid.Column="1">
                                 <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
                             </Border>
                         </Grid>
@@ -1011,6 +1010,7 @@
                                     TextAlignment="Left" />
                                 <DockPanel DockPanel.Dock="Right">
                                     <TextBox
+                                        Loaded="Plugin_GotFocus"
                                         Name="pluginFilterTxb"
                                         Width="150"
                                         Height="34"
@@ -1445,6 +1445,7 @@
                                 DockPanel.Dock="Right"
                                 FontSize="14"
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
+                                Loaded="PluginStore_GotFocus"
                                 LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
                                 TextAlignment="Left"
@@ -1795,7 +1796,12 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
-                                        <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
+                                        <Border
+                                            Width="{Binding WindowWidthSize}"
+                                            Margin="0"
+                                            SnapsToDevicePixels="True"
+                                            Style="{DynamicResource WindowBorderStyle}"
+                                            UseLayoutRounding="True">
                                             <Border Style="{DynamicResource WindowRadius}">
                                                 <Border.Clip>
                                                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -1813,6 +1819,7 @@
                                                     <Border Grid.Row="0">
                                                         <TextBox
                                                             x:Name="QueryTextBox"
+                                                            IsHitTestVisible="False"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
@@ -1850,7 +1857,10 @@
                                                     </Border>
 
                                                     <ContentControl Grid.Row="2">
-                                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
+                                                        <flowlauncher:ResultListBox
+                                                            DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                            IsHitTestVisible="False"
+                                                            Visibility="Visible" />
                                                     </ContentControl>
 
                                                 </Grid>

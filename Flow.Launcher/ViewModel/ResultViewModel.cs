@@ -195,14 +195,32 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadImageAsync()
         {
-            // We need to modify the property not field here to trigger the OnPropertyChanged event
-            Image = await LoadImageInternalAsync(Result.IcoPath, Result.Icon, false).ConfigureAwait(false);
+            var imagePath = Result.IcoPath;
+            var iconDelegate = Result.Icon;
+            if (ImageLoader.CacheContainImage(imagePath, false))
+            {
+                image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                Image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+            }
         }
 
         private async Task LoadPreviewImageAsync()
         {
             var imagePath = Result.PreviewImage ?? Result.IcoPath;
-            PreviewImage = await LoadImageInternalAsync(Result.IcoPath, Result.Icon, true).ConfigureAwait(false);
+            var iconDelegate = Result.Icon;
+            if (ImageLoader.CacheContainImage(imagePath, true))
+            {
+                previewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+            }
         }
 
         public Result Result { get; }
