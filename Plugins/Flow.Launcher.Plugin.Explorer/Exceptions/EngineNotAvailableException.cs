@@ -16,7 +16,8 @@ public class EngineNotAvailableException : Exception
     
     public string? ErrorIcon { get; init; }
     
-    public EngineNotAvailableException(string engineName,
+    public EngineNotAvailableException(
+        string engineName,
         string resolution,
         string message,
         Func<ActionContext, ValueTask<bool>> action = null) : base(message)
@@ -30,7 +31,8 @@ public class EngineNotAvailableException : Exception
         });
     }
 
-    public EngineNotAvailableException(string engineName,
+    public EngineNotAvailableException(
+        string engineName,
         string resolution,
         string message,
         Exception innerException) : base(message, innerException)

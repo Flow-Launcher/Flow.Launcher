@@ -70,9 +70,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
         }
 
-
-
-        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(string connectionString,
+        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(
+            string connectionString,
             string search,
             CancellationToken token)
         {
@@ -87,20 +86,33 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             {
                 throw new SearchException("Windows Index", e.Message, e);
             }
-            catch (COMException e)
+            catch (COMException)
             {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                
+                if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+                    return AsyncEnumerable.Empty<SearchResult>();
+
                 var api = SearchManager.Context.API;
 
-                throw new EngineNotAvailableException("Windows Index", 
+                throw new EngineNotAvailableException(
+                    "Windows Index",
                     api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
                     api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
-                    e)
+                    c =>
+                    {
+                        SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                        // Clears the warning message so user is not mistaken that it has not worked
+                        api.ChangeQuery(string.Empty);
+
+                        return ValueTask.FromResult(false);
+                    })
                 {
                     ErrorIcon = Constants.WindowsIndexErrorImagePath
                 };
             }
         }
-
 
         internal static bool PathIsIndexed(string path)
         {
@@ -116,7 +128,5 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 return false;
             }
         }
-
-
     }
 }

@@ -21,7 +21,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             QueryHelper = QueryConstructor.CreateQueryHelper();
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexFileContentSearchAsync(ReadOnlySpan<char> querySearchString,
+        private IAsyncEnumerable<SearchResult> WindowsIndexFileContentSearchAsync(
+            ReadOnlySpan<char> querySearchString,
             CancellationToken token)
         {
             if (querySearchString.IsEmpty)
@@ -33,7 +34,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 token);
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(ReadOnlySpan<char> querySearchString,
+        private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(
+            ReadOnlySpan<char> querySearchString,
             CancellationToken token = default)
         {
             return WindowsIndex.WindowsIndexSearchAsync(
@@ -42,7 +44,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 token);
         }
 
-        private IAsyncEnumerable<SearchResult> WindowsIndexTopLevelFolderSearchAsync(ReadOnlySpan<char> search,
+        private IAsyncEnumerable<SearchResult> WindowsIndexTopLevelFolderSearchAsync(
+            ReadOnlySpan<char> search,
             ReadOnlySpan<char> path,
             bool recursive,
             CancellationToken token)
