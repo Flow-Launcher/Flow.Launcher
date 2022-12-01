@@ -214,14 +214,14 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     && !settings.PluginSettings.PythonExecutablePath.StartsWith(DataLocation.PortableDataPath))
                 {
                     settings.PluginSettings.PythonExecutablePath
-                        = GetUpdatedPortablePath(settings.PluginSettings.PythonExecutablePath, DataLocation.PythonEnvironmentName);
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.PythonExecutablePath);
                 }
 
                 if (IsUsingPortablePath(settings.PluginSettings.NodeExecutablePath, DataLocation.NodeEnvironmentName)
                     && !settings.PluginSettings.NodeExecutablePath.StartsWith(DataLocation.PortableDataPath))
                 {
                     settings.PluginSettings.NodeExecutablePath
-                        = GetUpdatedPortablePath(settings.PluginSettings.NodeExecutablePath, DataLocation.NodeEnvironmentName);
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.NodeExecutablePath);
                 }
 
                 // When user has switched from roaming to portable
@@ -241,11 +241,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             {
                 if (IsUsingPortablePath(settings.PluginSettings.PythonExecutablePath, DataLocation.PythonEnvironmentName))
                     settings.PluginSettings.PythonExecutablePath
-                        = GetUpdatedPortablePath(settings.PluginSettings.PythonExecutablePath, DataLocation.PythonEnvironmentName);
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.PythonExecutablePath);
 
                 if (IsUsingPortablePath(settings.PluginSettings.NodeExecutablePath, DataLocation.NodeEnvironmentName))
                     settings.PluginSettings.NodeExecutablePath
-                        = GetUpdatedPortablePath(settings.PluginSettings.NodeExecutablePath, DataLocation.NodeEnvironmentName);
+                        = GetUpdatedEnvironmentPath(settings.PluginSettings.NodeExecutablePath);
             }
         }
 
@@ -261,12 +261,13 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             return filePath.StartsWith(DataLocation.RoamingDataPath);
         }
 
-        private static string GetUpdatedPortablePath(string filePath, string pluginEnvironmentName)
+        private static string GetUpdatedEnvironmentPath(string filePath)
         {
             var index = filePath.IndexOf(DataLocation.PluginEnvironments);
-            // get the substring after "Environments" because we can not determine it
-            var updatedPath = filePath.Substring(index + DataLocation.PluginEnvironments.Count());
-            return $"{DataLocation.PluginEnvironmentsPath}{updatedPath}";
+            
+            // get the substring after "Environments" because we can not determine it dynamically
+            var ExecutablePathSubstring = filePath.Substring(index + DataLocation.PluginEnvironments.Count());
+            return $"{DataLocation.PluginEnvironmentsPath}{ExecutablePathSubstring}";
         }
     }
 }
