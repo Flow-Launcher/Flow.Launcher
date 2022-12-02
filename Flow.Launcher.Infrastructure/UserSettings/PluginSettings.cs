@@ -5,7 +5,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class PluginsSettings : BaseModel
     {
-        private string pythonExecutablePath;
+        private string pythonExecutablePath = string.Empty;
         public string PythonExecutablePath {
             get { return pythonExecutablePath; }
             set
@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
 
-        private string nodeExecutablePath;
+        private string nodeExecutablePath = string.Empty;
         public string NodeExecutablePath
         {
             get { return nodeExecutablePath; }

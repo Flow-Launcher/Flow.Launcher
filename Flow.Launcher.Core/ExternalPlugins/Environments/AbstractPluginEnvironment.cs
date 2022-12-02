@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
@@ -31,12 +29,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
         internal List<PluginMetadata> PluginMetadataList;
 
         internal PluginsSettings PluginSettings;
-
-        private const string updatePythonIndicatorFilename = ".updatePythonPath";
-
-        private const string updateNodeIndicatorFilename = ".updateNodePath";
-
-        private const string appDataRegex = @"app-\d\.\d\.\d";
 
         internal AbstractPluginEnvironment(List<PluginMetadata> pluginMetadataList, PluginsSettings pluginSettings)
         {
