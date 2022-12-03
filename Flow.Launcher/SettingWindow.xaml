@@ -994,6 +994,7 @@
                                     TextAlignment="Left" />
                                 <DockPanel DockPanel.Dock="Right">
                                     <TextBox
+                                        Loaded="Plugin_GotFocus"
                                         Name="pluginFilterTxb"
                                         Width="150"
                                         Height="34"
@@ -1428,6 +1429,7 @@
                                 DockPanel.Dock="Right"
                                 FontSize="14"
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
+                                Loaded="PluginStore_GotFocus"
                                 LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
                                 TextAlignment="Left"
