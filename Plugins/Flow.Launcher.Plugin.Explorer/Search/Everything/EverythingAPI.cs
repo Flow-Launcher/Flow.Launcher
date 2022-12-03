@@ -91,9 +91,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public static async ValueTask<bool> IsEverythingRunningAsync(CancellationToken token = default)
         {
+            await _semaphore.WaitAsync(token);
+
             try
             {
-                await _semaphore.WaitAsync(token);
                 EverythingApiDllImport.Everything_GetMajorVersion(); 
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
@@ -119,10 +120,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
             
+            await _semaphore.WaitAsync(token);
+
+            
             try
             {
-                await _semaphore.WaitAsync(token);
-
                 if (token.IsCancellationRequested)
                     yield break;
 
