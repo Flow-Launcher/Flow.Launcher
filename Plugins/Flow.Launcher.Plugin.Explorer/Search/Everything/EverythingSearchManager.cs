@@ -1,14 +1,10 @@
 ﻿using System;
-using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
-using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
@@ -31,12 +27,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                         Main.Context.API.GetTranslation("flowlauncher_plugin_everything_click_to_launch_or_install"),
                         Main.Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running"),
-                        ClickToInstallEverything)
+                        ClickToInstallEverythingAsync)
                     {
                         ErrorIcon = Constants.EverythingErrorImagePath
                     };
             }
-            catch (DllNotFoundException e)
+            catch (DllNotFoundException)
             {
                 throw new EngineNotAvailableException(
                     Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
@@ -47,7 +43,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 };
             }
         }
-        private async ValueTask<bool> ClickToInstallEverything(ActionContext _)
+        private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
         {
             var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
             if (installedPath == null)
@@ -75,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await ThrowIfEverythingNotAvailableAsync(token);
             if (!Settings.EnableEverythingContentSearch)
             {
-                throw new EngineNotAvailableException(Enum.GetName(Settings.IndexSearchEngineOption.Everything),
+                throw new EngineNotAvailableException(Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                     "Click to Enable Everything Content Search (only applicable to Everything 1.5+ with indexed content)",
                     "Everything Content Search is not enabled.",
                     _ =>
