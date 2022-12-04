@@ -8,13 +8,17 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
+using ModernWpf.Controls;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
@@ -40,9 +44,6 @@ namespace Flow.Launcher
             InitializePosition();
             InitializeComponent();
 
-            CollectionView view = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
-            PropertyGroupDescription groupDescription = new PropertyGroupDescription("Category");
-            view.GroupDescriptions.Add(groupDescription);
         }
 
         #region General
@@ -63,7 +64,6 @@ namespace Flow.Launcher
             pluginStoreView.Filter = PluginStoreFilter;
 
             InitializePosition();
-            ClockDisplay();
         }
 
         private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
@@ -154,7 +154,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
             if (item != null)
@@ -245,6 +245,7 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowState = WindowState;
             settings.SettingWindowTop = Top;
             settings.SettingWindowLeft = Left;
             viewModel.Save();
@@ -289,17 +290,35 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
         {
-            _ = viewModel.RefreshExternalPluginsAsync();
-        }
+            //get parent item
+            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
 
+            //we've reached the end of the tree
+            if (parentObject == null) return null;
+
+            //check if the parent matches the type we're looking for
+            T parent = parentObject as T;
+            if (parent != null)
+                return parent;
+            else
+                return FindParent<T>(parentObject);
+        }
+        
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+            if (sender is not Button { DataContext: PluginStoreItemViewModel plugin } button)
             {
-                viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+                return;
             }
+
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
+            viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
         }
 
         private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
@@ -310,18 +329,30 @@ namespace Flow.Launcher
                 viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
 
+
         }
 
         private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
         {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
             if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
                 viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -374,11 +405,34 @@ namespace Flow.Launcher
                 restoreButton.Visibility = Visibility.Collapsed;
             }
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             RefreshMaximizeRestoreButton();
         }
 
+        #region Shortcut
+
+        private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.DeleteSelectedCustomShortcut();
+        }
+
+        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.EditSelectedCustomShortcut())
+            {
+                customShortcutView.Items.Refresh();
+            }
+        }
+
+        private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.AddCustomShortcut();
+        }
+
+        #endregion
+        
         private CollectionView pluginListView;
         private CollectionView pluginStoreView;
 
@@ -452,33 +506,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void PreviewClockAndDate(object sender, RoutedEventArgs e)
-        {
-            ClockDisplay();
-        }
-        public void ClockDisplay()
-        {
-            if (settings.UseClock)
-            {
-                ClockBox.Visibility = Visibility.Visible;
-                ClockBox.Text = DateTime.Now.ToString(settings.TimeFormat);
-            }
-            else
-            {
-                ClockBox.Visibility = Visibility.Collapsed;
-            }
-
-            if (settings.UseDate)
-            {
-                DateBox.Visibility = Visibility.Visible;
-                DateBox.Text = DateTime.Now.ToString(settings.DateFormat);
-            }
-            else
-            {
-                DateBox.Visibility = Visibility.Collapsed;
-            }
-        }
-
         public void InitializePosition()
         {
             if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
@@ -491,7 +518,9 @@ namespace Flow.Launcher
                 Top = WindowTop();
                 Left = WindowLeft();
             }
+            WindowState = settings.SettingWindowState;
         }
+
         public double WindowLeft()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -510,5 +539,31 @@ namespace Flow.Launcher
             return top;
         }
 
+        private Button storeClickedButton;
+
+        private void StoreListItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button)
+                return;
+
+            storeClickedButton = button;
+
+            var flyout = FlyoutService.GetFlyout(button);
+            flyout.Closed += (_, _) =>
+            {
+                storeClickedButton = null;
+            };
+
+        }
+
+        private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginStoreFilterTxb);
+        }
+
+        private void Plugin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginFilterTxb);
+        }
     }
 }

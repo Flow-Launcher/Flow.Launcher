@@ -16,7 +16,6 @@
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#303840" />
         <Setter Property="Foreground" Value="#d2d8e5" />
         <Setter Property="CaretBrush" Value="#FFAA47" />
         <Setter Property="FontSize" Value="26" />

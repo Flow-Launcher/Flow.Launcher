@@ -17,6 +17,36 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
+        public static readonly DependencyProperty RightClickResultCommandProperty =
+            DependencyProperty.Register("RightClickResultCommand", typeof(ICommand), typeof(ResultListBox), new UIPropertyMetadata(null));
+
+        public ICommand RightClickResultCommand
+        {
+            get
+            {
+                return (ICommand)GetValue(RightClickResultCommandProperty);
+            }
+            set
+            {
+                SetValue(RightClickResultCommandProperty, value);
+            }
+        }
+
+        public static readonly DependencyProperty LeftClickResultCommandProperty =
+            DependencyProperty.Register("LeftClickResultCommand", typeof(ICommand), typeof(ResultListBox), new UIPropertyMetadata(null));
+
+        public ICommand LeftClickResultCommand
+        {
+            get
+            {
+                return (ICommand)GetValue(LeftClickResultCommandProperty);
+            }
+            set
+            {
+                SetValue(LeftClickResultCommandProperty, value);
+            }
+        }
+
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count > 0 && e.AddedItems[0] != null)
@@ -98,10 +128,24 @@ namespace Flow.Launcher
                 path
             });
             DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
-            
+
             App.API.ChangeQuery(query, true);
-            
+
             e.Handled = true;
+        }
+        private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+                return;
+
+            RightClickResultCommand?.Execute(result.Result);
+        }
+        private void ResultListBox_OnPreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
+                return;
+
+            LeftClickResultCommand?.Execute(null);
         }
     }
 }

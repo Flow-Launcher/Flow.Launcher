@@ -9,6 +9,7 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
+using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -113,7 +114,7 @@ namespace Flow.Launcher
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
             tbMsg.Text = tbMsgTextOriginal;
-            tbMsg.Foreground = tbMsgForegroundColorOriginal;
+            tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
         }
     }
 }

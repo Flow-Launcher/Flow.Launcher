@@ -1,4 +1,5 @@
-﻿using System.Windows;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
@@ -25,7 +26,23 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public ImageSource Image => ImageLoader.Load(PluginPair.Metadata.IcoPath);
+
+        private async void LoadIconAsync()
+        {
+            Image = await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
+        }
+
+        public ImageSource Image
+        {
+            get
+            {
+                if (_image == ImageLoader.DefaultImage)
+                    LoadIconAsync();
+
+                return _image;
+            }
+            set => _image = value;
+        }
         public bool PluginState
         {
             get => !PluginPair.Metadata.Disabled;
@@ -52,6 +69,7 @@ namespace Flow.Launcher.ViewModel
                         ? new Control() 
                         : settingProvider.CreateSettingPanel() 
                 : null;
+        private ImageSource _image = ImageLoader.DefaultImage;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";

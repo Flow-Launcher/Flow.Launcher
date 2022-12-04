@@ -21,9 +21,11 @@
     <system:String x:Key="textTitle">Yazı</system:String>
     <system:String x:Key="GameMode">Oyun Modu</system:String>
     <system:String x:Key="GameModeToolTip">Kısayol Tuşlarının kullanımını durdurun.</system:String>
+    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Flow Launcher Ayarları</system:String>
+    <system:String x:Key="flowlauncher_settings">Ayarlar</system:String>
     <system:String x:Key="general">Genel</system:String>
     <system:String x:Key="portableMode">Taşınabilir Mod</system:String>
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
@@ -31,7 +33,12 @@
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak pencereden ayrıldığında Flow Launcher'u gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
-    <system:String x:Key="rememberLastLocation">Pencere konumunu hatırla</system:String>
+    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
+    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
+    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
     <system:String x:Key="language">Dil</system:String>
     <system:String x:Key="lastQueryMode">Pencere açıldığında</system:String>
     <system:String x:Key="lastQueryModeToolTip">Flow Launcher yeniden etkinleştirildiğinde önceki sonuçları göster/gizle.</system:String>
@@ -39,6 +46,7 @@
     <system:String x:Key="LastQuerySelected">Son sorguyu sakla ve tümünü seç</system:String>
     <system:String x:Key="LastQueryEmpty">Sorgu kutusunu temizle</system:String>
     <system:String x:Key="maxShowResults">Maksimum sonuç sayısı</system:String>
+    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Tam ekran modunda kısayol tuşunu gözardı et</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Tam ekran bir uygulama etkinken Flow Launcher etkinleştirmesini devre dışı bırakın (Oyunlar için önerilir).</system:String>
     <system:String x:Key="defaultFileManager">Varsayılan Dosya Yöneticisi</system:String>
@@ -54,10 +62,14 @@
     <system:String x:Key="querySearchPrecision">Sorgu Arama Hassasiyeti</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum maç puanını değiştirir.</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölge efektine izin verilmez</system:String>
 
     <!--  Setting Plugin  -->
+    <system:String x:Key="searchplugin">Search Plugin</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Eklenti</system:String>
     <system:String x:Key="browserMorePlugins">Daha fazla eklenti bul</system:String>
     <system:String x:Key="enable">Açık</system:String>
@@ -77,13 +89,25 @@
     <system:String x:Key="plugin_query_time">Sorgu Süresi:</system:String>
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
-    <system:String x:Key="uninstallbtn">Kaldır</system:String>
+    <system:String x:Key="plugin_uninstall">Kaldır</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
+    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_None">Eklentiler</system:String>
+    <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Yenile</system:String>
-    <system:String x:Key="installbtn">İndir</system:String>
+    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="uninstallbtn">Kaldır</system:String>
+    <system:String x:Key="updatebtn">Güncelle</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
+    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
+    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+
+
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
@@ -106,6 +130,8 @@
     <system:String x:Key="SoundEffectTip">Arama penceresi açıldığında küçük bir ses oynat</system:String>
     <system:String x:Key="Animation">Animasyon</system:String>
     <system:String x:Key="AnimationTip">Arayüzde Animasyon Kullan</system:String>
+    <system:String x:Key="Clock">Clock</system:String>
+    <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
@@ -116,17 +142,26 @@
     <system:String x:Key="showOpenResultHotkey">Kısayol Tuşunu Göster</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Özel Sorgu Kısayolları</system:String>
+    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customShortcut">Shortcut</system:String>
+    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="builtinShortcutDescription">Açıklama</system:String>
     <system:String x:Key="delete">Sil</system:String>
     <system:String x:Key="edit">Düzenle</system:String>
     <system:String x:Key="add">Ekle</system:String>
     <system:String x:Key="pleaseSelectAnItem">Lütfen bir öğe seçin</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} eklentisi için olan kısayolu silmek istediğinize emin misiniz?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
     <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Vekil Sunucu</system:String>
@@ -150,8 +185,10 @@
     <system:String x:Key="github">Github</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Sürüm</system:String>
+    <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Şu ana kadar Flow Launcher'u {0} kez aktifleştirdiniz.</system:String>
     <system:String x:Key="checkUpdates">Güncellemeleri Kontrol Et</system:String>
+    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
     <system:String x:Key="newVersionTips">Uygulamanın yeni sürümü ({0}) mevcut, Lütfen Flow Launcher'u yeniden başlatın.</system:String>
     <system:String x:Key="checkUpdatesFailed">Güncelleme kontrolü başarısız oldu. Lütfen bağlantınız ve vekil sunucu ayarlarınızın api.github.com adresine ulaşabilir olduğunu kontrol edin.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -206,11 +243,17 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Özel Sorgu Kısayolları</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press the custom hotkey to automatically insert the specified query.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Önizleme</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Kısayol tuşu kullanılabilir değil, lütfen başka bir kısayol tuşu seçin</system:String>
     <system:String x:Key="invalidPluginHotkey">Geçersiz eklenti kısayol tuşu</system:String>
     <system:String x:Key="update">Güncelle</system:String>
+
+    <!--  Custom Query Shortcut Dialog  -->
+    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Kısayol tuşu kullanılabilir değil</system:String>
@@ -287,7 +330,7 @@
     <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
-    <system:String x:Key="RecommendBluetooth">Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>

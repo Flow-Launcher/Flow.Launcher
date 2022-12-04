@@ -17,11 +17,13 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
+using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -63,9 +65,10 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
             Settings.PropertyChanged += (_, args) =>
             {
-                if (args.PropertyName == nameof(Settings.WindowSize))
-                {
-                    OnPropertyChanged(nameof(MainWindowWidth));
+                switch (args.PropertyName) {
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(MainWindowWidth));
+                        break;
                 }
             };
 
@@ -76,12 +79,21 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(Settings);
-            Results = new ResultsViewModel(Settings);
-            History = new ResultsViewModel(Settings);
+
+            ContextMenu = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            Results = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            History = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
             _selectedResults = Results;
 
-            InitializeKeyCommands();
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
@@ -156,165 +168,164 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-
-
-        private void InitializeKeyCommands()
+        [RelayCommand]
+        private async Task ReloadPluginDataAsync()
         {
-            EscCommand = new RelayCommand(_ =>
+            Hide();
+
+            await PluginManager.ReloadDataAsync().ConfigureAwait(false);
+            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+        }
+        [RelayCommand]
+        private void LoadHistory()
+        {
+            if (SelectedIsFromQueryResults())
             {
-                if (!SelectedIsFromQueryResults())
-                {
-                    SelectedResults = Results;
-                }
-                else
-                {
-                    Hide();
-                }
-            });
-
-            ClearQueryCommand = new RelayCommand(_ =>
+                SelectedResults = History;
+                History.SelectedIndex = _history.Items.Count - 1;
+            }
+            else
             {
-                if (!string.IsNullOrEmpty(QueryText))
-                {
-                    ChangeQueryText(string.Empty);
-
-                    // Push Event to UI SystemQuery has changed
-                    //OnPropertyChanged(nameof(SystemQueryText));
-                }
-            });
-
-            SelectNextItemCommand = new RelayCommand(_ => { SelectedResults.SelectNextResult(); });
-
-            SelectPrevItemCommand = new RelayCommand(_ => { SelectedResults.SelectPrevResult(); });
-
-            SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
-
-            SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
-
-            SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
-
-            StartHelpCommand = new RelayCommand(_ =>
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void LoadContextMenu()
+        {
+            if (SelectedIsFromQueryResults())
             {
-                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
-            });
-            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(async index =>
+                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                if (SelectedResults.SelectedItem != null)
+                    SelectedResults = ContextMenu;
+            }
+            else
             {
-                var results = SelectedResults;
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void Backspace(object index)
+        {
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
-                if (index != null)
+            // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+            var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
+
+            var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
+
+            ChangeQueryText($"{actionKeyword}{path}");
+        }
+        [RelayCommand]
+        private void AutocompleteQuery()
+        {
+            var result = SelectedResults.SelectedItem?.Result;
+            if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
+            {
+                var autoCompleteText = result.Title;
+
+                if (!string.IsNullOrEmpty(result.AutoCompleteText))
                 {
-                    results.SelectedIndex = int.Parse(index.ToString()!);
+                    autoCompleteText = result.AutoCompleteText;
+                }
+                else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                {
+                    autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
 
-                var result = results.SelectedItem?.Result;
-                if (result == null)
+                var specialKeyState = GlobalHotkey.CheckModifiers();
+                if (specialKeyState.ShiftPressed)
                 {
-                    return;
+                    autoCompleteText = result.SubTitle;
                 }
-                var hideWindow = await result.ExecuteAsync(new ActionContext
+
+                ChangeQueryText(autoCompleteText);
+            }
+        }
+        [RelayCommand]
+        private async Task OpenResultAsync(string index)
+        {
+            var results = SelectedResults;
+            if (index is not null)
+            {
+                results.SelectedIndex = int.Parse(index);
+            }
+            var result = results.SelectedItem?.Result;
+            if (result == null)
+            {
+                return;
+            }
+            var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
                     SpecialKeyState = GlobalHotkey.CheckModifiers()
-                }).ConfigureAwait(false);
+                })
+                .ConfigureAwait(false);
 
-                if (hideWindow)
-                {
-                    Hide();
-                }
-
-                if (SelectedIsFromQueryResults())
-                {
-                    _userSelectedRecord.Add(result);
-                    _history.Add(result.OriginQuery.RawQuery);
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
-            });
-
-            AutocompleteQueryCommand = new RelayCommand(_ =>
-            {
-                var result = SelectedResults.SelectedItem?.Result;
-                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
-                {
-                    var autoCompleteText = result.Title;
-
-                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
-                    {
-                        autoCompleteText = result.AutoCompleteText;
-                    }
-                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
-                    {
-                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
-                    }
-
-                    var specialKeyState = GlobalHotkey.CheckModifiers();
-                    if (specialKeyState.ShiftPressed)
-                    {
-                        autoCompleteText = result.SubTitle;
-                    }
-
-                    ChangeQueryText(autoCompleteText);
-                }
-            });
-
-            BackspaceCommand = new RelayCommand(index =>
-            {
-                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
-
-                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
-                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
-
-                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
-
-                ChangeQueryText($"{actionKeyword}{path}");
-            });
-
-            LoadContextMenuCommand = new RelayCommand(_ =>
-            {
-                if (SelectedIsFromQueryResults())
-                {
-                    // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                    // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                    if (SelectedResults.SelectedItem != null)
-                        SelectedResults = ContextMenu;
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
-            });
-
-            LoadHistoryCommand = new RelayCommand(_ =>
-            {
-                if (SelectedIsFromQueryResults())
-                {
-                    SelectedResults = History;
-                    History.SelectedIndex = _history.Items.Count - 1;
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
-            });
-
-            ReloadPluginDataCommand = new RelayCommand(_ =>
+            if (hideWindow)
             {
                 Hide();
+            }
 
-                _ = PluginManager
-                    .ReloadDataAsync()
-                    .ContinueWith(_ =>
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            Notification.Show(
-                                InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully")
-                            );
-                        }), TaskScheduler.Default)
-                    .ConfigureAwait(false);
-            });
+            if (SelectedIsFromQueryResults())
+            {
+                _userSelectedRecord.Add(result);
+                _history.Add(result.OriginQuery.RawQuery);
+            }
+            else
+            {
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void OpenSetting()
+        {
+            App.API.OpenSettingDialog();
+        }
+
+        [RelayCommand]
+        private void SelectHelp()
+        {
+            PluginManager.API.OpenUrl("https://www.flowlauncher.com/docs/#/usage-tips");
+        }
+
+        [RelayCommand]
+        private void SelectFirstResult()
+        {
+            SelectedResults.SelectFirstResult();
+        }
+        [RelayCommand]
+        private void SelectPrevPage()
+        {
+            SelectedResults.SelectPrevPage();
+        }
+
+        [RelayCommand]
+        private void SelectNextPage()
+        {
+            SelectedResults.SelectNextPage();
+        }
+        [RelayCommand]
+        private void SelectPrevItem()
+        {
+            SelectedResults.SelectPrevResult();
+        }
+        [RelayCommand]
+        private void SelectNextItem()
+        {
+            SelectedResults.SelectNextResult();
+        }
+
+        [RelayCommand]
+        private void Esc()
+        {
+            if (!SelectedIsFromQueryResults())
+            {
+                SelectedResults = Results;
+            }
+            else
+            {
+                Hide();
+            }
         }
 
         #endregion
@@ -322,8 +333,9 @@ namespace Flow.Launcher.ViewModel
         #region ViewModel Properties
 
         public Settings Settings { get; }
-        public object ClockText { get; private set; }
+        public string ClockText { get; private set; }
         public string DateText { get; private set; }
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         private async Task RegisterClockAndDateUpdateAsync()
         {
@@ -332,11 +344,12 @@ namespace Flow.Launcher.ViewModel
             while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
             {
                 if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat);
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, Culture);
                 if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat);
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, Culture);
             }
         }
+
         public ResultsViewModel Results { get; private set; }
 
         public ResultsViewModel ContextMenu { get; private set; }
@@ -362,9 +375,9 @@ namespace Flow.Launcher.ViewModel
         {
             if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
             {
-                Settings.WindowSize = 1920;        
+                Settings.WindowSize = 1920;
             }
-            else 
+            else
             {
                 Settings.WindowSize += 100;
                 Settings.WindowLeft -= 50;
@@ -410,6 +423,7 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
+        /// <param name="reQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
             if (QueryText != queryText)
@@ -487,25 +501,6 @@ namespace Flow.Launcher.ViewModel
         }
 
         public string PluginIconPath { get; set; } = null;
-
-        public ICommand EscCommand { get; set; }
-        public ICommand BackspaceCommand { get; set; }
-        public ICommand SelectNextItemCommand { get; set; }
-        public ICommand SelectPrevItemCommand { get; set; }
-        public ICommand SelectNextPageCommand { get; set; }
-        public ICommand SelectPrevPageCommand { get; set; }
-        public ICommand SelectFirstResultCommand { get; set; }
-        public ICommand StartHelpCommand { get; set; }
-        public ICommand LoadContextMenuCommand { get; set; }
-        public ICommand LoadHistoryCommand { get; set; }
-        public ICommand OpenResultCommand { get; set; }
-        public ICommand OpenSettingCommand { get; set; }
-        public ICommand ReloadPluginDataCommand { get; set; }
-        public ICommand ClearQueryCommand { get; private set; }
-
-        public ICommand CopyToClipboard { get; set; }
-
-        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -621,7 +616,9 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            if (string.IsNullOrWhiteSpace(QueryText))
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+            if (query == null) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
@@ -646,7 +643,6 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText, PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -734,6 +730,40 @@ namespace Flow.Launcher.ViewModel
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
+        }
+
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        {
+            if (string.IsNullOrWhiteSpace(queryText))
+            {
+                return null;
+            }
+
+            StringBuilder queryBuilder = new(queryText);
+            StringBuilder queryBuilderTmp = new(queryText);
+
+            foreach (var shortcut in customShortcuts)
+            {
+                if (queryBuilder.Equals(shortcut.Key))
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                }
+
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
+            }
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+            }
+
+            // show expanded builtin shortcuts
+            // use private field to avoid infinite recursion
+            _queryText = queryBuilderTmp.ToString();
+
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return query;
         }
 
         private void RemoveOldQueryResults(Query query)

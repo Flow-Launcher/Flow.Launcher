@@ -96,9 +96,16 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            Settings.Language = language.LanguageCode;
-            CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
+            // Culture of this thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows
+            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+            // App domain
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture;
+
+            // Raise event after culture is set
+            Settings.Language = language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
@@ -115,7 +122,11 @@ namespace Flow.Launcher.Core.Resource
             if (languageToSet != AvailableLanguages.Chinese && languageToSet != AvailableLanguages.Chinese_TW)
                 return false;
 
-            if (MessageBox.Show("Do you want to turn on search with Pinyin?", string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            // No other languages should show the following text so just make it hard-coded
+            // "Do you want to search with pinyin?"
+            string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？" ;
+
+            if (MessageBox.Show(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;
@@ -182,7 +193,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.DefaultThreadCurrentCulture);
                 }
                 catch (Exception e)
                 {

@@ -8,8 +8,8 @@
     Title="{DynamicResource flowlauncher_plugin_program_suffixes}"
     Width="600"
     Background="{DynamicResource PopuBGColor}"
-    Foreground="{DynamicResource PopupTextColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
@@ -163,17 +163,32 @@
                             FontSize="16"
                             FontWeight="SemiBold"
                             Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
-                        <CheckBox Name="apprefMS" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[appref-ms]}">appref-ms</CheckBox>
-                        <CheckBox Name="exe" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[exe]}">exe</CheckBox>
-                        <CheckBox Name="lnk" Margin="10,0,0,0" IsChecked="{Binding SuffixesStatus[lnk]}">lnk</CheckBox>
+                        <CheckBox
+                            Name="apprefMS"
+                            Margin="10,0,0,0"
+                            IsChecked="{Binding SuffixesStatus[appref-ms]}">
+                            appref-ms
+                        </CheckBox>
+                        <CheckBox
+                            Name="exe"
+                            Margin="10,0,0,0"
+                            IsChecked="{Binding SuffixesStatus[exe]}">
+                            exe
+                        </CheckBox>
+                        <CheckBox
+                            Name="lnk"
+                            Margin="10,0,0,0"
+                            IsChecked="{Binding SuffixesStatus[lnk]}">
+                            lnk
+                        </CheckBox>
                         <CheckBox
                             Name="CustomFiles"
                             Margin="10,0,0,0"
-                            IsChecked="{Binding UseCustomSuffixes}"
-                            Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}" />
+                            Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_file_types}"
+                            IsChecked="{Binding UseCustomSuffixes}" />
                         <TextBox
                             x:Name="tbSuffixes"
-                            Margin="10,4,0,6"
+                            Margin="10,4,0,10"
                             Style="{StaticResource CustomFileTypeTextBox}" />
                     </StackPanel>
 
@@ -189,17 +204,29 @@
                                 FontSize="16"
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource flowlauncher_plugin_program_suffixes_URL_types}" />
-                            <CheckBox Name="steam" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[steam]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_steam}"></CheckBox>
-                            <CheckBox Name="epic" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[epic]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_epic}"></CheckBox>
-                            <CheckBox Name="http" Margin="10,0,0,0" IsChecked="{Binding ProtocolsStatus[http]}" Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_http}"></CheckBox>
+                            <CheckBox
+                                Name="steam"
+                                Margin="10,0,0,0"
+                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_steam}"
+                                IsChecked="{Binding ProtocolsStatus[steam]}" />
+                            <CheckBox
+                                Name="epic"
+                                Margin="10,0,0,0"
+                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_epic}"
+                                IsChecked="{Binding ProtocolsStatus[epic]}" />
+                            <CheckBox
+                                Name="http"
+                                Margin="10,0,0,0"
+                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_URL_http}"
+                                IsChecked="{Binding ProtocolsStatus[http]}" />
                             <CheckBox
                                 Name="CustomProtocol"
                                 Margin="10,0,0,0"
-                                IsChecked="{Binding UseCustomProtocols}"
-                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}" />
+                                Content="{DynamicResource flowlauncher_plugin_program_suffixes_custom_urls}"
+                                IsChecked="{Binding UseCustomProtocols}" />
                             <TextBox
                                 x:Name="tbProtocols"
-                                Margin="10,4,0,6"
+                                Margin="10,4,0,0"
                                 Style="{StaticResource CustomURLTypeTextBox}" />
                         </StackPanel>
                     </Border>

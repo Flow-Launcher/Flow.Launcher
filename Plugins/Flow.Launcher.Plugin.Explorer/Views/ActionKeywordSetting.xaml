@@ -6,12 +6,13 @@
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.Explorer.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource plugin_explorer_manageactionkeywords_header}"
-    Width="400"
-    SizeToContent="Height"
+    Width="Auto"
+    Height="255"
     Background="{DynamicResource PopuBGColor}"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
+    SizeToContent="Width"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -68,7 +69,7 @@
 
                 <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                     <TextBlock
-                        Width="150"
+                        MinWidth="150"
                         Margin="0,10,15,10"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -78,18 +79,19 @@
                         Name="TxtCurrentActionKeyword"
                         Grid.Row="0"
                         Grid.Column="1"
-                        Width="105"
+                        Width="135"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         PreviewKeyDown="TxtCurrentActionKeyword_OnKeyDown"
                         Text="{Binding ActionKeyword}" />
                 </StackPanel>
                 <StackPanel Margin="0,10,0,15" Orientation="Horizontal">
-                    <TextBlock Margin="0 0 15 0 "
+                    <TextBlock
+                        MinWidth="150"
+                        Margin="0,0,18,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         FontSize="14"
-                        Width="150"
                         Text="{DynamicResource plugin_explorer_actionkeyword_enabled}" />
                     <CheckBox
                         Name="ChkActionKeywordEnabled"

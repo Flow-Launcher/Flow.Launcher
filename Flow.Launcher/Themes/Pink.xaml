@@ -12,7 +12,6 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#1f1d1f" />
         <Setter Property="Foreground" Value="#cc1081" />
         <Setter Property="CaretBrush" Value="#cc1081" />
         <Setter Property="SelectionBrush" Value="#e564b1" />
@@ -123,6 +122,7 @@
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
+        <Setter Property="FontWeight" Value="Bold" />
         <Setter Property="Foreground" Value="#71114b" />
     </Style>
 </ResourceDictionary>

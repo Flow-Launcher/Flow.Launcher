@@ -65,7 +65,6 @@
         x:Key="ItemTitleStyle"
         BasedOn="{StaticResource BaseItemTitleStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Margin" Value="0,-10" />
         <Setter Property="Foreground" Value="#FF000000" />
     </Style>
     <Style
@@ -78,7 +77,6 @@
         x:Key="ItemTitleSelectedStyle"
         BasedOn="{StaticResource BaseItemTitleSelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Margin" Value="0,-10" />
         <Setter Property="Foreground" Value="#ff000000" />
     </Style>
     <Style
