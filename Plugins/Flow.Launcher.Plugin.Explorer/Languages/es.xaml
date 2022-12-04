@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Dialogues-->
+    <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro que desea eliminar {0}?</system:String>
@@ -16,15 +16,22 @@
     <system:String x:Key="plugin_explorer_alternative_title">Explorador alternativo</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Se ha producido un error durante la búsqueda: {0}</system:String>
 
-    <!--Controls-->
+    <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_edit">Editar</system:String>
     <system:String x:Key="plugin_explorer_add">Añadir</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palabras clave de acción</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo ejecutable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch_tooltip">Al activar esta opción, los directorios/archivos indexados se mostrarán más rápidamente, pero si un directorio/archivo no está indexado, no se mostrará. Si se ha agregado un directorio/archivo a la ruta de exclusión del índice de búsqueda se seguirá mostrando incluso si la opción está activada</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Ruta de búsqueda:</system:String>
@@ -35,12 +42,24 @@
     <system:String x:Key="plugin_explorer_actionkeyword_done">Aceptar</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Activado</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Cuando esté desactivado, Flow no ejecutará esta opción de búsqueda, y además volverá a '*' para liberar la palabra clave de acción</system:String>
+    <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
 
-    <!--Plugin Infos-->
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+
+    <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Busca y gestiona archivos y carpetas. El explorador utiliza el índice de búsqueda de Windows</system:String>
 
-    <!--Context menu items-->
+    <!--  Plugin Tooltip  -->
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+
+    <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar ruta</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Eliminar</system:String>
@@ -51,6 +70,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el archivo o carpeta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir la carpeta actual y sus subcarpetas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluido del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opciones de indexación de Windows</system:String>
@@ -66,5 +86,36 @@
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina {0} actual del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
+
+    <!--  Everything  -->
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK Loaded Fail</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Advertencia: El servicio de Everything no se está ejecutando</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_query_error">Error al consultar Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Ordenar por</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Nombre</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Ruta</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Tamaño</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extensión</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Tipo</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Fecha de creación</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Fecha de modificación</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Atributos</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Nombre de la lista de archivos</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Número de ejecuciones</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Fecha de cambios recientes</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Fecha de último acceso</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Fecha de ejecución</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Advertencia: Esta no es una opción de clasificación rápida, las búsquedas pueden ser lentas</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to Launch or Install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalación de Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Instalando el servicio de Everything. Por favor, espere...</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Servicio de Everything instalado correctamente</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">No se ha podido instalar automáticamente el servicio de Everything. Por favor, instálelo manualmente desde https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">Hacer clic aquí para iniciarlo</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">No se ha podido encontrar una instalación de Everything, ¿desea seleccionar manualmente una ubicación?{0}{0}Si hace click en no Everything se instalará automáticamente para usted</system:String>
 
 </ResourceDictionary>
