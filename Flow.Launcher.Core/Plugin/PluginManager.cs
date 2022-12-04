@@ -152,6 +152,22 @@ namespace Flow.Launcher.Core.Plugin
                             NonGlobalPlugins[actionKeyword] = plugin;
                             break;
                     }
+                   
+                    
+                    
+                    
+                    
+                    
+                    if (plugin.Metadata.Name == "Explorer")
+                    {
+                        NonGlobalPlugins["d"] = plugin; 
+                        NonGlobalPlugins["f"] = plugin; 
+                    }
+                    
+                    
+                    
+                    
+                    
                 }
             }
 

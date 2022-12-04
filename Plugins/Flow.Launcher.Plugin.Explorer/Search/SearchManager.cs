@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -41,6 +42,49 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
         {
             var querySearch = query.Search;
+            
+           
+           
+            
+            
+            if ((query.ActionKeyword == "d"  || query.ActionKeyword == "f") && querySearch.Length > 0)
+            {
+                var queryConstructor = new QueryConstructor(settings);
+
+                var connectionString = queryConstructor.CreateQueryHelper().ConnectionString;
+                var reservedStringPattern = @"^[`\@\#\^,\&\/\\\$\%_]+$";
+                
+                
+                var regexMatch = Regex.Match(querySearch, reservedStringPattern);
+
+                if (regexMatch.Success)
+                    return new List<Result>();
+
+                var constructedQuery = $@"SELECT TOP 100
+                                                System.FileName,
+                                                System.ItemUrl,
+                                                System.ItemType,
+                                                System.Search.Rank
+                                          FROM SystemIndex 
+                                          WHERE scope='file:' 
+                                                AND CONTAINS(System.FileName,'""{querySearch}*""', 2057)";
+                if (query.ActionKeyword == "d")
+                {
+                    constructedQuery += "  AND System.ItemType = 'Directory'  ";
+                } else if (query.ActionKeyword == "f")
+                {
+                    constructedQuery += "  AND NOT System.ItemType = 'Directory'  ";
+                }
+                constructedQuery += "   ORDER BY System.Search.Rank DESC    ";
+
+                return await IndexSearch.ExecuteWindowsIndexSearchAsync(constructedQuery, connectionString, query, token)
+                        .ConfigureAwait(false);
+            }
+            
+            
+            
+            
+
 
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
