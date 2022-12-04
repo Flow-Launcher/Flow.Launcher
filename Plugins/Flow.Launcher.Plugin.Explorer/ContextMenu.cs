@@ -217,7 +217,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_show_contextmenu_title"),
                         IcoPath = Constants.ShowContextMenuImagePath,
-                        Glyph = new GlyphInfo("Segoe Fluent Icons", "\uE700"),
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
                         Action = _ =>
                         {
                             if (record.Type is ResultType.Volume)
