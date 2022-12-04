@@ -42,14 +42,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result.Type switch
             {
                 ResultType.Folder or ResultType.Volume => CreateFolderResult(Path.GetFileName(result.FullPath),
-                    result.FullPath, result.FullPath, query, 0, result.ShowIndexState, result.WindowsIndexed),
+                    result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
                 ResultType.File => CreateFileResult(
-                    result.FullPath, query, 0, result.ShowIndexState, result.WindowsIndexed),
+                    result.FullPath, query, 0, result.WindowsIndexed),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -85,7 +85,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     Type = ResultType.Folder,
                     FullPath = path,
-                    ShowIndexState = showIndexState,
                     WindowsIndexed = windowsIndexed
                 }
             };
@@ -126,7 +125,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     Type = ResultType.Volume,
                     FullPath = path,
-                    ShowIndexState = true,
                     WindowsIndexed = windowsIndexed
                 }
             };
@@ -200,13 +198,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     Type = ResultType.Folder,
                     FullPath = path,
-                    ShowIndexState = true,
                     WindowsIndexed = windowsIndexed
                 }
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
             var result = new Result
             {
@@ -261,7 +258,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     Type = ResultType.File,
                     FullPath = filePath,
-                    ShowIndexState = showIndexState,
                     WindowsIndexed = windowsIndexed
                 }
             };

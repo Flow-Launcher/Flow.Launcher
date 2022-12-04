@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -9,7 +9,5 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public int Score { get; init; }
 
         public bool WindowsIndexed { get; init; }
-
-        public bool ShowIndexState { get; init; }
     }
 }

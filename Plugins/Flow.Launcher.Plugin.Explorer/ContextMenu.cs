@@ -54,15 +54,6 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(CreateOpenWindowsIndexingOptions());
                 }
 
-                if (record.ShowIndexState)
-                    contextMenus.Add(new Result
-                    {
-                        Title = "From index search: " + (record.WindowsIndexed ? "Yes" : "No"),
-                        SubTitle = "Location: " + record.FullPath,
-                        Score = 501,
-                        IcoPath = Constants.IndexImagePath
-                    });
-
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
 
