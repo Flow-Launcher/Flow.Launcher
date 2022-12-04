@@ -2,7 +2,9 @@ using Flow.Launcher.Plugin.Explorer.ViewModels;
 using ICSharpCode.SharpZipLib.Zip;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 
@@ -11,9 +13,9 @@ namespace Flow.Launcher.Plugin.Explorer.Views
     /// <summary>
     /// Interaction logic for ActionKeywordSetting.xaml
     /// </summary>
-    public partial class ActionKeywordSetting : Window
+    public partial class ActionKeywordSetting : INotifyPropertyChanged
     {
-        public ActionKeywordModel CurrentActionKeyword { get; set; }
+        private ActionKeywordModel CurrentActionKeyword { get; }
 
         public string ActionKeyword
         {
@@ -22,14 +24,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             {
                 // Set Enable to be true if user change ActionKeyword
                 KeywordEnabled = true;
-                actionKeyword = value;
+                _ = SetField(ref actionKeyword, value);
             }
         }
 
-        public bool KeywordEnabled { get; set; }
+        public bool KeywordEnabled
+        {
+            get => _keywordEnabled;
+            set => SetField(ref _keywordEnabled, value);
+        }
 
         private string actionKeyword;
         private readonly IPublicAPI api;
+        private bool _keywordEnabled;
 
         public ActionKeywordSetting(ActionKeywordModel selectedActionKeyword, IPublicAPI api)
         {
@@ -55,18 +62,13 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 return;
             }
 
-            if (ActionKeyword == "")
-            {
-                ActionKeyword = "*";
-            }
-
             if (ActionKeyword == Query.GlobalPluginWildcardSign)
-                switch (CurrentActionKeyword.KeywordProperty)
+                switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
                 {
-                    case Settings.ActionKeyword.FileContentSearchActionKeyword:
+                    case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
                         MessageBox.Show(api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
                         return;
-                    case Settings.ActionKeyword.QuickAccessActionKeyword:
+                    case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
                         MessageBox.Show(api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
                         return;
                 }
@@ -95,6 +97,19 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 OnDoneButtonClick(sender, e);
                 e.Handled = true;
             }
+        }
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        private bool SetField<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(field, value))
+                return false;
+            field = value;
+            OnPropertyChanged(propertyName);
+            return true;
         }
     }
 }

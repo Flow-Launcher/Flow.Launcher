@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Infrastructure.Storage;
+﻿#nullable enable
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
@@ -11,7 +10,6 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
@@ -90,9 +88,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             ContentIndexSearchEngines = EnumBindingModel<Settings.ContentIndexSearchEngineOption>.CreateList();
             PathEnumerationEngines = EnumBindingModel<Settings.PathEnumerationEngineOption>.CreateList();
 
-            SelectedIndexSearchEngine = IndexSearchEngines.FirstOrDefault(x => x.Value == Settings.IndexSearchEngine);
-            _selectedContentSearchEngine = ContentIndexSearchEngines.FirstOrDefault(x => x.Value == Settings.ContentSearchEngine);
-            _selectedPathEnumerationEngine = PathEnumerationEngines.FirstOrDefault(x => x.Value == Settings.PathEnumerationEngine);
+            SelectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
+            SelectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
+            SelectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
         }
 
         #endregion
@@ -120,13 +118,13 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         public IReadOnlyList<ActionKeywordModel> ActionKeywordsModels { get; set; }
 
-        public ActionKeywordModel SelectedActionKeyword { get; set; }
+        public ActionKeywordModel? SelectedActionKeyword { get; set; }
 
         public ICommand EditActionKeywordCommand => new RelayCommand(EditActionKeyword);
 
         private void EditActionKeyword(object obj)
         {
-            if (SelectedActionKeyword is not ActionKeywordModel actionKeyword)
+            if (SelectedActionKeyword is not { } actionKeyword)
             {
                 ShowUnselectedMessage();
                 return;
@@ -150,7 +148,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
                     Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
                     break;
                 case (false, true):
-                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeyword.Keyword);
+                    Context.API.AddActionKeyword(Context.CurrentPluginMetadata.ID, actionKeywordWindow.ActionKeyword);
                     break;
                 case (false, false):
                     throw new ArgumentException(
@@ -165,8 +163,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region AccessLinks
 
-        public AccessLink SelectedQuickAccessLink { get; set; }
-        public AccessLink SelectedIndexSearchExcludedPath { get; set; }
+        public AccessLink? SelectedQuickAccessLink { get; set; }
+        public AccessLink? SelectedIndexSearchExcludedPath { get; set; }
 
 
 
@@ -187,7 +185,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         private void EditLink(object commandParameter)
         {
-            (AccessLink selectedLink, ObservableCollection<AccessLink> collection) = commandParameter switch
+            var (selectedLink, collection) = commandParameter switch
             {
                 "QuickAccessLink" => (SelectedQuickAccessLink, Settings.QuickAccessLinks),
                 "IndexSearchExcludedPaths" => (SelectedIndexSearchExcludedPath, Settings.IndexSearchExcludedSubdirectoryPaths),
@@ -266,9 +264,9 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #endregion
 
-        private string? PromptUserSelectPath(ResultType type, string initialDirectory = null)
+        private string? PromptUserSelectPath(ResultType type, string? initialDirectory = null)
         {
-            string path = null;
+            string? path = null;
 
             if (type is ResultType.Folder)
             {
