@@ -13,25 +13,18 @@ public static class EverythingDownloadHelper
 {
     public static async Task<string> PromptDownloadIfNotInstallAsync(string installedLocation, IPublicAPI api)
     {
-        if (installedLocation.FileExists())
-            return installedLocation;
-
-        if (!string.IsNullOrEmpty(installedLocation))
+        if (!string.IsNullOrEmpty(installedLocation) && installedLocation.FileExists())
             return installedLocation;
 
         installedLocation = GetInstalledPath();
 
         if (string.IsNullOrEmpty(installedLocation))
         {
-            // Solves single thread apartment (STA) mode requirement error when using OpenFileDialog
-            var t = new Thread(() =>
-            {
-                if (System.Windows.Forms.MessageBox.Show(
+            if (System.Windows.Forms.MessageBox.Show(
                         string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
                         api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-                        System.Windows.Forms.MessageBoxButtons.YesNo) != System.Windows.Forms.DialogResult.Yes)
-                    return;
-
+                        System.Windows.Forms.MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+            {
                 var dlg = new System.Windows.Forms.OpenFileDialog
                 {
                     InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
@@ -40,13 +33,7 @@ public static class EverythingDownloadHelper
                 var result = dlg.ShowDialog();
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrEmpty(dlg.FileName))
                     installedLocation = dlg.FileName;
-
-            });
-
-            // Run your code from a thread that joins the STA Thread
-            t.SetApartmentState(ApartmentState.STA);
-            t.Start();
-            t.Join();
+            }
         }
 
         if (!string.IsNullOrEmpty(installedLocation))
