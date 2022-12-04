@@ -42,16 +42,6 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-
-            if (Settings.EverythingEnabled)
-            {
-                _ = EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, context.API)
-                    .ContinueWith(s =>
-                    {
-                        if (s.IsCompletedSuccessfully)
-                            Settings.EverythingInstalledPath = s.Result;
-                    }, TaskScheduler.Default);
-            }
             
             SortOptionTranslationHelper.API = context.API;
 
