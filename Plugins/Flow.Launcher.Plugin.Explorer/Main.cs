@@ -1,14 +1,11 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.Explorer.Helper;
+﻿using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
-using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -55,7 +52,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             Settings.EverythingInstalledPath = s.Result;
                     }, TaskScheduler.Default);
             }
-
+            
             SortOptionTranslationHelper.API = context.API;
 
             EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",

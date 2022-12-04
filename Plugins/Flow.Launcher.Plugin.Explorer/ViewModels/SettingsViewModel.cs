@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -82,15 +83,21 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        [MemberNotNull(nameof(IndexSearchEngines),
+            nameof(ContentIndexSearchEngines),
+            nameof(PathEnumerationEngines),
+            nameof(_selectedIndexSearchEngine),
+            nameof(_selectedContentSearchEngine),
+            nameof(_selectedPathEnumerationEngine))]
         private void InitializeEngineSelection()
         {
             IndexSearchEngines = EnumBindingModel<Settings.IndexSearchEngineOption>.CreateList();
             ContentIndexSearchEngines = EnumBindingModel<Settings.ContentIndexSearchEngineOption>.CreateList();
             PathEnumerationEngines = EnumBindingModel<Settings.PathEnumerationEngineOption>.CreateList();
 
-            SelectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
-            SelectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
-            SelectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+            _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
+            _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
+            _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
         }
 
         #endregion
@@ -99,6 +106,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #region ActionKeyword
 
+        [MemberNotNull(nameof(ActionKeywordsModels))]
         private void InitializeActionKeywordModels()
         {
             ActionKeywordsModels = new List<ActionKeywordModel>
@@ -307,7 +315,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        private ICommand _openEditorPathCommand;
+        private ICommand? _openEditorPathCommand;
 
         public ICommand OpenEditorPath => _openEditorPathCommand ??= new RelayCommand(_ =>
         {
@@ -318,7 +326,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             EditorPath = path;
         });
 
-        private ICommand _openShellPathCommand;
+        private ICommand? _openShellPathCommand;
 
         public ICommand OpenShellPath => _openShellPathCommand ??= new RelayCommand(_ =>
         {
