@@ -1,7 +1,9 @@
-﻿using Flow.Launcher.Infrastructure;
+﻿using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,13 +37,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return $"{keyword}{formatted_path}";
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
+        public static Result CreateResult(Query query, SearchResult result)
+        {
+            return result.Type switch
+            {
+                ResultType.Folder or ResultType.Volume => CreateFolderResult(Path.GetFileName(result.FullPath),
+                    result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
+                ResultType.File => CreateFileResult(
+                    result.FullPath, query, 0, result.WindowsIndexed),
+                _ => throw new ArgumentOutOfRangeException()
+            };
+        }
+
+        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
             return new Result
             {
                 Title = title,
                 IcoPath = path,
-                SubTitle = subtitle,
+                SubTitle = Path.GetDirectoryName(path),
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Action = c =>
@@ -61,17 +75,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
 
                     Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
-                    
+
                     return false;
                 },
                 Score = score,
-                TitleToolTip = Constants.ToolTipOpenDirectory,
+                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
                     FullPath = path,
-                    ShowIndexState = showIndexState,
                     WindowsIndexed = windowsIndexed
                 }
             };
@@ -80,15 +93,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Result CreateDriveSpaceDisplayResult(string path, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
-            int progressValue = 0;
             var title = string.Empty; // hide title when use progress bar,
-            var driveLetter = path.Substring(0, 1).ToUpper();
+            var driveLetter = path[..1].ToUpper();
             var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
-            var subtitle = toReadableSize(drv.AvailableFreeSpace, 2) + " free of " + toReadableSize(drv.TotalSize, 2);
-            double UsingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
+            var subtitle = ToReadableSize(drv.AvailableFreeSpace, 2) + " free of " + ToReadableSize(drv.TotalSize, 2);
+            double usingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
 
-            progressValue = Convert.ToInt32(UsingSize);
+            int? progressValue = Convert.ToInt32(usingSize);
 
             if (progressValue >= 90)
                 progressBarColor = "#da2626";
@@ -111,15 +123,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitleToolTip = path,
                 ContextData = new SearchResult
                 {
-                    Type = ResultType.Folder,
+                    Type = ResultType.Volume,
                     FullPath = path,
-                    ShowIndexState = true,
                     WindowsIndexed = windowsIndexed
                 }
             };
         }
 
-        private static string toReadableSize(long pDrvSize, int pi)
+        private static string ToReadableSize(long pDrvSize, int pi)
         {
             int mok = 0;
             double drvSize = pDrvSize;
@@ -140,24 +151,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             else if (mok == 4)
                 Space = " TB";
 
-            var returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
+            var returnStr = $"{Convert.ToInt32(drvSize)}{Space}";
             if (mok != 0)
             {
-                switch (pi)
+                returnStr = pi switch
                 {
-                    case 1:
-                        returnStr = string.Format("{0:F1}{1}", drvSize, Space);
-                        break;
-                    case 2:
-                        returnStr = string.Format("{0:F2}{1}", drvSize, Space);
-                        break;
-                    case 3:
-                        returnStr = string.Format("{0:F3}{1}", drvSize, Space);
-                        break;
-                    default:
-                        returnStr = string.Format("{0}{1}", Convert.ToInt32(drvSize), Space);
-                        break;
-                }
+                    1 => $"{drvSize:F1}{Space}",
+                    2 => $"{drvSize:F2}{Space}",
+                    3 => $"{drvSize:F3}{Space}",
+                    _ => $"{Convert.ToInt32(drvSize)}{Space}"
+                };
             }
 
             return returnStr;
@@ -165,25 +168,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
         {
-            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
-
-            var folderName = retrievedDirectoryPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
+            var folderName = path.TrimEnd(Constants.DirectorySeperator).Split(new[]
             {
                 Path.DirectorySeparatorChar
             }, StringSplitOptions.None).Last();
 
-            if (retrievedDirectoryPath.EndsWith(":\\"))
-            {
-                var driveLetter = path.Substring(0, 1).ToUpper();
-                folderName = driveLetter + " drive";
-            }
-
-            var title = "Open current directory";
-
-            if (retrievedDirectoryPath != path)
-                title = "Open " + folderName;
-
-
+            var title = $"Open {folderName}";
+            
             var subtitleFolderName = folderName;
 
             // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
@@ -195,32 +186,29 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(retrievedDirectoryPath, ResultType.Folder),
-                IcoPath = retrievedDirectoryPath,
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
+                IcoPath = path,
                 Score = 500,
-                Action = c =>
+                Action = _ =>
                 {
-                    Context.API.OpenDirectory(retrievedDirectoryPath);
+                    Context.API.OpenDirectory(path);
                     return true;
                 },
-                TitleToolTip = retrievedDirectoryPath,
-                SubTitleToolTip = retrievedDirectoryPath,
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
-                    FullPath = retrievedDirectoryPath,
-                    ShowIndexState = true,
+                    FullPath = path,
                     WindowsIndexed = windowsIndexed
                 }
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool showIndexState = false, bool windowsIndexed = false)
+        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
             var result = new Result
             {
                 Title = Path.GetFileName(filePath),
-                SubTitle = filePath,
+                SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
@@ -231,7 +219,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            Task.Run(() =>
+                            _ = Task.Run(() =>
                             {
                                 try
                                 {
@@ -264,28 +252,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     return true;
                 },
-                TitleToolTip = Constants.ToolTipOpenContainingFolder,
+                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
                 ContextData = new SearchResult
                 {
                     Type = ResultType.File,
                     FullPath = filePath,
-                    ShowIndexState = showIndexState,
                     WindowsIndexed = windowsIndexed
                 }
             };
             return result;
         }
-    }
-
-    internal class SearchResult
-    {
-        public string FullPath { get; set; }
-        public ResultType Type { get; set; }
-
-        public bool WindowsIndexed { get; set; }
-
-        public bool ShowIndexState { get; set; }
     }
 
     public enum ResultType
