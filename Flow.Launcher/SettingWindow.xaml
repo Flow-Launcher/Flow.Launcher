@@ -1355,9 +1355,14 @@
                                                                         Cursor="Hand"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
-                                                                        MouseUp="OnPluginDirecotyClick"
                                                                         Text="{DynamicResource pluginDirectory}"
-                                                                        TextDecorations="Underline" />
+                                                                        TextDecorations="Underline" >
+                                                                        <TextBlock.InputBindings>
+                                                                            <MouseBinding
+                                                                                Command="{Binding OpenPluginDirectoryCommand}"
+                                                                                MouseAction="LeftClick"/>
+                                                                        </TextBlock.InputBindings>
+                                                                    </TextBlock>
                                                                 </StackPanel>
 
                                                             </ItemsControl>

@@ -189,7 +189,7 @@ namespace Flow.Launcher
         {
             if (sender is Control { DataContext: PluginViewModel pluginViewModel })
             {
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
             }
         }
@@ -328,8 +328,6 @@ namespace Flow.Launcher
                 var name = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
                 viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
-
-
         }
 
         private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)

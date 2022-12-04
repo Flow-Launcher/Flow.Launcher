@@ -54,7 +54,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _isExpanded = value;
-                
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SettingControl));
             }
@@ -62,12 +62,12 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
-        public Control SettingControl 
+        public Control SettingControl
             => IsExpanded
                 ? _settingControl
                     ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? new Control() 
-                        : settingProvider.CreateSettingPanel() 
+                        ? new Control()
+                        : settingProvider.CreateSettingPanel()
                 : null;
         private ImageSource _image = ImageLoader.DefaultImage;
 
@@ -87,6 +87,21 @@ namespace Flow.Launcher.ViewModel
         {
             PluginPair.Metadata.Priority = newPriority;
             OnPropertyChanged(nameof(Priority));
+        }
+
+        [RelayCommand]
+        private void EditPluginPriority()
+        {
+            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair.Metadata.ID, this);
+            priorityChangeWindow.ShowDialog();
+        }
+
+        [RelayCommand]
+        private void OpenPluginDirectory()
+        {
+            var directory = PluginPair.Metadata.PluginDirectory;
+            if (!string.IsNullOrEmpty(directory))
+                PluginManager.API.OpenDirectory(directory);
         }
 
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
