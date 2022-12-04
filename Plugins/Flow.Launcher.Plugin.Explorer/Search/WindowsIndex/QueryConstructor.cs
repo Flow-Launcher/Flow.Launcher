@@ -114,7 +114,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         ///</summary>
         public const string QueryWhereRestrictionsForAllFilesAndFoldersSearch = "scope='file:'";
 
-        public const string QueryOrderByFileNameRestriction = " ORDER BY System.FileName";
+        public const string QueryOrderByFileNameRestriction = " ORDER BY System.Search.Rank DESC";
 
 
         ///<summary>
