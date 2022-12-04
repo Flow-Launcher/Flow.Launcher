@@ -1,6 +1,5 @@
 ﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using System;
@@ -23,14 +22,12 @@ namespace Flow.Launcher
     public partial class PriorityChangeWindow : Window
     {
         private readonly PluginPair plugin;
-        private Settings settings;
         private readonly Internationalization translater = InternationalizationManager.Instance;
         private readonly PluginViewModel pluginViewModel;
-        public PriorityChangeWindow(string pluginId, Settings settings, PluginViewModel pluginViewModel)
+        public PriorityChangeWindow(string pluginId, PluginViewModel pluginViewModel)
         {
             InitializeComponent();
             plugin = PluginManager.GetPluginForId(pluginId);
-            this.settings = settings;
             this.pluginViewModel = pluginViewModel;
             if (plugin == null)
             {
