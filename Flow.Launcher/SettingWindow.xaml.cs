@@ -5,7 +5,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ModernWpf.Controls;
@@ -18,7 +17,6 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
@@ -194,32 +192,6 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var website = viewModel.SelectedPlugin.PluginPair.Metadata.Website;
-                if (!string.IsNullOrEmpty(website))
-                {
-                    var uri = new Uri(website);
-                    if (Uri.CheckSchemeName(uri.Scheme))
-                    {
-                        website.OpenInBrowserTab();
-                    }
-                }
-            }
-        }
-
-        private void OnPluginDirecotyClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
-                if (!string.IsNullOrEmpty(directory))
-                    PluginManager.API.OpenDirectory(directory);
-            }
-        }
-
         #endregion
 
         #region Proxy
@@ -290,22 +262,6 @@ namespace Flow.Launcher
             }
         }
 
-        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            //get parent item
-            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
-
-            //we've reached the end of the tree
-            if (parentObject == null) return null;
-
-            //check if the parent matches the type we're looking for
-            T parent = parentObject as T;
-            if (parent != null)
-                return parent;
-            else
-                return FindParent<T>(parentObject);
-        }
-        
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
             if (sender is not Button { DataContext: PluginStoreItemViewModel plugin } button)

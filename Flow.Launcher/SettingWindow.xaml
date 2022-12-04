@@ -1127,7 +1127,7 @@
                                                                 x:Name="PriorityButton"
                                                                 Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
-                                                                Click="OnPluginPriorityClick"
+                                                                Command="{Binding EditPluginPriorityCommand}"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
                                                                 ToolTip="{DynamicResource priorityToolTip}">
