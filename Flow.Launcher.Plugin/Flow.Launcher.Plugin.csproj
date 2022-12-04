@@ -68,7 +68,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
-    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
   </ItemGroup>
 
 </Project>
