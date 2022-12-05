@@ -89,7 +89,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Determines if the preview image should occupy the full width of the preveiw panel.
         /// </summary>
-        public bool UseBigThumbnail { get; set; } = false;
+        public bool FullWidthPreview { get; set; } = false;
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
@@ -244,7 +244,7 @@ namespace Flow.Launcher.Plugin
         /// Suggests the preview image of result should use full width of the default preview panel by result's file extension.
         /// </summary>
         /// <param name="extension">File extension. Dot included.</param>
-        public static bool ShouldUseBigThumbnail(string extension)
+        public static bool ShouldUseFullWidthPreview(string extension)
         {
             return extension is ".jpg"
                 or ".png"

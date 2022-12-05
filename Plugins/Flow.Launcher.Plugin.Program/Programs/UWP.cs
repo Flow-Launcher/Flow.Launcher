@@ -406,7 +406,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     SubTitle = Main._settings.HideAppsPath ? string.Empty : Location,
                     IcoPath = LogoPath,
                     PreviewImage = PreviewImagePath,
-                    UseBigThumbnail = false,
+                    FullWidthPreview = false,
                     Score = matchResult.Score,
                     TitleHighlightData = matchResult.MatchData,
                     ContextData = this,

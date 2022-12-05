@@ -169,7 +169,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// Determines if to use the full width of the preview panel
         /// </summary>
-        public bool UseBigThumbnail => Result.UseBigThumbnail;
+        public bool UseBigThumbnail => Result.FullWidthPreview;
 
         public GlyphInfo Glyph { get; set; }
 
