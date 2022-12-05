@@ -20,15 +20,15 @@
     <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
     <system:String x:Key="plugin_explorer_edit">Editar</system:String>
     <system:String x:Key="plugin_explorer_add">Añadir</system:String>
-    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">Configuración General</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palabras clave de acción</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
-    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Configuración Everything</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Opción de Clasificación:</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Ruta de Everything:</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Iniciar Oculto</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
-    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo ejecutable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
@@ -43,12 +43,12 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Activado</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Cuando esté desactivado, Flow no ejecutará esta opción de búsqueda, y además volverá a '*' para liberar la palabra clave de acción</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Índice de Windows</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumeración Directa</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Motor de Búsqueda de Contenido</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de Búsqueda Recursivo de Directorio</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Motor de Búsqueda del Índice</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
 
     <!--  Plugin Infos  -->
