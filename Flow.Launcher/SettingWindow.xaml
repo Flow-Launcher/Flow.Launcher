@@ -1143,7 +1143,7 @@
                                                                 x:Name="PriorityButton"
                                                                 Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
-                                                                Click="OnPluginPriorityClick"
+                                                                Command="{Binding EditPluginPriorityCommand}"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
                                                                 ToolTip="{DynamicResource priorityToolTip}">
@@ -1221,8 +1221,8 @@
                                                                         Height="34"
                                                                         Margin="5,0,0,0"
                                                                         HorizontalAlignment="Right"
-                                                                        Click="OnPluginActionKeywordsClick"
                                                                         Content="{Binding ActionKeywordsText}"
+                                                                        Command="{Binding SetActionKeywordsCommand}"
                                                                         Cursor="Hand"
                                                                         DockPanel.Dock="Right"
                                                                         FontWeight="Bold"
@@ -1371,9 +1371,14 @@
                                                                         Cursor="Hand"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
-                                                                        MouseUp="OnPluginDirecotyClick"
                                                                         Text="{DynamicResource pluginDirectory}"
-                                                                        TextDecorations="Underline" />
+                                                                        TextDecorations="Underline" >
+                                                                        <TextBlock.InputBindings>
+                                                                            <MouseBinding
+                                                                                Command="{Binding OpenPluginDirectoryCommand}"
+                                                                                MouseAction="LeftClick"/>
+                                                                        </TextBlock.InputBindings>
+                                                                    </TextBlock>
                                                                 </StackPanel>
 
                                                             </ItemsControl>

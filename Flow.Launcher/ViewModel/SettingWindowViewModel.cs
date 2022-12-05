@@ -356,6 +356,8 @@ namespace Flow.Launcher.ViewModel
             await PluginsManifest.UpdateManifestAsync();
             OnPropertyChanged(nameof(ExternalPlugins));
         }
+        
+        
 
         internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
         {
