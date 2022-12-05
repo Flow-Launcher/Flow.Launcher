@@ -5,10 +5,11 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class PluginViewModel : BaseModel
+    public partial class PluginViewModel : BaseModel
     {
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
@@ -53,6 +54,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _isExpanded = value;
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SettingControl));
             }
@@ -60,12 +62,12 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
-        public Control SettingControl 
+        public Control SettingControl
             => IsExpanded
                 ? _settingControl
                     ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? new Control() 
-                        : settingProvider.CreateSettingPanel() 
+                        ? new Control()
+                        : settingProvider.CreateSettingPanel()
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
@@ -87,7 +89,29 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(Priority));
         }
 
+        [RelayCommand]
+        private void EditPluginPriority()
+        {
+            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair.Metadata.ID, this);
+            priorityChangeWindow.ShowDialog();
+        }
+
+        [RelayCommand]
+        private void OpenPluginDirectory()
+        {
+            var directory = PluginPair.Metadata.PluginDirectory;
+            if (!string.IsNullOrEmpty(directory))
+                PluginManager.API.OpenDirectory(directory);
+        }
+
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+
+        [RelayCommand]
+        private void SetActionKeywords()
+        {
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(this);
+            changeKeywordsWindow.ShowDialog();
+        }
     }
 
 }

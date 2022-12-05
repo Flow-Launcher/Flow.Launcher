@@ -184,6 +184,13 @@ namespace Flow.Launcher.Plugin
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
         /// <summary>
+        /// Check whether specific ActionKeyword is assigned to any of the plugin
+        /// </summary>
+        /// <param name="actionKeyword">The actionkeyword for checking</param>
+        /// <returns>True if the actionkeyword is already assigned, False otherwise</returns>
+        bool ActionKeywordAssigned(string actionKeyword);
+
+        /// <summary>
         /// Log debug message
         /// Message will only be logged in Debug mode
         /// </summary>

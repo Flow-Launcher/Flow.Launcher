@@ -8,6 +8,7 @@
     <RootNamespace>Flow.Launcher.Plugin.Sys</RootNamespace>
     <AssemblyName>Flow.Launcher.Plugin.Sys</AssemblyName>
     <UseWindowsForms>true</UseWindowsForms>
+    <UseWpf>true</UseWpf>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
@@ -48,10 +49,6 @@
     <Content Include="Images\*.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-	  <Page Include="SysSettings.xaml">
-		  <Generator>MSBuild:Compile</Generator>
-		  <SubType>Designer</SubType>
-	  </Page>
   </ItemGroup>
   
   <ItemGroup>
