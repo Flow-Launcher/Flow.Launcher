@@ -205,11 +205,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
+            bool shouldUseBigThumbnail = Result.ShouldUseBigThumbnail(Path.GetExtension(filePath));
             var result = new Result
             {
                 Title = Path.GetFileName(filePath),
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
+                PreviewImage = shouldUseBigThumbnail ? filePath : null,
+                UseBigThumbnail = shouldUseBigThumbnail,
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
