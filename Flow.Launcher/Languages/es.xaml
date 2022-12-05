@@ -114,6 +114,14 @@
     <system:String x:Key="browserMoreThemes">Galería de temas</system:String>
     <system:String x:Key="howToCreateTheme">Cómo crear un tema</system:String>
     <system:String x:Key="hiThere">Hola</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorador</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Buscar archivos, carpetas y contenido de archivos</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Búsqueda Web</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Buscar en la web con el apoyo de diferentes motores de búsqueda</system:String>
+    <system:String x:Key="SampleTitleProgram">Programa</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Iniciar programas como administrador o como usuario diferente</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Eliminar Procesos</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminar procesos no deseados</system:String>
     <system:String x:Key="queryBoxFont">Fuente del texto del cuadro de consulta</system:String>
     <system:String x:Key="resultItemFont">Fuente del texto de los resultados</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
