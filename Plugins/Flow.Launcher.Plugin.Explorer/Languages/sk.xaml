@@ -24,7 +24,7 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavenia Everything</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Možnosti zoradenia:</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Umiestnenie Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Spustiť skryté</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Cesta k editoru</system:String>
@@ -43,21 +43,21 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Povolené</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Ak je vypnuté, Flow túto možnosť vyhľadávania nevykoná a následne sa vráti späť na &quot;*&quot;, aby sa uvoľnila skratka akcie</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Index Windowsu</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Zoznam priečinkov</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Vyhľadávač obsahu</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Priečinkový rekurzívny vyhľadávač</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Indexový vyhľadávač</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Otvoriť možnosti vyhľadávania vo Windowse</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva a spravuje súbory a priečinky. Prieskumník používa indexovanie vyhľadávania vo Windowse</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter na otvorenie priečinka</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter na otvorenie umiestnenia priečinka</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovať cestu</system:String>
@@ -70,7 +70,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvorí umiestnenie, ktoré obsahuje súbor alebo priečinok</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Otvori v príkazovom riadku:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Vylúčiť položku a jej podpriečinky z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Vylúčiť z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Otvoriť možnosti vyhľadávania vo Windowse</system:String>
@@ -86,10 +86,10 @@
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstráni {0} z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK Loaded Fail</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodarilo sa načítať Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Upozornenie: Služba Everything nie je spustená</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Chyba pri dopytovaní Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Zoradiť podľa</system:String>
@@ -110,7 +110,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Upozornenie: Toto nie je voľba Fast Sort, vyhľadávanie môže byť pomalé</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to Launch or Install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte alebo nainštalujete Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Inštalácia Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Inštaluje sa služba Everything. Čakajte, prosím…</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Služba Everything bola úspešne nainštalovaná</system:String>
