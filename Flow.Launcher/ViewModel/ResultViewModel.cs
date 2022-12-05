@@ -112,7 +112,7 @@ namespace Flow.Launcher.ViewModel
                 if (!Settings.UseGlyphIcons && !ImgIconAvailable && GlyphAvailable)
                     return Visibility.Visible;
 
-                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Hidden;
+                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Collapsed;
             }
         }
 
