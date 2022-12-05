@@ -169,7 +169,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// Determines if to use the full width of the preview panel
         /// </summary>
-        public bool UseBigThumbnail => Result.FullWidthPreview;
+        public bool UseBigThumbnail => Result.Preview.IsMedia;
 
         public GlyphInfo Glyph { get; set; }
 
@@ -210,7 +210,7 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadPreviewImageAsync()
         {
-            var imagePath = Result.PreviewImage ?? Result.IcoPath;
+            var imagePath = string.IsNullOrEmpty(Result.Preview.PreviewImagePath) ? Result.IcoPath : Result.Preview.PreviewImagePath;
             var iconDelegate = Result.Icon;
             if (ImageLoader.CacheContainImage(imagePath, true))
             {
