@@ -97,17 +97,26 @@ namespace Flow.Launcher
 
         private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
-                return;
+            if (Mouse.DirectlyOver is not FrameworkElement
+                {
+                    DataContext: ResultViewModel
+                    {
+                        Result:
+                        {
+                            CopyText: { } copyText,
+                            OriginQuery.RawQuery: { } rawQuery
+                        }
+                    }
+                }) return;
 
-            path = result.Result.CopyText;
-            query = result.Result.OriginQuery.RawQuery;
+            path = copyText;
+            query = rawQuery;
             start = e.GetPosition(null);
             isDragging = true;
         }
         private void ResultList_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed|| !isDragging)
+            if (e.LeftButton != MouseButtonState.Pressed || !isDragging)
             {
                 start = default;
                 path = string.Empty;
@@ -127,7 +136,7 @@ namespace Flow.Launcher
                 return;
 
             isDragging = false;
-            
+
             var data = new DataObject(DataFormats.FileDrop, new[]
             {
                 path
