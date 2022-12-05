@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
@@ -225,9 +226,9 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception)
             {
-                var name = "Plugin: Program";
-                var message = $"Unable to start: {info.FileName}";
-                Context.API.ShowMsg(name, message, string.Empty);
+                var title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
+                var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"), info.FileName);
+                Context.API.ShowMsg(title, string.Format(message, info.FileName), string.Empty);
             }
         }
 

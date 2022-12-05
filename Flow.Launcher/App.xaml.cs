@@ -183,7 +183,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Show();
+            _mainVM.Show();
         }
     }
 }

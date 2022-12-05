@@ -356,6 +356,8 @@ namespace Flow.Launcher.ViewModel
             await PluginsManifest.UpdateManifestAsync();
             OnPropertyChanged(nameof(ExternalPlugins));
         }
+        
+        
 
         internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
         {
@@ -609,26 +611,26 @@ namespace Flow.Launcher.ViewModel
                 {
                     new Result
                     {
-                        Title = "Explorer",
-                        SubTitle = "Search for files, folders and file contents",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleExplorer"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleExplorer"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png")
                     },
                     new Result
                     {
-                        Title = "WebSearch",
-                        SubTitle = "Search the web with different search engine support",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
-                        Title = "Program",
-                        SubTitle = "Launch programs as admin or a different user",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
-                        Title = "ProcessKiller",
-                        SubTitle = "Terminate unwanted processes",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
