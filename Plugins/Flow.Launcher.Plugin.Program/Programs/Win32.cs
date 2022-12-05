@@ -16,7 +16,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
-using System.Windows.Controls;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
