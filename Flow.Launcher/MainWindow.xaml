@@ -392,20 +392,22 @@
                         <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowDefaultPreview}">
                             <Grid
                                 Margin="20,0,10,0"
-                                VerticalAlignment="Top"
+                                VerticalAlignment="Stretch"
                                 Background="Transparent">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" MinHeight="240" />
                                     <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
                                 <Grid Grid.Row="0" VerticalAlignment="Center">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
                                     </Grid.RowDefinitions>
                                     <TextBlock
                                         x:Name="PreviewGlyphIcon"
                                         Grid.Row="0"
+                                        Height="Auto"
+                                        Margin="0,16,0,0"
                                         FontFamily="{Binding Glyph.FontFamily}"
                                         Style="{DynamicResource PreviewGlyph}"
                                         Text="{Binding Glyph.Glyph}"
@@ -414,7 +416,7 @@
                                         x:Name="PreviewImageIcon"
                                         Grid.Row="0"
                                         MaxHeight="400"
-                                        Margin="0,10,0,4"
+                                        Margin="0,16,0,0"
                                         HorizontalAlignment="Center"
                                         Source="{Binding PreviewImage}"
                                         StretchDirection="DownOnly"
@@ -433,6 +435,7 @@
                                     <TextBlock
                                         x:Name="PreviewTitle"
                                         Grid.Row="1"
+                                        Margin="0,6,0,16"
                                         HorizontalAlignment="Stretch"
                                         Style="{DynamicResource PreviewItemTitleStyle}"
                                         Text="{Binding Result.Title}"
@@ -440,6 +443,15 @@
                                         TextWrapping="Wrap" />
                                 </Grid>
                                 <StackPanel Grid.Row="1">
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
                                     <Separator Style="{DynamicResource PreviewSep}" />
                                     <TextBlock
                                         x:Name="PreviewSubTitle"
