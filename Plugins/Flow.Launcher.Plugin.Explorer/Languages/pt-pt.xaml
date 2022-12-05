@@ -47,9 +47,9 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumeração direta</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Mecanismo de pesquisa para conteúdo</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Mecanismo de pesquisa recursiva de diretórios</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Mecanismo de pesquisa do índice</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opções do índice Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
@@ -70,7 +70,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir pasta de destino</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre a localização que contém o ficheiro ou a pasta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Abrir com a consola:</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir diretório atual do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluído do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opções de indexação do Windows</system:String>
