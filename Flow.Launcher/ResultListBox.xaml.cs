@@ -132,10 +132,13 @@ namespace Flow.Launcher
             {
                 path
             });
-            
+
+            // Reassigning query to a new variable because for some reason
+            // after DragDrop.DoDragDrop call, 'query' loses its content, i.e. becomes empty string
+            var rawQuery = query;
             var effect = DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
             if (effect == DragDropEffects.Move)
-                App.API.ChangeQuery(query, true);
+                App.API.ChangeQuery(rawQuery, true);
         }
         private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
