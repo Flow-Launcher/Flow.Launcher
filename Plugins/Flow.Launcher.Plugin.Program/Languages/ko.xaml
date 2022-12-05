@@ -79,7 +79,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">성공</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">쿼리 결과에 이 프로그램이 표시되지 않도록 비활성화 했습니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">이 앱은 관리자로 실행되지 않습니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>

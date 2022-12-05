@@ -2031,7 +2031,7 @@
     <value>Change when the computer sleeps</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
-    <value>Set up a virtual private network (VPN) connection</value>
+    <value>Configurar uma rede privada (VPN)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
     <value>Accommodate learning abilities</value>
@@ -2055,7 +2055,7 @@
     <value>Accommodate low vision</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Manage offline files</value>
+    <value>Gerenciar ficheiros offline</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
     <value>Review your computer's status and resolve issues</value>
@@ -2091,7 +2091,7 @@
     <value>Change tablet pen settings</value>
   </data>
   <data name="ChangeHowYourMouseWorks" xml:space="preserve">
-    <value>Change how your mouse works</value>
+    <value>Alterar modo de funcionamento do rato</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
     <value>Show how much RAM is on this computer</value>
