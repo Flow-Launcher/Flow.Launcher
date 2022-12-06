@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin.Program.Views.Commands;
 using Flow.Launcher.Plugin.Program.Programs;
 using System.ComponentModel;
 using System.Windows.Data;
+using Flow.Launcher.Plugin.Program.ViewModels;
 
 namespace Flow.Launcher.Plugin.Program.Views
 {
@@ -135,7 +136,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void btnAddProgramSource_OnClick(object sender, RoutedEventArgs e)
         {
-            var add = new AddProgramSource(context, _settings);
+            var vm = new AddProgramSourceViewModel(context, _settings);
+            var add = new AddProgramSource(vm);
             if (add.ShowDialog() ?? false)
             {
                 ReIndexing();
@@ -170,7 +172,8 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
             else
             {
-                var add = new AddProgramSource(context, _settings, selectedProgramSource);
+                var vm = new AddProgramSourceViewModel(context, _settings, selectedProgramSource);
+                var add = new AddProgramSource(vm);
                 if (add.ShowDialog() ?? false)
                 {
                     if (selectedProgramSource.Enabled)
