@@ -18,6 +18,9 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -101,7 +104,7 @@
                                 HorizontalAlignment="Stretch"
                                 Click="BrowseButton_Click"
                                 Content="{DynamicResource flowlauncher_plugin_program_browse}"
-                                IsEnabled="{Binding IsCustomSource}"
+                                Visibility="{Binding IsCustomSource, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 Name="Directory"
