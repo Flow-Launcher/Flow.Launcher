@@ -98,8 +98,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri, (64, 64));
                         string previewUriTemp = visualElement?.Attributes[logoName]?.Value;
-                        string previewUri = previewUriTemp?.Replace(".png", ".targetsize-256.png");
-                        app.PreviewImagePath = app.LogoPathFromUri(previewUri, (128, 128));
+                        string previewUri = previewUriTemp?.Replace(".png", ".targetsize-96.png");
+                        app.PreviewImagePath = app.LogoPathFromUri(previewUri, (96, 96));
                     }
                 }
             }

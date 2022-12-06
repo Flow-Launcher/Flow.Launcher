@@ -426,7 +426,7 @@
                                         Visibility="{Binding ShowIcon}">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
-                                                <Setter Property="MaxWidth" Value="128" />
+                                                <Setter Property="MaxWidth" Value="96" />
                                                 <Style.Triggers>
                                                     <DataTrigger Binding="{Binding UseBigThumbnail}" Value="True">
                                                         <Setter Property="MaxWidth" Value="{Binding ElementName=Preview, Path=ActualWidth}" />
