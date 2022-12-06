@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using System.Threading.Channels;
 using System.Xml;
 using Windows.ApplicationModel.Core;
+using Windows.UI.Composition;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -96,7 +97,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var visualElement = appNode.SelectSingleNode($"*[local-name()='VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri, (64, 64));
-                        var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
+                        string previewUriTemp = visualElement?.Attributes[logoName]?.Value;
+                        string previewUri = previewUriTemp?.Replace(".png", ".targetsize-256.png");
                         app.PreviewImagePath = app.LogoPathFromUri(previewUri, (128, 128));
                     }
                 }
@@ -188,10 +190,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static readonly Dictionary<PackageVersion, string> bigLogoNameFromVersion = new()
         {
             {
-                PackageVersion.Windows10, "Square150x150Logo"
+                PackageVersion.Windows10, "Square310x310Logo"
             },
             {
-                PackageVersion.Windows81, "Square150x150Logo"
+                PackageVersion.Windows81, "Square310x310Logo"
             },
             {
                 PackageVersion.Windows8, "Logo"
