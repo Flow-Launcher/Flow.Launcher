@@ -58,6 +58,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = Path.GetDirectoryName(path),
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
+                CopyText = path,
                 Action = c =>
                 {
                     if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
@@ -189,6 +190,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 IcoPath = path,
                 Score = 500,
+                CopyText = path,
                 Action = _ =>
                 {
                     Context.API.OpenDirectory(path);
@@ -219,6 +221,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
+                CopyText = filePath,
                 Action = c =>
                 {
                     try

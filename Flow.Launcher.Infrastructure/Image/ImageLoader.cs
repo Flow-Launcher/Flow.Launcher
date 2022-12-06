@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -288,9 +289,33 @@ namespace Flow.Launcher.Infrastructure.Image
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(path);
+            image.UriSource = new Uri(path);            
             image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
+
+            if (image.PixelWidth > 320)
+            {
+                BitmapImage resizedWidth = new BitmapImage();
+                resizedWidth.BeginInit();
+                resizedWidth.CacheOption = BitmapCacheOption.OnLoad;
+                resizedWidth.UriSource = new Uri(path);
+                resizedWidth.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                resizedWidth.DecodePixelWidth = 320;
+                resizedWidth.EndInit();
+
+                if (resizedWidth.PixelHeight > 320)
+                {
+                    BitmapImage resizedHeight = new BitmapImage();
+                    resizedHeight.BeginInit();
+                    resizedHeight.CacheOption = BitmapCacheOption.OnLoad;
+                    resizedHeight.UriSource = new Uri(path);
+                    resizedHeight.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    resizedHeight.DecodePixelHeight = 320;
+                    resizedHeight.EndInit();
+                    return resizedHeight;
+                }
+                return resizedWidth;
+            }
             return image;
         }
     }
