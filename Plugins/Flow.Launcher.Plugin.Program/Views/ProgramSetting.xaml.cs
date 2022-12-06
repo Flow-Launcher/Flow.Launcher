@@ -174,6 +174,10 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 var vm = new AddProgramSourceViewModel(context, _settings, selectedProgramSource);
                 var add = new AddProgramSource(vm);
+                int selectedIndex = programSourceView.SelectedIndex;
+                // https://stackoverflow.com/questions/16789360/wpf-listbox-items-with-changing-hashcode
+                // Or it can't be unselected after changing Location
+                programSourceView.UnselectAll();
                 if (add.ShowDialog() ?? false)
                 {
                     if (selectedProgramSource.Enabled)
@@ -188,6 +192,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                     }
                     ReIndexing();
                 }
+                programSourceView.SelectedIndex = selectedIndex;
             }
         }
 
