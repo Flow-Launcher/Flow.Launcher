@@ -207,14 +207,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            bool shouldUseBigThumbnail = Result.ShouldUseFullWidthPreview(Path.GetExtension(filePath));
+            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo {
+                IsMedia = true,
+                PreviewImagePath = filePath,
+            } : Result.PreviewInfo.Default;
+
             var result = new Result
             {
                 Title = Path.GetFileName(filePath),
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
-                PreviewImage = shouldUseBigThumbnail ? filePath : null,
-                FullWidthPreview = shouldUseBigThumbnail,
+                Preview = preview,
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
@@ -268,6 +271,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 }
             };
             return result;
+        }
+
+        public static bool IsMedia(string extension)
+        {
+            return extension is ".jpg"
+                or ".png"
+                or ".avi"
+                or ".mkv"
+                or ".bmp"
+                or ".gif"
+                or ".wmv"
+                or ".mp3"
+                or ".flac"
+                or ".mp4";
         }
     }
 

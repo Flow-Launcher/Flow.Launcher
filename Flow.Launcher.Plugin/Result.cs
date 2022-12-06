@@ -82,16 +82,6 @@ namespace Flow.Launcher.Plugin
         public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
-        /// Full image used for preview panel
-        /// </summary>
-        public string PreviewImage { get; set; } = null;
-
-        /// <summary>
-        /// Determines if the preview image should occupy the full width of the preveiw panel.
-        /// </summary>
-        public bool FullWidthPreview { get; set; } = false;
-
-        /// <summary>
         /// Delegate function, see <see cref="Icon"/>
         /// </summary>
         /// <returns></returns>
@@ -240,22 +230,29 @@ namespace Flow.Launcher.Plugin
         /// <default>#26a0da (blue)</default>
         public string ProgressBarColor { get; set; } = "#26a0da";
 
+        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+
         /// <summary>
-        /// Suggests the preview image of result should use full width of the default preview panel by result's file extension.
+        /// Info of the preview image.
         /// </summary>
-        /// <param name="extension">File extension. Dot included.</param>
-        public static bool ShouldUseFullWidthPreview(string extension)
+        public record PreviewInfo
         {
-            return extension is ".jpg"
-                or ".png"
-                or ".avi"
-                or ".mkv"
-                or ".bmp"
-                or ".gif"
-                or ".wmv"
-                or ".mp3"
-                or ".flac"
-                or ".mp4";
+            /// <summary>
+            /// Full image used for preview panel
+            /// </summary>
+            public string PreviewImagePath { get; set; }
+            /// <summary>
+            /// Determines if the preview image should occupy the full width of the preveiw panel.
+            /// </summary>
+            public bool IsMedia { get; set; }
+            public string Description { get; set; }
+
+            public static PreviewInfo Default { get; } = new()
+            {
+                PreviewImagePath = null,
+                Description = null,
+                IsMedia = false,
+            };
         }
     }
 }
