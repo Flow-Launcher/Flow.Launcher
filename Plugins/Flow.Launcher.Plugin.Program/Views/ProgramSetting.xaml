@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:program="clr-namespace:Flow.Launcher.Plugin.Program"
     Height="520"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
@@ -172,7 +171,7 @@
                     <GridViewColumn Width="550" Header="{DynamicResource flowlauncher_plugin_program_location}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}" />
+                                <TextBlock Text="{Binding Location}" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

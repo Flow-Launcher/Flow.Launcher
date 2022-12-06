@@ -101,7 +101,6 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
 
         public (bool, string) UpdateProgramSource()
         {
-            // Separate checks to avoid changing UniqueIdentifier of UWP when changing Enabled
             if (LocationModified)
             {
                 if (!Directory.Exists(Location))
