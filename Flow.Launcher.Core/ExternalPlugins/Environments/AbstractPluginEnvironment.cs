@@ -204,6 +204,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         private static bool IsUsingPortablePath(string filePath, string pluginEnvironmentName)
         {
+            if (string.IsNullOrEmpty(filePath))
+                return false;
+
             // DataLocation.PortableDataPath returns the current portable path, this determines if an out
             // of date path is also a portable path.
             var portableAppEnvLocation = $"UserData\\{DataLocation.PluginEnvironments}\\{pluginEnvironmentName}";
@@ -213,6 +216,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         private static bool IsUsingRoamingPath(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+                return false;
+
             return filePath.StartsWith(DataLocation.RoamingDataPath);
         }
 
