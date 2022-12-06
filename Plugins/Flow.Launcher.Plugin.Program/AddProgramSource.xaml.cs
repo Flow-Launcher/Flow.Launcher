@@ -30,15 +30,15 @@ namespace Flow.Launcher.Plugin.Program
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var status = ViewModel.AddOrUpdate();
-            if (status == null)
+            bool modified = status.Item1;
+            string msg = status.Item2;
+            if (modified == false && msg != null)
             {
-                return; // Invalid
+                MessageBox.Show(msg);  // Invalid
+                return;
             }
-            else
-            {
-                DialogResult = status ?? false;
-                Close();
-            }
+            DialogResult = modified;
+            Close();
         }
     }
 }

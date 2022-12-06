@@ -80,42 +80,37 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             }
         }
 
-        public bool? AddProgramSource()
+        public (bool, string) AddProgramSource()
         {
             if (!Directory.Exists(Location))
             {
-                System.Windows.MessageBox.Show(API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
-                return null;
+                return (false, API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
             }
             else if (DuplicateSource(Location))
             {
-                System.Windows.MessageBox.Show(API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
-                return null;
+                return (false, API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
             }
             else
             {
                 var source = new ProgramSource(Location, Enabled);
                 Settings.ProgramSources.Insert(0, source);
                 ProgramSetting.ProgramSettingDisplayList.Add(source);
-                return true;
+                return (true, null);
             }
         }
 
-        public bool? UpdateProgramSource()
+        public (bool, string) UpdateProgramSource()
         {
             // Separate checks to avoid changing UniqueIdentifier of UWP when changing Enabled
             if (LocationModified)
             {
                 if (!Directory.Exists(Location))
                 {
-                    System.Windows.MessageBox.Show(API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
-                    return null;
+                    return (false, API.GetTranslation("flowlauncher_plugin_program_invalid_path"));
                 }
                 else if (DuplicateSource(Location))
                 {
-                    // No need to check win32 or uwp, just override them
-                    System.Windows.MessageBox.Show(API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
-                    return null;
+                    return (false, API.GetTranslation("flowlauncher_plugin_program_duplicate_program_source"));
                 }
                 else
                 {
@@ -126,10 +121,10 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             {
                 Source.Enabled = Enabled;
             }
-            return StatusModified || LocationModified;
+            return (StatusModified || LocationModified, null);
         }
 
-        public bool? AddOrUpdate()
+        public (bool, string) AddOrUpdate()
         {
             if (Source == null)
             {
