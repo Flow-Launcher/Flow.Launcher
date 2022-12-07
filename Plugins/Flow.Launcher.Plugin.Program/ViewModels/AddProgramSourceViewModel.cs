@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             set
             {
                 enabled = value;
-                OnPropertyChanged(nameof(Enabled));
+                StatusModified = true;
             }
         }
 
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             set
             {
                 location = value;
-                OnPropertyChanged(nameof(Location));
+                LocationModified = true;
             }
         }
 
@@ -55,19 +55,6 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             location = Source.Location;
             AddBtnText = API.GetTranslation("flowlauncher_plugin_program_update");
             IsCustomSource = Settings.ProgramSources.Any(x => x.UniqueIdentifier == Source.UniqueIdentifier);
-
-            this.PropertyChanged += (_, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(Location):
-                        LocationModified = true;
-                        break;
-                    case nameof(Enabled):
-                        StatusModified = true;
-                        break;
-                }
-            };
         }
 
         public void Browse()
