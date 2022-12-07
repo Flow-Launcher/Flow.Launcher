@@ -63,6 +63,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
     <system:String x:Key="ShouldUsePinyin">使用 Pinyin 搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
