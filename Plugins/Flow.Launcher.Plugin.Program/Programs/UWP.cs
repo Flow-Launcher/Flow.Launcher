@@ -96,8 +96,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         var visualElement = appNode.SelectSingleNode($"*[local-name()='VisualElements']", namespaceManager);
                         var logoUri = visualElement?.Attributes[logoName]?.Value;
                         app.LogoPath = app.LogoPathFromUri(logoUri, (64, 64));
-                        var previewUri = visualElement?.Attributes[bigLogoName]?.Value;
-                        app.PreviewImagePath = app.LogoPathFromUri(previewUri, (128, 128));
+                        // use small logo or may have a big margin
+                        var previewUri = visualElement?.Attributes[logoName]?.Value;
+                        app.PreviewImagePath = app.LogoPathFromUri(previewUri, (256, 256));
                     }
                 }
             }
@@ -555,6 +556,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         // select like logo.[xxx_yyy].png
                         // https://learn.microsoft.com/en-us/windows/uwp/app-resources/tailor-resources-lang-scale-contrast
 
+                        // todo select from file name like pt run
                         var selected = logos.FirstOrDefault();
                         var closest = selected;
                         int min = int.MaxValue;
