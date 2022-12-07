@@ -410,10 +410,10 @@
         <Setter Property="Foreground" Value="#555555" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="FontSize" Value="128" />
-        <Setter Property="MaxWidth" Value="128" />
+        <Setter Property="FontSize" Value="90" />
+        <Setter Property="MaxWidth" Value="96" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="MaxHeight" Value="128" />
+        <Setter Property="MaxHeight" Value="96" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=PreviewGlyphIcon, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Visibility" Value="Collapsed" />
