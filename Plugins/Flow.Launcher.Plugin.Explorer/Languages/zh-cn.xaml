@@ -20,15 +20,15 @@
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
     <system:String x:Key="plugin_explorer_edit">编辑</system:String>
     <system:String x:Key="plugin_explorer_add">增加</system:String>
-    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">通用设置</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
-    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Everything 路径</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">隐藏启动</system:String>
     <system:String x:Key="plugin_explorer_editor_path">编辑器路径</system:String>
-    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
@@ -43,13 +43,13 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">启用</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">当禁用时，Flow Launcher 将不会执行此搜索选项，并且还会恢复到“*”以释放动作关键字</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Windows 索引</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">直接枚举</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">文件内容搜索引擎</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">目录递归搜索引擎</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">索引搜索引擎</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">打开Windows索引选项</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">文件管理器</system:String>
@@ -70,7 +70,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开文件或文件夹所在目录</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开：</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">使用 Shell 打开：</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">从索引搜索中排除当前目录和子目录</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">从索引搜索中排除</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">打开Windows索引选项</system:String>
@@ -86,10 +86,10 @@
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中删除 {0}</system:String>
-    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK Loaded Fail</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK 加载失败</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告：Everything 服务未运行</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything 插件发生了一个错误（回车拷贝具体错误信息）</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">排序依据</system:String>
@@ -110,7 +110,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to Launch or Install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安装 Everything 服务。请稍后...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">成功安装了 Everything 服务</system:String>
