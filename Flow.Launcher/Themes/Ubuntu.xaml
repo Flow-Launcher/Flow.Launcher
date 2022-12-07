@@ -169,7 +169,7 @@
     </Style>
     <CornerRadius x:Key="ItemRadius">0</CornerRadius>
     <Thickness x:Key="ItemMargin">0 0 0 0</Thickness>
-    <Thickness x:Key="ResultMargin">0 0 0 0</Thickness>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
     <Style
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
@@ -187,5 +187,29 @@
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#c2c2c2" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#3b3b3b" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#c2c2c2" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#7e7e7e" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#fa7941" />
     </Style>
 </ResourceDictionary>

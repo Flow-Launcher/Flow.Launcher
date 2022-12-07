@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -21,8 +22,10 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
-        public static ImageSource DefaultImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
-        public const int SmallIconSize = 32;
+        public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
+        public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
+        public const int SmallIconSize = 64;
+        public const int FullIconSize = 256;
 
 
         private static readonly string[] ImageExtensions =
@@ -99,6 +102,7 @@ namespace Flow.Launcher.Infrastructure.Image
             Folder,
             Data,
             ImageFile,
+            FullImageFile,
             Error,
             Cache
         }
@@ -111,7 +115,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 if (string.IsNullOrEmpty(path))
                 {
-                    return new ImageResult(DefaultImage, ImageType.Error);
+                    return new ImageResult(MissingImage, ImageType.Error);
                 }
 
                 if (ImageCache.ContainsKey(path, loadFullImage))
@@ -201,6 +205,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     if (loadFullImage)
                     {
                         image = LoadFullImage(path);
+                        type = ImageType.FullImageFile;
                     }
                     else
                     {
@@ -215,7 +220,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 else
                 {
                     type = ImageType.File;
-                    image = GetThumbnail(path, ThumbnailOptions.None);
+                    image = GetThumbnail(path, ThumbnailOptions.None, loadFullImage ? FullIconSize : SmallIconSize);
                 }
             }
             else
@@ -232,12 +237,12 @@ namespace Flow.Launcher.Infrastructure.Image
             return new ImageResult(image, type);
         }
 
-        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly)
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly, int size = SmallIconSize)
         {
             return WindowsThumbnailProvider.GetThumbnail(
                 path,
-                Constant.ThumbnailSize,
-                Constant.ThumbnailSize,
+                size,
+                size,
                 option);
         }
 
@@ -254,6 +259,10 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
+                if (imageResult.ImageType == ImageType.FullImageFile)
+                {
+                    path = $"{path}_{ImageType.FullImageFile}";
+                }
                 if (hash != null)
                 {
 
@@ -263,6 +272,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     }
                     else
                     { // new guid
+
                         GuidToKey[hash] = path;
                     }
                 }
@@ -279,9 +289,33 @@ namespace Flow.Launcher.Infrastructure.Image
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(path);
+            image.UriSource = new Uri(path);            
             image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
+
+            if (image.PixelWidth > 320)
+            {
+                BitmapImage resizedWidth = new BitmapImage();
+                resizedWidth.BeginInit();
+                resizedWidth.CacheOption = BitmapCacheOption.OnLoad;
+                resizedWidth.UriSource = new Uri(path);
+                resizedWidth.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                resizedWidth.DecodePixelWidth = 320;
+                resizedWidth.EndInit();
+
+                if (resizedWidth.PixelHeight > 320)
+                {
+                    BitmapImage resizedHeight = new BitmapImage();
+                    resizedHeight.BeginInit();
+                    resizedHeight.CacheOption = BitmapCacheOption.OnLoad;
+                    resizedHeight.UriSource = new Uri(path);
+                    resizedHeight.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
+                    resizedHeight.DecodePixelHeight = 320;
+                    resizedHeight.EndInit();
+                    return resizedHeight;
+                }
+                return resizedWidth;
+            }
             return image;
         }
     }

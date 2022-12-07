@@ -356,7 +356,23 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle" />
+    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
@@ -384,7 +400,63 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
+    <Style x:Key="BasePreviewBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1,0,0,0" />
+        <Setter Property="BorderBrush" Value="#FFEAEAEA" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0,0,10,10" />
+    </Style>
+    <Style x:Key="BasePreviewGlyph" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="128" />
+        <Setter Property="MaxWidth" Value="128" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="MaxHeight" Value="128" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewGlyphIcon, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}" />
+    <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />
+        <Setter Property="Margin" Value="0,15,0,5" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="Gray" />
+    </Style>
 
+    <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
     <!--  for classic themes  -->
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#555555" />
@@ -431,4 +503,37 @@
         <Setter Property="FontSize" Value="25" />
     </Style>
 
+
+    <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="BasePreviewItemSubTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Margin" Value="0,6,0,10" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="LineHeight" Value="18" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!--  Style for old version themes  -->
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+    </Style>
 </ResourceDictionary>

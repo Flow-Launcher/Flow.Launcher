@@ -3,7 +3,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -207,11 +206,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
+            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo {
+                IsMedia = true,
+                PreviewImagePath = filePath,
+            } : Result.PreviewInfo.Default;
+
             var result = new Result
             {
                 Title = Path.GetFileName(filePath),
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
+                Preview = preview,
                 AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
@@ -266,6 +271,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
             return result;
         }
+
+        public static bool IsMedia(string extension)
+        {
+            if (string.IsNullOrEmpty(extension))
+            { 
+                return false; 
+            }
+            else
+            {
+                return MediaExtensions.Contains(extension.ToLowerInvariant());
+            }
+        }
+
+        public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
     }
 
     public enum ResultType

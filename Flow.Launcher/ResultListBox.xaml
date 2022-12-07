@@ -58,6 +58,7 @@
                             <ColumnDefinition Width="Auto" MinWidth="8" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
+                            x:Name="HotkeyArea"
                             Grid.Column="2"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
@@ -104,6 +105,7 @@
                                     Margin="0,0,0,0"
                                     HorizontalAlignment="Center"
                                     IsHitTestVisible="False"
+                                    RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Image, TargetNullValue={x:Null}}"
                                     Stretch="Uniform"
                                     Visibility="{Binding ShowIcon}">
