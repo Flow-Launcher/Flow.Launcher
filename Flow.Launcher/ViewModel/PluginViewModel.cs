@@ -36,7 +36,7 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (_image == ImageLoader.DefaultImage)
+                if (_image == ImageLoader.MissingImage)
                     LoadIconAsync();
 
                 return _image;
@@ -69,7 +69,7 @@ namespace Flow.Launcher.ViewModel
                         ? new Control()
                         : settingProvider.CreateSettingPanel()
                 : null;
-        private ImageSource _image = ImageLoader.DefaultImage;
+        private ImageSource _image = ImageLoader.MissingImage;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";

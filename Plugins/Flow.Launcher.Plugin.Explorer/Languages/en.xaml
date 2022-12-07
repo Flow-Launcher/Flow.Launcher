@@ -50,7 +50,7 @@
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Window Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>

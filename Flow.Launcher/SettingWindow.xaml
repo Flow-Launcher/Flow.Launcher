@@ -734,6 +734,22 @@
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
+                                    </StackPanel>
+                                    <CheckBox
+                                        IsChecked="{Binding Settings.AlwaysPreview}"
+                                        Style="{DynamicResource SideControlCheckBox}"
+                                        ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe8a1;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
                                     </StackPanel>
