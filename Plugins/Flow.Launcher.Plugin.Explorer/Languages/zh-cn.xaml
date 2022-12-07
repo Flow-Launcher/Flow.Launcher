@@ -56,8 +56,8 @@
     <system:String x:Key="plugin_explorer_plugin_description">利用Windows索引来搜索和管理文件和文件夹。</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以打开目录</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter 以打开所在的文件夹</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
