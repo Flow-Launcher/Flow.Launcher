@@ -3,7 +3,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -275,17 +274,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         public static bool IsMedia(string extension)
         {
-            return extension is ".jpg"
-                or ".png"
-                or ".avi"
-                or ".mkv"
-                or ".bmp"
-                or ".gif"
-                or ".wmv"
-                or ".mp3"
-                or ".flac"
-                or ".mp4";
+            if (string.IsNullOrEmpty(extension))
+            { 
+                return false; 
+            }
+            else
+            {
+                return MediaExtensions.Contains(extension.ToLowerInvariant());
+            }
         }
+
+        public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
     }
 
     public enum ResultType
