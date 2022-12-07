@@ -63,6 +63,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
