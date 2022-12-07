@@ -29,9 +29,7 @@ namespace Flow.Launcher.Plugin.Program
 
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            var status = ViewModel.AddOrUpdate();
-            bool modified = status.Item1;
-            string msg = status.Item2;
+            var (modified, msg) = ViewModel.AddOrUpdate();
             if (modified == false && msg != null)
             {
                 MessageBox.Show(msg);  // Invalid

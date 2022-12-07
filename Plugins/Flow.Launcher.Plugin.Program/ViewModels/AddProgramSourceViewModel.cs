@@ -67,7 +67,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             }
         }
 
-        public (bool, string) AddProgramSource()
+        public (bool modified, string message) AddProgramSource()
         {
             if (!Directory.Exists(Location))
             {
@@ -86,7 +86,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             }
         }
 
-        public (bool, string) UpdateProgramSource()
+        public (bool modified, string message) UpdateProgramSource()
         {
             if (LocationModified)
             {
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             return (StatusModified || LocationModified, null);
         }
 
-        public (bool, string) AddOrUpdate()
+        public (bool modified, string message) AddOrUpdate()
         {
             if (Source == null)
             {
