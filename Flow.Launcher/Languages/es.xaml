@@ -63,6 +63,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
