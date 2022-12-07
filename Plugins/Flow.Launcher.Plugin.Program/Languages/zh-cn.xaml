@@ -37,7 +37,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">请先选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">您确定要删除选定的程序源吗？</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">相同位置存在另一个程序源。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">程序源</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">编辑此程序源的目录和状态。</system:String>
@@ -79,9 +79,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">成功</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">错误</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">成功禁止该程序在搜索结果中显示</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">此应用程序不能作为管理员运行</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">无法运行 {0}</system:String>
 
 </ResourceDictionary>
