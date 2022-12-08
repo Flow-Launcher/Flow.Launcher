@@ -22,7 +22,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Refresca los datos del complemento con nuevo contenido</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Abre la ubicación de los archivos de registro de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Busca actualizaciones de Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Visite la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Accede a la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abre la ubicación donde se almacena la configuración de Flow Launcher</system:String>
 
     <!--  Dialogs  -->

@@ -79,7 +79,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">成功</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">成功禁止该程序在搜索结果中显示</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">此应用程序不能作为管理员运行</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>

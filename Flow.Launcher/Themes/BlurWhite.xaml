@@ -155,4 +155,28 @@
         <Setter Property="Foreground" Value="#000000" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#c6c6c6" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF000000" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#818181" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF000000" />
+    </Style>
 </ResourceDictionary>

@@ -19,4 +19,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Percorso cartella Data</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Aggiungi</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Cancella</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
 </ResourceDictionary>
