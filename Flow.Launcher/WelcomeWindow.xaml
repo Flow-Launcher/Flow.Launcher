@@ -8,12 +8,12 @@
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Name="FlowWelcomeWindow"
     Title="Welcome to Flow Launcher"
-    Activated="OnActivated"
     Width="550"
     Height="650"
-    MouseDown="window_MouseDown"
+    Activated="OnActivated"
     Background="{DynamicResource Color00B}"
     Foreground="{DynamicResource PopupTextColor}"
+    MouseDown="window_MouseDown"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <!--#region TitleBar-->
@@ -48,7 +48,7 @@
                         VerticalAlignment="Center"
                         FontSize="12"
                         Foreground="{DynamicResource Color05B}"
-                        Text="Welcome to Flow Launcher" />
+                        Text="{DynamicResource Welcome_Page1_Title}" />
 
                     <Button
                         Grid.Column="4"
