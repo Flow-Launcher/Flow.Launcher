@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,6 +20,20 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
+using System.Text;
+using DataObject = System.Windows.DataObject;
+using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Windows.Threading;
+using System.Windows.Data;
+using ModernWpf.Controls;
+using System.Drawing;
+using System.Windows.Forms.Design.Behavior;
+using System.Security.Cryptography;
+using System.Runtime.CompilerServices;
+using Microsoft.VisualBasic.Devices;
+using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
 
 namespace Flow.Launcher
 {
@@ -43,8 +57,9 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
+            
             InitializeComponent();
-            InitializePosition();
+            InitializePosition();            
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -52,6 +67,7 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
+        
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -89,10 +105,11 @@ namespace Flow.Launcher
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            InitializePosition();
+            PreviewReset();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
-
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -106,8 +123,8 @@ namespace Flow.Launcher
                                     animationSound.Position = TimeSpan.Zero;
                                     animationSound.Play();
                                 }
-                                
                                 UpdatePosition();
+                                PreviewReset();
                                 Activate();
                                 QueryTextBox.Focus();
                                 _settings.ActivateTimes++;
@@ -136,22 +153,20 @@ namespace Flow.Launcher
                         }
                     case nameof(MainViewModel.ProgressBarVisibility):
                         {
-                            Dispatcher.Invoke(async () =>
+                            Dispatcher.Invoke(() =>
                             {
                                 if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
                                 {
-                                    await Task.Delay(50);
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
                                 else if (_viewModel.MainWindowVisibilityStatus &&
-                                         isProgressBarStoryboardPaused)
+                                            isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
-                            }, System.Windows.Threading.DispatcherPriority.Render);
-
+                            });
                             break;
                         }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
@@ -161,6 +176,7 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
+
                 }
             };
             _settings.PropertyChanged += (o, e) =>
@@ -176,31 +192,52 @@ namespace Flow.Launcher
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
                         break;
+                    case nameof(Settings.WindowLeft):
+                        Left = _settings.WindowLeft;
+                        break;
+                    case nameof(Settings.WindowTop):
+                        Top = _settings.WindowTop;
+                        break;
                 }
             };
         }
 
         private void InitializePosition()
         {
-            if (_settings.RememberLastLaunchLocation)
+            switch (_settings.SearchWindowPosition)
             {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
-            }
-            else
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
+                case SearchWindowPositions.RememberLastLaunchLocation:
+                    Top = _settings.WindowTop;
+                    Left = _settings.WindowLeft;
+                    break;
+                case SearchWindowPositions.MouseScreenCenter:
+                    Left = HorizonCenter();
+                    Top = VerticalCenter();
+                    break;
+                case SearchWindowPositions.MouseScreenCenterTop:
+                    Left = HorizonCenter();
+                    Top = 10;
+                    break;
+                case SearchWindowPositions.MouseScreenLeftTop:
+                    Left = 10;
+                    Top = 10;
+                    break;
+                case SearchWindowPositions.MouseScreenRightTop:
+                    Left = HorizonRight();
+                    Top = 10;
+                    break;
             }
         }
 
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
-            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
             ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
             ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+
         }
 
         private void InitializeNotifyIcon()
@@ -211,38 +248,52 @@ namespace Flow.Launcher
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
+
             contextMenu = new ContextMenu();
 
-            var header = new MenuItem
-            {
-                Header = "Flow Launcher",
-                IsEnabled = false
-            };
+            var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +_settings.Hotkey + ")"
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
+            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode")
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
+            var positionreset = new MenuItem
+            {
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
+            };
+            var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
+            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit")
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => ToggleGameMode();
+            positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
-            contextMenu.Items.Add(header);
-            contextMenu.Items.Add(open);
+
             gamemode.ToolTip = InternationalizationManager.Instance.GetTranslation("GameModeToolTip");
+            positionreset.ToolTip = InternationalizationManager.Instance.GetTranslation("PositionResetToolTip");
+
+            contextMenu.Items.Add(open);
             contextMenu.Items.Add(gamemode);
+            contextMenu.Items.Add(positionreset);
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
@@ -289,10 +340,17 @@ namespace Flow.Launcher
                 _viewModel.GameModeStatus = true;
             }
         }
+        private async void PositionReset()
+        {
+           _viewModel.Show();
+           await Task.Delay(300); // If don't give a time, Positioning will be weird.
+           Left = HorizonCenter();
+           Top = VerticalCenter();
+        }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
-                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
@@ -310,11 +368,14 @@ namespace Flow.Launcher
 
             _animating = true;
             UpdatePosition();
-            Storyboard sb = new Storyboard();
+
+            Storyboard windowsb = new Storyboard();
+            Storyboard clocksb = new Storyboard();
             Storyboard iconsb = new Storyboard();
-            CircleEase easing = new CircleEase();  // or whatever easing class you want
+            CircleEase easing = new CircleEase();
             easing.EasingMode = EasingMode.EaseInOut;
-            var da = new DoubleAnimation
+
+            var WindowOpacity = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
@@ -322,60 +383,81 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.Stop
             };
 
-            var da2 = new DoubleAnimation
+            var WindowMotion = new DoubleAnimation
             {
                 From = Top + 10,
                 To = Top,
                 Duration = TimeSpan.FromSeconds(0.25),
                 FillBehavior = FillBehavior.Stop
             };
-                var da3 = new DoubleAnimation
-                {
+            var IconMotion = new DoubleAnimation
+            {
                     From = 12,
                     To = 0,
                     EasingFunction = easing,
                     Duration = TimeSpan.FromSeconds(0.36),
                     FillBehavior = FillBehavior.Stop
-                };
-            Storyboard.SetTarget(da, this);
-            Storyboard.SetTargetProperty(da, new PropertyPath(Window.OpacityProperty));
-            Storyboard.SetTargetProperty(da2, new PropertyPath(Window.TopProperty));
-            Storyboard.SetTargetProperty(da3, new PropertyPath(TopProperty));
-            sb.Children.Add(da);
-            sb.Children.Add(da2);
-            iconsb.Children.Add(da3);
-            sb.Completed += (_, _) => _animating = false;
+            };
+
+            var ClockOpacity = new DoubleAnimation
+            {
+                From = 0,
+                To = 1,
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+            double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
+            var IconOpacity = new DoubleAnimation
+            {
+                From = 0,
+                To = TargetIconOpacity,
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            double right = ClockPanel.Margin.Right;
+            var thicknessAnimation = new ThicknessAnimation
+            {
+                From = new Thickness(0, 12, right, 0),
+                To = new Thickness(0, 0, right, 0),
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
+            };
+
+            Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
+            Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
+            Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
+            Storyboard.SetTarget(WindowOpacity, this);
+            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
+            Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
+
+            clocksb.Children.Add(thicknessAnimation);
+            clocksb.Children.Add(ClockOpacity);
+            windowsb.Children.Add(WindowOpacity);
+            windowsb.Children.Add(WindowMotion);
+            iconsb.Children.Add(IconMotion);
+            iconsb.Children.Add(IconOpacity);
+
+            windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+
+            if (QueryTextBox.Text.Length == 0)
+            {
+                clocksb.Begin(ClockPanel);
+            }
             iconsb.Begin(SearchIcon);
-            sb.Begin(FlowMainWindow);
+            windowsb.Begin(FlowMainWindow);
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();
-        }
-
-        private void OnPreviewMouseButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (sender != null && e.OriginalSource != null)
-            {
-                var r = (ResultListBox)sender;
-                var d = (DependencyObject)e.OriginalSource;
-                var item = ItemsControl.ContainerFromElement(r, d) as ListBoxItem;
-                var result = (ResultViewModel)item?.DataContext;
-                if (result != null)
-                {
-                    if (e.ChangedButton == MouseButton.Left)
-                    {
-                        _viewModel.OpenResultCommand.Execute(null);
-                    }
-                    else if (e.ChangedButton == MouseButton.Right)
-                    {
-                        _viewModel.LoadContextMenuCommand.Execute(null);
-                    }
-                }
-            }
         }
 
         private void OnPreviewDragOver(object sender, DragEventArgs e)
@@ -396,6 +478,8 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
+            _settings.WindowLeft = Left;
+            _settings.WindowTop = Top;
             //This condition stops extra hide call when animator is on, 
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -417,24 +501,14 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-
-            if (_settings.RememberLastLaunchLocation)
-            {
-                Left = _settings.WindowLeft;
-                Top = _settings.WindowTop;
-            }
-            else
-            {
-                Left = WindowLeft();
-                Top = WindowTop();
-            }
+            InitializePosition();
         }
 
         private void OnLocationChanged(object sender, EventArgs e)
         {
             if (_animating)
                 return;
-            if (_settings.RememberLastLaunchLocation)
+            if (_settings.SearchWindowPosition == SearchWindowPositions.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -453,8 +527,8 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
         }
-
-        public double WindowLeft()
+        
+        public double HorizonCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
@@ -463,7 +537,7 @@ namespace Flow.Launcher
             return left;
         }
 
-        public double WindowTop()
+        public double VerticalCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
@@ -472,12 +546,22 @@ namespace Flow.Launcher
             return top;
         }
 
+        public double HorizonRight()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - ActualWidth) - 10;
+            return left;
+        }
+
         /// <summary>
         /// Register up and down key
         /// todo: any way to put this in xaml ?
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
+            var specialKeyState = GlobalHotkey.CheckModifiers();
             switch (e.Key)
             {
                 case Key.Down:
@@ -512,15 +596,21 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
+                case Key.F12:
+                    if (specialKeyState.CtrlPressed)
+                    {
+                        ToggleGameMode();
+                    }
+                    break;
                 case Key.Back:
-                    var specialKeyState = GlobalHotkey.CheckModifiers();
                     if (specialKeyState.CtrlPressed)
                     {
                         if (_viewModel.SelectedIsFromQueryResults()
+                            && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
                             var queryWithoutActionKeyword = 
-                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins).Search;
+                                QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins)?.Search;
                             
                             if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
                             {
@@ -530,15 +620,50 @@ namespace Flow.Launcher
                         }
                     }
                     break;
+                case Key.F1:
+                    PreviewToggle();
+                    e.Handled = true;
+                    break;
+
                 default:
                     break;
 
             }
         }
 
+        public void PreviewReset()
+        {
+            if (_settings.AlwaysPreview == true)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                Preview.Visibility = Visibility.Collapsed;
+            }
+        }
+        public void PreviewToggle()
+        {
+
+            if (Preview.Visibility == Visibility.Collapsed)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                Preview.Visibility = Visibility.Collapsed;
+            }
+        }
+
         private void MoveQueryTextToEnd()
         {
-            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
+            // QueryTextBox seems to be update with a DispatcherPriority as low as ContextIdle.
+            // To ensure QueryTextBox is up to date with QueryText from the View, we need to Dispatch with such a priority
+            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length, System.Windows.Threading.DispatcherPriority.ContextIdle);
         }
 
         public void InitializeColorScheme()
@@ -550,6 +675,15 @@ namespace Flow.Launcher
             else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+            }
+        }
+
+        private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(_viewModel.QueryText != QueryTextBox.Text)
+            {
+                BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+                be.UpdateSource();
             }
         }
     }

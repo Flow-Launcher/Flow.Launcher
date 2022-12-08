@@ -5,12 +5,13 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="{DynamicResource flowlauncher_plugin_program_directory}"
-    Width="400"
+    Width="Auto"
+    Height="276"
     Background="{DynamicResource PopuBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
-    SizeToContent="Height"
-    WindowStartupLocation="CenterScreen"
-    mc:Ignorable="d">
+    ResizeMode="NoResize"
+    SizeToContent="Width"
+    WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -19,7 +20,6 @@
             <RowDefinition />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
-
         <StackPanel Grid.Row="0">
             <StackPanel>
                 <Grid>
@@ -53,34 +53,80 @@
                     </Button>
                 </Grid>
             </StackPanel>
-            <StackPanel Margin="26,12,26,0">
-                <StackPanel Margin="0,0,0,12">
+            <StackPanel Margin="26,0,26,0">
+                <StackPanel Grid.Row="0" Margin="0,0,0,12">
                     <TextBlock
                         Grid.Column="0"
                         Margin="0,0,0,0"
-                        FontFamily="Segoe UI"
                         FontSize="20"
                         FontWeight="SemiBold"
-                        Text="{DynamicResource flowlauncher_plugin_program_directory}"
+                        Text="{DynamicResource flowlauncher_plugin_program_edit_program_source_title}"
                         TextAlignment="Left" />
                 </StackPanel>
-                <StackPanel Margin="0,0,0,10" Orientation="Horizontal">
-                    <TextBox
-                        Name="Directory"
-                        Width="268"
-                        Margin="0,7"
-                        VerticalAlignment="Center" />
-                    <Button
-                        Width="70"
-                        Margin="10"
-                        HorizontalAlignment="Right"
-                        Click="BrowseButton_Click"
-                        Content="{DynamicResource flowlauncher_plugin_program_browse}" />
+                <StackPanel>
+                    <TextBlock
+                        FontSize="14"
+                        Text="{DynamicResource flowlauncher_plugin_program_edit_program_source_tips}"
+                        TextAlignment="Left"
+                        TextWrapping="WrapWithOverflow" />
+                </StackPanel>
+
+                <StackPanel Margin="0,10,10,0" Orientation="Horizontal">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource flowlauncher_plugin_program_directory}" />
+                        <DockPanel
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            LastChildFill="True">
+                            <Button
+                                MinWidth="70"
+                                HorizontalAlignment="Stretch"
+                                Click="BrowseButton_Click"
+                                Content="{DynamicResource flowlauncher_plugin_program_browse}"
+                                DockPanel.Dock="Right" />
+                            <TextBox
+                                Name="Directory"
+                                MinWidth="300"
+                                Margin="10"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center" />
+                        </DockPanel>
+                        <TextBlock
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Margin="10"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Text="{DynamicResource flowlauncher_plugin_program_enabled}" />
+                        <CheckBox
+                            x:Name="Chkbox"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10,0"
+                            VerticalAlignment="Center" />
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
         <Border
             Grid.Row="1"
+            Margin="0,14,0,0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0">
@@ -88,19 +134,17 @@
                 <Button
                     x:Name="btnCancel"
                     MinWidth="140"
-                    Margin="0,0,5,0"
+                    Margin="10,0,5,0"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource cancel}" />
-
                 <Button
+                    x:Name="btnAdd"
                     MinWidth="140"
-                    Margin="5,0,0,0"
-                    HorizontalAlignment="Right"
-                    Click="ButtonAdd_OnClick"
+                    Margin="5,0,10,0"
+                    Click="BtnAdd_OnClick"
                     Content="{DynamicResource flowlauncher_plugin_program_update}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
     </Grid>
-
 </Window>

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
@@ -74,7 +74,7 @@ namespace Flow.Launcher
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePluginsAsync(API);
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -104,14 +104,22 @@ namespace Flow.Launcher
             });
         }
 
-
         private void AutoStartup()
         {
-            if (_settings.StartFlowLauncherOnSystemStartup)
+            // we try to enable auto-startup on first launch, or reenable if it was removed
+            // but the user still has the setting set
+            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
-                if (!SettingWindow.StartupSet())
+                try
                 {
-                    SettingWindow.SetStartup();
+                    Helper.AutoStartup.Enable();
+                }
+                catch (Exception e)
+                {
+                    // but if it fails (permissions, etc) then don't keep retrying
+                    // this also gives the user a visual indication in the Settings widget
+                    _settings.StartFlowLauncherOnSystemStartup = false;
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
@@ -175,7 +183,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Show();
+            _mainVM.Show();
         }
     }
 }

@@ -18,6 +18,18 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
         public static void Init(IPublicAPI api) => _api = api;
 
+        private static List<Result> GetDefaultReuslts(in IEnumerable<WindowsSetting> list,
+            string windowsSettingIconPath,
+            string controlPanelIconPath)
+        {
+            return list.Select(entry =>
+            {
+                var result = NewSettingResult(100, entry.Type, windowsSettingIconPath, controlPanelIconPath, entry);
+                AddOptionalToolTip(entry, result);
+                return result;
+            }).ToList();
+        }
+
         /// <summary>
         /// Return a list with <see cref="Result"/>s, based on the given list.
         /// </summary>
@@ -31,11 +43,19 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             string windowsSettingIconPath,
             string controlPanelIconPath)
         {
+            if (string.IsNullOrWhiteSpace(query.Search))
+            {
+                return GetDefaultReuslts(list, windowsSettingIconPath, controlPanelIconPath);
+            }
+
             var resultList = new List<Result>();
+
             foreach (var entry in list)
             {
-                const int highScore = 20;
-                const int midScore = 10;
+                // Adjust the score to lower the order of many irrelevant matches from area strings
+                // that may only be for description.
+                const int nonNameMatchScoreAdj = 10;
+
 
                 Result? result;
                 Debug.Assert(_api != null, nameof(_api) + " != null");
@@ -44,7 +64,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
                 if (nameMatch.IsSearchPrecisionScoreMet())
                 {
-                    var settingResult = NewSettingResult(nameMatch.Score + highScore, entry.Type);
+                    var settingResult = NewSettingResult(nameMatch.Score, entry.Type, windowsSettingIconPath, controlPanelIconPath, entry);
                     settingResult.TitleHighlightData = nameMatch.MatchData;
                     result = settingResult;
                 }
@@ -53,7 +73,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                     var areaMatch = _api.FuzzySearch(query.Search, entry.Area);
                     if (areaMatch.IsSearchPrecisionScoreMet())
                     {
-                        var settingResult = NewSettingResult(areaMatch.Score + midScore, entry.Type);
+                        var settingResult = NewSettingResult(areaMatch.Score - nonNameMatchScoreAdj, entry.Type, windowsSettingIconPath, controlPanelIconPath, entry);
                         result = settingResult;
                     }
                     else
@@ -61,7 +81,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                         result = entry.AltNames?
                             .Select(altName => _api.FuzzySearch(query.Search, altName))
                             .Where(match => match.IsSearchPrecisionScoreMet())
-                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score + midScore, entry.Type))
+                            .Select(altNameMatch => NewSettingResult(altNameMatch.Score - nonNameMatchScoreAdj, entry.Type, windowsSettingIconPath, controlPanelIconPath, entry))
                             .FirstOrDefault();
                     }
 
@@ -75,7 +95,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                                 .SelectMany(x => x)
                                 .Contains(x, StringComparer.CurrentCultureIgnoreCase))
                         )
-                            result = NewSettingResult(midScore, entry.Type);
+                            result = NewSettingResult(nonNameMatchScoreAdj, entry.Type, windowsSettingIconPath, controlPanelIconPath, entry);
                     }
                 }
 
@@ -85,24 +105,27 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
                 AddOptionalToolTip(entry, result);
 
                 resultList.Add(result);
-
-                Result NewSettingResult(int score, string type) => new()
-                {
-                    Action = _ => DoOpenSettingsAction(entry),
-                    IcoPath = type == "AppSettingsApp" ? windowsSettingIconPath : controlPanelIconPath,
-                    SubTitle = GetSubtitle(entry.Area, type),
-                    Title = entry.Name + entry.glyph,
-                    ContextData = entry,
-                    Score = score
-                };
             }
 
             return resultList;
         }
 
+        private const int TaskLinkScorePanelty = 50;
+
+        private static Result NewSettingResult(int score, string type, string windowsSettingIconPath, string controlPanelIconPath, WindowsSetting entry) => new()
+        {
+            Action = _ => DoOpenSettingsAction(entry),
+            IcoPath = type == "AppSettingsApp" ? windowsSettingIconPath : controlPanelIconPath,
+            Glyph = entry.IconGlyph,
+            SubTitle = GetSubtitle(entry.Area, type),
+            Title = entry.Name,
+            ContextData = entry,
+            Score = score - (type == "TaskLink" ? TaskLinkScorePanelty : 0),
+        };
+
         private static string GetSubtitle(string section, string entryType)
         {
-            var settingType = entryType == "AppSettingsApp" ? "System settings" : "Control Panel";
+            var settingType = entryType == "AppSettingsApp" ? Resources.AppSettingsApp : Resources.AppControlPanel;
 
             return $"{settingType} > {section}";
         }
@@ -115,8 +138,8 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         private static void AddOptionalToolTip(WindowsSetting entry, Result result)
         {
             var toolTipText = new StringBuilder();
-            
-            var settingType = entry.Type == "AppSettingsApp" ? "System settings" : "Control Panel";
+
+            var settingType = entry.Type == "AppSettingsApp" ? Resources.AppSettingsApp : Resources.AppControlPanel;
 
             toolTipText.AppendLine($"{Resources.Application}: {settingType}");
             toolTipText.AppendLine($"{Resources.Area}: {entry.Area}");

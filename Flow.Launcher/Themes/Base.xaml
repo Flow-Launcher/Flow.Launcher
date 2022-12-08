@@ -1,32 +1,56 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:system="clr-namespace:System;assembly=mscorlib"
-                    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
+    <CornerRadius x:Key="ItemRadius">0</CornerRadius>
+    <Thickness x:Key="ItemMargin">0</Thickness>
+    <Thickness x:Key="ResultMargin">0</Thickness>
+    <!--  Further font customisations are dynamically loaded in Theme.cs  -->
 
-    <!-- Further font customisations are dynamically loaded in Theme.cs -->
+    <Style x:Key="BaseBulletStyle" TargetType="{x:Type Border}" />
+    <Style
+        x:Key="BulletStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+    <Style
+        x:Key="ItemBulletSelectedStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
-        <Setter Property="Margin" Value="16 7 0 7" />
-        <Setter Property="Padding" Value="0 4 68 0" />
-        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Margin" Value="16,7,0,7" />
+        <Setter Property="Padding" Value="0,4,68,0" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"
-                                      Background="{TemplateBinding Background}">
+                    <Border
+                        x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Background="{TemplateBinding Background}"
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden">
                             <ScrollViewer.ContentTemplate>
                                 <DataTemplate>
-                                    <Grid Background="{Binding Background, ElementName=PART_ContentHost}" RenderOptions.ClearTypeHint="Enabled">
-                                        <ContentPresenter Content="{Binding Path=Content, ElementName=PART_ContentHost}"></ContentPresenter>
+                                    <Grid Background="{Binding Background, ElementName=PART_ContentHost}">
+                                        <ContentPresenter Content="{Binding Path=Content, ElementName=PART_ContentHost}" />
                                     </Grid>
                                 </DataTemplate>
                             </ScrollViewer.ContentTemplate>
@@ -37,47 +61,142 @@
         </Setter>
     </Style>
 
-    <!-- Further font customisations are dynamically loaded in Theme.cs -->
-    <Style x:Key="BaseQuerySuggestionBoxStyle" BasedOn="{StaticResource BaseQueryBoxStyle}" TargetType="{x:Type TextBox}">
+    <!--  Further font customisations are dynamically loaded in Theme.cs  -->
+    <Style x:Key="BaseQueryBoxBgStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="0,2,0,0" />
+    </Style>
+    <Style
+        x:Key="QueryBoxBgStyle"
+        BasedOn="{StaticResource BaseQueryBoxBgStyle}"
+        TargetType="{x:Type Border}" />
+    <Style
+        x:Key="BaseQuerySuggestionBoxStyle"
+        BasedOn="{StaticResource BaseQueryBoxStyle}"
+        TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="Height" Value="48" />
-        <Setter Property="Margin" Value="16 7 0 7" />
+        <Setter Property="Margin" Value="16,7,0,7" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="0 4 68 0" />
+        <Setter Property="Padding" Value="0,4,68,0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Background" Value="#2F2F2F"></Setter>
-        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="600" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="5" />
     </Style>
-    
+
     <Style x:Key="BasePendingLineStyle" TargetType="{x:Type Line}">
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
-    
-    <!-- Item Style -->
+    <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
+
+    <Style x:Key="BaseClockPanel" TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="0,0,66,0" />
+        <Setter Property="Visibility" Value="Collapsed" />
+    </Style>
+    <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DateBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="BaseDateBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#C6C6C6" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#C6C6C6" />
+    </Style>
+    <Style
+        x:Key="ClockPanel"
+        BasedOn="{StaticResource BaseClockPanel}"
+        TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.0"
+                                To="1"
+                                Duration="0:0:0.25" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
+        </Style.Triggers>
+
+    </Style>
+
+    <!--  Item Style  -->
+    <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Foreground" Value="#26a0da " />
+    </Style>
+
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Medium" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
-    <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}" >
+    <Style x:Key="BaseItemSubTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
         <Setter Property="FontSize" Value="13" />
         <Setter Property="FontWeight" Value="Normal" />
         <Style.Triggers>
@@ -89,9 +208,8 @@
     <Style x:Key="BaseItemNumberStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="3 0 0 0" />
+        <Setter Property="Margin" Value="3,0,0,0" />
         <Setter Property="FontSize" Value="22" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
     <Style x:Key="BaseGlyphStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
@@ -99,34 +217,39 @@
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="25" />
         <Setter Property="Height" Value="25" />
-        <Setter Property="FontSize" Value="25"/>
+        <Setter Property="FontSize" Value="25" />
     </Style>
-    <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
+    <Style x:Key="BaseGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+    <Style x:Key="BaseItemTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
     </Style>
-    <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}" >
+    <Style x:Key="BaseItemSubTitleSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#D9D9D4" />
         <Setter Property="FontSize" Value="13" />
-        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled"/>
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=SubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Height" Value="0" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" >
-    </Style>
+    <Style x:Key="BaseItemImageSelectedStyle" TargetType="{x:Type Image}" />
 
     <Style x:Key="BaseListboxStyle" TargetType="{x:Type ListBox}">
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
-        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="Margin" Value="0 0 0 0" />
-        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
@@ -135,12 +258,12 @@
                             <Style TargetType="ScrollViewer">
                                 <Style.Triggers>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
-                                        <Setter Property="Margin" Value="0 0 0 0" />
-                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                        <Setter Property="Margin" Value="0,0,0,0" />
+                                        <Setter Property="Padding" Value="0,0,0,0" />
                                     </Trigger>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
-                                        <Setter Property="Margin" Value="0 0 0 0" />
-                                        <Setter Property="Padding" Value="0 0 0 0" />
+                                        <Setter Property="Margin" Value="0,0,0,0" />
+                                        <Setter Property="Padding" Value="0,0,0,0" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -152,7 +275,7 @@
         </Setter>
     </Style>
 
-    <!-- ScrollViewer Style -->
+    <!--  ScrollViewer Style  -->
     <ControlTemplate x:Key="ScrollViewerControlTemplate" TargetType="{x:Type ScrollViewer}">
         <Grid x:Name="Grid" Background="{TemplateBinding Background}">
             <Grid.ColumnDefinitions>
@@ -160,44 +283,50 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <!--content in the left of ScrollViewer, just default-->
-            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter"
-                                        CanContentScroll="{TemplateBinding CanContentScroll}"
-                                        CanHorizontallyScroll="False"
-                                        CanVerticallyScroll="False"
-                                        ContentTemplate="{TemplateBinding ContentTemplate}"
-                                        Content="{TemplateBinding Content}"
-                                        Grid.Column="0"
-                                        Margin="0"
-                                        Grid.Row="0" />
+            <!--  content in the left of ScrollViewer, just default  -->
+            <ScrollContentPresenter
+                x:Name="PART_ScrollContentPresenter"
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0"
+                CanContentScroll="{TemplateBinding CanContentScroll}"
+                CanHorizontallyScroll="False"
+                CanVerticallyScroll="False"
+                Content="{TemplateBinding Content}"
+                ContentTemplate="{TemplateBinding ContentTemplate}" />
 
-            <!--Scrollbar in thr rigth of ScrollViewer-->
-            <ScrollBar x:Name="PART_VerticalScrollBar"
-                           AutomationProperties.AutomationId="VerticalScrollBar"
-                           Cursor="Arrow"
-                           Grid.Column="0"
-                           HorizontalAlignment="Right"
-                           Margin="0 0 0 0"
-                           Maximum="{TemplateBinding ScrollableHeight}"
-                           Minimum="0"
-                           Grid.Row="0"
-                           Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
-                           Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}"
-                           ViewportSize="{TemplateBinding ViewportHeight}"
-                           Style="{DynamicResource ScrollBarStyle}" />
+            <!--  Scrollbar in thr rigth of ScrollViewer  -->
+            <ScrollBar
+                x:Name="PART_VerticalScrollBar"
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="0,0,0,0"
+                HorizontalAlignment="Right"
+                AutomationProperties.AutomationId="VerticalScrollBar"
+                Cursor="Arrow"
+                Maximum="{TemplateBinding ScrollableHeight}"
+                Minimum="0"
+                Style="{DynamicResource ScrollBarStyle}"
+                ViewportSize="{TemplateBinding ViewportHeight}"
+                Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}"
+                Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" />
         </Grid>
     </ControlTemplate>
 
-    <!-- button style in the middle of the scrollbar -->
+    <!--  button style in the middle of the scrollbar  -->
     <Style x:Key="BaseThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-        <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="IsTabStop" Value="false"/>
-        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="OverridesDefaultStyle" Value="true" />
+        <Setter Property="IsTabStop" Value="false" />
+        <Setter Property="Focusable" Value="false" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Border CornerRadius="2" DockPanel.Dock="Right" Background="#898989" BorderBrush="Transparent" />
+                    <Border
+                        Background="#898989"
+                        BorderBrush="Transparent"
+                        CornerRadius="2"
+                        DockPanel.Dock="Right" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -207,16 +336,19 @@
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="false" />
         <Setter Property="Background" Value="Black" />
-        <!-- must set min width -->
-        <Setter Property="MinWidth" Value="0"/>
-        <Setter Property="Width" Value="5"/>
+        <!--  must set min width  -->
+        <Setter Property="MinWidth" Value="0" />
+        <Setter Property="Width" Value="5" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
                     <DockPanel>
-                        <Track x:Name="PART_Track" IsDirectionReversed="true" DockPanel.Dock="Right">
+                        <Track
+                            x:Name="PART_Track"
+                            DockPanel.Dock="Right"
+                            IsDirectionReversed="true">
                             <Track.Thumb>
-                                <Thumb Style="{DynamicResource ThumbStyle}"/>
+                                <Thumb Style="{DynamicResource ThumbStyle}" />
                             </Track.Thumb>
                         </Track>
                     </DockPanel>
@@ -225,6 +357,21 @@
         </Setter>
     </Style>
     <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
     </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
@@ -249,12 +396,68 @@
     <Style x:Key="BaseSearchIconPosition" TargetType="{x:Type Canvas}">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0 2 18 0" />
+        <Setter Property="Margin" Value="0,2,18,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-    
-    <!--for classic themes-->
+    <Style x:Key="BasePreviewBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1,0,0,0" />
+        <Setter Property="BorderBrush" Value="#FFEAEAEA" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0,0,10,10" />
+    </Style>
+    <Style x:Key="BasePreviewGlyph" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="90" />
+        <Setter Property="MaxWidth" Value="96" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="MaxHeight" Value="96" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewGlyphIcon, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}" />
+    <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />
+        <Setter Property="Margin" Value="0,15,0,5" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="Gray" />
+    </Style>
+
+    <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
+    <!--  for classic themes  -->
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#555555" />
         <Setter Property="Width" Value="32" />
@@ -263,19 +466,74 @@
     <Style x:Key="SearchIconPosition" TargetType="{x:Type Canvas}">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0 2 18 0" />
+        <Setter Property="Margin" Value="0,2,18,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
-    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource BaseItemHotkeyStyle}">
+    <Style
+        x:Key="ClockPanelPosition"
+        BasedOn="{StaticResource BaseClockPanelPosition}"
+        TargetType="{x:Type Canvas}">
+        <Setter Property="Margin" Value="0,2,66,0" />
+    </Style>
+    <Style
+        x:Key="ItemHotkeyStyle"
+        BasedOn="{StaticResource BaseItemHotkeyStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
     </Style>
-    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}"  BasedOn="{StaticResource BaseItemHotkeySelecetedStyle}">
+    <Style
+        x:Key="ItemHotkeySelectedStyle"
+        BasedOn="{StaticResource BaseItemHotkeySelecetedStyle}"
+        TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style
+        x:Key="ItemGlyphSelectedStyle"
+        BasedOn="{StaticResource BaseGlyphSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+
+
+    <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="BasePreviewItemSubTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Margin" Value="0,6,0,10" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="LineHeight" Value="18" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!--  Style for old version themes  -->
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
 </ResourceDictionary>
-    

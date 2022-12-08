@@ -64,7 +64,6 @@
                     <TextBlock
                         Grid.Column="0"
                         Margin="0,0,0,0"
-                        FontFamily="Segoe UI"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource customeQueryHotkeyTitle}"
@@ -76,10 +75,14 @@
                         Text="{DynamicResource customeQueryHotkeyTips}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
+                    <Image
+                        Width="478"
+                        Margin="0,20,0,0"
+                        Source="/Images/illustration_01.png" />
                 </StackPanel>
 
                 <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                    <Grid Width="470">
+                    <Grid Width="478">
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
@@ -132,6 +135,7 @@
                             LastChildFill="True">
                             <Button
                                 x:Name="btnTestActionKeyword"
+                                Margin="0,0,10,0"
                                 Padding="10,5,10,5"
                                 Click="BtnTestActionKeyword_OnClick"
                                 Content="{DynamicResource preview}"

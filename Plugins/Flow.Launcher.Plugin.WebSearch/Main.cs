@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -49,9 +49,10 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var title = keyword;
                 string subtitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_search") + " " + searchSource.Title;
 
-                //Action Keyword match apear on top
+                // Action Keyword match apear on top
                 var score = searchSource.ActionKeyword == SearchSourceGlobalPluginWildCardSign ? scoreStandard : scoreStandard + 1;
 
+                // This populates the associated action keyword search entry
                 if (string.IsNullOrEmpty(keyword))
                 {
                     var result = new Result
@@ -61,6 +62,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                         IcoPath = searchSource.IconPath,
                         Score = score
                     };
+
                     results.Add(result);
                 }
                 else
@@ -93,7 +95,6 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 if (token.IsCancellationRequested)
                     return null;
-
             }
 
             return results;

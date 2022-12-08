@@ -27,7 +27,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 
-## 🎉 New Features in 1.9 
+## 🎉 New Features in 1.9
 
 ![screenshot](https://user-images.githubusercontent.com/6903107/144855345-45535bc7-7777-4c5a-b8d9-d6ce8adc5e84.png)
 
@@ -38,10 +38,13 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 <h4 align="center">
-  <a href="#Getting-Started">Getting Started</a> •  <a href="#Features">Features</a> • <a href="#Plugins">Plugins</a> •
-       <a href="#Hotkeys">Hotkeys</a> •
-  <a href="#QuestionsSuggestions">Questions/Suggestions</a> •
-  <a href="#Development">Development</a> •
+  <a href="#-getting-started">Getting Started</a> •
+  <a href="#-features">Features</a> •
+  <a href="#-plugins">Plugins</a> •
+  <a href="#%EF%B8%8F-hotkeys">Hotkeys</a> •
+  <a href="#sponsors">Sponsors</a> •
+  <a href="#-questionssuggestions">Questions/Suggestions</a> •
+  <a href="#development">Development</a> •
   <a href="https://flowlauncher.com/docs">Docs</a>
 </h4>
 
@@ -51,10 +54,13 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 ### Installation
 
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) | `winget install "Flow Launcher"` | `scoop install Flow-Launcher` |
-| :----------------------------------------------------------: | :----------------------------------------------------------: | :------------------------------: | :------------------------------: |
+| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
 
-> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up. 
+| `winget install "Flow Launcher"` | `scoop install Flow-Launcher` | `choco install Flow-Launcher` |
+| :------------------------------: | :------------------------------: | :------------------------------: |
+
+> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
 And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions" target="_blank">early access version</a>.
 
@@ -67,14 +73,14 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/145332614-74909973-f6eb-47c2-8235-289931e30718.png" width="400">
 
 
-- Search for files or their contents.
+- Search for apps, files or file contents.
 
 <img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
 
 
 - Support search using environment variable paths.
 
-### Web Search & Open URL
+### Web Searches & URLs
 
 <img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
 <img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
@@ -88,14 +94,14 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517557-9b5b82fc-6408-48a0-af59-69b385a0782e.png" width="400">
 
-- Provides System related commands. shutdown, lock, settings, etc.
+- Provides system related commands. shutdown, lock, settings, etc.
 - <a href="#system-command-list">System command list</a>
 
 ### Calculator
 
 <img src="https://user-images.githubusercontent.com/6903107/144517570-f0e62716-3fdf-4f2a-8986-385a3fcd0663.png" width="400">
 
-- Do mathematical calculations and copy the result to clipboard. 
+- Do mathematical calculations and copy the result to clipboard.
 
 ### Shell Command
 
@@ -110,11 +116,11 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Save file or folder locations for quick access.
 
-### Window Setting & Control Panel
+### Windows & Control Panel Settings
 
 <img src="https://user-images.githubusercontent.com/6903107/144982305-42a2f63e-0066-4557-9791-0a1c57495ea7.png" width="400">
 
-- Search within Window Settings & Control Panel.
+- Search for Windows & Control Panel settings.
 
 
 ### Priority
@@ -124,7 +130,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 - Prioritise the order of each plugin's results.
 
-### Customization
+### Customizations
 
 ![Animation5](https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif)
 
@@ -133,27 +139,27 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ![themes](https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png)
 
-- There are various themes and you can make it yourself.
+- There are various themes and you also can make your own.
 
 ### 💬 Language
 
-- Support languages from Chinese to Italian and more.
-- Support Pinyin.
-- Translation support this project in [Crowdin](https://crowdin.com/project/flow-launcher)
+- Supports languages from Chinese to Italian and more.
+- Supports Pinyin search.
+- [Crowdin](https://crowdin.com/project/flow-launcher) support for language translations.
 
 ### Portable
 
 - Fully portable.
 - Type `flow user data` to open your saved user settings folder. They are located at:
   - If using roaming: `%APPDATA%\FlowLauncher`
-  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData` 
+  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData`
   - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
 ### 🎮 Game Mode
 
 <img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
 
-- Suspend the hotkey when you are playing games.
+- Pause hotkey activation when you are playing games.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -164,6 +170,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <p align="center">
 <a href="https://flowlauncher.com/docs/#/develop-dotnet-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870065-4096f233-147c-434e-a3ac-69519582605f.png" width="64"></a>
+<a href="https://github.com/Flow-Launcher/plugin-samples/tree/master/HelloWorldFSharp"><img src="https://user-images.githubusercontent.com/26427004/156536959-dfdc7be8-4b59-4587-9c6a-a297903e4ce1.png" width="64"></a>
 <a href="https://www.flowlauncher.com/docs/#/py-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870066-7599eb15-0333-468e-82e8-4d432ceb5a45.png" width="64"></a>
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870071-d67c736b-0748-428f-a283-14587696dfa3.png" width="64"></a>
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
@@ -192,7 +199,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Github
 <img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
- 
+
 ### Window Walker
 <img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
 
@@ -204,7 +211,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
-- You can view the full plugin list or quickly install a plugin via the Plugin Store menu in Settings
+- You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
 
 - or type `pm` `install`/`uninstall`/`update` + the plugin name in the search window,
 
@@ -258,19 +265,43 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
+## Sponsors
+
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
+  </a>
+  
+  <a href="https://github.com/itsonlyfrans">
+    <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
+  </a>
+</p>
+
+<p align="left">
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
+</p>
+
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## ❔ Questions/Suggestions
 
 Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/q-a) section. **Join our community on [Discord](https://discord.gg/AvgAQgh)!**
 
+<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
+
 ## Development
 
-### Status
+### New changes
 
-Flow is under heavy development, but the code base is stable, so contributions are very welcome. If you would like to help maintain it, please do not hesistate to get in touch.
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current latest release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+
+Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
 ### Contributing
 
-We welcome all contributions. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
+Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
 
 You will find the main goals of flow placed under the [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
@@ -278,8 +309,8 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 5
+- Flow Launcher's target framework is .Net 6
 
-- Install Visual Studio 2019
+- Install Visual Studio 2022
 
-- Install .Net 5 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.103-windows-x64-installer)
+- Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)

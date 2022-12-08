@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure
 
         private List<int> originalIndexs = new List<int>();
         private List<int> translatedIndexs = new List<int>();
-        private int translaedLength = 0;
+        private int translatedLength = 0;
 
         public string key { get; private set; }
 
@@ -32,13 +32,13 @@ namespace Flow.Launcher.Infrastructure
             originalIndexs.Add(originalIndex);
             translatedIndexs.Add(translatedIndex);
             translatedIndexs.Add(translatedIndex + length);
-            translaedLength += length - 1;
+            translatedLength += length - 1;
         }
 
         public int MapToOriginalIndex(int translatedIndex)
         {
             if (translatedIndex > translatedIndexs.Last())
-                return translatedIndex - translaedLength - 1;
+                return translatedIndex - translatedLength - 1;
 
             int lowerBound = 0;
             int upperBound = originalIndexs.Count - 1;
@@ -83,7 +83,7 @@ namespace Flow.Launcher.Infrastructure
                     translatedIndex < translatedIndexs[upperBound * 2])
                 {
                     int indexDef = 0;
-                    
+
                     for (int j = 0; j < upperBound; j++)
                     {
                         indexDef += translatedIndexs[j * 2 + 1] - translatedIndexs[j * 2];
@@ -102,9 +102,24 @@ namespace Flow.Launcher.Infrastructure
         }
     }
 
+    /// <summary>
+    /// Translate a language to English letters using a given rule.
+    /// </summary>
     public interface IAlphabet
     {
+        /// <summary>
+        /// Translate a string to English letters, using a given rule.
+        /// </summary>
+        /// <param name="stringToTranslate">String to translate.</param>
+        /// <returns></returns>
         public (string translation, TranslationMapping map) Translate(string stringToTranslate);
+
+        /// <summary>
+        /// Determine if a string can be translated to English letter with this Alphabet.
+        /// </summary>
+        /// <param name="stringToTranslate">String to translate.</param>
+        /// <returns></returns>
+        public bool CanBeTranslated(string stringToTranslate);
     }
 
     public class PinyinAlphabet : IAlphabet
@@ -119,58 +134,65 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
+        public bool CanBeTranslated(string stringToTranslate)
+        {
+            return WordsHelper.HasChinese(stringToTranslate);
+        }
+
         public (string translation, TranslationMapping map) Translate(string content)
         {
             if (_settings.ShouldUsePinyin)
             {
                 if (!_pinyinCache.ContainsKey(content))
                 {
-                    if (WordsHelper.HasChinese(content))
-                    {
-                        var resultList = WordsHelper.GetPinyinList(content);
-
-                        StringBuilder resultBuilder = new StringBuilder();
-                        TranslationMapping map = new TranslationMapping();
-
-                        bool pre = false;
-
-                        for (int i = 0; i < resultList.Length; i++)
-                        {
-                            if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
-                            {
-                                map.AddNewIndex(i, resultBuilder.Length, resultList[i].Length + 1);
-                                resultBuilder.Append(' ');
-                                resultBuilder.Append(resultList[i]);
-                                pre = true;
-                            }
-                            else
-                            {
-                                if (pre)
-                                {
-                                    pre = false;
-                                    resultBuilder.Append(' ');
-                                }
-
-                                resultBuilder.Append(resultList[i]);
-                            }
-                        }
-
-                        map.endConstruct();
-
-                        var key = resultBuilder.ToString();
-                        map.setKey(key);
-
-                        return _pinyinCache[content] = (key, map);
-                    }
-                    else
-                    {
-                        return (content, null);
-                    }
+                    return BuildCacheFromContent(content);
                 }
                 else
                 {
                     return _pinyinCache[content];
                 }
+            }
+            return (content, null);
+        }
+
+        private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
+        {
+            if (WordsHelper.HasChinese(content))
+            {
+                var resultList = WordsHelper.GetPinyinList(content);
+
+                StringBuilder resultBuilder = new StringBuilder();
+                TranslationMapping map = new TranslationMapping();
+
+                bool pre = false;
+
+                for (int i = 0; i < resultList.Length; i++)
+                {
+                    if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                    {
+                        map.AddNewIndex(i, resultBuilder.Length, resultList[i].Length + 1);
+                        resultBuilder.Append(' ');
+                        resultBuilder.Append(resultList[i]);
+                        pre = true;
+                    }
+                    else
+                    {
+                        if (pre)
+                        {
+                            pre = false;
+                            resultBuilder.Append(' ');
+                        }
+
+                        resultBuilder.Append(resultList[i]);
+                    }
+                }
+
+                map.endConstruct();
+
+                var key = resultBuilder.ToString();
+                map.setKey(key);
+
+                return _pinyinCache[content] = (key, map);
             }
             else
             {

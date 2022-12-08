@@ -2,23 +2,29 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Program setting  -->
+    <system:String x:Key="flowlauncher_plugin_program_reset">Repor predefinições</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Adicionar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Nome</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Ativar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Ativo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Desativar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Localização</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos os programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes">Sufixos</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes">Tipo de ficheiro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">Reindexar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexação</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">Indexar menu Iniciar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_source">Origens de índices</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Opções</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Menu Iniciar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Se ativada, Flow Launcher irá carregar os programas do menu Iniciar</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">Indexar registo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Se ativada, Flow Launcher irá carregar os programas do registo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Se ativa, Flow Launcher irá carregar os programas da variável de ambiente PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar caminho da aplicação</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executásseis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executáveis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Pesquisar na descrição dos programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Se ativada, Flow Launcher irá analisar também a descrição dos programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Sufixos</system:String>
@@ -31,11 +37,30 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Por favor selecione uma origem de programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Tem a certeza de que deseja remover as origens selecionadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Já existe uma origem de programas com esta localização.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">OK</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Flow Launcher apenas irá indexar os ficheiros com os seguintes sufixos (separe cada sufixo com ';')</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Origem de programas</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Editar diretório e estado desta origem de programas.</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_update">Atualizar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">O plugin Programas apenas irá indexar os ficheiros com os sufixos selecionados e os ficheiros .url com os protocolos selecionados.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Sufixos de ficheiros indexados com sucesso</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Não pode indicar sufixos vazios</system:String>
+    <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Os protocolos não podem estar vazios</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">Sufixos de ficheiros</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">Protocolos de URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">Protocolos personalizados</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Sufixos personalizados</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
+        Indique os sufixos dos ficheiros que pretende indexar. Deve separar os sufixos com ';'. (ex.: bat;py;doc)
+    </system:String>
+    <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
+        Indique os protocolos dos ficheiros .url que pretende indexar. Deve separar os protocolos com ';' e terminar com &quot;://&quot;. (ex&gt;ftp://;mailto://)
+    </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Executar com outro utilizador</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Executar como administrador</system:String>
@@ -54,7 +79,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Sucesso</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Erro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Desativou com sucesso a exibição deste programa nas suas consultas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Não é suposto que esta aplicação seja executada como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Não foi possível executar {0}</system:String>
 
 </ResourceDictionary>

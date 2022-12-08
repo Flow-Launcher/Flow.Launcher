@@ -38,9 +38,8 @@
                     FontSize="13"
                     FontWeight="SemiBold"
                     Foreground="{DynamicResource Color05B}"
-                    Visibility="Visible">
-                    Press key
-                </TextBlock>
+                    Text="{DynamicResource flowlauncherPressHotkey}"
+                    Visibility="Visible" />
             </Border>
         </Popup>
 
@@ -49,8 +48,8 @@
             Margin="0,0,18,0"
             VerticalContentAlignment="Center"
             input:InputMethod.IsInputMethodEnabled="False"
+            LostFocus="tbHotkey_LostFocus"
             PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
-            TabIndex="100"
-            LostFocus="tbHotkey_LostFocus"/>
+            TabIndex="100" />
     </Grid>
 </UserControl>

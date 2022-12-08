@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -17,14 +17,17 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
+using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using System.IO;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class MainViewModel : BaseModel, ISavable
+    public partial class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
 
@@ -37,7 +40,6 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
-        internal readonly Settings _settings;
         private readonly History _history;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
@@ -60,12 +62,13 @@ namespace Flow.Launcher.ViewModel
             _queryText = "";
             _lastQuery = new Query();
 
-            _settings = settings;
-            _settings.PropertyChanged += (_, args) =>
+            Settings = settings;
+            Settings.PropertyChanged += (_, args) =>
             {
-                if (args.PropertyName == nameof(Settings.WindowSize))
-                {
-                    OnPropertyChanged(nameof(MainWindowWidth));
+                switch (args.PropertyName) {
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(MainWindowWidth));
+                        break;
                 }
             };
 
@@ -76,14 +79,25 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-            ContextMenu = new ResultsViewModel(_settings);
-            Results = new ResultsViewModel(_settings);
-            History = new ResultsViewModel(_settings);
+
+            ContextMenu = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            Results = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
+            History = new ResultsViewModel(Settings)
+            {
+                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+            };
             _selectedResults = Results;
 
-            InitializeKeyCommands();
+
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
+            RegisterClockAndDateUpdateAsync();
 
             SetOpenResultModifiers();
         }
@@ -154,172 +168,192 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void InitializeKeyCommands()
+        [RelayCommand]
+        private async Task ReloadPluginDataAsync()
         {
-            EscCommand = new RelayCommand(_ =>
+            Hide();
+
+            await PluginManager.ReloadDataAsync().ConfigureAwait(false);
+            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+        }
+        [RelayCommand]
+        private void LoadHistory()
+        {
+            if (SelectedIsFromQueryResults())
             {
-                if (!SelectedIsFromQueryResults())
-                {
-                    SelectedResults = Results;
-                }
-                else
-                {
-                    Hide();
-                }
-            });
-
-            ClearQueryCommand = new RelayCommand(_ =>
+                SelectedResults = History;
+                History.SelectedIndex = _history.Items.Count - 1;
+            }
+            else
             {
-                if (!string.IsNullOrEmpty(QueryText))
-                {
-                    ChangeQueryText(string.Empty);
-
-                    // Push Event to UI SystemQuery has changed
-                    //OnPropertyChanged(nameof(SystemQueryText));
-                }
-            });
-
-            SelectNextItemCommand = new RelayCommand(_ => { SelectedResults.SelectNextResult(); });
-
-            SelectPrevItemCommand = new RelayCommand(_ => { SelectedResults.SelectPrevResult(); });
-
-            SelectNextPageCommand = new RelayCommand(_ => { SelectedResults.SelectNextPage(); });
-
-            SelectPrevPageCommand = new RelayCommand(_ => { SelectedResults.SelectPrevPage(); });
-
-            SelectFirstResultCommand = new RelayCommand(_ => SelectedResults.SelectFirstResult());
-
-            StartHelpCommand = new RelayCommand(_ =>
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void LoadContextMenu()
+        {
+            if (SelectedIsFromQueryResults())
             {
-                PluginManager.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher/wiki/Flow-Launcher/");
-            });
-            OpenSettingCommand = new RelayCommand(_ => { App.API.OpenSettingDialog(); });
-            OpenResultCommand = new RelayCommand(index =>
+                // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
+                // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
+                if (SelectedResults.SelectedItem != null)
+                    SelectedResults = ContextMenu;
+            }
+            else
             {
-                var results = SelectedResults;
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void Backspace(object index)
+        {
+            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
-                if (index != null)
-                {
-                    results.SelectedIndex = int.Parse(index.ToString());
-                }
+            // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
+            var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
 
-                var result = results.SelectedItem?.Result;
-                if (result != null) // SelectedItem returns null if selection is empty.
-                {
-                    bool hideWindow = result.Action != null && result.Action(new ActionContext
-                    {
-                        SpecialKeyState = GlobalHotkey.CheckModifiers()
-                    });
+            var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
 
-                    if (hideWindow)
-                    {
-                        Hide();
-                    }
-
-                    if (SelectedIsFromQueryResults())
-                    {
-                        _userSelectedRecord.Add(result);
-                        _history.Add(result.OriginQuery.RawQuery);
-                    }
-                    else
-                    {
-                        SelectedResults = Results;
-                    }
-                }
-            });
-
-            AutocompleteQueryCommand = new RelayCommand(_ =>
+            ChangeQueryText($"{actionKeyword}{path}");
+        }
+        [RelayCommand]
+        private void AutocompleteQuery()
+        {
+            var result = SelectedResults.SelectedItem?.Result;
+            if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
             {
-                var result = SelectedResults.SelectedItem?.Result;
-                if (result != null && SelectedIsFromQueryResults()) // SelectedItem returns null if selection is empty.
+                var autoCompleteText = result.Title;
+
+                if (!string.IsNullOrEmpty(result.AutoCompleteText))
                 {
-                    var autoCompleteText = result.Title;
-
-                    if (!string.IsNullOrEmpty(result.AutoCompleteText))
-                    {
-                        autoCompleteText = result.AutoCompleteText;
-                    }
-                    else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
-                    {
-                        autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
-                    }
-
-                    var specialKeyState = GlobalHotkey.CheckModifiers();
-                    if (specialKeyState.ShiftPressed)
-                    {
-                        autoCompleteText = result.SubTitle;
-                    }
-
-                    ChangeQueryText(autoCompleteText);
+                    autoCompleteText = result.AutoCompleteText;
                 }
-            });
+                else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
+                {
+                    autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
+                }
 
-            BackspaceCommand = new RelayCommand(index =>
+                var specialKeyState = GlobalHotkey.CheckModifiers();
+                if (specialKeyState.ShiftPressed)
+                {
+                    autoCompleteText = result.SubTitle;
+                }
+
+                ChangeQueryText(autoCompleteText);
+            }
+        }
+        [RelayCommand]
+        private async Task OpenResultAsync(string index)
+        {
+            var results = SelectedResults;
+            if (index is not null)
             {
-                var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
-
-                // GetPreviousExistingDirectory does not require trailing '\', otherwise will return empty string
-                var path = FilesFolders.GetPreviousExistingDirectory((_) => true, query.Search.TrimEnd('\\'));
-
-                var actionKeyword = string.IsNullOrEmpty(query.ActionKeyword) ? string.Empty : $"{query.ActionKeyword} ";
-
-                ChangeQueryText($"{actionKeyword}{path}");
-            });
-
-            LoadContextMenuCommand = new RelayCommand(_ =>
+                results.SelectedIndex = int.Parse(index);
+            }
+            var result = results.SelectedItem?.Result;
+            if (result == null)
             {
-                if (SelectedIsFromQueryResults())
+                return;
+            }
+            var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
-                    // When switch to ContextMenu from QueryResults, but no item being chosen, should do nothing
-                    // i.e. Shift+Enter/Ctrl+O right after Alt + Space should do nothing
-                    if (SelectedResults.SelectedItem != null)
-                        SelectedResults = ContextMenu;
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
-            });
+                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                })
+                .ConfigureAwait(false);
 
-            LoadHistoryCommand = new RelayCommand(_ =>
-            {
-                if (SelectedIsFromQueryResults())
-                {
-                    SelectedResults = History;
-                    History.SelectedIndex = _history.Items.Count - 1;
-                }
-                else
-                {
-                    SelectedResults = Results;
-                }
-            });
-
-            ReloadPluginDataCommand = new RelayCommand(_ =>
+            if (hideWindow)
             {
                 Hide();
+            }
 
-                PluginManager
-                    .ReloadData()
-                    .ContinueWith(_ =>
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            Notification.Show(
-                                InternationalizationManager.Instance.GetTranslation("success"),
-                                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"),
-                                "");
-                        }))
-                    .ConfigureAwait(false);
-            });
+            if (SelectedIsFromQueryResults())
+            {
+                _userSelectedRecord.Add(result);
+                _history.Add(result.OriginQuery.RawQuery);
+            }
+            else
+            {
+                SelectedResults = Results;
+            }
+        }
+        [RelayCommand]
+        private void OpenSetting()
+        {
+            App.API.OpenSettingDialog();
+        }
+
+        [RelayCommand]
+        private void SelectHelp()
+        {
+            PluginManager.API.OpenUrl("https://www.flowlauncher.com/docs/#/usage-tips");
+        }
+
+        [RelayCommand]
+        private void SelectFirstResult()
+        {
+            SelectedResults.SelectFirstResult();
+        }
+        [RelayCommand]
+        private void SelectPrevPage()
+        {
+            SelectedResults.SelectPrevPage();
+        }
+
+        [RelayCommand]
+        private void SelectNextPage()
+        {
+            SelectedResults.SelectNextPage();
+        }
+        [RelayCommand]
+        private void SelectPrevItem()
+        {
+            SelectedResults.SelectPrevResult();
+        }
+        [RelayCommand]
+        private void SelectNextItem()
+        {
+            SelectedResults.SelectNextResult();
+        }
+
+        [RelayCommand]
+        private void Esc()
+        {
+            if (!SelectedIsFromQueryResults())
+            {
+                SelectedResults = Results;
+            }
+            else
+            {
+                Hide();
+            }
         }
 
         #endregion
 
         #region ViewModel Properties
 
+        public Settings Settings { get; }
+        public string ClockText { get; private set; }
+        public string DateText { get; private set; }
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
+
+        private async Task RegisterClockAndDateUpdateAsync()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            // ReSharper disable once MethodSupportsCancellation
+            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            {
+                if (Settings.UseClock)
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, Culture);
+                if (Settings.UseDate)
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, Culture);
+            }
+        }
+
         public ResultsViewModel Results { get; private set; }
-        
+
         public ResultsViewModel ContextMenu { get; private set; }
-        
+
         public ResultsViewModel History { get; private set; }
 
         public bool GameModeStatus { get; set; }
@@ -335,17 +369,70 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+        [RelayCommand]
+        private void IncreaseWidth()
+        {
+            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
+            {
+                Settings.WindowSize = 1920;
+            }
+            else
+            {
+                Settings.WindowSize += 100;
+                Settings.WindowLeft -= 50;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void DecreaseWidth()
+        {
+            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
+            {
+                Settings.WindowSize = 400;
+            }
+            else
+            {
+                Settings.WindowLeft += 50;
+                Settings.WindowSize -= 100;
+            }
+            OnPropertyChanged();
+        }
+
+        [RelayCommand]
+        private void IncreaseMaxResult()
+        {
+            if (Settings.MaxResultsToShow == 17)
+                return;
+
+            Settings.MaxResultsToShow += 1;
+        }
+
+        [RelayCommand]
+        private void DecreaseMaxResult()
+        {
+            if (Settings.MaxResultsToShow == 2)
+                return;
+
+            Settings.MaxResultsToShow -= 1;
+        }
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
+        /// <param name="reQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
             if (QueryText != queryText)
             {
                 // re-query is done in QueryText's setter method
                 QueryText = queryText;
+                // set to false so the subsequent set true triggers
+                // PropertyChanged and MoveQueryTextToEnd is called
+                QueryTextCursorMovedToEnd = false;
             }
             else if (reQuery)
             {
@@ -407,28 +494,13 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility SearchIconVisibility { get; set; }
 
-        public double MainWindowWidth => _settings.WindowSize;
+        public double MainWindowWidth
+        {
+            get => Settings.WindowSize;
+            set => Settings.WindowSize = value;
+        }
 
         public string PluginIconPath { get; set; } = null;
-
-        public ICommand EscCommand { get; set; }
-        public ICommand BackspaceCommand { get; set; }
-        public ICommand SelectNextItemCommand { get; set; }
-        public ICommand SelectPrevItemCommand { get; set; }
-        public ICommand SelectNextPageCommand { get; set; }
-        public ICommand SelectPrevPageCommand { get; set; }
-        public ICommand SelectFirstResultCommand { get; set; }
-        public ICommand StartHelpCommand { get; set; }
-        public ICommand LoadContextMenuCommand { get; set; }
-        public ICommand LoadHistoryCommand { get; set; }
-        public ICommand OpenResultCommand { get; set; }
-        public ICommand OpenSettingCommand { get; set; }
-        public ICommand ReloadPluginDataCommand { get; set; }
-        public ICommand ClearQueryCommand { get; private set; }
-
-        public ICommand CopyToClipboard { get; set; }
-
-        public ICommand AutocompleteQueryCommand { get; set; }
 
         public string OpenResultCommandModifiers { get; private set; }
 
@@ -544,7 +616,9 @@ namespace Flow.Launcher.ViewModel
         {
             _updateSource?.Cancel();
 
-            if (string.IsNullOrWhiteSpace(QueryText))
+            var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
+
+            if (query == null) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visbility = Visibility.Collapsed;
@@ -569,7 +643,6 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            var query = QueryBuilder.Build(QueryText.Trim(), PluginManager.NonGlobalPlugins);
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -588,7 +661,7 @@ namespace Flow.Launcher.ViewModel
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
             }
-            
+
 
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
@@ -659,9 +732,43 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        {
+            if (string.IsNullOrWhiteSpace(queryText))
+            {
+                return null;
+            }
+
+            StringBuilder queryBuilder = new(queryText);
+            StringBuilder queryBuilderTmp = new(queryText);
+
+            foreach (var shortcut in customShortcuts)
+            {
+                if (queryBuilder.Equals(shortcut.Key))
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                }
+
+                queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
+            }
+
+            foreach (var shortcut in builtInShortcuts)
+            {
+                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+            }
+
+            // show expanded builtin shortcuts
+            // use private field to avoid infinite recursion
+            _queryText = queryBuilderTmp.ToString();
+
+            var query = QueryBuilder.Build(queryBuilder.ToString().Trim(), PluginManager.NonGlobalPlugins);
+            return query;
+        }
+
         private void RemoveOldQueryResults(Query query)
         {
-            if (_lastQuery.ActionKeyword != query.ActionKeyword)
+            if (_lastQuery?.ActionKeyword != query?.ActionKeyword)
             {
                 Results.Clear();
             }
@@ -755,7 +862,7 @@ namespace Flow.Launcher.ViewModel
 
         private void SetOpenResultModifiers()
         {
-            OpenResultCommandModifiers = _settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
+            OpenResultCommandModifiers = Settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
         }
 
         public void ToggleFlowLauncher()
@@ -784,24 +891,24 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            switch (_settings.LastQueryMode)
+            switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
                     await Task.Delay(100); //Time for change to opacity
                     break;
                 case LastQueryMode.Preserved:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = true;
                     break;
                 case LastQueryMode.Selected:
-                    if (_settings.UseAnimation)
+                    if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
                 default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{_settings.LastQueryMode}>");
+                    throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
             }
 
             MainWindowVisibilityStatus = false;
@@ -816,7 +923,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return _settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
 
 
@@ -889,28 +996,26 @@ namespace Flow.Launcher.ViewModel
                 var result = Results.SelectedItem?.Result;
                 if (result != null)
                 {
-                    string copyText = string.IsNullOrEmpty(result.CopyText) ? result.SubTitle : result.CopyText;
+                    string copyText = result.CopyText;
                     var isFile = File.Exists(copyText);
                     var isFolder = Directory.Exists(copyText);
                     if (isFile || isFolder)
                     {
-                        var paths = new StringCollection();
-                        paths.Add(copyText);
+                        var paths = new StringCollection
+                        {
+                            copyText
+                        };
 
                         Clipboard.SetFileDropList(paths);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                +" " 
-                                + (isFile? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle")), 
+                            $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                     else
                     {
-                        Clipboard.SetDataObject(copyText.ToString());
+                        Clipboard.SetDataObject(copyText);
                         App.API.ShowMsg(
-                            App.API.GetTranslation("copy") 
-                                + " " 
-                                + App.API.GetTranslation("textTitle"), 
+                            $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
                             App.API.GetTranslation("completedSuccessfully"));
                     }
                 }

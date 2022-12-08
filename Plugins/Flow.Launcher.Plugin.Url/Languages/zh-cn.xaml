@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_url_canot_open_url">无法打开链接:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">打开链接</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_description">从Flow Launcher打开链接</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_description">从 Flow Launcher 打开链接</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">请设置你的浏览器路径:</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_choose">选择</system:String>

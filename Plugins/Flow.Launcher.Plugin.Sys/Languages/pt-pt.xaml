@@ -1,21 +1,23 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Command List-->
+    <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descrição</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Desligar</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reiniciar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Desligar computador</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reiniciar computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reinicia o computador com as opções avançadas de arranque para os modos de segurança e de depuração</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off">Sair</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off">Sair da sessão</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquear computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Fechar Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Reiniciar Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Ajustar esta aplicação</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep">Suspender</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Ajustar definições de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep">Suspender computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Esvaziar reciclagem</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Abrir Reciclagem</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">Opções de indexação</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate">Hibernar computador</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Guardar definições do Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">Recarrega os dados do plugin com o novo conteúdo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location">Abrir localização dos registos do Flow Launcher</system:String>
@@ -23,9 +25,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Aceda à documentação para mais informações e dicas de utilização</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abrir localização onde as definições do Flow Launcher estão guardadas</system:String>
 
-    <!--Dialogs-->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Sucesso</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Todas as definições guardadas</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Definições guardadas com sucesso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Recarregar todos os dados aplicáveis ao plugin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Tem certeza de que deseja desligar o computador?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Tem a certeza que deseja reiniciar o computador?</system:String>

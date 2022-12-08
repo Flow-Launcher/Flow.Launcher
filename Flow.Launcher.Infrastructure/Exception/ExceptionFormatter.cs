@@ -78,7 +78,7 @@ namespace Flow.Launcher.Infrastructure.Exception
             sb.AppendLine();
             sb.AppendLine("## Assemblies - " + AppDomain.CurrentDomain.FriendlyName);
             sb.AppendLine();
-            foreach (var ass in AppDomain.CurrentDomain.GetAssemblies().OrderBy(o => o.GlobalAssemblyCache ? 50 : 0))
+            foreach (var ass in AppDomain.CurrentDomain.GetAssemblies())
             {
                 sb.Append("* ");
                 sb.Append(ass.FullName);
@@ -166,7 +166,7 @@ namespace Flow.Launcher.Infrastructure.Exception
                 }
                 return result;
             }
-            catch (System.Exception e)
+            catch
             {
                 return new List<string>();
             }
