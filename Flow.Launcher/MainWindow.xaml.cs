@@ -57,7 +57,7 @@ namespace Flow.Launcher
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
-            
+
             InitializeComponent();
             InitializePosition();
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -67,7 +67,7 @@ namespace Flow.Launcher
         {
             InitializeComponent();
         }
-        
+
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             if (QueryTextBox.SelectionLength == 0)
@@ -114,6 +114,8 @@ namespace Flow.Launcher
                 switch (e.PropertyName)
                 {
                     case nameof(MainViewModel.MainWindowVisibilityStatus):
+                    {
+                        Dispatcher.Invoke(() =>
                         {
                             if (_viewModel.MainWindowVisibilityStatus)
                             {
@@ -138,7 +140,7 @@ namespace Flow.Launcher
                                     isProgressBarStoryboardPaused = false;
                                 }
 
-                                if(_settings.UseAnimation)
+                                if (_settings.UseAnimation)
                                     WindowAnimator();
                             }
                             else if (!isProgressBarStoryboardPaused)
@@ -146,27 +148,27 @@ namespace Flow.Launcher
                                 _progressBarStoryboard.Stop(ProgressBar);
                                 isProgressBarStoryboardPaused = true;
                             }
-
-                            break;
-                        }
+                        });
+                        break;
+                    }
                     case nameof(MainViewModel.ProgressBarVisibility):
+                    {
+                        Dispatcher.Invoke(() =>
                         {
-                            Dispatcher.Invoke(() =>
+                            if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
                             {
-                                if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
-                                {
-                                    _progressBarStoryboard.Stop(ProgressBar);
-                                    isProgressBarStoryboardPaused = true;
-                                }
-                                else if (_viewModel.MainWindowVisibilityStatus &&
-                                            isProgressBarStoryboardPaused)
-                                {
-                                    _progressBarStoryboard.Begin(ProgressBar, true);
-                                    isProgressBarStoryboardPaused = false;
-                                }
-                            });
-                            break;
-                        }
+                                _progressBarStoryboard.Stop(ProgressBar);
+                                isProgressBarStoryboardPaused = true;
+                            }
+                            else if (_viewModel.MainWindowVisibilityStatus &&
+                                     isProgressBarStoryboardPaused)
+                            {
+                                _progressBarStoryboard.Begin(ProgressBar, true);
+                                isProgressBarStoryboardPaused = false;
+                            }
+                        });
+                        break;
+                    }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
                         if (_viewModel.QueryTextCursorMovedToEnd)
                         {
@@ -249,35 +251,45 @@ namespace Flow.Launcher
 
             contextMenu = new ContextMenu();
 
-            var openIcon = new FontIcon { Glyph = "\ue71e" };
+            var openIcon = new FontIcon
+            {
+                Glyph = "\ue71e"
+            };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
-                Icon = openIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")", Icon = openIcon
             };
-            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
+            var gamemodeIcon = new FontIcon
+            {
+                Glyph = "\ue7fc"
+            };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
-                Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
             };
-            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
+            var positionresetIcon = new FontIcon
+            {
+                Glyph = "\ue73f"
+            };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
-                Icon = positionresetIcon
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
             };
-            var settingsIcon = new FontIcon { Glyph = "\ue713" };
+            var settingsIcon = new FontIcon
+            {
+                Glyph = "\ue713"
+            };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
-                Icon = settingsIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
             };
-            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
+            var exitIcon = new FontIcon
+            {
+                Glyph = "\ue7e8"
+            };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
-                Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -340,15 +352,15 @@ namespace Flow.Launcher
         }
         private async void PositionReset()
         {
-           _viewModel.Show();
-           await Task.Delay(300); // If don't give a time, Positioning will be weird.
-           Left = HorizonCenter();
-           Top = VerticalCenter();
+            _viewModel.Show();
+            await Task.Delay(300); // If don't give a time, Positioning will be weird.
+            Left = HorizonCenter();
+            Top = VerticalCenter();
         }
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 150,
-            new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 50, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
@@ -390,11 +402,11 @@ namespace Flow.Launcher
             };
             var IconMotion = new DoubleAnimation
             {
-                    From = 12,
-                    To = 0,
-                    EasingFunction = easing,
-                    Duration = TimeSpan.FromSeconds(0.36),
-                    FillBehavior = FillBehavior.Stop
+                From = 12,
+                To = 0,
+                EasingFunction = easing,
+                Duration = TimeSpan.FromSeconds(0.36),
+                FillBehavior = FillBehavior.Stop
             };
 
             var ClockOpacity = new DoubleAnimation
@@ -466,10 +478,10 @@ namespace Flow.Launcher
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
             _viewModel.Hide();
-            
-            if(_settings.UseAnimation)
+
+            if (_settings.UseAnimation)
                 await Task.Delay(100);
-            
+
             App.API.OpenSettingDialog();
         }
 
@@ -487,7 +499,7 @@ namespace Flow.Launcher
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
                     await Task.Delay(100);
-                
+
                 if (_settings.HideWhenDeactive)
                 {
                     _viewModel.Hide();
@@ -525,7 +537,7 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
         }
-        
+
         public double HorizonCenter()
         {
             var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -607,9 +619,9 @@ namespace Flow.Launcher
                             && QueryTextBox.Text.Length > 0
                             && QueryTextBox.CaretIndex == QueryTextBox.Text.Length)
                         {
-                            var queryWithoutActionKeyword = 
+                            var queryWithoutActionKeyword =
                                 QueryBuilder.Build(QueryTextBox.Text.Trim(), PluginManager.NonGlobalPlugins)?.Search;
-                            
+
                             if (FilesFolders.IsLocationPathString(queryWithoutActionKeyword))
                             {
                                 _viewModel.BackspaceCommand.Execute(null);
@@ -645,7 +657,7 @@ namespace Flow.Launcher
 
         private void QueryTextBox_KeyUp(object sender, KeyEventArgs e)
         {
-            if(_viewModel.QueryText != QueryTextBox.Text)
+            if (_viewModel.QueryText != QueryTextBox.Text)
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
                 be.UpdateSource();

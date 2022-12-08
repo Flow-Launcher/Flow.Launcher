@@ -24,6 +24,7 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -751,12 +752,15 @@ namespace Flow.Launcher.ViewModel
 
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
-
-            foreach (var shortcut in builtInShortcuts)
+            
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
-                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
-            }
+                foreach (var shortcut in builtInShortcuts)
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                    queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+                }
+            });
 
             // show expanded builtin shortcuts
             // use private field to avoid infinite recursion
@@ -879,11 +883,14 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            MainWindowVisibility = Visibility.Visible;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindowVisibility = Visibility.Visible;
 
-            MainWindowVisibilityStatus = true;
+                MainWindowVisibilityStatus = true;
 
-            MainWindowOpacity = 1;
+                MainWindowOpacity = 1;
+            });
         }
 
         public async void Hide()
