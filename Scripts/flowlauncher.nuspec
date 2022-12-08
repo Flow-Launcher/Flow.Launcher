@@ -6,7 +6,7 @@
     <version>$version$</version>
     <authors>Flow-Launcher Team</authors>
     <projectUrl>https://github.com/Flow-Launcher/Flow.Launcher</projectUrl>
-    <icon>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Images/app.png</icon>
+    <iconUrl>https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher/master/Flow.Launcher/Images/app.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Flow Launcher - Quick file search and app launcher for Windows with community-made plugins</description>
   </metadata>
