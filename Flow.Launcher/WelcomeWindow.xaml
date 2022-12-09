@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Name="FlowWelcomeWindow"
-    Title="Welcome to Flow Launcher"
+    Title="{DynamicResource Welcome_Page1_Title}"
     Width="550"
     Height="650"
     Activated="OnActivated"
