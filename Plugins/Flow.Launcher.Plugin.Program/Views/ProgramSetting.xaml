@@ -160,7 +160,7 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="90" Header="{DynamicResource flowlauncher_plugin_program_enabled}">
+                    <GridViewColumn Width="90" Header="{DynamicResource flowlauncher_plugin_program_status}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <TextBlock TextAlignment="Left">

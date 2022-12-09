@@ -34,7 +34,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Select Icon</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Icon</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancel</system:String>
