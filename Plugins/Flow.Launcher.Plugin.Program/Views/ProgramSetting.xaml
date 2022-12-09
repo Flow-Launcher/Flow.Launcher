@@ -149,7 +149,8 @@
             MouseDoubleClick="programSourceView_MouseDoubleClick"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             SelectionChanged="programSourceView_SelectionChanged"
-            SelectionMode="Extended">
+            SelectionMode="Extended"
+            SizeChanged="ListView_SizeChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_program_name}">
@@ -159,20 +160,28 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enabled}">
+                    <GridViewColumn Width="90" Header="{DynamicResource flowlauncher_plugin_program_enabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    MaxWidth="60"
-                                    Text="{Binding Enabled}"
-                                    TextAlignment="Center" />
+                                <TextBlock x:Name="ListViewEnabled" TextAlignment="Left">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_program_false}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_program_true}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="550" Header="{DynamicResource flowlauncher_plugin_program_location}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_location}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}" />
+                                <TextBlock Text="{Binding Location, ConverterParameter=(null), Converter={program:LocationConverter}}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
