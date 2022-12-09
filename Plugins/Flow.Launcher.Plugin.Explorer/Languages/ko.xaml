@@ -19,7 +19,7 @@
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">삭제</system:String>
     <system:String x:Key="plugin_explorer_edit">편집</system:String>
-    <system:String x:Key="plugin_explorer_add">추</system:String>
+    <system:String x:Key="plugin_explorer_add">추가</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
