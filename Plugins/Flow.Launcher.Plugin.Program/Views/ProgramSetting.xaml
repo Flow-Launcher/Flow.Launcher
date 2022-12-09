@@ -90,10 +90,9 @@
                 BorderBrush="{DynamicResource Color03B}"
                 BorderThickness="1" />
             <StackPanel
-                Width="Auto"
-                Height="55"
-                Margin="60,6,0,0"
+                Margin="60,0,0,2"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnLoadAllProgramSource"
@@ -191,7 +190,7 @@
         <DockPanel
             Grid.Row="3"
             Grid.RowSpan="1"
-            Margin="0,0,20,10">
+            Margin="0,0,20,0">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
                     x:Name="btnProgramSourceStatus"
