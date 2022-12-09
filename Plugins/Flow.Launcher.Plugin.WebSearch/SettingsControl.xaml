@@ -86,13 +86,21 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding Enabled}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
+                    <GridViewColumn Width="140" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Enabled}" />
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_false}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_true}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

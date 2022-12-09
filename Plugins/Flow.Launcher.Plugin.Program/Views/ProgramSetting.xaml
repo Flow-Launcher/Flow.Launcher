@@ -163,7 +163,7 @@
                     <GridViewColumn Width="90" Header="{DynamicResource flowlauncher_plugin_program_enabled}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock x:Name="ListViewEnabled" TextAlignment="Left">
+                                <TextBlock TextAlignment="Left">
                                     <TextBlock.Style>
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_program_false}" />
