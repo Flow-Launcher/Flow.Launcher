@@ -340,9 +340,10 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             await InitSettingAsync();
         }
-        private static readonly Thickness settingControlMargin = new(10, 4, 10, 4);
-        private static readonly Thickness settingPanelMargin = new(15, 20, 15, 20);
-        private static readonly Thickness settingTextBlockMargin = new(10, 4, 10, 4);
+        private static readonly Thickness settingControlMargin = new(0, 6, 0, 6);
+        private static readonly Thickness settingPanelMargin = new(70, 18, 18, 18);
+        private static readonly Thickness settingTextBlockMargin = new(0, 6, 0, 6);
+        private static readonly Thickness settingLabelMargin = new(0, 0, 18, 0);
         private JsonRpcConfigurationModel _settingsTemplate;
 
         public Control CreateSettingPanel()
@@ -350,26 +351,35 @@ namespace Flow.Launcher.Core.Plugin
             if (Settings == null)
                 return new();
             var settingWindow = new UserControl();
-            var mainPanel = new StackPanel
+            var mainPanel = new Grid
             {
-                Margin = settingPanelMargin, Orientation = Orientation.Vertical
+                Margin = settingPanelMargin
             };
+            ColumnDefinition gridCol1 = new ColumnDefinition() { Width = GridLength.Auto };
+            ColumnDefinition gridCol2 = new ColumnDefinition();
+            gridCol2.Width = new GridLength(75, GridUnitType.Star);
+            mainPanel.ColumnDefinitions.Add(gridCol1);
+            mainPanel.ColumnDefinitions.Add(gridCol2);
+            
             settingWindow.Content = mainPanel;
-
+            int rowCount = 0;
             foreach (var (type, attribute) in _settingsTemplate.Body)
             {
-                var panel = new StackPanel
-                {
-                    Orientation = Orientation.Horizontal, Margin = settingControlMargin
-                };
+                //var panel = new StackPanel
+                //{
+                //Orientation = Orientation.Horizontal, Margin = settingControlMargin
+                //};
+                RowDefinition gridRow = new RowDefinition();
+                mainPanel.RowDefinitions.Add(gridRow);
                 var name = new TextBlock()
                 {
                     Text = attribute.Label,
-                    Width = 120,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingControlMargin,
+                    Margin = settingLabelMargin,
                     TextWrapping = TextWrapping.WrapWithOverflow
                 };
+                Grid.SetColumn(name, 0);
+                Grid.SetRow(name, rowCount);
 
                 FrameworkElement contentControl;
 
@@ -381,10 +391,15 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = attribute.Description.Replace("\\r\\n", "\r\n"),
                             Margin = settingTextBlockMargin,
-                            MaxWidth = 500,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            HorizontalAlignment = HorizontalAlignment.Left,
+                            TextAlignment = TextAlignment.Left,
                             TextWrapping = TextWrapping.WrapWithOverflow
                         };
-                        break;
+                            Grid.SetColumn(contentControl, 0);
+                            Grid.SetColumnSpan(contentControl, 2);
+                            Grid.SetRow(contentControl, rowCount);
+                            break;
                     }
                     case "input":
                     {
@@ -393,6 +408,7 @@ namespace Flow.Launcher.Core.Plugin
                             Width = 300,
                             Text = Settings[attribute.Name] as string ?? string.Empty,
                             Margin = settingControlMargin,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             ToolTip = attribute.Description
                         };
                         textBox.TextChanged += (_, _) =>
@@ -400,7 +416,9 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = textBox.Text;
                         };
                         contentControl = textBox;
-                        break;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            break;
                     }
                     case "textarea":
                     {
@@ -411,6 +429,7 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = settingControlMargin,
                             TextWrapping = TextWrapping.WrapWithOverflow,
                             AcceptsReturn = true,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             Text = Settings[attribute.Name] as string ?? string.Empty,
                             ToolTip = attribute.Description
                         };
@@ -419,7 +438,9 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((TextBox)sender).Text;
                         };
                         contentControl = textBox;
-                        break;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            break;
                     }
                     case "passwordBox":
                     {
@@ -429,6 +450,7 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = settingControlMargin,
                             Password = Settings[attribute.Name] as string ?? string.Empty,
                             PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             ToolTip = attribute.Description
                         };
                         passwordBox.PasswordChanged += (sender, _) =>
@@ -436,7 +458,9 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((PasswordBox)sender).Password;
                         };
                         contentControl = passwordBox;
-                        break;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            break;
                     }
                     case "dropdown":
                     {
@@ -445,6 +469,7 @@ namespace Flow.Launcher.Core.Plugin
                             ItemsSource = attribute.Options,
                             SelectedItem = Settings[attribute.Name],
                             Margin = settingControlMargin,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             ToolTip = attribute.Description
                         };
                         comboBox.SelectionChanged += (sender, _) =>
@@ -452,13 +477,16 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
                         };
                         contentControl = comboBox;
-                        break;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            break;
                     }
                     case "checkbox":
                         var checkBox = new CheckBox
                         {
                             IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
                             Margin = settingControlMargin,
+                            HorizontalAlignment = HorizontalAlignment.Left,
                             ToolTip = attribute.Description
                         };
                         checkBox.Click += (sender, _) =>
@@ -466,15 +494,20 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
                         };
                         contentControl = checkBox;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
                         break;
                     default:
                         continue;
                 }
                 if (type != "textBlock")
                     _settingControls[attribute.Name] = contentControl;
-                panel.Children.Add(name);
-                panel.Children.Add(contentControl);
-                mainPanel.Children.Add(panel);
+                //panel.Children.Add(name);
+                //panel.Children.Add(contentControl);
+                //mainPanel.Children.Add(panel);
+                mainPanel.Children.Add(name);
+                mainPanel.Children.Add(contentControl);
+                rowCount++;
             }
             return settingWindow;
         }
