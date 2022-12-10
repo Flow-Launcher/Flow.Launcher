@@ -22,6 +22,9 @@ using Control = System.Windows.Controls.Control;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
+using System.Windows.Documents;
+using static System.Windows.Forms.LinkLabel;
+using Droplex;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -33,7 +36,6 @@ namespace Flow.Launcher.Core.Plugin
     {
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
-
         /// <summary>
         /// The language this JsonRPCPlugin support
         /// </summary>
@@ -544,6 +546,28 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
                         };
                         contentControl = checkBox;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
+                    case "hyperlink":
+                        var hyperlink = new Hyperlink
+                        {
+                            ToolTip = attribute.Description,
+                            NavigateUri = attribute.url
+                        };
+                        var linkbtn = new Button
+                        {
+                            HorizontalAlignment = HorizontalAlignment.Right,
+                            Margin = settingControlMargin
+                        };
+                        linkbtn.Content = attribute.urlLabel;
+
+                        contentControl = linkbtn;
                         Grid.SetColumn(contentControl, 1);
                         Grid.SetRow(contentControl, rowCount);
                         if (rowCount != 0)
