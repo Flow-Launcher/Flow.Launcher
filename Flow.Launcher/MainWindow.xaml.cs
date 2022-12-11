@@ -675,7 +675,7 @@ namespace Flow.Launcher
         {
             // QueryTextBox seems to be update with a DispatcherPriority as low as ContextIdle.
             // To ensure QueryTextBox is up to date with QueryText from the View, we need to Dispatch with such a priority
-            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length, System.Windows.Threading.DispatcherPriority.ContextIdle);
+            Dispatcher.Invoke(() => QueryTextBox.CaretIndex = QueryTextBox.Text.Length);
         }
 
         public void InitializeColorScheme()
