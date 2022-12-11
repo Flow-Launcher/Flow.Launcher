@@ -25,6 +25,7 @@ using UserControl = System.Windows.Controls.UserControl;
 using System.Windows.Documents;
 using static System.Windows.Forms.LinkLabel;
 using Droplex;
+using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -424,7 +425,7 @@ namespace Flow.Launcher.Core.Plugin
                             Text = attribute.Description.Replace("\\r\\n", "\r\n"),
                             Margin = settingTextBlockMargin,
                             Padding = new Thickness(0,0,0,0),
-                            HorizontalAlignment = HorizontalAlignment.Left,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
                             TextAlignment = TextAlignment.Left,
                             TextWrapping = TextWrapping.Wrap
                         };
@@ -444,7 +445,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = Settings[attribute.Name] as string ?? string.Empty,
                             Margin = settingControlMargin,
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
                             ToolTip = attribute.Description
                         };
                         textBox.TextChanged += (_, _) =>
@@ -461,6 +462,41 @@ namespace Flow.Launcher.Core.Plugin
                             Grid.SetColumnSpan(sep, 2);
                             break;
                     }
+                    case "inputWithFileBtn":
+                        {
+                            var textBox = new TextBox()
+                            {
+                                Margin = new Thickness(10, 0, 0, 0),
+                                Text = Settings[attribute.Name] as string ?? string.Empty,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                ToolTip = attribute.Description
+                            };
+                            textBox.TextChanged += (_, _) =>
+                            {
+                                Settings[attribute.Name] = textBox.Text;
+                            };
+                            var Btn = new System.Windows.Controls.Button()
+                            {
+                                Margin = new Thickness(10,0,0,0),
+                                Content = "Browse"
+                            };
+                            var dockPanel = new DockPanel()
+                            {
+                                Margin = settingControlMargin
+                            };
+                            DockPanel.SetDock(Btn, Dock.Right);
+                            dockPanel.Children.Add(Btn);
+                            dockPanel.Children.Add(textBox);
+                            contentControl = dockPanel;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
+                            break;
+                        }
                     case "textarea":
                     {
                         var textBox = new TextBox()
@@ -470,7 +506,7 @@ namespace Flow.Launcher.Core.Plugin
                             VerticalAlignment = VerticalAlignment.Center,
                             TextWrapping = TextWrapping.WrapWithOverflow,
                             AcceptsReturn = true,
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
                             Text = Settings[attribute.Name] as string ?? string.Empty,
                             ToolTip = attribute.Description
                         };
@@ -495,7 +531,7 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = settingControlMargin,
                             Password = Settings[attribute.Name] as string ?? string.Empty,
                             PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
                             ToolTip = attribute.Description
                         };
                         passwordBox.PasswordChanged += (sender, _) =>
@@ -514,17 +550,17 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     case "dropdown":
                     {
-                        var comboBox = new ComboBox()
+                        var comboBox = new System.Windows.Controls.ComboBox()
                         {
                             ItemsSource = attribute.Options,
                             SelectedItem = Settings[attribute.Name],
                             Margin = settingControlMargin,
-                            HorizontalAlignment = HorizontalAlignment.Right,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
                             ToolTip = attribute.Description
                         };
                         comboBox.SelectionChanged += (sender, _) =>
                         {
-                            Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
+                            Settings[attribute.Name] = (string)((System.Windows.Controls.ComboBox)sender).SelectedItem;
                         };
                         contentControl = comboBox;
                             Grid.SetColumn(contentControl, 1);
@@ -541,7 +577,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
                             Margin = settingCheckboxMargin,
-                            HorizontalAlignment = HorizontalAlignment.Right,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
                             ToolTip = attribute.Description
                         };
                         checkBox.Click += (sender, _) =>
@@ -563,9 +599,9 @@ namespace Flow.Launcher.Core.Plugin
                             ToolTip = attribute.Description,
                             NavigateUri = attribute.url
                         };
-                        var linkbtn = new Button
+                        var linkbtn = new System.Windows.Controls.Button
                         {
-                            HorizontalAlignment = HorizontalAlignment.Right,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
                             Margin = settingControlMargin
                         };
                         linkbtn.Content = attribute.urlLabel;
@@ -623,7 +659,7 @@ namespace Flow.Launcher.Core.Plugin
                         case PasswordBox passwordBox:
                             passwordBox.Dispatcher.Invoke(() => passwordBox.Password = value as string);
                             break;
-                        case ComboBox comboBox:
+                        case System.Windows.Controls.ComboBox comboBox:
                             comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
                             break;
                         case CheckBox checkBox:
