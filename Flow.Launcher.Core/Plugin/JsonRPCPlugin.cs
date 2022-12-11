@@ -345,9 +345,10 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
         private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
         private static readonly Thickness settingPanelMargin = new(0, 0, 0, 0);
-        private static readonly Thickness settingTextBlockMargin = new(70, 17, 18, 0);
-        private static readonly Thickness settingLabelMargin = new(70, 0, 18, 0);
-        private static readonly Thickness settingDescMargin = new(70, 0, 18, 0);
+        private static readonly Thickness settingTextBlockMargin = new(70, 9, 18, 9);
+        private static readonly Thickness settingLabelPanelMargin = new(70, 9, 18, 9);
+        private static readonly Thickness settingLabelMargin = new(0, 0, 0, 0);
+        private static readonly Thickness settingDescMargin = new(0, 2, 0, 0);
         private static readonly Thickness settingSepMargin = new(0, 0, 0, 2);
         private JsonRpcConfigurationModel _settingsTemplate;
 
@@ -358,7 +359,7 @@ namespace Flow.Launcher.Core.Plugin
             var settingWindow = new UserControl();
             var mainPanel = new Grid
             {
-                Margin = settingPanelMargin
+                Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center
             };
             ColumnDefinition gridCol1 = new ColumnDefinition();
             ColumnDefinition gridCol2 = new ColumnDefinition();
@@ -377,7 +378,9 @@ namespace Flow.Launcher.Core.Plugin
                 sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
                 var panel = new StackPanel
                 {
-                Orientation = Orientation.Vertical, VerticalAlignment = VerticalAlignment.Center
+                    Background = System.Windows.SystemColors.GrayTextBrush,
+                    Orientation = Orientation.Vertical, VerticalAlignment = VerticalAlignment.Center,
+                    Margin = settingLabelPanelMargin
                 };
                 RowDefinition gridRow = new RowDefinition();
                 mainPanel.RowDefinitions.Add(gridRow);
@@ -420,10 +423,10 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = attribute.Description.Replace("\\r\\n", "\r\n"),
                             Margin = settingTextBlockMargin,
-                            VerticalAlignment = VerticalAlignment.Stretch,
+                            Padding = new Thickness(0,0,0,0),
                             HorizontalAlignment = HorizontalAlignment.Left,
                             TextAlignment = TextAlignment.Left,
-                            TextWrapping = TextWrapping.WrapWithOverflow
+                            TextWrapping = TextWrapping.Wrap
                         };
                             Grid.SetColumn(contentControl, 0);
                             Grid.SetColumnSpan(contentControl, 2);
