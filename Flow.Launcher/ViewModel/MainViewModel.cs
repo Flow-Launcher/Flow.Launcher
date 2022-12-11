@@ -814,7 +814,7 @@ namespace Flow.Launcher.ViewModel
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg("Success");
+                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
                         return false;
                     }
                 };
