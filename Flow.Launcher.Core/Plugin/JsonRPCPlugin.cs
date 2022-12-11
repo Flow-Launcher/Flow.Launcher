@@ -379,7 +379,6 @@ namespace Flow.Launcher.Core.Plugin
                 sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
                 var panel = new StackPanel
                 {
-                    Background = System.Windows.SystemColors.GrayTextBrush,
                     Orientation = Orientation.Vertical, VerticalAlignment = VerticalAlignment.Center,
                     Margin = settingLabelPanelMargin
                 };
