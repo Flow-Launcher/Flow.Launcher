@@ -1283,7 +1283,6 @@
                                                                     VerticalAlignment="Center"
                                                                     Orientation="Horizontal"
                                                                     Style="{StaticResource TextPanel}">
-
                                                                     <TextBlock
                                                                         Margin="10,0,0,0"
                                                                         VerticalAlignment="center"
@@ -1316,138 +1315,44 @@
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="|" />
-
                                                                     <TextBlock
                                                                         Margin="5,0,0,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                                        FontSize="11"
-                                                                        TextDecorations="None"
+                                                                        Style="{DynamicResource LinkBtnStyle}"
                                                                         ToolTip="{DynamicResource plugin_query_web}">
                                                                         <Hyperlink
-                                                                            Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
                                                                             RequestNavigate="OnRequestNavigate"
+                                                                            Style="{DynamicResource HyperLinkBtnStyle}"
                                                                             TextDecorations="None">
-                                                                            <!--<Run Text="{DynamicResource plugin_query_web}" />-->
                                                                             <Run Text="&#xe80f;" />
                                                                         </Hyperlink>
                                                                     </TextBlock>
-
                                                                     <TextBlock
                                                                         Margin="10,0,0,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnExternalPluginUninstallClick"
+                                                                        Style="{DynamicResource LinkBtnStyle}"
                                                                         Text="&#xe74d;"
-                                                                        TextDecorations="None"
                                                                         ToolTip="{DynamicResource plugin_uninstall}" />
-
                                                                     <TextBlock
                                                                         Margin="10,0,5,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
+                                                                        Style="{DynamicResource LinkBtnStyle}"
                                                                         Text="&#xe8b7;"
                                                                         ToolTip="{DynamicResource pluginDirectory}">
                                                                         <TextBlock.InputBindings>
                                                                             <MouseBinding Command="{Binding OpenPluginDirectoryCommand}" MouseAction="LeftClick" />
                                                                         </TextBlock.InputBindings>
                                                                     </TextBlock>
-                                                                    <!--
-                                                                      <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{DynamicResource plugin_init_time}" />
-                                                                    <TextBlock
-                                                                        MaxWidth="100"
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{Binding InitilizaTime}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        VerticalAlignment="Center"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="|" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{DynamicResource plugin_query_time}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{Binding QueryTime}" />
-                                                                    -->
-                                                                    <!--
-                                                                    <Button
-                                                                        Margin="0,0,0,0"
-                                                                        Background="Transparent"
-                                                                        BorderThickness="0"
-                                                                        Content="&#xe712;"
-                                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Style="{DynamicResource DefaultNonBDButtonStyle}">
-                                                                        <ui:FlyoutService.Flyout>
-                                                                            <ui:MenuFlyout>
-                                                                                <MenuItem Click="OpenWelcomeWindow" Header="{DynamicResource plugin_query_web}">
-                                                                                    <MenuItem.Icon>
-                                                                                        <ui:FontIcon Glyph="&#xe939;" />
-                                                                                    </MenuItem.Icon>
-                                                                                </MenuItem>
-                                                                                <MenuItem Click="OpenSettingFolder" Header="{DynamicResource plugin_uninstall}">
-                                                                                    <MenuItem.Icon>
-                                                                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                                                                    </MenuItem.Icon>
-                                                                                </MenuItem>
-                                                                                <MenuItem Click="OpenLogFolder" Header="{DynamicResource pluginDirectory}">
-                                                                                    <MenuItem.Icon>
-                                                                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                                                                    </MenuItem.Icon>
-                                                                                </MenuItem>
-                                                                                <MenuItem Click="OpenLogFolder" Header="{DynamicResource pluginDirectory}">
-                                                                                    <MenuItem.Icon>
-                                                                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                                                                    </MenuItem.Icon>
-                                                                                </MenuItem>
-                                                                                <MenuItem Click="OpenLogFolder" Header="{DynamicResource pluginDirectory}">
-                                                                                    <MenuItem.Icon>
-                                                                                        <ui:FontIcon Glyph="&#xe8b7;" />
-                                                                                    </MenuItem.Icon>
-                                                                                </MenuItem>
-                                                                            </ui:MenuFlyout>
-                                                                        </ui:FlyoutService.Flyout>
-                                                                    </Button>
-                                                                    -->
                                                                 </StackPanel>
-
                                                             </ItemsControl>
                                                         </Border>
-
                                                     </StackPanel>
                                                 </StackPanel>
                                             </Grid>
                                         </Expander>
-
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
-
                     </Grid>
                 </TabItem>
 
