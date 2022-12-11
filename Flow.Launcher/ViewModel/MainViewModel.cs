@@ -429,22 +429,24 @@ namespace Flow.Launcher.ViewModel
         /// <param name="reQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText != queryText)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                Application.Current.Dispatcher.Invoke(() =>
+                if (QueryText != queryText)
                 {
+
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
-                });
-            }
-            else if (reQuery)
-            {
-                Query();
-            }
-            QueryTextCursorMovedToEnd = true;
+
+                }
+                else if (reQuery)
+                {
+                    Query();
+                }
+                QueryTextCursorMovedToEnd = true;
+            });
         }
 
         public bool LastQuerySelected { get; set; }
