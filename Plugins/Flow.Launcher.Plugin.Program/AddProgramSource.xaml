@@ -152,7 +152,7 @@
                     MinWidth="140"
                     Margin="5,0,10,0"
                     Click="BtnAdd_OnClick"
-                    Content="{Binding AddBtnText, Mode=TwoWay}"
+                    Content="{Binding AddBtnText}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>
