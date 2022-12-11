@@ -1309,7 +1309,7 @@
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding Version}"
                                                                         ToolTip="{Binding InitAndQueryTime}"
-                                                                        ToolTipService.InitialShowDelay="0" />
+                                                                        ToolTipService.InitialShowDelay="500" />
                                                                     <TextBlock
                                                                         Margin="5,0,5,0"
                                                                         VerticalAlignment="Center"
@@ -1325,8 +1325,7 @@
                                                                         FontFamily="/Resources/#Segoe Fluent Icons"
                                                                         FontSize="11"
                                                                         TextDecorations="None"
-                                                                        ToolTip="{DynamicResource plugin_query_web}"
-                                                                        ToolTipService.InitialShowDelay="0">
+                                                                        ToolTip="{DynamicResource plugin_query_web}">
                                                                         <Hyperlink
                                                                             Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
@@ -1348,8 +1347,7 @@
                                                                         MouseUp="OnExternalPluginUninstallClick"
                                                                         Text="&#xe74d;"
                                                                         TextDecorations="None"
-                                                                        ToolTip="{DynamicResource plugin_uninstall}"
-                                                                        ToolTipService.InitialShowDelay="0" />
+                                                                        ToolTip="{DynamicResource plugin_uninstall}" />
 
                                                                     <TextBlock
                                                                         Margin="10,0,5,0"
@@ -1360,8 +1358,7 @@
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="&#xe8b7;"
-                                                                        ToolTip="{DynamicResource pluginDirectory}"
-                                                                        ToolTipService.InitialShowDelay="0">
+                                                                        ToolTip="{DynamicResource pluginDirectory}">
                                                                         <TextBlock.InputBindings>
                                                                             <MouseBinding Command="{Binding OpenPluginDirectoryCommand}" MouseAction="LeftClick" />
                                                                         </TextBlock.InputBindings>
