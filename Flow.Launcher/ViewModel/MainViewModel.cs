@@ -66,7 +66,8 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
             Settings.PropertyChanged += (_, args) =>
             {
-                switch (args.PropertyName) {
+                switch (args.PropertyName)
+                {
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
                         break;
@@ -366,6 +367,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _queryText = value;
+                OnPropertyChanged();
                 Query();
             }
         }
@@ -429,11 +431,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (QueryText != queryText)
             {
-                // re-query is done in QueryText's setter method
-                QueryText = queryText;
-                // set to false so the subsequent set true triggers
-                // PropertyChanged and MoveQueryTextToEnd is called
-                QueryTextCursorMovedToEnd = false;
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    // re-query is done in QueryText's setter method
+                    QueryText = queryText;
+                    // set to false so the subsequent set true triggers
+                    // PropertyChanged and MoveQueryTextToEnd is called
+                    QueryTextCursorMovedToEnd = false;
+                });
             }
             else if (reQuery)
             {
@@ -752,7 +757,7 @@ namespace Flow.Launcher.ViewModel
 
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
-            
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 foreach (var shortcut in builtInShortcuts)
@@ -887,9 +892,9 @@ namespace Flow.Launcher.ViewModel
             {
                 MainWindowVisibility = Visibility.Visible;
 
-                MainWindowVisibilityStatus = true;
-
                 MainWindowOpacity = 1;
+
+                MainWindowVisibilityStatus = true;
             });
         }
 
