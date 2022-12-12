@@ -20,8 +20,6 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
-<p align="center"><img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a></p>
-
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 
@@ -327,9 +325,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
   <br />
-  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
-    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
-  </a>
+
 </p>
 
 <p align="center">
@@ -338,6 +334,10 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
           <br /><sub><b>itsonlyfrans</b></sub>
   </a>
 </p>
+
+## Media's Recommends
+- <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - appwrite
+- <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
