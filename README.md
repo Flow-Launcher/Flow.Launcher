@@ -63,6 +63,8 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - Add Category in plugin store.(Installed, New...)
 
 ### Improve non-c# plugin panel design
+<img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
+
 - The design has been adjusted to suit the overall design feel.
 - Changed the complex bottom information simply.
 
