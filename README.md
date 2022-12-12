@@ -210,8 +210,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ### 🛒 Plugin Store
+<img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
 
-![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
 
@@ -231,10 +231,12 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>←</kbd><kbd>→</kbd>                                     | Back to result / Open Context Menu           |
 | <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
 | <kbd>Tab</kbd>                                               | Autocomplete                                 |
+| <kbd>F1</kbd>                                                | Toggle Preveiw Panel                         |
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
+| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                              | Toggle Game Mode                             |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
 | <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
@@ -251,6 +253,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | Sleep                  | Put computer to sleep                                        |
 | Hibernate              | Hibernate computer                                           |
 | Empty Recycle Bin      | Empty recycle bin                                            |
+| Open Recycle Bin       | Open recycle bin                                             |
 | Exit                   | Close Flow Launcher                                          |
 | Save Settings          | Save all Flow Launcher settings                              |
 | Restart Flow Launcher  | Restart Flow Launcher                                        |
