@@ -28,13 +28,41 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 
-## 🎉 New Features in 1.9
+## 🎉 New Features
+### Preview Panel
+<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-![screenshot](https://user-images.githubusercontent.com/6903107/144855345-45535bc7-7777-4c5a-b8d9-d6ce8adc5e84.png)
+- You can use the F1 key to open/hide the preview panel.
+- Media files display large images.
+- If it is not a media file, a large icon and the entire path are displayed.
+- You can always turn it on (Always Preview) in Settings.
+- Added hotkeys to quickly change flow window's width and height.
+- This feature is currently in its early stages.
 
-- All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
-- New Plugins, Plugin Store, Game Mode, Wizard window
-- <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
+### Everything plugin merged to Explorer
+- Everything's features are now included in the Explorer plug-in.
+- If you are already using everything plugin, you can only enable the explorer.
+- If you are using windows search indexer, add-ons are available from the Everything plug-in.
+
+### Clock & Dates in Search box
+
+<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
+
+- Display Time & dates in searchbox.
+
+### Drag and Drop
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+
+- You can drag an item to a discord or desktop.
+- The drop target program determines whether to copy or move (You can change it CTRL or Alt), and is displayed in the mouse cursor.
+
+### Custom Hotkey and Shortcut
+### Improved Memory usage
+### Improved Plugin / Plugin Store
+- Add Searchbox. you can search plugins in plugin / plugin store.
+- Add Category in plugin store.(Installed, New...)
+
+<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.10">Full changelog</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
