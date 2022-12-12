@@ -89,7 +89,7 @@
     <system:String x:Key="author">af</system:String>
     <system:String x:Key="plugin_init_time">Initaliseringstid:</system:String>
     <system:String x:Key="plugin_query_time">Søgetid:</system:String>
-    <system:String x:Key="plugin_query_version">| Version</system:String>
+    <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
