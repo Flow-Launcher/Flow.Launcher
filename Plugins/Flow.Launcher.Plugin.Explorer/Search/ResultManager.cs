@@ -21,16 +21,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type)
+        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
         {
-            // one of it is enabled
-            var keyword = Settings.SearchActionKeywordEnabled ? Settings.SearchActionKeyword : Settings.PathSearchActionKeyword;
-
-            keyword = keyword == Query.GlobalPluginWildcardSign ? string.Empty : keyword + " ";
+            // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
+            var keyword = actionKeyword != string.Empty ? actionKeyword + " " : string.Empty;
 
             var formatted_path = path;
 
             if (type == ResultType.Folder)
+                // the seperator is needed so when navigating the folder structure contents of the folder are listed
                 formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
 
             return $"{keyword}{formatted_path}";
@@ -55,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = Path.GetDirectoryName(path),
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -74,7 +73,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
 
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
 
                     return false;
                 },
@@ -90,7 +89,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateDriveSpaceDisplayResult(string path, bool windowsIndexed = false)
+        internal static Result CreateDriveSpaceDisplayResult(string path, string actionKeyword, bool windowsIndexed = false)
         {
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
@@ -109,7 +108,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 SubTitle = subtitle,
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
                 IcoPath = path,
                 Score = 500,
                 ProgressBar = progressValue,
@@ -166,9 +165,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return returnStr;
         }
 
-        internal static Result CreateOpenCurrentFolderResult(string path, bool windowsIndexed = false)
+        internal static Result CreateOpenCurrentFolderResult(string path, string actionKeyword, bool windowsIndexed = false)
         {
-            var folderName = path.TrimEnd(Constants.DirectorySeperator).Split(new[]
+            // Path passed from PathSearchAsync ends with Constants.DirectorySeperator ('\'), need to remove the seperator
+            // so it's consistent with folder results returned by index search which does not end with one
+            var folderPath = path.TrimEnd(Constants.DirectorySeperator);
+            
+            var folderName = folderPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
             {
                 Path.DirectorySeparatorChar
             }, StringSplitOptions.None).Last();
@@ -186,19 +189,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
-                IcoPath = path,
+                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
+                IcoPath = folderPath,
                 Score = 500,
-                CopyText = path,
+                CopyText = folderPath,
                 Action = _ =>
                 {
-                    Context.API.OpenDirectory(path);
+                    Context.API.OpenDirectory(folderPath);
                     return true;
                 },
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
-                    FullPath = path,
+                    FullPath = folderPath,
                     WindowsIndexed = windowsIndexed
                 }
             };
@@ -217,7 +220,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 Preview = preview,
-                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
+                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File, query.ActionKeyword),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 CopyText = filePath,

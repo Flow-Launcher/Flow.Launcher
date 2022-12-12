@@ -1,4 +1,4 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
@@ -6,6 +6,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -74,6 +75,8 @@ namespace Flow.Launcher.ViewModel
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
+        public string Version => InternationalizationManager.Instance.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
+        public string InitAndQueryTime => InternationalizationManager.Instance.GetTranslation("plugin_init_time") + " " + PluginPair.Metadata.InitTime + "ms, " + InternationalizationManager.Instance.GetTranslation("plugin_query_time") + " " + PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
 

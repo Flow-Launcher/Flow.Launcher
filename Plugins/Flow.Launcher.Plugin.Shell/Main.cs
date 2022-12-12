@@ -387,7 +387,8 @@ namespace Flow.Launcher.Plugin.Shell
                         Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
                         return true;
                     },
-                    IcoPath = "Images/user.png"
+                    IcoPath = "Images/user.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
                 },
                 new Result
                 {
@@ -397,7 +398,8 @@ namespace Flow.Launcher.Plugin.Shell
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
                         return true;
                     },
-                    IcoPath = "Images/admin.png"
+                    IcoPath = "Images/admin.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
                 },
                 new Result
                 {
@@ -407,7 +409,8 @@ namespace Flow.Launcher.Plugin.Shell
                         Clipboard.SetDataObject(selectedResult.Title);
                         return true;
                     },
-                    IcoPath = "Images/copy.png"
+                    IcoPath = "Images/copy.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
                 }
             };
 
