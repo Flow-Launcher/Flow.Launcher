@@ -2,7 +2,7 @@
         <a href="https://flowlauncher.com">
         	<img src="https://user-images.githubusercontent.com/6903107/207167068-2196d2a3-2caa-4856-958b-a780fbda95c6.gif" width="500">
         </a><br />
-        <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="500">
+        <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="400">
 </p>
 <p align="center">
 <img src="https://img.shields.io/maintenance/yes/3000">
@@ -269,6 +269,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
 | <kbd>Ctrl</kbd> + <kbd>F12</kbd>                              | Toggle Game Mode                             |
+| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                             | Quick Change Maximum Result Shown                           |
+| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                             | Quick Change Window Width                           |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
 | <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
