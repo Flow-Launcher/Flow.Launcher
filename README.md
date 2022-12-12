@@ -84,11 +84,12 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
 <img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
-<img src="https://user-images.githubusercontent.com/6903107/144517519-79ee8a81-083c-42be-b2d7-4990d1cb53e5.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207141710-50bc0e6b-f0f8-4dc2-a136-621a473689d7.png" width="400">
+
 
 ### Browser Bookmarks
 
-<img src="https://user-images.githubusercontent.com/6903107/144517534-5e27547b-77f8-4718-941c-5bc542eed931.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207143428-e6406306-4f1e-4c24-917d-d2a333d5dc2b.png" width="400">
 
 ### System Commands
 
@@ -99,26 +100,27 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Calculator
 
-<img src="https://user-images.githubusercontent.com/6903107/144517570-f0e62716-3fdf-4f2a-8986-385a3fcd0663.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207142449-7de0c30d-8d5b-4331-967e-f3e78c17ea93.png" width="400">
 
 - Do mathematical calculations and copy the result to clipboard.
 
 ### Shell Command
 
-<img src="https://user-images.githubusercontent.com/6903107/144517582-83da8414-e03d-402c-863d-22d116d20c31.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207142197-9e910147-96a9-466e-bbc4-b1163314ef59.png" width="400">
+
 
 - Run batch and PowerShell commands as Administrator or a different user.
 - Ctrl+Enter to Run as Administrator.
 
 ### Explorer
 
-<img src="https://user-images.githubusercontent.com/6903107/144517603-7bfbf868-476a-41d1-bd1b-1ebde7ab2539.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207145376-fbb68ec2-93b9-4b0f-befe-0aeb792367a7.png" width="400">
 
 - Save file or folder locations for quick access.
 
 ### Windows & Control Panel Settings
 
-<img src="https://user-images.githubusercontent.com/6903107/144982305-42a2f63e-0066-4557-9791-0a1c57495ea7.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
 
 - Search for Windows & Control Panel settings.
 
@@ -127,17 +129,16 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="500">
 
-
 - Prioritise the order of each plugin's results.
 
 ### Customizations
 
-![Animation5](https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif)
+<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
 
 - Window size adjustment, animation, and sound
 - Color Scheme (aka Dark Mode)
 
-![themes](https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png)
+<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="500">
 
 - There are various themes and you also can make your own.
 
@@ -157,7 +158,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### 🎮 Game Mode
 
-<img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
+<img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
 
@@ -271,13 +272,15 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://appwrite.io">
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
-  
+</p>
+
+<p align="center">
   <a href="https://github.com/itsonlyfrans">
     <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
   </a>
 </p>
 
-<p align="left">
+<p align="center">
   <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
     :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
   </a>
