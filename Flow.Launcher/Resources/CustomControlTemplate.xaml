@@ -3230,4 +3230,26 @@
 
     <ui:TextContextMenu x:Key="TextControlContextMenu" x:Shared="False" />
 
+    <!--  Text Button style for Plugin Area  -->
+    <Style x:Key="LinkBtnStyle" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource PluginInfoColor}" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+        <Setter Property="FontSize" Value="11" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="HyperLinkBtnStyle" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="{DynamicResource PluginInfoColor}" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>
