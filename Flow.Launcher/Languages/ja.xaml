@@ -89,7 +89,7 @@
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">初期化時間:</system:String>
     <system:String x:Key="plugin_query_time">クエリ時間:</system:String>
-    <system:String x:Key="plugin_query_version">| バージョン</system:String>
+    <system:String x:Key="plugin_query_version"></system:String>
     <system:String x:Key="plugin_query_web">ウェブサイト</system:String>
     <system:String x:Key="plugin_uninstall">アンインストール</system:String>
 
