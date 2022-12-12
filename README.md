@@ -60,6 +60,12 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/207170525-3e99ad93-e8b7-4b39-b9b3-8fbeb443ed26.png" width="300">
 
 - Added shortcut functionality. This allows you to set additional action keywords.
+
+### Impvroved Program Plugin
+- Added Index PATH
+- Support .url files. so flow can search steam/epic games in now.
+- Improved Indexing UWP.
+
 ### Improved Memory usage
 - Fixed a memory leak and reduced overall memory usage.
 ### Improved Plugin / Plugin Store
@@ -201,7 +207,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
-- You can toggle through the Ctrl+F12.
+- You can toggle through the Ctrl+F12 in querybox.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
