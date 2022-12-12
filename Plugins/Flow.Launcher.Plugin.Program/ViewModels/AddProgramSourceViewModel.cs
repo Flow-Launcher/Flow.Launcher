@@ -30,6 +30,7 @@ namespace Flow.Launcher.Plugin.Program.ViewModels
             {
                 location = value;
                 LocationModified = true;
+                OnPropertyChanged();
             }
         }
 
