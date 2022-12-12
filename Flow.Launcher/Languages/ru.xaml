@@ -89,7 +89,7 @@
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Инициализация:</system:String>
     <system:String x:Key="plugin_query_time">Запрос:</system:String>
-    <system:String x:Key="plugin_query_version">| Version</system:String>
+    <system:String x:Key="plugin_query_version">Версия</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Удалить</system:String>
 
