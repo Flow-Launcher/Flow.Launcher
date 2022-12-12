@@ -68,7 +68,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - The design has been adjusted to suit the overall design feel.
 - Changed the complex bottom information simply.
 
-<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full Changelogs</a>
+🚂<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full Changelogs</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
