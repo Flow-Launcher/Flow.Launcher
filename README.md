@@ -1,7 +1,8 @@
 <p align="center">
 	<img src="https://user-images.githubusercontent.com/6903107/144854670-d624d717-d86a-49e5-a5e5-e782f91ed12a.png" width="300"><br />
   <a href="https://flowlauncher.com">
-	<img src="https://user-images.githubusercontent.com/6903107/144854052-969f5e60-a0ec-44b8-8968-620467496f10.gif" width="500">
+	<img src="https://user-images.githubusercontent.com/6903107/207153785-884aa4e8-999e-4a61-8355-7fa208538be6.gif" width="500">
+
   </a>
 </p>
 <br />
