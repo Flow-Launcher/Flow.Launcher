@@ -1,10 +1,9 @@
 <p align="center">
-  <a href="https://flowlauncher.com">
-	<img src="https://user-images.githubusercontent.com/6903107/207167068-2196d2a3-2caa-4856-958b-a780fbda95c6.gif" width="500">
-  </a><br />
-        <img src="https://user-images.githubusercontent.com/6903107/144854670-d624d717-d86a-49e5-a5e5-e782f91ed12a.png" width="280">
+        <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="500"><br />
+        <a href="https://flowlauncher.com">
+        	<img src="https://user-images.githubusercontent.com/6903107/207167068-2196d2a3-2caa-4856-958b-a780fbda95c6.gif" width="500">
+        </a>
 </p>
-<br />
 <p align="center">
 <img src="https://img.shields.io/maintenance/yes/3000">
 <a href="https://crowdin.com/project/flow-launcher"><img src="https://badges.crowdin.net/flow-launcher/localized.svg"></a>
