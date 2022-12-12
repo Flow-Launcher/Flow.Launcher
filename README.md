@@ -25,7 +25,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 
-## 🎉 New Features
+## 🎅 New Features🤶
 ### Preview Panel
 <img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
@@ -324,18 +324,16 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://appwrite.io">
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
+  <br />
+  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
+    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+  </a>
 </p>
 
 <p align="center">
   <a href="https://github.com/itsonlyfrans">
     <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
-          <br /><sub><b>itsonlyfrans</sub>
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
-    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
+          <br /><sub><b>itsonlyfrans</b></sub>
   </a>
 </p>
 
