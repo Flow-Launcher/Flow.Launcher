@@ -89,7 +89,7 @@
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
-    <system:String x:Key="plugin_query_version">| Versão</system:String>
+    <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
 
