@@ -59,7 +59,7 @@ namespace Flow.Launcher
             _settings = settings;
             
             InitializeComponent();
-            InitializePosition();
+            InitializePosition();            
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
@@ -106,6 +106,7 @@ namespace Flow.Launcher
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             InitializePosition();
+            PreviewReset();
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
@@ -123,6 +124,7 @@ namespace Flow.Launcher
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
+                                PreviewReset();
                                 Activate();
                                 QueryTextBox.Focus();
                                 _settings.ActivateTimes++;
@@ -618,9 +620,42 @@ namespace Flow.Launcher
                         }
                     }
                     break;
+                case Key.F1:
+                    PreviewToggle();
+                    e.Handled = true;
+                    break;
+
                 default:
                     break;
 
+            }
+        }
+
+        public void PreviewReset()
+        {
+            if (_settings.AlwaysPreview == true)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                Preview.Visibility = Visibility.Collapsed;
+            }
+        }
+        public void PreviewToggle()
+        {
+
+            if (Preview.Visibility == Visibility.Collapsed)
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
+                Preview.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
+                Preview.Visibility = Visibility.Collapsed;
             }
         }
 

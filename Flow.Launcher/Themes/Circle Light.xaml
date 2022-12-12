@@ -69,7 +69,7 @@
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="#f6f6f6" />
+        <Setter Property="Fill" Value="#e2e2e2" />
         <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="0,0,0,8" />
     </Style>
@@ -162,5 +162,29 @@
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#999aa3" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#e2e2e2" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#3d434a" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#9da1aa" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#9da1aa" />
     </Style>
 </ResourceDictionary>

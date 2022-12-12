@@ -108,7 +108,7 @@
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 Name="Directory"
-                                MinWidth="300"
+                                Width="350"
                                 Margin="10"
                                 Text="{Binding Location, Mode=TwoWay}"
                                 IsReadOnly="{Binding IsNotCustomSource}"

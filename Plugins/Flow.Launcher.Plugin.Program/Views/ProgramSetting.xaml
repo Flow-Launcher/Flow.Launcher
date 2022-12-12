@@ -12,7 +12,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="60" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel
             Margin="70,10,0,8"
@@ -89,10 +89,9 @@
                 BorderBrush="{DynamicResource Color03B}"
                 BorderThickness="1" />
             <StackPanel
-                Width="Auto"
-                Height="55"
-                Margin="60,6,0,0"
+                Margin="60,0,0,2"
                 HorizontalAlignment="Left"
+                VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnLoadAllProgramSource"
@@ -148,7 +147,8 @@
             MouseDoubleClick="programSourceView_MouseDoubleClick"
             PreviewMouseRightButtonUp="ProgramSourceView_PreviewMouseRightButtonUp"
             SelectionChanged="programSourceView_SelectionChanged"
-            SelectionMode="Extended">
+            SelectionMode="Extended"
+            SizeChanged="ListView_SizeChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="150" Header="{DynamicResource flowlauncher_plugin_program_name}">
@@ -158,20 +158,28 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_enabled}">
+                    <GridViewColumn Width="90" Header="{DynamicResource flowlauncher_plugin_program_status}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock
-                                    MaxWidth="60"
-                                    Text="{Binding Enabled}"
-                                    TextAlignment="Center" />
+                                <TextBlock TextAlignment="Left">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_program_false}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_program_true}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn Width="550" Header="{DynamicResource flowlauncher_plugin_program_location}">
+                    <GridViewColumn Header="{DynamicResource flowlauncher_plugin_program_location}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Location}" />
+                                <TextBlock Text="{Binding Location}" TextTrimming="CharacterEllipsis" />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -181,7 +189,7 @@
         <DockPanel
             Grid.Row="3"
             Grid.RowSpan="1"
-            Margin="0,0,20,10">
+            Margin="0,0,20,0">
             <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                 <Button
                     x:Name="btnProgramSourceStatus"

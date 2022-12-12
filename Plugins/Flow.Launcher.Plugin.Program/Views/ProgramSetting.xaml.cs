@@ -391,5 +391,20 @@ namespace Flow.Launcher.Plugin.Program.Views
         {
             return items.All(x => _settings.ProgramSources.Any(y => y.UniqueIdentifier == x.UniqueIdentifier));
         }
+
+        private void ListView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            ListView listView = sender as ListView;
+            GridView gView = listView.View as GridView;
+
+            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var col1 = 0.25;
+            var col2 = 0.15;
+            var col3 = 0.60;
+
+            gView.Columns[0].Width = workingWidth * col1;
+            gView.Columns[1].Width = workingWidth * col2;
+            gView.Columns[2].Width = workingWidth * col3;
+        }
     }
 }
