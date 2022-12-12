@@ -24,6 +24,7 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -65,7 +66,8 @@ namespace Flow.Launcher.ViewModel
             Settings = settings;
             Settings.PropertyChanged += (_, args) =>
             {
-                switch (args.PropertyName) {
+                switch (args.PropertyName)
+                {
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
                         break;
@@ -365,6 +367,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _queryText = value;
+                OnPropertyChanged();
                 Query();
             }
         }
@@ -426,19 +429,24 @@ namespace Flow.Launcher.ViewModel
         /// <param name="reQuery">Force query even when Query Text doesn't change</param>
         public void ChangeQueryText(string queryText, bool reQuery = false)
         {
-            if (QueryText != queryText)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                // re-query is done in QueryText's setter method
-                QueryText = queryText;
-                // set to false so the subsequent set true triggers
-                // PropertyChanged and MoveQueryTextToEnd is called
-                QueryTextCursorMovedToEnd = false;
-            }
-            else if (reQuery)
-            {
-                Query();
-            }
-            QueryTextCursorMovedToEnd = true;
+                if (QueryText != queryText)
+                {
+
+                    // re-query is done in QueryText's setter method
+                    QueryText = queryText;
+                    // set to false so the subsequent set true triggers
+                    // PropertyChanged and MoveQueryTextToEnd is called
+                    QueryTextCursorMovedToEnd = false;
+
+                }
+                else if (reQuery)
+                {
+                    Query();
+                }
+                QueryTextCursorMovedToEnd = true;
+            });
         }
 
         public bool LastQuerySelected { get; set; }
@@ -752,11 +760,14 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
-            foreach (var shortcut in builtInShortcuts)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                queryBuilder.Replace(shortcut.Key, shortcut.Expand());
-                queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
-            }
+                foreach (var shortcut in builtInShortcuts)
+                {
+                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
+                    queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+                }
+            });
 
             // show expanded builtin shortcuts
             // use private field to avoid infinite recursion
@@ -879,11 +890,14 @@ namespace Flow.Launcher.ViewModel
 
         public void Show()
         {
-            MainWindowVisibility = Visibility.Visible;
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                MainWindowVisibility = Visibility.Visible;
 
-            MainWindowVisibilityStatus = true;
+                MainWindowOpacity = 1;
 
-            MainWindowOpacity = 1;
+                MainWindowVisibilityStatus = true;
+            });
         }
 
         public async void Hide()

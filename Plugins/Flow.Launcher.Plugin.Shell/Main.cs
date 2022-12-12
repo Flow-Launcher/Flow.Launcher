@@ -61,15 +61,15 @@ namespace Flow.Launcher.Plugin.Shell
 
                     if (basedir != null)
                     {
-                        var autocomplete = 
+                        var autocomplete =
                             Directory.GetFileSystemEntries(basedir)
                                 .Select(o => dir + Path.GetFileName(o))
                                 .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
-                        
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+
                         autocomplete.Sort();
-                        
+
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
                             Title = m,
@@ -194,72 +194,74 @@ namespace Flow.Launcher.Plugin.Shell
 
             ProcessStartInfo info = new()
             {
-                Verb = runAsAdministratorArg,
-                WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
             };
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
-                    {
-                        info.FileName = "cmd.exe";
-                        info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                {
+                    info.FileName = "cmd.exe";
+                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
 
-                        //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
-                        //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
-                        //// Incorrect:
-                        // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
+                    //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
+                    //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
+                    //// Incorrect:
+                    // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                    // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
 
-                        //// Correct version should be:
-                        //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        //info.ArgumentList.Add("mkdir");
-                        //info.ArgumentList.Add(@"c:\test new");
+                    //// Correct version should be:
+                    //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                    //info.ArgumentList.Add("mkdir");
+                    //info.ArgumentList.Add(@"c:\test new");
 
-                        //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
+                    //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
 
-                        break;
-                    }
+                    break;
+                }
 
                 case Shell.Powershell:
+                {
+                    info.FileName = "powershell.exe";
+                    if (_settings.LeaveShellOpen)
                     {
-                        info.FileName = "powershell.exe";
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("-NoExit");
-                            info.ArgumentList.Add(command);
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add(command);
-                        }
-                        break;
+                        info.ArgumentList.Add("-NoExit");
+                        info.ArgumentList.Add(command);
                     }
+                    else
+                    {
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add(command);
+                    }
+                    break;
+                }
 
                 case Shell.RunCommand:
+                {
+                    var parts = command.Split(new[]
                     {
-                        var parts = command.Split(new[] { ' ' }, 2);
-                        if (parts.Length == 2)
+                        ' '
+                    }, 2);
+                    if (parts.Length == 2)
+                    {
+                        var filename = parts[0];
+                        if (ExistInPath(filename))
                         {
-                            var filename = parts[0];
-                            if (ExistInPath(filename))
-                            {
-                                var arguments = parts[1];
-                                info.FileName = filename;
-                                info.ArgumentList.Add(arguments);
-                            }
-                            else
-                            {
-                                info.FileName = command;
-                            }
+                            var arguments = parts[1];
+                            info.FileName = filename;
+                            info.ArgumentList.Add(arguments);
                         }
                         else
                         {
                             info.FileName = command;
                         }
-
-                        break;
                     }
+                    else
+                    {
+                        info.FileName = command;
+                    }
+
+                    break;
+                }
                 default:
                     throw new NotImplementedException();
             }
@@ -350,8 +352,12 @@ namespace Flow.Launcher.Plugin.Shell
         private void OnWinRPressed()
         {
             // show the main window and set focus to the query box
-            context.API.ShowMainWindow();
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            Task.Run(() =>
+            {
+                context.API.ShowMainWindow();
+                context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            });
+
         }
 
         public Control CreateSettingPanel()
