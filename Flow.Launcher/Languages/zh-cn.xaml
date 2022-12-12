@@ -89,7 +89,7 @@
     <system:String x:Key="author">出自</system:String>
     <system:String x:Key="plugin_init_time">加载耗时：</system:String>
     <system:String x:Key="plugin_query_time">查询耗时：</system:String>
-    <system:String x:Key="plugin_query_version">| 版本</system:String>
+    <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
 
