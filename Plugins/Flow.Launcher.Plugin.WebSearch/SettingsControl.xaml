@@ -35,7 +35,7 @@
             </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
-    <Grid Margin="14,14,14,0">
+    <Grid Margin="0,4,0,0">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="56" />
@@ -44,7 +44,7 @@
         <ListView
             x:Name="SearchSourcesListView"
             Grid.Row="0"
-            Margin="0,18,0,0"
+            Margin="18,18,18,0"
             BorderBrush="DarkGray"
             BorderThickness="1"
             GridViewColumnHeader.Click="SortByColumn"
@@ -86,13 +86,21 @@
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
-                    <GridViewColumn
-                        Width="80"
-                        DisplayMemberBinding="{Binding Enabled}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
+                    <GridViewColumn Width="140" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Enabled}" />
+                                <TextBlock>
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_false}" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                    <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_true}" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
@@ -115,7 +123,7 @@
                 Content="{DynamicResource flowlauncher_plugin_websearch_edit}" />
             <Button
                 Width="100"
-                Margin="10,10,0,10"
+                Margin="10,10,18,10"
                 Click="OnAddSearchSearchClick"
                 Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
@@ -123,9 +131,9 @@
             Grid.Row="2"
             Margin="0,0,0,0"
             HorizontalAlignment="Stretch"
-            BorderBrush="#cecece"
+            BorderBrush="{DynamicResource Color03B}"
             BorderThickness="0,1,0,0">
-            <DockPanel Margin="0,14,0,0" HorizontalAlignment="Right">
+            <DockPanel HorizontalAlignment="Right">
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
                     <Label
                         Margin="14,0,10,0"
@@ -147,7 +155,7 @@
                         Content="{DynamicResource flowlauncher_plugin_websearch_enable_suggestion}" />
                     <CheckBox
                         Name="EnableSuggestion"
-                        Margin="0,0,0,0"
+                        Margin="0,0,8,0"
                         IsChecked="{Binding Settings.EnableSuggestion}" />
                 </StackPanel>
                 <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSaerchSuggestion is not working  -->
