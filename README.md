@@ -62,6 +62,10 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - Add Searchbox. you can search plugins in plugin / plugin store.
 - Add Category in plugin store.(Installed, New...)
 
+### Improve non-c# plugin panel design
+- The design has been adjusted to suit the overall design feel.
+- Changed the complex bottom information simply.
+
 <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.10">Full changelog</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
