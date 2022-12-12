@@ -63,6 +63,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
+    <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao iniciar a aplicação. Prima F1 para comutar esta opção. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
 
     <!--  Setting Plugin  -->
@@ -87,7 +89,7 @@
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
-    <system:String x:Key="plugin_query_version">| Versão</system:String>
+    <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
 
