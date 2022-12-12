@@ -176,8 +176,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
             results.Add(retrievedDirectoryPath.EndsWith(":\\") 
-                ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, useIndexSearch)
-                : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, useIndexSearch));
+                ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch)
+                : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
 
             if (token.IsCancellationRequested)
                 return new List<Result>();
