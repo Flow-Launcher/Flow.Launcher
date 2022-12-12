@@ -194,6 +194,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
+- You can toggle through the Ctrl+F12.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
