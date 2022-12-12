@@ -38,6 +38,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 ### Everything plugin merged to Explorer
 <img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
+
 - Everything's features are now included in the Explorer plug-in.
 - If you are already using everything plugin, you can only enable the explorer.
 - If you are using windows search indexer, add-ons are available from the Everything plug-in.
