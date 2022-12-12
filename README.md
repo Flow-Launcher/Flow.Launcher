@@ -37,6 +37,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - This feature is currently in its early stages.
 
 ### Everything plugin merged to Explorer
+<img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
 - Everything's features are now included in the Explorer plug-in.
 - If you are already using everything plugin, you can only enable the explorer.
 - If you are using windows search indexer, add-ons are available from the Everything plug-in.
@@ -53,14 +54,21 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - You can drag an item to a discord or desktop.
 - The drop target program determines whether to copy or move (You can change it CTRL or Alt), and is displayed in the mouse cursor.
 
-### Custom Hotkey and Shortcut
+### Custom Shortcut
+
+<img src="https://user-images.githubusercontent.com/6903107/207170354-db1a98a6-3959-4341-82ed-0c417bdb121c.png" width="300">
+<img src="https://user-images.githubusercontent.com/6903107/207170525-3e99ad93-e8b7-4b39-b9b3-8fbeb443ed26.png" width="300">
+
+- Added shortcut functionality. This allows you to set additional action keywords.
 ### Improved Memory usage
+- Fixed a memory leak and reduced overall memory usage.
 ### Improved Plugin / Plugin Store
 - Add Searchbox. you can search plugins in plugin / plugin store.
 - Add Category in plugin store.(Installed, New...)
 
 ### Improve non-c# plugin panel design
 <img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
+
 
 - The design has been adjusted to suit the overall design feel.
 - Changed the complex bottom information simply.
