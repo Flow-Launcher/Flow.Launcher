@@ -282,9 +282,9 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
-| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                              | Toggle Game Mode                             |
-| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                             | Quick Change Maximum Result Shown                           |
-| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                             | Quick Change Window Width                           |
+| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode                             |
+| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quick Change Maximum Result Shown            |
+| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                  | Quick Change Window Width                    |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
 | <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
@@ -309,6 +309,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | Reload Plugin Data     | Refreshes plugin data with new content                       |
 | Check For Update       | Check for new Flow Launcher update                           |
 | Open Log Location      | Open Flow Launcher's log location                            |
+| Index Option           | Open Windows Search Index window                             |
 | Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
 | Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
 
