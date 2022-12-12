@@ -33,7 +33,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - Media files display large images.
 - If it is not a media file, a large icon and the entire path are displayed.
 - You can always turn it on (Always Preview) in Settings.
-- Added hotkeys to quickly change flow window's width and height.
+- Added hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to quickly change flow window's width and height. If you feel that the preview area is narrow, adjust it quickly.
 - This feature is currently in its early stages.
 
 ### Everything plugin merged to Explorer
