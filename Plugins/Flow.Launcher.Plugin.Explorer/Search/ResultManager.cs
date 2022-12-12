@@ -167,7 +167,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, string actionKeyword, bool windowsIndexed = false)
         {
-            var folderName = path.TrimEnd(Constants.DirectorySeperator).Split(new[]
+            // Path passed from PathSearchAsync ends with Constants.DirectorySeperator ('\'), need to remove the seperator
+            // so it's consistent with folder results returned by index search which does not end with one
+            var folderPath = path.TrimEnd(Constants.DirectorySeperator);
+            
+            var folderName = folderPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
             {
                 Path.DirectorySeparatorChar
             }, StringSplitOptions.None).Last();
@@ -185,19 +189,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
-                IcoPath = path,
+                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
+                IcoPath = folderPath,
                 Score = 500,
-                CopyText = path,
+                CopyText = folderPath,
                 Action = _ =>
                 {
-                    Context.API.OpenDirectory(path);
+                    Context.API.OpenDirectory(folderPath);
                     return true;
                 },
                 ContextData = new SearchResult
                 {
                     Type = ResultType.Folder,
-                    FullPath = path,
+                    FullPath = folderPath,
                     WindowsIndexed = windowsIndexed
                 }
             };

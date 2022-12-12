@@ -57,7 +57,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
                 var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
 
-                if (Settings.QuickAccessLinks.All(x => x.Path != record.FullPath))
+                if (Settings.QuickAccessLinks.All(x => !x.Path.Equals(record.FullPath, StringComparison.OrdinalIgnoreCase)))
                 {
                     contextMenus.Add(new Result
                     {
