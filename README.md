@@ -30,7 +30,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - You can use the F1 key to open/hide the preview panel.
 - Media files display large images.
 - If it is not a media file, a large icon and the entire path are displayed.
-- You can always turn it on (Always Preview) in Settings.
+- You can turn it on permanently via Settings (Always Preview).
 - Added hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to quickly change flow window's width and height. If you feel that the preview area is narrow, adjust it quickly.
 - This feature is currently in its early stages.
 
