@@ -70,7 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvorí umiestnenie, ktoré obsahuje súbor alebo priečinok</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Otvori v príkazovom riadku:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Vylúčiť položku a jej podpriečinky z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Vylúčiť z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Otvoriť možnosti vyhľadávania vo Windowse</system:String>
@@ -87,7 +89,7 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstráni {0} z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
-
+    
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodarilo sa načítať Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Upozornenie: Služba Everything nie je spustená</system:String>
