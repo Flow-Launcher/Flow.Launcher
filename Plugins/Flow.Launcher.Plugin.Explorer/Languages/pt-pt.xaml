@@ -70,9 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir pasta de destino</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre a localização que contém o ficheiro ou a pasta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Erro ao abrir o ficheiro {0} com o editor {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir com a consola:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Erro ao abrir a pasta {0} com a consola {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir diretório atual do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluído do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opções de indexação do Windows</system:String>
