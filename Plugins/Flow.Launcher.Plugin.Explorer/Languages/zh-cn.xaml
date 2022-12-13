@@ -70,7 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开文件或文件夹所在目录</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开：</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">使用 Shell 打开：</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">从索引搜索中排除当前目录和子目录</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">从索引搜索中排除</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">打开Windows索引选项</system:String>
@@ -87,7 +89,7 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中删除 {0}</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
-
+    
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK 加载失败</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告：Everything 服务未运行</system:String>
