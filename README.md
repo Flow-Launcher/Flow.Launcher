@@ -27,11 +27,10 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 ### Preview Panel
 <img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-- You can use the F1 key to open/hide the preview panel.
-- Media files display large images.
-- If it is not a media file, a large icon and the entire path are displayed.
-- You can turn it on permanently via Settings (Always Preview).
-- Added hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to quickly change flow window's width and height. If you feel that the preview area is narrow, adjust it quickly.
+- Use the F1 key to open/hide the preview panel.
+- Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
+- Turn on preview permanently via Settings (Always Preview).
+- Use hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to adjust flow's search window width and height quickly if the preview area is too narrow.
 - This feature is currently in its early stages.
 
 ### Everything plugin merged to Explorer
