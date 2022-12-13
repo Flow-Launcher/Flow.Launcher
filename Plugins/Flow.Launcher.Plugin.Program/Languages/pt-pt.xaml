@@ -10,6 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_program_enable">Ativar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Ativo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Desativar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">Estado</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Ativo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_false">Inativo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Localização</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos os programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Tipo de ficheiro</system:String>
@@ -26,7 +29,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar caminho da aplicação</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executáveis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Pesquisar na descrição dos programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Se ativada, Flow Launcher irá analisar também a descrição dos programas</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow irá pesquisar na descrição do programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Sufixos</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidade máxima</system:String>
 

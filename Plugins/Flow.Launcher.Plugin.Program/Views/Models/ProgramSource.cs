@@ -83,7 +83,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UniqueIdentifier);
+            return uniqueIdentifier.GetHashCode();
         }
     }
 }

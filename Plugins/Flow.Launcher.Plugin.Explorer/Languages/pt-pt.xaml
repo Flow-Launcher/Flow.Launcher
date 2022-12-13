@@ -49,7 +49,7 @@
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Mecanismo de pesquisa para conteúdo</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Mecanismo de pesquisa recursiva de diretórios</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Mecanismo de pesquisa do índice</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opções do índice Windows</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opções de índice do Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
