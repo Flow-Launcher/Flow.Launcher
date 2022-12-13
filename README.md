@@ -277,11 +277,11 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>F1</kbd>                                                | Toggle Preveiw Panel                         |
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
-| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
+| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open flow's settings                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
-| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode when in search window.          |
-| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quickly change maximum results shown            |
-| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                  | Quickly change search window width                    |
+| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode when in search window.      |
+| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quickly change maximum results shown         |
+| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                  | Quickly change search window width           |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
 | <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
@@ -333,7 +333,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   </a>
 </p>
 
-## Mentions
+### Mentions
 - <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - Appwrite
 - <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">Softpedia Editor's Pick</a>
 
