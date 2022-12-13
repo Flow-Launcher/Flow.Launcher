@@ -33,31 +33,30 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - Use hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to adjust flow's search window width and height quickly if the preview area is too narrow.
 - This feature is currently in its early stages.
 
-### Everything plugin merged to Explorer
+### Everything Plugin Merged Into Explorer
 <img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
 
-- Everything's features are now included in the Explorer plug-in.
-- If you are already using everything plugin, you can only enable the explorer.
-- If you are using windows search indexer, add-ons are available from the Everything plug-in.
+- Switch easily between Everything and Windows Search to take advantage of both search engines (remember to remove existing Everything plugin).
+- Use features available to both Everything and Explorer plugins
 
-### Clock & Dates in Search box
+### Date & Time Display In Search Window
 
 <img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
 
-- Display Time & dates in searchbox.
+- Display the date and time when the search window is triggered.
 
-### Drag and Drop
+### Drag & Drop
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
 
-- You can drag an item to a discord or desktop.
-- The drop target program determines whether to copy or move (You can change it CTRL or Alt), and is displayed in the mouse cursor.
+- Drag an item to Discord or computer location.
+- The target program determines whether the drop is to copy or move the item (can change via CTRL or Alt), and the operation is displayed on the mouse cursor.
 
 ### Custom Shortcut
 
 <img src="https://user-images.githubusercontent.com/6903107/207170354-db1a98a6-3959-4341-82ed-0c417bdb121c.png" width="300">
 <img src="https://user-images.githubusercontent.com/6903107/207170525-3e99ad93-e8b7-4b39-b9b3-8fbeb443ed26.png" width="300">
 
-- Added shortcut functionality. This allows you to set additional action keywords.
+- New shortcut functionality to set additional action keywords or search terms.
 
 ### Impvroved Program Plugin
 - Added Index PATH
