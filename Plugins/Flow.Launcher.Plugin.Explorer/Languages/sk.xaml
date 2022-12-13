@@ -35,7 +35,7 @@
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Cesta vyhľadávania:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie v obsahu súborov:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">Vyhľadávanie obsahu súborov:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Vyhľadávanie v indexe:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Rýchly prístup:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Aktuálny aktivačný príkaz</system:String>
