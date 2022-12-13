@@ -327,7 +327,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Failed to open editor for file at {record.FullPath} with Editor {Path.GetFileNameWithoutExtension(editorPath)} at {editorPath}";
+                        var raw_message = Context.API.GetTranslation("plugin_explorer_openwitheditor_error");
+                        var message = string.Format(raw_message, record.FullPath, Path.GetFileNameWithoutExtension(editorPath), editorPath);
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;
@@ -358,7 +359,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                     catch (Exception e)
                     {
-                        var message = $"Failed to open editor for file at {record.FullPath} with Shell {Path.GetFileNameWithoutExtension(shellPath)} at {shellPath}";
+                        var raw_message = Context.API.GetTranslation("plugin_explorer_openwithshell_error");
+                        var message = string.Format(raw_message, record.FullPath, Path.GetFileNameWithoutExtension(shellPath), shellPath);
                         LogException(message, e);
                         Context.API.ShowMsgError(message);
                         return false;
