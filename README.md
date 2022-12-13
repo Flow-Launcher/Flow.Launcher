@@ -59,9 +59,9 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - New shortcut functionality to set additional action keywords or search terms.
 
 ### Impvroved Program Plugin
-- Added Index PATH
-- Support .url files. so flow can search steam/epic games in now.
-- Improved Indexing UWP.
+- PATH is now indexed
+- Support for .url files, flow can now search installed steam/epic games.
+- Improved UWP indexing.
 
 ### Improved Memory usage
 - Fixed a memory leak and reduced overall memory usage.
