@@ -47,9 +47,9 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumeración directa</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Motor de búsqueda de contenido</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de búsqueda recursivo de directorio</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de búsqueda recursiva de directorio</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Motor de búsqueda del Índice</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir ventana de opciones de indexación</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
@@ -89,7 +89,7 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Fallo al cargar Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">No se ha podido cargar Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Advertencia: El servicio de Everything no se está ejecutando</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error al consultar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Ordenar por</system:String>

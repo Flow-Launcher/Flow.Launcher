@@ -10,6 +10,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">삭제</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">편집</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">추</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">켬</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">확인</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">액션 키워드</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
@@ -30,7 +32,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">이름</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">활성화</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">아이콘 선택</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">아이콘</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">취소</system:String>

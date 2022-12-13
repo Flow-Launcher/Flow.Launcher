@@ -10,6 +10,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Añadir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
@@ -30,7 +32,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Activar</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Estado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Seleccionar icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancelar</system:String>

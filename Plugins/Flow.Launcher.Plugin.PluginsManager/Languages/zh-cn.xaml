@@ -2,13 +2,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">下载插件</system:String>
+    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">正在下载插件...</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">下载完成</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">错误：无法下载该插件</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3} 您要卸载此插件吗？ 卸载后，Flow Launcher 将自动重启。</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3} 您要安装此插件吗？ 安装后，Flow Launcher 将自动重启</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">插件安装</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">正在安装插件</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">下载与安装 {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">插件卸载</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">插件安装成功。正在重新启动 Flow Launcher，请稍候...</system:String>
