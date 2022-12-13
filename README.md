@@ -334,8 +334,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 </p>
 
 ## Mentions
-- <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - appwrite
-- <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a>
+- <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - Appwrite
+- <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">Softpedia Editor's Pick</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
