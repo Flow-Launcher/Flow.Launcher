@@ -63,18 +63,18 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 - Support for .url files, flow can now search installed steam/epic games.
 - Improved UWP indexing.
 
-### Improved Memory usage
+### Improved Memory Usage
 - Fixed a memory leak and reduced overall memory usage.
-### Improved Plugin / Plugin Store
-- Add Searchbox. you can search plugins in plugin / plugin store.
-- Add Category in plugin store.(Installed, New...)
 
-### Improve non-c# plugin panel design
+### Improved Plugin / Plugin Store
+- Search plugins in the Plugin Store and existing plugin tab.
+- Categorised sections in Plugin Store to easily see new and updated plugins.
+
+### Improved Non-C# Plugin's Panel Design
 <img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
 
-
-- The design has been adjusted to suit the overall design feel.
-- Changed the complex bottom information simply.
+- The design has been adjusted to align to the overall look and feel of flow.
+- Simplified the information displayed on buttons
 
 🚂<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full Changelogs</a>
 
