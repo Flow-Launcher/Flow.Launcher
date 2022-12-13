@@ -322,7 +322,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 {
                     try
                     {
-                        Process.Start(editorPath, record.FullPath);
+                        Process.Start(editorPath, '"' + record.FullPath + '"');
                         return true;
                     }
                     catch (Exception e)
