@@ -9,6 +9,7 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
+using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -65,11 +66,11 @@ namespace Flow.Launcher
             {
                 await Task.Delay(500, token);
                 if (!token.IsCancellationRequested)
-                    await SetHotkey(hotkeyModel);
+                    await SetHotkeyAsync(hotkeyModel);
             });
         }
 
-        public async Task SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
+        public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
             CurrentHotkey = keyModel;
 
@@ -101,9 +102,9 @@ namespace Flow.Launcher
             }
         }
 
-        public void SetHotkey(string keyStr, bool triggerValidate = true)
+        public Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
         {
-            SetHotkey(new HotkeyModel(keyStr), triggerValidate);
+            return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
         private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
@@ -113,7 +114,7 @@ namespace Flow.Launcher
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
             tbMsg.Text = tbMsgTextOriginal;
-            tbMsg.Foreground = tbMsgForegroundColorOriginal;
+            tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
         }
     }
 }

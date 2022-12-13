@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin;
+﻿using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.Explorer;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
@@ -7,6 +7,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -19,10 +20,12 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
+#pragma warning disable CS1998 // async method with no await (more readable to leave it async to match the tested signature)
         private async Task<List<Result>> MethodWindowsIndexSearchReturnsZeroResultsAsync(Query dummyQuery, string dummyString, CancellationToken dummyToken)
         {
             return new List<Result>();
         }
+#pragma warning restore CS1998
 
         private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString, CancellationToken token)
         {
@@ -30,12 +33,11 @@ namespace Flow.Launcher.Test.Plugins
             {
                 new Result
                 {
-                    Title="Result 1"
+                    Title = "Result 1"
                 },
-
                 new Result
                 {
-                    Title="Result 2"
+                    Title = "Result 2"
                 }
             };
         }
@@ -44,15 +46,13 @@ namespace Flow.Launcher.Test.Plugins
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\SomeFolder\\", "directory='file:C:\\SomeFolder\\'")]
         public void GivenWindowsIndexSearch_WhenProvidedFolderPath_ThenQueryWhereRestrictionsShouldUseDirectoryString(string path, string expectedString)
         {
-            // Given
-            var queryConstructor = new QueryConstructor(new Settings());
-
             // When
             var folderPath = path;
-            var result = queryConstructor.QueryWhereRestrictionsForTopLevelDirectorySearch(folderPath);
+            var result = QueryConstructor.TopLevelDirectoryConstraint(folderPath);
 
             // Then
             Assert.IsTrue(result == expectedString,
@@ -60,6 +60,7 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual: {result}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("C:\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\' ORDER BY System.FileName")]
         [TestCase("C:\\SomeFolder\\", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType FROM SystemIndex WHERE directory='file:C:\\SomeFolder\\' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchTypeIsTopLevelDirectorySearch_ThenQueryShouldUseExpectedString(string folderPath, string expectedString)
@@ -68,130 +69,68 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When            
-            var queryString = queryConstructor.QueryForTopLevelDirectorySearch(folderPath);
+            var queryString = queryConstructor.Directory(folderPath);
 
             // Then
-            Assert.IsTrue(queryString == expectedString,
+            Assert.IsTrue(queryString.Replace("  ", " ") == expectedString.Replace("  ", " "),
                 $"Expected string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
-        [TestCase("C:\\SomeFolder\\flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
-            "FROM SystemIndex WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033))" +
-                                        " AND directory='file:C:\\SomeFolder' ORDER BY System.FileName")]
+        [SupportedOSPlatform("windows7.0")]
+        [TestCase("C:\\SomeFolder", "flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType" +
+                                                         " FROM SystemIndex WHERE directory='file:C:\\SomeFolder'" +
+                                                         " AND (System.FileName LIKE 'flow.launcher.sln%' OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"'))" +
+                                                         " ORDER BY System.FileName")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
-            string userSearchString, string expectedString)
+            string folderPath, string userSearchString, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When            
-            var queryString = queryConstructor.QueryForTopLevelDirectorySearch(userSearchString);
+            var queryString = queryConstructor.Directory(folderPath, userSearchString);
 
             // Then
-            Assert.IsTrue(queryString == expectedString,
-                $"Expected string: {expectedString}{Environment.NewLine} " +
-                $"Actual string was: {queryString}{Environment.NewLine}");
+            Assert.AreEqual(expectedString, queryString);
         }
 
-        [TestCase("C:\\SomeFolder\\SomeApp", "(System.FileName LIKE 'SomeApp%' " +
-                    "OR CONTAINS(System.FileName,'\"SomeApp*\"',1033))" +
-                    " AND directory='file:C:\\SomeFolder'")]
-        public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryWhereRestrictionsShouldUseDirectoryString(
-            string userSearchString, string expectedString)
-        {
-            // Given
-            var queryConstructor = new QueryConstructor(new Settings());
-
-            //When            
-            var queryString = queryConstructor.QueryWhereRestrictionsForTopLevelDirectorySearch(userSearchString);
-
-            // Then
-            Assert.IsTrue(queryString == expectedString,
-                $"Expected string: {expectedString}{Environment.NewLine} " +
-                $"Actual string was: {queryString}{Environment.NewLine}");
-        }
-
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("scope='file:'")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryWhereRestrictionsShouldUseScopeString(string expectedString)
         {
             //When
-            var resultString = QueryConstructor.QueryWhereRestrictionsForAllFilesAndFoldersSearch;
+            const string resultString = QueryConstructor.RestrictionsForAllFilesAndFoldersSearch;
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
-                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
-                $"Actual string was: {resultString}{Environment.NewLine}");
+            Assert.AreEqual(expectedString, resultString);
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
-            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                        "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
+                                       "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+                                       "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
+        [TestCase("", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
-            var baseQuery =  queryConstructor.CreateBaseQuery();
-            
+            var baseQuery = queryConstructor.BaseQueryHelper;
+
             // system running this test could have different locale than the hard-coded 1033 LCID en-US.
             var queryKeywordLocale = baseQuery.QueryKeywordLocale;
             expectedString = expectedString.Replace("1033", queryKeywordLocale.ToString());
-            
-            
 
             //When
-            var resultString = queryConstructor.QueryForAllFilesAndFolders(userSearchString);
+            var resultString = queryConstructor.FilesAndFolders(userSearchString);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
-                $"Expected query string: {expectedString}{Environment.NewLine} " +
-                $"Actual string was: {resultString}{Environment.NewLine}");
+            Assert.AreEqual(expectedString, resultString);
         }
 
-        [TestCase]
-        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldContinueDirectoryInfoClassSearch()
-        {
-            // Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
-            // When
-            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
-                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
-                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
-                                            false,
-                                            new Query(),
-                                            "string not used",
-                                            default);
-
-            // Then
-            Assert.IsTrue(results.Count == 2,
-                $"Expected to have 2 results from DirectoryInfoClassSearch {Environment.NewLine} " +
-                $"Actual number of results is {results.Count} {Environment.NewLine}");
-        }
-
-        [TestCase]
-        public async Task GivenTopLevelDirectorySearch_WhenIndexSearchNotRequired_ThenSearchMethodShouldNotContinueDirectoryInfoClassSearch()
-        {
-            // Given
-            var searchManager = new SearchManager(new Settings(), new PluginInitContext());
-
-            // When
-            var results = await searchManager.TopLevelDirectorySearchBehaviourAsync(
-                                            MethodWindowsIndexSearchReturnsZeroResultsAsync,
-                                            MethodDirectoryInfoClassSearchReturnsTwoResults,
-                                            true,
-                                            new Query(),
-                                            "string not used",
-                                            default);
-
-            // Then
-            Assert.IsTrue(results.Count == 0,
-                $"Expected to have 0 results because location is indexed {Environment.NewLine} " +
-                $"Actual number of results is {results.Count} {Environment.NewLine}");
-        }
-
+        [SupportedOSPlatform("windows7.0")]
         [TestCase(@"some words", @"FREETEXT('some words')")]
         public void GivenWindowsIndexSearch_WhenQueryWhereRestrictionsIsForFileContentSearch_ThenShouldReturnFreeTextString(
             string querySearchString, string expectedString)
@@ -200,7 +139,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When
-            var resultString = queryConstructor.QueryWhereRestrictionsForFileContentSearch(querySearchString);
+            var resultString = QueryConstructor.RestrictionsForFileContentSearch(querySearchString);
 
             // Then
             Assert.IsTrue(resultString == expectedString,
@@ -208,8 +147,9 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("some words", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
-                    "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
+                                "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchForFileContent_ThenQueryShouldUseExpectedString(
             string userSearchString, string expectedString)
         {
@@ -217,7 +157,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryConstructor = new QueryConstructor(new Settings());
 
             //When
-            var resultString = queryConstructor.QueryForFileContentSearch(userSearchString);
+            var resultString = queryConstructor.FileContent(userSearchString);
 
             // Then
             Assert.IsTrue(resultString == expectedString,
@@ -228,12 +168,15 @@ namespace Flow.Launcher.Test.Plugins
         public void GivenQuery_WhenActionKeywordForFileContentSearchExists_ThenFileContentSearchRequiredShouldReturnTrue()
         {
             // Given
-            var query = new Query { ActionKeyword = "doc:", Search = "search term" };
+            var query = new Query
+            {
+                ActionKeyword = "doc:", Search = "search term"
+            };
 
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
+            var result = SearchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
             Assert.IsTrue(result,
@@ -301,24 +244,19 @@ namespace Flow.Launcher.Test.Plugins
                 $"Actual path string is {returnedPath} {Environment.NewLine}");
         }
 
-        [TestCase("c:\\SomeFolder\\>", "scope='file:c:\\SomeFolder'")]
-        [TestCase("c:\\SomeFolder\\>SomeName", "(System.FileName LIKE 'SomeName%' "
-                                               + "OR CONTAINS(System.FileName,'\"SomeName*\"',1033)) AND "
-                                               + "scope='file:c:\\SomeFolder'")]
-        public void GivenWindowsIndexSearch_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString)
+        [SupportedOSPlatform("windows7.0")]
+        [TestCase("c:\\SomeFolder", "scope='file:c:\\SomeFolder'")]
+        [TestCase("c:\\OtherFolder", "scope='file:c:\\OtherFolder'")]
+        public void GivenFilePath_WhenSearchPatternHotKeyIsSearchAll_ThenQueryWhereRestrictionsShouldUseScopeString(string path, string expectedString)
         {
-            // Given
-            var queryConstructor = new QueryConstructor(new Settings());
-
             //When
-            var resultString = queryConstructor.QueryWhereRestrictionsForTopLevelDirectoryAllFilesAndFoldersSearch(path);
+            var resultString = QueryConstructor.RecursiveDirectoryConstraint(path);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
-                $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
-                $"Actual string was: {resultString}{Environment.NewLine}");
+            Assert.AreEqual(expectedString, resultString);
         }
 
+        [SupportedOSPlatform("windows7.0")]
         [TestCase("c:\\somefolder\\>somefile", "*somefile*")]
         [TestCase("c:\\somefolder\\somefile", "somefile*")]
         [TestCase("c:\\somefolder\\", "*")]
@@ -329,9 +267,7 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = DirectoryInfoSearch.ConstructSearchCriteria(path);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
-                $"Expected criteria string: {expectedString}{Environment.NewLine} " +
-                $"Actual criteria string was: {resultString}{Environment.NewLine}");
+            Assert.AreEqual(expectedString, resultString);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace Flow.Launcher.Plugin.PluginIndicator
                               SubTitle = $"Activate {metadata.Name} plugin",
                               Score = 100,
                               IcoPath = metadata.IcoPath,
+                              AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
                               Action = c =>
                               {
                                   context.API.ChangeQuery($"{keyword}{Plugin.Query.TermSeparator}");

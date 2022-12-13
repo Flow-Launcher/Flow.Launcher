@@ -62,7 +62,6 @@
                         <TextBlock
                             Grid.Column="0"
                             Margin="0,0,0,0"
-                            FontFamily="Segoe UI"
                             FontSize="20"
                             FontWeight="SemiBold"
                             Text="{DynamicResource fileManagerWindow}"

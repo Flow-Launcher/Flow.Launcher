@@ -1,0 +1,132 @@
+using Flow.Launcher.Infrastructure.Logger;
+using Microsoft.Search.Interop;
+using System;
+using System.Collections.Generic;
+using System.Data.OleDb;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+using System.Threading;
+using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
+
+namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
+{
+    internal static class WindowsIndex
+    {
+
+        // Reserved keywords in oleDB
+        private static Regex _reservedPatternMatcher = new(@"^[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+$", RegexOptions.Compiled);
+
+        private static async IAsyncEnumerable<SearchResult> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, [EnumeratorCancellation] CancellationToken token)
+        {
+            await using var conn = new OleDbConnection(connectionString);
+            await conn.OpenAsync(token);
+            token.ThrowIfCancellationRequested();
+
+            await using var command = new OleDbCommand(indexQueryString, conn);
+            // Results return as an OleDbDataReader.
+            OleDbDataReader dataReaderAttempt;
+            try
+            {
+                dataReaderAttempt = await command.ExecuteReaderAsync(token) as OleDbDataReader;
+            }
+            catch (OleDbException e)
+            {
+                Log.Exception($"|WindowsIndex.ExecuteWindowsIndexSearchAsync|Failed to execute windows index search query: {indexQueryString}", e);
+                yield break;
+            }
+            await using var dataReader = dataReaderAttempt;
+            token.ThrowIfCancellationRequested();
+
+            if (dataReader is not { HasRows: true })
+            {
+                yield break;
+            }
+
+            while (await dataReader.ReadAsync(token))
+            {
+                token.ThrowIfCancellationRequested();
+                if (dataReader.GetValue(0) == DBNull.Value || dataReader.GetValue(1) == DBNull.Value)
+                {
+                    continue;
+                }
+                // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
+                var encodedFragmentPath = dataReader
+                    .GetString(1)
+                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+
+                var path = new Uri(encodedFragmentPath).LocalPath;
+
+                yield return new SearchResult
+                {
+                    FullPath = path,
+                    Type = dataReader.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    WindowsIndexed = true
+                };
+            }
+
+            // Initial ordering, this order can be updated later by UpdateResultView.MainViewModel based on history of user selection.
+        }
+
+        internal static IAsyncEnumerable<SearchResult> WindowsIndexSearchAsync(
+            string connectionString,
+            string search,
+            CancellationToken token)
+        {
+            try
+            {
+
+                return _reservedPatternMatcher.IsMatch(search)
+                    ? AsyncEnumerable.Empty<SearchResult>()
+                    : ExecuteWindowsIndexSearchAsync(search, connectionString, token);
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new SearchException("Windows Index", e.Message, e);
+            }
+            catch (COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                
+                if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+                    return AsyncEnumerable.Empty<SearchResult>();
+
+                var api = SearchManager.Context.API;
+
+                throw new EngineNotAvailableException(
+                    "Windows Index",
+                    api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                    api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                    c =>
+                    {
+                        SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                        // Clears the warning message so user is not mistaken that it has not worked
+                        api.ChangeQuery(string.Empty);
+
+                        return ValueTask.FromResult(false);
+                    })
+                {
+                    ErrorIcon = Constants.WindowsIndexErrorImagePath
+                };
+            }
+        }
+
+        internal static bool PathIsIndexed(string path)
+        {
+            try
+            {
+                var csm = new CSearchManager();
+                var indexManager = csm.GetCatalog("SystemIndex").GetCrawlScopeManager();
+                return indexManager.IncludedInCrawlScope(path) > 0;
+            }
+            catch (COMException)
+            {
+                // Occurs because the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                return false;
+            }
+        }
+    }
+}

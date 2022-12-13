@@ -2,6 +2,8 @@
 using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,43 +12,43 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public static class PluginsManifest
     {
-        static PluginsManifest()
-        {
-            UpdateTask = UpdateManifestAsync();
-        }
-
-        public static List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
-
-        public static Task UpdateTask { get; private set; }
+        private const string manifestFileUrl = "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
-        public static Task UpdateManifestAsync()
-        {
-            if (manifestUpdateLock.CurrentCount == 0)
-            {
-                return UpdateTask;
-            }
+        private static string latestEtag = "";
 
-            return UpdateTask = DownloadManifestAsync();
-        }
+        public static List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
 
-        private static async Task DownloadManifestAsync()
+        public static async Task UpdateManifestAsync(CancellationToken token = default)
         {
             try
             {
-                await manifestUpdateLock.WaitAsync().ConfigureAwait(false);
+                await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
-                await using var jsonStream = await Http.GetStreamAsync("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json")
-                                 .ConfigureAwait(false);
+                var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
+                request.Headers.Add("If-None-Match", latestEtag);
 
-                UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(jsonStream).ConfigureAwait(false);
+                using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    Log.Info($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Fetched plugins from manifest repo");
+
+                    await using var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
+
+                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
+
+                    latestEtag = response.Headers.ETag.Tag;
+                }
+                else if (response.StatusCode != HttpStatusCode.NotModified)
+                {
+                    Log.Warn($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Http response for manifest file was {response.StatusCode}");
+                }
             }
             catch (Exception e)
             {
-                Log.Exception("|PluginManagement.GetManifest|Encountered error trying to download plugins manifest", e);
-
-                UserPlugins = new List<UserPlugin>();
+                Log.Exception($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Http request failed", e);
             }
             finally
             {

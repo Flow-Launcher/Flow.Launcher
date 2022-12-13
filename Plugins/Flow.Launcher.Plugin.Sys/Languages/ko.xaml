@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Command List-->
+    <!--  Command List  -->
     <system:String x:Key="flowlauncher_plugin_sys_command">명령어</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">설명</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">컴퓨터 종료</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">컴퓨터 재시작</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">안전 및 디버깅 모드에 대한 고급 부팅 옵션과 기타 옵션을 사용하여 컴퓨터를 다시 시작</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">시스템 종료</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer">시스템 재시작</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">안전 및 디버깅 모드에 대한 고급 부팅 옵션과 기타 옵션을 사용하여 시스템을 다시 시작</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_log_off">로그아웃</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">컴퓨터 잠금</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Flow Launcher 닫기</system:String>
@@ -15,6 +15,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_setting">이 프로그램을 조정합니다</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">PC를 절전모드로 전환</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">휴지통 비우기</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">휴지통 열기</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption">색인 옵션</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">최대 절전 모드</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Flow Launcher 설정 저장</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">플러그인 데이터를 새 콘텐츠와 함께 다시 로드</system:String>
@@ -23,13 +25,13 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Flow Launcher의 도움말 및 사용안내</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Flow Launcher의 설정이 저장된 위치 열기</system:String>
 
-    <!--Dialogs-->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">성공</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">모든 Flow Launcher 설정을 저장했습니다</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">적용 가능한 모든 플러그인 데이터를 다시 로드했습니다</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">컴퓨터를 종료하시겠습니까?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">컴퓨터를 재시작 하시겠습니까?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">고급 부팅 옵션으로 컴퓨터를 다시 시작하시겠습니까?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">시스템을 종료하시겠습니까?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">시스템을 재시작 하시겠습니까?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">고급 부팅 옵션으로 시스템을 다시 시작하시겠습니까?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">시스템 명령어</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">시스템 종료, 컴퓨터 잠금, 설정 등과 같은 시스템 관련 명령어를 제공합니다</system:String>

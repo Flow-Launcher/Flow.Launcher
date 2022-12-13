@@ -88,6 +88,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     ContextData = p.ProcessName,
+                    AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);

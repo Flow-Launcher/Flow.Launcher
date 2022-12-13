@@ -3,18 +3,32 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
-
+    <CornerRadius x:Key="ItemRadius">0</CornerRadius>
+    <Thickness x:Key="ItemMargin">0</Thickness>
+    <Thickness x:Key="ResultMargin">0</Thickness>
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
+
+    <Style x:Key="BaseBulletStyle" TargetType="{x:Type Border}" />
+    <Style
+        x:Key="BulletStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+    <Style
+        x:Key="ItemBulletSelectedStyle"
+        BasedOn="{StaticResource BaseBulletStyle}"
+        TargetType="{x:Type Border}" />
+
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
         <Setter Property="Margin" Value="16,7,0,7" />
         <Setter Property="Padding" Value="0,4,68,0" />
-        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
+        <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
@@ -48,6 +62,13 @@
     </Style>
 
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
+    <Style x:Key="BaseQueryBoxBgStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="0,2,0,0" />
+    </Style>
+    <Style
+        x:Key="QueryBoxBgStyle"
+        BasedOn="{StaticResource BaseQueryBoxBgStyle}"
+        TargetType="{x:Type Border}" />
     <Style
         x:Key="BaseQuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
@@ -66,6 +87,8 @@
         <Setter Property="Background" Value="#2F2F2F" />
         <Setter Property="Padding" Value="0,0,0,0" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
         <Setter Property="Width" Value="600" />
@@ -79,8 +102,94 @@
         <Setter Property="Stroke" Value="Blue" />
     </Style>
 
+    <Style x:Key="BaseClockPanelPosition" TargetType="{x:Type Canvas}" />
+
+    <Style x:Key="BaseClockPanel" TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="0,0,66,0" />
+        <Setter Property="Visibility" Value="Collapsed" />
+    </Style>
+    <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DateBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="BaseDateBox" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#C6C6C6" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#C6C6C6" />
+    </Style>
+    <Style
+        x:Key="ClockPanel"
+        BasedOn="{StaticResource BaseClockPanel}"
+        TargetType="{x:Type StackPanel}">
+        <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <Setter Property="Visibility" Value="Visible" />
+                <MultiDataTrigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation
+                                Storyboard.TargetProperty="Opacity"
+                                From="0.0"
+                                To="1"
+                                Duration="0:0:0.25" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </MultiDataTrigger.EnterActions>
+            </MultiDataTrigger>
+        </Style.Triggers>
+
+    </Style>
 
     <!--  Item Style  -->
+    <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
+        <Setter Property="Height" Value="18" />
+        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Foreground" Value="#26a0da " />
+    </Style>
+
     <Style x:Key="BaseItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FFFFF8" />
         <Setter Property="FontSize" Value="16" />
@@ -103,6 +212,14 @@
         <Setter Property="FontSize" Value="22" />
     </Style>
     <Style x:Key="BaseGlyphStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#ffffff" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+    <Style x:Key="BaseGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
@@ -239,7 +356,23 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle" />
+    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Visibility" Value="Collapsed" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
+    </Style>
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
@@ -267,7 +400,63 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
+    <Style x:Key="BasePreviewBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="1,0,0,0" />
+        <Setter Property="BorderBrush" Value="#FFEAEAEA" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0,0,10,10" />
+    </Style>
+    <Style x:Key="BasePreviewGlyph" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#555555" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="FontSize" Value="90" />
+        <Setter Property="MaxWidth" Value="96" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="MaxHeight" Value="96" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewGlyphIcon, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}" />
+    <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />
+        <Setter Property="Margin" Value="0,15,0,5" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="Gray" />
+    </Style>
 
+    <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
+        <Setter Property="Visibility" Value="Collapsed" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Height" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+
+        </Style.Triggers>
+    </Style>
     <!--  for classic themes  -->
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#555555" />
@@ -280,6 +469,12 @@
         <Setter Property="Margin" Value="0,2,18,0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
+    </Style>
+    <Style
+        x:Key="ClockPanelPosition"
+        BasedOn="{StaticResource BaseClockPanelPosition}"
+        TargetType="{x:Type Canvas}">
+        <Setter Property="Margin" Value="0,2,66,0" />
     </Style>
     <Style
         x:Key="ItemHotkeyStyle"
@@ -296,5 +491,49 @@
         <Setter Property="FontSize" Value="15" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="Opacity" Value="0.5" />
+    </Style>
+    <Style
+        x:Key="ItemGlyphSelectedStyle"
+        BasedOn="{StaticResource BaseGlyphSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
+
+
+    <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Margin" Value="0,6,0,0" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="TextAlignment" Value="Center" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+    <Style x:Key="BasePreviewItemSubTitleStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="Margin" Value="0,6,0,10" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="LineHeight" Value="18" />
+        <Setter Property="TextAlignment" Value="Left" />
+        <Setter Property="TextWrapping" Value="Wrap" />
+    </Style>
+
+    <!--  Style for old version themes  -->
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
 </ResourceDictionary>

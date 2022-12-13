@@ -3,7 +3,7 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Marcadores del navegador</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busque en sus marcadores del navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores del navegador</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos de marcador</system:String>
@@ -19,4 +19,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del directorio de datos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Añadir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Eliminar</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Otros</system:String>
 </ResourceDictionary>

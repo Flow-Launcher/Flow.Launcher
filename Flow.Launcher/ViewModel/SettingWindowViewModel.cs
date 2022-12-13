@@ -19,10 +19,13 @@ using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
+using System.Collections.ObjectModel;
+using CommunityToolkit.Mvvm.Input;
+using System.Globalization;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class SettingWindowViewModel : BaseModel
+    public partial class SettingWindowViewModel : BaseModel
     {
         private readonly Updater _updater;
         private readonly IPortable _portable;
@@ -41,8 +44,24 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.ActivateTimes):
                         OnPropertyChanged(nameof(ActivatedTimes));
                         break;
+                    case nameof(Settings.WindowSize):
+                        OnPropertyChanged(nameof(WindowWidthSize));
+                        break;
+                    case nameof(Settings.UseDate):
+                    case nameof(Settings.DateFormat):
+                        OnPropertyChanged(nameof(DateText));
+                        break;
+                    case nameof(Settings.UseClock):
+                    case nameof(Settings.TimeFormat):
+                        OnPropertyChanged(nameof(ClockText));
+                        break;
+                    case nameof(Settings.Language):
+                        OnPropertyChanged(nameof(ClockText));
+                        OnPropertyChanged(nameof(DateText));
+                        break;
                 }
             };
+
         }
 
         public Settings Settings { get; set; }
@@ -65,6 +84,8 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
+
+        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         public bool StartFlowLauncherOnSystemStartup
         {
@@ -125,25 +146,47 @@ namespace Flow.Launcher.ViewModel
         #region general
 
         // todo a better name?
-        public class LastQueryMode
+        public class LastQueryMode : BaseModel
         {
             public string Display { get; set; }
             public Infrastructure.UserSettings.LastQueryMode Value { get; set; }
         }
+
+        private List<LastQueryMode> _lastQueryModes = new List<LastQueryMode>();
         public List<LastQueryMode> LastQueryModes
         {
             get
             {
-                List<LastQueryMode> modes = new List<LastQueryMode>();
-                var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
-                foreach (var e in enums)
+                if (_lastQueryModes.Count == 0)
                 {
-                    var key = $"LastQuery{e}";
-                    var display = _translater.GetTranslation(key);
-                    var m = new LastQueryMode { Display = display, Value = e, };
-                    modes.Add(m);
+                    _lastQueryModes = InitLastQueryModes();
                 }
-                return modes;
+                return _lastQueryModes;
+            }
+        }
+
+        private List<LastQueryMode> InitLastQueryModes()
+        {
+            var modes = new List<LastQueryMode>();
+            var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(typeof(Infrastructure.UserSettings.LastQueryMode));
+            foreach (var e in enums)
+            {
+                var key = $"LastQuery{e}";
+                var display = _translater.GetTranslation(key);
+                var m = new LastQueryMode
+                {
+                    Display = display, Value = e,
+                };
+                modes.Add(m);
+            }
+            return modes;
+        }
+
+        private void UpdateLastQueryModeDisplay()
+        {
+            foreach (var item in LastQueryModes)
+            {
+                item.Display = _translater.GetTranslation($"LastQuery{item.Value}");
             }
         }
 
@@ -159,6 +202,8 @@ namespace Flow.Launcher.ViewModel
 
                 if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
+
+                UpdateLastQueryModeDisplay();
             }
         }
 
@@ -188,10 +233,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public List<string> OpenResultModifiersList => new List<string> { KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}" };
+        public List<string> OpenResultModifiersList => new List<string>
+        {
+            KeyConstant.Alt,
+            KeyConstant.Ctrl,
+            $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
+        };
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
 
         public string TestProxy()
         {
@@ -251,18 +304,31 @@ namespace Flow.Launcher.ViewModel
                 var metadatas = PluginManager.AllPlugins
                     .OrderBy(x => x.Metadata.Disabled)
                     .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel { PluginPair = p })
+                    .Select(p => new PluginViewModel
+                    {
+                        PluginPair = p
+                    })
                     .ToList();
                 return metadatas;
             }
         }
 
-        public IList<UserPlugin> ExternalPlugins
+        public IList<PluginStoreItemViewModel> ExternalPlugins
         {
             get
             {
-                return PluginsManifest.UserPlugins;
+                return LabelMaker(PluginsManifest.UserPlugins);
             }
+        }
+
+        private IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
+        {
+            return list.Select(p => new PluginStoreItemViewModel(p))
+                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
+                .ToList();
         }
 
         public Control SettingProvider
@@ -284,19 +350,31 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public async Task RefreshExternalPluginsAsync()
+        [RelayCommand]
+        private async Task RefreshExternalPluginsAsync()
         {
             await PluginsManifest.UpdateManifestAsync();
             OnPropertyChanged(nameof(ExternalPlugins));
         }
+        
+        
 
+        internal void DisplayPluginQuery(string queryToDisplay, PluginPair plugin, int actionKeywordPosition = 0)
+        {
+            var actionKeyword = plugin.Metadata.ActionKeywords.Count == 0
+                ? string.Empty
+                : plugin.Metadata.ActionKeywords[actionKeywordPosition];
 
+            App.API.ChangeQuery($"{actionKeyword} {queryToDisplay}");
+            App.API.ShowMainWindow();
+        }
 
         #endregion
 
         #region theme
 
-        public static string Theme => @"https://flow-launcher.github.io/docs/#/how-to-create-a-theme";
+        public static string Theme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
+        public static string ThemeGallery => @"https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
         public string SelectedTheme
         {
@@ -305,7 +383,7 @@ namespace Flow.Launcher.ViewModel
             {
                 Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
-                
+
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                     DropShadowEffect = false;
             }
@@ -354,12 +432,87 @@ namespace Flow.Launcher.ViewModel
                 {
                     var key = $"ColorScheme{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new ColorScheme { Display = display, Value = e, };
+                    var m = new ColorScheme
+                    {
+                        Display = display, Value = e,
+                    };
                     modes.Add(m);
                 }
                 return modes;
             }
         }
+
+        public class SearchWindowPosition
+        {
+            public string Display { get; set; }
+            public SearchWindowPositions Value { get; set; }
+        }
+
+        public List<SearchWindowPosition> SearchWindowPositions
+        {
+            get
+            {
+                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
+                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowPosition{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowPosition
+                    {
+                        Display = display, Value = e,
+                    };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+        public List<string> TimeFormatList { get; } = new()
+        {
+            "h:mm",
+            "hh:mm",
+            "H:mm",
+            "HH:mm",
+            "tt h:mm",
+            "tt hh:mm",
+            "h:mm tt",
+            "hh:mm tt"
+        };
+
+        public List<string> DateFormatList { get; } = new()
+        {
+            "MM'/'dd dddd",
+            "MM'/'dd ddd",
+            "MM'/'dd",
+            "MM'-'dd",
+            "MMMM', 'dd",
+            "dd'/'MM",
+            "dd'-'MM",
+            "ddd MM'/'dd",
+            "dddd MM'/'dd",
+            "dddd",
+            "ddd dd'/'MM",
+            "dddd dd'/'MM",
+            "dddd dd', 'MMMM",
+            "dd', 'MMMM"
+        };
+
+        public string TimeFormat
+        {
+            get => Settings.TimeFormat;
+            set => Settings.TimeFormat = value;
+        }
+
+        public string DateFormat
+        {
+            get => Settings.DateFormat;
+            set => Settings.DateFormat = value;
+        }
+
+        public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
+
+        public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
         public double WindowWidthSize
         {
@@ -385,6 +538,42 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseSound = value;
         }
 
+        public bool UseClock
+        {
+            get => Settings.UseClock;
+            set => Settings.UseClock = value;
+        }
+
+        public bool UseDate
+        {
+            get => Settings.UseDate;
+            set => Settings.UseDate = value;
+        }
+
+        public double SettingWindowWidth
+        {
+            get => Settings.SettingWindowWidth;
+            set => Settings.SettingWindowWidth = value;
+        }
+
+        public double SettingWindowHeight
+        {
+            get => Settings.SettingWindowHeight;
+            set => Settings.SettingWindowHeight = value;
+        }
+
+        public double SettingWindowTop
+        {
+            get => Settings.SettingWindowTop;
+            set => Settings.SettingWindowTop = value;
+        }
+
+        public double SettingWindowLeft
+        {
+            get => Settings.SettingWindowLeft;
+            set => Settings.SettingWindowLeft = value;
+        }
+
         public Brush PreviewBackground
         {
             get
@@ -396,8 +585,13 @@ namespace Flow.Launcher.ViewModel
                     var bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.StreamSource = memStream;
+                    bitmap.DecodePixelWidth = 800;
+                    bitmap.DecodePixelHeight = 600;
                     bitmap.EndInit();
-                    var brush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+                    var brush = new ImageBrush(bitmap)
+                    {
+                        Stretch = Stretch.UniformToFill
+                    };
                     return brush;
                 }
                 else
@@ -417,27 +611,27 @@ namespace Flow.Launcher.ViewModel
                 {
                     new Result
                     {
-                        Title = "Explorer",
-                        SubTitle = "Search for files, folders and file contents",
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleExplorer"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleExplorer"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png")
                     },
                     new Result
                     {
-                        Title = "WebSearch",
-                        SubTitle = "Search the web with different search engine support",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
                     },
                     new Result
                     {
-                        Title = "Program",
-                        SubTitle = "Launch programs as admin or a different user",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
                     },
                     new Result
                     {
-                        Title = "ProcessKiller",
-                        SubTitle = "Terminate unwanted processes",
-                        IcoPath =Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
+                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
+                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
+                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
                 var vm = new ResultsViewModel(Settings);
@@ -451,8 +645,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.QueryBoxFont)) > 0)
                 {
                     var font = new FontFamily(Settings.QueryBoxFont);
                     return font;
@@ -479,7 +673,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.QueryBoxFontStyle,
                         Settings.QueryBoxFontWeight,
                         Settings.QueryBoxFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -496,8 +690,8 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 if (Fonts.SystemFontFamilies.Count(o =>
-                    o.FamilyNames.Values != null &&
-                    o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
+                        o.FamilyNames.Values != null &&
+                        o.FamilyNames.Values.Contains(Settings.ResultFont)) > 0)
                 {
                     var font = new FontFamily(Settings.ResultFont);
                     return font;
@@ -524,7 +718,7 @@ namespace Flow.Launcher.ViewModel
                         Settings.ResultFontStyle,
                         Settings.ResultFontWeight,
                         Settings.ResultFontStretch
-                        ));
+                    ));
                 return typeface;
             }
             set
@@ -546,15 +740,131 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #region shortcut
+
+        public CustomShortcutModel? SelectedCustomShortcut { get; set; }
+
+        public void DeleteSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return;
+            }
+
+            string deleteWarning = string.Format(
+                InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"),
+                item.Key, item.Value);
+            if (MessageBox.Show(deleteWarning, InternationalizationManager.Instance.GetTranslation("delete"),
+                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+            {
+                Settings.CustomShortcuts.Remove(item);
+            }
+        }
+
+        public bool EditSelectedCustomShortcut()
+        {
+            var item = SelectedCustomShortcut;
+            if (item == null)
+            {
+                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+                return false;
+            }
+
+            var shortcutSettingWindow = new CustomShortcutSetting(item.Key, item.Value, this);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                item.Key = shortcutSettingWindow.Key;
+                item.Value = shortcutSettingWindow.Value;
+                return true;
+            }
+            return false;
+        }
+
+        public void AddCustomShortcut()
+        {
+            var shortcutSettingWindow = new CustomShortcutSetting(this);
+            if (shortcutSettingWindow.ShowDialog() == true)
+            {
+                var shortcut = new CustomShortcutModel(shortcutSettingWindow.Key, shortcutSettingWindow.Value);
+                Settings.CustomShortcuts.Add(shortcut);
+            }
+        }
+
+        public bool ShortcutExists(string key)
+        {
+            return Settings.CustomShortcuts.Any(x => x.Key == key) || Settings.BuiltinShortcuts.Any(x => x.Key == key);
+        }
+
+        #endregion
+
         #region about
 
         public string Website => Constant.Website;
+        public string SponsorPage => Constant.SponsorPage;
         public string ReleaseNotes => _updater.GitHubRepository + @"/releases/latest";
         public string Documentation => Constant.Documentation;
         public string Docs => Constant.Docs;
         public string Github => Constant.GitHub;
-        public static string Version => Constant.Version;
+        public string Version
+        {
+            get
+            {
+                if (Constant.Version == "1.0.0")
+                {
+                    return Constant.Dev;
+                }
+                else
+                {
+                    return Constant.Version;
+                }
+            }
+        }
         public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
+
+        public string CheckLogFolder
+        {
+            get
+            {
+                var dirInfo = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+                long size = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
+
+                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")";
+            }
+        }
+
+        internal void ClearLogFolder()
+        {
+            var directory = new DirectoryInfo(
+                Path.Combine(
+                    DataLocation.DataDirectory(),
+                    Constant.Logs,
+                    Constant.Version));
+
+            directory.EnumerateFiles()
+                .ToList()
+                .ForEach(x => x.Delete());
+        }
+        internal string FormatBytes(long bytes)
+        {
+            const int scale = 1024;
+            string[] orders = new string[]
+            {
+                "GB", "MB", "KB", "Bytes"
+            };
+            long max = (long)Math.Pow(scale, orders.Length - 1);
+
+            foreach (string order in orders)
+            {
+                if (bytes > max)
+                    return string.Format("{0:##.##} {1}", decimal.Divide(bytes, max), order);
+
+                max /= scale;
+            }
+            return "0 Bytes";
+        }
+
         #endregion
     }
 }

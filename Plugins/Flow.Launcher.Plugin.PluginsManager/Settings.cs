@@ -6,11 +6,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class Settings
     {
-        internal string HotKeyInstall { get; set; } = "install";
+        internal const string InstallCommand = "install";
 
-        internal string HotkeyUninstall { get; set; } = "uninstall";
+        internal const string UninstallCommand = "uninstall";
 
-        internal string HotkeyUpdate { get; set; } = "update";
+        internal const string UpdateCommand = "update";
 
         public bool WarnFromUnknownSource { get; set; } = true;
     }

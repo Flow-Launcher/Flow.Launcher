@@ -17,7 +17,7 @@ namespace Flow.Launcher.Helper
         internal static void Initialize(MainViewModel mainVM)
         {
             mainViewModel = mainVM;
-            settings = mainViewModel._settings;
+            settings = mainViewModel.Settings;
 
             SetHotkey(settings.Hotkey, OnToggleHotkey);
             LoadCustomPluginHotkey();

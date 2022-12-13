@@ -74,7 +74,7 @@ namespace Flow.Launcher
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePluginsAsync(API);
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -161,7 +161,6 @@ namespace Flow.Launcher
             DispatcherUnhandledException += ErrorReporting.DispatcherUnhandledException;
         }
 
-
         /// <summary>
         /// let exception throw as normal is better for Debug
         /// </summary>
@@ -184,7 +183,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Show();
+            _mainVM.Show();
         }
     }
 }

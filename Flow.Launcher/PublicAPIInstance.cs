@@ -23,7 +23,6 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Diagnostics;
 
 namespace Flow.Launcher
@@ -83,7 +82,7 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData() => PluginManager.ReloadData();
+        public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
@@ -141,6 +140,8 @@ namespace Flow.Launcher
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+
+        public bool ActionKeywordAssigned(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
 
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
@@ -209,21 +210,53 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        public void OpenUrl(string url, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null)
         {
-            var browserInfo = _settingsVM.Settings.CustomBrowser;
-
-            var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
-
-            if (browserInfo.OpenInTab)
+            if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                var browserInfo = _settingsVM.Settings.CustomBrowser;
+
+                var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
+
+                if (browserInfo.OpenInTab)
+                {
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
+                else
+                {
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                }
             }
             else
             {
-                url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
-            }
+                Process.Start(new ProcessStartInfo()
+                {
+                    FileName = uri.AbsoluteUri,
+                    UseShellExecute = true
+                })?.Dispose();
 
+                return;
+            }
+        }
+
+        public void OpenUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate);
+        }
+
+        public void OpenUrl(Uri url, bool? inPrivate = null)
+        {
+            OpenUri(url, inPrivate);
+        }
+
+        public void OpenAppUri(string appUri)
+        {
+            OpenUri(new Uri(appUri));
+        }
+
+        public void OpenAppUri(Uri appUri)
+        {
+            OpenUri(appUri);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

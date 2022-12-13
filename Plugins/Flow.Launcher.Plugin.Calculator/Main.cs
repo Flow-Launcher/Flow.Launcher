@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
@@ -61,7 +61,7 @@ namespace Flow.Launcher.Plugin.Caculator
                 switch (_settings.DecimalSeparator)
                 {
                     case DecimalSeparator.Comma:
-                    case DecimalSeparator.UseSystemLocale when CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
+                    case DecimalSeparator.UseSystemLocale when CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
                         expression = query.Search.Replace(",", ".");
                         break;
                     default:
@@ -90,6 +90,7 @@ namespace Flow.Launcher.Plugin.Caculator
                             IcoPath = "Images/calculator.png",
                             Score = 300,
                             SubTitle = Context.API.GetTranslation("flowlauncher_plugin_calculator_copy_number_to_clipboard"),
+                            CopyText = newResult,
                             Action = c =>
                             {
                                 try
@@ -97,7 +98,7 @@ namespace Flow.Launcher.Plugin.Caculator
                                     Clipboard.SetDataObject(newResult);
                                     return true;
                                 }
-                                catch (ExternalException e)
+                                catch (ExternalException)
                                 {
                                     MessageBox.Show("Copy failed, please try later");
                                     return false;
@@ -156,7 +157,7 @@ namespace Flow.Launcher.Plugin.Caculator
 
         private string GetDecimalSeparator()
         {
-            string systemDecimalSeperator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string systemDecimalSeperator = CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator;
             switch (_settings.DecimalSeparator)
             {
                 case DecimalSeparator.UseSystemLocale: return systemDecimalSeperator;

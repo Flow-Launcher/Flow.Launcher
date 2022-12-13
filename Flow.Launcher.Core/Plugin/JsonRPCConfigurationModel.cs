@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -26,6 +27,8 @@ namespace Flow.Launcher.Core.Plugin
         public string Name { get; set; }
         public string Label { get; set; }
         public string Description { get; set; }
+        public string urlLabel { get; set; }
+        public Uri url { get; set; }
         public bool Validation { get; set; }
         public List<string> Options { get; set; }
         public string DefaultValue { get; set; }

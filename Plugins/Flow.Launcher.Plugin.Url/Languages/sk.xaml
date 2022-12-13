@@ -12,6 +12,6 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Otvoriť zadanú adresu URL z Flow Launchera</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Zadajte cestu k prehliadaču:</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Vybrať</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Prehliadať</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplikácie (*.exe)|*.exe|Všetky súbory|*.*</system:String>
 </ResourceDictionary>
