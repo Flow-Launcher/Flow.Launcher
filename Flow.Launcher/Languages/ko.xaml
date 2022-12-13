@@ -89,7 +89,7 @@
     <system:String x:Key="author">제작자</system:String>
     <system:String x:Key="plugin_init_time">초기화 시간:</system:String>
     <system:String x:Key="plugin_query_time">쿼리 시간:</system:String>
-    <system:String x:Key="plugin_query_version">버</system:String>
+    <system:String x:Key="plugin_query_version">버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
     <system:String x:Key="plugin_uninstall">제거</system:String>
 
