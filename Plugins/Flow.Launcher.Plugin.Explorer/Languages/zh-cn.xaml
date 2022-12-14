@@ -49,7 +49,7 @@
     <system:String x:Key="plugin_explorer_Content_Search_Engine">文件内容搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">目录递归搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">索引搜索引擎</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">打开 Windows 索引选项</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">文件管理器</system:String>
@@ -70,9 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开文件或文件夹所在目录</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开：</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">使用编辑器 {1} ({2}) 打开文件 {0} 时失败</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">使用 Shell 打开：</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">使用 Shell {1} ({2}) 打开文件夹 {0} 时失败</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">从索引搜索中排除当前目录和子目录</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">从索引搜索中排除</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">打开Windows索引选项</system:String>
