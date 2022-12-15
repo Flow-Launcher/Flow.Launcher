@@ -326,12 +326,10 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 </p>
 
-<p align="center">
-  <a href="https://github.com/itsonlyfrans">
-    <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
-          <br /><sub><b>itsonlyfrans</b></sub>
-  </a>
-</p>
+| <a href="https://github.com/andreqramos"><img src='https://avatars.githubusercontent.com/u/49326063?v=4' width="30%"/><br /><sub><b>andreqramos</b></sub>  	|  <a href="https://github.com/Shazzik"><img src='https://avatars.githubusercontent.com/u/30706709?v=4' width="30%"/><br /><sub><b>Shazzik</b></sub>  	|   <a href="https://github.com/itsonlyfrans"><img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="30%"/><br /><sub><b>itsonlyfrans</b></sub> 	|  <a href="https://github.com/barinbritva"><img src='https://avatars.githubusercontent.com/u/4758362?v=4' width="30%"/><br /><sub><b>barinbritva</b></sub>  	|
+|:----------------:|:------------:|:-----------------:|:----------------:|
+|   <a href="https://github.com/hahaleyile"><img src='https://avatars.githubusercontent.com/u/38727644?v=4' width="30%"/><br /><sub><b>hahaleyile</b></sub> 	|   	|   	|   	|
+
 
 ### Mentions
 - <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - Appwrite
