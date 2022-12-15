@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
+using Flow.Launcher.Plugin.Explorer.Exceptions;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
-using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class WindowsIndexSearchManager : IIndexProvider, IContentIndexProvider, IPathIndexProvider
     {
         private Settings Settings { get; }
-        private QueryConstructor QueryConstructor { get; }
 
-        private CSearchQueryHelper QueryHelper { get; }
+        private QueryConstructor QueryConstructor { get; }
+        
         public WindowsIndexSearchManager(Settings settings)
         {
             Settings = settings;
             QueryConstructor = new QueryConstructor(Settings);
-            QueryHelper = QueryConstructor.CreateQueryHelper();
         }
 
         private IAsyncEnumerable<SearchResult> WindowsIndexFileContentSearchAsync(
@@ -28,20 +28,38 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             if (querySearchString.IsEmpty)
                 return AsyncEnumerable.Empty<SearchResult>();
 
-            return WindowsIndex.WindowsIndexSearchAsync(
-                QueryHelper.ConnectionString,
-                QueryConstructor.FileContent(querySearchString),
-                token);
+            try
+            {
+                return WindowsIndex.WindowsIndexSearchAsync(
+                    QueryConstructor.CreateQueryHelper().ConnectionString,
+                    QueryConstructor.FileContent(querySearchString),
+                    token);
+            }
+            catch (COMException)
+            {
+                // Occurs when the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                // Thrown by QueryConstructor.CreateQueryHelper()
+                return HandledEngineNotAvailableExceptionAsync();
+            }
         }
 
         private IAsyncEnumerable<SearchResult> WindowsIndexFilesAndFoldersSearchAsync(
             ReadOnlySpan<char> querySearchString,
             CancellationToken token = default)
         {
-            return WindowsIndex.WindowsIndexSearchAsync(
-                QueryHelper.ConnectionString,
-                QueryConstructor.FilesAndFolders(querySearchString),
-                token);
+            try
+            {
+                return WindowsIndex.WindowsIndexSearchAsync(
+                    QueryConstructor.CreateQueryHelper().ConnectionString,
+                    QueryConstructor.FilesAndFolders(querySearchString),
+                    token);
+            }
+            catch (COMException)
+            {
+                // Occurs when the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                // Thrown by QueryConstructor.CreateQueryHelper()
+                return HandledEngineNotAvailableExceptionAsync();
+            }
         }
 
         private IAsyncEnumerable<SearchResult> WindowsIndexTopLevelFolderSearchAsync(
@@ -50,12 +68,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             bool recursive,
             CancellationToken token)
         {
-            var queryConstructor = new QueryConstructor(Settings);
-
-            return WindowsIndex.WindowsIndexSearchAsync(
-                QueryConstructor.CreateQueryHelper().ConnectionString,
-                queryConstructor.Directory(path, search, recursive),
-                token);
+            try
+            {
+                return WindowsIndex.WindowsIndexSearchAsync(
+                    QueryConstructor.CreateQueryHelper().ConnectionString,
+                    QueryConstructor.Directory(path, search, recursive),
+                    token);
+            }
+            catch (COMException)
+            {
+                // Occurs when the Windows Indexing (WSearch) is turned off in services and unable to be used by Explorer plugin
+                // Thrown by QueryConstructor.CreateQueryHelper()
+                return HandledEngineNotAvailableExceptionAsync();
+            }
         }
         public IAsyncEnumerable<SearchResult> SearchAsync(string search, CancellationToken token)
         {
@@ -68,6 +93,31 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
         public IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, CancellationToken token)
         {
             return WindowsIndexTopLevelFolderSearchAsync(search, path, recursive, token);
+        }
+
+        private IAsyncEnumerable<SearchResult> HandledEngineNotAvailableExceptionAsync()
+        {
+            if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+                return AsyncEnumerable.Empty<SearchResult>();
+
+            var api = SearchManager.Context.API;
+
+            throw new EngineNotAvailableException(
+                "Windows Index",
+                api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
+                api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                c =>
+                {
+                    SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+
+                    // Clears the warning message so user is not mistaken that it has not worked
+                    api.ChangeQuery(string.Empty);
+
+                    return ValueTask.FromResult(false);
+                })
+            {
+                ErrorIcon = Constants.WindowsIndexErrorImagePath
+            };
         }
     }
 }
