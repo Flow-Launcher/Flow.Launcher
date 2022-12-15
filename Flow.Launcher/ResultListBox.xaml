@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     MaxHeight="{Binding MaxHeight}"
-    Margin="{DynamicResource ResultMargin}"
     HorizontalContentAlignment="Stretch"
     d:DataContext="{d:DesignInstance vm:ResultsViewModel}"
     d:DesignHeight="100"
