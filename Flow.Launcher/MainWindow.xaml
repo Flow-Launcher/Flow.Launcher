@@ -180,10 +180,7 @@
             Modifiers="{Binding OpenResultCommandModifiers}" />
     </Window.InputBindings>
     <Grid>
-        <Border
-            ClipToBounds="True"
-            MouseDown="OnMouseDown"
-            Style="{DynamicResource WindowBorderStyle}">
+        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
