@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
@@ -115,9 +114,7 @@ namespace Flow.Launcher.Plugin.Program
 
         public static void IndexUwpPrograms()
         {
-            var windows10 = new Version(10, 0);
-            var support = Environment.OSVersion.Version.Major >= windows10.Major;
-            var applications = support ? UWP.All() : Array.Empty<UWP.Application>();
+            var applications = UWP.All(_settings);
             _uwps = applications;
             ResetCache();
         }
