@@ -62,46 +62,57 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 return new List<Result>();
             }
 
-            IAsyncEnumerable<SearchResult> searchResults = null;
+            IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString();
+            bool isPathSearch = query.Search.IsLocationPathString() || query.Search.StartsWith("%");
+
+            string EngineName;
 
             switch (isPathSearch)
             {
                 case true
                     when ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-                    
+                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
+
                     results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
-                    
+
                     return results.ToList();
 
-                case false 
+                case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
-                
+
                     // Intentionally require enabling of Everything's content search due to its slowness
                     if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
                         return EverythingContentSearchResult(query);
-                    
+
                     searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
-                    
+                    EngineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
-                
+
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
-                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-                    
+                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
+
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
-                    
+                    EngineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
+                default:
+                    return results.ToList();
             }
 
-            if (searchResults == null)
-                return results.ToList();
+            try
+            {
+                await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
+                    results.Add(ResultManager.CreateResult(query, search));
+            }
+            catch (Exception e)
+            {
+                if (e is OperationCanceledException)
+                    return results.ToList();
 
-            await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
-                results.Add(ResultManager.CreateResult(query, search));
-
+                throw new SearchException(EngineName, e.Message, e);
+            }
+            
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                 excludedPath => r.SubTitle.StartsWith(excludedPath.Path, StringComparison.OrdinalIgnoreCase)));
 
@@ -175,46 +186,47 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
-            results.Add(retrievedDirectoryPath.EndsWith(":\\") 
+            results.Add(retrievedDirectoryPath.EndsWith(":\\")
                 ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch)
                 : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
 
             if (token.IsCancellationRequested)
                 return new List<Result>();
 
-            IEnumerable<SearchResult> directoryResult;
+            IAsyncEnumerable<SearchResult> directoryResult;
 
             var recursiveIndicatorIndex = query.Search.IndexOf('>');
 
             if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.DirectEnumeration)
             {
                 directoryResult =
-                    await Settings.PathEnumerator.EnumerateAsync(
-                            query.Search[..recursiveIndicatorIndex],
-                            query.Search[(recursiveIndicatorIndex + 1)..],
-                            true,
-                            token)
-                        .ToListAsync(cancellationToken: token)
-                        .ConfigureAwait(false);
+                    Settings.PathEnumerator.EnumerateAsync(
+                        query.Search[..recursiveIndicatorIndex],
+                        query.Search[(recursiveIndicatorIndex + 1)..],
+                        true,
+                        token);
 
             }
             else
             {
-                try
-                {
-                    directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token);
-                }
-                catch (Exception e)
-                {
-                    throw new SearchException("DirectoryInfoSearch", e.Message, e);
-                }
+                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token).ToAsyncEnumerable();
             }
 
+            if (token.IsCancellationRequested)
+                return new List<Result>();
 
+            try
+            {
+                await foreach (var directory in directoryResult.WithCancellation(token).ConfigureAwait(false))
+                {
+                    results.Add(ResultManager.CreateResult(query, directory));
+                }
+            }
+            catch (Exception e)
+            {
+                throw new SearchException(Enum.GetName(Settings.PathEnumerationEngine), e.Message, e);
+            }
 
-            token.ThrowIfCancellationRequested();
-
-            results.UnionWith(directoryResult.Select(searchResult => ResultManager.CreateResult(query, searchResult)));
 
             return results.ToList();
         }
@@ -227,7 +239,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var pathToDirectory = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
             return !Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase)) 
+                       x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
     }
