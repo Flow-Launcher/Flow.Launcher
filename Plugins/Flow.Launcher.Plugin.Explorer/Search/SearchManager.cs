@@ -64,9 +64,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString() || query.Search.StartsWith("%");
+            bool isPathSearch = query.Search.IsLocationPathString() || IsEnvironmentVariableSearch(query.Search);
 
-            string EngineName;
+            string engineName;
 
             switch (isPathSearch)
             {
@@ -86,7 +86,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         return EverythingContentSearchResult(query);
 
                     searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
-                    EngineName = Enum.GetName(Settings.ContentSearchEngine);
+                    engineName = Enum.GetName(Settings.ContentSearchEngine);
                     break;
 
                 case false
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
 
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
-                    EngineName = Enum.GetName(Settings.IndexSearchEngine);
+                    engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
                 default:
                     return results.ToList();
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (e is OperationCanceledException)
                     return results.ToList();
 
-                throw new SearchException(EngineName, e.Message, e);
+                throw new SearchException(engineName, e.Message, e);
             }
             
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
@@ -241,6 +241,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return !Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
+        }
+        
+        internal static bool IsEnvironmentVariableSearch(string search)
+        {
+            return search.StartsWith("%") 
+                   && search != "%%"
+                   && !search.Contains('\\');
         }
     }
 }
