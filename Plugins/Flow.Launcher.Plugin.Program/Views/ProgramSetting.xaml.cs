@@ -395,8 +395,11 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void programSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
-            EditProgramSource(selectedProgramSource);
+            if (((FrameworkElement)e.OriginalSource).DataContext is ProgramSource)
+            {
+                var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
+                EditProgramSource(selectedProgramSource);
+            }
         }
 
         private bool IsAllItemsUserAdded(List<ProgramSource> items)
