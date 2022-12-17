@@ -451,15 +451,16 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <!--
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />-->
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
                     <Setter Property="Height" Value="0" />
                 </MultiDataTrigger.Setters>
             </MultiDataTrigger>
-
         </Style.Triggers>
     </Style>
     <!--  for classic themes  -->
