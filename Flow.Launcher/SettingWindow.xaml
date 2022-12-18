@@ -803,7 +803,39 @@
                                 Padding="0"
                                 CornerRadius="5"
                                 Style="{DynamicResource SettingGroupBox}">
+
                                 <StackPanel Orientation="Vertical">
+                                    <Border
+                                        Margin="0"
+                                        BorderThickness="0"
+                                        Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    Style="{DynamicResource SettingTitleLabel}"
+                                                    Text="{DynamicResource querySearchDelay}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource querySearchDelayToolTip}" />
+                                            </StackPanel>
+                                            <ComboBox
+                                                Grid.Column="2"
+                                                MinWidth="180"
+                                                Margin="0,0,18,0"
+                                                DisplayMemberPath="Display"
+                                                FontSize="14"
+                                                ItemsSource="{Binding SearchDelays}"
+                                                SelectedValue="{Binding Settings.SearchDelay}"
+                                                SelectedValuePath="Value" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe916;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Separator
+                                        Width="Auto"
+                                        BorderThickness="1"
+                                        Style="{StaticResource SettingSeparatorStyle}" />
                                     <Border
                                         Margin="0"
                                         BorderThickness="0"

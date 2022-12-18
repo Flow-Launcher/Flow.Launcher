@@ -190,6 +190,49 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+        public class SearchDelay
+        {
+            public string Display { get; set; }
+            public int Value { get; set; }
+        }
+        public List<SearchDelay> SearchDelays
+        {
+            get
+            {
+                List<SearchDelay> delay = new List<SearchDelay>();
+
+                SearchDelay Fast = new SearchDelay();
+                Fast.Display = _translater.GetTranslation("SearchDelayFast");
+                Fast.Value = 50;
+                SearchDelay Normal = new SearchDelay();
+                Normal.Display = _translater.GetTranslation("SearchDelayNormal");
+                Normal.Value = 100;
+                SearchDelay Slow = new SearchDelay();
+                Slow.Display = _translater.GetTranslation("SearchDelaySlow");
+                Slow.Value = 150;
+                delay.Add(Fast);
+                delay.Add(Normal);
+                delay.Add(Slow);
+
+                /*
+                foreach (var e in enums)
+                {
+                    var key = $"SearchDelay{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchDelay
+                    {
+                        Display = display,
+                        Value = e,
+                    };
+                    delay.Add(m);
+                }
+                */
+                return delay;
+            }
+        }
+
+
         public string Language
         {
             get

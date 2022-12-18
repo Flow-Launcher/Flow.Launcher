@@ -61,12 +61,17 @@
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
+    <system:String x:Key="querySearchDelay">Search Delay</system:String>
+    <system:String x:Key="querySearchDelayToolTip">Sets the speed at which search results appear when typing is stopped. The lower it is, the more the search results are updated during typing. Some plug-in may have its own delay value, in which case the plug-in's delay is applied.</system:String>
+    <system:String x:Key="SearchDelayFast">Fast</system:String>
+    <system:String x:Key="SearchDelayNormal">Normal</system:String>
+    <system:String x:Key="SearchDelaySlow">Slow</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
