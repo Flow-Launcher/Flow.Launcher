@@ -327,10 +327,9 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 </p>
 
 <p align="center">
-  <a href="https://github.com/itsonlyfrans">
-    <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
-          <br /><sub><b>itsonlyfrans</b></sub>
-  </a>
+  <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
 </p>
 
 ### Mentions
