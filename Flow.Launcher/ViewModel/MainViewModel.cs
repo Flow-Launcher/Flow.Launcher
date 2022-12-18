@@ -675,7 +675,7 @@ namespace Flow.Launcher.ViewModel
             {
                 // Wait 45 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, currentCancellationToken);
+                await Task.Delay(Settings.SearchDelay, currentCancellationToken);
                 if (currentCancellationToken.IsCancellationRequested)
                     return;
             }
