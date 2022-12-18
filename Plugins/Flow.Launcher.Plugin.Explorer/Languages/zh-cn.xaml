@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速访问</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">当前触发关键字</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">确认</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">启用</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">已启用</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">当禁用时，Flow Launcher 将不会执行此搜索选项，并且还会恢复到“*”以释放动作关键字</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows 索引</system:String>
