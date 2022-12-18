@@ -49,7 +49,7 @@
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Motor de búsqueda de contenido</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de búsqueda recursiva de directorio</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Motor de búsqueda del Índice</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opciones de indexación de Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
@@ -70,7 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el archivo o carpeta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">No se pudo abrir el archivo en {0} con el editor {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir con Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">No se pudo abrir la carpeta {0} con Shell {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir la carpeta actual y sus subcarpetas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluido del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opciones de indexación de Windows</system:String>
@@ -87,7 +89,7 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina {0} actual del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
-
+    
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">No se ha podido cargar Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Advertencia: El servicio de Everything no se está ejecutando</system:String>
