@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">단축키 등록 실패: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
@@ -59,12 +62,17 @@
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
+    <system:String x:Key="querySearchDelay">검색 지연 시간</system:String>
+    <system:String x:Key="querySearchDelayToolTip">타이핑이 멈췄을 때 검색 결과가 표시되는 속도를 지정합니다.빠를수록 타이핑 도중 결과가 갱신됩니다. 일부 플러그인은 자체적으로 설정된 지연시간을 가지고 있으며, 이 경우 플러그인에서 지정한 지연시간으로 동작합니다.</system:String>
+    <system:String x:Key="SearchDelay50">빠름</system:String>
+    <system:String x:Key="SearchDelay100">보통</system:String>
+    <system:String x:Key="SearchDelay150">느림</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">검색 결과에 필요한 최소 매치 점수를 변경합니다.</system:String>
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Pinyin을 사용하여 검색할 수 있습니다. Pinyin (병음) 은 로마자 중국어 입력 방식입니다.</system:String>
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">항상 미리보기 패널이 열린 상태로 Flow를 시작합니다. F1키로 미리보기를 on/off 합니다. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">항상 미리보기 패널이 열린 상태로 Flow를 시작합니다. F1키로 미리보기를 on/off 합니다.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--  Setting Plugin  -->

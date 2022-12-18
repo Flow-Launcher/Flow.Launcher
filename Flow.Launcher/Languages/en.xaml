@@ -63,9 +63,9 @@
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchDelay">Search Delay</system:String>
     <system:String x:Key="querySearchDelayToolTip">Sets the speed at which search results appear when typing is stopped. The lower it is, the more the search results are updated during typing. Some plug-in may have its own delay value, in which case the plug-in's delay is applied.</system:String>
-    <system:String x:Key="SearchDelayFast">Fast</system:String>
-    <system:String x:Key="SearchDelayNormal">Normal</system:String>
-    <system:String x:Key="SearchDelaySlow">Slow</system:String>
+    <system:String x:Key="SearchDelay50">Fast</system:String>
+    <system:String x:Key="SearchDelay100">Normal</system:String>
+    <system:String x:Key="SearchDelay150">Slow</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
