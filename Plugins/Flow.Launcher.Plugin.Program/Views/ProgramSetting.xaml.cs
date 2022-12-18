@@ -69,10 +69,10 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         public bool EnablePATHSource
         {
-            get => _settings.EnablePathSource;
+            get => _settings.EnablePATHSource;
             set
             {
-                _settings.EnablePathSource = value;
+                _settings.EnablePATHSource = value;
                 ReIndexing();
             }
         }

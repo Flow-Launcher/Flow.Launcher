@@ -620,7 +620,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     autoIndexPrograms = autoIndexPrograms.Concat(startMenu);
                 }
 
-                if (settings.EnablePathSource)
+                if (settings.EnablePATHSource)
                 {
                     var path = PATHPrograms(settings.GetSuffixes(), protocols, commonParents);
                     programs = programs.Concat(path);
