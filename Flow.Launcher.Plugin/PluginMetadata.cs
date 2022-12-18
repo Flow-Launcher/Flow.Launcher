@@ -46,6 +46,11 @@ namespace Flow.Launcher.Plugin
         public string ExecuteFilePath { get; private set;}
 
         /// <summary>
+        /// Plugin Specified Search Delay
+        /// </summary>
+        public int? SearchDelay { get; set; } = null;
+
+        /// <summary>
         /// Executable file Name of the plugin
         /// </summary>
         public string ExecuteFileName { get; set; }

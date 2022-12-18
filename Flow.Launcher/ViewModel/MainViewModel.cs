@@ -670,16 +670,6 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-
-            if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
-            {
-                // Wait 45 millisecond for query change in global query
-                // if query changes, return so that it won't be calculated
-                await Task.Delay(Settings.SearchDelay, currentCancellationToken);
-                if (currentCancellationToken.IsCancellationRequested)
-                    return;
-            }
-
             _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
             {
                 // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
@@ -689,19 +679,16 @@ namespace Flow.Launcher.ViewModel
                 }
             }, currentCancellationToken, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
 
-            // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
-
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
-            {
-                false => QueryTask(plugin),
-                true => Task.CompletedTask
-            }).ToArray();
-
-
             try
             {
-                // Check the code, WhenAll will translate all type of IEnumerable or Collection to Array, so make an array at first
-                await Task.WhenAll(tasks);
+                await Parallel.ForEachAsync(plugins, currentCancellationToken,
+                    async (pair, token) =>
+                    {
+                        await Task.Delay(pair.Metadata.SearchDelay ?? Settings.SearchDelay, token);
+                        if (pair.Metadata.Disabled)
+                            return;
+                        await QueryTask(pair, token);
+                    });
             }
             catch (OperationCanceledException)
             {
@@ -721,15 +708,12 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTask(PluginPair plugin)
+            async ValueTask QueryTask(PluginPair plugin, CancellationToken token = default)
             {
-                // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
-                // Task.Yield will force it to run in ThreadPool
-                await Task.Yield();
+                IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, token);
 
-                IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
-
-                currentCancellationToken.ThrowIfCancellationRequested();
+                if (token.IsCancellationRequested)
+                    return;
 
                 results ??= _emptyResult;
 
