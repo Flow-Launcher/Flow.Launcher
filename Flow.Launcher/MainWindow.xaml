@@ -284,6 +284,20 @@
                             </Canvas>
                         </Grid>
                     </Border>
+                    <Line
+                        x:Name="ProgressBar"
+                        Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
+                        Height="2"
+                        Margin="12,0,12,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        StrokeThickness="2"
+                        Style="{DynamicResource PendingLineStyle}"
+                        Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        X1="-100"
+                        X2="0"
+                        Y1="0"
+                        Y2="0" />
                 </Grid>
 
                 <Grid ClipToBounds="True">
@@ -310,18 +324,7 @@
                             HorizontalAlignment="Stretch"
                             Style="{DynamicResource SeparatorStyle}" />
                     </ContentControl>
-                    <Line
-                        x:Name="ProgressBar"
-                        Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
-                        Height="2"
-                        HorizontalAlignment="Right"
-                        StrokeThickness="1"
-                        Style="{DynamicResource PendingLineStyle}"
-                        Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        X1="-150"
-                        X2="-50"
-                        Y1="0"
-                        Y2="0" />
+
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>

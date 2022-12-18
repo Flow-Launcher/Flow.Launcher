@@ -248,8 +248,9 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="{DynamicResource ResultMargin}" />
         <Setter Property="Padding" Value="0,0,0,0" />
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBox">
@@ -273,6 +274,11 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=Items.Count}" Value="0">
+                <Setter Property="Margin" Value="0" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 
     <!--  ScrollViewer Style  -->
@@ -360,8 +366,7 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=QueryTextBox, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
                 </MultiDataTrigger.Conditions>
@@ -446,15 +451,16 @@
         <Style.Triggers>
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
+                    <!--
                     <Condition Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Collapsed" />
                     <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />-->
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
                 </MultiDataTrigger.Conditions>
                 <MultiDataTrigger.Setters>
                     <Setter Property="Height" Value="0" />
                 </MultiDataTrigger.Setters>
             </MultiDataTrigger>
-
         </Style.Triggers>
     </Style>
     <!--  for classic themes  -->

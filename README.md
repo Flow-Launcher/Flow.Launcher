@@ -58,7 +58,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 - New shortcut functionality to set additional action keywords or search terms.
 
-### Impvroved Program Plugin
+### Improved Program Plugin
 - PATH is now indexed
 - Support for .url files, flow can now search installed steam/epic games.
 - Improved UWP indexing.
@@ -327,10 +327,9 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 </p>
 
 <p align="center">
-  <a href="https://github.com/itsonlyfrans">
-    <img src='https://avatars.githubusercontent.com/u/46535667?v=4' width="10%"/>
-          <br /><sub><b>itsonlyfrans</b></sub>
-  </a>
+  <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
 </p>
 
 ### Mentions
@@ -349,7 +348,7 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 
 ### New changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current latest release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 
