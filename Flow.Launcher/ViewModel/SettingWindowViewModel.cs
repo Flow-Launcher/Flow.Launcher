@@ -775,8 +775,11 @@ namespace Flow.Launcher.ViewModel
             var shortcutSettingWindow = new CustomShortcutSetting(item.Key, item.Value, this);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
+                // https://stackoverflow.com/questions/16789360/wpf-listbox-items-with-changing-hashcode
+                SelectedCustomShortcut = null;
                 item.Key = shortcutSettingWindow.Key;
                 item.Value = shortcutSettingWindow.Value;
+                SelectedCustomShortcut = item;
                 return true;
             }
             return false;
