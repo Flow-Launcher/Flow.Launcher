@@ -45,6 +45,8 @@
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">ファイル エディターのパス</system:String>
+    <system:String x:Key="plugin_explorer_folder_editor_path">フォルダー エディターのパス</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>

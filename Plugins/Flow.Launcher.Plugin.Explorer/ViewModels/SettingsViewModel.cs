@@ -315,15 +315,26 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             Process.Start(psi);
         }
 
-        private ICommand? _openEditorPathCommand;
+        private ICommand? _openFileEditorPathCommand;
 
-        public ICommand OpenEditorPath => _openEditorPathCommand ??= new RelayCommand(_ =>
+        public ICommand OpenFileEditorPath => _openFileEditorPathCommand ??= new RelayCommand(_ =>
         {
             var path = PromptUserSelectPath(ResultType.File, Settings.EditorPath != null ? Path.GetDirectoryName(Settings.EditorPath) : null);
             if (path is null)
                 return;
 
-            EditorPath = path;
+            FileEditorPath = path;
+        });
+
+        private ICommand? _openFolderEditorPathCommand;
+
+        public ICommand OpenFolderEditorPath => _openFolderEditorPathCommand ??= new RelayCommand(_ =>
+        {
+            var path = PromptUserSelectPath(ResultType.File, Settings.FolderEditorPath != null ? Path.GetDirectoryName(Settings.FolderEditorPath) : null);
+            if (path is null)
+                return;
+
+            FolderEditorPath = path;
         });
 
         private ICommand? _openShellPathCommand;
@@ -338,12 +349,22 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         });
 
 
-        public string EditorPath
+        public string FileEditorPath
         {
             get => Settings.EditorPath;
             set
             {
                 Settings.EditorPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string FolderEditorPath
+        {
+            get => Settings.FolderEditorPath;
+            set
+            {
+                Settings.FolderEditorPath = value;
                 OnPropertyChanged();
             }
         }
