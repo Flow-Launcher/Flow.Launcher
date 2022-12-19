@@ -70,7 +70,9 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir pasta de destino</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre a localização que contém o ficheiro ou a pasta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Erro ao abrir o ficheiro {0} com o editor {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir com a consola:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Erro ao abrir a pasta {0} com a consola {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Excluir diretório atual do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluído do índice de pesquisas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Abrir opções de indexação do Windows</system:String>
@@ -87,7 +89,7 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remover do acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remover {0} do acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menu de contexto do Windows</system:String>
-
+    
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Falha ao carregar SDK Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Aviso: o serviço Everything não está em execução</system:String>
