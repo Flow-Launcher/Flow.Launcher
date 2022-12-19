@@ -820,8 +820,9 @@
                                             </StackPanel>
                                             <ComboBox
                                                 Grid.Column="2"
-                                                MinWidth="180"
+                                                MinWidth="95"
                                                 Margin="0,0,18,0"
+                                                VerticalAlignment="Center"
                                                 DisplayMemberPath="Display"
                                                 FontSize="14"
                                                 ItemsSource="{Binding SearchDelays}"

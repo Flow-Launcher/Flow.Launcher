@@ -63,10 +63,7 @@
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
     <system:String x:Key="querySearchDelay">검색 지연 시간</system:String>
-    <system:String x:Key="querySearchDelayToolTip">타이핑이 멈췄을 때 검색 결과가 표시되는 속도를 지정합니다.빠를수록 타이핑 도중 결과가 갱신됩니다.</system:String>
-    <system:String x:Key="SearchDelay50">빠름</system:String>
-    <system:String x:Key="SearchDelay100">보통</system:String>
-    <system:String x:Key="SearchDelay150">느림</system:String>
+    <system:String x:Key="querySearchDelayToolTip">타이핑이 멈췄을 때 검색 결과가 표시되는 속도를 지정합니다. 빠를수록 타이핑 도중 결과가 갱신됩니다. 기본값은 50ms입니다.</system:String>
     <system:String x:Key="querySearchPrecision">쿼리 검색 정밀도</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">검색 결과에 필요한 최소 매치 점수를 변경합니다.</system:String>
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>

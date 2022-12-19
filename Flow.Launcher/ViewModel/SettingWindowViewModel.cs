@@ -201,28 +201,19 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 List<SearchDelay> delay = new List<SearchDelay>();
-
                 SearchDelay Fast = new SearchDelay();
-                Fast.Display = _translater.GetTranslation("SearchDelay50");
+                Fast.Display = "50ms";
                 Fast.Value = 50;
                 SearchDelay Normal = new SearchDelay();
-                Normal.Display = _translater.GetTranslation("SearchDelay100");
+                Normal.Display = "100ms";
                 Normal.Value = 100;
                 SearchDelay Slow = new SearchDelay();
-                Slow.Display = _translater.GetTranslation("SearchDelay150");
+                Slow.Display = "150ms";
                 Slow.Value = 150;
                 delay.Add(Fast);
                 delay.Add(Normal);
                 delay.Add(Slow);
                 return delay;
-            }
-        }
-
-        private void UpdateSearchDelayDisplay()
-        {
-            foreach (var item in SearchDelays)
-            {
-                item.Display = _translater.GetTranslation($"SearchDelay{item.Value}");
             }
         }
 
@@ -240,7 +231,6 @@ namespace Flow.Launcher.ViewModel
                     ShouldUsePinyin = true;
 
                 UpdateLastQueryModeDisplay();
-                UpdateSearchDelayDisplay();
             }
         }
 
