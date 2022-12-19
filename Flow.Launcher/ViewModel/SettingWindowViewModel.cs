@@ -478,7 +478,8 @@ namespace Flow.Launcher.ViewModel
             "tt hh:mm",
             "h:mm tt",
             "hh:mm tt",
-            "hh:mm:ss tt"
+            "hh:mm:ss tt",
+            "HH:mm:ss tt"
         };
 
         public List<string> DateFormatList { get; } = new()
