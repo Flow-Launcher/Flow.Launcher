@@ -39,6 +39,7 @@
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter"/>
+        <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
@@ -207,6 +208,7 @@
                                 Style="{DynamicResource QueryBoxStyle}"
                                 Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
+                                InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                                 Visibility="Visible">
                                 <TextBox.CommandBindings>
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />

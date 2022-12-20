@@ -28,4 +28,28 @@ namespace Flow.Launcher.Converters
             throw new NotImplementedException();
         }
     }
+
+    internal class BoolToIMEStateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool v)
+            {
+                if (v)
+                {
+                    return InputMethodState.Off;
+                }
+                else
+                {
+                    return InputMethodState.DoNotCare;
+                }
+            }
+            return InputMethodState.DoNotCare;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 }
