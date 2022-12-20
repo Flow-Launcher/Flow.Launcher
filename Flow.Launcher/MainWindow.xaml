@@ -244,6 +244,7 @@
                             </TextBox>
                         </Grid>
                     </Border>
+
                     <StackPanel
                         x:Name="ClockPanel"
                         IsHitTestVisible="False"

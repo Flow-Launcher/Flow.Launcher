@@ -737,9 +737,11 @@
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
                                         <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
                                     </StackPanel>
-                                    <CheckBox
-                                        IsChecked="{Binding Settings.AlwaysPreview}"
-                                        Style="{DynamicResource SideControlCheckBox}"
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.AlwaysPreview}"
+                                        Style="{DynamicResource SideToggleSwitch}"
                                         ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8a1;
@@ -943,10 +945,31 @@
                                             Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}" />
                                         <Button
                                             Height="34"
-                                            Margin="10,10,18,10"
+                                            Margin="10,0,18,0"
                                             Click="OnSelectPythonDirectoryClick"
                                             Content="{DynamicResource selectPythonDirectory}" />
                                     </StackPanel>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Style="{DynamicResource SettingTitleLabel}"
+                                            Text="{DynamicResource typingStartEn}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource typingStartEnTooltip}" />
+                                    </StackPanel>
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.AlwaysStartEn}"
+                                        Style="{DynamicResource SideToggleSwitch}" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe8d3;
+                                    </TextBlock>
                                 </ItemsControl>
                             </Border>
 

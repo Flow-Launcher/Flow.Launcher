@@ -34,6 +34,9 @@ using System.Security.Cryptography;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualBasic.Devices;
 using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
+using NLog.Targets;
+using YamlDotNet.Core.Tokens;
+using Key = System.Windows.Input.Key;
 
 namespace Flow.Launcher
 {
@@ -128,6 +131,7 @@ namespace Flow.Launcher
                                 UpdatePosition();
                                 PreviewReset();
                                 Activate();
+                                QueryTextBox_StartEn();
                                 QueryTextBox.Focus();
                                 _settings.ActivateTimes++;
                                 if (!_viewModel.LastQuerySelected)
@@ -190,6 +194,9 @@ namespace Flow.Launcher
                         break;
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
+                        break;
+                    case nameof(Settings.AlwaysStartEn):
+                        QueryTextBox_StartEn();
                         break;
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
@@ -694,6 +701,20 @@ namespace Flow.Launcher
             {
                 BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
                 be.UpdateSource();
+            }
+        }
+
+        private void QueryTextBox_StartEn()
+        {
+            if (_settings.AlwaysStartEn)
+            {
+                QueryTextBox.SetValue(InputMethod.PreferredImeConversionModeProperty, ImeConversionModeValues.Alphanumeric); 
+                QueryTextBox.SetValue(InputMethod.PreferredImeStateProperty, InputMethodState.Off);
+            }
+            else
+            {
+                QueryTextBox.ClearValue(InputMethod.PreferredImeConversionModeProperty);
+                QueryTextBox.ClearValue(InputMethod.PreferredImeStateProperty);
             }
         }
     }
