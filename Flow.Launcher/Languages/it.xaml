@@ -53,6 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selezionare il Gestore file da usare all'apertura della cartella.</system:String>
     <system:String x:Key="defaultBrowser">Browser predefinito</system:String>
     <system:String x:Key="defaultBrowserToolTip">Impostazione per Nuova scheda, Nuova finestra, Modalità privata.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Cartella Python</system:String>
     <system:String x:Key="autoUpdates">Aggiornamento automatico</system:String>
     <system:String x:Key="selectPythonDirectory">Seleziona</system:String>
