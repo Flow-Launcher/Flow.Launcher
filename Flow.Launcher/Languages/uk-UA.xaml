@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
@@ -86,7 +88,7 @@
     <system:String x:Key="author">за</system:String>
     <system:String x:Key="plugin_init_time">Ініціалізація:</system:String>
     <system:String x:Key="plugin_query_time">Запит:</system:String>
-    <system:String x:Key="plugin_query_version">| Версія</system:String>
+    <system:String x:Key="plugin_query_version">Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
     <system:String x:Key="howToCreateTheme">Як створити тему</system:String>
     <system:String x:Key="hiThere">Привіт усім</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
+    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleProgram">Program</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>

@@ -443,10 +443,9 @@
                                 Margin="2,2,2,0"
                                 Panel.ZIndex="1"
                                 Background="Transparent"
-                                IsItemsHost="true"                                
+                                IsItemsHost="true"
                                 LastChildFill="False" />
-                            <Border
-                                Grid.Column="1">
+                            <Border Grid.Column="1">
                                 <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
                             </Border>
                         </Grid>
@@ -728,6 +727,22 @@
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7fc;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
+                                    </StackPanel>
+                                    <CheckBox
+                                        IsChecked="{Binding Settings.AlwaysPreview}"
+                                        Style="{DynamicResource SideControlCheckBox}"
+                                        ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe8a1;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
@@ -1022,6 +1037,7 @@
                                         DockPanel.Dock="Right"
                                         FontSize="14"
                                         KeyDown="PluginFilterTxb_OnKeyDown"
+                                        Loaded="Plugin_GotFocus"
                                         LostFocus="RefreshPluginListEventHandler"
                                         Text=""
                                         TextAlignment="Left"
@@ -1146,7 +1162,7 @@
                                                                 x:Name="PriorityButton"
                                                                 Margin="0,0,22,0"
                                                                 VerticalAlignment="Center"
-                                                                Click="OnPluginPriorityClick"
+                                                                Command="{Binding EditPluginPriorityCommand}"
                                                                 Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
                                                                 Cursor="Hand"
                                                                 ToolTip="{DynamicResource priorityToolTip}">
@@ -1224,7 +1240,7 @@
                                                                         Height="34"
                                                                         Margin="5,0,0,0"
                                                                         HorizontalAlignment="Right"
-                                                                        Click="OnPluginActionKeywordsClick"
+                                                                        Command="{Binding SetActionKeywordsCommand}"
                                                                         Content="{Binding ActionKeywordsText}"
                                                                         Cursor="Hand"
                                                                         DockPanel.Dock="Right"
@@ -1274,7 +1290,7 @@
                                                     <StackPanel>
                                                         <Border
                                                             Margin="0"
-                                                            Padding="0,12,0,12"
+                                                            Padding="0,10,0,10"
                                                             VerticalAlignment="Center"
                                                             BorderThickness="0,1,0,0"
                                                             CornerRadius="0 0 5 5"
@@ -1288,110 +1304,74 @@
                                                                     Style="{StaticResource TextPanel}">
                                                                     <TextBlock
                                                                         Margin="10,0,0,0"
+                                                                        VerticalAlignment="center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{DynamicResource author}" />
                                                                     <TextBlock
                                                                         Margin="5,0,0,0"
+                                                                        VerticalAlignment="center"
                                                                         FontSize="11"
                                                                         Foreground="{DynamicResource PluginInfoColor}"
                                                                         Text="{Binding PluginPair.Metadata.Author}" />
                                                                     <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        VerticalAlignment="Center"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="|" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{DynamicResource plugin_init_time}" />
-                                                                    <TextBlock
-                                                                        MaxWidth="100"
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{Binding InitilizaTime}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        VerticalAlignment="Center"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="|" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{DynamicResource plugin_query_time}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{Binding QueryTime}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        VerticalAlignment="Center"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{DynamicResource plugin_query_version}" />
-                                                                    <TextBlock
-                                                                        Margin="5,0,0,0"
-                                                                        VerticalAlignment="Center"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        Text="{Binding PluginPair.Metadata.Version}" />
-
-                                                                    <TextBlock
                                                                         Margin="10,0,0,0"
-                                                                        HorizontalAlignment="Right"
                                                                         VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontSize="11">
+                                                                        FontSize="11"
+                                                                        Foreground="{DynamicResource PluginInfoColor}"
+                                                                        Text="|" />
+                                                                    <TextBlock
+                                                                        Margin="10,0,5,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="11"
+                                                                        Foreground="{DynamicResource PluginInfoColor}"
+                                                                        Text="{Binding Version}"
+                                                                        ToolTip="{Binding InitAndQueryTime}"
+                                                                        ToolTipService.InitialShowDelay="500" />
+                                                                    <TextBlock
+                                                                        Margin="5,0,5,0"
+                                                                        VerticalAlignment="Center"
+                                                                        FontSize="11"
+                                                                        Foreground="{DynamicResource PluginInfoColor}"
+                                                                        Text="|" />
+                                                                    <TextBlock
+                                                                        Margin="5,0,0,0"
+                                                                        Style="{DynamicResource LinkBtnStyle}"
+                                                                        ToolTip="{DynamicResource plugin_query_web}">
                                                                         <Hyperlink
-                                                                            Foreground="{DynamicResource PluginInfoColor}"
                                                                             NavigateUri="{Binding PluginPair.Metadata.Website}"
-                                                                            RequestNavigate="OnRequestNavigate">
-                                                                            <Run Text="{DynamicResource plugin_query_web}" />
+                                                                            RequestNavigate="OnRequestNavigate"
+                                                                            Style="{DynamicResource HyperLinkBtnStyle}"
+                                                                            TextDecorations="None">
+                                                                            <Run Text="&#xe80f;" />
                                                                         </Hyperlink>
                                                                     </TextBlock>
-
                                                                     <TextBlock
                                                                         Margin="10,0,0,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
                                                                         MouseUp="OnExternalPluginUninstallClick"
-                                                                        Text="{DynamicResource plugin_uninstall}"
-                                                                        TextDecorations="Underline" />
-
+                                                                        Style="{DynamicResource LinkBtnStyle}"
+                                                                        Text="&#xe74d;"
+                                                                        ToolTip="{DynamicResource plugin_uninstall}" />
                                                                     <TextBlock
-                                                                        Margin="10,0,0,0"
-                                                                        HorizontalAlignment="Right"
-                                                                        VerticalAlignment="Center"
-                                                                        Cursor="Hand"
-                                                                        FontSize="11"
-                                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                                        MouseUp="OnPluginDirecotyClick"
-                                                                        Text="{DynamicResource pluginDirectory}"
-                                                                        TextDecorations="Underline" />
+                                                                        Margin="10,0,5,0"
+                                                                        Style="{DynamicResource LinkBtnStyle}"
+                                                                        Text="&#xe8b7;"
+                                                                        ToolTip="{DynamicResource pluginDirectory}">
+                                                                        <TextBlock.InputBindings>
+                                                                            <MouseBinding Command="{Binding OpenPluginDirectoryCommand}" MouseAction="LeftClick" />
+                                                                        </TextBlock.InputBindings>
+                                                                    </TextBlock>
                                                                 </StackPanel>
-
                                                             </ItemsControl>
                                                         </Border>
-
                                                     </StackPanel>
                                                 </StackPanel>
                                             </Grid>
                                         </Expander>
-
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </Border>
-
                     </Grid>
                 </TabItem>
 
@@ -1448,6 +1428,7 @@
                                 DockPanel.Dock="Right"
                                 FontSize="14"
                                 KeyDown="PluginStoreFilterTxb_OnKeyDown"
+                                Loaded="PluginStore_GotFocus"
                                 LostFocus="RefreshPluginStoreEventHandler"
                                 Text=""
                                 TextAlignment="Left"
@@ -1798,7 +1779,12 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
-                                        <Border Width="{Binding WindowWidthSize}" Style="{DynamicResource WindowBorderStyle}">
+                                        <Border
+                                            Width="{Binding WindowWidthSize}"
+                                            Margin="0"
+                                            SnapsToDevicePixels="True"
+                                            Style="{DynamicResource WindowBorderStyle}"
+                                            UseLayoutRounding="True">
                                             <Border Style="{DynamicResource WindowRadius}">
                                                 <Border.Clip>
                                                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -1816,6 +1802,7 @@
                                                     <Border Grid.Row="0">
                                                         <TextBox
                                                             x:Name="QueryTextBox"
+                                                            IsHitTestVisible="False"
                                                             IsReadOnly="True"
                                                             Style="{DynamicResource QueryBoxStyle}"
                                                             Text="{DynamicResource hiThere}" />
@@ -1853,7 +1840,10 @@
                                                     </Border>
 
                                                     <ContentControl Grid.Row="2">
-                                                        <flowlauncher:ResultListBox DataContext="{Binding PreviewResults, Mode=OneTime}" Visibility="Visible" />
+                                                        <flowlauncher:ResultListBox
+                                                            DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                            IsHitTestVisible="False"
+                                                            Visibility="Visible" />
                                                     </ContentControl>
 
                                                 </Grid>

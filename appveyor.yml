@@ -1,4 +1,4 @@
-version: '1.9.5.{build}'
+version: '1.10.1.{build}'
 
 init:
 - ps: |

@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Wijzigt de minimale overeenkomst-score die vereist is voor resultaten.</system:String>
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
 
     <!--  Setting Plugin  -->
@@ -86,7 +88,7 @@
     <system:String x:Key="author">door</system:String>
     <system:String x:Key="plugin_init_time">Init tijd:</system:String>
     <system:String x:Key="plugin_query_time">Query tijd:</system:String>
-    <system:String x:Key="plugin_query_version">| Versie</system:String>
+    <system:String x:Key="plugin_query_version">Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
     <system:String x:Key="howToCreateTheme">Hoe maak je een thema</system:String>
     <system:String x:Key="hiThere">Hallo daar</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
+    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleProgram">Program</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">Query Box lettertype</system:String>
     <system:String x:Key="resultItemFont">Resultaat Item lettertype</system:String>
     <system:String x:Key="windowMode">Venster Modus</system:String>

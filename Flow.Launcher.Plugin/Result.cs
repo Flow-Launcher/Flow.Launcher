@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
@@ -204,6 +205,11 @@ namespace Flow.Launcher.Plugin
         public string SubTitleToolTip { get; set; }
 
         /// <summary>
+        /// Customized Preview Panel
+        /// </summary>
+        public Lazy<UserControl> PreviewPanel { get; set; }
+
+        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>
@@ -223,5 +229,30 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <default>#26a0da (blue)</default>
         public string ProgressBarColor { get; set; } = "#26a0da";
+
+        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+
+        /// <summary>
+        /// Info of the preview image.
+        /// </summary>
+        public record PreviewInfo
+        {
+            /// <summary>
+            /// Full image used for preview panel
+            /// </summary>
+            public string PreviewImagePath { get; set; }
+            /// <summary>
+            /// Determines if the preview image should occupy the full width of the preveiw panel.
+            /// </summary>
+            public bool IsMedia { get; set; }
+            public string Description { get; set; }
+
+            public static PreviewInfo Default { get; } = new()
+            {
+                PreviewImagePath = null,
+                Description = null,
+                IsMedia = false,
+            };
+        }
     }
 }

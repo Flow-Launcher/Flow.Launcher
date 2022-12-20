@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
+    <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao iniciar a aplicação. Prima F1 para comutar esta opção. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
 
     <!--  Setting Plugin  -->
@@ -86,7 +88,7 @@
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
-    <system:String x:Key="plugin_query_version">| Versão</system:String>
+    <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
 
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Galeria de temas</system:String>
     <system:String x:Key="howToCreateTheme">Como criar um tema</system:String>
     <system:String x:Key="hiThere">Olá</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorador</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Pesquisar por ficheiros, pastas e conteúdo dos ficheiros</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Pesquisa Web</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Pesquisa na web com suporte a diversos motores de pesquisa</system:String>
+    <system:String x:Key="SampleTitleProgram">Programas</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Iniciar programas como administrador ou utilizador</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Terminador de processos</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminar processos indesejados</system:String>
     <system:String x:Key="queryBoxFont">Tipo de letra da consulta</system:String>
     <system:String x:Key="resultItemFont">Tipo de letra dos resultados</system:String>
     <system:String x:Key="windowMode">Modo da janela</system:String>

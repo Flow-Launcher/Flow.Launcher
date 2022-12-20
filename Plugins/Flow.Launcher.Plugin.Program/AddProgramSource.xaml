@@ -4,7 +4,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Flow.Launcher.Plugin.Program.ViewModels"
+    mc:Ignorable="d"
     Title="{DynamicResource flowlauncher_plugin_program_directory}"
+    d:DataContext="{d:DesignInstance vm:AddProgramSourceViewModel}"
     Width="Auto"
     Height="276"
     Background="{DynamicResource PopuBGColor}"
@@ -15,6 +18,9 @@
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -98,11 +104,14 @@
                                 HorizontalAlignment="Stretch"
                                 Click="BrowseButton_Click"
                                 Content="{DynamicResource flowlauncher_plugin_program_browse}"
+                                Visibility="{Binding IsCustomSource, Converter={StaticResource BooleanToVisibilityConverter}}"
                                 DockPanel.Dock="Right" />
                             <TextBox
                                 Name="Directory"
-                                MinWidth="300"
+                                Width="350"
                                 Margin="10"
+                                Text="{Binding Location, Mode=TwoWay}"
+                                IsReadOnly="{Binding IsNotCustomSource}"
                                 HorizontalAlignment="Stretch"
                                 VerticalAlignment="Center" />
                         </DockPanel>
@@ -119,6 +128,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Margin="10,0"
+                            IsChecked="{Binding Enabled, Mode=TwoWay}"
                             VerticalAlignment="Center" />
                     </Grid>
                 </StackPanel>
@@ -142,7 +152,7 @@
                     MinWidth="140"
                     Margin="5,0,10,0"
                     Click="BtnAdd_OnClick"
-                    Content="{DynamicResource flowlauncher_plugin_program_update}"
+                    Content="{Binding AddBtnText}"
                     Style="{DynamicResource AccentButtonStyle}" />
             </StackPanel>
         </Border>

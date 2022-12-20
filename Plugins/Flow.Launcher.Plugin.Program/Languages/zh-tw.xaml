@@ -10,6 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_program_enable">啟</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">已啟用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">停用</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">已啟用</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">路徑</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
@@ -26,7 +29,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Disabling this will also stop Flow from searching via the program desciption</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">副檔名</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">最大深度</system:String>
 
@@ -79,7 +82,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">成</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>

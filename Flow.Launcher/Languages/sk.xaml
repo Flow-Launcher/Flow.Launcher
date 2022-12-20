@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
+    <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Pri spustení Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu F1 prepnete náhľad. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--  Setting Plugin  -->
@@ -86,7 +88,7 @@
     <system:String x:Key="author">od</system:String>
     <system:String x:Key="plugin_init_time">Inicializácia:</system:String>
     <system:String x:Key="plugin_query_time">Trvanie dopytu:</system:String>
-    <system:String x:Key="plugin_query_version">| Verzia</system:String>
+    <system:String x:Key="plugin_query_version">Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
 
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
     <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
+    <system:String x:Key="SampleTitleExplorer">Prieskumník</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Vyhľadávanie súborov, priečinkov a obsahu súborov</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Webové vyhľadávanie</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Vyhľadávanie na webe s podporou rôznych vyhľadávačov</system:String>
+    <system:String x:Key="SampleTitleProgram">Program</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Spúšťanie programov ako správca alebo iný používateľ</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Ukončenie nežiaducich procesov</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
     <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>

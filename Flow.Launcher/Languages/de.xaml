@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Erforderliche Suchergebnisse.</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Der Schatteneffekt ist nicht zulässig, wenn das aktuelle Thema den Weichzeichneffekt aktiviert hat</system:String>
 
     <!--  Setting Plugin  -->
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
     <system:String x:Key="howToCreateTheme">Wie man ein Design erstellt</system:String>
     <system:String x:Key="hiThere">Hallo!</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
+    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleProgram">Programm</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">Abfragebox Schriftart</system:String>
     <system:String x:Key="resultItemFont">Ergebnis Schriftart</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
@@ -163,9 +173,9 @@
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP Proxy</system:String>
+    <system:String x:Key="proxy">HTTP-Proxy</system:String>
     <system:String x:Key="enableProxy">Aktiviere HTTP Proxy</system:String>
-    <system:String x:Key="server">HTTP Server</system:String>
+    <system:String x:Key="server">HTTP-Server</system:String>
     <system:String x:Key="port">Port</system:String>
     <system:String x:Key="userName">Benutzername</system:String>
     <system:String x:Key="password">Passwort</system:String>
@@ -180,9 +190,9 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Über</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Webseite</system:String>
     <system:String x:Key="github">Github</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">Dokumentation</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
@@ -207,24 +217,24 @@
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
+    <system:String x:Key="fileManager_name">Datei-Manager</system:String>
+    <system:String x:Key="fileManager_profile_name">Profilname</system:String>
     <system:String x:Key="fileManager_path">File Manager Path</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Standard-Webbrowser</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser-Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">Browserpfad</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Privater Modus</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
+    <system:String x:Key="changePriorityWindow">Priorität ändern</system:String>
     <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
     <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
 

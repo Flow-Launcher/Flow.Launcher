@@ -19,4 +19,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">数据文件路径</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">增加</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">删除</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
 </ResourceDictionary>

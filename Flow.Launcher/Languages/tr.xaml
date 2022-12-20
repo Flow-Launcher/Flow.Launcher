@@ -62,6 +62,8 @@
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum maç puanını değiştirir.</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
+    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölge efektine izin verilmez</system:String>
 
     <!--  Setting Plugin  -->
@@ -113,6 +115,14 @@
     <system:String x:Key="browserMoreThemes">Daha fazla tema bul</system:String>
     <system:String x:Key="howToCreateTheme">Nasıl bir tema yaratılır</system:String>
     <system:String x:Key="hiThere">Merhaba</system:String>
+    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
+    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleTitleProgram">Program</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">Pencere Yazı Tipi</system:String>
     <system:String x:Key="resultItemFont">Sonuç Yazı Tipi</system:String>
     <system:String x:Key="windowMode">Pencere Modu</system:String>

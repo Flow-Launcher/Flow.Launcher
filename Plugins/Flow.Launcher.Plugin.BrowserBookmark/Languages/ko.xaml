@@ -19,4 +19,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">데이터 디렉토리 위치</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">추가</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">삭제</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
 </ResourceDictionary>

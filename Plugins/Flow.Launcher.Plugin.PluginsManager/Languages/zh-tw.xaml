@@ -1,13 +1,14 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Dialogues-->
+    <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">正在下載外掛</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">下載完成</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">錯誤：無法下載外掛</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">安裝外掛</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">下載並安裝 {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">移除外掛</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">外掛安裝成功。正在重啟 Flow，請稍後...</system:String>
@@ -26,14 +27,14 @@
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
 
-    <!--Controls-->
-    
-    <!--Plugin Infos-->
+    <!--  Controls  -->
+
+    <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">外掛管理</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">未知的作者</system:String>
 
-    <!--Context menu items-->
+    <!--  Context menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">打開網頁</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">查看外掛的網站</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">查看原始碼</system:String>
@@ -43,6 +44,6 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Go to Flow's plugins repository</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
 
-    <!--Settings menu items-->
+    <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
 </ResourceDictionary>

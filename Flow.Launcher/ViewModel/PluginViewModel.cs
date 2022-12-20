@@ -1,14 +1,16 @@
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
+using CommunityToolkit.Mvvm.Input;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class PluginViewModel : BaseModel
+    public partial class PluginViewModel : BaseModel
     {
         private readonly PluginPair _pluginPair;
         public PluginPair PluginPair
@@ -35,7 +37,7 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (_image == ImageLoader.DefaultImage)
+                if (_image == ImageLoader.MissingImage)
                     LoadIconAsync();
 
                 return _image;
@@ -53,6 +55,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 _isExpanded = value;
+
                 OnPropertyChanged();
                 OnPropertyChanged(nameof(SettingControl));
             }
@@ -60,18 +63,20 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
-        public Control SettingControl 
+        public Control SettingControl
             => IsExpanded
                 ? _settingControl
                     ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? new Control() 
-                        : settingProvider.CreateSettingPanel() 
+                        ? new Control()
+                        : settingProvider.CreateSettingPanel()
                 : null;
-        private ImageSource _image = ImageLoader.DefaultImage;
+        private ImageSource _image = ImageLoader.MissingImage;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
+        public string Version => InternationalizationManager.Instance.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
+        public string InitAndQueryTime => InternationalizationManager.Instance.GetTranslation("plugin_init_time") + " " + PluginPair.Metadata.InitTime + "ms, " + InternationalizationManager.Instance.GetTranslation("plugin_query_time") + " " + PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
 
@@ -87,7 +92,29 @@ namespace Flow.Launcher.ViewModel
             OnPropertyChanged(nameof(Priority));
         }
 
+        [RelayCommand]
+        private void EditPluginPriority()
+        {
+            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair.Metadata.ID, this);
+            priorityChangeWindow.ShowDialog();
+        }
+
+        [RelayCommand]
+        private void OpenPluginDirectory()
+        {
+            var directory = PluginPair.Metadata.PluginDirectory;
+            if (!string.IsNullOrEmpty(directory))
+                PluginManager.API.OpenDirectory(directory);
+        }
+
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+
+        [RelayCommand]
+        private void SetActionKeywords()
+        {
+            ActionKeywords changeKeywordsWindow = new ActionKeywords(this);
+            changeKeywordsWindow.ShowDialog();
+        }
     }
 
 }

@@ -1,11 +1,9 @@
 <p align="center">
-	<img src="https://user-images.githubusercontent.com/6903107/144854670-d624d717-d86a-49e5-a5e5-e782f91ed12a.png" width="300"><br />
-  <a href="https://flowlauncher.com">
-	<img src="https://user-images.githubusercontent.com/6903107/144854052-969f5e60-a0ec-44b8-8968-620467496f10.gif" width="500">
-  </a>
+        <a href="https://flowlauncher.com">
+        	<img src="https://user-images.githubusercontent.com/6903107/207167068-2196d2a3-2caa-4856-958b-a780fbda95c6.gif" width="500">
+        </a><br />
+        <img src="https://user-images.githubusercontent.com/6903107/207168016-85d0dd16-1f3b-4d42-9d37-0e0d5a596ead.png" width="400">
 </p>
-<br />
-
 <p align="center">
 <img src="https://img.shields.io/maintenance/yes/3000">
 <a href="https://crowdin.com/project/flow-launcher"><img src="https://badges.crowdin.net/flow-launcher/localized.svg"></a>
@@ -22,18 +20,63 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
-<p align="center"><img width="12px" src="https://user-images.githubusercontent.com/26427004/104119722-9033c600-5385-11eb-9d57-4c376862fd36.png"> <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">SOFTPEDIA EDITOR'S PICK</a></p>
-
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 
-## 🎉 New Features in 1.9
+## 🎅 New Features🤶
+### Preview Panel
+<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-![screenshot](https://user-images.githubusercontent.com/6903107/144855345-45535bc7-7777-4c5a-b8d9-d6ce8adc5e84.png)
+- Use the F1 key to open/hide the preview panel.
+- Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
+- Turn on preview permanently via Settings (Always Preview).
+- Use hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to adjust flow's search window width and height quickly if the preview area is too narrow.
+- This feature is currently in its early stages.
 
-- All New Design. New Themes, New Setting Window. Animation & Sound Effect, Color Scheme aka Dark Mode.
-- New Plugins, Plugin Store, Game Mode, Wizard window
-- <a href="https://github.com/Flow-Launcher/Flow.Launcher/releases/tag/v1.9.0">Full changelog</a>
+### Everything Plugin Merged Into Explorer
+<img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
+
+- Switch easily between Everything and Windows Search to take advantage of both search engines (remember to remove existing Everything plugin).
+- Use features available to both Everything and Explorer plugins
+
+### Date & Time Display In Search Window
+
+<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
+
+- Display the date and time when the search window is triggered.
+
+### Drag & Drop
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+
+- Drag an item to Discord or computer location.
+- The target program determines whether the drop is to copy or move the item (can change via CTRL or Alt), and the operation is displayed on the mouse cursor.
+
+### Custom Shortcut
+
+<img src="https://user-images.githubusercontent.com/6903107/207170354-db1a98a6-3959-4341-82ed-0c417bdb121c.png" width="300">
+<img src="https://user-images.githubusercontent.com/6903107/207170525-3e99ad93-e8b7-4b39-b9b3-8fbeb443ed26.png" width="300">
+
+- New shortcut functionality to set additional action keywords or search terms.
+
+### Improved Program Plugin
+- PATH is now indexed
+- Support for .url files, flow can now search installed steam/epic games.
+- Improved UWP indexing.
+
+### Improved Memory Usage
+- Fixed a memory leak and reduced overall memory usage.
+
+### Improved Plugin / Plugin Store
+- Search plugins in the Plugin Store and existing plugin tab.
+- Categorised sections in Plugin Store to easily see new and updated plugins.
+
+### Improved Non-C# Plugin's Panel Design
+<img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
+
+- The design has been adjusted to align to the overall look and feel of flow.
+- Simplified the information displayed on buttons
+
+🚂<a href="https://github.com/Flow-Launcher/Flow.Launcher/releases">Full Changelogs</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -84,11 +127,12 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
 <img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
-<img src="https://user-images.githubusercontent.com/6903107/144517519-79ee8a81-083c-42be-b2d7-4990d1cb53e5.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207141710-50bc0e6b-f0f8-4dc2-a136-621a473689d7.png" width="400">
+
 
 ### Browser Bookmarks
 
-<img src="https://user-images.githubusercontent.com/6903107/144517534-5e27547b-77f8-4718-941c-5bc542eed931.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207143428-e6406306-4f1e-4c24-917d-d2a333d5dc2b.png" width="400">
 
 ### System Commands
 
@@ -99,26 +143,27 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### Calculator
 
-<img src="https://user-images.githubusercontent.com/6903107/144517570-f0e62716-3fdf-4f2a-8986-385a3fcd0663.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207142449-7de0c30d-8d5b-4331-967e-f3e78c17ea93.png" width="400">
 
 - Do mathematical calculations and copy the result to clipboard.
 
 ### Shell Command
 
-<img src="https://user-images.githubusercontent.com/6903107/144517582-83da8414-e03d-402c-863d-22d116d20c31.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207142197-9e910147-96a9-466e-bbc4-b1163314ef59.png" width="400">
+
 
 - Run batch and PowerShell commands as Administrator or a different user.
 - Ctrl+Enter to Run as Administrator.
 
 ### Explorer
 
-<img src="https://user-images.githubusercontent.com/6903107/144517603-7bfbf868-476a-41d1-bd1b-1ebde7ab2539.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207145376-fbb68ec2-93b9-4b0f-befe-0aeb792367a7.png" width="400">
 
 - Save file or folder locations for quick access.
 
 ### Windows & Control Panel Settings
 
-<img src="https://user-images.githubusercontent.com/6903107/144982305-42a2f63e-0066-4557-9791-0a1c57495ea7.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
 
 - Search for Windows & Control Panel settings.
 
@@ -127,17 +172,16 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517677-857a2b0a-4b94-4be0-bc89-f35723ecddf9.png" width="500">
 
-
 - Prioritise the order of each plugin's results.
 
 ### Customizations
 
-![Animation5](https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif)
+<img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
 
 - Window size adjustment, animation, and sound
 - Color Scheme (aka Dark Mode)
 
-![themes](https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png)
+<img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="500">
 
 - There are various themes and you also can make your own.
 
@@ -157,9 +201,10 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 ### 🎮 Game Mode
 
-<img src="https://user-images.githubusercontent.com/6903107/144517711-a7396bbb-f7ae-403d-9644-1414edd9e3f1.png" width="150">
+<img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
+- When in search window use Ctrl+F12 to toggle on/off.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -208,8 +253,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ### 🛒 Plugin Store
+<img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
 
-![pluginstore](https://user-images.githubusercontent.com/6903107/144528115-3b6baa89-f53f-40db-8426-02c4db8dd2b5.png)
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
 
@@ -224,16 +269,21 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | ------------------------------------------------------------ | -------------------------------------------- |
 | <kbd>Alt</kbd>+ <kbd>Space</kbd>                             | Open search window (default and configurable)|
 | <kbd>Enter</kbd>                                             | Execute                                      |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run commands from Shell plugin as admin      |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>            | Run as admin                                 |
 | <kbd>↑</kbd><kbd>↓</kbd>                                     | Scroll up & down                             |
 | <kbd>←</kbd><kbd>→</kbd>                                     | Back to result / Open Context Menu           |
 | <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
 | <kbd>Tab</kbd>                                               | Autocomplete                                 |
+| <kbd>F1</kbd>                                                | Toggle Preveiw Panel                         |
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
-| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open Settings window                         |
+| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open flow's settings                         |
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
+| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode when in search window.      |
+| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quickly change maximum results shown         |
+| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                  | Quickly change search window width           |
 | <kbd>Ctrl</kbd> + <kbd>H</kbd>                               | Open search history                          |
+| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                       | Back to previous directory                   |
 
 
 ## System Command List
@@ -248,6 +298,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | Sleep                  | Put computer to sleep                                        |
 | Hibernate              | Hibernate computer                                           |
 | Empty Recycle Bin      | Empty recycle bin                                            |
+| Open Recycle Bin       | Open recycle bin                                             |
 | Exit                   | Close Flow Launcher                                          |
 | Save Settings          | Save all Flow Launcher settings                              |
 | Restart Flow Launcher  | Restart Flow Launcher                                        |
@@ -255,6 +306,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | Reload Plugin Data     | Refreshes plugin data with new content                       |
 | Check For Update       | Check for new Flow Launcher update                           |
 | Open Log Location      | Open Flow Launcher's log location                            |
+| Index Option           | Open Windows Search Index window                             |
 | Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
 | Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
 
@@ -270,13 +322,19 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://appwrite.io">
     <img src='https://appwrite.io/images-ee/press/logo-1.svg' width="25%"/>
   </a>
+  <br />
+
 </p>
 
-<p align="left">
-  <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj">
-    :sparkles:<i>Why I Chose to Support Flow-Launcher</i>:sparkles:
-  </a>
+<p align="center">
+  <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
 </p>
+
+### Mentions
+- <a href="https://dev.to/appwrite/appwrite-loves-open-source-why-i-chose-to-support-flow-launcher-54pj"> Why I Chose to Support Flow-Launcher</a> - Appwrite
+- <a href="https://www.softpedia.com/get/System/Launchers-Shutdown-Tools/Flow-Launcher.shtml">Softpedia Editor's Pick</a>
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -290,7 +348,7 @@ Yes please, let us know in the [Q&A](https://github.com/Flow-Launcher/Flow.Launc
 
 ### New changes
 
-All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current latest release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
+All changes to flow are captured via pull requests. Some new changes will have been merged but still pending release, this means whilst a change may not exist in the current release, it may very well have been accepted and merged into the dev branch and available as a pre-release download. It is therefore a good idea that before you start to make changes, search through the open and closed pull requests to make sure the change you intend to make is not already done.
 
 Each of the pull requests will be marked with a milestone indicating the planned release version for the change.  
 

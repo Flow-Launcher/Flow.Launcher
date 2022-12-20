@@ -176,7 +176,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 return;
             }
 
-            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
+            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
                 Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"));
 
             Context.API.RestartApp();

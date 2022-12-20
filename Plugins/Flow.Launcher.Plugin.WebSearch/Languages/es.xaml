@@ -10,6 +10,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Añadir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
@@ -30,7 +32,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Activar</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Estado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Seleccionar icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancelar</system:String>
@@ -40,7 +42,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Por favor, introduzca una URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">La palabra clave de acción ya está en uso, por favor, introduzca una diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Correcto</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Sugerencia: No es necesario copiar imágenes personalizadas en esta carpeta, cuando Flow sea actualizado se perderán. Flow copiará automáticamente cualquier imagen externa a esta carpeta en la ubicación de imágenes personalizada de WebSearch.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Sugerencia: No es necesario colocar imágenes personalizadas en esta carpeta, al actualizar Flow se perderán. Flow copiará automáticamente cualquier imagen externa a esta carpeta en la ubicación de imágenes personalizada de WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Búsquedas Web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permite realizar búsquedas web</system:String>

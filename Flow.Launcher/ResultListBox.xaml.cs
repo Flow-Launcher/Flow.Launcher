@@ -92,24 +92,36 @@ namespace Flow.Launcher
         private Point start;
         private string path;
         private string query;
+        // this method is called by the UI thread, which is single threaded, so we can be sloppy with locking
+        private bool isDragging;
 
         private void ResultList_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (Mouse.DirectlyOver is not FrameworkElement { DataContext: ResultViewModel result })
-                return;
+            if (Mouse.DirectlyOver is not FrameworkElement
+                {
+                    DataContext: ResultViewModel
+                    {
+                        Result:
+                        {
+                            CopyText: { } copyText,
+                            OriginQuery.RawQuery: { } rawQuery
+                        }
+                    }
+                }) return;
 
-            path = result.Result.CopyText;
-            query = result.Result.OriginQuery.RawQuery;
+            path = copyText;
+            query = rawQuery;
             start = e.GetPosition(null);
+            isDragging = true;
         }
-
         private void ResultList_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed)
+            if (e.LeftButton != MouseButtonState.Pressed || !isDragging)
             {
                 start = default;
                 path = string.Empty;
                 query = string.Empty;
+                isDragging = false;
                 return;
             }
 
@@ -123,15 +135,19 @@ namespace Flow.Launcher
                 || Math.Abs(diff.Y) < SystemParameters.MinimumVerticalDragDistance)
                 return;
 
+            isDragging = false;
+
             var data = new DataObject(DataFormats.FileDrop, new[]
             {
                 path
             });
-            DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
 
-            App.API.ChangeQuery(query, true);
-
-            e.Handled = true;
+            // Reassigning query to a new variable because for some reason
+            // after DragDrop.DoDragDrop call, 'query' loses its content, i.e. becomes empty string
+            var rawQuery = query;
+            var effect = DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
+            if (effect == DragDropEffects.Move)
+                App.API.ChangeQuery(rawQuery, true);
         }
         private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {

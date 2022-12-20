@@ -77,8 +77,6 @@
                         Text="{DynamicResource plugin_explorer_actionkeyword_current}" />
                     <TextBox
                         Name="TxtCurrentActionKeyword"
-                        Grid.Row="0"
-                        Grid.Column="1"
                         Width="135"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
@@ -97,7 +95,7 @@
                         Name="ChkActionKeywordEnabled"
                         Width="auto"
                         VerticalAlignment="Center"
-                        IsChecked="{Binding Enabled}"
+                        IsChecked="{Binding KeywordEnabled, Mode=TwoWay}"
                         ToolTip="{DynamicResource plugin_explorer_actionkeyword_enabled_tooltip}" />
                 </StackPanel>
             </StackPanel>

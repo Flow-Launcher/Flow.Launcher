@@ -5,7 +5,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ModernWpf.Controls;
@@ -18,7 +17,6 @@ using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
@@ -181,41 +179,8 @@ namespace Flow.Launcher
         {
             if (sender is Control { DataContext: PluginViewModel pluginViewModel })
             {
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
-            }
-        }
-
-        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
-        {
-            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-            ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
-            changeKeywordsWindow.ShowDialog();
-        }
-
-        private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var website = viewModel.SelectedPlugin.PluginPair.Metadata.Website;
-                if (!string.IsNullOrEmpty(website))
-                {
-                    var uri = new Uri(website);
-                    if (Uri.CheckSchemeName(uri.Scheme))
-                    {
-                        website.OpenInBrowserTab();
-                    }
-                }
-            }
-        }
-
-        private void OnPluginDirecotyClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
-                if (!string.IsNullOrEmpty(directory))
-                    PluginManager.API.OpenDirectory(directory);
             }
         }
 
@@ -289,22 +254,6 @@ namespace Flow.Launcher
             }
         }
 
-        private static T FindParent<T>(DependencyObject child) where T : DependencyObject
-        {
-            //get parent item
-            DependencyObject parentObject = VisualTreeHelper.GetParent(child);
-
-            //we've reached the end of the tree
-            if (parentObject == null) return null;
-
-            //check if the parent matches the type we're looking for
-            T parent = parentObject as T;
-            if (parent != null)
-                return parent;
-            else
-                return FindParent<T>(parentObject);
-        }
-        
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
             if (sender is not Button { DataContext: PluginStoreItemViewModel plugin } button)
@@ -327,8 +276,6 @@ namespace Flow.Launcher
                 var name = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
                 viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
             }
-
-
         }
 
         private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
@@ -553,6 +500,16 @@ namespace Flow.Launcher
                 storeClickedButton = null;
             };
 
+        }
+
+        private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginStoreFilterTxb);
+        }
+
+        private void Plugin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginFilterTxb);
         }
     }
 }

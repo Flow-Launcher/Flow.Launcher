@@ -10,6 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_program_enable">Activar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Activado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Desactivar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_status">Estado</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Ubicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">Todos los programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">Tipo de archivo</system:String>
@@ -26,7 +29,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar ruta de aplicación</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para los archivos ejecutables como UWP o lnk, oculta la ruta del archivo para que no sea visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Buscar en la descripción del programa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Cuando este desactivado, Flow evitará buscar a través de la descripción del programa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow buscará la descripción del programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Extensiones</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidad máxima</system:String>
 
@@ -79,7 +82,9 @@
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Correcto</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Programa desactivado correctamente en las búsquedas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Esta aplicación no fue diseñada para ser ejecutada como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">No se puede ejecutar {0}</system:String>
 
 </ResourceDictionary>
