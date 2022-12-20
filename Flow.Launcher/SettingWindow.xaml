@@ -752,24 +752,6 @@
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
-                                    </StackPanel>
-                                    <ui:ToggleSwitch
-                                        Grid.Column="2"
-                                        FocusVisualMargin="5"
-                                        IsOn="{Binding Settings.ShouldUsePinyin}"
-                                        Style="{DynamicResource SideToggleSwitch}"
-                                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
-                                    <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe98a;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-
-                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource autoUpdates}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
@@ -969,6 +951,24 @@
                                         Style="{DynamicResource SideToggleSwitch}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8d3;
+                                    </TextBlock>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ShouldUsePinyin}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ShouldUsePinyinToolTip}" />
+                                    </StackPanel>
+                                    <ui:ToggleSwitch
+                                        Grid.Column="2"
+                                        FocusVisualMargin="5"
+                                        IsOn="{Binding Settings.ShouldUsePinyin}"
+                                        Style="{DynamicResource SideToggleSwitch}"
+                                        ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                                    <TextBlock Style="{StaticResource Glyph}">
+                                        &#xe98a;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>
