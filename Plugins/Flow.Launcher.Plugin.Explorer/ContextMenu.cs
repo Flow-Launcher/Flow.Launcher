@@ -42,11 +42,15 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File && !string.IsNullOrEmpty(Settings.EditorPath))
                     contextMenus.Add(CreateOpenWithEditorResult(record));
 
-                if (record.Type == ResultType.Folder && record.WindowsIndexed)
+                if (record.Type == ResultType.Folder)
                 {
-                    contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
                     contextMenus.Add(CreateOpenWithShellResult(record));
+                    if (record.WindowsIndexed)
+                    {
+                        contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
+                    }
                 }
+
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
                 if (record.WindowsIndexed)
