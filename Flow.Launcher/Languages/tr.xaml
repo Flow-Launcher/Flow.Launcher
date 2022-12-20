@@ -53,6 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Klasör açarken kullanılacak dosya yöneticisini seçin.</system:String>
     <system:String x:Key="defaultBrowser">Varsayılan Tarayıcısı</system:String>
     <system:String x:Key="defaultBrowserToolTip">Yeni Sekme, Yeni Pencere, Gizli Mod için Ayar.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Python Konumu</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
     <system:String x:Key="selectPythonDirectory">Seç</system:String>
