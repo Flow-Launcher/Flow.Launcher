@@ -53,6 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Wählen Sie den Dateimanager, der beim Öffnen des Ordners verwendet werden soll.</system:String>
     <system:String x:Key="defaultBrowser">Standardbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Einstellung für neuen Tab, neues Fenster und dem Privatmodus.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Python-Verzeichnis</system:String>
     <system:String x:Key="autoUpdates">Automatische Aktualisierung</system:String>
     <system:String x:Key="selectPythonDirectory">Auswählen</system:String>
