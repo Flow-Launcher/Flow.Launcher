@@ -202,11 +202,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public static Application[] All(Settings settings)
         {
             var support = SupportUWP();
-            if (!support && settings.EnableUWP)
-            {
-                settings.EnableUWP = false;
-            }
-            if (settings.EnableUWP)
+            if (support && settings.EnableUWP)
             {
                 var applications = CurrentUserPackages().AsParallel().SelectMany(p =>
                 {
