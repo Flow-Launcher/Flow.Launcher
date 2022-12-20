@@ -53,6 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecteer de bestandsbeheerder voor het openen van de map.</system:String>
     <system:String x:Key="defaultBrowser">Standaard webbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Instelling voor Nieuw tabblad, Nieuw Venster, Privémodus.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Python map</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
     <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
