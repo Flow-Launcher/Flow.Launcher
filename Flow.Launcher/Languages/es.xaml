@@ -265,7 +265,7 @@
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Introduzca acceso directo para mostrar directamente la consulta especificada.</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Introduzca un acceso directo para expandir automáticamente la consulta especificada.</system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
 
