@@ -40,7 +40,10 @@ namespace Flow.Launcher.Plugin.Explorer
             if (selectedResult.ContextData is SearchResult record)
             {
                 if (record.Type == ResultType.File && !string.IsNullOrEmpty(Settings.EditorPath))
-                    contextMenus.Add(CreateOpenWithEditorResult(record));
+                    contextMenus.Add(CreateOpenWithEditorResult(record, Settings.EditorPath));
+
+                if ((record.Type == ResultType.Folder || record.Type == ResultType.Volume) && !string.IsNullOrEmpty(Settings.FolderEditorPath))
+                    contextMenus.Add(CreateOpenWithEditorResult(record, Settings.FolderEditorPath));
 
                 if (record.Type == ResultType.Folder)
                 {
@@ -309,10 +312,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
 
 
-        private Result CreateOpenWithEditorResult(SearchResult record)
+        private Result CreateOpenWithEditorResult(SearchResult record, string editorPath)
         {
-            string editorPath = Settings.EditorPath;
-
             var name = $"{Context.API.GetTranslation("plugin_explorer_openwitheditor")} {Path.GetFileNameWithoutExtension(editorPath)}";
 
             return new Result

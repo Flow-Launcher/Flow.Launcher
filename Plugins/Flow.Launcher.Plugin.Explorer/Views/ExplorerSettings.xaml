@@ -177,7 +177,8 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
-                                    </Grid.RowDefinitions>
+                                        <RowDefinition />
+                                     </Grid.RowDefinitions>
 
                                     <TextBlock
                                         Grid.Row="0"
@@ -185,7 +186,7 @@
                                         Margin="0,6,16,6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{DynamicResource plugin_explorer_editor_path}"
+                                        Text="{DynamicResource plugin_explorer_file_editor_path}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
                                     <StackPanel
                                         Grid.Row="0"
@@ -196,19 +197,47 @@
                                             Width="250"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Text="{Binding EditorPath}"
+                                            Text="{Binding FileEditorPath}"
                                             TextWrapping="NoWrap" />
                                         <Button
                                             MinWidth="50"
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Command="{Binding OpenEditorPath}"
+                                            Command="{Binding OpenFileEditorPath}"
                                             Content="..." />
                                     </StackPanel>
 
                                     <TextBlock
                                         Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="0,6,16,6"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{DynamicResource plugin_explorer_folder_editor_path}"
+                                        TextBlock.Foreground="{DynamicResource Color05B}" />
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,6,6,6"
+                                        Orientation="Horizontal">
+                                        <TextBox
+                                            Width="250"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding FolderEditorPath}"
+                                            TextWrapping="NoWrap" />
+                                        <Button
+                                            MinWidth="50"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding OpenFolderEditorPath}"
+                                            Content="..." />
+                                    </StackPanel>
+
+                                    <TextBlock
+                                        Grid.Row="2"
                                         Grid.Column="0"
                                         Margin="0,16,6,6"
                                         HorizontalAlignment="Left"
@@ -216,7 +245,7 @@
                                         Text="{DynamicResource plugin_explorer_shell_path}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
                                     <StackPanel
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         Grid.Column="1"
                                         Orientation="Horizontal">
                                         <TextBox

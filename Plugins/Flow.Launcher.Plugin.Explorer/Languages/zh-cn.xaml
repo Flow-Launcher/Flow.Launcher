@@ -45,6 +45,8 @@
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows 索引</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">直接枚举</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">文件编辑器路径</system:String>
+    <system:String x:Key="plugin_explorer_folder_editor_path">文件夹编辑器路径</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">文件内容搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">目录递归搜索引擎</system:String>
