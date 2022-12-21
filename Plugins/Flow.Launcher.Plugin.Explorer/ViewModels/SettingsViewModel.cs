@@ -112,15 +112,15 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             ActionKeywordsModels = new List<ActionKeywordModel>
             {
                 new(Settings.ActionKeyword.SearchActionKeyword,
-                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_search")),
+                    "plugin_explorer_actionkeywordview_search"),
                 new(Settings.ActionKeyword.FileContentSearchActionKeyword,
-                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_filecontentsearch")),
+                    "plugin_explorer_actionkeywordview_filecontentsearch"),
                 new(Settings.ActionKeyword.PathSearchActionKeyword,
-                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_pathsearch")),
+                    "plugin_explorer_actionkeywordview_pathsearch"),
                 new(Settings.ActionKeyword.IndexSearchActionKeyword,
-                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_indexsearch")),
+                    "plugin_explorer_actionkeywordview_indexsearch"),
                 new(Settings.ActionKeyword.QuickAccessActionKeyword,
-                    Context.API.GetTranslation("plugin_explorer_actionkeywordview_quickaccess"))
+                    "plugin_explorer_actionkeywordview_quickaccess")
             };
         }
 
