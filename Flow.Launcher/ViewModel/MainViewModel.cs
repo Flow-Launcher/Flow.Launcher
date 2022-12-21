@@ -71,6 +71,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
                         break;
+                    case nameof(Settings.AlwaysStartEn):
+                        OnPropertyChanged(nameof(StartWithEnglishMode));
+                        break;
                 }
             };
 
@@ -513,6 +516,8 @@ namespace Flow.Launcher.ViewModel
         public string OpenResultCommandModifiers { get; private set; }
 
         public string Image => Constant.QueryTextBoxIconImagePath;
+
+        public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
         #endregion
 
