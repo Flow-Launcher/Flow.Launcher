@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">검색 출처 설정</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
@@ -9,7 +12,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">삭제</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">편집</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_add">추</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_add">추가</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled">사용</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">켬</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">확인</system:String>
@@ -32,7 +36,7 @@
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">이름</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">상태</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">아이콘 선택</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">아이콘</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">취소</system:String>
