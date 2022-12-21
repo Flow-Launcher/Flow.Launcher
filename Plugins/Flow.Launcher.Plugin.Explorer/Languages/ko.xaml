@@ -39,11 +39,11 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">경로 검색:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">파일 내용 검색:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">색인 검색:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">빠른 접근:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">현재 액션 키워드</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">완료</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">활성</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">사용</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">윈도우 색인</system:String>
