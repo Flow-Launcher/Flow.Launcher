@@ -16,8 +16,8 @@
     <system:String x:Key="copy">Kopieren</system:String>
     <system:String x:Key="cut">Ausschneiden</system:String>
     <system:String x:Key="paste">Einfügen</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="undo">Rückgängig</system:String>
+    <system:String x:Key="selectAll">Alle auswählen</system:String>
     <system:String x:Key="fileTitle">Datei</system:String>
     <system:String x:Key="folderTitle">Ordner</system:String>
     <system:String x:Key="textTitle">Text</system:String>
