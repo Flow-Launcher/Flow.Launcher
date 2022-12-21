@@ -46,8 +46,8 @@
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Índice do Windows</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumeração direta</system:String>
-    <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
-    <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">Caminho do editor de ficheiros</system:String>
+    <system:String x:Key="plugin_explorer_folder_editor_path">Caminho do editor de pastas</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Mecanismo de pesquisa para conteúdo</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Mecanismo de pesquisa recursiva de diretórios</system:String>
