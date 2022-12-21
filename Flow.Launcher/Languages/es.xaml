@@ -16,8 +16,8 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Pegar</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="undo">Deshacer</system:String>
+    <system:String x:Key="selectAll">Seleccionar todo</system:String>
     <system:String x:Key="fileTitle">Archivo</system:String>
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
@@ -56,7 +56,7 @@
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
     <system:String x:Key="defaultBrowserToolTip">Configuración para Nueva Pestaña, Nueva Ventana, Modo Privado.</system:String>
     <system:String x:Key="typingStartEn">Empezar a escribir siempre en modo inglés</system:String>
-    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
+    <system:String x:Key="typingStartEnTooltip">Cambia temporalmente el método de entrada al modo inglés cuando se activa Flow.</system:String>
     <system:String x:Key="pythonDirectory">Carpeta de Python</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="selectPythonDirectory">Seleccionar</system:String>
