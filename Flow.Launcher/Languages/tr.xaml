@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopyala</system:String>
     <system:String x:Key="cut">Kes</system:String>
     <system:String x:Key="paste">Yapıştır</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Dosya</system:String>
     <system:String x:Key="folderTitle">Klasör</system:String>
     <system:String x:Key="textTitle">Yazı</system:String>
@@ -53,6 +55,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Klasör açarken kullanılacak dosya yöneticisini seçin.</system:String>
     <system:String x:Key="defaultBrowser">Varsayılan Tarayıcısı</system:String>
     <system:String x:Key="defaultBrowserToolTip">Yeni Sekme, Yeni Pencere, Gizli Mod için Ayar.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Python Konumu</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
     <system:String x:Key="selectPythonDirectory">Seç</system:String>
@@ -64,7 +68,7 @@
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölge efektine izin verilmez</system:String>
 
     <!--  Setting Plugin  -->
