@@ -16,6 +16,8 @@
     <system:String x:Key="copy">复制</system:String>
     <system:String x:Key="cut">剪切</system:String>
     <system:String x:Key="paste">粘贴</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">文件</system:String>
     <system:String x:Key="folderTitle">目录</system:String>
     <system:String x:Key="textTitle">文本</system:String>
@@ -66,7 +68,7 @@
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。 </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
