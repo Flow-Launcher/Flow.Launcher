@@ -25,7 +25,7 @@
     <system:String x:Key="plugin_explorer_add">추가</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">일반 설정</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">빠른 실행 항목</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">빠른 접근 항목</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 설정</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">정렬:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 경로:</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">경로 검색:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">파일 내용 검색:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">빠른 실행:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">빠른 접근:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">현재 액션 키워드</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">완료</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">활성</system:String>
@@ -86,21 +86,21 @@
     <system:String x:Key="plugin_explorer_openindexingoptions">윈도우 색인 설정 열기</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">폴더 및 파일의 색인 관리</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">윈도우 색인 설정을 여는데 실패했습니다</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">빠른 실행에 추가</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">빠른 실행에 이 항목을 추가</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">빠른 접근에 추가</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">빠른 접근에 이 항목을 추가</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">추가 완료</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">빠른 실행에 추가했습니다</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">빠른 접근에 추가했습니다</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">제거 완료</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">빠른 실행에서 제거했습니다</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">빠른 접근에서 제거했습니다</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">빠른 실행에서 제거</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">이 항목을 빠른 실행에서 제거</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">빠른 접근에서 제거</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">이 항목을 빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">우클릭 메뉴 보기</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Everything SDK를 불러오는데 실패했습니다</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">주의: Everything 서비스가 실행 중이 아닙니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">경고: Everything 서비스가 실행 중이 아닙니다</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
