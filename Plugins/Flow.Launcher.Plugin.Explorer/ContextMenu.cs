@@ -138,7 +138,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile") : Context.API.GetTranslation("plugin_explorer_copyfolder"),
+                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
                     SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
                     Action = _ =>
                     {
@@ -167,7 +167,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type is ResultType.File or ResultType.Folder)
                     contextMenus.Add(new Result
                     {
-                        Title = isFile ? Context.API.GetTranslation("plugin_explorer_deletefile") : Context.API.GetTranslation("plugin_explorer_deletefolder"),
+                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
                         SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_deletefile_subtitle") : Context.API.GetTranslation("plugin_explorer_deletefolder_subtitle"),
                         Action = (context) =>
                         {
