@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopírovať</system:String>
     <system:String x:Key="cut">Vystrihnúť</system:String>
     <system:String x:Key="paste">Prilepiť</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Súbor</system:String>
     <system:String x:Key="folderTitle">Priečinok</system:String>
     <system:String x:Key="textTitle">Text</system:String>
@@ -66,7 +68,7 @@
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Pri spustení Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu F1 prepnete náhľad. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Pri spustení Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu F1 prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--  Setting Plugin  -->
