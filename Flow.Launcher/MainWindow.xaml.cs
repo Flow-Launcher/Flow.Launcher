@@ -20,20 +20,10 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Text;
-using DataObject = System.Windows.DataObject;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
-using System.Drawing;
-using System.Windows.Forms.Design.Behavior;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
-using Microsoft.VisualBasic.Devices;
-using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
+using Key = System.Windows.Input.Key;
 
 namespace Flow.Launcher
 {

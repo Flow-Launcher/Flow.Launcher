@@ -147,6 +147,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
         public bool AlwaysPreview { get; set; } = false;
+        public bool AlwaysStartEn { get; set; } = false;
 
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
