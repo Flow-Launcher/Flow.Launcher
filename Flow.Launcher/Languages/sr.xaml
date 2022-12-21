@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Copy</system:String>
     <system:String x:Key="cut">Cut</system:String>
     <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">File</system:String>
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
@@ -53,6 +55,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="pythonDirectory">Python direktorijum</system:String>
     <system:String x:Key="autoUpdates">Auto ažuriranje</system:String>
     <system:String x:Key="selectPythonDirectory">Izaberi</system:String>
@@ -64,7 +68,7 @@
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
