@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Pegar</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Archivo</system:String>
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
@@ -66,7 +68,7 @@
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse F1 para mostrar/ocultar la vista previa. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse F1 para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
