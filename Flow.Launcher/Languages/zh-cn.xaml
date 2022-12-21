@@ -16,6 +16,8 @@
     <system:String x:Key="copy">复制</system:String>
     <system:String x:Key="cut">剪切</system:String>
     <system:String x:Key="paste">粘贴</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">文件</system:String>
     <system:String x:Key="folderTitle">目录</system:String>
     <system:String x:Key="textTitle">文本</system:String>
@@ -53,6 +55,8 @@
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
     <system:String x:Key="defaultBrowserToolTip">新标签/窗口及隐身模式设置。</system:String>
+    <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
+    <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英语模式。</system:String>
     <system:String x:Key="pythonDirectory">Python 路径</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="selectPythonDirectory">选择</system:String>
@@ -61,10 +65,10 @@
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
-    <system:String x:Key="ShouldUsePinyin">使用 Pinyin 搜索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索.</system:String>
+    <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。 </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
@@ -160,7 +164,7 @@
     <system:String x:Key="builtinShortcutDescription">描述</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
-    <system:String x:Key="add">增加</system:String>
+    <system:String x:Key="add">添加</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
