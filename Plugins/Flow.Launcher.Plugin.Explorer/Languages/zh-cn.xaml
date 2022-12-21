@@ -33,11 +33,11 @@
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索激活：</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索激活:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索：</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路径搜索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">文件内容搜索：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">索引搜索：</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速访问</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速访问：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">当前触发关键字</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">确认</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">已启用</system:String>
