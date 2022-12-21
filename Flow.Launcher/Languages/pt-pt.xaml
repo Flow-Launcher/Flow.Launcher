@@ -16,8 +16,8 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Colar</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="undo">Desfazer</system:String>
+    <system:String x:Key="selectAll">Selecionar tudo</system:String>
     <system:String x:Key="fileTitle">Ficheiro</system:String>
     <system:String x:Key="folderTitle">Pasta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
