@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File && !string.IsNullOrEmpty(Settings.EditorPath))
                     contextMenus.Add(CreateOpenWithEditorResult(record, Settings.EditorPath));
 
-                if (record.Type == ResultType.Folder && !string.IsNullOrEmpty(Settings.FolderEditorPath))
+                if ((record.Type == ResultType.Folder || record.Type == ResultType.Volume) && !string.IsNullOrEmpty(Settings.FolderEditorPath))
                     contextMenus.Add(CreateOpenWithEditorResult(record, Settings.FolderEditorPath));
 
                 if (record.Type == ResultType.Folder)
