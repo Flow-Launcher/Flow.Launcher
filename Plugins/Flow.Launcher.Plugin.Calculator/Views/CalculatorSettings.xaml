@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:calculator="clr-namespace:Flow.Launcher.Plugin.Caculator"
-    xmlns:core="clr-namespace:Flow.Launcher.Core;assembly=Flow.Launcher.Core"
+    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="clr-namespace:Flow.Launcher.Infrastructure.UI;assembly=Flow.Launcher.Infrastructure"
