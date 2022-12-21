@@ -42,11 +42,15 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type == ResultType.File && !string.IsNullOrEmpty(Settings.EditorPath))
                     contextMenus.Add(CreateOpenWithEditorResult(record));
 
-                if (record.Type == ResultType.Folder && record.WindowsIndexed)
+                if (record.Type == ResultType.Folder)
                 {
-                    contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
                     contextMenus.Add(CreateOpenWithShellResult(record));
+                    if (record.WindowsIndexed)
+                    {
+                        contextMenus.Add(CreateAddToIndexSearchExclusionListResult(record));
+                    }
                 }
+
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
                 if (record.WindowsIndexed)
@@ -55,14 +59,14 @@ namespace Flow.Launcher.Plugin.Explorer
                 }
 
                 var icoPath = (record.Type == ResultType.File) ? Constants.FileImagePath : Constants.FolderImagePath;
-                var fileOrFolder = (record.Type == ResultType.File) ? "file" : "folder";
+                bool isFile = record.Type == ResultType.File;
 
                 if (Settings.QuickAccessLinks.All(x => !x.Path.Equals(record.FullPath, StringComparison.OrdinalIgnoreCase)))
                 {
                     contextMenus.Add(new Result
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_title"),
-                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"), fileOrFolder),
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_add_to_quickaccess_subtitle"),
                         Action = (context) =>
                         {
                             Settings.QuickAccessLinks.Add(new AccessLink
@@ -71,10 +75,8 @@ namespace Flow.Launcher.Plugin.Explorer
                             });
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess"),
-                                string.Format(
                                     Context.API.GetTranslation("plugin_explorer_addfilefoldersuccess_detail"),
-                                    fileOrFolder),
-                                Constants.ExplorerIconImageFullPath);
+                                    Constants.ExplorerIconImageFullPath);
 
                             ViewModel.Save();
 
@@ -91,16 +93,14 @@ namespace Flow.Launcher.Plugin.Explorer
                     contextMenus.Add(new Result
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_title"),
-                        SubTitle = string.Format(Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"), fileOrFolder),
+                        SubTitle = Context.API.GetTranslation("plugin_explorer_remove_from_quickaccess_subtitle"),
                         Action = (context) =>
                         {
-                            Settings.QuickAccessLinks.Remove(Settings.QuickAccessLinks.FirstOrDefault(x => x.Path == record.FullPath));
+                            Settings.QuickAccessLinks.Remove(Settings.QuickAccessLinks.FirstOrDefault(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)));
 
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess"),
-                                string.Format(
                                     Context.API.GetTranslation("plugin_explorer_removefilefoldersuccess_detail"),
-                                    fileOrFolder),
-                                Constants.ExplorerIconImageFullPath);
+                                    Constants.ExplorerIconImageFullPath);
 
                             ViewModel.Save();
 
@@ -116,7 +116,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 contextMenus.Add(new Result
                 {
                     Title = Context.API.GetTranslation("plugin_explorer_copypath"),
-                    SubTitle = $"Copy the current {fileOrFolder} path to clipboard",
+                    SubTitle = Context.API.GetTranslation("plugin_explorer_copypath_subtitle"),
                     Action = _ =>
                     {
                         try
@@ -138,8 +138,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder") + $" {fileOrFolder}",
-                    SubTitle = $"Copy the {fileOrFolder} to clipboard",
+                    Title = Context.API.GetTranslation("plugin_explorer_copyfilefolder"),
+                    SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_copyfile_subtitle") : Context.API.GetTranslation("plugin_explorer_copyfolder_subtitle"),
                     Action = _ =>
                     {
                         try
@@ -152,7 +152,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                         catch (Exception e)
                         {
-                            var message = $"Fail to set {fileOrFolder} in clipboard";
+                            var message = $"Fail to set file/folder in clipboard";
                             LogException(message, e);
                             Context.API.ShowMsg(message);
                             return false;
@@ -167,21 +167,21 @@ namespace Flow.Launcher.Plugin.Explorer
                 if (record.Type is ResultType.File or ResultType.Folder)
                     contextMenus.Add(new Result
                     {
-                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder") + $" {fileOrFolder}",
-                        SubTitle = Context.API.GetTranslation("plugin_explorer_deletefilefolder_subtitle") + $" {fileOrFolder}",
+                        Title = Context.API.GetTranslation("plugin_explorer_deletefilefolder"),
+                        SubTitle = isFile ? Context.API.GetTranslation("plugin_explorer_deletefile_subtitle") : Context.API.GetTranslation("plugin_explorer_deletefolder_subtitle"),
                         Action = (context) =>
                         {
                             try
                             {
                                 if (MessageBox.Show(
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"), fileOrFolder),
+                                        Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),
                                         string.Empty,
                                         MessageBoxButton.YesNo,
                                         MessageBoxIcon.Warning)
                                     == DialogResult.No)
                                     return false;
 
-                                if (record.Type == ResultType.File)
+                                if (isFile)
                                     File.Delete(record.FullPath);
                                 else
                                     Directory.Delete(record.FullPath, true);
@@ -189,13 +189,13 @@ namespace Flow.Launcher.Plugin.Explorer
                                 _ = Task.Run(() =>
                                 {
                                     Context.API.ShowMsg(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess"),
-                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), fileOrFolder),
+                                        string.Format(Context.API.GetTranslation("plugin_explorer_deletefilefoldersuccess_detail"), record.FullPath),
                                         Constants.ExplorerIconImageFullPath);
                                 });
                             }
                             catch (Exception e)
                             {
-                                var message = $"Fail to delete {fileOrFolder} at {record.FullPath}";
+                                var message = $"Fail to delete {record.FullPath}";
                                 LogException(message, e);
                                 Context.API.ShowMsgError(message);
                                 return false;
@@ -382,7 +382,7 @@ namespace Flow.Launcher.Plugin.Explorer
                 SubTitle = Context.API.GetTranslation("plugin_explorer_path") + " " + record.FullPath,
                 Action = _ =>
                 {
-                    if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => x.Path == record.FullPath))
+                    if (!Settings.IndexSearchExcludedSubdirectoryPaths.Any(x => string.Equals(x.Path, record.FullPath, StringComparison.OrdinalIgnoreCase)))
                         Settings.IndexSearchExcludedSubdirectoryPaths.Add(new AccessLink
                         {
                             Path = record.FullPath
