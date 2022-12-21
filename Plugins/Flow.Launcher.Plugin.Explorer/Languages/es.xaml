@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo del ejecutable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo ejecutable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
@@ -46,6 +46,8 @@
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Índice de Windows</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Enumeración directa</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Motor de búsqueda de contenido</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de búsqueda recursiva de directorio</system:String>
@@ -74,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecuta la selección usando una cuenta de usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el elemento</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el archivo o carpeta</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">No se pudo abrir el archivo en {0} con el editor {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir con Shell:</system:String>
@@ -85,7 +87,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administra archivos y carpetas indexados</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">No se ha podido abrir las opciones de indexación de Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Añadir al acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añade el resultado actual al acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añade {0} actual al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Añadido/a correctamente</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Añadido/a correctamente al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Eliminado/a correctamente</system:String>
@@ -93,7 +95,7 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añade al acceso rápido para que se pueda abrir con la palabra clave de acción que activa la búsqueda del explorador</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina el resultado actual del acceso rápido</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina {0} actual del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
 
     <!--  Everything  -->
