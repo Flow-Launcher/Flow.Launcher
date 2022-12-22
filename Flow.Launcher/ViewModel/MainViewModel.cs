@@ -32,8 +32,6 @@ namespace Flow.Launcher.ViewModel
     {
         #region Private Fields
 
-        private const string DefaultOpenResultModifiers = "Alt";
-
         private bool _isQueryRunning;
         private Query _lastQuery;
         private string _queryTextBeforeLeaveResults;
@@ -103,8 +101,6 @@ namespace Flow.Launcher.ViewModel
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
             RegisterClockAndDateUpdateAsync();
-
-            SetOpenResultModifiers();
         }
 
         private void RegisterViewUpdate()
@@ -513,7 +509,7 @@ namespace Flow.Launcher.ViewModel
 
         public string PluginIconPath { get; set; } = null;
 
-        public string OpenResultCommandModifiers { get; private set; }
+        public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -875,11 +871,6 @@ namespace Flow.Launcher.ViewModel
         }
 
         #region Hotkey
-
-        private void SetOpenResultModifiers()
-        {
-            OpenResultCommandModifiers = Settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
-        }
 
         public void ToggleFlowLauncher()
         {
