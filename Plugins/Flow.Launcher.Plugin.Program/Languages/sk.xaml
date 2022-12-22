@@ -20,6 +20,8 @@
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexovanie</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">Zdroje indexu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">Možnosti</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Ponuka Štart</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Ak je povolené, Flow načíta programy z ponuky Štart</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Databáza Registry</system:String>
