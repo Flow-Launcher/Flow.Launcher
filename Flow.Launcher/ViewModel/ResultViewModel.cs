@@ -179,7 +179,7 @@ namespace Flow.Launcher.ViewModel
             {
                 try
                 {
-                    var image = await Task.Run(() => icon()).ConfigureAwait(false);
+                    var image = icon();
                     return image;
                 }
                 catch (Exception e)
