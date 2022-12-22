@@ -72,6 +72,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
                         break;
+                    case nameof(Settings.OpenResultModifiers):
+                        OnPropertyChanged(nameof(OpenResultCommandModifiers));
+                        break;
                 }
             };
 
