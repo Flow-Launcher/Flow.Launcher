@@ -21,13 +21,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type)
+        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
         {
-            var keyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
+            string keyword;
+            // Using Quick Access or Index Search action keywords to then navigate to directory
+            if (actionKeyword == Settings.PathSearchActionKeyword || actionKeyword == Settings.SearchActionKeyword)
+            {
+                keyword = actionKeyword == Settings.PathSearchActionKeyword ? $"{actionKeyword} " : string.Empty;
+            }
+            else
+            {
+                keyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
                             ? $"{Settings.PathSearchActionKeyword} "
                             : Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
                                 ? string.Empty // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
                                 : $"{Settings.SearchActionKeyword} ";
+            }
 
             var formatted_path = path;
 
@@ -42,7 +51,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
                         ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
-                        : GetPathWithActionKeyword(path, resultType);
+                        : GetPathWithActionKeyword(path, resultType, query.ActionKeyword);
         }
 
         public static Result CreateResult(Query query, SearchResult result)
@@ -83,7 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
 
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
 
                     return false;
                 },
@@ -118,7 +127,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 SubTitle = subtitle,
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
                 IcoPath = path,
                 Score = 500,
                 ProgressBar = progressValue,
@@ -199,7 +208,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder),
+                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
                 IcoPath = folderPath,
                 Score = 500,
                 CopyText = folderPath,
