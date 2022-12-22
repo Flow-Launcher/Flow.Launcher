@@ -21,10 +21,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
+        private static string GetPathWithActionKeyword(string path, ResultType type)
         {
-            // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
-            var keyword = actionKeyword != string.Empty ? actionKeyword + " " : string.Empty;
+            var keyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
+                            ? $"{Settings.PathSearchActionKeyword} "
+                            : Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
+                                ? string.Empty // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
+                                : $"{Settings.SearchActionKeyword} ";
 
             var formatted_path = path;
 
@@ -49,12 +52,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
-            var pathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled 
-                                            ? Settings.PathSearchActionKeyword 
-                                            : Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
-                                                ? string.Empty 
-                                                : Settings.SearchActionKeyword;
-
             return new Result
             {
                 Title = title,
@@ -62,7 +59,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = Path.GetDirectoryName(path),
                 AutoCompleteText = !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled 
                                         ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
-                                        : GetPathWithActionKeyword(path, ResultType.Folder, pathSearchActionKeyword),
+                                        : GetPathWithActionKeyword(path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -81,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
 
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, pathSearchActionKeyword));
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder));
 
                     return false;
                 },
@@ -116,7 +113,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 SubTitle = subtitle,
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, actionKeyword),
+                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder),
                 IcoPath = path,
                 Score = 500,
                 ProgressBar = progressValue,
@@ -197,7 +194,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = $"Use > to search within {subtitleFolderName}, " +
                            $"* to search for file extensions or >* to combine both searches.",
-                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
+                AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder),
                 IcoPath = folderPath,
                 Score = 500,
                 CopyText = folderPath,
@@ -228,7 +225,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 Preview = preview,
-                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File, query.ActionKeyword),
+                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
                 Score = score,
                 CopyText = filePath,
