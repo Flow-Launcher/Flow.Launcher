@@ -620,11 +620,6 @@ namespace Flow.Launcher
                         }
                     }
                     break;
-                case Key.F1:
-                    PreviewToggle();
-                    e.Handled = true;
-                    break;
-
                 default:
                     break;
 

@@ -181,6 +181,9 @@
             Command="{Binding OpenResultCommand}"
             CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="{Binding TogglePreviewHotkey}"
+            Command="{Binding TogglePreviewCommand}"/>
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">

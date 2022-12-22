@@ -74,6 +74,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
                         break;
+                    case nameof(Settings.PreviewHotkey):
+                        OnPropertyChanged(nameof(TogglePreviewHotkey));
+                        break;
                 }
             };
 
@@ -569,6 +572,8 @@ namespace Flow.Launcher.ViewModel
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers { get; private set; }
+
+        public string TogglePreviewHotkey => Settings.PreviewHotkey; // TODO: is hotkey combo possible?
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
