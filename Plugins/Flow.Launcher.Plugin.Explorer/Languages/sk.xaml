@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Cesta k editoru</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
