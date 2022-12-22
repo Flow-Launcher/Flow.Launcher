@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo ejecutable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
