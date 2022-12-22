@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">编辑器路径</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索：</system:String>
