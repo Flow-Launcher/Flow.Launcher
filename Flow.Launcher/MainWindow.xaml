@@ -343,7 +343,7 @@
                     <StackPanel
                         x:Name="ResultArea"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2">
+                        Grid.ColumnSpan="{Binding ResultAreaColumn}">
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -397,11 +397,13 @@
                         x:Name="Preview"
                         Grid.Column="1"
                         VerticalAlignment="Stretch"
-                        d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                        DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
                         Style="{DynamicResource PreviewArea}"
-                        Visibility="Collapsed">
-                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowDefaultPreview}">
+                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Border 
+                            Style="{DynamicResource PreviewBorderStyle}" 
+                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
+                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            Visibility="{Binding ShowDefaultPreview}">
                             <Grid
                                 Margin="20,0,10,0"
                                 VerticalAlignment="Stretch"
@@ -472,7 +474,11 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowCustomizedPreview}">
+                        <Border 
+                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
+                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            Style="{DynamicResource PreviewBorderStyle}" 
+                            Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                         </Border>
                     </Grid>

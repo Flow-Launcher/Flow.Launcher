@@ -104,7 +104,7 @@ namespace Flow.Launcher.ViewModel
             RegisterResultsUpdatedEvent();
             RegisterClockAndDateUpdateAsync();
 
-            SetOpenResultModifiers();
+            SetOpenResultModifiers(); // TODO?
         }
 
         private void RegisterViewUpdate()
@@ -424,6 +424,43 @@ namespace Flow.Launcher.ViewModel
             Settings.MaxResultsToShow -= 1;
         }
 
+        [RelayCommand]
+        public void TogglePreview()
+        {
+            if (!PreviewVisible)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
+        private void ShowPreview()
+        {
+            ResultAreaColumn = 1;
+            PreviewVisible = true;
+        }
+
+        private void HidePreview()
+        {
+            ResultAreaColumn = 2;
+            PreviewVisible = false;
+        }
+
+        public void ResetPreview()
+        {
+            if (Settings.AlwaysPreview == true)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -518,6 +555,10 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
+
+        public bool PreviewVisible { get; set; } = false;
+
+        public int ResultAreaColumn { get; set; } = 1;
 
         #endregion
 
