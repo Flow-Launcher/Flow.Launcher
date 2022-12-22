@@ -13,12 +13,12 @@
     <system:String x:Key="iconTrayAbout">O programie</system:String>
     <system:String x:Key="iconTrayExit">Wyjdź</system:String>
     <system:String x:Key="closeWindow">Zamknij</system:String>
-    <system:String x:Key="copy">Copy</system:String>
+    <system:String x:Key="copy">Kopiuj</system:String>
     <system:String x:Key="cut">Wytnij</system:String>
     <system:String x:Key="paste">Wklej</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="undo">Cofnij</system:String>
+    <system:String x:Key="selectAll">Zaznacz wszystko</system:String>
+    <system:String x:Key="fileTitle">Plik</system:String>
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Tryb grania</system:String>
@@ -72,8 +72,8 @@
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F aby wyszukać wtyczki</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
@@ -94,12 +94,12 @@
     <system:String x:Key="plugin_init_time">Czas ładowania:</system:String>
     <system:String x:Key="plugin_query_time">Czas zapytania:</system:String>
     <system:String x:Key="plugin_query_version">Wersja</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Wtyczki</system:String>
