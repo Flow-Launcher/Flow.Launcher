@@ -49,12 +49,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
+            var pathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled 
+                                            ? Settings.PathSearchActionKeyword 
+                                            : Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
+                                                ? string.Empty 
+                                                : Settings.SearchActionKeyword;
+
             return new Result
             {
                 Title = title,
                 IcoPath = path,
                 SubTitle = Path.GetDirectoryName(path),
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword),
+                AutoCompleteText = !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled 
+                                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
+                                        : GetPathWithActionKeyword(path, ResultType.Folder, pathSearchActionKeyword),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -73,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
 
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
+                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, pathSearchActionKeyword));
 
                     return false;
                 },
