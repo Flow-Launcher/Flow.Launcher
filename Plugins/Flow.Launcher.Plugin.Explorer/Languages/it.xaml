@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Tasto di accesso rapido alla finestra</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the excutable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
