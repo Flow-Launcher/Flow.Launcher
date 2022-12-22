@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Caminho do editor</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Caminho da consola</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Caminhos excluídos do índice de pesquisa</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizar localização do resultado da pesquisa como diretório de trabalho do executável.</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizar localização do resultado da pesquisa como diretório de trabalho do executável</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar índice de pesquisa para o caminho</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opções de indexação</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Pesquisar:</system:String>
