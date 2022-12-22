@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
@@ -38,6 +38,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return $"{keyword}{formatted_path}";
         }
 
+        private static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
+        {
+            return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
+                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
+                        : GetPathWithActionKeyword(path, resultType);
+        }
+
         public static Result CreateResult(Query query, SearchResult result)
         {
             return result.Type switch
@@ -57,9 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = Path.GetDirectoryName(path),
-                AutoCompleteText = !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled 
-                                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
-                                        : GetPathWithActionKeyword(path, ResultType.Folder),
+                AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -219,14 +224,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 PreviewImagePath = filePath,
             } : Result.PreviewInfo.Default;
 
+            var title = Path.GetFileName(filePath);
+
             var result = new Result
             {
-                Title = Path.GetFileName(filePath),
+                Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 Preview = preview,
-                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
+                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 Action = c =>
