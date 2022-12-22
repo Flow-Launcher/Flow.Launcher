@@ -99,6 +99,15 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
+            Results.PropertyChanged += (_, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(Results.SelectedItem):
+                        UpdatePreview();
+                        break;
+                }
+            };
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
@@ -441,6 +450,7 @@ namespace Flow.Launcher.ViewModel
         {
             ResultAreaColumn = 1;
             PreviewVisible = true;
+            Results.SelectedItem?.LoadPreviewImage();
         }
 
         private void HidePreview()
@@ -458,6 +468,14 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 HidePreview();
+            }
+        }
+
+        private void UpdatePreview()
+        {
+            if (PreviewVisible)
+            {
+                Results.SelectedItem?.LoadPreviewImage();
             }
         }
 

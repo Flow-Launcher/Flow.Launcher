@@ -90,6 +90,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool UsePreviewImage
+        {
+            //todo binding
+            get => !ImgIconAvailable && !GlyphAvailable ||
+                Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable ||
+                !Settings.UseGlyphIcons && ImgIconAvailable;
+        }
+
         public double IconRadius
         {
             get
@@ -153,16 +161,7 @@ namespace Flow.Launcher.ViewModel
 
         public ImageSource PreviewImage
         {
-            get
-            {
-                if (!PreviewImageLoaded)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
-
-                return previewImage;
-            }
+            get => previewImage;
             private set => previewImage = value;
         }
 
@@ -220,6 +219,15 @@ namespace Flow.Launcher.ViewModel
             {
                 // We need to modify the property not field here to trigger the OnPropertyChanged event
                 PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+            }
+        }
+
+        public void LoadPreviewImage()
+        {
+            if (!PreviewImageLoaded && UsePreviewImage)
+            {
+                PreviewImageLoaded = true;
+                _ = LoadPreviewImageAsync();
             }
         }
 
