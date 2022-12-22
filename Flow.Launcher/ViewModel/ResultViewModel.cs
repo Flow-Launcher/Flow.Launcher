@@ -90,14 +90,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public bool UsePreviewImage
-        {
-            //todo binding
-            get => !ImgIconAvailable && !GlyphAvailable ||
-                Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable ||
-                !Settings.UseGlyphIcons && ImgIconAvailable;
-        }
-
         public double IconRadius
         {
             get
@@ -224,7 +216,7 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (!PreviewImageLoaded && UsePreviewImage)
+            if (!PreviewImageLoaded && ShowIcon == Visibility.Visible)
             {
                 PreviewImageLoaded = true;
                 _ = LoadPreviewImageAsync();
