@@ -769,8 +769,16 @@ namespace Flow.Launcher.ViewModel
             {
                 foreach (var shortcut in builtInShortcuts)
                 {
-                    queryBuilder.Replace(shortcut.Key, shortcut.Expand());
-                    queryBuilderTmp.Replace(shortcut.Key, shortcut.Expand());
+                    try
+                    {
+                        var expansion = shortcut.Expand();
+                        queryBuilder.Replace(shortcut.Key, expansion);
+                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Exception($"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}", e);
+                    }
                 }
             });
 
