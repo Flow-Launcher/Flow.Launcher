@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
