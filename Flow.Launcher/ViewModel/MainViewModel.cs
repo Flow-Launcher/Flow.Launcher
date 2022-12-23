@@ -135,8 +135,6 @@ namespace Flow.Launcher.ViewModel
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
             }
 
-            ;
-
             void continueAction(Task t)
             {
 #if DEBUG
@@ -180,6 +178,7 @@ namespace Flow.Launcher.ViewModel
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
             Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
         }
+
         [RelayCommand]
         private void LoadHistory()
         {
@@ -193,6 +192,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void LoadContextMenu()
         {
@@ -208,6 +208,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void Backspace(object index)
         {
@@ -220,6 +221,7 @@ namespace Flow.Launcher.ViewModel
 
             ChangeQueryText($"{actionKeyword}{path}");
         }
+
         [RelayCommand]
         private void AutocompleteQuery()
         {
@@ -246,6 +248,7 @@ namespace Flow.Launcher.ViewModel
                 ChangeQueryText(autoCompleteText);
             }
         }
+
         [RelayCommand]
         private async Task OpenResultAsync(string index)
         {
@@ -280,6 +283,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void OpenSetting()
         {
@@ -297,6 +301,7 @@ namespace Flow.Launcher.ViewModel
         {
             SelectedResults.SelectFirstResult();
         }
+
         [RelayCommand]
         private void SelectPrevPage()
         {
@@ -308,11 +313,13 @@ namespace Flow.Launcher.ViewModel
         {
             SelectedResults.SelectNextPage();
         }
+
         [RelayCommand]
         private void SelectPrevItem()
         {
             SelectedResults.SelectPrevResult();
         }
+
         [RelayCommand]
         private void SelectNextItem()
         {
@@ -519,6 +526,8 @@ namespace Flow.Launcher.ViewModel
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
         #endregion
+
+        #region Query
 
         public void Query()
         {
@@ -873,6 +882,8 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
+        #endregion
+
         #region Hotkey
 
         public void ToggleFlowLauncher()
@@ -928,9 +939,6 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibility = Visibility.Collapsed;
         }
 
-        #endregion
-
-
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
@@ -939,7 +947,7 @@ namespace Flow.Launcher.ViewModel
             return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
         }
 
-
+        #endregion
 
         #region Public Methods
 

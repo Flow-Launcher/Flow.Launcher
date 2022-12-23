@@ -70,6 +70,7 @@ namespace Flow.Launcher
                 _viewModel.ResultCopy(QueryTextBox.SelectedText);
             }
         }
+
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _settings.WindowTop = Top;
@@ -324,11 +325,13 @@ namespace Flow.Launcher
                 OpenWelcomeWindow();
             }
         }
+
         private void OpenWelcomeWindow()
         {
             var WelcomeWindow = new WelcomeWindow(_settings);
             WelcomeWindow.Show();
         }
+
         private void ToggleGameMode()
         {
             if (_viewModel.GameModeStatus)
@@ -342,6 +345,7 @@ namespace Flow.Launcher
                 _viewModel.GameModeStatus = true;
             }
         }
+
         private async void PositionReset()
         {
             _viewModel.Show();
@@ -349,6 +353,7 @@ namespace Flow.Launcher
             Left = HorizonCenter();
             Top = VerticalCenter();
         }
+
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
@@ -361,6 +366,7 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
+
         public void WindowAnimator()
         {
             if (_animating)
@@ -474,7 +480,6 @@ namespace Flow.Launcher
 
             App.API.OpenSettingDialog();
         }
-
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
@@ -644,6 +649,7 @@ namespace Flow.Launcher
                 Preview.Visibility = Visibility.Collapsed;
             }
         }
+
         public void PreviewToggle()
         {
 

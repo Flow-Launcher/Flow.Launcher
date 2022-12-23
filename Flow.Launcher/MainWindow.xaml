@@ -86,14 +86,10 @@
             Key="O"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
