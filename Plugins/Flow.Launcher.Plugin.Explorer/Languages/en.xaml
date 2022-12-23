@@ -130,6 +130,6 @@
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">"It can be very slow without index (which is only supported in Everything v1.5+)"</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
 </ResourceDictionary>
