@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -24,7 +23,6 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
-using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
