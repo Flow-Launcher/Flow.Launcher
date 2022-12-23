@@ -246,12 +246,14 @@ namespace Flow.Launcher.Plugin
             /// </summary>
             public bool IsMedia { get; set; }
             public string Description { get; set; }
+            public IconDelegate PreviewDelegate { get; set; }
 
             public static PreviewInfo Default { get; } = new()
             {
                 PreviewImagePath = null,
                 Description = null,
                 IsMedia = false,
+                PreviewDelegate = null,
             };
         }
     }
