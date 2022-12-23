@@ -337,6 +337,12 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        [RelayCommand]
+        public void ToggleGameMode()
+        {
+            GameModeStatus = !GameModeStatus;
+        }
+
         #endregion
 
         #region ViewModel Properties
@@ -365,7 +371,7 @@ namespace Flow.Launcher.ViewModel
 
         public ResultsViewModel History { get; private set; }
 
-        public bool GameModeStatus { get; set; }
+        public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
         public string QueryText
@@ -378,7 +384,6 @@ namespace Flow.Launcher.ViewModel
                 Query();
             }
         }
-
 
         [RelayCommand]
         private void IncreaseWidth()
@@ -942,7 +947,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
         }
 
         #endregion

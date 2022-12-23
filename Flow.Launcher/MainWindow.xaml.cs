@@ -101,6 +101,7 @@ namespace Flow.Launcher
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
+
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -169,9 +170,12 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
-
+                    case nameof(MainViewModel.GameModeStatus):
+                        _notifyIcon.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
+                        break;
                 }
             };
+
             _settings.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -286,7 +290,7 @@ namespace Flow.Launcher
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
-            gamemode.Click += (o, e) => ToggleGameMode();
+            gamemode.Click += (o, e) => _viewModel.ToggleGameMode();
             positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
@@ -330,20 +334,6 @@ namespace Flow.Launcher
         {
             var WelcomeWindow = new WelcomeWindow(_settings);
             WelcomeWindow.Show();
-        }
-
-        private void ToggleGameMode()
-        {
-            if (_viewModel.GameModeStatus)
-            {
-                _notifyIcon.Icon = Properties.Resources.app;
-                _viewModel.GameModeStatus = false;
-            }
-            else
-            {
-                _notifyIcon.Icon = Properties.Resources.gamemode;
-                _viewModel.GameModeStatus = true;
-            }
         }
 
         private async void PositionReset()
@@ -599,12 +589,6 @@ namespace Flow.Launcher
                     {
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
-                    }
-                    break;
-                case Key.F12:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        ToggleGameMode();
                     }
                     break;
                 case Key.Back:

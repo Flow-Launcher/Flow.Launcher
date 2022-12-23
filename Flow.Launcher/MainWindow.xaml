@@ -177,6 +177,10 @@
             Command="{Binding OpenResultCommand}"
             CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="F12"
+            Command="{Binding ToggleGameModeCommand}"
+            Modifiers="Ctrl"/>
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
