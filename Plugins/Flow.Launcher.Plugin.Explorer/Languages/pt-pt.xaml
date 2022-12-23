@@ -64,7 +64,7 @@
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar caminho</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Copiar caminho do item atual para área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copiar ficheiro atual para a área de transferência</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copiar pasta atual para a área de transferência</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Executar com outro utilizador</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Executar ações com uma conta de utilizador diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir pasta de destino</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre a localização que contém o ficheiro ou item atual</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Erro ao abrir o ficheiro {0} com o editor {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir com a consola:</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Gerir ficheiros e pastas indexadas</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Não foi possível abrir as opções de indexação do Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Adicionar ao acesso rápido</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Adicionar item ao Acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Adicionado com sucesso</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Adicionado com sucesso ao acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Removido com sucesso</system:String>
@@ -95,7 +95,7 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Adicionar ao acesso rápido para que possa ser aberto com a palavra-chave de ativação da pesquisa no explorador</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remover do acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remover do acesso rápido</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remover item do Acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menu de contexto do Windows</system:String>
     
     <!-- Special Results-->
@@ -133,6 +133,6 @@
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Clique aqui para iniciar</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Não foi possível encontrar a instalação de Everything. Deseja especificar manualmente a localização?{0}{0}Clique Não e Everything será instalado automaticamente.</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Deseja ativar a pesquisa de conteúdo através de Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Pode ser muito lento sem índice (que apenas existe em Everything  v1.5+)</system:String>
 
 </ResourceDictionary>
