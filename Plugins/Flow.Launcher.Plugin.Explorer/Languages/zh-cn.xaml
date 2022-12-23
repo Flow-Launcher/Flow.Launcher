@@ -5,10 +5,10 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">请先进行选择</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">Are you sure you want to permanently delete this folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
+    <system:String x:Key="plugin_explorer_deletefolderconfirm">您确定要永久删除此文件夹吗？</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">您确定要永久删除此文件吗？</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">删除成功</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">已成功删除 {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">使用全局操作关键字可能会在搜索过程中带来太多结果。请使用一个特定的操作关键字。</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">无法使用全局动作关键词作为快速访问关键字，请指定动作关键字</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Windows 索引搜索所需的服务似乎没有运行</system:String>
@@ -64,19 +64,19 @@
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">复制路径</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current result to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">复制当前结果的路径到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">复制</system:String>
-    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyfile_subtitle">复制当前文件到剪贴板</system:String>
+    <system:String x:Key="plugin_explorer_copyfolder_subtitle">复制当前文件夹到剪贴板</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">删除</system:String>
-    <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
-    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
+    <system:String x:Key="plugin_explorer_deletefile_subtitle">永久删除当前文件</system:String>
+    <system:String x:Key="plugin_explorer_deletefolder_subtitle">永久删除当前文件夹</system:String>
     <system:String x:Key="plugin_explorer_path">路径:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">删除所选内容</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains the item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开包含该项目的文件夹</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开：</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">使用编辑器 {1} ({2}) 打开文件 {0} 时失败</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">使用 Shell 打开：</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">管理索引文件和文件夹</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">无法打开Windows索引选项</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">添加到快速访问</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current result to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">将当前结果添加到“快速访问”</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">添加完成</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">成功添加到快速访问</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">删除完成</system:String>
@@ -95,11 +95,11 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">添加到快速访问，以便可以使用Explorer的搜索关键字将其打开</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current result from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中移除当前结果</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">加载 Everything SDK 失败</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">警告：Everything 服务未运行</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Everything 插件发生了一个错误（回车拷贝具体错误信息）</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">排序依据</system:String>
@@ -127,7 +127,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">自动安装 Everything 服务失败。请从 https://www.voidtools.com 手动下载并安装。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">单击此处开始</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">无法找到任何 Everything 安装，您想手动选择一个位置吗？{0}{0} 单击 不 将自动为您安装 Everything。</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">&quot;It can be very slow without index (which is only supported in Everything v1.5+)&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">您想要启用 Everything 的内容搜索功能吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">如果没有索引，它可能会非常慢（索引仅在 Everything v1.5+ 中支持）</system:String>
 
 </ResourceDictionary>
