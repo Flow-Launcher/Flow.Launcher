@@ -97,6 +97,11 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
+    
+    <!-- Special Results-->
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">加载 Everything SDK 失败</system:String>
