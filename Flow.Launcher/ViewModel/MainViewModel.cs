@@ -101,7 +101,7 @@ namespace Flow.Launcher.ViewModel
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
-            RegisterClockAndDateUpdateAsync();
+            _ = RegisterClockAndDateUpdateAsync();
         }
 
         private void RegisterViewUpdate()
