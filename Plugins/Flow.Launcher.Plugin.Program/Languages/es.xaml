@@ -20,8 +20,8 @@
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexando</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">Fuentes de Índice</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">Opciones</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">Aplicaciones UWP</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">Cuando esté activado, Flow cargará aplicaciones UWP</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">Menú Inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Cuando esté activado, Flow cargará los programas desde el menú de inicio</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Registro</system:String>
