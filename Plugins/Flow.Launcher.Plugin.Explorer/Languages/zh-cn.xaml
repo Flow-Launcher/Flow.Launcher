@@ -20,7 +20,7 @@
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
     <system:String x:Key="plugin_explorer_edit">编辑</system:String>
-    <system:String x:Key="plugin_explorer_add">增加</system:String>
+    <system:String x:Key="plugin_explorer_add">添加</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">通用设置</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
