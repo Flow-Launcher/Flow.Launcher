@@ -630,10 +630,6 @@ namespace Flow.Launcher
         {
             _viewModel.ResetPreview();
         }
-        public void PreviewToggle()
-        {
-            _viewModel.TogglePreview();
-        }
 
         private void MoveQueryTextToEnd()
         {
