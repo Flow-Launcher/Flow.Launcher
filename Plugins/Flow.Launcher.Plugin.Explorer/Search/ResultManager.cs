@@ -96,7 +96,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var driveLetter = path[..1].ToUpper();
             var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
-            var subtitle = ToReadableSize(drv.AvailableFreeSpace, 2) + " free of " + ToReadableSize(drv.TotalSize, 2);
+            var freespace = ToReadableSize(drv.AvailableFreeSpace, 2);
+            var totalspace = ToReadableSize(drv.TotalSize, 2);
+            var subtitle = string.Format(Context.API.GetTranslation("plugin_explorer_diskfreespace"), freespace, totalspace);
             double usingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
 
             int? progressValue = Convert.ToInt32(usingSize);
@@ -170,25 +172,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             // Path passed from PathSearchAsync ends with Constants.DirectorySeperator ('\'), need to remove the seperator
             // so it's consistent with folder results returned by index search which does not end with one
             var folderPath = path.TrimEnd(Constants.DirectorySeperator);
-            
-            var folderName = folderPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
-            {
-                Path.DirectorySeparatorChar
-            }, StringSplitOptions.None).Last();
-
-            var title = $"Open {folderName}";
-
-            var subtitleFolderName = folderName;
-
-            // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
-            if (folderName.Length > 19)
-                subtitleFolderName = "the directory";
 
             return new Result
             {
-                Title = title,
-                SubTitle = $"Use > to search within {subtitleFolderName}, " +
-                           $"* to search for file extensions or >* to combine both searches.",
+                Title = Context.API.GetTranslation("plugin_explorer_openresultfolder"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_openresultfolder_subtitle"),
                 AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
                 IcoPath = folderPath,
                 Score = 500,
