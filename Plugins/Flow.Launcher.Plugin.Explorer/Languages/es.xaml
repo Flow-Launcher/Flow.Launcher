@@ -31,7 +31,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Ruta del editor</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo ejecutable</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo del ejecutable</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>
@@ -64,7 +64,7 @@
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copiar ruta</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Copia la ruta del elemento actual al portapapeles</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Copiar</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copia el archivo actual al portapapeles</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copia la carpeta actual al portapapeles</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecuta la selección usando una cuenta de usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el elemento actual</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">No se pudo abrir el archivo en {0} con el editor {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir con Shell:</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Administra archivos y carpetas indexados</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">No se ha podido abrir las opciones de indexación de Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Añadir al acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Añade elemento actual al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Añadido/a correctamente</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Añadido/a correctamente al acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Eliminado/a correctamente</system:String>
@@ -95,13 +95,13 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Añade al acceso rápido para que se pueda abrir con la palabra clave de acción que activa la búsqueda del explorador</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina elemento actual del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
     
     <!-- Special Results-->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">Abrir en administrador de archivos predeterminado</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' para buscar en este directorio, '*' para buscar extensiones de archivo o '&gt;*' para combinar ambas búsquedas.</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">No se ha podido cargar Everything SDK</system:String>
@@ -133,6 +133,6 @@
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Hacer clic aquí para iniciarlo</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">No se ha podido encontrar una instalación de Everything, ¿desea seleccionar manualmente una ubicación?{0}{0}Si hace click en no, Everything se instalará automáticamente para usted</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">¿Desea activar la búsqueda de contenidos de Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Puede ser muy lento sin índice (solo se admite en Everything v1.5+)</system:String>
 
 </ResourceDictionary>
