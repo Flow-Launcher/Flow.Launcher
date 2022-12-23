@@ -64,7 +64,7 @@
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopírovať cestu</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Skopírovať cesu k aktuálnemu výsledku do schránky</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopírovať</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Skopírovať aktuálny súbor do schránky</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Skopírovať aktuálny priečinok do schránky</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvorí umiestnenie, ktoré obsahuje položka</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains current item</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Nepodarilo sa otvoriť súbor {0} v editore {1} – {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Otvori v príkazovom riadku:</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Správa indexovaných súborov a priečinkov</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Nepodarilo sa otvoriť možnosti indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Pridať do Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Pridať aktuálny výsledok do Rýchleho prístupu</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Úspešne pridané</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Úspešne pridané do Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Úspešne odstránené</system:String>
@@ -95,7 +95,7 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Pridať do Rýchleho prístupu, aby ho bolo možné otvoriť pomocou aktivačného príkazu pluginu Prieskumník</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstrániť aktuálny výsledok z Rýchleho prístupu</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
 
     <!--  Everything  -->
@@ -128,6 +128,6 @@
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Kliknutím sem ju spustíte</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Nepodarilo sa nájsť inštaláciu Everything, chcete manuálne vybrať jej umiestnenie?{0}{0}Kliknutím na nie sa Everything automaticky nainštaluje</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povoliť vyhľadávanie obsahu cez Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">&quot;Bez indexu (ktorý je podporovaný len v Everything v1.5+) to môže byť veľmi pomalé&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
 </ResourceDictionary>
