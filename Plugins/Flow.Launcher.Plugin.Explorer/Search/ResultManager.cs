@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.Resource;
+﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
@@ -21,23 +21,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
+        public static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
         {
-            string keyword;
-            // Using Quick Access or Index Search action keywords to then navigate to directory
-            if (actionKeyword == Settings.PathSearchActionKeyword || actionKeyword == Settings.SearchActionKeyword)
-            {
-                keyword = actionKeyword == Settings.PathSearchActionKeyword ? $"{actionKeyword} " : string.Empty;
-            }
-            else
-            {
-                keyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
-                            ? $"{Settings.PathSearchActionKeyword} "
-                            : Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
-                                ? string.Empty // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
-                                : $"{Settings.SearchActionKeyword} ";
-            }
+            // actionKeyword will be empty string if using global, query.ActionKeyword is ""
 
+            var usePathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled;
+
+            var pathSearchActionKeyword = Settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign 
+                ? string.Empty 
+                : $"{Settings.PathSearchActionKeyword} ";
+
+            var searchActionKeyword = Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
+                ? string.Empty
+                : $"{Settings.SearchActionKeyword} ";
+
+            var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
+            
             var formatted_path = path;
 
             if (type == ResultType.Folder)
