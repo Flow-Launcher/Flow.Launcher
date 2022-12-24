@@ -269,5 +269,65 @@ namespace Flow.Launcher.Test.Plugins
             // Then
             Assert.AreEqual(expectedString, resultString);
         }
+
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "irrelevant", false, true, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder\\", ResultType.Folder, "irrelevant", true, true, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "irrelevant", true, false, "p c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder\\", ResultType.Folder, "irrelevant", false, false, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "p", true, false, "p c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "", true, true, "c:\\somefolder\\someotherfolder\\")]
+        public void GivenFolderResult_WhenGetPath_ThenPathShouldBeExpectedString(
+            string path, 
+            ResultType type, 
+            string actionKeyword,
+            bool pathSearchKeywordEnabled, 
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var settings = new Settings() 
+            {
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                PathSearchActionKeyword = "p",
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = Query.GlobalPluginWildcardSign
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+            
+            // When
+            var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "irrelevant", false, true, "e c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "p", true, false, "p c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "e", true, true, "e c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "irrelevant", false, false, "e c:\\somefolder\\somefile")]
+        public void GivenFileResult_WhenGetPath_ThenPathShouldBeExpectedString(
+            string path,
+            ResultType type,
+            string actionKeyword,
+            bool pathSearchKeywordEnabled,
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var settings = new Settings()
+            {
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                PathSearchActionKeyword = "p",
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = "e"
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+
+            // When
+            var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
     }
 }
