@@ -46,7 +46,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return $"{keyword}{formatted_path}";
         }
 
-        private static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
+        public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
         {
             return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
                         ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
