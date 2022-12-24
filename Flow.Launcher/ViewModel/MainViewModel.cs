@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -24,15 +23,12 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
-using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
     public partial class MainViewModel : BaseModel, ISavable
     {
         #region Private Fields
-
-        private const string DefaultOpenResultModifiers = "Alt";
 
         private bool _isQueryRunning;
         private Query _lastQuery;
@@ -74,6 +70,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
                         break;
+                    case nameof(Settings.OpenResultModifiers):
+                        OnPropertyChanged(nameof(OpenResultCommandModifiers));
+                        break;
                 }
             };
 
@@ -102,9 +101,7 @@ namespace Flow.Launcher.ViewModel
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
-            RegisterClockAndDateUpdateAsync();
-
-            SetOpenResultModifiers();
+            _ = RegisterClockAndDateUpdateAsync();
         }
 
         private void RegisterViewUpdate()
@@ -135,8 +132,6 @@ namespace Flow.Launcher.ViewModel
 
                 Log.Error("MainViewModel", "Unexpected ResultViewUpdate ends");
             }
-
-            ;
 
             void continueAction(Task t)
             {
@@ -181,6 +176,7 @@ namespace Flow.Launcher.ViewModel
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
             Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
         }
+
         [RelayCommand]
         private void LoadHistory()
         {
@@ -194,6 +190,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void LoadContextMenu()
         {
@@ -209,6 +206,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void Backspace(object index)
         {
@@ -221,6 +219,7 @@ namespace Flow.Launcher.ViewModel
 
             ChangeQueryText($"{actionKeyword}{path}");
         }
+
         [RelayCommand]
         private void AutocompleteQuery()
         {
@@ -247,6 +246,7 @@ namespace Flow.Launcher.ViewModel
                 ChangeQueryText(autoCompleteText);
             }
         }
+
         [RelayCommand]
         private async Task OpenResultAsync(string index)
         {
@@ -281,6 +281,7 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
         }
+
         [RelayCommand]
         private void OpenSetting()
         {
@@ -298,6 +299,7 @@ namespace Flow.Launcher.ViewModel
         {
             SelectedResults.SelectFirstResult();
         }
+
         [RelayCommand]
         private void SelectPrevPage()
         {
@@ -309,11 +311,13 @@ namespace Flow.Launcher.ViewModel
         {
             SelectedResults.SelectNextPage();
         }
+
         [RelayCommand]
         private void SelectPrevItem()
         {
             SelectedResults.SelectPrevResult();
         }
+
         [RelayCommand]
         private void SelectNextItem()
         {
@@ -331,6 +335,12 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
             }
+        }
+
+        [RelayCommand]
+        public void ToggleGameMode()
+        {
+            GameModeStatus = !GameModeStatus;
         }
 
         #endregion
@@ -361,7 +371,7 @@ namespace Flow.Launcher.ViewModel
 
         public ResultsViewModel History { get; private set; }
 
-        public bool GameModeStatus { get; set; }
+        public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
         public string QueryText
@@ -374,7 +384,6 @@ namespace Flow.Launcher.ViewModel
                 Query();
             }
         }
-
 
         [RelayCommand]
         private void IncreaseWidth()
@@ -513,13 +522,15 @@ namespace Flow.Launcher.ViewModel
 
         public string PluginIconPath { get; set; } = null;
 
-        public string OpenResultCommandModifiers { get; private set; }
+        public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
         #endregion
+
+        #region Query
 
         public void Query()
         {
@@ -874,12 +885,9 @@ namespace Flow.Launcher.ViewModel
             return selected;
         }
 
-        #region Hotkey
+        #endregion
 
-        private void SetOpenResultModifiers()
-        {
-            OpenResultCommandModifiers = Settings.OpenResultModifiers ?? DefaultOpenResultModifiers;
-        }
+        #region Hotkey
 
         public void ToggleFlowLauncher()
         {
@@ -934,18 +942,15 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibility = Visibility.Collapsed;
         }
 
-        #endregion
-
-
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen();
+            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
         }
 
-
+        #endregion
 
         #region Public Methods
 
