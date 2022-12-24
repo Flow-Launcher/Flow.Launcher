@@ -9,6 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
@@ -37,6 +38,8 @@
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter"/>
+        <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
@@ -204,6 +207,8 @@
                                 PreviewKeyUp="QueryTextBox_KeyUp"
                                 Style="{DynamicResource QueryBoxStyle}"
                                 Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
+                                InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                                 Visibility="Visible">
                                 <TextBox.CommandBindings>
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
@@ -244,6 +249,7 @@
                             </TextBox>
                         </Grid>
                     </Border>
+
                     <StackPanel
                         x:Name="ClockPanel"
                         IsHitTestVisible="False"
