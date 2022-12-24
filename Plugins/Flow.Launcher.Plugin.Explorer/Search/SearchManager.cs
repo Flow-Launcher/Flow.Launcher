@@ -110,6 +110,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (e is OperationCanceledException)
                     return results.ToList();
 
+                if (e is EngineNotAvailableException)
+                    throw;
+
                 throw new SearchException(engineName, e.Message, e);
             }
             
