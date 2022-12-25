@@ -21,11 +21,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
+        public static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
         {
-            // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
-            var keyword = actionKeyword != string.Empty ? actionKeyword + " " : string.Empty;
+            // actionKeyword will be empty string if using global, query.ActionKeyword is ""
 
+            var usePathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled;
+
+            var pathSearchActionKeyword = Settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign 
+                ? string.Empty 
+                : $"{Settings.PathSearchActionKeyword} ";
+
+            var searchActionKeyword = Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
+                ? string.Empty
+                : $"{Settings.SearchActionKeyword} ";
+
+            var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
+            
             var formatted_path = path;
 
             if (type == ResultType.Folder)
@@ -33,6 +44,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
 
             return $"{keyword}{formatted_path}";
+        }
+
+        public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
+        {
+            return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
+                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
+                        : GetPathWithActionKeyword(path, resultType, query.ActionKeyword);
         }
 
         public static Result CreateResult(Query query, SearchResult result)
@@ -54,7 +72,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = Path.GetDirectoryName(path),
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword),
+                AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -202,14 +220,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 PreviewImagePath = filePath,
             } : Result.PreviewInfo.Default;
 
+            var title = Path.GetFileName(filePath);
+
             var result = new Result
             {
-                Title = Path.GetFileName(filePath),
+                Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 Preview = preview,
-                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File, query.ActionKeyword),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
+                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 Action = c =>
