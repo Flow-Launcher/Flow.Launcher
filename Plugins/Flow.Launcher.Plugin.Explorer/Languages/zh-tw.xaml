@@ -114,7 +114,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to Launch or Install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安裝程序</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安裝 Everything 服務，請稍後...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">成功安裝 Everything 服務</system:String>
