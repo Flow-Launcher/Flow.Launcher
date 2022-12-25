@@ -125,7 +125,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Attenzione: Questa non è un'opzione di ordinamento rapido, le ricerche potrebbero essere lente</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to Launch or Install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installazione di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installazione di everything. Si prega di attendere...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything è stato installato con successo</system:String>
