@@ -85,14 +85,10 @@
             Key="O"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
@@ -180,6 +176,10 @@
             Command="{Binding OpenResultCommand}"
             CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="F12"
+            Command="{Binding ToggleGameModeCommand}"
+            Modifiers="Ctrl"/>
         <KeyBinding
             Key="{Binding TogglePreviewHotkey}"
             Command="{Binding TogglePreviewCommand}"/>
