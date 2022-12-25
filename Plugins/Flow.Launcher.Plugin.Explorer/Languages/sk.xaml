@@ -125,7 +125,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Upozornenie: Toto nie je voľba Fast Sort, vyhľadávanie môže byť pomalé</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte alebo nainštalujete Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Inštalácia Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Inštaluje sa služba Everything. Čakajte, prosím…</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Služba Everything bola úspešne nainštalovaná</system:String>
