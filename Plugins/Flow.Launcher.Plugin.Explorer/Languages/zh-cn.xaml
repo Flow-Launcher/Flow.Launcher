@@ -125,7 +125,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安装 Everything 服务。请稍后...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">成功安装了 Everything 服务</system:String>
