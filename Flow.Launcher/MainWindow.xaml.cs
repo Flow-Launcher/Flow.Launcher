@@ -20,20 +20,10 @@ using Flow.Launcher.Infrastructure;
 using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Text;
-using DataObject = System.Windows.DataObject;
-using System.Diagnostics;
-using Microsoft.AspNetCore.Http;
-using System.IO;
 using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
-using System.Drawing;
-using System.Windows.Forms.Design.Behavior;
-using System.Security.Cryptography;
-using System.Runtime.CompilerServices;
-using Microsoft.VisualBasic.Devices;
-using Microsoft.FSharp.Data.UnitSystems.SI.UnitNames;
+using Key = System.Windows.Input.Key;
 
 namespace Flow.Launcher
 {
@@ -80,6 +70,7 @@ namespace Flow.Launcher
                 _viewModel.ResultCopy(QueryTextBox.SelectedText);
             }
         }
+
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _settings.WindowTop = Top;
@@ -110,6 +101,7 @@ namespace Flow.Launcher
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
+
             _viewModel.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -178,9 +170,12 @@ namespace Flow.Launcher
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
                         break;
-
+                    case nameof(MainViewModel.GameModeStatus):
+                        _notifyIcon.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
+                        break;
                 }
             };
+
             _settings.PropertyChanged += (o, e) =>
             {
                 switch (e.PropertyName)
@@ -295,7 +290,7 @@ namespace Flow.Launcher
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
-            gamemode.Click += (o, e) => ToggleGameMode();
+            gamemode.Click += (o, e) => _viewModel.ToggleGameMode();
             positionreset.Click += (o, e) => PositionReset();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
@@ -334,24 +329,13 @@ namespace Flow.Launcher
                 OpenWelcomeWindow();
             }
         }
+
         private void OpenWelcomeWindow()
         {
             var WelcomeWindow = new WelcomeWindow(_settings);
             WelcomeWindow.Show();
         }
-        private void ToggleGameMode()
-        {
-            if (_viewModel.GameModeStatus)
-            {
-                _notifyIcon.Icon = Properties.Resources.app;
-                _viewModel.GameModeStatus = false;
-            }
-            else
-            {
-                _notifyIcon.Icon = Properties.Resources.gamemode;
-                _viewModel.GameModeStatus = true;
-            }
-        }
+
         private async void PositionReset()
         {
             _viewModel.Show();
@@ -359,6 +343,7 @@ namespace Flow.Launcher
             Left = HorizonCenter();
             Top = VerticalCenter();
         }
+
         private void InitProgressbarAnimation()
         {
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
@@ -371,6 +356,7 @@ namespace Flow.Launcher
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
             isProgressBarStoryboardPaused = true;
         }
+
         public void WindowAnimator()
         {
             if (_animating)
@@ -484,7 +470,6 @@ namespace Flow.Launcher
 
             App.API.OpenSettingDialog();
         }
-
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
@@ -606,12 +591,6 @@ namespace Flow.Launcher
                         e.Handled = true;
                     }
                     break;
-                case Key.F12:
-                    if (specialKeyState.CtrlPressed)
-                    {
-                        ToggleGameMode();
-                    }
-                    break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
                     {
@@ -654,6 +633,7 @@ namespace Flow.Launcher
                 Preview.Visibility = Visibility.Collapsed;
             }
         }
+
         public void PreviewToggle()
         {
 
