@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
-        public string PreviewHotkey { get; set; } = $"F1"; // TODO: change to another value
+        public string PreviewHotkey { get; set; } = $"F1";
 
         public string Language
         {
