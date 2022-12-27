@@ -56,7 +56,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Busca y gestiona archivos y carpetas. El explorador utiliza el índice de búsqueda de Windows</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Entrar para abrir el directorio</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ejecuta la selección usando una cuenta de usuario diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abre la ubicación que contiene el elemento actual</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir con el editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">No se pudo abrir el archivo en {0} con el editor {1} en {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir con Shell:</system:String>
