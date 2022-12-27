@@ -78,7 +78,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Opens the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
