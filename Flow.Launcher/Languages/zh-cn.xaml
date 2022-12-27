@@ -64,7 +64,7 @@
     <system:String x:Key="ShouldUsePinyin">使用 Pinyin 搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索.</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。 </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。 </system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->

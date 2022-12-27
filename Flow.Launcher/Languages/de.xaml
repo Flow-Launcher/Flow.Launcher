@@ -64,7 +64,7 @@
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Der Schatteneffekt ist nicht zulässig, wenn das aktuelle Thema den Weichzeichneffekt aktiviert hat</system:String>
 
     <!--  Setting Plugin  -->
