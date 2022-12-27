@@ -35,7 +35,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Sufixos</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Profundidade máxima</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_directory">Diretório</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_directory">Pasta</system:String>
     <system:String x:Key="flowlauncher_plugin_program_browse">Explorar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Sufixos de ficheiros:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Profundidade máxima de pesquisa (-1 é ilimitada):</system:String>
@@ -45,7 +45,7 @@
     <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Já existe uma origem de programas com esta localização.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Origem de programas</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Editar diretório e estado desta origem de programas.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Editar pasta e estado desta origem de programas.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Atualizar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">O plugin Programas apenas irá indexar os ficheiros com os sufixos selecionados e os ficheiros .url com os protocolos selecionados.</system:String>
@@ -80,7 +80,7 @@
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorador personalizado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Argumentos</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Pode utilizar um gestor de ficheiros personalizado para abrir a pasta de destino, introduzindo a variável de ambiente do gestor de ficheiros a utilizar. Deve utilizar a linha de comandos para testar se a variável de ambiente está disponível.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduza os argumentos personalizados para o gestor de ficheiros personalizado. %s para diretório superior e %f para o caminho completo (apenas funcional em sistemas 32 bits) Consulte o site do gestor de ficheiros para detalhes.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduza os argumentos para o gestor de ficheiros personalizado. %s para pasta superior e %f para o caminho completo (apenas funcional em sistemas 32 bits). Consulte o site do gestor de ficheiros para detalhes.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Sucesso</system:String>
