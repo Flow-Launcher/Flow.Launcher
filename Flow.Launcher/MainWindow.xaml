@@ -182,7 +182,8 @@
             Modifiers="Ctrl"/>
         <KeyBinding
             Key="{Binding TogglePreviewHotkey}"
-            Command="{Binding TogglePreviewCommand}"/>
+            Command="{Binding TogglePreviewCommand}"
+            Modifiers="{Binding TogglePreviewModifiers}"/>
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">

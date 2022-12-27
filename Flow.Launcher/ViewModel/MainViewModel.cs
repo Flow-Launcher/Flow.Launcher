@@ -23,6 +23,7 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -74,7 +75,7 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(OpenResultCommandModifiers));
                         break;
                     case nameof(Settings.PreviewHotkey):
-                        OnPropertyChanged(nameof(TogglePreviewHotkey));
+                        UpdatePreviewHotkey();
                         break;
                 }
             };
@@ -114,6 +115,7 @@ namespace Flow.Launcher.ViewModel
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
             _ = RegisterClockAndDateUpdateAsync();
+            UpdatePreviewHotkey();
         }
 
         private void RegisterViewUpdate()
@@ -582,7 +584,9 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string TogglePreviewHotkey => Settings.PreviewHotkey; // TODO: is hotkey combo possible?
+        public Key TogglePreviewHotkey { get; set; }
+
+        public ModifierKeys TogglePreviewModifiers { get; set; }
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -1012,6 +1016,14 @@ namespace Flow.Launcher.ViewModel
         public bool ShouldIgnoreHotkeys()
         {
             return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
+        }
+
+        private void UpdatePreviewHotkey()
+        {
+            var converter = new KeyGestureConverter();
+            var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
+            TogglePreviewHotkey = key.Key;
+            TogglePreviewModifiers = key.Modifiers;
         }
 
         #endregion
