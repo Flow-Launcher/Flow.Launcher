@@ -57,7 +57,7 @@
     <system:String x:Key="defaultBrowserToolTip">Definições para Novo separador, Nova Janela e Modo privado</system:String>
     <system:String x:Key="typingStartEn">Escrever sempre em inglês</system:String>
     <system:String x:Key="typingStartEnTooltip">Alterar, temporariamente, o método de introdução para inglês ao iniciar Flow launcher.</system:String>
-    <system:String x:Key="pythonDirectory">Diretório Python</system:String>
+    <system:String x:Key="pythonDirectory">Pasta Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
     <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
@@ -89,7 +89,7 @@
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
     <system:String x:Key="priorityToolTip">Alterar prioridade dos resultados do plugin</system:String>
-    <system:String x:Key="pluginDirectory">Diretório de plugins</system:String>
+    <system:String x:Key="pluginDirectory">Pasta de plugins</system:String>
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
