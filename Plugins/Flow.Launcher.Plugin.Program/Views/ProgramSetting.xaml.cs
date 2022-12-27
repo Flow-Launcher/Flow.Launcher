@@ -77,6 +77,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        public bool EnableUWP
+        {
+            get => _settings.EnableUWP;
+            set
+            {
+                _settings.EnableUWP = value;
+                ReIndexing();
+            }
+        }
+
         public string CustomizedExplorerPath
         {
             get => _settings.CustomizedExplorer;
@@ -88,6 +98,8 @@ namespace Flow.Launcher.Plugin.Program.Views
             get => _settings.CustomizedArgs;
             set => _settings.CustomizedArgs = value;
         }
+
+        public bool ShowUWPCheckbox => UWP.SupportUWP();
 
         public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
         {
@@ -383,8 +395,11 @@ namespace Flow.Launcher.Plugin.Program.Views
 
         private void programSourceView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
-            EditProgramSource(selectedProgramSource);
+            if (((FrameworkElement)e.OriginalSource).DataContext is ProgramSource)
+            {
+                var selectedProgramSource = programSourceView.SelectedItem as ProgramSource;
+                EditProgramSource(selectedProgramSource);
+            }
         }
 
         private bool IsAllItemsUserAdded(List<ProgramSource> items)

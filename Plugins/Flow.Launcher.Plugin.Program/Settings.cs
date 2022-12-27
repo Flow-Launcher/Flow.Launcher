@@ -119,6 +119,7 @@ namespace Flow.Launcher.Plugin.Program
         public bool HideAppsPath { get; set; } = true;
         public bool EnableRegistrySource { get; set; } = true;
         public bool EnablePathSource { get; set; } = false;
+        public bool EnableUWP { get; set; } = true;
 
         public string CustomizedExplorer { get; set; } = Explorer;
         public string CustomizedArgs { get; set; } = ExplorerArgs;
