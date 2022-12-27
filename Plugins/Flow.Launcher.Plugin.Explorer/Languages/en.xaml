@@ -58,7 +58,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Search and manage files and folders. Explorer utilises Windows Index Search</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
