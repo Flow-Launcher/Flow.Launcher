@@ -56,7 +56,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva s spravuje súbory i priečinky cez Windows Search alebo Everything</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter na otvorenie priečinka</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Spustiť ako iný používateľ</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Spustí vybranú položku ako používateľ s iným kontom</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otvoriť umiestnenie priečinka</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvoriť umiestnenie aktuálnej položky</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Nepodarilo sa otvoriť súbor {0} v editore {1} – {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Otvori v príkazovom riadku:</system:String>
