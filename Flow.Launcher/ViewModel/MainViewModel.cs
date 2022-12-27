@@ -75,7 +75,7 @@ namespace Flow.Launcher.ViewModel
                         OnPropertyChanged(nameof(OpenResultCommandModifiers));
                         break;
                     case nameof(Settings.PreviewHotkey):
-                        UpdatePreviewHotkey();
+                        OnPropertyChanged(nameof(PreviewHotkey));
                         break;
                 }
             };
@@ -115,7 +115,6 @@ namespace Flow.Launcher.ViewModel
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
             _ = RegisterClockAndDateUpdateAsync();
-            UpdatePreviewHotkey();
         }
 
         private void RegisterViewUpdate()
@@ -584,9 +583,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public Key TogglePreviewHotkey { get; set; }
-
-        public ModifierKeys TogglePreviewModifiers { get; set; }
+        public string PreviewHotkey => Settings.PreviewHotkey;
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -1016,14 +1013,6 @@ namespace Flow.Launcher.ViewModel
         public bool ShouldIgnoreHotkeys()
         {
             return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
-        }
-
-        private void UpdatePreviewHotkey()
-        {
-            var converter = new KeyGestureConverter();
-            var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
-            TogglePreviewHotkey = key.Key;
-            TogglePreviewModifiers = key.Modifiers;
         }
 
         #endregion
