@@ -56,7 +56,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">文件管理器</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">利用 Windows 搜索或者 Everything 查找和管理文件</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以打开目录</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">以其他用户身份运行</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">使用其他用户帐户运行所选内容</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">打开文件所在文件夹</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">打开包含该项目的文件夹</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">使用编辑器打开：</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">使用编辑器 {1} ({2}) 打开文件 {0} 时失败</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">使用 Shell 打开：</system:String>
