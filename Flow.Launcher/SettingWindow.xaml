@@ -743,7 +743,7 @@
                                         FocusVisualMargin="5"
                                         IsOn="{Binding Settings.AlwaysPreview}"
                                         Style="{DynamicResource SideToggleSwitch}"
-                                        ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
+                                        ToolTip="{Binding AlwaysPreviewToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8a1;
                                     </TextBlock>

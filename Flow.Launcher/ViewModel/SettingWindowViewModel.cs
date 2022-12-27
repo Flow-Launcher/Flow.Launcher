@@ -243,6 +243,8 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
+        public string AlwaysPreviewTooltip => string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
+
         public string TestProxy()
         {
             var proxyServer = Settings.Proxy.Server;
