@@ -56,7 +56,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Encontrar e gerir ficheiros/pastas através da Pesquisa Windows ou de Everything</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl+Enter para abrir o diretório</system:String>
@@ -76,7 +76,7 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Executar com outro utilizador</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Executar ações com uma conta de utilizador diferente</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Abrir pasta de destino</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Abrir localização que contém o item atual</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Abrir com o editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Erro ao abrir o ficheiro {0} com o editor {1} em {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Abrir com a consola:</system:String>
