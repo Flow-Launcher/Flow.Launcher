@@ -8,7 +8,7 @@
     "*"
   ],
   "Name": "Explorer",
-  "Description": "Search and manage files and folders. Explorer utilises Windows Index Search",
+  "Description": "Find and manage files and folders via Windows Search or Everything",
   "Author": "Jeremy Wu",
   "Version": "2.0.1",
   "Language": "csharp",
