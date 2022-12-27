@@ -216,10 +216,13 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (!PreviewImageLoaded && ShowIcon == Visibility.Visible)
+            if (ShowDefaultPreview == Visibility.Visible)
             {
-                PreviewImageLoaded = true;
-                _ = LoadPreviewImageAsync();
+                if (!PreviewImageLoaded && ShowIcon == Visibility.Visible)
+                {
+                    PreviewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
             }
         }
 
