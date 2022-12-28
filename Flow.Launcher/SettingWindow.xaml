@@ -736,7 +736,7 @@
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{Binding AlwaysPreviewToolTip}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
