@@ -55,11 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
-    <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualizar Automaticamente</system:String>
-    <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
+    <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Esconder Flow Launcher na inicialização</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -291,7 +294,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
