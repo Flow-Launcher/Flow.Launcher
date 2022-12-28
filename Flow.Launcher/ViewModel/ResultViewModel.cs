@@ -90,6 +90,30 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public bool ShowPreviewImage
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null)
+                {
+                    return true;
+                }
+                else
+                {
+                    // Fall back to Icon
+                    if (!ImgIconAvailable && !GlyphAvailable)
+                        return true;
+
+                    // Although user can choose to use glyph icons, plugins may choose to supply only image icons.
+                    // In this case we ignore the setting because otherwise icons will not display as intended
+                    if (Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable)
+                        return true;
+
+                    return !Settings.UseGlyphIcons && ImgIconAvailable;
+                }
+            }
+        }
+
         public double IconRadius
         {
             get
@@ -119,6 +143,8 @@ namespace Flow.Launcher.ViewModel
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
+
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
@@ -218,7 +244,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (ShowDefaultPreview == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowIcon == Visibility.Visible)
+                if (!PreviewImageLoaded && ShowPreviewImage)
                 {
                     PreviewImageLoaded = true;
                     _ = LoadPreviewImageAsync();
