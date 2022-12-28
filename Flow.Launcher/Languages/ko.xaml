@@ -55,11 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">폴더를 열 때 사용할 파일관리자를 선택하세요.</system:String>
     <system:String x:Key="defaultBrowser">기본 웹 브라우저</system:String>
     <system:String x:Key="defaultBrowserToolTip">새 탭, 새  창, 사생활 보호 모드</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
-    <system:String x:Key="pythonDirectory">Python 디렉토리</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
-    <system:String x:Key="selectPythonDirectory">선택</system:String>
+    <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
     <system:String x:Key="hideNotifyIcon">트레이 아이콘 숨기기</system:String>
     <system:String x:Key="hideNotifyIconToolTip">트레이에서 아이콘을 숨길 경우, 검색창 우클릭으로 설정창을 열 수 있습니다.</system:String>
@@ -291,7 +294,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">새 업데이트 확인 중</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">이미 가장 최신 버전의 Flow Launcher를 사용중입니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_found">업데이트 발견</system:String>
