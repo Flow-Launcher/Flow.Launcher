@@ -227,8 +227,8 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadPreviewImageAsync()
         {
-            var imagePath = string.IsNullOrEmpty(Result.Preview.PreviewImagePath) ? Result.IcoPath : Result.Preview.PreviewImagePath;
-            var iconDelegate = Result.Icon ?? Result.Preview.PreviewDelegate;
+            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
+            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
             if (ImageLoader.CacheContainImage(imagePath, true))
             {
                 previewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
