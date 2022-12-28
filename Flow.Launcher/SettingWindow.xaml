@@ -2666,7 +2666,14 @@
                                             <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
                                                 <GridViewColumn.CellTemplate>
                                                     <DataTemplate>
-                                                        <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
+                                                        <TextBlock>
+                                                            <TextBlock.Text>
+                                                                <MultiBinding Converter="{StaticResource TranslationConverter}">
+                                                                    <Binding Path="Description"/>
+                                                                    <Binding Path="DataContext.Culture" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
                                                     </DataTemplate>
                                                 </GridViewColumn.CellTemplate>
                                             </GridViewColumn>
@@ -3081,8 +3088,15 @@
                                     DockPanel.Dock="Bottom"
                                     FontSize="12"
                                     Foreground="{DynamicResource Color15B}"
-                                    Text="{Binding ActivatedTimes, Mode=OneWay}"
-                                    TextWrapping="WrapWithOverflow" />
+                                    TextWrapping="WrapWithOverflow">
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource TranslationConverter}">
+                                            <Binding Path="ActivatedTimesKey" Mode="OneTime"/>
+                                            <Binding Path="Culture"></Binding>
+                                            <Binding Path="Settings.ActivateTimes"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
                             </StackPanel>
                         </ScrollViewer>
                     </Border>

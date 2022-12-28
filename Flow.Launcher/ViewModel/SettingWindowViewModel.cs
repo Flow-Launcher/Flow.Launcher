@@ -41,14 +41,8 @@ namespace Flow.Launcher.ViewModel
             {
                 switch (e.PropertyName)
                 {
-                    case nameof(Settings.ActivateTimes):
-                        OnPropertyChanged(nameof(ActivatedTimes));
-                        break;
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(WindowWidthSize));
-                        break;
-                    case nameof(Settings.Language):
-                        OnPropertyChanged(nameof(Culture));
                         break;
                 }
             };
@@ -213,6 +207,7 @@ namespace Flow.Launcher.ViewModel
             set
             {
                 InternationalizationManager.Instance.ChangeLanguage(value);
+                OnPropertyChanged(nameof(Culture));
 
                 if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                     ShouldUsePinyin = true;
@@ -837,7 +832,8 @@ namespace Flow.Launcher.ViewModel
                 }
             }
         }
-        public string ActivatedTimes => string.Format(_translater.GetTranslation("about_activate_times"), Settings.ActivateTimes);
+
+        public static string ActivatedTimesKey => "about_activate_times";
 
         public string CheckLogFolder
         {
