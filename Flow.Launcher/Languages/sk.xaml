@@ -55,10 +55,10 @@
     <system:String x:Key="defaultFileManagerToolTip">Vyberte správcu súborov, ktorý sa má použiť pri otváraní priečinka.</system:String>
     <system:String x:Key="defaultBrowser">Predvolený webový prehliadač</system:String>
     <system:String x:Key="defaultBrowserToolTip">Nastavenie pre novú kartu, nové okno, privátny režim.</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
-    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
-    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="pythonFilePath">Cesta k Pythonu</system:String>
+    <system:String x:Key="nodeFilePath">Cesta k Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Vyberte spustiteľný súbor Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Prosím, vyberte pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Vždy písať s angickou klávesnicou</system:String>
     <system:String x:Key="typingStartEnTooltip">Pri aktivácii Flowu sa dočasne zmení klávesnica na anglickú.</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
