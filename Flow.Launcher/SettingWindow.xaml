@@ -2434,7 +2434,7 @@
                                                 Loaded="OnPreviewHotkeyControlLoaded"
                                                 LostFocus="OnPreviewHotkeyControlFocusLost" />
                                             <TextBlock Style="{StaticResource Glyph}">
-                                                &#xeda7;
+                                                &#xe8a1;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
