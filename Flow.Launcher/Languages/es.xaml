@@ -55,10 +55,10 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
     <system:String x:Key="defaultBrowserToolTip">Configuración para Nueva Pestaña, Nueva Ventana, Modo Privado.</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
-    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
-    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="pythonFilePath">Ruta de Python</system:String>
+    <system:String x:Key="nodeFilePath">Ruta de Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Seleccionar el ejecutable de Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Seleccionar pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Empezar a escribir siempre en modo inglés</system:String>
     <system:String x:Key="typingStartEnTooltip">Cambia temporalmente el método de entrada al modo inglés cuando se activa Flow.</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
