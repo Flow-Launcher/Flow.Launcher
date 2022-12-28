@@ -14,7 +14,7 @@
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <core:LocalizationConverter x:Key="LocalizationConverter" />
+        <core:LocalizationAttributeConverter x:Key="LocalizationConverter" />
     </UserControl.Resources>
 
     <Grid Margin="70,14,0,14">

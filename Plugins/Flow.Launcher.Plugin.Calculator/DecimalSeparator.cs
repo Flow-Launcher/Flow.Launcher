@@ -3,7 +3,7 @@ using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Plugin.Caculator
 {    
-    [TypeConverter(typeof(LocalizationConverter))]
+    [TypeConverter(typeof(LocalizationAttributeConverter))]
     public enum DecimalSeparator
     {
         [LocalizedDescription("flowlauncher_plugin_calculator_decimal_seperator_use_system_locale")]
