@@ -248,7 +248,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static bool CacheContainImage(string path, bool loadFullImage = false)
         {
-            return ImageCache.ContainsKey(path, false) && ImageCache[path, loadFullImage] != null;
+            return ImageCache.ContainsKey(path, loadFullImage) && ImageCache[path, loadFullImage] != null;
         }
 
         public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
@@ -259,10 +259,6 @@ namespace Flow.Launcher.Infrastructure.Image
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
             { // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
-                if (imageResult.ImageType == ImageType.FullImageFile)
-                {
-                    path = $"{path}_{ImageType.FullImageFile}";
-                }
                 if (hash != null)
                 {
 
@@ -278,7 +274,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
 
                 // update cache
-                ImageCache[path, false] = img;
+                ImageCache[path, loadFullImage] = img;
             }
 
             return img;
