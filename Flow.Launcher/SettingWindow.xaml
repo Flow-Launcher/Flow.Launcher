@@ -44,6 +44,7 @@
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <converters:TextConverter x:Key="TextConverter" />
         <core:TranslationConverter x:Key="TranslationConverter" />
+        <converters:DateTimeFormatToNowConverter x:Key="DateTimeFormatToNowConverter"/>
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
                 <scm:SortDescription PropertyName="Source" />
@@ -1841,13 +1842,25 @@
                                                         <TextBlock
                                                             x:Name="ClockBox"
                                                             Style="{DynamicResource ClockBox}"
-                                                            Text="{Binding ClockText}"
-                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding Converter="{StaticResource DateTimeFormatToNowConverter}">
+                                                                    <Binding Path="Settings.TimeFormat"/>
+                                                                    <Binding Path="Culture"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
                                                         <TextBlock
                                                             x:Name="DateBox"
                                                             Style="{DynamicResource DateBox}"
-                                                            Text="{Binding DateText}"
-                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                            <TextBlock.Text>
+                                                                <MultiBinding Converter="{StaticResource DateTimeFormatToNowConverter}">
+                                                                    <Binding Path="Settings.DateFormat"/>
+                                                                    <Binding Path="Culture"/>
+                                                                </MultiBinding>
+                                                            </TextBlock.Text>
+                                                        </TextBlock>
                                                     </StackPanel>
                                                     <Canvas Style="{DynamicResource SearchIconPosition}">
                                                         <Path
@@ -2195,8 +2208,14 @@
                                                                 Margin="0,0,10,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                Foreground="{DynamicResource Color04B}"
-                                                                Text="{Binding ClockText}" />
+                                                                Foreground="{DynamicResource Color04B}">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource DateTimeFormatToNowConverter}">
+                                                                        <Binding Path="Settings.TimeFormat"/>
+                                                                        <Binding Path="Culture"/>
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
                                                             <ComboBox
                                                                 x:Name="TimeFormat"
                                                                 Grid.Column="2"
@@ -2237,8 +2256,14 @@
                                                                 Margin="0,0,10,0"
                                                                 VerticalAlignment="Center"
                                                                 FontSize="14"
-                                                                Foreground="{DynamicResource Color04B}"
-                                                                Text="{Binding DateText}" />
+                                                                Foreground="{DynamicResource Color04B}">
+                                                                <TextBlock.Text>
+                                                                    <MultiBinding Converter="{StaticResource DateTimeFormatToNowConverter}">
+                                                                        <Binding Path="Settings.DateFormat"/>
+                                                                        <Binding Path="Culture"/>
+                                                                    </MultiBinding>
+                                                                </TextBlock.Text>
+                                                            </TextBlock>
                                                             <ComboBox
                                                                 x:Name="DateFormat"
                                                                 Grid.Column="2"

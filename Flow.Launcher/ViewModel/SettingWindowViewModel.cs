@@ -47,17 +47,8 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(WindowWidthSize));
                         break;
-                    case nameof(Settings.UseDate):
-                    case nameof(Settings.DateFormat):
-                        OnPropertyChanged(nameof(DateText));
-                        break;
-                    case nameof(Settings.UseClock):
-                    case nameof(Settings.TimeFormat):
-                        OnPropertyChanged(nameof(ClockText));
-                        break;
                     case nameof(Settings.Language):
-                        OnPropertyChanged(nameof(ClockText));
-                        OnPropertyChanged(nameof(DateText));
+                        OnPropertyChanged(nameof(Culture));
                         break;
                 }
             };
@@ -534,10 +525,6 @@ namespace Flow.Launcher.ViewModel
             get => Settings.DateFormat;
             set => Settings.DateFormat = value;
         }
-
-        public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
-
-        public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
         public double WindowWidthSize
         {
