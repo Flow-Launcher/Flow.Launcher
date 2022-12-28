@@ -333,10 +333,10 @@ namespace Flow.Launcher.ViewModel
         private IList<PluginStoreItemViewModel> LabelMaker(IList<UserPlugin> list)
         {
             return list.Select(p => new PluginStoreItemViewModel(p))
-                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
-                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
-                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
-                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.Installed)
+                .OrderByDescending(p => p.Category == PluginStoreItemViewModel.PluginCategory.NewRelease)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.PluginCategory.RecentlyUpdated)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.PluginCategory.None)
+                .ThenByDescending(p => p.Category == PluginStoreItemViewModel.PluginCategory.Installed)
                 .ToList();
         }
 

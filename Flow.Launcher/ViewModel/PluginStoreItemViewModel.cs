@@ -1,6 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel
@@ -28,27 +30,34 @@ namespace Flow.Launcher.ViewModel
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
         public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
 
-        internal const string None = "None";
-        internal const string RecentlyUpdated = "RecentlyUpdated";
-        internal const string NewRelease = "NewRelease";
-        internal const string Installed = "Installed";
+        public enum PluginCategory
+        {
+            [LocalizedDescription("pluginStore_None")]
+            None,
+            [LocalizedDescription("pluginStore_RecentlyUpdated")]
+            RecentlyUpdated,
+            [LocalizedDescription("pluginStore_NewRelease")]
+            NewRelease,
+            [LocalizedDescription("pluginStore_Installed")]
+            Installed
+        }
 
-        public string Category
+        public PluginCategory Category
         {
             get
             {
-                string category = None;
+                PluginCategory category = PluginCategory.None;
                 if (DateTime.Now - _plugin.LatestReleaseDate < TimeSpan.FromDays(7))
                 {
-                    category = RecentlyUpdated;
+                    category = PluginCategory.RecentlyUpdated;
                 }
                 if (DateTime.Now - _plugin.DateAdded < TimeSpan.FromDays(7))
                 {
-                    category = NewRelease;
+                    category = PluginCategory.NewRelease;
                 }
                 if (PluginManager.GetPluginForId(_plugin.ID) != null)
                 {
-                    category = Installed;
+                    category = PluginCategory.Installed;
                 }
 
                 return category;

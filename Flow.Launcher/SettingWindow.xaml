@@ -42,8 +42,8 @@
     <Window.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-        <converters:TextConverter x:Key="TextConverter" />
         <core:TranslationConverter x:Key="TranslationConverter" />
+        <core:LocalizationAttributeConverter x:Key="LocalizationAttributeConverter"/>
         <converters:DateTimeFormatToNowConverter x:Key="DateTimeFormatToNowConverter"/>
         <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
             <CollectionViewSource.SortDescriptions>
@@ -1547,8 +1547,14 @@
                                                                     VerticalAlignment="Top"
                                                                     FontSize="16"
                                                                     FontWeight="Bold"
-                                                                    Foreground="{DynamicResource Color05B}"
-                                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                                                    Foreground="{DynamicResource Color05B}">
+                                                                    <TextBlock.Text>
+                                                                        <MultiBinding Converter="{StaticResource LocalizationAttributeConverter}">
+                                                                            <Binding Path="Name"/>
+                                                                            <Binding Path="DataContext.Culture" RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                                                                        </MultiBinding>
+                                                                    </TextBlock.Text>
+                                                                </TextBlock>
                                                                 <ItemsPresenter />
                                                             </StackPanel>
                                                         </Grid>
