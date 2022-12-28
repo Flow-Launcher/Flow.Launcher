@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Klasör açarken kullanılacak dosya yöneticisini seçin.</system:String>
     <system:String x:Key="defaultBrowser">Varsayılan Tarayıcısı</system:String>
     <system:String x:Key="defaultBrowserToolTip">Yeni Sekme, Yeni Pencere, Gizli Mod için Ayar.</system:String>
-    <system:String x:Key="pythonDirectory">Python Konumu</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
-    <system:String x:Key="selectPythonDirectory">Seç</system:String>
+    <system:String x:Key="select">Seç</system:String>
     <system:String x:Key="hideOnStartup">Başlangıçta Flow Launcher'u gizle</system:String>
     <system:String x:Key="hideNotifyIcon">Sistem çekmecesi simgesini gizle</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

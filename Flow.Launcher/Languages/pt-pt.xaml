@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gestor de ficheiros utilizado para abrir a página</system:String>
     <system:String x:Key="defaultBrowser">Navegador web padrão</system:String>
     <system:String x:Key="defaultBrowserToolTip">Definições para Novo separador, Nova Janela e Modo privado</system:String>
-    <system:String x:Key="pythonDirectory">Diretório Python</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
-    <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
+    <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>

@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecteer de bestandsbeheerder voor het openen van de map.</system:String>
     <system:String x:Key="defaultBrowser">Standaard webbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Instelling voor Nieuw tabblad, Nieuw Venster, Privémodus.</system:String>
-    <system:String x:Key="pythonDirectory">Python map</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
-    <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
+    <system:String x:Key="select">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
     <system:String x:Key="hideNotifyIcon">Systeemvakpictogram verbergen</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

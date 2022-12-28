@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Wybierz menedżer plików używany do otwierania folderów.</system:String>
     <system:String x:Key="defaultBrowser">Domyślna przeglądarka</system:String>
     <system:String x:Key="defaultBrowserToolTip">Ustawienie dla nowej karty, nowego okna i trybu prywatnego.</system:String>
-    <system:String x:Key="pythonDirectory">Folder biblioteki Python</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
-    <system:String x:Key="selectPythonDirectory">Wybierz</system:String>
+    <system:String x:Key="select">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
     <system:String x:Key="hideNotifyIcon">Ukryj ikonę zasobnika</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

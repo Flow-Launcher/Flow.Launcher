@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">選擇開啟資料夾時要使用的檔案管理器。</system:String>
     <system:String x:Key="defaultBrowser">預設瀏覽器</system:String>
     <system:String x:Key="defaultBrowserToolTip">設定新增分頁、視窗和無痕模式。</system:String>
-    <system:String x:Key="pythonDirectory">Python 路徑</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
-    <system:String x:Key="selectPythonDirectory">選擇</system:String>
+    <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

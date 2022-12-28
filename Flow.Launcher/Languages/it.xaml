@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selezionare il Gestore file da usare all'apertura della cartella.</system:String>
     <system:String x:Key="defaultBrowser">Browser predefinito</system:String>
     <system:String x:Key="defaultBrowserToolTip">Impostazione per Nuova scheda, Nuova finestra, Modalità privata.</system:String>
-    <system:String x:Key="pythonDirectory">Cartella Python</system:String>
     <system:String x:Key="autoUpdates">Aggiornamento automatico</system:String>
-    <system:String x:Key="selectPythonDirectory">Seleziona</system:String>
+    <system:String x:Key="select">Seleziona</system:String>
     <system:String x:Key="hideOnStartup">Nascondi Flow Launcher all'avvio</system:String>
     <system:String x:Key="hideNotifyIcon">Nascondi Icona nell'Area di Notifica</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

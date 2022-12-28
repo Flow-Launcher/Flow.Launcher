@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
-    <system:String x:Key="pythonDirectory">Pythonのディレクトリ</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
-    <system:String x:Key="selectPythonDirectory">選択</system:String>
+    <system:String x:Key="select">選択</system:String>
     <system:String x:Key="hideOnStartup">起動時にFlow Launcherを隠す</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

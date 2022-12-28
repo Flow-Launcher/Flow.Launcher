@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
     <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
-    <system:String x:Key="pythonDirectory">Python direktorijum</system:String>
     <system:String x:Key="autoUpdates">Auto ažuriranje</system:String>
-    <system:String x:Key="selectPythonDirectory">Izaberi</system:String>
+    <system:String x:Key="select">Izaberi</system:String>
     <system:String x:Key="hideOnStartup">Sakrij Flow Launcher pri podizanju sistema</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

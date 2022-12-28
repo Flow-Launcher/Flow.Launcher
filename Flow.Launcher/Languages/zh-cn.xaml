@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
     <system:String x:Key="defaultBrowserToolTip">新标签/窗口及隐身模式设置。</system:String>
-    <system:String x:Key="pythonDirectory">Python 路径</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
-    <system:String x:Key="selectPythonDirectory">选择</system:String>
+    <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>

@@ -64,31 +64,23 @@ namespace Flow.Launcher
             InitializePosition();
         }
 
-        private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
+        private void OnSelectPythonPathClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new FolderBrowserDialog
-            {
-                SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-            };
+            var selectedFile = viewModel.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+                                    "Python|pythonw.exe");
 
-            var result = dlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                string pythonDirectory = dlg.SelectedPath;
-                if (!string.IsNullOrEmpty(pythonDirectory))
-                {
-                    var pythonPath = Path.Combine(pythonDirectory, PluginsLoader.PythonExecutable);
-                    if (File.Exists(pythonPath))
-                    {
-                        settings.PluginSettings.PythonDirectory = pythonDirectory;
-                        MessageBox.Show("Remember to restart Flow Launcher use new Python path");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Can't find python in given directory");
-                    }
-                }
-            }
+            if (!string.IsNullOrEmpty(selectedFile))
+                settings.PluginSettings.PythonExecutablePath = selectedFile;
+        }
+
+        private void OnSelectNodePathClick(object sender, RoutedEventArgs e)
+        {
+            var selectedFile = viewModel.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"));
+
+            if (!string.IsNullOrEmpty(selectedFile))
+                settings.PluginSettings.NodeExecutablePath = selectedFile;
         }
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)

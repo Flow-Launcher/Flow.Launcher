@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Виберіть файловий менеджер для використання під час відкриття теки.</system:String>
     <system:String x:Key="defaultBrowser">Браузер за замовчуванням</system:String>
     <system:String x:Key="defaultBrowserToolTip">Налаштування нової вкладки, нового вікна, приватного режиму.</system:String>
-    <system:String x:Key="pythonDirectory">Директорія Python</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
-    <system:String x:Key="selectPythonDirectory">Вибрати</system:String>
+    <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>

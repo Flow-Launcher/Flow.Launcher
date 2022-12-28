@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Vyberte správcu súborov, ktorý sa má použiť pri otváraní priečinka.</system:String>
     <system:String x:Key="defaultBrowser">Predvolený webový prehliadač</system:String>
     <system:String x:Key="defaultBrowserToolTip">Nastavenie pre novú kartu, nové okno, privátny režim.</system:String>
-    <system:String x:Key="pythonDirectory">Priečinok s Pythonom</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
-    <system:String x:Key="selectPythonDirectory">Vybrať</system:String>
+    <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>

@@ -143,6 +143,29 @@ namespace Flow.Launcher.ViewModel
             _storage.Save();
         }
 
+        public string GetFileFromDialog(string title, string filter = "")
+        {
+            var dlg = new System.Windows.Forms.OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = title,
+                Filter = filter
+            };
+
+            var result = dlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                return dlg.FileName;
+            }
+            else
+            {
+                return string.Empty;
+            }
+        }
+
         #region general
 
         // todo a better name?

@@ -919,18 +919,37 @@
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonDirectory}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource pythonFilePath}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                                         <TextBox
                                             Width="300"
                                             Height="34"
-                                            Text="{Binding Settings.PluginSettings.PythonDirectory, TargetNullValue='No Setting'}" />
+                                            Text="{Binding Settings.PluginSettings.PythonExecutablePath, TargetNullValue='None'}" />
                                         <Button
                                             Height="34"
                                             Margin="10,0,18,0"
-                                            Click="OnSelectPythonDirectoryClick"
-                                            Content="{DynamicResource selectPythonDirectory}" />
+                                            Click="OnSelectPythonPathClick"
+                                            Content="{DynamicResource select}" />
+                                    </StackPanel>
+                                </ItemsControl>
+                            </Border>
+
+                            <Border Margin="0,4,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                    <StackPanel Style="{StaticResource TextPanel}">
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource nodeFilePath}" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                        <TextBox
+                                            Width="300"
+                                            Height="34"
+                                            Text="{Binding Settings.PluginSettings.NodeExecutablePath, TargetNullValue='None'}" />
+                                        <Button
+                                            Height="34"
+                                            Margin="10,0,18,0"
+                                            Click="OnSelectNodePathClick"
+                                            Content="{DynamicResource select}" />
                                     </StackPanel>
                                 </ItemsControl>
                             </Border>
@@ -974,7 +993,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
+                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource language}" />
