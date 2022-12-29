@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Pinyin을 사용하여 검색할 수 있습니다. Pinyin (병음) 은 로마자 중국어 입력 방식입니다.</system:String>
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">항상 미리보기 패널이 열린 상태로 Flow를 시작합니다. F1키로 미리보기를 on/off 합니다.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">단축키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력합니다.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
     <system:String x:Key="openResultModifiersToolTip">결과 항목을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
