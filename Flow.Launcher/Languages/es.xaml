@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse F1 para mostrar/ocultar la vista previa.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
