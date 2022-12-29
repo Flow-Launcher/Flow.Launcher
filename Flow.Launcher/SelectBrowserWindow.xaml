@@ -166,7 +166,7 @@
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Click="btnBrowseFile_Click"
-                                Content="{DynamicResource selectPythonDirectory}"
+                                Content="{DynamicResource select}"
                                 DockPanel.Dock="Right">
                                 <Button.Style>
                                     <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="{x:Type Button}">

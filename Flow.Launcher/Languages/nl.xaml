@@ -53,9 +53,8 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecteer de bestandsbeheerder voor het openen van de map.</system:String>
     <system:String x:Key="defaultBrowser">Standaard webbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Instelling voor Nieuw tabblad, Nieuw Venster, Privémodus.</system:String>
-    <system:String x:Key="pythonDirectory">Python map</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
-    <system:String x:Key="selectPythonDirectory">Selecteer</system:String>
+    <system:String x:Key="select">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
     <system:String x:Key="hideNotifyIcon">Systeemvakpictogram verbergen</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -64,7 +63,7 @@
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
 
     <!--  Setting Plugin  -->

@@ -86,6 +86,21 @@ namespace Flow.Launcher.Infrastructure.Image
             return key is not null && Data.ContainsKey((key, isFullImage)) && Data[(key, isFullImage)].imageSource != null;
         }
 
+        public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
+        {
+            if (key is not null)
+            {
+                bool hasKey = Data.TryGetValue((key, isFullImage), out var imageUsage);
+                image = hasKey ? imageUsage.imageSource : null;
+                return hasKey;
+            }
+            else
+            {
+                image = null;
+                return false;
+            }
+        }
+
         public int CacheSize()
         {
             return Data.Count;

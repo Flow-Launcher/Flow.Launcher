@@ -144,6 +144,5 @@ namespace Flow.Launcher.Core
 
             return tips;
         }
-
     }
 }

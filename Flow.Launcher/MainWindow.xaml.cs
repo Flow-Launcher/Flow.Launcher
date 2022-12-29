@@ -609,11 +609,6 @@ namespace Flow.Launcher
                         }
                     }
                     break;
-                case Key.F1:
-                    PreviewToggle();
-                    e.Handled = true;
-                    break;
-
                 default:
                     break;
 
@@ -622,31 +617,7 @@ namespace Flow.Launcher
 
         public void PreviewReset()
         {
-            if (_settings.AlwaysPreview == true)
-            {
-                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
-                Preview.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
-                Preview.Visibility = Visibility.Collapsed;
-            }
-        }
-
-        public void PreviewToggle()
-        {
-
-            if (Preview.Visibility == Visibility.Collapsed)
-            {
-                ResultArea.SetValue(Grid.ColumnSpanProperty, 1);
-                Preview.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ResultArea.SetValue(Grid.ColumnSpanProperty, 2);
-                Preview.Visibility = Visibility.Collapsed;
-            }
+            _viewModel.ResetPreview();
         }
 
         private void MoveQueryTextToEnd()

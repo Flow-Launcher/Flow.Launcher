@@ -90,6 +90,22 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public Visibility ShowPreviewImage
+        {
+            get
+            {
+                if (PreviewImageAvailable)
+                {
+                    return Visibility.Visible;
+                }
+                else
+                {
+                    // Fall back to icon
+                    return ShowIcon;
+                }
+            }
+        }
+
         public double IconRadius
         {
             get
@@ -119,6 +135,8 @@ namespace Flow.Launcher.ViewModel
         private bool GlyphAvailable => Glyph is not null;
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
+
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
@@ -153,16 +171,7 @@ namespace Flow.Launcher.ViewModel
 
         public ImageSource PreviewImage
         {
-            get
-            {
-                if (!PreviewImageLoaded)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
-
-                return previewImage;
-            }
+            get => previewImage;
             private set => previewImage = value;
         }
 
@@ -197,9 +206,9 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
-            if (ImageLoader.CacheContainImage(imagePath, false))
+            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
             {
-                image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+                image = img;
             }
             else
             {
@@ -210,16 +219,28 @@ namespace Flow.Launcher.ViewModel
 
         private async Task LoadPreviewImageAsync()
         {
-            var imagePath = string.IsNullOrEmpty(Result.Preview.PreviewImagePath) ? Result.IcoPath : Result.Preview.PreviewImagePath;
-            var iconDelegate = Result.Icon;
-            if (ImageLoader.CacheContainImage(imagePath, true))
+            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
+            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
+            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
             {
-                previewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+                previewImage = img;
             }
             else
             {
                 // We need to modify the property not field here to trigger the OnPropertyChanged event
                 PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+            }
+        }
+
+        public void LoadPreviewImage()
+        {
+            if (ShowDefaultPreview == Visibility.Visible)
+            {
+                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
+                {
+                    PreviewImageLoaded = true;
+                    _ = LoadPreviewImageAsync();
+                }
             }
         }
 
