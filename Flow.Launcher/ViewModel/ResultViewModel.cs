@@ -214,9 +214,9 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
-            if (ImageLoader.CacheContainImage(imagePath, false))
+            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
             {
-                image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
+                image = img;
             }
             else
             {
@@ -229,9 +229,9 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.CacheContainImage(imagePath, true))
+            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
             {
-                previewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+                previewImage = img;
             }
             else
             {
