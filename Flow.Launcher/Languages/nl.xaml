@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Voer snelkoppeling in om Flow Launcher te tonen/verbergen.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Open resultaatmodificatoren</system:String>
     <system:String x:Key="openResultModifiersToolTip">Kies een aanpassingstoets om het geselecteerde resultaat te openen via het toetsenbord.</system:String>
     <system:String x:Key="showOpenResultHotkey">Sneltoets weergeven</system:String>
