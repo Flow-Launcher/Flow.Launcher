@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть ярлик для відображення/приховання потокового запуску.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Відкрити ключ зміни результатів</system:String>
     <system:String x:Key="openResultModifiersToolTip">Виберіть ключ модифікатора для відкриття вибраних результатів за допомогою клавіатури.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показати гарячу клавішу</system:String>
