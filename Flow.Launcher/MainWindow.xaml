@@ -438,7 +438,7 @@
                                         HorizontalAlignment="Center"
                                         Source="{Binding PreviewImage}"
                                         StretchDirection="DownOnly"
-                                        Visibility="{Binding ShowPreviewImage, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        Visibility="{Binding ShowPreviewImage}">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
                                                 <Setter Property="MaxWidth" Value="96" />

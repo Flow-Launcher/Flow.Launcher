@@ -90,26 +90,18 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public bool ShowPreviewImage
+        public Visibility ShowPreviewImage
         {
             get
             {
-                if (!string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null)
+                if (PreviewImageAvailable)
                 {
-                    return true;
+                    return Visibility.Visible;
                 }
                 else
                 {
-                    // Fall back to Icon
-                    if (!ImgIconAvailable && !GlyphAvailable)
-                        return true;
-
-                    // Although user can choose to use glyph icons, plugins may choose to supply only image icons.
-                    // In this case we ignore the setting because otherwise icons will not display as intended
-                    if (Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable)
-                        return true;
-
-                    return !Settings.UseGlyphIcons && ImgIconAvailable;
+                    // Fall back to icon
+                    return ShowIcon;
                 }
             }
         }
@@ -244,7 +236,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (ShowDefaultPreview == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage)
+                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
                 {
                     PreviewImageLoaded = true;
                     _ = LoadPreviewImageAsync();
