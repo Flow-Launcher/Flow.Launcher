@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜索.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
