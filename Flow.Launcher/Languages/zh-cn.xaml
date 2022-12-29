@@ -71,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
@@ -154,6 +154,8 @@
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
