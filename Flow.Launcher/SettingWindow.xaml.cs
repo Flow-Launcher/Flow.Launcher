@@ -123,6 +123,19 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnPreviewHotkeyControlLoaded(object sender, RoutedEventArgs e)
+        {
+            _ = PreviewHotkeyControl.SetHotkeyAsync(settings.PreviewHotkey, false);
+        }
+
+        private void OnPreviewHotkeyControlFocusLost(object sender, RoutedEventArgs e)
+        {
+            if (PreviewHotkeyControl.CurrentHotkeyAvailable)
+            {
+                settings.PreviewHotkey = PreviewHotkeyControl.CurrentHotkey.ToString();
+            }
+        }
+
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;

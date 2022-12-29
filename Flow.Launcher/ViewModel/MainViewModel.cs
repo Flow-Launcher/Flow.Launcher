@@ -23,6 +23,7 @@ using System.IO;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using System.Windows.Input;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -73,6 +74,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.OpenResultModifiers):
                         OnPropertyChanged(nameof(OpenResultCommandModifiers));
                         break;
+                    case nameof(Settings.PreviewHotkey):
+                        OnPropertyChanged(nameof(PreviewHotkey));
+                        break;
                 }
             };
 
@@ -98,6 +102,15 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = Results;
 
+            Results.PropertyChanged += (_, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(Results.SelectedItem):
+                        UpdatePreview();
+                        break;
+                }
+            };
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
@@ -433,6 +446,52 @@ namespace Flow.Launcher.ViewModel
             Settings.MaxResultsToShow -= 1;
         }
 
+        [RelayCommand]
+        public void TogglePreview()
+        {
+            if (!PreviewVisible)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
+        private void ShowPreview()
+        {
+            ResultAreaColumn = 1;
+            PreviewVisible = true;
+            Results.SelectedItem?.LoadPreviewImage();
+        }
+
+        private void HidePreview()
+        {
+            ResultAreaColumn = 2;
+            PreviewVisible = false;
+        }
+
+        public void ResetPreview()
+        {
+            if (Settings.AlwaysPreview == true)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
+        private void UpdatePreview()
+        {
+            if (PreviewVisible)
+            {
+                Results.SelectedItem?.LoadPreviewImage();
+            }
+        }
+
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -524,9 +583,15 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
+        public string PreviewHotkey => Settings.PreviewHotkey;
+
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
+
+        public bool PreviewVisible { get; set; } = false;
+
+        public int ResultAreaColumn { get; set; } = 1;
 
         #endregion
 

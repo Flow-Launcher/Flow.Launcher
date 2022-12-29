@@ -63,7 +63,7 @@
     <system:String x:Key="ShouldUsePinyin">Dovrebbe usare il Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">L'effetto ombra non è consentito mentre il tema corrente ha un effetto di sfocatura abilitato</system:String>
 
     <!--  Setting Plugin  -->

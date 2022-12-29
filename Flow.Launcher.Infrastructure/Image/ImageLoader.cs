@@ -251,6 +251,11 @@ namespace Flow.Launcher.Infrastructure.Image
             return ImageCache.ContainsKey(path, false) && ImageCache[path, loadFullImage] != null;
         }
 
+        public static bool TryGetValue(string path, bool loadFullImage, out ImageSource image)
+        {
+            return ImageCache.TryGetValue(path, loadFullImage, out image);
+        }
+
         public static async ValueTask<ImageSource> LoadAsync(string path, bool loadFullImage = false)
         {
             var imageResult = await LoadInternalAsync(path, loadFullImage);

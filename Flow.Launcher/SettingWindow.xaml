@@ -736,14 +736,14 @@
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
                                         <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AlwaysPreview}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AlwaysPreviewToolTip}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{Binding AlwaysPreviewToolTip}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
                                         FocusVisualMargin="5"
                                         IsOn="{Binding Settings.AlwaysPreview}"
                                         Style="{DynamicResource SideToggleSwitch}"
-                                        ToolTip="{DynamicResource AlwaysPreviewToolTip}" />
+                                        ToolTip="{Binding AlwaysPreviewToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe8a1;
                                     </TextBlock>
@@ -2434,8 +2434,33 @@
                                     </Border>
                                 </StackPanel>
 
+                                <StackPanel Grid.Row="2">
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource previewHotkey}"/>
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource previewHotkeyToolTip}" />
+                                            </StackPanel>
+                                            <flowlauncher:HotkeyControl
+                                                x:Name="PreviewHotkeyControl"
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Width="300"
+                                                Height="35"
+                                                Margin="0,0,0,0"
+                                                HorizontalAlignment="Right"
+                                                HorizontalContentAlignment="Right"
+                                                Loaded="OnPreviewHotkeyControlLoaded"
+                                                LostFocus="OnPreviewHotkeyControlFocusLost" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe8a1;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                </StackPanel>
+
                                 <Border
-                                    Grid.Row="2"
+                                    Grid.Row="3"
                                     Margin="0,12,0,0"
                                     Padding="0"
                                     CornerRadius="5"
@@ -2492,7 +2517,7 @@
                                 </Border>
 
                                 <TextBlock
-                                    Grid.Row="3"
+                                    Grid.Row="4"
                                     Margin="0,10,12,10"
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
@@ -2500,7 +2525,7 @@
                                     Foreground="{DynamicResource Color05B}"
                                     Text="{DynamicResource customQueryHotkey}" />
                                 <ListView
-                                    Grid.Row="4"
+                                    Grid.Row="5"
                                     MinHeight="160"
                                     Margin="0,0,0,0"
                                     Background="{DynamicResource Color02B}"
@@ -2529,7 +2554,7 @@
                                     </ListView.View>
                                 </ListView>
                                 <StackPanel
-                                    Grid.Row="5"
+                                    Grid.Row="6"
                                     Margin="0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
@@ -2552,7 +2577,7 @@
                                 </StackPanel>
 
                                 <TextBlock
-                                    Grid.Row="6"
+                                    Grid.Row="7"
                                     Margin="0,0,12,2"
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
@@ -2561,7 +2586,7 @@
                                     Text="{DynamicResource customQueryShortcut}" />
                                 <ListView
                                     Name="customShortcutView"
-                                    Grid.Row="7"
+                                    Grid.Row="8"
                                     MinHeight="160"
                                     Margin="0,6,0,0"
                                     Background="{DynamicResource Color02B}"
@@ -2590,7 +2615,7 @@
                                     </ListView.View>
                                 </ListView>
                                 <StackPanel
-                                    Grid.Row="8"
+                                    Grid.Row="9"
                                     Margin="0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
@@ -2613,7 +2638,7 @@
                                 </StackPanel>
 
                                 <TextBlock
-                                    Grid.Row="9"
+                                    Grid.Row="10"
                                     Margin="0,0,12,2"
                                     Padding="0,12,0,0"
                                     VerticalAlignment="Center"
@@ -2621,7 +2646,7 @@
                                     Foreground="{DynamicResource Color05B}"
                                     Text="{DynamicResource builtinShortcuts}" />
                                 <ListView
-                                    Grid.Row="10"
+                                    Grid.Row="11"
                                     MinHeight="160"
                                     Margin="0,6,0,20"
                                     Background="{DynamicResource Color02B}"
