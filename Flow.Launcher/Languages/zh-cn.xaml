@@ -55,10 +55,10 @@
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
     <system:String x:Key="defaultBrowserToolTip">新标签/窗口及隐身模式设置。</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
-    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
-    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="pythonFilePath">Python 路径</system:String>
+    <system:String x:Key="nodeFilePath">Node.js 路径</system:String>
+    <system:String x:Key="selectNodeExecutable">请选择 Node.js 可执行文件</system:String>
+    <system:String x:Key="selectPythonExecutable">请选择 pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
     <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英语模式。</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
