@@ -114,7 +114,7 @@ namespace Flow.Launcher.Core
             public string HtmlUrl { get; [UsedImplicitly] set; }
         }
 
-        /// https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
+        // https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
         private async Task<UpdateManager> GitHubUpdateManagerAsync(string repository)
         {
             var uri = new Uri(repository);
