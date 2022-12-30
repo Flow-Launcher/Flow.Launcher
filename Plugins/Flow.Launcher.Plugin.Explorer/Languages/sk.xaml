@@ -56,7 +56,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva s spravuje súbory i priečinky cez Windows Search alebo Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Vyhľadáva a spravuje súbory i priečinky cez Windows Search alebo Everything</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter na otvorenie priečinka</system:String>

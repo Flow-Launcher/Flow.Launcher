@@ -59,7 +59,7 @@
     <system:String x:Key="nodeFilePath">Cesta k Node.js</system:String>
     <system:String x:Key="selectNodeExecutable">Vyberte spustiteľný súbor Node.js</system:String>
     <system:String x:Key="selectPythonExecutable">Prosím, vyberte pythonw.exe</system:String>
-    <system:String x:Key="typingStartEn">Vždy písať s angickou klávesnicou</system:String>
+    <system:String x:Key="typingStartEn">Vždy písať s anglickou klávesnicou</system:String>
     <system:String x:Key="typingStartEnTooltip">Pri aktivácii Flowu sa dočasne zmení klávesnica na anglickú.</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
     <system:String x:Key="select">Vybrať</system:String>
