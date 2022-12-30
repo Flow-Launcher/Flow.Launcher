@@ -44,6 +44,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public bool Enabled { get; set; }
         public string Location => ParentDirectory;
 
+        // Localized name based on windows display language
+        public string LocalizedName { get; set; } = string.Empty;
+
         private const string ShortcutExtension = "lnk";
         private const string UrlExtension = "url";
         private const string ExeExtension = "exe";
@@ -69,27 +72,30 @@ namespace Flow.Launcher.Plugin.Program.Programs
             string title;
             MatchResult matchResult;
 
+            // Name of the result
+            string resultName = string.IsNullOrEmpty(LocalizedName) ? Name : LocalizedName;
+
             // We suppose Name won't be null
-            if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
+            if (!Main._settings.EnableDescription || Description == null || resultName.StartsWith(Description))
             {
-                title = Name;
+                title = resultName;
                 matchResult = StringMatcher.FuzzySearch(query, title);
             }
-            else if (Description.StartsWith(Name))
+            else if (Description.StartsWith(resultName))
             {
                 title = Description;
                 matchResult = StringMatcher.FuzzySearch(query, Description);
             }
             else
             {
-                title = $"{Name}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, Name);
+                title = $"{resultName}: {Description}";
+                var nameMatch = StringMatcher.FuzzySearch(query, resultName);
                 var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
                 if (desciptionMatch.Score > nameMatch.Score)
                 {
                     for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
                     {
-                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        desciptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
                     }
                     matchResult = desciptionMatch;
                 }
@@ -296,6 +302,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                     }
                 }
+
+                program.LocalizedName = ShellLocalization.GetLocalizedName(path);
 
                 return program;
             }
