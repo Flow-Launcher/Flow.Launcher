@@ -21,11 +21,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
+        public static string GetPathWithActionKeyword(string path, ResultType type, string actionKeyword)
         {
-            // Query.ActionKeyword is string.Empty when Global Action Keyword ('*') is used
-            var keyword = actionKeyword != string.Empty ? actionKeyword + " " : string.Empty;
+            // actionKeyword will be empty string if using global, query.ActionKeyword is ""
 
+            var usePathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled;
+
+            var pathSearchActionKeyword = Settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign 
+                ? string.Empty 
+                : $"{Settings.PathSearchActionKeyword} ";
+
+            var searchActionKeyword = Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
+                ? string.Empty
+                : $"{Settings.SearchActionKeyword} ";
+
+            var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
+            
             var formatted_path = path;
 
             if (type == ResultType.Folder)
@@ -33,6 +44,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
 
             return $"{keyword}{formatted_path}";
+        }
+
+        public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
+        {
+            return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
+                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
+                        : GetPathWithActionKeyword(path, resultType, query.ActionKeyword);
         }
 
         public static Result CreateResult(Query query, SearchResult result)
@@ -54,7 +72,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 IcoPath = path,
                 SubTitle = Path.GetDirectoryName(path),
-                AutoCompleteText = GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword),
+                AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
                 Action = c =>
@@ -96,7 +114,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var driveLetter = path[..1].ToUpper();
             var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
-            var subtitle = ToReadableSize(drv.AvailableFreeSpace, 2) + " free of " + ToReadableSize(drv.TotalSize, 2);
+            var freespace = ToReadableSize(drv.AvailableFreeSpace, 2);
+            var totalspace = ToReadableSize(drv.TotalSize, 2);
+            var subtitle = string.Format(Context.API.GetTranslation("plugin_explorer_diskfreespace"), freespace, totalspace);
             double usingSize = (Convert.ToDouble(drv.TotalSize) - Convert.ToDouble(drv.AvailableFreeSpace)) / Convert.ToDouble(drv.TotalSize) * 100;
 
             int? progressValue = Convert.ToInt32(usingSize);
@@ -170,25 +190,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             // Path passed from PathSearchAsync ends with Constants.DirectorySeperator ('\'), need to remove the seperator
             // so it's consistent with folder results returned by index search which does not end with one
             var folderPath = path.TrimEnd(Constants.DirectorySeperator);
-            
-            var folderName = folderPath.TrimEnd(Constants.DirectorySeperator).Split(new[]
-            {
-                Path.DirectorySeparatorChar
-            }, StringSplitOptions.None).Last();
-
-            var title = $"Open {folderName}";
-
-            var subtitleFolderName = folderName;
-
-            // ie. max characters can be displayed without subtitle cutting off: "Program Files (x86)"
-            if (folderName.Length > 19)
-                subtitleFolderName = "the directory";
 
             return new Result
             {
-                Title = title,
-                SubTitle = $"Use > to search within {subtitleFolderName}, " +
-                           $"* to search for file extensions or >* to combine both searches.",
+                Title = Context.API.GetTranslation("plugin_explorer_openresultfolder"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_openresultfolder_subtitle"),
                 AutoCompleteText = GetPathWithActionKeyword(folderPath, ResultType.Folder, actionKeyword),
                 IcoPath = folderPath,
                 Score = 500,
@@ -214,14 +220,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 PreviewImagePath = filePath,
             } : Result.PreviewInfo.Default;
 
+            var title = Path.GetFileName(filePath);
+
             var result = new Result
             {
-                Title = Path.GetFileName(filePath),
+                Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
                 Preview = preview,
-                AutoCompleteText = GetPathWithActionKeyword(filePath, ResultType.File, query.ActionKeyword),
-                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, Path.GetFileName(filePath)).MatchData,
+                AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
+                TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
                 Action = c =>

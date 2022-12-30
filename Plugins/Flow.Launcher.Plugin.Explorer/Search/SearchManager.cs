@@ -110,6 +110,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (e is OperationCanceledException)
                     return results.ToList();
 
+                if (e is EngineNotAvailableException)
+                    throw;
+
                 throw new SearchException(engineName, e.Message, e);
             }
             
@@ -145,8 +148,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 new()
                 {
-                    Title = "Do you want to enable content search for Everything?",
-                    SubTitle = "It can be very slow without index (which is only supported in Everything v1.5+)",
+                    Title = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
+                    SubTitle = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
                     IcoPath = "Images/index_error.png",
                     Action = c =>
                     {

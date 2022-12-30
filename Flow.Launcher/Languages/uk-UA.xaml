@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Копіювати</system:String>
     <system:String x:Key="cut">Вирізати</system:String>
     <system:String x:Key="paste">Вставити</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Файл</system:String>
     <system:String x:Key="folderTitle">Тека</system:String>
     <system:String x:Key="textTitle">Текст</system:String>
@@ -53,9 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">Виберіть файловий менеджер для використання під час відкриття теки.</system:String>
     <system:String x:Key="defaultBrowser">Браузер за замовчуванням</system:String>
     <system:String x:Key="defaultBrowserToolTip">Налаштування нової вкладки, нового вікна, приватного режиму.</system:String>
-    <system:String x:Key="pythonDirectory">Директорія Python</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
-    <system:String x:Key="selectPythonDirectory">Вибрати</system:String>
+    <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -64,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть ярлик для відображення/приховання потокового запуску.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Відкрити ключ зміни результатів</system:String>
     <system:String x:Key="openResultModifiersToolTip">Виберіть ключ модифікатора для відкриття вибраних результатів за допомогою клавіатури.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показати гарячу клавішу</system:String>
@@ -287,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>

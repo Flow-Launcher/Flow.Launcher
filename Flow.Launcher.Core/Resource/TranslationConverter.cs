@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Flow.Launcher.Core.Resource;
 
-namespace Flow.Launcher.Converters
+namespace Flow.Launcher.Core.Resource
 {
-    public class TranlationConverter : IValueConverter
+    public class TranslationConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

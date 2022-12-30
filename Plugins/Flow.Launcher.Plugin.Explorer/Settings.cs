@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.Everything.Everything;
+﻿using Flow.Launcher.Plugin.Everything.Everything;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
@@ -22,6 +22,8 @@ namespace Flow.Launcher.Plugin.Explorer
         public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 
         public string EditorPath { get; set; } = "";
+
+        public string FolderEditorPath { get; set; } = "";
 
         public string ShellPath { get; set; } = "cmd";
 

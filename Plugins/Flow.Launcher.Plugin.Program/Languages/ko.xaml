@@ -20,6 +20,8 @@
     <system:String x:Key="flowlauncher_plugin_program_indexing">색인 중</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">색인 위치</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">기타 설정</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">시작 메뉴</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">활성화시 Flow가 시작 메뉴의 프로그램을 로드합니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">레지스트리</system:String>

@@ -1,4 +1,4 @@
-﻿using NUnit;
+using NUnit;
 using NUnit.Framework;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
@@ -16,8 +16,6 @@ namespace Flow.Launcher.Test.Plugins
     // ReSharper disable once InconsistentNaming
     internal class JsonRPCPluginTest : JsonRPCPlugin
     {
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Executable;
-
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             throw new System.NotImplementedException();

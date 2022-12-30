@@ -15,3 +15,7 @@ updates:
       - "jjw24"
       - "taooceros"
       - "JohnTheGr8"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"

@@ -3419,7 +3419,7 @@
     "Name": "CreateAndFormatHardDiskPartitions",
     "Area": "Unknown",
     "Type": "TaskLink",
-    "Command": "%windir%\\system32\\mmc.exe %windir%\\system32\\diskmgmt.msc",
+    "Command": "%windir%\\system32\\diskmgmt.msc",
     "Keywords": [
       [
         "clean-up",

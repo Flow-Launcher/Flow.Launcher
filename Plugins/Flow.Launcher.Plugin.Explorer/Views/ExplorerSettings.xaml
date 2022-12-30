@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Plugin.Explorer.Views.Converters"
+    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:qa="clr-namespace:Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks"
@@ -106,12 +107,13 @@
         <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
             <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
+        <core:TranslationConverter x:Key="TranslationConverter" />
         <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
             <Grid>
                 <TextBlock
                     Margin="0,5,0,0"
                     IsEnabled="{Binding Enabled}"
-                    Text="{Binding Description, Mode=OneTime}">
+                    Text="{Binding Description, Mode=OneTime, Converter={StaticResource TranslationConverter}}">
                     <TextBlock.Style>
                         <Style TargetType="{x:Type TextBlock}">
                             <Style.Triggers>
@@ -175,7 +177,8 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition />
                                         <RowDefinition />
-                                    </Grid.RowDefinitions>
+                                        <RowDefinition />
+                                     </Grid.RowDefinitions>
 
                                     <TextBlock
                                         Grid.Row="0"
@@ -183,7 +186,7 @@
                                         Margin="0,6,16,6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        Text="{DynamicResource plugin_explorer_editor_path}"
+                                        Text="{DynamicResource plugin_explorer_file_editor_path}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
                                     <StackPanel
                                         Grid.Row="0"
@@ -194,19 +197,47 @@
                                             Width="250"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Text="{Binding EditorPath}"
+                                            Text="{Binding FileEditorPath}"
                                             TextWrapping="NoWrap" />
                                         <Button
                                             MinWidth="50"
                                             Margin="5,0,0,0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
-                                            Command="{Binding OpenEditorPath}"
+                                            Command="{Binding OpenFileEditorPath}"
                                             Content="..." />
                                     </StackPanel>
 
                                     <TextBlock
                                         Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="0,6,16,6"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        Text="{DynamicResource plugin_explorer_folder_editor_path}"
+                                        TextBlock.Foreground="{DynamicResource Color05B}" />
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0,6,6,6"
+                                        Orientation="Horizontal">
+                                        <TextBox
+                                            Width="250"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Text="{Binding FolderEditorPath}"
+                                            TextWrapping="NoWrap" />
+                                        <Button
+                                            MinWidth="50"
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding OpenFolderEditorPath}"
+                                            Content="..." />
+                                    </StackPanel>
+
+                                    <TextBlock
+                                        Grid.Row="2"
                                         Grid.Column="0"
                                         Margin="0,16,6,6"
                                         HorizontalAlignment="Left"
@@ -214,7 +245,7 @@
                                         Text="{DynamicResource plugin_explorer_shell_path}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
                                     <StackPanel
-                                        Grid.Row="1"
+                                        Grid.Row="2"
                                         Grid.Column="1"
                                         Orientation="Horizontal">
                                         <TextBox

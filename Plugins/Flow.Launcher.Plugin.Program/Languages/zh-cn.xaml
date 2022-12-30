@@ -20,6 +20,8 @@
     <system:String x:Key="flowlauncher_plugin_program_indexing">索引中</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">索引程序源</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_option">选项</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP 应用</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">启用时，Flow 将加载 UWP 应用</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start">开始菜单</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">启用时搜索开始菜单中的程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">注册表</system:String>

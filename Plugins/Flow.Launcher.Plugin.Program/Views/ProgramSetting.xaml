@@ -7,6 +7,9 @@
     Height="520"
     DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </UserControl.Resources>
     <Grid Margin="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -28,6 +31,13 @@
                 HorizontalAlignment="Right"
                 DockPanel.Dock="Right">
                 <CheckBox
+                    Name="UWPEnabled"
+                    Margin="12,0,12,0"
+                    Visibility="{Binding ShowUWPCheckbox, Converter={StaticResource BooleanToVisibilityConverter}}"
+                    Content="{DynamicResource flowlauncher_plugin_program_index_uwp}"
+                    IsChecked="{Binding EnableUWP}"
+                    ToolTip="{DynamicResource flowlauncher_plugin_program_index_uwp_tooltip}" />
+                <CheckBox
                     Name="StartMenuEnabled"
                     Margin="12,0,12,0"
                     Content="{DynamicResource flowlauncher_plugin_program_index_start}"
@@ -39,7 +49,6 @@
                     Content="{DynamicResource flowlauncher_plugin_program_index_registry}"
                     IsChecked="{Binding EnableRegistrySource}"
                     ToolTip="{DynamicResource flowlauncher_plugin_program_index_registry_tooltip}" />
-
                 <CheckBox
                     Name="PATHEnabled"
                     Margin="12,0,12,0"

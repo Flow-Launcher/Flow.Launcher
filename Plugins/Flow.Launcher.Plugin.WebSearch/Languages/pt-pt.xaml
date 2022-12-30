@@ -42,7 +42,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Introduza um URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Esta palavra-chave já existe. Por favor escolha outra.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Sucesso</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é necessário colocar imagens personalizadas neste diretório porque se Flow Launcher for atualizado, estas serão perdidas. A aplicação irá copiar todas as imagens que estejam fora deste diretório para todas as pesquisas Web.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é preciso colocar imagens personalizadas nesta pasta pois se Flow Launcher for atualizado, serão perdidas. Flow irá copiar todas as imagens que estejam fora desta pasta em todas as pesquisas Web.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Pesquisas web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permite pesquisar diretamente na web</system:String>
