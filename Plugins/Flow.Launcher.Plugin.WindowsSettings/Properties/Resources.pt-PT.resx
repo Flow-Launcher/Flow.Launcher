@@ -2043,7 +2043,7 @@
     <value>Set up a connection or network</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
-    <value>How to change your Windows password</value>
+    <value>Como alterar a palavra-passe do Windows</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
     <value>Make it easier to see the mouse pointer</value>
@@ -2055,7 +2055,7 @@
     <value>Accommodate low vision</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Gerenciar ficheiros offline</value>
+    <value>Gerir ficheiros offline</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
     <value>Review your computer's status and resolve issues</value>
@@ -2070,13 +2070,13 @@
     <value>Change temporary Internet file settings</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Connect to the Internet</value>
+    <value>Estabelecer ligação à Internet</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
-    <value>Find and fix audio playback problems</value>
+    <value>Localizar e corrigir problemas com o som</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
-    <value>Change the mouse pointer display or speed</value>
+    <value>Alterar exibição e/ou velocidade do ponteiro do rato</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
     <value>Back up your recovery key</value>
@@ -2109,10 +2109,10 @@
     <value>Configurar fontes de dados ODBC (32-bit)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Change Font Settings</value>
+    <value>Alterar definições do tipo de letra</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
-    <value>Magnify portions of the screen using Magnifier</value>
+    <value>Ampliar partes do ecrão com o Magnificador</value>
   </data>
   <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
     <value>Change the file type associated with a file extension</value>
@@ -2164,7 +2164,7 @@
     <value>Alterar impressora pré-definida</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
-    <value>Editar variáveis de ambiente do seu utilizador</value>
+    <value>Editar variáveis de ambiente para a sua conta</value>
   </data>
   <data name="OptimiseVisualDisplay" xml:space="preserve">
     <value>Otimizar exibição visual</value>
@@ -2215,7 +2215,7 @@
     <value>Alterar tipo de conta</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Alterar proteção de cerã</value>
+    <value>Alterar proteção de ecrã</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
     <value>Change User Account Control settings</value>

@@ -16,6 +16,8 @@
     <system:String x:Key="copy">복사하기</system:String>
     <system:String x:Key="cut">잘라내기</system:String>
     <system:String x:Key="paste">붙여넣기</system:String>
+    <system:String x:Key="undo">되돌리기</system:String>
+    <system:String x:Key="selectAll">전체 선택</system:String>
     <system:String x:Key="fileTitle">파일</system:String>
     <system:String x:Key="folderTitle">폴더</system:String>
     <system:String x:Key="textTitle">텍스트</system:String>
@@ -53,6 +55,12 @@
     <system:String x:Key="defaultFileManagerToolTip">폴더를 열 때 사용할 파일관리자를 선택하세요.</system:String>
     <system:String x:Key="defaultBrowser">기본 웹 브라우저</system:String>
     <system:String x:Key="defaultBrowserToolTip">새 탭, 새  창, 사생활 보호 모드</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">항상 영어입력 모드에서 시작</system:String>
+    <system:String x:Key="typingStartEnTooltip">Flow 시작시 영어 상태에서 입력을 시작합니다.</system:String>
     <system:String x:Key="autoUpdates">자동 업데이트</system:String>
     <system:String x:Key="select">선택</system:String>
     <system:String x:Key="hideOnStartup">시작 시 Flow Launcher 숨김</system:String>
@@ -63,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">항상 Pinyin 사용</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Pinyin을 사용하여 검색할 수 있습니다. Pinyin (병음) 은 로마자 중국어 입력 방식입니다.</system:String>
     <system:String x:Key="AlwaysPreview">항상 미리보기</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">항상 미리보기 패널이 열린 상태로 Flow를 시작합니다. {0} 키로 미리보기를 on/off 합니다. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Flow 사용시 항상 미리보기 패널을 열어둡니다. {0} 키를 눌러 프리뷰창을 켜고 끌 수 있습니다.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">반투명 흐림 효과를 사용하는 경우, 그림자 효과를 쓸 수 없습니다.</system:String>
 
     <!--  Setting Plugin  -->
@@ -145,14 +153,16 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력합니다.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력하세요.</system:String>
+    <system:String x:Key="previewHotkey">미리보기 단축키</system:String>
+    <system:String x:Key="previewHotkeyToolTip">미리보기 패널을 켜고 끌 때 사용할 단축키를 입력하세요.</system:String>
     <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
     <system:String x:Key="openResultModifiersToolTip">결과 항목을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
     <system:String x:Key="customQueryHotkey">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customQueryShortcut">사용자 지정 쿼리 단축어</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="builtinShortcuts">내장 단축어</system:String>
     <system:String x:Key="customQuery">쿼리</system:String>
     <system:String x:Key="customShortcut">단축어</system:String>
     <system:String x:Key="customShortcutExpansion">확장</system:String>
@@ -286,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">새 업데이트 확인 중</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">이미 가장 최신 버전의 Flow Launcher를 사용중입니다.</system:String>
     <system:String x:Key="update_flowlauncher_update_found">업데이트 발견</system:String>

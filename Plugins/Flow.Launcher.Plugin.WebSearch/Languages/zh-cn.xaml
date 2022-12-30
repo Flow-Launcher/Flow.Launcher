@@ -9,8 +9,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_choose">选择</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">删除</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">编辑</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_add">增加</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">启用</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_add">添加</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">已启用</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">已禁用</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">确认</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">触发关键字</system:String>

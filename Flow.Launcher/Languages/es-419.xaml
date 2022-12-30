@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Pegar</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Archivo</system:String>
     <system:String x:Key="folderTitle">Carpeta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
@@ -53,6 +55,12 @@
     <system:String x:Key="defaultFileManagerToolTip">Seleccione el gestor de archivos a utilizar al abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
     <system:String x:Key="defaultBrowserToolTip">Configuración para Nueva Pestaña, Nueva Ventana, Modo Privado.</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al arrancar el sistema</system:String>
@@ -146,6 +154,8 @@
     <system:String x:Key="hotkey">Tecla Rápida</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de acceso a Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Abrir Tecla de Modificación de Resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla de modificación para abrir el resultado seleccionado vía teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de acceso directo</system:String>
@@ -286,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor espere...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Buscando nueva actualización</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Ya esta instalada la última versión de Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Actualización encontrada</system:String>

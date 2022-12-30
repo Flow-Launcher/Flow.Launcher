@@ -16,7 +16,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar URL do marcador para a área de transferência</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Carregar navegador em:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nome do navegador</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Caminho do diretório de dados</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Caminho da pasta de dados</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Adicionar</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Outros</system:String>

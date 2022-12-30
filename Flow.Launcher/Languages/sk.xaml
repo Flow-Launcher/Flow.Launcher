@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopírovať</system:String>
     <system:String x:Key="cut">Vystrihnúť</system:String>
     <system:String x:Key="paste">Prilepiť</system:String>
+    <system:String x:Key="undo">Späť</system:String>
+    <system:String x:Key="selectAll">Vybrať všetko</system:String>
     <system:String x:Key="fileTitle">Súbor</system:String>
     <system:String x:Key="folderTitle">Priečinok</system:String>
     <system:String x:Key="textTitle">Text</system:String>
@@ -53,6 +55,12 @@
     <system:String x:Key="defaultFileManagerToolTip">Vyberte správcu súborov, ktorý sa má použiť pri otváraní priečinka.</system:String>
     <system:String x:Key="defaultBrowser">Predvolený webový prehliadač</system:String>
     <system:String x:Key="defaultBrowserToolTip">Nastavenie pre novú kartu, nové okno, privátny režim.</system:String>
+    <system:String x:Key="pythonFilePath">Cesta k Pythonu</system:String>
+    <system:String x:Key="nodeFilePath">Cesta k Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Vyberte spustiteľný súbor Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Prosím, vyberte pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Vždy písať s angickou klávesnicou</system:String>
+    <system:String x:Key="typingStartEnTooltip">Pri aktivácii Flowu sa dočasne zmení klávesnica na anglickú.</system:String>
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
@@ -63,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Pri spustení Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
 
     <!--  Setting Plugin  -->
@@ -97,7 +105,7 @@
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nová verzia</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
-    <system:String x:Key="pluginStore_None">Pluginy</system:String>
+    <system:String x:Key="pluginStore_None">Plugin</system:String>
     <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
@@ -146,6 +154,8 @@
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
+    <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skytie náhľadu vo vyhľadávacom okne.</system:String>
     <system:String x:Key="openResultModifiers">Modifikačný kláves na otvorenie výsledkov</system:String>
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
@@ -286,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Vyhľadávajú sa aktualizácie</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Už máte najnovšiu verziu Flow Launchera</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Bola nájdená aktualizácia</system:String>
