@@ -16,6 +16,8 @@
     <system:String x:Key="copy">复制</system:String>
     <system:String x:Key="cut">剪切</system:String>
     <system:String x:Key="paste">粘贴</system:String>
+    <system:String x:Key="undo">撤销</system:String>
+    <system:String x:Key="selectAll">全选</system:String>
     <system:String x:Key="fileTitle">文件</system:String>
     <system:String x:Key="folderTitle">目录</system:String>
     <system:String x:Key="textTitle">文本</system:String>
@@ -53,18 +55,23 @@
     <system:String x:Key="defaultFileManagerToolTip">选择打开文件夹时要使用的文件管理器。</system:String>
     <system:String x:Key="defaultBrowser">默认浏览器</system:String>
     <system:String x:Key="defaultBrowserToolTip">新标签/窗口及隐身模式设置。</system:String>
-    <system:String x:Key="pythonDirectory">Python 路径</system:String>
+    <system:String x:Key="pythonFilePath">Python 路径</system:String>
+    <system:String x:Key="nodeFilePath">Node.js 路径</system:String>
+    <system:String x:Key="selectNodeExecutable">请选择 Node.js 可执行文件</system:String>
+    <system:String x:Key="selectPythonExecutable">请选择 pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
+    <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英文模式。</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
-    <system:String x:Key="selectPythonDirectory">选择</system:String>
+    <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
-    <system:String x:Key="ShouldUsePinyin">使用 Pinyin 搜索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索.</system:String>
+    <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 F1 以切换预览。 </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
+    <system:String x:Key="previewHotkey">预览快捷键</system:String>
+    <system:String x:Key="previewHotkeyToolTip">输入在搜索窗口中开启/关闭预览的快捷键。</system:String>
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
@@ -160,7 +169,7 @@
     <system:String x:Key="builtinShortcutDescription">描述</system:String>
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
-    <system:String x:Key="add">增加</system:String>
+    <system:String x:Key="add">添加</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
@@ -287,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">检查新的更新</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">您已经拥有最新的 Flow Launcher 版本</system:String>
     <system:String x:Key="update_flowlauncher_update_found">检查到更新</system:String>

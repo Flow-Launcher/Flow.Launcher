@@ -2999,8 +2999,6 @@
                 <Setter TargetName="KeyboardAcceleratorTextBlock" Property="Foreground" Value="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForegroundPressed}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <!--  Hide Disabled Item  -->
-                <Setter TargetName="LayoutRoot" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource MenuFlyoutItemBackgroundDisabled}" />
                 <Setter TargetName="LayoutRoot" Property="TextElement.Foreground" Value="{DynamicResource MenuFlyoutItemForegroundDisabled}" />
                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource MenuFlyoutItemForegroundDisabled}" />

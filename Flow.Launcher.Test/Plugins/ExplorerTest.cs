@@ -269,5 +269,129 @@ namespace Flow.Launcher.Test.Plugins
             // Then
             Assert.AreEqual(expectedString, resultString);
         }
+
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "irrelevant", false, true, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder\\", ResultType.Folder, "irrelevant", true, true, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "irrelevant", true, false, "p c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder\\", ResultType.Folder, "irrelevant", false, false, "c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "p", true, false, "p c:\\somefolder\\someotherfolder\\")]
+        [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "", true, true, "c:\\somefolder\\someotherfolder\\")]
+        public void GivenFolderResult_WhenGetPath_ThenPathShouldBeExpectedString(
+            string path, 
+            ResultType type, 
+            string actionKeyword,
+            bool pathSearchKeywordEnabled, 
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var settings = new Settings() 
+            {
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                PathSearchActionKeyword = "p",
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = Query.GlobalPluginWildcardSign
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+            
+            // When
+            var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "irrelevant", false, true, "e c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "p", true, false, "p c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "e", true, true, "e c:\\somefolder\\somefile")]
+        [TestCase("c:\\somefolder\\somefile", ResultType.File, "irrelevant", false, false, "e c:\\somefolder\\somefile")]
+        public void GivenFileResult_WhenGetPath_ThenPathShouldBeExpectedString(
+            string path,
+            ResultType type,
+            string actionKeyword,
+            bool pathSearchKeywordEnabled,
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var settings = new Settings()
+            {
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                PathSearchActionKeyword = "p",
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = "e"
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+
+            // When
+            var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase("somefolder", "c:\\somefolder\\", ResultType.Folder, "q", false, false, "q somefolder")]
+        [TestCase("somefolder", "c:\\somefolder\\", ResultType.Folder, "i", true, false, "p c:\\somefolder\\")]
+        [TestCase("somefolder", "c:\\somefolder\\", ResultType.Folder, "irrelevant", true, true, "c:\\somefolder\\")]
+        public void GivenQueryWithFolderTypeResult_WhenGetAutoComplete_ThenResultShouldBeExpectedString(
+            string title,
+            string path,
+            ResultType resultType,
+            string actionKeyword,
+            bool pathSearchKeywordEnabled,
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var query = new Query() { ActionKeyword = actionKeyword };
+            var settings = new Settings()
+            {
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                PathSearchActionKeyword = "p",
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = Query.GlobalPluginWildcardSign,
+                QuickAccessActionKeyword = "q",
+                IndexSearchActionKeyword = "i"
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+
+            // When
+            var result = ResultManager.GetAutoCompleteText(title, query, path, resultType);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase("somefile", "c:\\somefolder\\somefile", ResultType.File, "q", false, false, "q somefile")]
+        [TestCase("somefile", "c:\\somefolder\\somefile", ResultType.File, "i", true, false, "p c:\\somefolder\\somefile")]
+        [TestCase("somefile", "c:\\somefolder\\somefile", ResultType.File, "irrelevant", true, true, "c:\\somefolder\\somefile")]
+        public void GivenQueryWithFileTypeResult_WhenGetAutoComplete_ThenResultShouldBeExpectedString(
+            string title,
+            string path,
+            ResultType resultType,
+            string actionKeyword,
+            bool pathSearchKeywordEnabled,
+            bool searchActionKeywordEnabled,
+            string expectedResult)
+        {
+            // Given
+            var query = new Query() { ActionKeyword = actionKeyword };
+            var settings = new Settings()
+            {
+                QuickAccessActionKeyword = "q",
+                IndexSearchActionKeyword = "i",
+                PathSearchActionKeyword = "p",
+                PathSearchKeywordEnabled = pathSearchKeywordEnabled,
+                SearchActionKeywordEnabled = searchActionKeywordEnabled,
+                SearchActionKeyword = Query.GlobalPluginWildcardSign
+            };
+            ResultManager.Init(new PluginInitContext(), settings);
+
+            // When
+            var result = ResultManager.GetAutoCompleteText(title, query, path, resultType);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
     }
 }

@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopyala</system:String>
     <system:String x:Key="cut">Kes</system:String>
     <system:String x:Key="paste">Yapıştır</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Dosya</system:String>
     <system:String x:Key="folderTitle">Klasör</system:String>
     <system:String x:Key="textTitle">Yazı</system:String>
@@ -53,9 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">Klasör açarken kullanılacak dosya yöneticisini seçin.</system:String>
     <system:String x:Key="defaultBrowser">Varsayılan Tarayıcısı</system:String>
     <system:String x:Key="defaultBrowserToolTip">Yeni Sekme, Yeni Pencere, Gizli Mod için Ayar.</system:String>
-    <system:String x:Key="pythonDirectory">Python Konumu</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Otomatik Güncelle</system:String>
-    <system:String x:Key="selectPythonDirectory">Seç</system:String>
+    <system:String x:Key="select">Seç</system:String>
     <system:String x:Key="hideOnStartup">Başlangıçta Flow Launcher'u gizle</system:String>
     <system:String x:Key="hideNotifyIcon">Sistem çekmecesi simgesini gizle</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -64,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Mevcut temada bulanıklık efekti etkinken gölge efektine izin verilmez</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Kısayolu</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Açık Sonuç Değiştiricileri</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Kısayol Tuşunu Göster</system:String>
@@ -287,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>

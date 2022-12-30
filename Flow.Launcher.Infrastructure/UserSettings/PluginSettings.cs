@@ -1,11 +1,34 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class PluginsSettings : BaseModel
     {
+        private string pythonExecutablePath = string.Empty;
+        public string PythonExecutablePath {
+            get { return pythonExecutablePath; }
+            set
+            {
+                pythonExecutablePath = value;
+                Constant.PythonPath = value;
+            }
+        }
+
+        private string nodeExecutablePath = string.Empty;
+        public string NodeExecutablePath
+        {
+            get { return nodeExecutablePath; }
+            set 
+            {
+                nodeExecutablePath = value;
+                Constant.NodePath = value;
+            }
+        }
+
+        // TODO: Remove. This is backwards compatibility for 1.10.0 release.
         public string PythonDirectory { get; set; }
+
         public Dictionary<string, Plugin> Plugins { get; set; } = new Dictionary<string, Plugin>();
 
         public void UpdatePluginSettings(List<PluginMetadata> metadatas)
