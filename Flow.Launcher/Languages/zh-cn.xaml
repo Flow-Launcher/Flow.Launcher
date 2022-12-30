@@ -60,7 +60,7 @@
     <system:String x:Key="selectNodeExecutable">请选择 Node.js 可执行文件</system:String>
     <system:String x:Key="selectPythonExecutable">请选择 pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">以英文模式开始输入</system:String>
-    <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英语模式。</system:String>
+    <system:String x:Key="typingStartEnTooltip">激活 Flow 时暂时将输入法更改为英文模式。</system:String>
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
