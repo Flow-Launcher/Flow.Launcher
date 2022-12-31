@@ -82,10 +82,10 @@ jobs:
         post_comment: 0
         use_magic_file: 1
         experimental_apply_changes_via_bot: 1
-        use_sarif: true # to show in pr page
+        use_sarif: 0 # to show in pr page
         extra_dictionary_limit: 10
         check_commit_messages: commits title description
-        only_check_changed_files: false
+        only_check_changed_files: 0
         check_extra_dictionaries: ''
         quit_without_error: true
         extra_dictionaries:
