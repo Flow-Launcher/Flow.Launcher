@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se ha podido encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar el complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Se ha producido un error al intentar instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No hay actualizaciones disponibles</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Todos los complementos están actualizados</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} por {1} {2}{3}¿Desea actualizar este complemento? Después de la actualización Flow se reiniciará automáticamente.</system:String>
