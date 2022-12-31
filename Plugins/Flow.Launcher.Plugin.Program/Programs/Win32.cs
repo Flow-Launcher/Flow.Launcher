@@ -333,26 +333,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     program.LnkResolvedPath = Path.GetFullPath(target);
                     program.ExecutableName = Path.GetFileName(target);
 
-                    if (Extension(target) == ExeExtension)
+                    var args = _helper.arguments;
+                    if(!string.IsNullOrEmpty(args))
                     {
-                        var args = _helper.arguments;
-                        if(!string.IsNullOrEmpty(args))
-                        {
-                            program.LnkResolvedPath += " " + args;
-                        }
+                        program.LnkResolvedPath += " " + args;
+                    }
 
-                        var description = _helper.description;
-                        if (!string.IsNullOrEmpty(description))
+                    var description = _helper.description;
+                    if (!string.IsNullOrEmpty(description))
+                    {
+                        program.Description = description;
+                    }
+                    else
+                    {
+                        var info = FileVersionInfo.GetVersionInfo(target);
+                        if (!string.IsNullOrEmpty(info.FileDescription))
                         {
-                            program.Description = description;
-                        }
-                        else
-                        {
-                            var info = FileVersionInfo.GetVersionInfo(target);
-                            if (!string.IsNullOrEmpty(info.FileDescription))
-                            {
-                                program.Description = info.FileDescription;
-                            }
+                            program.Description = info.FileDescription;
                         }
                     }
                 }
