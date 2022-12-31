@@ -32,6 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">¿Está seguro que desea apagar el equipo?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">¿Está seguro que desea reiniciar el equipo?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">¿Está seguro que desea reiniciar el equipo con opciones de arranque avanzadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos del sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Proporciona comandos relacionados con el sistema. Por ejemplo, apagar, bloquear, configurar, etc.</system:String>
