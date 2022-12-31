@@ -23,9 +23,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si desea añadir una búsqueda de un sitio web concreto a Flow, introduzca primero una cadena de texto ficticia en la barra de búsqueda de ese sitio web, y ejecute la búsqueda. Ahora copie el contenido de la barra de direcciones del navegador y péguelo en el campo de la URL abajo indicado. Sustituya su cadena de prueba por {q}. Por ejemplo, si busca Casino en Netflix, su barra de direcciones debe decir</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Ahora copie la cadena de entrada y péguela en el campo de la URL de la parte inferior.
-        A continuación, sustituya casino por {q}.
-	De esta manera, la fórmula genérica para una búsqueda en Netflix será https://www.netflix.com/search?q={q}
+        Now copy this entire string and paste it in the URL field below.
+        Then replace casino with {q}.
+        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
     </system:String>
 
 
