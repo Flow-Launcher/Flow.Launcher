@@ -69,6 +69,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Enabled = false
         };
 
+        private static MatchResult Match(string query, List<string> candidates)
+        {
+            if (candidates.Count == 0)
+                return null;
+
+            List<MatchResult> matches = new List<MatchResult>();
+            foreach(var candidate in candidates)
+            {
+                var match = StringMatcher.FuzzySearch(query, candidate);
+                if (match.IsSearchPrecisionScoreMet())
+                {
+                    matches.Add(match);
+                }
+            }
+            if (matches.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return matches.MaxBy(match => match.Score);
+            }
+        }
 
         public Result Result(string query, IPublicAPI api)
         {
@@ -76,44 +99,73 @@ namespace Flow.Launcher.Plugin.Program.Programs
             MatchResult matchResult;
 
             // Name of the result
-            string resultName = string.IsNullOrEmpty(LocalizedName) ? Name : LocalizedName;
+            // Check equality to avoid matching again in candidates
+            bool useLocalizedName = !string.IsNullOrEmpty(LocalizedName) && !Name.Equals(LocalizedName);
+            string resultName = useLocalizedName ? LocalizedName : Name;
 
-            // We suppose Name won't be null
-            if (!Main._settings.EnableDescription || Description == null || resultName.StartsWith(Description))
+            if (!Main._settings.EnableDescription)
             {
                 title = resultName;
-                matchResult = StringMatcher.FuzzySearch(query, title);
-            }
-            else if (Description.StartsWith(resultName))
-            {
-                title = Description;
-                matchResult = StringMatcher.FuzzySearch(query, Description);
+                matchResult = StringMatcher.FuzzySearch(query, resultName);
             }
             else
             {
-                title = $"{resultName}: {Description}";
-                var nameMatch = StringMatcher.FuzzySearch(query, resultName);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                if (desciptionMatch.Score > nameMatch.Score)
+                if (string.IsNullOrEmpty(Description) || resultName.StartsWith(Description))
                 {
-                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
-                    {
-                        desciptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
-                    }
-                    matchResult = desciptionMatch;
+                    // Description is invalid or included in resultName
+                    // Description is always localized, so Name.StartsWith(Description) is generally useless
+                    title = resultName;
+                    matchResult = StringMatcher.FuzzySearch(query, resultName);
                 }
-                else matchResult = nameMatch;
+                else if (Description.StartsWith(resultName))
+                {
+                    // resultName included in Description
+                    title = Description;
+                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                }
+                else
+                {
+                    // Search in both
+                    title = $"{resultName}: {Description}";
+                    var nameMatch = StringMatcher.FuzzySearch(query, resultName);
+                    var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    if (descriptionMatch.Score > nameMatch.Score)
+                    {
+                        for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
+                        {
+                            descriptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
+                        }
+                        matchResult = descriptionMatch;
+                    }
+                    else
+                    {
+                        matchResult = nameMatch;
+                    }
+                }
             }
+
+            List<string> candidates = new List<string>();
 
             if (!matchResult.IsSearchPrecisionScoreMet())
             {
                 if (ExecutableName != null) // only lnk program will need this one
-                    matchResult = StringMatcher.FuzzySearch(query, ExecutableName);
-
-                if (!matchResult.IsSearchPrecisionScoreMet())
+                {
+                    candidates.Add(ExecutableName);
+                }
+                if (useLocalizedName)
+                {
+                    candidates.Add(Name);
+                }
+                matchResult = Match(query, candidates);
+                if (matchResult == null)
+                {
                     return null;
-
-                matchResult.MatchData = new List<int>();
+                }
+                else
+                {
+                    // Nothing to highlight in title in this case
+                    matchResult.MatchData.Clear();
+                }
             }
 
             string subtitle = string.Empty;
