@@ -336,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Indietro / Menu contestuale</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navigazione tra le voci</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Apri il menu di scelta rapida</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Apri la cartella Contaning</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Esegui come amministratore</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Cronologia Query</system:String>
     <system:String x:Key="HotkeyESCDesc">Torna al risultato nel menu contestuale</system:String>
