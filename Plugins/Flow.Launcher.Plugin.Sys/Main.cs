@@ -95,11 +95,11 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var reuslt = MessageBox.Show(
+                        var result = MessageBox.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (reuslt == MessageBoxResult.Yes)
+                        if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
                         }

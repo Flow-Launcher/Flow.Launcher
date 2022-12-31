@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public void InitAppsInPackage(Package package)
         {
-            var applist = new List<Application>();
+            var apps = new List<Application>();
             // WinRT
             var appListEntries = package.GetAppListEntries();
             foreach (var app in appListEntries)
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 try
                 {
                     var tmp = new Application(app, this);
-                    applist.Add(tmp);
+                    apps.Add(tmp);
                 }
                 catch (Exception e)
                 {
@@ -55,7 +55,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                            + $"{FullName} from location {Location}", e);
                 }
             }
-            Apps = applist.ToArray();
+            Apps = apps.ToArray();
 
             try
             {
@@ -392,14 +392,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     title = $"{Name}: {Description}";
                     var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                    var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                    if (desciptionMatch.Score > nameMatch.Score)
+                    var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    if (descriptionMatch.Score > nameMatch.Score)
                     {
-                        for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                        for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
                         {
-                            desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                            descriptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
                         }
-                        matchResult = desciptionMatch;
+                        matchResult = descriptionMatch;
                     }
                     else matchResult = nameMatch;
                 }
@@ -658,8 +658,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //            var brush = new SolidColorBrush(color);
             //            var pen = new Pen(brush, 1);
             //            var backgroundArea = new Rect(0, 0, width, width);
-            //            var rectabgle = new RectangleGeometry(backgroundArea);
-            //            var rectDrawing = new GeometryDrawing(brush, pen, rectabgle);
+            //            var rectangle = new RectangleGeometry(backgroundArea);
+            //            var rectDrawing = new GeometryDrawing(brush, pen, rectangle);
             //            group.Children.Add(rectDrawing);
 
             //            var imageArea = new Rect(x, y, image.Width, image.Height);

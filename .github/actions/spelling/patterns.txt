@@ -108,3 +108,7 @@
 # Localization keys
 #x:Key="[^"]+"
 #{DynamicResource [^"]+}
+
+
+# html tag
+<\w+[^>]*>
