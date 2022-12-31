@@ -127,7 +127,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e)
             {
-                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "An unexpected error occured and unable to parse AppxManifest.xml", e);
+                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "An unexpected error occurred and unable to parse AppxManifest.xml", e);
                 return null;
             }
         }
@@ -215,7 +215,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and unable to convert Package to UWP for {p.Id.FullName}", e);
+                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occurred and unable to convert Package to UWP for {p.Id.FullName}", e);
                         return Array.Empty<Application>();
                     }
 #endif
@@ -277,7 +277,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occurred and "
                                                                                         + $"unable to verify if package is valid", e);
                         return false;
                     }

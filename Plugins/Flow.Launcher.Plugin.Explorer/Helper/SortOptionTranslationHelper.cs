@@ -14,7 +14,7 @@ public static class SortOptionTranslationHelper
         const string prefix = "flowlauncher_plugin_everything_sort_by_";
 
         ArgumentNullException.ThrowIfNull(API);
-        
+
         var enumName = Enum.GetName(sortOption);
         var splited = enumName.Split('_');
         var name = string.Join('_', splited[..^1]);
