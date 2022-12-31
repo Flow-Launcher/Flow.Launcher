@@ -335,7 +335,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyUpDownDesc">Recuar/Menu de contexto</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegação nos itens</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menu de contexto</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir pasta</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir pasta do resultado</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Histórico de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Voltar aos resultados no menu de contexto</system:String>
