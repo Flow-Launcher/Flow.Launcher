@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para abrir Flow Laucher y realizar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
@@ -336,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú contextual</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegación entre elementos</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
