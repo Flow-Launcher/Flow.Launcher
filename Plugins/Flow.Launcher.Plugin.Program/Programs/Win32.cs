@@ -309,15 +309,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
                 return program;
             }
-            catch (COMException e)
-            {
-                // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
-                ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
-                                           "|Error caused likely due to trying to get the description of the program",
-                    e);
-
-                return Default;
-            }
             catch (FileNotFoundException e)
             {
                 ProgramLogger.LogException($"|Win32|LnkProgram|{path}" +
