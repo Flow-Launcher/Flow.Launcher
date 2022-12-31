@@ -201,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">정보</system:String>
     <system:String x:Key="website">웹사이트</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">문서</system:String>
     <system:String x:Key="version">버전</system:String>
     <system:String x:Key="icons">아이콘</system:String>
@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
     <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
@@ -336,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">뒤로/ 콘텍스트 메뉴</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">아이템 이동</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">콘텍스트 메뉴 열기</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">포함된 폴더 열기</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">관리자 권한으로 실행</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
     <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
