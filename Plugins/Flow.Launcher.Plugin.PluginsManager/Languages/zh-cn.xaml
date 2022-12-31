@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">安装失败：无法从新插件中找到plugin.json元数据文件</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">错误：具有相同或更高版本的 {0} 的插件已经存在。</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">安装插件时出错</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">尝试安装 {0} 时发生错误</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">无可用更新</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">所有插件都是最新的</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}您要更新此插件吗？ 更新后，Flow Launcher 将自动重启。</system:String>
