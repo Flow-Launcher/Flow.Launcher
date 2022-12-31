@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Flow.Launcher.Core;
+﻿using System.ComponentModel;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Plugin.Caculator
 {    

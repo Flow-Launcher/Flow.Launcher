@@ -4,6 +4,30 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019">
 
+    <ContextMenu x:Key="TextBoxContextMenu">
+        <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
+            <MenuItem.Icon>
+                <ui:FontIcon Glyph="&#xe8c6;" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}">
+            <MenuItem.Icon>
+                <ui:FontIcon Glyph="&#xe8c8;" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}">
+            <MenuItem.Icon>
+                <ui:FontIcon Glyph="&#xe77f;" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="ApplicationCommands.Undo" Header="{DynamicResource undo}">
+            <MenuItem.Icon>
+                <ui:FontIcon Glyph="&#xe10e;" />
+            </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Command="ApplicationCommands.SelectAll" Header="{DynamicResource selectAll}" />
+    </ContextMenu>
+
 
     <Style TargetType="{x:Type ContentControl}">
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
@@ -1357,7 +1381,13 @@
         </Setter>
     </Style>
 
-    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox" />
+    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+        <Setter Property="ContextMenu" Value="{StaticResource TextBoxContextMenu}" />
+    </Style>
+
+    <Style BasedOn="{StaticResource DefaultPasswordBoxStyle}" TargetType="PasswordBox">
+        <Setter Property="ContextMenu" Value="{StaticResource TextBoxContextMenu}" />
+    </Style>
 
     <Style
         x:Key="DataGridTextBoxStyle"
@@ -3252,4 +3282,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+
 </ResourceDictionary>

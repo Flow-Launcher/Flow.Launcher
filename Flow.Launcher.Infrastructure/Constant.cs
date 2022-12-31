@@ -32,6 +32,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
 
         public static string PythonPath;
+        public static string NodePath;
 
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
 

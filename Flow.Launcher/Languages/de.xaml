@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopieren</system:String>
     <system:String x:Key="cut">Ausschneiden</system:String>
     <system:String x:Key="paste">Einfügen</system:String>
+    <system:String x:Key="undo">Rückgängig</system:String>
+    <system:String x:Key="selectAll">Alle auswählen</system:String>
     <system:String x:Key="fileTitle">Datei</system:String>
     <system:String x:Key="folderTitle">Ordner</system:String>
     <system:String x:Key="textTitle">Text</system:String>
@@ -53,9 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">Wählen Sie den Dateimanager, der beim Öffnen des Ordners verwendet werden soll.</system:String>
     <system:String x:Key="defaultBrowser">Standardbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Einstellung für neuen Tab, neues Fenster und dem Privatmodus.</system:String>
-    <system:String x:Key="pythonDirectory">Python-Verzeichnis</system:String>
+    <system:String x:Key="pythonFilePath">Python-Pfad</system:String>
+    <system:String x:Key="nodeFilePath">Node.js-Pfad</system:String>
+    <system:String x:Key="selectNodeExecutable">Bitte wählen Sie das Programm Node.js aus</system:String>
+    <system:String x:Key="selectPythonExecutable">Bitte wählen Sie pythonw.exe aus</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatische Aktualisierung</system:String>
-    <system:String x:Key="selectPythonDirectory">Auswählen</system:String>
+    <system:String x:Key="select">Auswählen</system:String>
     <system:String x:Key="hideOnStartup">Verstecke Flow Launcher bei Systemstart</system:String>
     <system:String x:Key="hideNotifyIcon">Statusleistensymbol ausblenden</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -64,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Der Schatteneffekt ist nicht zulässig, wenn das aktuelle Thema den Weichzeichneffekt aktiviert hat</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Verknüpfung eingeben, um Flow Launcher anzuzeigen/auszublenden.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Öffnen Sie die Ergebnismodifikatoren</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Hotkey anzeigen</system:String>
@@ -192,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">Über</system:String>
     <system:String x:Key="website">Webseite</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumentation</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -253,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Benutzerdefinierte Abfrage Tastenkombination</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Vorschau</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Tastenkombination ist nicht verfügbar, bitte wähle eine andere Tastenkombination</system:String>
     <system:String x:Key="invalidPluginHotkey">Ungültige Plugin Tastenkombination</system:String>
@@ -287,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Nach Updates suchen!</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">Sie haben bereits die neuste Version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update gefunden</system:String>
@@ -327,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>

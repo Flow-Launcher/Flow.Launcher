@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Copiar</system:String>
     <system:String x:Key="cut">Cortar</system:String>
     <system:String x:Key="paste">Colar</system:String>
+    <system:String x:Key="undo">Desfazer</system:String>
+    <system:String x:Key="selectAll">Selecionar tudo</system:String>
     <system:String x:Key="fileTitle">Ficheiro</system:String>
     <system:String x:Key="folderTitle">Pasta</system:String>
     <system:String x:Key="textTitle">Texto</system:String>
@@ -53,9 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gestor de ficheiros utilizado para abrir a página</system:String>
     <system:String x:Key="defaultBrowser">Navegador web padrão</system:String>
     <system:String x:Key="defaultBrowserToolTip">Definições para Novo separador, Nova Janela e Modo privado</system:String>
-    <system:String x:Key="pythonDirectory">Diretório Python</system:String>
+    <system:String x:Key="pythonFilePath">Caminho Python</system:String>
+    <system:String x:Key="nodeFilePath">Caminho Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Selecione o executável Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Selecione o executável pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Escrever sempre em inglês</system:String>
+    <system:String x:Key="typingStartEnTooltip">Alterar, temporariamente, o método de introdução para inglês ao iniciar Flow launcher.</system:String>
     <system:String x:Key="autoUpdates">Atualização automática</system:String>
-    <system:String x:Key="selectPythonDirectory">Selecionar</system:String>
+    <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher ao arrancar</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone na bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Se o ícone da bandeja estiver oculto, pode abrir as Definições com um clique com o botão direito do rato na caixa de pesquisa.</system:String>
@@ -64,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao iniciar a aplicação. Prima F1 para comutar esta opção. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
 
     <!--  Setting Plugin  -->
@@ -85,7 +92,7 @@
     <system:String x:Key="newPriority">Nova prioridade</system:String>
     <system:String x:Key="priority">Prioridade</system:String>
     <system:String x:Key="priorityToolTip">Alterar prioridade dos resultados do plugin</system:String>
-    <system:String x:Key="pluginDirectory">Diretório de plugins</system:String>
+    <system:String x:Key="pluginDirectory">Pasta de plugins</system:String>
     <system:String x:Key="author">de</system:String>
     <system:String x:Key="plugin_init_time">Tempo de arranque:</system:String>
     <system:String x:Key="plugin_query_time">Tempo de consulta:</system:String>
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Introduza o atalho para mostrar/ocultar a pré-visualização na janela de pesquisa.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para os resultados</system:String>
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado com o teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
@@ -286,7 +295,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor aguarde...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">A procurar atualizações...</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">A sua versão de Flow Launcher é a mais recente</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Atualização encontrada</system:String>

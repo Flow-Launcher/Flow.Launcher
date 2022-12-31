@@ -58,6 +58,10 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.Language):
                         OnPropertyChanged(nameof(ClockText));
                         OnPropertyChanged(nameof(DateText));
+                        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
+                        break;
+                    case nameof(Settings.PreviewHotkey):
+                        OnPropertyChanged(nameof(AlwaysPreviewToolTip));
                         break;
                 }
             };
@@ -141,6 +145,29 @@ namespace Flow.Launcher.ViewModel
 
             PluginManager.Save();
             _storage.Save();
+        }
+
+        public string GetFileFromDialog(string title, string filter = "")
+        {
+            var dlg = new System.Windows.Forms.OpenFileDialog
+            {
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),
+                Multiselect = false,
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Title = title,
+                Filter = filter
+            };
+
+            var result = dlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                return dlg.FileName;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
         #region general
@@ -270,8 +297,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
+        public string AlwaysPreviewToolTip => string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
 
         public string TestProxy()
         {
@@ -504,7 +530,9 @@ namespace Flow.Launcher.ViewModel
             "tt h:mm",
             "tt hh:mm",
             "h:mm tt",
-            "hh:mm tt"
+            "hh:mm tt",
+            "hh:mm:ss tt",
+            "HH:mm:ss"
         };
 
         public List<string> DateFormatList { get; } = new()
@@ -769,6 +797,10 @@ namespace Flow.Launcher.ViewModel
 
         #region shortcut
 
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
+
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
+
         public CustomShortcutModel? SelectedCustomShortcut { get; set; }
 
         public void DeleteSelectedCustomShortcut()
@@ -802,8 +834,12 @@ namespace Flow.Launcher.ViewModel
             var shortcutSettingWindow = new CustomShortcutSetting(item.Key, item.Value, this);
             if (shortcutSettingWindow.ShowDialog() == true)
             {
+                // Fix un-selectable shortcut item after the first selection
+                // https://stackoverflow.com/questions/16789360/wpf-listbox-items-with-changing-hashcode
+                SelectedCustomShortcut = null;
                 item.Key = shortcutSettingWindow.Key;
                 item.Value = shortcutSettingWindow.Value;
+                SelectedCustomShortcut = item;
                 return true;
             }
             return false;

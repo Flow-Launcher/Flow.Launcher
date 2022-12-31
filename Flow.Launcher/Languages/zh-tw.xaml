@@ -16,6 +16,8 @@
     <system:String x:Key="copy">複製</system:String>
     <system:String x:Key="cut">剪下</system:String>
     <system:String x:Key="paste">貼上</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">檔案</system:String>
     <system:String x:Key="folderTitle">資料夾</system:String>
     <system:String x:Key="textTitle">文字</system:String>
@@ -53,9 +55,14 @@
     <system:String x:Key="defaultFileManagerToolTip">選擇開啟資料夾時要使用的檔案管理器。</system:String>
     <system:String x:Key="defaultBrowser">預設瀏覽器</system:String>
     <system:String x:Key="defaultBrowserToolTip">設定新增分頁、視窗和無痕模式。</system:String>
-    <system:String x:Key="pythonDirectory">Python 路徑</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
-    <system:String x:Key="selectPythonDirectory">選擇</system:String>
+    <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
@@ -64,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜索.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
@@ -147,6 +154,8 @@
     <system:String x:Key="hotkey">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
@@ -192,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">關於</system:String>
     <system:String x:Key="website">官方網站</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -253,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">自定義快捷鍵查詢</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">預覽</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">快捷鍵不存在，請設定一個新的快捷鍵</system:String>
     <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>
@@ -287,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">請稍後...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">正在檢查更新</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">您已經擁有最新的 Flow Launcher 版本</system:String>
     <system:String x:Key="update_flowlauncher_update_found">找到更新</system:String>

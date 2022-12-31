@@ -127,7 +127,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
             catch (Exception e)
             {
-                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "An unexpected error occured and unable to parse AppxManifest.xml", e);
+                ProgramLogger.LogException("UWP", "GetManifestXml", $"{Location}", "An unexpected error occurred and unable to parse AppxManifest.xml", e);
                 return null;
             }
         }
@@ -199,11 +199,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             },
         };
 
-        public static Application[] All()
+        public static Application[] All(Settings settings)
         {
-            var windows10 = new Version(10, 0);
-            var support = Environment.OSVersion.Version.Major >= windows10.Major;
-            if (support)
+            var support = SupportUWP();
+            if (support && settings.EnableUWP)
             {
                 var applications = CurrentUserPackages().AsParallel().SelectMany(p =>
                 {
@@ -216,7 +215,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 #if !DEBUG
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occured and unable to convert Package to UWP for {p.Id.FullName}", e);
+                        ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occurred and unable to convert Package to UWP for {p.Id.FullName}", e);
                         return Array.Empty<Application>();
                     }
 #endif
@@ -239,6 +238,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 return Array.Empty<Application>();
             }
+        }
+
+        public static bool SupportUWP()
+        {
+            var windows10 = new Version(10, 0);
+            var support = Environment.OSVersion.Version.Major >= windows10.Major;
+            return support;
         }
 
         private static IEnumerable<Package> CurrentUserPackages()
@@ -271,7 +277,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occurred and "
                                                                                         + $"unable to verify if package is valid", e);
                         return false;
                     }

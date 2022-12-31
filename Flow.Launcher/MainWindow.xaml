@@ -9,6 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
@@ -37,10 +38,12 @@
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter"/>
+        <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter"/>
+        <converters:StringToKeyBindingConverter x:Key="StringToKeyBindingConverter"/>
     </Window.Resources>
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
-        <KeyBinding Key="F1" Command="{Binding StartHelpCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
         <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
         <KeyBinding
@@ -83,14 +86,10 @@
             Key="O"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
-        <KeyBinding Key="Right" Command="{Binding LoadContextMenuCommand}" />
-        <KeyBinding Key="Left" Command="{Binding EscCommand}" />
         <KeyBinding
             Key="OemCloseBrackets"
             Command="{Binding IncreaseWidthCommand}"
@@ -178,6 +177,14 @@
             Command="{Binding OpenResultCommand}"
             CommandParameter="9"
             Modifiers="{Binding OpenResultCommandModifiers}" />
+        <KeyBinding
+            Key="F12"
+            Command="{Binding ToggleGameModeCommand}"
+            Modifiers="Ctrl"/>
+        <KeyBinding
+            Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding TogglePreviewCommand}"
+            Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}"/>
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
@@ -204,6 +211,8 @@
                                 PreviewKeyUp="QueryTextBox_KeyUp"
                                 Style="{DynamicResource QueryBoxStyle}"
                                 Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
+                                InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                                 Visibility="Visible">
                                 <TextBox.CommandBindings>
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
@@ -244,6 +253,7 @@
                             </TextBox>
                         </Grid>
                     </Border>
+
                     <StackPanel
                         x:Name="ClockPanel"
                         IsHitTestVisible="False"
@@ -337,7 +347,7 @@
                     <StackPanel
                         x:Name="ResultArea"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2">
+                        Grid.ColumnSpan="{Binding ResultAreaColumn}">
                         <Border Style="{DynamicResource WindowRadius}">
                             <Border.Clip>
                                 <MultiBinding Converter="{StaticResource BorderClipConverter}">
@@ -391,11 +401,13 @@
                         x:Name="Preview"
                         Grid.Column="1"
                         VerticalAlignment="Stretch"
-                        d:DataContext="{d:DesignInstance vm:ResultViewModel}"
-                        DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
                         Style="{DynamicResource PreviewArea}"
-                        Visibility="Collapsed">
-                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowDefaultPreview}">
+                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Border 
+                            Style="{DynamicResource PreviewBorderStyle}" 
+                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
+                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            Visibility="{Binding ShowDefaultPreview}">
                             <Grid
                                 Margin="20,0,10,0"
                                 VerticalAlignment="Stretch"
@@ -426,7 +438,7 @@
                                         HorizontalAlignment="Center"
                                         Source="{Binding PreviewImage}"
                                         StretchDirection="DownOnly"
-                                        Visibility="{Binding ShowIcon}">
+                                        Visibility="{Binding ShowPreviewImage}">
                                         <Image.Style>
                                             <Style TargetType="{x:Type Image}">
                                                 <Setter Property="MaxWidth" Value="96" />
@@ -466,7 +478,11 @@
                                 </StackPanel>
                             </Grid>
                         </Border>
-                        <Border Style="{DynamicResource PreviewBorderStyle}" Visibility="{Binding ShowCustomizedPreview}">
+                        <Border 
+                            d:DataContext="{d:DesignInstance vm:ResultViewModel}"
+                            DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
+                            Style="{DynamicResource PreviewBorderStyle}" 
+                            Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                         </Border>
                     </Grid>
