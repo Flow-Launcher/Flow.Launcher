@@ -23,9 +23,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Ak chcete do Flowu pridať vyhľadávanie na konkrétnej webovej stránke, najprv zadajte testovací textový reťazec do vyhľadávacieho poľa danej webovej stránky a spustite vyhľadávanie. Teraz skopírujte obsah adresného riadka prehliadača a vložte ho do poľa URL nižšie. Nahraďte svoj testovací reťazec týmto {q}. Ak napríklad hľadáte na Netflixe kasíno, adresa bude vyzerať takto</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Kasíno</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Teraz skopírujte celý tento reťazec a vložte ho do poľa URL nižšie.
-        Potom nahraďte kasíno reťazcom {q}.
-        Všeobecný vzorec pre vyhľadávanie na Netflix je teda https://www.netflix.com/search?q={q}
+        Now copy this entire string and paste it in the URL field below.
+        Then replace casino with {q}.
+        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
     </system:String>
 
 
