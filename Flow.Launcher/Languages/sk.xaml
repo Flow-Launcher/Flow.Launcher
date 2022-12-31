@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Laucher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
@@ -336,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Späť/kontextová ponuka</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navigácia medzi položkami</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Otvoriť kontextovú ponuku</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">História dopytov</system:String>
     <system:String x:Key="HotkeyESCDesc">Návrat na výsledky z kontextovej ponuky</system:String>
