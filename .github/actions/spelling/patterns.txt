@@ -108,3 +108,7 @@
 # Localization keys
 #x:Key="[^"]+"
 #{DynamicResource [^"]+}
+
+#http/https
+(?:\b(?:https?|ftp|file)://)[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]
+
