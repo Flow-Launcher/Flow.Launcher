@@ -30,14 +30,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// </summary>
         public string FullPath { get; set; }
         /// <summary>
-        /// Path of the excutable for .lnk, or the URL for .url. Arguments are included if any.
+        /// Path of the executable for .lnk, or the URL for .url. Arguments are included if any.
         /// </summary>
         public string LnkResolvedPath { get; set; }
         /// <summary>
-        /// Path of the actual executable file.
+        /// Path of the actual executable file. Args are included.
         /// </summary>
         public string ExecutablePath => LnkResolvedPath ?? FullPath;
         public string ParentDirectory { get; set; }
+        /// <summary>
+        /// Name of the executable for .lnk files
+        /// </summary>
         public string ExecutableName { get; set; }
         public string Description { get; set; }
         public bool Valid { get; set; }
@@ -584,7 +587,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            // TODO: Unable to distinguish multiple lnks to the same excutable but with different params
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
