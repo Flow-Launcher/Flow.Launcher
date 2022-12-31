@@ -249,24 +249,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Package> CurrentUserPackages()
         {
-            var u = WindowsIdentity.GetCurrent().User;
+            var user = WindowsIdentity.GetCurrent().User;
 
-            if (u != null)
+            if (user != null)
             {
-                var id = u.Value;
-                PackageManager m;
+                var userId = user.Value;
+                PackageManager packageManager;
                 try
                 {
-                    m = new PackageManager();
+                    packageManager = new PackageManager();
                 }
                 catch
                 {
                     // Bug from https://github.com/microsoft/CsWinRT, using Microsoft.Windows.SDK.NET.Ref 10.0.19041.0.
                     // Only happens on the first time, so a try catch can fix it.
-                    m = new PackageManager();
+                    packageManager = new PackageManager();
                 }
-                var ps = m.FindPackagesForUser(id);
-                ps = ps.Where(p =>
+                var packages = packageManager.FindPackagesForUser(userId);
+                packages = packages.Where(p =>
                 {
                     try
                     {
@@ -282,7 +282,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         return false;
                     }
                 });
-                return ps;
+                return packages;
             }
             else
             {
