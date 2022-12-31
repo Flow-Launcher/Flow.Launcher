@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Laucher a automaticky vložíte zadaný dotaz.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Stlačením vlastnej klávesovej skratky otvoríte Flow Launcher a automaticky vložíte zadaný dotaz.</system:String>
     <system:String x:Key="preview">Náhľad</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
