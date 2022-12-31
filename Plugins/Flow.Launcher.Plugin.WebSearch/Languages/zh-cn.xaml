@@ -23,9 +23,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">如果你想添加某个搜索，首先在网站的搜索框中输入任意内容并开始搜索。然后把浏览器地址栏中的URL复制到下面的 UR 输入框中，并把你搜索的内容换成 {q}。例如，你在 Netflix 上搜索 &quot;Casino&quot; ，那么搜索结果在浏览器地址栏中的 URL 就是</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Now copy this entire string and paste it in the URL field below.
-        Then replace casino with {q}.
-        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+        把整个 URL 复制下来然后粘贴在下面的 URL 输入框里面。
+        然后用{q}替换 &quot;Casino&quot; 。
+        那么 Netflix 搜索的表达式就是 https://www.netflix.com/search?q={q}
     </system:String>
 
 
