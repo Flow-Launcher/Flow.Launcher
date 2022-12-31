@@ -273,14 +273,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ShellLinkHelper _helper = new ShellLinkHelper();
                 string target = _helper.retrieveTargetPath(path);
 
-                if (!string.IsNullOrEmpty(target))
+                if (!string.IsNullOrEmpty(target) && File.Exists(target))
                 {
-                    var extension = Extension(target);
-                    if (extension == ExeExtension && File.Exists(target))
-                    {
-                        program.LnkResolvedPath = Path.GetFullPath(target);
-                        program.ExecutableName = Path.GetFileName(target);
+                    program.LnkResolvedPath = Path.GetFullPath(target);
+                    program.ExecutableName = Path.GetFileName(target);
 
+                    if (Extension(target) == ExeExtension)
+                    {
                         var args = _helper.arguments;
                         if(!string.IsNullOrEmpty(args))
                         {
