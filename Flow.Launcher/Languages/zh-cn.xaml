@@ -201,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">关于</system:String>
     <system:String x:Key="website">官方网站</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文档</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">图标</system:String>
@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">自定义查询热键</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">输入一个自定义的快捷键来打开 Flow Laucher 并自动输入指定的查询。</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">输入一个自定义的快捷键来打开 Flow Launcher 并自动输入指定的查询。</system:String>
     <system:String x:Key="preview">预览</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>

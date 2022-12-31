@@ -17,7 +17,7 @@
     <system:String x:Key="cut">잘라내기</system:String>
     <system:String x:Key="paste">붙여넣기</system:String>
     <system:String x:Key="undo">되돌리기</system:String>
-    <system:String x:Key="selectAll">전체 선택</system:String>
+    <system:String x:Key="selectAll">모두 선택</system:String>
     <system:String x:Key="fileTitle">파일</system:String>
     <system:String x:Key="folderTitle">폴더</system:String>
     <system:String x:Key="textTitle">텍스트</system:String>
@@ -173,7 +173,7 @@
     <system:String x:Key="pleaseSelectAnItem">항목을 선택하세요.</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_clipboard_description">클립보드에서 텍스트 가져오기</system:String>
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
@@ -201,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">정보</system:String>
     <system:String x:Key="website">웹사이트</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">문서</system:String>
     <system:String x:Key="version">버전</system:String>
     <system:String x:Key="icons">아이콘</system:String>
@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">사용자지정 쿼리 단축키</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">미리보기</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
     <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
