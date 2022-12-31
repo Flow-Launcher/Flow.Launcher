@@ -84,14 +84,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 title = $"{Name}: {Description}";
                 var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                if (desciptionMatch.Score > nameMatch.Score)
+                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                if (descriptionMatch.Score > nameMatch.Score)
                 {
-                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                    for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
                     {
-                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        descriptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
                     }
-                    matchResult = desciptionMatch;
+                    matchResult = descriptionMatch;
                 }
                 else matchResult = nameMatch;
             }

@@ -55,3 +55,5 @@ appref
 TSource
 runas
 dpi
+popup
+ptr

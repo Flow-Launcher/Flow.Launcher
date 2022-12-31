@@ -147,7 +147,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
-                       "|Trying to get the package version of the UWP program, but an unknown UWP appmanifest version in package "
+                       "|Trying to get the package version of the UWP program, but an unknown UWP app-manifest version in package "
                        + $"{FullName} from location {Location}", new FormatException());
                 return PackageVersion.Unknown;
             }
@@ -633,7 +633,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //    }
             //    else
             //    {
-            //        ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
+            //        ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Available" : path)}" +
             //                                   $"|Unable to get logo for {UserModelId} from {path} and" +
             //                                   $" located in {Location}", new FileNotFoundException());
             //        return new BitmapImage(new Uri(Constant.MissingImgIcon));
