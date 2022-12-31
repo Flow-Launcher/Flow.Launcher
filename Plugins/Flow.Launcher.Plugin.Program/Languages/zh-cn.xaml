@@ -79,7 +79,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">自定义资源管理器</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">参数</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">您可以通过输入要使用的资源管理器的环境变量来自定义用于打开文件夹的资源管理器。 使用CMD来测试环境变量是否可用。</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">输入要为自定义资源管理器添加的自定义参数。 %s代表父目录，%f代表完整路径（仅适用于win32）。 检查资源管理器的网站以获取详细信息。</system:String>
 
     <!--  Dialogs  -->
