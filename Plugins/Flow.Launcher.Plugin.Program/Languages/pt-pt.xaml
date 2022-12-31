@@ -79,7 +79,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorador personalizado</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Argumentos</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Pode utilizar um gestor de ficheiros personalizado para abrir a pasta de destino, introduzindo a variável de ambiente do gestor de ficheiros a utilizar. Deve utilizar a linha de comandos para testar se a variável de ambiente está disponível.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Introduza os argumentos para o gestor de ficheiros personalizado. %s para pasta superior e %f para o caminho completo (apenas funcional em sistemas 32 bits). Consulte o site do gestor de ficheiros para detalhes.</system:String>
 
     <!--  Dialogs  -->
