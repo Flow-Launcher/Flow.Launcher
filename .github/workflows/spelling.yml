@@ -85,7 +85,7 @@ jobs:
         use_sarif: 0 # to show in pr page
         extra_dictionary_limit: 10
         check_commit_messages: commits title description
-        only_check_changed_files: 0
+        only_check_changed_files: 1
         check_extra_dictionaries: ''
         quit_without_error: true
         extra_dictionaries:
