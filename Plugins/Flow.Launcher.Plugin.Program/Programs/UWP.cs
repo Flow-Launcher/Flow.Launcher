@@ -277,7 +277,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occured and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{p.Id}", "An unexpected error occured and "
                                                                                         + $"unable to verify if package is valid", e);
                         return false;
                     }
