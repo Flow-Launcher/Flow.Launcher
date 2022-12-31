@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Não foi possível localizar o ficheiro plugin.json a partir do ficheiro extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Erro: já está instalado um plugin com uma versão igual ou superior a {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Erro ao instalar o plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Ocorreu um erro ao tentar instalar {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Não existem atualizações</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Todos os plugins estão instalados</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende atualizar este plugin? Após a atualização, Flow Launcher será reiniciado.</system:String>
