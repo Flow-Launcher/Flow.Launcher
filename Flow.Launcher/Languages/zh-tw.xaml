@@ -336,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">返回 / 快捷選單</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">打開選單</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">開啟檔案位置</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理員身分執行</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查詢歷史</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
