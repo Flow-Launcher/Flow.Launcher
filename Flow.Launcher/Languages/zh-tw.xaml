@@ -201,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">關於</system:String>
     <system:String x:Key="website">官方網站</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
     <system:String x:Key="version">版本</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">自定義快捷鍵查詢</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">預覽</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">快捷鍵不存在，請設定一個新的快捷鍵</system:String>
     <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>

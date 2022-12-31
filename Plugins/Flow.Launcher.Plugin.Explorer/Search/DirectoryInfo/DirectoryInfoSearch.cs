@@ -76,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception(nameof(DirectoryInfoSearch), "Error occured while searching path", e);
+                Log.Exception(nameof(DirectoryInfoSearch), "Error occurred while searching path", e);
                 
                 throw;
             }
