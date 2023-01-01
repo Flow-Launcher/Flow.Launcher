@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_new_tab">Novo separador</system:String>
     
     <system:String x:Key="flowlauncher_plugin_url_open_url">Abrir URL:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Impossível abrir URL:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">Não foi possível abrir o URL:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Abrir o URL no Flow Launcher</system:String>
