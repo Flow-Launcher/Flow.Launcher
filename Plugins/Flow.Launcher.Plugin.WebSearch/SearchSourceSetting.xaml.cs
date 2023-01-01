@@ -21,16 +21,16 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             _oldSearchSource = old;
             _viewModel = new SearchSourceViewModel {SearchSource = old.DeepCopy()};
-            Initilize(sources, context, Action.Edit);
+            Initialize(sources, context, Action.Edit);
         }
 
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context)
         {
             _viewModel = new SearchSourceViewModel {SearchSource = new SearchSource()};
-            Initilize(sources, context, Action.Add);
+            Initialize(sources, context, Action.Add);
         }
 
-        private async void Initilize(IList<SearchSource> sources, PluginInitContext context, Action action)
+        private async void Initialize(IList<SearchSource> sources, PluginInitContext context, Action action)
         {
             InitializeComponent();
             DataContext = _viewModel;

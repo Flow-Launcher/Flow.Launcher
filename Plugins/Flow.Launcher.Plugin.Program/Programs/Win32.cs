@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// </summary>
         public string FullPath { get; set; }
         /// <summary>
-        /// Path of the excutable for .lnk, or the URL for .url. Arguments are included if any.
+        /// Path of the executable for .lnk, or the URL for .url. Arguments are included if any.
         /// </summary>
         public string LnkResolvedPath { get; set; }
         /// <summary>
@@ -84,14 +84,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 title = $"{Name}: {Description}";
                 var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                if (desciptionMatch.Score > nameMatch.Score)
+                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                if (descriptionMatch.Score > nameMatch.Score)
                 {
-                    for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                    for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
                     {
-                        desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                        descriptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
                     }
-                    matchResult = desciptionMatch;
+                    matchResult = descriptionMatch;
                 }
                 else matchResult = nameMatch;
             }
@@ -495,12 +495,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Distinct();
         }
 
-        private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subkey)
+        private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subKey)
         {
             var path = string.Empty;
             try
             {
-                using (var key = root.OpenSubKey(subkey))
+                using (var key = root.OpenSubKey(subKey))
                 {
                     if (key == null)
                         return string.Empty;
@@ -577,7 +577,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            // TODO: Unable to distinguish multiple lnks to the same excutable but with different params
+            // TODO: Unable to distinguish multiple lnks to the same executable but with different params
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
