@@ -12,17 +12,19 @@ namespace Flow.Launcher.Plugin.PluginIndicator
         {
             var results =
                 from keyword in PluginManager.NonGlobalPlugins.Keys
-                let metadata = PluginManager.NonGlobalPlugins[keyword].Metadata
-                where (context.API.FuzzySearch(query.Search, keyword).IsSearchPrecisionScoreMet()
-                        || context.API.FuzzySearch(query.Search, metadata.Name).IsSearchPrecisionScoreMet()
+                let plugin = PluginManager.NonGlobalPlugins[keyword].Metadata
+                let keywordSearchResult = context.API.FuzzySearch(query.Search, keyword)
+                let searchResult = keywordSearchResult.IsSearchPrecisionScoreMet() ? keywordSearchResult : context.API.FuzzySearch(query.Search, plugin.Name)
+                let score = searchResult.Score
+                where (searchResult.IsSearchPrecisionScoreMet()
                         || string.IsNullOrEmpty(query.Search)) // To list all available action keywords
-                    && !metadata.Disabled
+                    && !plugin.Disabled
                 select new Result
                 {
                     Title = keyword,
-                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), metadata.Name),
-                    Score = 100,
-                    IcoPath = metadata.IcoPath,
+                    SubTitle = string.Format(context.API.GetTranslation("flowlauncher_plugin_pluginindicator_result_subtitle"), plugin.Name),
+                    Score = score,
+                    IcoPath = plugin.IcoPath,
                     AutoCompleteText = $"{keyword}{Plugin.Query.TermSeparator}",
                     Action = c =>
                     {
