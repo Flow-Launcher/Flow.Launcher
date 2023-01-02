@@ -545,12 +545,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Distinct();
         }
 
-        private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subkey)
+        private static string GetProgramPathFromRegistrySubKeys(RegistryKey root, string subKey)
         {
             var path = string.Empty;
             try
             {
-                using (var key = root.OpenSubKey(subkey))
+                using (var key = root.OpenSubKey(subKey))
                 {
                     if (key == null)
                         return string.Empty;
