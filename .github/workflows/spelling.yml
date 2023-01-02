@@ -71,6 +71,7 @@ jobs:
       # note: If you use only_check_changed_files, you do not want cancel-in-progress
       cancel-in-progress: false
     steps:
+    - run: echo "🔎 The name of your branch is ${{ github.head_ref }} and your repository is ${{ github.repository }}."
     - name: check-spelling
       id: spelling
       uses: check-spelling/check-spelling@main
