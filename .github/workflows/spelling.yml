@@ -65,7 +65,7 @@ jobs:
     outputs:
       followup: ${{ steps.spelling.outputs.followup }}
     runs-on: ubuntu-latest
-    if: "contains(github.event_name, 'pull_request') || github.event_name == 'push'"
+    if: contains(github.event_name, 'pull_request') && github.ref != 'ref/heads/l10n_dev' || github.event_name == 'push'
     concurrency:
       group: spelling-${{ github.event.pull_request.number || github.ref }}
       # note: If you use only_check_changed_files, you do not want cancel-in-progress
