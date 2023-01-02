@@ -59,7 +59,7 @@
 # Custom
 (?:^|/)Languages/(?!en.xaml)
 Scripts/
-Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/(?!Resources.resx)
+Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/
 \QPlugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json\E
 \QPlugins/Flow.Launcher.Plugin.WebSearch/setting.json\E
 (?:^|/)FodyWeavers.xml
