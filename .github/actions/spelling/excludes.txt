@@ -60,8 +60,9 @@
 (?:^|/)Languages/(?!en.xaml)
 Scripts/
 Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/
-\QPlugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json\E
-\QPlugins/Flow.Launcher.Plugin.WebSearch/setting.json\E
+Flow.Launcher/Properties/
+^\QPlugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json\E$
+^\QPlugins/Flow.Launcher.Plugin.WebSearch/setting.json\E$
 (?:^|/)FodyWeavers.xml
 .editorconfig
 ignore$
