@@ -59,9 +59,9 @@
 # Custom
 (?:^|/)Languages/(?!en.xaml)
 Scripts/
-Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/
-Plugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json
-Plugins/Flow.Launcher.Plugin.WebSearch/setting.json
+Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/(?!Resources.resx)
+\QPlugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json\E
+\QPlugins/Flow.Launcher.Plugin.WebSearch/setting.json\E
 (?:^|/)FodyWeavers.xml
 .editorconfig
 ignore$
