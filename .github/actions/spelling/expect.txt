@@ -61,3 +61,4 @@ pluginindicator
 TobiasSekan
 Img
 img
+resx
