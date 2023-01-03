@@ -73,7 +73,7 @@
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
@@ -156,6 +156,8 @@
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
@@ -201,7 +203,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
     <system:String x:Key="website">Website</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -262,7 +264,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Preview</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
@@ -336,7 +338,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>

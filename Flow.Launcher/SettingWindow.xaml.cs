@@ -123,6 +123,19 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnPreviewHotkeyControlLoaded(object sender, RoutedEventArgs e)
+        {
+            _ = PreviewHotkeyControl.SetHotkeyAsync(settings.PreviewHotkey, false);
+        }
+
+        private void OnPreviewHotkeyControlFocusLost(object sender, RoutedEventArgs e)
+        {
+            if (PreviewHotkeyControl.CurrentHotkeyAvailable)
+            {
+                settings.PreviewHotkey = PreviewHotkeyControl.CurrentHotkey.ToString();
+            }
+        }
+
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
@@ -237,7 +250,7 @@ namespace Flow.Launcher
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
-            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+            viewModel.OpenLogFolder();
         }
         private void ClearLogFolder(object sender, RoutedEventArgs e)
         {
@@ -249,8 +262,6 @@ namespace Flow.Launcher
             if (confirmResult == MessageBoxResult.Yes)
             {
                 viewModel.ClearLogFolder();
-                
-                ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
             }
         }
 

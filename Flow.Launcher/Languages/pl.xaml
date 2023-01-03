@@ -13,10 +13,12 @@
     <system:String x:Key="iconTrayAbout">O programie</system:String>
     <system:String x:Key="iconTrayExit">Wyjdź</system:String>
     <system:String x:Key="closeWindow">Zamknij</system:String>
-    <system:String x:Key="copy">Copy</system:String>
+    <system:String x:Key="copy">Kopiuj</system:String>
     <system:String x:Key="cut">Wytnij</system:String>
     <system:String x:Key="paste">Wklej</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
+    <system:String x:Key="undo">Cofnij</system:String>
+    <system:String x:Key="selectAll">Zaznacz wszystko</system:String>
+    <system:String x:Key="fileTitle">Plik</system:String>
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Tryb grania</system:String>
@@ -53,6 +55,12 @@
     <system:String x:Key="defaultFileManagerToolTip">Wybierz menedżer plików używany do otwierania folderów.</system:String>
     <system:String x:Key="defaultBrowser">Domyślna przeglądarka</system:String>
     <system:String x:Key="defaultBrowserToolTip">Ustawienie dla nowej karty, nowego okna i trybu prywatnego.</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
     <system:String x:Key="select">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
@@ -63,12 +71,12 @@
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
+    <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F aby wyszukać wtyczki</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
@@ -89,12 +97,12 @@
     <system:String x:Key="plugin_init_time">Czas ładowania:</system:String>
     <system:String x:Key="plugin_query_time">Czas zapytania:</system:String>
     <system:String x:Key="plugin_query_version">Wersja</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Wtyczki</system:String>
@@ -146,6 +154,8 @@
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
     <system:String x:Key="flowlauncherHotkey">Skrót klawiszowy Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Modyfikatory klawiszów otwierających wyniki</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Pokaż skrót klawiszowy</system:String>
@@ -191,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">O programie</system:String>
     <system:String x:Key="website">Website</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Wersja</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -252,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Podgląd</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Skrót klawiszowy jest niedostępny, musisz podać inny skrót klawiszowy</system:String>
     <system:String x:Key="invalidPluginHotkey">Niepoprawny skrót klawiszowy</system:String>
@@ -286,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
@@ -326,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>

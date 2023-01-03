@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Infrastructure.Image
@@ -85,6 +84,21 @@ namespace Flow.Launcher.Infrastructure.Image
         public bool ContainsKey(string key, bool isFullImage)
         {
             return key is not null && Data.ContainsKey((key, isFullImage)) && Data[(key, isFullImage)].imageSource != null;
+        }
+
+        public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
+        {
+            if (key is not null)
+            {
+                bool hasKey = Data.TryGetValue((key, isFullImage), out var imageUsage);
+                image = hasKey ? imageUsage.imageSource : null;
+                return hasKey;
+            }
+            else
+            {
+                image = null;
+                return false;
+            }
         }
 
         public int CacheSize()

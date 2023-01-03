@@ -44,6 +44,7 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(WindowWidthSize));
                         break;
+
                 }
             };
 
@@ -252,8 +253,7 @@ namespace Flow.Launcher.ViewModel
         public List<Language> Languages => _translater.LoadAvailableLanguages();
         public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
+        public string AlwaysPreviewToolTip => string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
 
         public string TestProxy()
         {
@@ -749,6 +749,10 @@ namespace Flow.Launcher.ViewModel
 
         #region shortcut
 
+        public ObservableCollection<CustomShortcutModel> CustomShortcuts => Settings.CustomShortcuts;
+
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts => Settings.BuiltinShortcuts;
+
         public CustomShortcutModel? SelectedCustomShortcut { get; set; }
 
         public void DeleteSelectedCustomShortcut()
@@ -839,31 +843,48 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                var dirInfo = new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
-                long size = dirInfo.EnumerateFiles("*", SearchOption.AllDirectories).Sum(file => file.Length);
-
-                return _translater.GetTranslation("clearlogfolder") + " (" + FormatBytes(size) + ")";
+                var logFiles = GetLogFiles();
+                long size = logFiles.Sum(file => file.Length);
+                return string.Format("{0} ({1})", _translater.GetTranslation("clearlogfolder"), BytesToReadableString(size));
             }
+        }
+
+        private static DirectoryInfo GetLogDir(string version = "")
+        {
+            return new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, version));
+        }
+
+        private static List<FileInfo> GetLogFiles(string version = "")
+        {
+            return GetLogDir(version).EnumerateFiles("*", SearchOption.AllDirectories).ToList();
         }
 
         internal void ClearLogFolder()
         {
-            var directory = new DirectoryInfo(
-                Path.Combine(
-                    DataLocation.DataDirectory(),
-                    Constant.Logs,
-                    Constant.Version));
+            var logDirectory = GetLogDir();
+            var logFiles = GetLogFiles();
 
-            directory.EnumerateFiles()
+            logFiles.ForEach(f => f.Delete());
+
+            logDirectory.EnumerateDirectories("*", SearchOption.TopDirectoryOnly)
+                .Where(dir => !Constant.Version.Equals(dir.Name))
                 .ToList()
-                .ForEach(x => x.Delete());
+                .ForEach(dir => dir.Delete());
+
+            OnPropertyChanged(nameof(CheckLogFolder));
         }
-        internal string FormatBytes(long bytes)
+
+        internal void OpenLogFolder()
+        {
+            App.API.OpenDirectory(GetLogDir(Constant.Version).FullName);
+        }
+
+        internal static string BytesToReadableString(long bytes)
         {
             const int scale = 1024;
             string[] orders = new string[]
             {
-                "GB", "MB", "KB", "Bytes"
+                "GB", "MB", "KB", "B"
             };
             long max = (long)Math.Pow(scale, orders.Length - 1);
 
@@ -874,7 +895,7 @@ namespace Flow.Launcher.ViewModel
 
                 max /= scale;
             }
-            return "0 Bytes";
+            return "0 B";
         }
 
         #endregion

@@ -74,7 +74,7 @@ namespace Flow.Launcher.Plugin.Url
                             }
                             catch(Exception)
                             {
-                                context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_canot_open_url"), raw));
+                                context.API.ShowMsg(string.Format(context.API.GetTranslation("flowlauncher_plugin_url_cannot_open_url"), raw));
                                 return false;
                             }
                         }

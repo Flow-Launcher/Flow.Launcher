@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">从以下浏览器加载：</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">浏览器名称</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">数据文件路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">增加</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">添加</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">删除</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
 </ResourceDictionary>

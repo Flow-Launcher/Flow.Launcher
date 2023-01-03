@@ -16,6 +16,8 @@
     <system:String x:Key="copy">Kopiëren</system:String>
     <system:String x:Key="cut">Knippen</system:String>
     <system:String x:Key="paste">Plakken</system:String>
+    <system:String x:Key="undo">Undo</system:String>
+    <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">Bestand</system:String>
     <system:String x:Key="folderTitle">Map</system:String>
     <system:String x:Key="textTitle">Tekst</system:String>
@@ -53,6 +55,12 @@
     <system:String x:Key="defaultFileManagerToolTip">Selecteer de bestandsbeheerder voor het openen van de map.</system:String>
     <system:String x:Key="defaultBrowser">Standaard webbrowser</system:String>
     <system:String x:Key="defaultBrowserToolTip">Instelling voor Nieuw tabblad, Nieuw Venster, Privémodus.</system:String>
+    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
+    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
+    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
+    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">Automatische Update</system:String>
     <system:String x:Key="select">Selecteer</system:String>
     <system:String x:Key="hideOnStartup">Verberg Flow Launcher als systeem opstart</system:String>
@@ -63,7 +71,7 @@
     <system:String x:Key="ShouldUsePinyin">Zou Pinyin moeten gebruiken</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Zorgt ervoor dat Pinyin gebruikt kan worden om te zoeken. Pinyin is het standaard systeem van geromaniseerde spelling voor het vertalen van Chinees.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow starts. Press F1 to toggle preview. </system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
 
     <!--  Setting Plugin  -->
@@ -146,6 +154,8 @@
     <system:String x:Key="hotkey">Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Voer snelkoppeling in om Flow Launcher te tonen/verbergen.</system:String>
+    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Open resultaatmodificatoren</system:String>
     <system:String x:Key="openResultModifiersToolTip">Kies een aanpassingstoets om het geselecteerde resultaat te openen via het toetsenbord.</system:String>
     <system:String x:Key="showOpenResultHotkey">Sneltoets weergeven</system:String>
@@ -191,7 +201,7 @@
     <!--  Setting About  -->
     <system:String x:Key="about">About</system:String>
     <system:String x:Key="website">Website</system:String>
-    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Versie</system:String>
     <system:String x:Key="icons">Icons</system:String>
@@ -252,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Sneltoets</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Laucher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">Voorbeeld</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Sneltoets is niet beschikbaar, selecteer een nieuwe sneltoets</system:String>
     <system:String x:Key="invalidPluginHotkey">Ongeldige plugin sneltoets</system:String>
@@ -286,7 +296,7 @@
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
 
-    <!--  update  -->
+    <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
@@ -326,7 +336,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Contaning Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
