@@ -103,21 +103,21 @@ jobs:
 
 
 
-  comment-push:
-    name: Report (Push)
-    # If your workflow isn't running on push, you can remove this job
-    runs-on: ubuntu-latest
-    needs: spelling
-    permissions:
-      contents: write
-    if: (success() || failure()) && needs.spelling.outputs.followup && github.event_name == 'push'
-    steps:
-    - name: comment
-      uses: check-spelling/check-spelling@main
-      with:
-        checkout: true
-        spell_check_this: check-spelling/spell-check-this@main
-        task: ${{ needs.spelling.outputs.followup }}
+#   comment-push:
+#     name: Report (Push)
+#     # If your workflow isn't running on push, you can remove this job
+#     runs-on: ubuntu-latest
+#     needs: spelling
+#     permissions:
+#       contents: write
+#     if: (success() || failure()) && needs.spelling.outputs.followup && github.event_name == 'push'
+#     steps:
+#     - name: comment
+#       uses: check-spelling/check-spelling@main
+#       with:
+#         checkout: true
+#         spell_check_this: check-spelling/spell-check-this@main
+#         task: ${{ needs.spelling.outputs.followup }}
 
   comment-pr:
     name: Report (PR)
