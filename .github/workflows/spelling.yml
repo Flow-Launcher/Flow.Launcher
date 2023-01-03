@@ -34,12 +34,12 @@ name: Check Spelling
 #   For background, see: https://github.com/check-spelling/check-spelling/wiki/Feature:-Update-with-deploy-key
 
 on:
-  push:
-    branches:
-    - '**'
-    - '!l10n_dev'
-    tags-ignore:
-    - "**"
+#   push:
+#     branches:
+#     - '**'
+#     - '!l10n_dev'
+#     tags-ignore:
+#     - "**"
   pull_request_target:
     branches:
     - '**'
