@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         private const string queryAllBookmarks = @"SELECT moz_places.url, moz_bookmarks.title
               FROM moz_places
               INNER JOIN moz_bookmarks ON (
-                moz_bookmarks.fk NOT NULL AND moz_bookmarks.fk = moz_places.id
+                moz_bookmarks.fk NOT NULL AND moz_bookmarks.title NOT NULL AND moz_bookmarks.fk = moz_places.id
               )              
               ORDER BY moz_places.visit_count DESC
             ";
@@ -29,21 +29,21 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 return new List<Bookmark>();
 
             var bookmarkList = new List<Bookmark>();
+            
+            Main.RegisterBookmarkFile(PlacesPath);
 
             // create the connection string and init the connection
             string dbPath = string.Format(dbPathFormat, PlacesPath);
-            using (var dbConnection = new SQLiteConnection(dbPath))
-            {
-                // Open connection to the database file and execute the query
-                dbConnection.Open();
-                var reader = new SQLiteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
+            using var dbConnection = new SQLiteConnection(dbPath);
+            // Open connection to the database file and execute the query
+            dbConnection.Open();
+            var reader = new SQLiteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
 
-                // return results in List<Bookmark> format
-                bookmarkList = reader.Select(
-                    x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(), 
-                        x["url"].ToString())
-                ).ToList();
-            }
+            // return results in List<Bookmark> format
+            bookmarkList = reader.Select(
+                x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(), 
+                    x["url"].ToString())
+            ).ToList();
 
             return bookmarkList;
         }

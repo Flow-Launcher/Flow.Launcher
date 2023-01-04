@@ -1,0 +1,78 @@
+name: "\U0001F41E Bug Report"
+description: Create a bug report to help us improve Flow Launcher
+title: "BUG: "
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to fill out this bug report!
+
+  - type: checkboxes
+    attributes:
+      label: Checks
+      options:
+        - label: >
+            I have checked that this issue has not already been reported.
+
+  - type: textarea
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the problem is.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: To Reproduce
+      description: Steps to reproduce the behavior.
+      value: >
+        1. ...
+
+        2. ...
+
+        3. ...
+
+  - type: textarea
+    attributes:
+      label: Screenshots
+      description: If applicable, add screenshots to help explain your problem.
+
+  - type: input
+    attributes:
+      label: Flow Launcher Version
+      description: Go to "Settings" => "About".
+      value: v1.8.3
+
+  - type: input
+    attributes:
+      label: Windows Build Number
+      description: Run "ver" at CMD (command prompt).
+      value: 10.0.19043.1288
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error Log
+      description: >
+        Log file place:
+
+        - The latest version place: `%AppData%\FlowLauncher\Logs\<version>\<date>.txt`
+
+        - For portable mode: `%LocalAppData%\FlowLauncher\<App-Version>\UserData\Logs\<version>\<date>.txt`
+      value: >
+        <details>
+
+
+        ```shell
+
+
+        Replace this line with the important log contents.
+
+
+        ```
+
+        </details>
+
+
+        <!-- # Or drag and drop the log file and delete the above detail part. -->

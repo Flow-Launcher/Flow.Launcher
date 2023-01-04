@@ -6,6 +6,7 @@ using System.Timers;
 using System.Windows;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -61,6 +62,8 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
+                AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
+
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -74,7 +77,7 @@ namespace Flow.Launcher
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePluginsAsync(API);
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -183,7 +186,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Show();
+            _mainVM.Show();
         }
     }
 }

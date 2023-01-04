@@ -5,13 +5,13 @@
     <system:String x:Key="flowlauncher_plugin_new_window">Nueva ventana</system:String>
     <system:String x:Key="flowlauncher_plugin_new_tab">Nueva pestaña</system:String>
     
-    <system:String x:Key="flowlauncher_plugin_url_open_url">Abrir enlace:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">No se puede abrir el enlace:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_open_url">Abrir url:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">No se puede abrir la url:{0}</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_name">Enlace</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_description">Abre los enlaces web escritos desde Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_description">Abre la URL escrita desde Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Por favor, especifica la ruta de tu navegador:</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Elige</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Por favor, establezca la ruta del navegador:</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Elegir</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Aplicación(*.exe)|*.exe|Todos los archivos|*.*</system:String>
 </ResourceDictionary>

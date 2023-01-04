@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -49,6 +50,9 @@ namespace Flow.Launcher.ViewModel
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visbility { get; set; } = Visibility.Collapsed;
+        
+        public ICommand RightClickResultCommand { get; init; }
+        public ICommand LeftClickResultCommand { get; init; }
 
         #endregion
 
@@ -166,12 +170,10 @@ namespace Flow.Launcher.ViewModel
             switch (Visbility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
-                    Margin = new Thickness { Top = 0 };
                     SelectedIndex = 0;
                     Visbility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
-                    Margin = new Thickness { Top = 0 };
                     Visbility = Visibility.Collapsed;
                     break;
             }

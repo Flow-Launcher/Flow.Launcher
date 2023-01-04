@@ -9,23 +9,30 @@
     <system:String x:Key="flowlauncher_plugin_websearch_choose">选择</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">删除</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">编辑</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_add">增加</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_add">添加</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">已启用</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">已禁用</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">确认</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">触发关键字</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">打开链接</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">搜索</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">启用搜索建议 </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">自动补全数据： </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">启用搜索建议</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">自动补全数据：</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">请选择一项</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">您确定要删除 {0} 吗?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">如果您有您想要使用的网页搜索服务，您可以将其添加到 Flow。例如，如果您想要在 Netflix 上搜索“casino”，您可以遵循地址栏中的 URL 格式：&quot;https://www.netflix.com/search?q=Casino&quot;。要做到这一点，使用搜索词“Casino”。</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">将其添加到下面的 URL 部分。您现在可以使用任意的搜索词来从 Netflix 中搜索。</system:String>
-   
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">如果你想添加某个搜索，首先在网站的搜索框中输入任意内容并开始搜索。然后把浏览器地址栏中的URL复制到下面的 UR 输入框中，并把你搜索的内容换成 {q}。例如，你在 Netflix 上搜索 &quot;Casino&quot; ，那么搜索结果在浏览器地址栏中的 URL 就是</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
+        把整个 URL 复制下来然后粘贴在下面的 URL 输入框里面。
+        然后用{q}替换 &quot;Casino&quot; 。
+        那么 Netflix 搜索的表达式就是 https://www.netflix.com/search?q={q}
+    </system:String>
 
-    <!--web search edit-->
+
+
+    <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">标题</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">启用</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">状态</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">选择图标</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">图标</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">取消</system:String>

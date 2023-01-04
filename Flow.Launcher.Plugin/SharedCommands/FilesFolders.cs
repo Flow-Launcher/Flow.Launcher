@@ -5,6 +5,9 @@ using System.Windows;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
+    /// <summary>
+    /// Commands that are useful to run on files... and folders!
+    /// </summary>
     public static class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
@@ -53,10 +56,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     CopyAll(subdir.FullName, temppath);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
                 RemoveFolderIfExists(targetPath);
@@ -65,6 +68,13 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         }
 
+        /// <summary>
+        /// Check if the files and directories are identical between <paramref name="fromPath"/> 
+        /// and <paramref name="toPath"/>
+        /// </summary>
+        /// <param name="fromPath"></param>
+        /// <param name="toPath"></param>
+        /// <returns></returns>
         public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath)
         {
             try
@@ -80,10 +90,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
@@ -92,6 +102,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         }
 
+        /// <summary>
+        /// Deletes a folder if it exists
+        /// </summary>
+        /// <param name="path"></param>
         public static void RemoveFolderIfExists(this string path)
         {
             try
@@ -99,26 +113,40 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (Directory.Exists(path))
                     Directory.Delete(path, true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
         }
 
+        /// <summary>
+        /// Checks if a directory exists
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool LocationExists(this string path)
         {
             return Directory.Exists(path);
         }
 
+        /// <summary>
+        /// Checks if a file exists
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static bool FileExists(this string filePath)
         {
             return File.Exists(filePath);
         }
 
+        /// <summary>
+        /// Open a directory window (using the OS's default handler, usually explorer)
+        /// </summary>
+        /// <param name="fileOrFolderPath"></param>
         public static void OpenPath(string fileOrFolderPath)
         {
             var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
@@ -127,16 +155,20 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
 
+        /// <summary>
+        /// Open the folder that contains <paramref name="path"/>
+        /// </summary>
+        /// <param name="path"></param>
         public static void OpenContainingFolder(string path)
         {
             Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");

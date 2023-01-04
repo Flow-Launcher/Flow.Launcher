@@ -1,7 +1,8 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -41,7 +42,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Copy Text to clipboard
         /// </summary>
-        /// <param name="Text">Text to save on clipboard</param>
+        /// <param name="text">Text to save on clipboard</param>
         public void CopyToClipboard(string text);
 
         /// <summary>
@@ -163,6 +164,7 @@ namespace Flow.Launcher.Plugin
         /// Download the specific url to a cretain file path
         /// </summary>
         /// <param name="url">URL to download file</param>
+        /// <param name="filePath">path to save downloaded file</param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
@@ -178,8 +180,15 @@ namespace Flow.Launcher.Plugin
         /// Remove ActionKeyword for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
-        /// <param name="newActionKeyword">The actionkeyword that is supposed to be removed</param>
+        /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
+
+        /// <summary>
+        /// Check whether specific ActionKeyword is assigned to any of the plugin
+        /// </summary>
+        /// <param name="actionKeyword">The actionkeyword for checking</param>
+        /// <returns>True if the actionkeyword is already assigned, False otherwise</returns>
+        bool ActionKeywordAssigned(string actionKeyword);
 
         /// <summary>
         /// Log debug message

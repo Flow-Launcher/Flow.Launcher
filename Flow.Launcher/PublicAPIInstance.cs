@@ -23,7 +23,6 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Diagnostics;
 
 namespace Flow.Launcher
@@ -83,7 +82,7 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData() => PluginManager.ReloadData();
+        public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
@@ -141,6 +140,8 @@ namespace Flow.Launcher
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+
+        public bool ActionKeywordAssigned(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
 
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
-        private const int ShadowExtraMargin = 12;
+        private const int ShadowExtraMargin = 32;
 
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
@@ -102,7 +102,7 @@ namespace Flow.Launcher.Core.Resource
 
                 SetBlurForWindow();
             }
-            catch (DirectoryNotFoundException e)
+            catch (DirectoryNotFoundException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
@@ -112,7 +112,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 return false;
             }
-            catch (XamlParseException e)
+            catch (XamlParseException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
@@ -238,9 +238,10 @@ namespace Flow.Launcher.Core.Resource
                 Property = Border.EffectProperty,
                 Value = new DropShadowEffect
                 {
-                    Opacity = 0.4,
-                    ShadowDepth = 2,
-                    BlurRadius = 15
+                    Opacity = 0.3,
+                    ShadowDepth = 12,
+                    Direction = 270,
+                    BlurRadius = 30
                 }
             };
 
@@ -250,7 +251,7 @@ namespace Flow.Launcher.Core.Resource
                 marginSetter = new Setter()
                 {
                     Property = Border.MarginProperty,
-                    Value = new Thickness(ShadowExtraMargin),
+                    Value = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin),
                 };
                 windowBorderStyle.Setters.Add(marginSetter);
             }

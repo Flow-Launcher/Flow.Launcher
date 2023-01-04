@@ -10,22 +10,29 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">삭제</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">편집</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">추</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">켬</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">확인</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">액션 키워드</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">검색</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">검색 쿼리 자동완성 사용: </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">자동완성 데이터 출처: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">검색 쿼리 자동완성 사용:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">자동완성 데이터 출처:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">웹 검색을 선택하세요</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">사용하고자 하는 서비스에 웹검색이 있다면 Flow에 추가할 수 있습니다. 예를들어 넷플릭스에서 &quot;Casino&quot;를 검색하면 주소표시줄에서 &quot;https://www.netflix.com/search?q=Casino&quot;형태가 되는 것을 확인할 수 있습니다. 이 경우, &quot;Casino&quot; 부분을 다음과 같이 변경합니다.</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">변경한 주소를 아래 URL 항목에 추가합니다. 이제 원하는 검색어를 사용하여 Flow에서 넷플릭스를 검색할 수 있습니다.</system:String>
-   
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
+        Now copy this entire string and paste it in the URL field below.
+        Then replace casino with {q}.
+        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+    </system:String>
 
-    <!--web search edit-->
+
+
+    <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">이름</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">활성화</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">아이콘 선택</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">아이콘</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">취소</system:String>

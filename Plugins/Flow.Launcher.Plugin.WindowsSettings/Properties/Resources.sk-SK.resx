@@ -130,7 +130,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value> </value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
@@ -654,7 +654,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value> </value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -673,7 +673,7 @@
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Asistent na lepšie sústredenie - Obdobie kľudu</value>
+    <value>Asistent na lepšie sústredenie - Obdobie pokoja</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
@@ -831,7 +831,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value>Light color</value>
+    <value>Svetlá farba</value>
   </data>
   <data name="LightMode" xml:space="preserve">
     <value>Svetlý režim</value>
@@ -982,7 +982,7 @@
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value>Nočné osvetlenie</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
     <value>Nastavenia nočného osvetlenia</value>
@@ -1004,7 +1004,7 @@
     <value>Zastarané v systéme Windows 10, verzia 1809 (zostava 17763) a novších.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>K dispozícii len v prípade, že je spárované zariadenie Dial.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>Dostupné iba vtedy, ak je povolený DirectAccess.</value>
@@ -1031,7 +1031,7 @@
     <value>Dostupné iba v prípade, že je nainštalovaná aplikácia Mixed Reality Portal.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>K dispozícii len v mobilných zariadeniach a v prípade, že podnik nasadil balík provisioningu.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>Pridané v systéme Windows 10, verzia 1903 (zostava 18362).</value>
@@ -1052,7 +1052,7 @@
     <value>Zariadenie musí podporovať Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value>K dispozícii len v prípade, že podnik nasadil balík provisioningu.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
     <value>Oznámenia</value>
@@ -1271,7 +1271,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Quiet moments game</value>
+    <value>Hranie hry na celú obrazovku</value>
   </data>
   <data name="Radios" xml:space="preserve">
     <value>Vysielače</value>
@@ -1297,7 +1297,7 @@
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
-    <value>Red week</value>
+    <value>Protanopia</value>
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
@@ -1427,7 +1427,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value>Start places</value>
+    <value>Priečinky v ponuke Štart</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
     <value>Aplikácie pri spustení</value>
@@ -1595,7 +1595,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>Hlasitosť</value>
   </data>
   <data name="Vpn" xml:space="preserve">
     <value>VPN</value>
@@ -1735,5 +1735,780 @@
   <data name="Zoom" xml:space="preserve">
     <value>Približovanie</value>
     <comment>Mean zooming of things via a magnifier</comment>
+  </data>
+  <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie inštalácie zariadení</value>
+  </data>
+  <data name="TurnOffBackgroundImages" xml:space="preserve">
+    <value>Vypnúť obrázky pozadia</value>
+  </data>
+  <data name="NavigationProperties" xml:space="preserve">
+    <value>Vlastnosti navigácie</value>
+  </data>
+  <data name="MediaStreamingOptions" xml:space="preserve">
+    <value>Možnosti streamovania médií</value>
+  </data>
+  <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
+    <value>Nastaviť typ súboru tak, aby sa vždy otváral v určitom programe</value>
+  </data>
+  <data name="ChangeTheNarratorSVoice" xml:space="preserve">
+    <value>Zmeniť hlas moderátora</value>
+  </data>
+  <data name="FindAndFixKeyboardProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s klávesnicou</value>
+  </data>
+  <data name="UseScreenReader" xml:space="preserve">
+    <value>Použiť čítanie obrazovky</value>
+  </data>
+  <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
+    <value>Zobraziť pracovnú skupinu, do ktorej je počítač zaradený</value>
+  </data>
+  <data name="ChangeMouseWheelSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie kolieska myši</value>
+  </data>
+  <data name="ManageComputerCertificates" xml:space="preserve">
+    <value>Spravovať certifikáty počítača</value>
+  </data>
+  <data name="FindAndFixProblems" xml:space="preserve">
+    <value>Vyhľadať a vyriešiť problémy</value>
+  </data>
+  <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
+    <value>Zmeniť nastavenie obsahu prijatého prostredníctvom funkcie Priblížiť a odoslať</value>
+  </data>
+  <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
+    <value>Zmeniť predvolené nastavenie pre médiá alebo zariadenia</value>
+  </data>
+  <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
+    <value>Tlačiť referenčnú kartu hlasovej komunikácie s počítačom</value>
+  </data>
+  <data name="CalibrateDisplayColour" xml:space="preserve">
+    <value>Kalibrácia farieb obrazovky</value>
+  </data>
+  <data name="ManageFileEncryptionCertificates" xml:space="preserve">
+    <value>Spravovať certifikáty šifrovania súborov</value>
+  </data>
+  <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
+    <value>Zobraziť najnovšie hlásenia o počítači</value>
+  </data>
+  <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
+    <value>Poskytnúť prístup k počítaču iným používateľom</value>
+  </data>
+  <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
+    <value>Zobraziť skryté súbory a priečinky</value>
+  </data>
+  <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
+    <value>Možnosti spustenia funkcie Windows To Go</value>
+  </data>
+  <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
+    <value>Nastaviť, ktoré procesy sa majú automaticky spúšťať pri spustení systému Windows</value>
+  </data>
+  <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
+    <value>Zobraziť informáciu, či je na webovej lokalite k dispozícii informačný kanál</value>
+  </data>
+  <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
+    <value>Pridať hodiny pre rôzne časové pásma</value>
+  </data>
+  <data name="AddABluetoothDevice" xml:space="preserve">
+    <value>Pridať zariadenie Bluetooth</value>
+  </data>
+  <data name="CustomiseTheMouseButtons" xml:space="preserve">
+    <value>Prispôsobiť tlačidlá myši</value>
+  </data>
+  <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
+    <value>Nastaviť tlačidlá tabletu na vykonávanie určitých úloh</value>
+  </data>
+  <data name="ViewInstalledFonts" xml:space="preserve">
+    <value>Zobraziť nainštalované písma</value>
+  </data>
+  <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
+    <value>Zmeniť spôsob zobrazenia meny</value>
+  </data>
+  <data name="EditGroupPolicy" xml:space="preserve">
+    <value>Upraviť skupinovú politiku</value>
+  </data>
+  <data name="ManageBrowserAddOns" xml:space="preserve">
+    <value>Spravovať doplnky prehliadača</value>
+  </data>
+  <data name="CheckProcessorSpeed" xml:space="preserve">
+    <value>Skontrolovať rýchlosť procesora</value>
+  </data>
+  <data name="CheckFirewallStatus" xml:space="preserve">
+    <value>Skontrolovať stav brány firewall</value>
+  </data>
+  <data name="SendOrReceiveAFile" xml:space="preserve">
+    <value>Odoslať alebo prijať súbor</value>
+  </data>
+  <data name="AddOrRemoveUserAccounts" xml:space="preserve">
+    <value>Pridať alebo odstrániť používateľské kontá</value>
+  </data>
+  <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
+    <value>Upraviť systémové premenné prostredia</value>
+  </data>
+  <data name="ManageBitlocker" xml:space="preserve">
+    <value>Spravovať šifrovanie BitLocker</value>
+  </data>
+  <data name="AutoHideTheTaskbar" xml:space="preserve">
+    <value>Automaticky skrývať panel úloh</value>
+  </data>
+  <data name="ChangeSoundCardSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie zvukovej karty</value>
+  </data>
+  <data name="MakeChangesToAccounts" xml:space="preserve">
+    <value>Zmeniť kontá</value>
+  </data>
+  <data name="EditLocalUsersAndGroups" xml:space="preserve">
+    <value>Upraviť lokálnych používateľov a skupiny</value>
+  </data>
+  <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
+    <value>Zobraziť počítače a zariadenia v sieti</value>
+  </data>
+  <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
+    <value>Inštalovať program zo siete</value>
+  </data>
+  <data name="ViewScannersAndCameras" xml:space="preserve">
+    <value>Zobraziť skenery a fotoaparáty</value>
+  </data>
+  <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
+    <value>Slovo zaregistrované v editore Microsoft IME (japončina)</value>
+  </data>
+  <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
+    <value>Obnoviť súbory pomocou histórie súborov</value>
+  </data>
+  <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť klávesnicu na obrazovke</value>
+  </data>
+  <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
+    <value>Blokovať alebo povoliť cudzie súbory cookie</value>
+  </data>
+  <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s nahrávaním zvuku</value>
+  </data>
+  <data name="CreateARecoveryDrive" xml:space="preserve">
+    <value>Vytvoriť jednotku na obnovenie</value>
+  </data>
+  <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
+    <value>Nastavenie metódy vstupu Microsoft (nové fonetické)</value>
+  </data>
+  <data name="GenerateASystemHealthReport" xml:space="preserve">
+    <value>Generovať zostavu stavu systému</value>
+  </data>
+  <data name="FixProblemsWithYourComputer" xml:space="preserve">
+    <value>Odstrániť problémy s počítačom</value>
+  </data>
+  <data name="BackUpAndRestoreWindows7" xml:space="preserve">
+    <value>Zálohovanie a obnova (Windows 7)</value>
+  </data>
+  <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
+    <value>Zobrazenie ukážky, odstránenie alebo zobrazenie a skrytie písiem nainštalovaných v počítači</value>
+  </data>
+  <data name="MicrosoftQuickSettings" xml:space="preserve">
+    <value>Nastavenie metódy vstupu Microsoft (rýchle)</value>
+  </data>
+  <data name="ViewReliabilityHistory" xml:space="preserve">
+    <value>Zobraziť históriu spoľahlivosti</value>
+  </data>
+  <data name="AccessRemoteappAndDesktops" xml:space="preserve">
+    <value>Prístup k aplikáciám RemoteApp a vzdialeným pracovným plochám</value>
+  </data>
+  <data name="SetUpODBCDataSources" xml:space="preserve">
+    <value>Nastaviť zdroje údajov ODBC</value>
+  </data>
+  <data name="ResetSecurityPolicies" xml:space="preserve">
+    <value>Resetovať politiky zabezpečenia</value>
+  </data>
+  <data name="BlockOrAllowPopUps" xml:space="preserve">
+    <value>Blokovať alebo povoliť automaticky otvárané okná</value>
+  </data>
+  <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť automatické dokončovanie v programe Internet Explorer</value>
+  </data>
+  <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
+    <value>Možnosti editora Microsoft Pinyin SimpleFast</value>
+  </data>
+  <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
+    <value>Zmeniť nastavenie správania počítača po zatvorení krytu</value>
+  </data>
+  <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
+    <value>Vypnúť nepotrebné animácie</value>
+  </data>
+  <data name="CreateARestorePoint" xml:space="preserve">
+    <value>Vytvoriť bod obnovenia</value>
+  </data>
+  <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
+    <value>Vypnúť automatické usporiadanie okien</value>
+  </data>
+  <data name="TroubleshootingHistory" xml:space="preserve">
+    <value>História riešenia problémov</value>
+  </data>
+  <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
+    <value>Zisťovanie výskytu problémov s pamäťou v počítači</value>
+  </data>
+  <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
+    <value>Zobraziť odporúčané akcie pre bezproblémové používanie systému Windows</value>
+  </data>
+  <data name="ChangeCursorBlinkRate" xml:space="preserve">
+    <value>Zmeniť rýchlosť blikania kurzora</value>
+  </data>
+  <data name="AddOrRemovePrograms" xml:space="preserve">
+    <value>Pridanie alebo odstránenie programov</value>
+  </data>
+  <data name="CreateAPasswordResetDisk" xml:space="preserve">
+    <value>Vytvoriť disk na obnovenie hesla</value>
+  </data>
+  <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
+    <value>Konfigurovať rozšírené vlastnosti profilu používateľa</value>
+  </data>
+  <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
+    <value>Začať alebo prestať používať automatické prehrávanie vo všetkých médiách a zariadeniach</value>
+  </data>
+  <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie automatickej údržby</value>
+  </data>
+  <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
+    <value>Nastaviť jedno alebo dve kliknutia na otvorenie položiek</value>
+  </data>
+  <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
+    <value>Vybrať používateľov, ktorí môžu používať vzdialenú pracovnú plochu</value>
+  </data>
+  <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
+    <value>Zobraziť programy nainštalované v počítači</value>
+  </data>
+  <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
+    <value>Povoliť vzdialený prístupu do počítača</value>
+  </data>
+  <data name="ViewAdvancedSystemSettings" xml:space="preserve">
+    <value>Zobraziť rozšírené nastavenia systému</value>
+  </data>
+  <data name="HowToInstallAProgram" xml:space="preserve">
+    <value>Postup pri inštalácii programu</value>
+  </data>
+  <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
+    <value>Zmeniť funkcie klávesnice</value>
+  </data>
+  <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
+    <value>Automaticky upraviť čas pri prechode na letný čas a späť</value>
+  </data>
+  <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
+    <value>Zmeniť poradie miniaplikácií pre platformu Windows SideShow</value>
+  </data>
+  <data name="CheckKeyboardStatus" xml:space="preserve">
+    <value>Kontrolovať stav klávesnice</value>
+  </data>
+  <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
+    <value>Ovládať počítač bez myši alebo klávesnice</value>
+  </data>
+  <data name="ChangeOrRemoveAProgram" xml:space="preserve">
+    <value>Zmeniť alebo odstrániť program</value>
+  </data>
+  <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie viacdotykových gest</value>
+  </data>
+  <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
+    <value>Nastaviť zdroje údajov ODBC (64-bitová verzia)</value>
+  </data>
+  <data name="ConfigureProxyServer" xml:space="preserve">
+    <value>Konfigurovať server proxy</value>
+  </data>
+  <data name="ChangeYourHomepage" xml:space="preserve">
+    <value>Zmeniť domovskú stránku</value>
+  </data>
+  <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
+    <value>Zoskupiť okná s podobným obsahom na paneli úloh</value>
+  </data>
+  <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie platformy Windows SideShow</value>
+  </data>
+  <data name="UseAudioDescriptionForVideo" xml:space="preserve">
+    <value>Použiť zvukový popis obrazu</value>
+  </data>
+  <data name="ChangeWorkgroupName" xml:space="preserve">
+    <value>Zmeniť názov pracovnej skupiny</value>
+  </data>
+  <data name="FindAndFixPrintingProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s tlačou</value>
+  </data>
+  <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
+    <value>Zmeniť čas prechodu počítača do režimu spánku</value>
+  </data>
+  <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
+    <value>Nastaviť pripojenie virtuálnej súkromnej siete</value>
+  </data>
+  <data name="AccommodateLearningAbilities" xml:space="preserve">
+    <value>Prispôsobiť schopnosti pri vzdelávaní sa</value>
+  </data>
+  <data name="SetUpADialUpConnection" xml:space="preserve">
+    <value>Nastaviť telefonické pripojenie</value>
+  </data>
+  <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
+    <value>Vytvorenie pripojenia alebo siete</value>
+  </data>
+  <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
+    <value>Zmena hesla systému Windows</value>
+  </data>
+  <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
+    <value>Viditeľnejšie zobraziť ukazovateľ myši</value>
+  </data>
+  <data name="SetUpIscsiInitiator" xml:space="preserve">
+    <value>Nastaviť iniciátor iSCSI</value>
+  </data>
+  <data name="AccommodateLowVision" xml:space="preserve">
+    <value>Prispôsobiť počítač pre zrakovo postihnutých používateľov</value>
+  </data>
+  <data name="ManageOfflineFiles" xml:space="preserve">
+    <value>Spravovať súbory offline</value>
+  </data>
+  <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
+    <value>Kontrola najnovších hlásení a riešenie problémov</value>
+  </data>
+  <data name="MicrosoftChangjieSettings" xml:space="preserve">
+    <value>Nastavenie metódy vstupu Microsoft ChangJie</value>
+  </data>
+  <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
+    <value>Nahradiť zvuky vizuálnymi pomôckami</value>
+  </data>
+  <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie dočasných internetových súborov</value>
+  </data>
+  <data name="ConnectToTheInternet" xml:space="preserve">
+    <value>Pripojiť sa na internet</value>
+  </data>
+  <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s prehrávaním zvuku</value>
+  </data>
+  <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
+    <value>Zmeniť zobrazenie alebo rýchlosť ukazovateľa myši</value>
+  </data>
+  <data name="BackUpYourRecoveryKey" xml:space="preserve">
+    <value>Zálohovať kľúč na obnovenie</value>
+  </data>
+  <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
+    <value>Uložiť záložné kópie súborov pomocou histórie súborov</value>
+  </data>
+  <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
+    <value>Zobraziť aktuálne nastavenie zjednodušenia ovládania</value>
+  </data>
+  <data name="ChangeTabletPenSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie pera tabletu</value>
+  </data>
+  <data name="ChangeHowYourMouseWorks" xml:space="preserve">
+    <value>Zmeniť funkcie myši</value>
+  </data>
+  <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
+    <value>Zobraziť veľkosť pamäte RAM v počítači</value>
+  </data>
+  <data name="EditPowerPlan" xml:space="preserve">
+    <value>Upraviť plán napájania</value>
+  </data>
+  <data name="AdjustSystemVolume" xml:space="preserve">
+    <value>Upraviť hlasitosť systému</value>
+  </data>
+  <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
+    <value>Defragmentovať a optimalizovať jednotky</value>
+  </data>
+  <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
+    <value>Nastaviť zdroje údajov ODBC (32-bitová verzia)</value>
+  </data>
+  <data name="ChangeFontSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie písma</value>
+  </data>
+  <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
+    <value>Zväčšiť časti obrazovky pomocou zväčšovacieho skla</value>
+  </data>
+  <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
+    <value>Zmeniť typ súboru priradený k prípone súboru</value>
+  </data>
+  <data name="ViewEventLogs" xml:space="preserve">
+    <value>Zobraziť denníky udalostí</value>
+  </data>
+  <data name="ManageWindowsCredentials" xml:space="preserve">
+    <value>Spravovať poverenia systému Windows</value>
+  </data>
+  <data name="SetUpAMicrophone" xml:space="preserve">
+    <value>Nastaviť mikrofón</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
+    <value>Zmeniť vzhľad ukazovateľa myši</value>
+  </data>
+  <data name="ChangePowerSavingSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie úspory energie</value>
+  </data>
+  <data name="OptimiseForBlindness" xml:space="preserve">
+    <value>Optimalizovať pre nevidomých</value>
+  </data>
+  <data name="null" xml:space="preserve">
+    <value>
+    </value>
+  </data>
+  <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť súčasti systému Windows</value>
+  </data>
+  <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
+    <value>Zobraziť informácie o operačnom systéme v počítači</value>
+  </data>
+  <data name="ViewLocalServices" xml:space="preserve">
+    <value>Zobraziť lokálne služby</value>
+  </data>
+  <data name="ManageWorkFolders" xml:space="preserve">
+    <value>Spravovať Pracovné priečinky</value>
+  </data>
+  <data name="EncryptYourOfflineFiles" xml:space="preserve">
+    <value>Šifrovať súbory offline</value>
+  </data>
+  <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
+    <value>Nastaviť počítač na rozpoznávanie hlasu</value>
+  </data>
+  <data name="AdvancedPrinterSetup" xml:space="preserve">
+    <value>Rozšírené nastavenie tlačiarne</value>
+  </data>
+  <data name="ChangeDefaultPrinter" xml:space="preserve">
+    <value>Zmeniť predvolenú tlačiareň</value>
+  </data>
+  <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
+    <value>Upraviť premenné prostredia pre konto používateľa</value>
+  </data>
+  <data name="OptimiseVisualDisplay" xml:space="preserve">
+    <value>Optimalizovať vizuálne zobrazenie</value>
+  </data>
+  <data name="ChangeMouseClickSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie klikania myši</value>
+  </data>
+  <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
+    <value>Zmeniť rozšírené nastavenia správy farieb pre obrazovky, skenery a tlačiarne</value>
+  </data>
+  <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
+    <value>Nastavenie zjednodušenia prístupu určí systém Windows</value>
+  </data>
+  <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
+    <value>Vyčistiť miesto na disku odstránením nepotrebných súborov</value>
+  </data>
+  <data name="ViewDevicesAndPrinters" xml:space="preserve">
+    <value>Zobraziť zariadenia a tlačiarne</value>
+  </data>
+  <data name="PrivateCharacterEditor" xml:space="preserve">
+    <value>Editor súkromných znakov</value>
+  </data>
+  <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
+    <value>Zaznamenať kroky na reprodukovanie problému</value>
+  </data>
+  <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
+    <value>Upraviť vzhľad a výkon systému Windows</value>
+  </data>
+  <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
+    <value>Nastavenie editora Microsoft IME (japončina)</value>
+  </data>
+  <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
+    <value>Požiadať o pomoc inú osobu a umožniť jej pripojiť sa k tomuto počítaču alebo ponúknuť pomoc niekomu inému</value>
+  </data>
+  <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
+    <value>Spustiť programy vytvorené pre predchádzajúce verzie systému Windows</value>
+  </data>
+  <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
+    <value>Vybrať poradie otáčania obrazovky</value>
+  </data>
+  <data name="ChangeHowWindowsSearches" xml:space="preserve">
+    <value>Zmeniť spôsob vyhľadávania v systéme Windows</value>
+  </data>
+  <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
+    <value>Nastavenie rýchlych pohybov na vykonávanie určitých úloh</value>
+  </data>
+  <data name="ChangeAccountType" xml:space="preserve">
+    <value>Zmeniť typ konta</value>
+  </data>
+  <data name="ChangeScreenSaver" xml:space="preserve">
+    <value>Zmeniť šetrič obrazovky</value>
+  </data>
+  <data name="ChangeUserAccountControlSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie kontroly používateľských kont</value>
+  </data>
+  <data name="TurnOnEasyAccessKeys" xml:space="preserve">
+    <value>Zapnúť klávesy pre zjednodušenie prístupu</value>
+  </data>
+  <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
+    <value>Identifikovať a opraviť problémy so sieťou</value>
+  </data>
+  <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s pripojením a so sieťou</value>
+  </data>
+  <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
+    <value>Automaticky prehrávať disky CD a ďalšie médiá</value>
+  </data>
+  <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
+    <value>Zobraziť základné informácie o počítači</value>
+  </data>
+  <data name="ChooseHowYouOpenLinks" xml:space="preserve">
+    <value>Vybrať spôsob otvárania prepojení</value>
+  </data>
+  <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
+    <value>Povoliť zasielanie žiadostí o pomoc na diaľku z tohto počítača</value>
+  </data>
+  <data name="TaskManager" xml:space="preserve">
+    <value>Správca úloh</value>
+  </data>
+  <data name="TurnFlicksOnOrOff" xml:space="preserve">
+    <value>Zapnutie alebo vypnutie rýchlych pohybov</value>
+  </data>
+  <data name="AddALanguage" xml:space="preserve">
+    <value>Pridať jazyk</value>
+  </data>
+  <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
+    <value>Zobraziť stav siete a sieťové úlohy</value>
+  </data>
+  <data name="TurnMagnifierOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť zväčšovacie sklo</value>
+  </data>
+  <data name="SeeTheNameOfThisComputer" xml:space="preserve">
+    <value>Zobraziť názov tohto počítača</value>
+  </data>
+  <data name="ViewNetworkConnections" xml:space="preserve">
+    <value>Zobraziť sieťové pripojenia</value>
+  </data>
+  <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
+    <value>Automaticky vykonať odporúčané úlohy údržby</value>
+  </data>
+  <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
+    <value>Spravovať miesto na disku využívané súbormi offline</value>
+  </data>
+  <data name="TurnHighContrastOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť vysoký kontrast</value>
+  </data>
+  <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
+    <value>Zmeniť spôsob zobrazenia času</value>
+  </data>
+  <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
+    <value>Zmeniť spôsob zobrazenia webových stránok na kartách</value>
+  </data>
+  <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
+    <value>Zmeniť spôsob zobrazenia dátumu a zoznamov</value>
+  </data>
+  <data name="ManageAudioDevices" xml:space="preserve">
+    <value>Spravovať zvukové zariadenia</value>
+  </data>
+  <data name="ChangeSecuritySettings" xml:space="preserve">
+    <value>Zmeniť nastavenie zabezpečenia</value>
+  </data>
+  <data name="CheckSecurityStatus" xml:space="preserve">
+    <value>Skontrolovať stav zabezpečenia</value>
+  </data>
+  <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
+    <value>Odstrániť súbory cookie alebo dočasné súbory</value>
+  </data>
+  <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
+    <value>Zadanie ruky používanej na písanie</value>
+  </data>
+  <data name="ChangeTouchInputSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie pre dotykové vstupy</value>
+  </data>
+  <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
+    <value>Zmeniť veľkosť virtuálnej pamäte</value>
+  </data>
+  <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
+    <value>Čítať text nahlas pomocou programu Moderátor</value>
+  </data>
+  <data name="SetUpUSBGameControllers" xml:space="preserve">
+    <value>Nastaviť hracie zariadenia USB</value>
+  </data>
+  <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
+    <value>Zobraziť informácie o doméne, v ktorej sa počítač nachádza</value>
+  </data>
+  <data name="ViewAllProblemReports" xml:space="preserve">
+    <value>Zobraziť všetky hlásenia problémov</value>
+  </data>
+  <data name="16BitApplicationSupport" xml:space="preserve">
+    <value>Podpora 16-bitových aplikácií</value>
+  </data>
+  <data name="SetUpDiallingRules" xml:space="preserve">
+    <value>Nastaviť pravidlá vytáčania</value>
+  </data>
+  <data name="EnableOrDisableSessionCookies" xml:space="preserve">
+    <value>Povoliť alebo zakázať súbory cookie relácií</value>
+  </data>
+  <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
+    <value>Prideliť oprávnenia správcu používateľovi domény</value>
+  </data>
+  <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
+    <value>Nastaviť vypínanie obrazovky</value>
+  </data>
+  <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
+    <value>Pohybovať ukazovateľom pomocou klávesnice s funkciou Klávesy myši</value>
+  </data>
+  <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie zariadení kompatibilných s platformou Windows SideShow</value>
+  </data>
+  <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
+    <value>Upraviť bežne používané nastavenie pre mobilnú prácu</value>
+  </data>
+  <data name="ChangeTextToSpeechSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie prevodu textu na reč</value>
+  </data>
+  <data name="SetTheTimeAndDate" xml:space="preserve">
+    <value>Nastaviť čas a dátum</value>
+  </data>
+  <data name="ChangeLocationSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie umiestnenia</value>
+  </data>
+  <data name="ChangeMouseSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie myši</value>
+  </data>
+  <data name="ManageStorageSpaces" xml:space="preserve">
+    <value>Spravovať ukladacie priestory</value>
+  </data>
+  <data name="ShowOrHideFileExtensions" xml:space="preserve">
+    <value>Zobraziť alebo skryť prípony súborov</value>
+  </data>
+  <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
+    <value>Povoliť komunikáciu aplikácie cez bránu Windows Firewall</value>
+  </data>
+  <data name="ChangeSystemSounds" xml:space="preserve">
+    <value>Zmeniť systémové zvuky</value>
+  </data>
+  <data name="AdjustCleartypeText" xml:space="preserve">
+    <value>Upraviť text ClearType</value>
+  </data>
+  <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
+    <value>Zapnúť alebo vypnúť šetrič obrazovky</value>
+  </data>
+  <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
+    <value>Vyhľadať a opraviť problémy so službou Windows Update</value>
+  </data>
+  <data name="ChangeBluetoothSettings" xml:space="preserve">
+    <value>Zmeniť nastavenie zariadení Bluetooth</value>
+  </data>
+  <data name="ConnectToANetwork" xml:space="preserve">
+    <value>Pripojiť k sieti</value>
+  </data>
+  <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
+    <value>Zmeniť poskytovateľa vyhľadávania v programe Internet Explorer</value>
+  </data>
+  <data name="JoinADomain" xml:space="preserve">
+    <value>Pripojiť k doméne</value>
+  </data>
+  <data name="AddADevice" xml:space="preserve">
+    <value>Pridať zariadenie</value>
+  </data>
+  <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
+    <value>Vyhľadať a opraviť problémy so súčasťou Windows Search</value>
+  </data>
+  <data name="ChooseAPowerPlan" xml:space="preserve">
+    <value>Vybrať plán napájania</value>
+  </data>
+  <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
+    <value>Zmeniť vzhľad ukazovateľa myši v pohybe</value>
+  </data>
+  <data name="UninstallAProgram" xml:space="preserve">
+    <value>Odinštalovať program</value>
+  </data>
+  <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
+    <value>Vytvoriť a formátovať oblasti na pevnom disku</value>
+  </data>
+  <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
+    <value>Zmeniť formát dátumu, času alebo čísel</value>
+  </data>
+  <data name="ChangePCWakeUpSettings" xml:space="preserve">
+    <value>Zmena nastavení prebúdzania počítača</value>
+  </data>
+  <data name="ManageNetworkPasswords" xml:space="preserve">
+    <value>Spravovať sieťové heslá</value>
+  </data>
+  <data name="ChangeInputMethods" xml:space="preserve">
+    <value>Zmeniť metódy vstupu</value>
+  </data>
+  <data name="ManageAdvancedSharingSettings" xml:space="preserve">
+    <value>Správa rozšíreného nastavenia zdieľania</value>
+  </data>
+  <data name="ChangeBatterySettings" xml:space="preserve">
+    <value>Zmeniť nastavenie batérie</value>
+  </data>
+  <data name="RenameThisComputer" xml:space="preserve">
+    <value>Zmeniť názov počítača</value>
+  </data>
+  <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
+    <value>Zamknúť alebo odomknúť panel úloh</value>
+  </data>
+  <data name="ManageWebCredentials" xml:space="preserve">
+    <value>Spravovať webové poverenia</value>
+  </data>
+  <data name="ChangeTheTimeZone" xml:space="preserve">
+    <value>Zmeniť časové pásmo</value>
+  </data>
+  <data name="StartSpeechRecognition" xml:space="preserve">
+    <value>Spustiť rozpoznávanie reči</value>
+  </data>
+  <data name="ViewInstalledUpdates" xml:space="preserve">
+    <value>Zobraziť nainštalované aktualizácie</value>
+  </data>
+  <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
+    <value>Čo sa stalo s panelom nástrojov Rýchle spustenie?</value>
+  </data>
+  <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
+    <value>Zmeniť možnosti vyhľadávania súborov a priečinkov</value>
+  </data>
+  <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
+    <value>Upraviť nastavenie pred prezentáciou</value>
+  </data>
+  <data name="ScanADocumentOrPicture" xml:space="preserve">
+    <value>Skenovať dokument alebo obrázok</value>
+  </data>
+  <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
+    <value>Zmeniť spôsob zobrazenia merných jednotiek</value>
+  </data>
+  <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
+    <value>Postupne stláčať kombinácie klávesov</value>
+  </data>
+  <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
+    <value>Obnoviť údaje, súbory alebo počítač zo zálohy (Windows 7)</value>
+  </data>
+  <data name="SetYourDefaultPrograms" xml:space="preserve">
+    <value>Nastaviť predvolené programy</value>
+  </data>
+  <data name="SetUpABroadbandConnection" xml:space="preserve">
+    <value>Nastaviť širokopásmové pripojenie</value>
+  </data>
+  <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
+    <value>Kalibrovať obrazovku pre text zadaný perom alebo pre dotykové vstupy</value>
+  </data>
+  <data name="ManageUserCertificates" xml:space="preserve">
+    <value>Spravovať používateľské certifikáty</value>
+  </data>
+  <data name="ScheduleTasks" xml:space="preserve">
+    <value>Plánovať úlohy</value>
+  </data>
+  <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
+    <value>Ignorovať opakované stlačenia klávesov pomocou funkcie Filtrovanie klávesov</value>
+  </data>
+  <data name="FindAndFixBluescreenProblems" xml:space="preserve">
+    <value>Nájsť a opraviť problémy s modrou obrazovkou</value>
+  </data>
+  <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
+    <value>Prehrať tón pri stlačení klávesu</value>
+  </data>
+  <data name="DeleteBrowsingHistory" xml:space="preserve">
+    <value>Odstrániť históriu prehľadávania</value>
+  </data>
+  <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
+    <value>Zmeniť funkciu tlačidla napájania</value>
+  </data>
+  <data name="CreateStandardUserAccount" xml:space="preserve">
+    <value>Vytvoriť štandardné konto používateľa</value>
+  </data>
+  <data name="TakeSpeechTutorials" xml:space="preserve">
+    <value>Absolvovať kurzy hlasovej komunikácie s počítačom</value>
+  </data>
+  <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
+    <value>Zobraziť využitie systémových prostriedkov v Správcovi úloh</value>
+  </data>
+  <data name="CreateAnAccount" xml:space="preserve">
+    <value>Vytvoriť konto</value>
+  </data>
+  <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
+    <value>Získať viac funkcií s novým vydaním systému Windows</value>
+  </data>
+  <data name="AppControlPanel" xml:space="preserve">
+    <value>Ovládací panel</value>
+  </data>
+  <data name="TaskLink" xml:space="preserve">
+    <value>TaskLink</value>
+  </data>
+  <data name="AreaUnknown" xml:space="preserve">
+    <value>Neznáma</value>
   </data>
 </root>

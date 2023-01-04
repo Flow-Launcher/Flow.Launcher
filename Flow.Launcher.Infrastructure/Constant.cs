@@ -1,4 +1,4 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 
@@ -21,6 +21,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string PreinstalledDirectory = Path.Combine(ProgramDirectory, Plugins);
         public const string Issue = "https://github.com/Flow-Launcher/Flow.Launcher/issues/new";
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
+        public static readonly string Dev = "Dev";
         public const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";
 
         public static readonly int ThumbnailSize = 64;
@@ -28,8 +29,10 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string DefaultIcon = Path.Combine(ImagesDirectory, "app.png");
         public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
         public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
+        public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
 
         public static string PythonPath;
+        public static string NodePath;
 
         public static readonly string QueryTextBoxIconImagePath = $"{ProgramDirectory}\\Images\\mainsearch.svg";
 
@@ -44,6 +47,7 @@ namespace Flow.Launcher.Infrastructure
         public const string Logs = "Logs";
 
         public const string Website = "https://flowlauncher.com";
+        public const string SponsorPage = "https://github.com/sponsors/Flow-Launcher";
         public const string GitHub = "https://github.com/Flow-Launcher/Flow.Launcher";
         public const string Docs = "https://flowlauncher.com/docs";
     }

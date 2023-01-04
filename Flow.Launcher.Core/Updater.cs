@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
@@ -40,7 +40,7 @@ namespace Flow.Launcher.Core
                     api.ShowMsg(api.GetTranslation("pleaseWait"),
                         api.GetTranslation("update_flowlauncher_update_check"));
 
-                using var updateManager = await GitHubUpdateManager(GitHubRepository).ConfigureAwait(false);
+                using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
                 var newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
@@ -79,7 +79,7 @@ namespace Flow.Launcher.Core
                     await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
-                var newVersionTips = NewVersinoTips(newReleaseVersion.ToString());
+                var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
@@ -114,8 +114,8 @@ namespace Flow.Launcher.Core
             public string HtmlUrl { get; [UsedImplicitly] set; }
         }
 
-        /// https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
-        private async Task<UpdateManager> GitHubUpdateManager(string repository)
+        // https://github.com/Squirrel/Squirrel.Windows/blob/master/src/Squirrel/UpdateManager.Factory.cs
+        private async Task<UpdateManager> GitHubUpdateManagerAsync(string repository)
         {
             var uri = new Uri(repository);
             var api = $"https://api.github.com/repos{uri.AbsolutePath}/releases";
@@ -137,12 +137,12 @@ namespace Flow.Launcher.Core
             return manager;
         }
 
-        public string NewVersinoTips(string version)
+        public string NewVersionTips(string version)
         {
-            var translater = InternationalizationManager.Instance;
-            var tips = string.Format(translater.GetTranslation("newVersionTips"), version);
+            var translator = InternationalizationManager.Instance;
+            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
+
             return tips;
         }
-
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Shell
             string cmd = query.Search;
             if (string.IsNullOrEmpty(cmd))
             {
-                return ResultsFromlHistory();
+                return ResultsFromHistory();
             }
             else
             {
@@ -55,21 +55,21 @@ namespace Flow.Launcher.Plugin.Shell
                     else if (Directory.Exists(Path.GetDirectoryName(excmd) ?? string.Empty))
                     {
                         basedir = Path.GetDirectoryName(excmd);
-                        var dirn = Path.GetDirectoryName(cmd);
-                        dir = (dirn.EndsWith("/") || dirn.EndsWith(@"\")) ? dirn : cmd.Substring(0, dirn.Length + 1);
+                        var dirName = Path.GetDirectoryName(cmd);
+                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd.Substring(0, dirName.Length + 1);
                     }
 
                     if (basedir != null)
                     {
-                        var autocomplete = 
+                        var autocomplete =
                             Directory.GetFileSystemEntries(basedir)
                                 .Select(o => dir + Path.GetFileName(o))
                                 .Where(o => o.StartsWith(cmd, StringComparison.OrdinalIgnoreCase) &&
-                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
-                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
-                        
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase)) &&
+                                            !results.Any(p => o.Equals(p.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+
                         autocomplete.Sort();
-                        
+
                         results.AddRange(autocomplete.ConvertAll(m => new Result
                         {
                             Title = m,
@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Shell
             return result;
         }
 
-        private List<Result> ResultsFromlHistory()
+        private List<Result> ResultsFromHistory()
         {
             IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
                 .Select(m => new Result
@@ -194,72 +194,74 @@ namespace Flow.Launcher.Plugin.Shell
 
             ProcessStartInfo info = new()
             {
-                Verb = runAsAdministratorArg,
-                WorkingDirectory = workingDirectory,
+                Verb = runAsAdministratorArg, WorkingDirectory = workingDirectory,
             };
             switch (_settings.Shell)
             {
                 case Shell.Cmd:
-                    {
-                        info.FileName = "cmd.exe";
-                        info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                {
+                    info.FileName = "cmd.exe";
+                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
 
-                        //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
-                        //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
-                        //// Incorrect:
-                        // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
+                    //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
+                    //// Previous code using ArgumentList, commands needed to be separated correctly:                      
+                    //// Incorrect:
+                    // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                    // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
 
-                        //// Correct version should be:
-                        //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                        //info.ArgumentList.Add("mkdir");
-                        //info.ArgumentList.Add(@"c:\test new");
+                    //// Correct version should be:
+                    //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
+                    //info.ArgumentList.Add("mkdir");
+                    //info.ArgumentList.Add(@"c:\test new");
 
-                        //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
+                    //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
 
-                        break;
-                    }
+                    break;
+                }
 
                 case Shell.Powershell:
+                {
+                    info.FileName = "powershell.exe";
+                    if (_settings.LeaveShellOpen)
                     {
-                        info.FileName = "powershell.exe";
-                        if (_settings.LeaveShellOpen)
-                        {
-                            info.ArgumentList.Add("-NoExit");
-                            info.ArgumentList.Add(command);
-                        }
-                        else
-                        {
-                            info.ArgumentList.Add("-Command");
-                            info.ArgumentList.Add(command);
-                        }
-                        break;
+                        info.ArgumentList.Add("-NoExit");
+                        info.ArgumentList.Add(command);
                     }
+                    else
+                    {
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add(command);
+                    }
+                    break;
+                }
 
                 case Shell.RunCommand:
+                {
+                    var parts = command.Split(new[]
                     {
-                        var parts = command.Split(new[] { ' ' }, 2);
-                        if (parts.Length == 2)
+                        ' '
+                    }, 2);
+                    if (parts.Length == 2)
+                    {
+                        var filename = parts[0];
+                        if (ExistInPath(filename))
                         {
-                            var filename = parts[0];
-                            if (ExistInPath(filename))
-                            {
-                                var arguments = parts[1];
-                                info.FileName = filename;
-                                info.ArgumentList.Add(arguments);
-                            }
-                            else
-                            {
-                                info.FileName = command;
-                            }
+                            var arguments = parts[1];
+                            info.FileName = filename;
+                            info.ArgumentList.Add(arguments);
                         }
                         else
                         {
                             info.FileName = command;
                         }
-
-                        break;
                     }
+                    else
+                    {
+                        info.FileName = command;
+                    }
+
+                    break;
+                }
                 default:
                     throw new NotImplementedException();
             }
@@ -350,8 +352,12 @@ namespace Flow.Launcher.Plugin.Shell
         private void OnWinRPressed()
         {
             // show the main window and set focus to the query box
-            context.API.ShowMainWindow();
-            context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            Task.Run(() =>
+            {
+                context.API.ShowMainWindow();
+                context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
+            });
+
         }
 
         public Control CreateSettingPanel()
@@ -371,19 +377,20 @@ namespace Flow.Launcher.Plugin.Shell
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var resultlist = new List<Result>
+            var results = new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
-                    Action = c =>
+                    AsyncAction = async c =>
                     {
-                        Task.Run(() => Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title)));
+                        Execute(ShellCommand.RunAsDifferentUser, PrepareProcessStartInfo(selectedResult.Title));
                         return true;
                     },
-                    IcoPath = "Images/user.png"
+                    IcoPath = "Images/user.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
                 },
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
@@ -391,9 +398,10 @@ namespace Flow.Launcher.Plugin.Shell
                         Execute(Process.Start, PrepareProcessStartInfo(selectedResult.Title, true));
                         return true;
                     },
-                    IcoPath = "Images/admin.png"
+                    IcoPath = "Images/admin.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
                 },
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
@@ -401,11 +409,12 @@ namespace Flow.Launcher.Plugin.Shell
                         Clipboard.SetDataObject(selectedResult.Title);
                         return true;
                     },
-                    IcoPath = "Images/copy.png"
+                    IcoPath = "Images/copy.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
                 }
             };
 
-            return resultlist;
+            return results;
         }
     }
 }

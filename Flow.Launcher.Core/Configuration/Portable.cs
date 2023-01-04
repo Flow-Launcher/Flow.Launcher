@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using Squirrel;
 using System;
 using System.IO;
@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.DisablePortableMode|Error occured while disabling portable mode", e);
+                Log.Exception("|Portable.DisablePortableMode|Error occurred while disabling portable mode", e);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Flow.Launcher.Core.Configuration
             }
             catch (Exception e)
             {
-                Log.Exception("|Portable.EnablePortableMode|Error occured while enabling portable mode", e);
+                Log.Exception("|Portable.EnablePortableMode|Error occurred while enabling portable mode", e);
             }
         }
 
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Core.Configuration
 
             using (var portabilityUpdater = NewUpdateManager())
             {
-                portabilityUpdater.CreateUninstallerRegistryEntry();
+                _ = portabilityUpdater.CreateUninstallerRegistryEntry();
             }
         }
 
@@ -187,7 +187,7 @@ namespace Flow.Launcher.Core.Configuration
             if (roamingLocationExists && portableLocationExists)
             {
                 MessageBox.Show(string.Format("Flow Launcher detected your user data exists both in {0} and " +
-                                    "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occured.", 
+                                    "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.", 
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 
                 return false;

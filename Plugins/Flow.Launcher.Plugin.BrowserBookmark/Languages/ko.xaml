@@ -8,15 +8,16 @@
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">북마크 데이터</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">새 창</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">새 탭</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">선택</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">브라우저 이름</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">데이터 디렉토리 위치</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">추</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">추가</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">삭제</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
 </ResourceDictionary>

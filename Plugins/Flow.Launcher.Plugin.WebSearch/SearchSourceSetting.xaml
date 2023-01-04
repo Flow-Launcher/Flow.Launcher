@@ -63,7 +63,6 @@
                             <TextBlock
                                 Grid.Column="0"
                                 Margin="0,0,0,0"
-                                FontFamily="Segoe UI"
                                 FontSize="20"
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource flowlauncher_plugin_websearch_window_title}"
@@ -75,10 +74,11 @@
                                 Text="{DynamicResource flowlauncher_plugin_websearch_guide_1}"
                                 TextAlignment="Left"
                                 TextWrapping="WrapWithOverflow" />
-                            <TextBlock
+                            <TextBox
                                 Margin="0,12,0,12"
                                 FontSize="14"
                                 FontWeight="SemiBold"
+                                IsReadOnly="True"
                                 Text="{DynamicResource flowlauncher_plugin_websearch_guide_2}"
                                 TextAlignment="Center"
                                 TextWrapping="WrapWithOverflow" />
@@ -179,7 +179,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Text="{DynamicResource flowlauncher_plugin_websearch_enable}" />
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_enabled}" />
                                 <CheckBox
                                     Grid.Row="4"
                                     Grid.Column="1"

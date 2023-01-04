@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
-using Flow.Launcher.Core.Resource;
 
-namespace Flow.Launcher.Core
+namespace Flow.Launcher.Core.Resource
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {

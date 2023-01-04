@@ -385,27 +385,5 @@ namespace Flow.Launcher.Helper
         }
 
         #endregion
-
-        #region Private Classes
-
-        /// <summary>
-        /// Remoting service class which is exposed by the server i.e the first instance and called by the second instance
-        /// to pass on the command line arguments to the first instance and cause it to activate itself.
-        /// </summary>
-        private class IPCRemoteService : MarshalByRefObject
-        {
-
-            /// <summary>
-            /// Remoting Object's ease expires after every 5 minutes by default. We need to override the InitializeLifetimeService class
-            /// to ensure that lease never expires.
-            /// </summary>
-            /// <returns>Always null.</returns>
-            public override object InitializeLifetimeService()
-            {
-                return null;
-            }
-        }
-
-        #endregion
     }
 }

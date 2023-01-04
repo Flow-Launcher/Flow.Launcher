@@ -3,20 +3,21 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Marcadores del navegador</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores de tu navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Busca en los marcadores del navegador</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Datos de marcador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir marcadores en:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nueva ventana</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva Pestaña</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nueva pestaña</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Establecer navegador desde ruta:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elige</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar enlace</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copiar enlace del marcador al portapapeles</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Iniciar navegador desde:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Elegir</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copiar url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copia la url del marcador al portapapeles</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Cargar navegador desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Nombre del navegador</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Ruta del directorio de datos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Añadir</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Eliminar</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Otros</system:String>
 </ResourceDictionary>

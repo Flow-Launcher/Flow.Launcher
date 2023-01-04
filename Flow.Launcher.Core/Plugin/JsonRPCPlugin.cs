@@ -1,33 +1,31 @@
-﻿using Accessibility;
-using Flow.Launcher.Core.Resource;
+﻿using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using ICSharpCode.SharpZipLib.Zip;
-using JetBrains.Annotations;
 using Microsoft.IO;
-using System.Text.Json.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using CheckBox = System.Windows.Controls.CheckBox;
 using Control = System.Windows.Controls.Control;
-using Label = System.Windows.Controls.Label;
 using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Data;
+using System.Windows.Documents;
+using static System.Windows.Forms.LinkLabel;
+using Droplex;
+using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -40,10 +38,6 @@ namespace Flow.Launcher.Core.Plugin
         protected PluginInitContext context;
         public const string JsonRPC = "JsonRPC";
 
-        /// <summary>
-        /// The language this JsonRPCPlugin support
-        /// </summary>
-        public abstract string SupportedLanguage { get; set; }
         protected abstract Task<Stream> RequestAsync(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
         protected abstract string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default);
 
@@ -69,7 +63,13 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
+#pragma warning disable SYSLIB0020
+            // IgnoreNullValues is obsolete, but the replacement JsonIgnoreCondition.WhenWritingNull still 
+            // deserializes null, instead of ignoring it and leaving the default (empty list). We can change the behaviour
+            // to accept null and fallback to a default etc, or just keep IgnoreNullValues for now
+            // see: https://github.com/dotnet/runtime/issues/39152
             IgnoreNullValues = true,
+#pragma warning restore SYSLIB0020 // Type or member is obsolete
             Converters =
             {
                 new JsonObjectConverter()
@@ -82,16 +82,19 @@ namespace Flow.Launcher.Core.Plugin
         };
         private Dictionary<string, object> Settings { get; set; }
 
-        private Dictionary<string, FrameworkElement> _settingControls = new();
+        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         private async Task<List<Result>> DeserializedResultAsync(Stream output)
         {
-            if (output == Stream.Null) return null;
+            await using (output)
+            {
+                if (output == Stream.Null) return null;
 
-            var queryResponseModel =
-                await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
+                var queryResponseModel =
+                    await JsonSerializer.DeserializeAsync<JsonRPCQueryResponseModel>(output, options);
 
-            return ParseResults(queryResponseModel);
+                return ParseResults(queryResponseModel);
+            }
         }
 
         private List<Result> DeserializedResult(string output)
@@ -133,7 +136,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                     else
                     {
-                        var actionResponse = await RequestAsync(result.JsonRPCAction);
+                        await using var actionResponse = await RequestAsync(result.JsonRPCAction);
 
                         if (actionResponse.Length == 0)
                         {
@@ -241,73 +244,54 @@ namespace Flow.Launcher.Core.Plugin
 
         protected async Task<Stream> ExecuteAsync(ProcessStartInfo startInfo, CancellationToken token = default)
         {
-            Process process = null;
-            using var exitTokenSource = new CancellationTokenSource();
+            using var process = Process.Start(startInfo);
+            if (process == null)
+            {
+                Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
+                return Stream.Null;
+            }
+
+            var sourceBuffer = BufferManager.GetStream();
+            using var errorBuffer = BufferManager.GetStream();
+
+            var sourceCopyTask = process.StandardOutput.BaseStream.CopyToAsync(sourceBuffer, token);
+            var errorCopyTask = process.StandardError.BaseStream.CopyToAsync(errorBuffer, token);
+
+            await using var registeredEvent = token.Register(() =>
+            {
+                if (!process.HasExited)
+                    process.Kill();
+                sourceBuffer.Dispose();
+            });
+
             try
             {
-                process = Process.Start(startInfo);
-                if (process == null)
-                {
-                    Log.Error("|JsonRPCPlugin.ExecuteAsync|Can't start new process");
-                    return Stream.Null;
-                }
-
-
-                await using var source = process.StandardOutput.BaseStream;
-
-                var buffer = BufferManager.GetStream();
-
-                token.Register(() =>
-                {
-                    // ReSharper disable once AccessToModifiedClosure
-                    // Manually Check whether disposed
-                    if (!exitTokenSource.IsCancellationRequested && !process.HasExited)
-                        process.Kill();
-                });
-
-                try
-                {
-                    // token expire won't instantly trigger the exception, 
-                    // manually kill process at before
-                    await source.CopyToAsync(buffer, token);
-                }
-                catch (OperationCanceledException)
-                {
-                    await buffer.DisposeAsync();
-                    return Stream.Null;
-                }
-
-                buffer.Seek(0, SeekOrigin.Begin);
-
-                token.ThrowIfCancellationRequested();
-
-                if (buffer.Length == 0)
-                {
-                    var errorMessage = process.StandardError.EndOfStream ?
-                        "Empty JSONRPC Response" :
-                        await process.StandardError.ReadToEndAsync();
-                    throw new InvalidDataException($"{context.CurrentPluginMetadata.Name}|{errorMessage}");
-                }
-
-                if (!process.StandardError.EndOfStream)
-                {
-                    using var standardError = process.StandardError;
-                    var error = await standardError.ReadToEndAsync();
-
-                    if (!string.IsNullOrEmpty(error))
-                    {
-                        Log.Error($"|{context.CurrentPluginMetadata.Name}.{nameof(ExecuteAsync)}|{error}");
-                    }
-                }
-
-                return buffer;
+                // token expire won't instantly trigger the exception, 
+                // manually kill process at before
+                await process.WaitForExitAsync(token);
+                await Task.WhenAll(sourceCopyTask, errorCopyTask);
             }
-            finally
+            catch (OperationCanceledException)
             {
-                exitTokenSource.Cancel();
-                process?.Dispose();
+                await sourceBuffer.DisposeAsync();
+                return Stream.Null;
             }
+
+            switch (sourceBuffer.Length, errorBuffer.Length)
+            {
+                case (0, 0):
+                    const string errorMessage = "Empty JSON-RPC Response.";
+                    Log.Warn($"|{nameof(JsonRPCPlugin)}.{nameof(ExecuteAsync)}|{errorMessage}");
+                    break;
+                case (_, not 0):
+                    throw new InvalidDataException(Encoding.UTF8.GetString(errorBuffer.ToArray())); // The process has exited with an error message
+            }
+
+            sourceBuffer.Seek(0, SeekOrigin.Begin);
+            
+            return sourceBuffer;
         }
+
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
@@ -356,124 +340,240 @@ namespace Flow.Launcher.Core.Plugin
             this.context = context;
             await InitSettingAsync();
         }
-        private static readonly Thickness settingControlMargin = new(10, 4, 10, 4);
-        private static readonly Thickness settingPanelMargin = new(15, 20, 15, 20);
-        private static readonly Thickness settingTextBlockMargin = new(10, 4, 10, 4);
+        private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
+        private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
+        private static readonly Thickness settingPanelMargin = new(0, 0, 0, 0);
+        private static readonly Thickness settingTextBlockMargin = new(70, 9, 18, 9);
+        private static readonly Thickness settingLabelPanelMargin = new(70, 9, 18, 9);
+        private static readonly Thickness settingLabelMargin = new(0, 0, 0, 0);
+        private static readonly Thickness settingDescMargin = new(0, 2, 0, 0);
+        private static readonly Thickness settingSepMargin = new(0, 0, 0, 2);
         private JsonRpcConfigurationModel _settingsTemplate;
+
         public Control CreateSettingPanel()
         {
             if (Settings == null)
                 return new();
             var settingWindow = new UserControl();
-            var mainPanel = new StackPanel
+            var mainPanel = new Grid
             {
-                Margin = settingPanelMargin, Orientation = Orientation.Vertical
+                Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center
             };
-            settingWindow.Content = mainPanel;
+            ColumnDefinition gridCol1 = new ColumnDefinition();
+            ColumnDefinition gridCol2 = new ColumnDefinition();
 
+            gridCol1.Width = new GridLength(70, GridUnitType.Star);
+            gridCol2.Width = new GridLength(30, GridUnitType.Star);
+            mainPanel.ColumnDefinitions.Add(gridCol1);
+            mainPanel.ColumnDefinitions.Add(gridCol2);
+            settingWindow.Content = mainPanel;
+            int rowCount = 0;
             foreach (var (type, attribute) in _settingsTemplate.Body)
             {
+                Separator sep = new Separator();
+                sep.VerticalAlignment = VerticalAlignment.Top;
+                sep.Margin = settingSepMargin;
+                sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
                 var panel = new StackPanel
                 {
-                    Orientation = Orientation.Horizontal, Margin = settingControlMargin
+                    Orientation = Orientation.Vertical, VerticalAlignment = VerticalAlignment.Center,
+                    Margin = settingLabelPanelMargin
                 };
+                RowDefinition gridRow = new RowDefinition();
+                mainPanel.RowDefinitions.Add(gridRow);
                 var name = new TextBlock()
                 {
                     Text = attribute.Label,
-                    Width = 120,
                     VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingControlMargin,
+                    Margin = settingLabelMargin,
                     TextWrapping = TextWrapping.WrapWithOverflow
                 };
+                var desc = new TextBlock()
+                {
+                    Text = attribute.Description, FontSize = 12,
+                    VerticalAlignment = VerticalAlignment.Center,Margin = settingDescMargin,
+                    TextWrapping = TextWrapping.WrapWithOverflow
+                };
+                desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
+
+                if (attribute.Description == null) /* if no description, hide */
+                    desc.Visibility = Visibility.Collapsed;
+
+
+                if (type != "textBlock") /* if textBlock, hide desc */
+                {
+                    panel.Children.Add(name);
+                    panel.Children.Add(desc);
+                }
+                    
+
+                Grid.SetColumn(panel, 0);
+                Grid.SetRow(panel, rowCount);
 
                 FrameworkElement contentControl;
 
                 switch (type)
                 {
                     case "textBlock":
+                    {
+                        contentControl = new TextBlock
                         {
-                            contentControl = new TextBlock
-                            {
-                                Text = attribute.Description.Replace("\\r\\n", "\r\n"),
-                                Margin = settingTextBlockMargin,
-                                MaxWidth = 500,
-                                TextWrapping = TextWrapping.WrapWithOverflow
-                            };
+                            Text = attribute.Description.Replace("\\r\\n", "\r\n"),
+                            Margin = settingTextBlockMargin,
+                            Padding = new Thickness(0,0,0,0),
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                            TextAlignment = TextAlignment.Left,
+                            TextWrapping = TextWrapping.Wrap
+                        };
+                            Grid.SetColumn(contentControl, 0);
+                            Grid.SetColumnSpan(contentControl, 2);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
                             break;
-                        }
+                    }
                     case "input":
+                    {
+                        var textBox = new TextBox()
+                        {
+                            Text = Settings[attribute.Name] as string ?? string.Empty,
+                            Margin = settingControlMargin,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                            ToolTip = attribute.Description
+                        };
+                        textBox.TextChanged += (_, _) =>
+                        {
+                            Settings[attribute.Name] = textBox.Text;
+                        };
+                        contentControl = textBox;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
+                            break;
+                    }
+                    case "inputWithFileBtn":
                         {
                             var textBox = new TextBox()
                             {
-                                Width = 300,
+                                Margin = new Thickness(10, 0, 0, 0),
                                 Text = Settings[attribute.Name] as string ?? string.Empty,
-                                Margin = settingControlMargin,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
                                 ToolTip = attribute.Description
                             };
                             textBox.TextChanged += (_, _) =>
                             {
                                 Settings[attribute.Name] = textBox.Text;
                             };
-                            contentControl = textBox;
+                            var Btn = new System.Windows.Controls.Button()
+                            {
+                                Margin = new Thickness(10,0,0,0),
+                                Content = "Browse"
+                            };
+                            var dockPanel = new DockPanel()
+                            {
+                                Margin = settingControlMargin
+                            };
+                            DockPanel.SetDock(Btn, Dock.Right);
+                            dockPanel.Children.Add(Btn);
+                            dockPanel.Children.Add(textBox);
+                            contentControl = dockPanel;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
                             break;
                         }
                     case "textarea":
+                    {
+                        var textBox = new TextBox()
                         {
-                            var textBox = new TextBox()
-                            {
-                                Width = 300,
-                                Height = 120,
-                                Margin = settingControlMargin,
-                                TextWrapping = TextWrapping.WrapWithOverflow,
-                                AcceptsReturn = true,
-                                Text = Settings[attribute.Name] as string ?? string.Empty,
-                                ToolTip = attribute.Description
-                            };
-                            textBox.TextChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = ((TextBox)sender).Text;
-                            };
-                            contentControl = textBox;
+                            Height = 120,
+                            Margin = settingControlMargin,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            TextWrapping = TextWrapping.WrapWithOverflow,
+                            AcceptsReturn = true,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                            Text = Settings[attribute.Name] as string ?? string.Empty,
+                            ToolTip = attribute.Description
+                        };
+                        textBox.TextChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = ((TextBox)sender).Text;
+                        };
+                        contentControl = textBox;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
                             break;
-                        }
+                    }
                     case "passwordBox":
+                    {
+                        var passwordBox = new PasswordBox()
                         {
-                            var passwordBox = new PasswordBox()
-                            {
-                                Width = 300,
-                                Margin = settingControlMargin,
-                                Password = Settings[attribute.Name] as string ?? string.Empty,
-                                PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
-                                ToolTip = attribute.Description
-                            };
-                            passwordBox.PasswordChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = ((PasswordBox)sender).Password;
-                            };
-                            contentControl = passwordBox;
+                            Margin = settingControlMargin,
+                            Password = Settings[attribute.Name] as string ?? string.Empty,
+                            PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                            ToolTip = attribute.Description
+                        };
+                        passwordBox.PasswordChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = ((PasswordBox)sender).Password;
+                        };
+                        contentControl = passwordBox;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
                             break;
-                        }
+                    }
                     case "dropdown":
+                    {
+                        var comboBox = new System.Windows.Controls.ComboBox()
                         {
-                            var comboBox = new ComboBox()
-                            {
-                                ItemsSource = attribute.Options,
-                                SelectedItem = Settings[attribute.Name],
-                                Margin = settingControlMargin,
-                                ToolTip = attribute.Description
-                            };
-                            comboBox.SelectionChanged += (sender, _) =>
-                            {
-                                Settings[attribute.Name] = (string)((ComboBox)sender).SelectedItem;
-                            };
-                            contentControl = comboBox;
+                            ItemsSource = attribute.Options,
+                            SelectedItem = Settings[attribute.Name],
+                            Margin = settingControlMargin,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                            ToolTip = attribute.Description
+                        };
+                        comboBox.SelectionChanged += (sender, _) =>
+                        {
+                            Settings[attribute.Name] = (string)((System.Windows.Controls.ComboBox)sender).SelectedItem;
+                        };
+                        contentControl = comboBox;
+                            Grid.SetColumn(contentControl, 1);
+                            Grid.SetRow(contentControl, rowCount);
+                            if (rowCount != 0)
+                                mainPanel.Children.Add(sep);
+                            Grid.SetRow(sep, rowCount);
+                            Grid.SetColumn(sep, 0);
+                            Grid.SetColumnSpan(sep, 2);
                             break;
-                        }
+                    }
                     case "checkbox":
                         var checkBox = new CheckBox
                         {
                             IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
-                            Margin = settingControlMargin,
+                            Margin = settingCheckboxMargin,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
                             ToolTip = attribute.Description
                         };
                         checkBox.Click += (sender, _) =>
@@ -481,18 +581,49 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
                         };
                         contentControl = checkBox;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
+                    case "hyperlink":
+                        var hyperlink = new Hyperlink
+                        {
+                            ToolTip = attribute.Description,
+                            NavigateUri = attribute.url
+                        };
+                        var linkbtn = new System.Windows.Controls.Button
+                        {
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                            Margin = settingControlMargin
+                        };
+                        linkbtn.Content = attribute.urlLabel;
+
+                        contentControl = linkbtn;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
                         break;
                     default:
                         continue;
                 }
                 if (type != "textBlock")
                     _settingControls[attribute.Name] = contentControl;
-                panel.Children.Add(name);
-                panel.Children.Add(contentControl);
                 mainPanel.Children.Add(panel);
+                mainPanel.Children.Add(contentControl);
+                rowCount++;
+                
             }
             return settingWindow;
         }
+
         public void Save()
         {
             if (Settings != null)
@@ -524,7 +655,7 @@ namespace Flow.Launcher.Core.Plugin
                         case PasswordBox passwordBox:
                             passwordBox.Dispatcher.Invoke(() => passwordBox.Password = value as string);
                             break;
-                        case ComboBox comboBox:
+                        case System.Windows.Controls.ComboBox comboBox:
                             comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
                             break;
                         case CheckBox checkBox:
@@ -535,4 +666,5 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
     }
+
 }

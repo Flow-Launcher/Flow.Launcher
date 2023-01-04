@@ -8,7 +8,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
     {
         private const int quickAccessResultScore = 100;
 
-        internal static List<Result> AccessLinkListMatched(Query query, List<AccessLink> accessLinks)
+        internal static List<Result> AccessLinkListMatched(Query query, IEnumerable<AccessLink> accessLinks)
         {
             if (string.IsNullOrEmpty(query.Search))
                 return new List<Result>();
@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
 
             var queriedAccessLinks =
                 accessLinks
-                .Where(x => x.Name.Contains(search, StringComparison.OrdinalIgnoreCase))
+                .Where(x => x.Name.Contains(search, StringComparison.OrdinalIgnoreCase) || x.Path.Contains(search, StringComparison.OrdinalIgnoreCase))
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Name);
 
@@ -29,7 +29,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
             }).ToList();
         }
 
-        internal static List<Result> AccessLinkListAll(Query query, List<AccessLink> accessLinks)
+        internal static List<Result> AccessLinkListAll(Query query, IEnumerable<AccessLink> accessLinks)
             => accessLinks
                 .OrderBy(x => x.Type)
                 .ThenBy(x => x.Name)
