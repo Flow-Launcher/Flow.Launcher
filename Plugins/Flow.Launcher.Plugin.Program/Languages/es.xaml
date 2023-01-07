@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Las extensiones de archivo no pueden estar vacías</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Los protocolos no pueden estar vacíos</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">Extensiones de archivo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Extensiones de archivo</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">Protocolos URL</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Juegos Steam</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Juegos Epic</system:String>

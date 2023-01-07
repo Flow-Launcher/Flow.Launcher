@@ -339,6 +339,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue70f"),
                 IcoPath = Constants.FileImagePath
             };
         }
@@ -371,7 +372,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                IcoPath = Constants.FileImagePath
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue756"),
+                IcoPath = Constants.FolderImagePath
             };
         }
 
@@ -437,7 +439,7 @@ namespace Flow.Launcher.Plugin.Explorer
             };
         }
 
-        public void LogException(string message, Exception e)
+        private void LogException(string message, Exception e)
         {
             Log.Exception($"|Flow.Launcher.Plugin.Folder.ContextMenu|{message}", e);
         }

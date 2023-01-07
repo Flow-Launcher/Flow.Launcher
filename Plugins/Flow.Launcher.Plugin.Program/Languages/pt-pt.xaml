@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Não pode indicar sufixos vazios</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Os protocolos não podem estar vazios</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">Sufixos de ficheiros</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Sufixos de ficheiros</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">Protocolos de URL</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
