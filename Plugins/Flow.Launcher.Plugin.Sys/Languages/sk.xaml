@@ -32,7 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Naozaj chcete počítač vypnúť?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Naozaj chcete počítač reštartovať?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Naozaj sa chcete odstrániť?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové príkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje príkazy súvisiace so systémom ako je vypnutie, uzamknutie počítača atď.</system:String>
