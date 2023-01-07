@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Pole s príponami nemôže byť prázdne</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protokoly musia byť vyplnené</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">Prípony súborov</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Prípony súborov</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">Protokoly URL</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Hry v službe Steam</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Hry v službe Epic Games</system:String>

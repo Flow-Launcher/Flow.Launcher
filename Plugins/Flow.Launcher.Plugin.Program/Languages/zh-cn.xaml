@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">文件后缀不能为空</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">协议不能为空</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">文件后缀</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">文件后缀</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL 协议</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam 游戏</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic 游戏</system:String>
