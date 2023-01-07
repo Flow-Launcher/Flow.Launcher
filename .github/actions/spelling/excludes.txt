@@ -57,12 +57,12 @@
 ^\.github/actions/spelling/
 ^\Q.github/workflows/spelling.yml\E$
 # Custom
-(?:^|/)Languages/(?!en.xaml)
+(?:^|/)Languages/(?!en\.xaml)
 Scripts/
-Plugins/Flow.Launcher.Plugin.WindowsSettings/Properties/
-Plugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json
-Plugins/Flow.Launcher.Plugin.WebSearch/setting.json
-(?:^|/)FodyWeavers.xml
+\.resx$
+^\QPlugins/Flow.Launcher.Plugin.WindowsSettings/WindowsSettings.json\E$
+^\QPlugins/Flow.Launcher.Plugin.WebSearch/setting.json\E$
+(?:^|/)FodyWeavers\.xml
 .editorconfig
 ignore$
 \.ps1$

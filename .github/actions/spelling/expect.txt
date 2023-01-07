@@ -58,3 +58,7 @@ dpi
 popup
 ptr
 pluginindicator
+TobiasSekan
+Img
+img
+resx
