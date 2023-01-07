@@ -88,7 +88,7 @@ namespace Flow.Launcher
 
                 HotKeyMapper.Initialize(_mainVM);
 
-                // happlebao todo temp fix for instance code logic
+                // todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
