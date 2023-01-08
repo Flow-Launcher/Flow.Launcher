@@ -15,7 +15,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Impossibile trovare il file dei metadati plugin.json dal file zip estratto.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Errore: esiste già un plugin che ha la stessa o maggiore versione con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Errore durante l'installazione del plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Errore durante il tentativo di installare {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Nessun aggiornamento disponibile</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Tutti i plugin sono aggiornati</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} da {1} {2}{3}Vuoi aggiornare questo plugin? Dopo l'aggiornamento, Flow si riavvierà automaticamente.</system:String>

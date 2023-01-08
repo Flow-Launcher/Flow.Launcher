@@ -53,7 +53,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Dosya uzantıları boş olamaz</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protocols can't be empty</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_excutable_types">İndekslenecek Uzantılar</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">İndekslenecek Uzantılar</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL Protocols</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
