@@ -8,6 +8,8 @@
     <Thickness x:Key="ResultMargin">0</Thickness>
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
 
+    <system:Double x:Key="ResultItemHeight">52</system:Double>
+    
     <Style x:Key="BaseBulletStyle" TargetType="{x:Type Border}" />
     <Style
         x:Key="BulletStyle"
@@ -17,6 +19,12 @@
         x:Key="ItemBulletSelectedStyle"
         BasedOn="{StaticResource BaseBulletStyle}"
         TargetType="{x:Type Border}" />
+    <Style
+        x:Key="ImageIconStyle"
+        TargetType="{x:Type Image}">
+        <Setter Property="Height" Value="32"/>
+        <Setter Property="Width" Value="32"/>
+    </Style>
 
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
         <Setter Property="BorderThickness" Value="0" />
