@@ -174,6 +174,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">클립보드에서 텍스트 가져오기</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
