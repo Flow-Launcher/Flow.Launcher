@@ -1,4 +1,5 @@
-﻿<ListBox x:Class="Flow.Launcher.ResultListBox"
+﻿<ListBox
+    x:Class="Flow.Launcher.ResultListBox"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converter="clr-namespace:Flow.Launcher.Converters"
@@ -43,7 +44,8 @@
                     </ControlTemplate>
                 </Button.Template>
                 <Button.Content>
-                    <Grid Margin="0"
+                    <Grid
+                        Margin="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Cursor="Hand"
@@ -54,32 +56,30 @@
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Style="{DynamicResource ImageAreaWidth}" />
                             <ColumnDefinition Width="9*" />
-                            <ColumnDefinition Width="Auto"
-                                MinWidth="8" />
+                            <ColumnDefinition Width="Auto" MinWidth="8" />
                         </Grid.ColumnDefinitions>
-                        <StackPanel x:Name="HotkeyArea"
+                        <StackPanel
+                            x:Name="HotkeyArea"
                             Grid.Column="2"
                             Margin="0,0,10,0"
                             VerticalAlignment="Center"
                             Visibility="{Binding ShowOpenResultHotkey}">
-                            <TextBlock x:Name="Hotkey"
+                            <TextBlock
+                                x:Name="Hotkey"
                                 Margin="12,0,12,0"
                                 Padding="0,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Style="{DynamicResource ItemHotkeyStyle}">
                                 <TextBlock.Visibility>
-                                    <Binding
-                                        Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}"
-                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
+                                    <Binding Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                 </TextBlock.Visibility>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0}+{1}">
                                         <Binding Path="OpenResultModifiers" />
-                                        <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}"
-                                            RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
+                                        <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -91,37 +91,37 @@
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
 
-                            <Border x:Name="Bullet"
+                            <Border
+                                x:Name="Bullet"
                                 Grid.Column="0"
                                 Style="{DynamicResource BulletStyle}" />
 
-                            <Border Grid.Column="1"
+                            <Border
+                                Grid.Column="1"
                                 Margin="9,0,0,0"
                                 BorderBrush="Transparent"
                                 BorderThickness="1">
-                                <Image x:Name="ImageIcon"
-                                    Style="{DynamicResource ImageIconStyle}"
+                                <Image
+                                    x:Name="ImageIcon"
                                     Margin="0,0,0,0"
                                     HorizontalAlignment="Center"
                                     IsHitTestVisible="False"
                                     RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Image, TargetNullValue={x:Null}}"
                                     Stretch="Uniform"
+                                    Style="{DynamicResource ImageIconStyle}"
                                     Visibility="{Binding ShowIcon}">
                                     <Image.Clip>
-                                        <EllipseGeometry
-                                            Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
+                                        <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
                                             <EllipseGeometry.RadiusX>
                                                 <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon"
-                                                        Path="ActualWidth" />
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
                                                     <Binding Path="Result.RoundedIcon" />
                                                 </MultiBinding>
                                             </EllipseGeometry.RadiusX>
                                             <EllipseGeometry.RadiusY>
                                                 <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon"
-                                                        Path="ActualWidth" />
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
                                                     <Binding Path="Result.RoundedIcon" />
                                                 </MultiBinding>
                                             </EllipseGeometry.RadiusY>
@@ -129,11 +129,13 @@
                                     </Image.Clip>
                                 </Image>
                             </Border>
-                            <Border Grid.Column="1"
+                            <Border
+                                Grid.Column="1"
                                 Margin="9,0,0,0"
                                 BorderBrush="Transparent"
                                 BorderThickness="0">
-                                <TextBlock x:Name="GlyphIcon"
+                                <TextBlock
+                                    x:Name="GlyphIcon"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     FontFamily="{Binding Glyph.FontFamily}"
@@ -143,35 +145,33 @@
                             </Border>
                         </Grid>
 
-                        <Grid Grid.Column="1"
+                        <Grid
+                            Grid.Column="1"
                             Margin="6,0,10,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition x:Name="SubTitleRowDefinition"
-                                    Height="Auto" />
+                                <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-                            <ProgressBar x:Name="progressbarResult"
+                            <ProgressBar
+                                x:Name="progressbarResult"
                                 Grid.Row="0"
                                 Foreground="{Binding Result.ProgressBarColor}"
                                 Value="{Binding ResultProgress, Mode=OneWay}">
                                 <ProgressBar.Style>
-                                    <Style BasedOn="{StaticResource ProgressBarResult}"
-                                        TargetType="ProgressBar">
-                                        <Setter Property="Visibility"
-                                            Value="Visible" />
+                                    <Style BasedOn="{StaticResource ProgressBarResult}" TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Visible" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Result.ProgressBar}"
-                                                Value="{x:Null}">
-                                                <Setter Property="Visibility"
-                                                    Value="Collapsed" />
+                                            <DataTrigger Binding="{Binding Result.ProgressBar}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </ProgressBar.Style>
                             </ProgressBar>
-                            <TextBlock x:Name="Title"
+                            <TextBlock
+                                x:Name="Title"
                                 Grid.Row="0"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
@@ -188,7 +188,8 @@
                                     </MultiBinding>
                                 </vm:ResultsViewModel.FormattedText>
                             </TextBlock>
-                            <TextBlock x:Name="SubTitle"
+                            <TextBlock
+                                x:Name="SubTitle"
                                 Grid.Row="1"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
@@ -203,27 +204,12 @@
             </Button>
             <!--  a result item height is 52 including margin  -->
             <DataTemplate.Triggers>
-                <DataTrigger
-                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                    Value="True">
-                    <Setter TargetName="Bullet"
-                        Property="Style"
-                        Value="{DynamicResource ItemBulletSelectedStyle}" />
-                    <Setter TargetName="Title"
-                        Property="Style"
-                        Value="{DynamicResource ItemTitleSelectedStyle}" />
-                    <Setter TargetName="SubTitle"
-                        Property="Style"
-                        Value="{DynamicResource ItemSubTitleSelectedStyle}" />
-                    <Setter TargetName="Hotkey"
-                        Property="Style"
-                        Value="{DynamicResource ItemHotkeySelectedStyle}" />
-                    <Setter TargetName="ImageIcon"
-                        Property="Style"
-                        Value="{DynamicResource ItemImageSelectedStyle}" />
-                    <Setter TargetName="GlyphIcon"
-                        Property="Style"
-                        Value="{DynamicResource ItemGlyphSelectedStyle}" />
+                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="Bullet" Property="Style" Value="{DynamicResource ItemBulletSelectedStyle}" />
+                    <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
+                    <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
+                    <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
+                    <Setter TargetName="GlyphIcon" Property="Style" Value="{DynamicResource ItemGlyphSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -231,28 +217,24 @@
     <!--  http://stackoverflow.com/questions/16819577/setting-background-color-or-wpf-4-0-listbox-windows-8/#16820062  -->
     <ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
-            <EventSetter Event="MouseEnter"
-                Handler="OnMouseEnter" />
-            <EventSetter Event="MouseMove"
-                Handler="OnMouseMove" />
-            <Setter Property="Height"
-                Value="{DynamicResource ResultItemHeight}" />
-            <Setter Property="Margin"
-                Value="0" />
-            <Setter Property="Padding"
-                Value="0" />
-            <Setter Property="BorderThickness"
-                Value="0" />
+            <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
+            <EventSetter Event="MouseMove" Handler="OnMouseMove" />
+            <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                        <Border x:Name="Bd"
+                        <Border
+                            x:Name="Bd"
                             Margin="{DynamicResource ItemMargin}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             CornerRadius="{DynamicResource ItemRadius}"
                             SnapsToDevicePixels="True">
-                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
                                 ContentStringFormat="{TemplateBinding ContentStringFormat}"
@@ -260,14 +242,9 @@
                                 SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsSelected"
-                                Value="True">
-                                <Setter TargetName="Bd"
-                                    Property="Background"
-                                    Value="{DynamicResource ItemSelectedBackgroundColor}" />
-                                <Setter TargetName="Bd"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource ItemSelectedBackgroundColor}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>

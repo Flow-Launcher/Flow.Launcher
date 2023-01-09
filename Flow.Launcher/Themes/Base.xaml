@@ -9,7 +9,7 @@
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
 
     <system:Double x:Key="ResultItemHeight">52</system:Double>
-    
+
     <Style x:Key="BaseBulletStyle" TargetType="{x:Type Border}" />
     <Style
         x:Key="BulletStyle"
@@ -19,11 +19,9 @@
         x:Key="ItemBulletSelectedStyle"
         BasedOn="{StaticResource BaseBulletStyle}"
         TargetType="{x:Type Border}" />
-    <Style
-        x:Key="ImageIconStyle"
-        TargetType="{x:Type Image}">
-        <Setter Property="Height" Value="32"/>
-        <Setter Property="Width" Value="32"/>
+    <Style x:Key="ImageIconStyle" TargetType="{x:Type Image}">
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="32" />
     </Style>
 
     <Style x:Key="BaseQueryBoxStyle" TargetType="{x:Type TextBox}">
@@ -433,6 +431,9 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
+    <Style x:Key="ImageAreaWidth" TargetType="{x:Type ColumnDefinition}">
+        <Setter Property="Width" Value="60" />
+    </Style>
     <Style
         x:Key="PreviewGlyph"
         BasedOn="{StaticResource BasePreviewGlyph}"
@@ -472,6 +473,14 @@
         </Style.Triggers>
     </Style>
     <!--  for classic themes  -->
+
+    <Style x:Key="PluginActivationIcon" TargetType="{x:Type Image}">
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Margin" Value="0,0,18,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
     <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#555555" />
         <Setter Property="Width" Value="32" />
