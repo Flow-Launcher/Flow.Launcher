@@ -27,7 +27,7 @@ namespace Flow.Launcher.Resources.Pages
             tbMsgTextOriginal = HotkeyControl.tbMsg.Text;
             tbMsgForegroundColorOriginal = HotkeyControl.tbMsg.Foreground;
 
-            HotkeyControl.SetHotkeyAsync(new Infrastructure.Hotkey.HotkeyModel(Settings.Hotkey), false);
+            HotkeyControl.SetHotkeyAsync(Settings.Hotkey, false);
         }
         private void HotkeyControl_OnGotFocus(object sender, RoutedEventArgs args)
         {
