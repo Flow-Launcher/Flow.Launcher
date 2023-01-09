@@ -325,18 +325,14 @@ namespace Flow.Launcher.ViewModel
 
         public IList<PluginViewModel> PluginViewModels
         {
-            get
-            {
-                var metadatas = PluginManager.AllPlugins
-                    .OrderBy(x => x.Metadata.Disabled)
-                    .ThenBy(y => y.Metadata.Name)
-                    .Select(p => new PluginViewModel
-                    {
-                        PluginPair = p
-                    })
-                    .ToList();
-                return metadatas;
-            }
+            get => PluginManager.AllPlugins
+                .OrderBy(x => x.Metadata.Disabled)
+                .ThenBy(y => y.Metadata.Name)
+                .Select(p => new PluginViewModel
+                {
+                    PluginPair = p
+                })
+                .ToList();
         }
 
         public IList<PluginStoreItemViewModel> ExternalPlugins

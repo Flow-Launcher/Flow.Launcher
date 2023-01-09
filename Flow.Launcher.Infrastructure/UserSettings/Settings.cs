@@ -226,7 +226,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool LeaveCmdOpen { get; set; }
-        public bool HideWhenDeactive { get; set; } = true;
+        public bool HideWhenDeactivated { get; set; } = true;
         public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 

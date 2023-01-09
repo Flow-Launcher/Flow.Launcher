@@ -36,7 +36,7 @@ namespace Flow.Launcher.Core.Resource
         {
             _themeDirectories.Add(DirectoryPath);
             _themeDirectories.Add(UserDirectoryPath);
-            MakesureThemeDirectoriesExist();
+            MakeSureThemeDirectoriesExist();
 
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.First(d =>
@@ -55,20 +55,17 @@ namespace Flow.Launcher.Core.Resource
             _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
         }
 
-        private void MakesureThemeDirectoriesExist()
+        private void MakeSureThemeDirectoriesExist()
         {
-            foreach (string dir in _themeDirectories)
+            foreach (var dir in _themeDirectories.Where(dir => !Directory.Exists(dir)))
             {
-                if (!Directory.Exists(dir))
+                try
                 {
-                    try
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
-                    }
+                    Directory.CreateDirectory(dir);
+                }
+                catch (Exception e)
+                {
+                    Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
                 }
             }
         }

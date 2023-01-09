@@ -673,7 +673,7 @@
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
                                         FocusVisualMargin="5"
-                                        IsOn="{Binding Settings.HideWhenDeactive}"
+                                        IsOn="{Binding Settings.HideWhenDeactivated}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>

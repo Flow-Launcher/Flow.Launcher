@@ -27,7 +27,7 @@
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
-    Visibility="{Binding Visbility}"
+    Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
