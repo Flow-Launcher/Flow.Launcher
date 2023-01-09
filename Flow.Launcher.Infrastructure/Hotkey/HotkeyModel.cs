@@ -11,10 +11,21 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public bool Shift { get; set; }
         public bool Win { get; set; }
         public bool Ctrl { get; set; }
-        public Key CharKey { get; set; }
 
+        private Key charKey = Key.None;
+        public Key CharKey
+        {
+            get => charKey;
+            set
+            {
+                if (ValidateHotkey(value))
+                {
+                    charKey = value;
+                }
+            }
+        }
 
-        Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
+        private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
             {Key.Space, "Space"},
             {Key.Oem3, "~"}
@@ -86,7 +97,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 Ctrl = true;
                 keys.Remove("Ctrl");
             }
-            if (keys.Count > 0)
+            if (keys.Count == 1)
             {
                 string charKey = keys[0];
                 KeyValuePair<Key, string>? specialSymbolPair = specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
@@ -110,36 +121,61 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override string ToString()
         {
-            string text = string.Empty;
+            List<string> keys = new List<string>();
             if (Ctrl)
             {
-                text += "Ctrl + ";
+                keys.Add("Ctrl");
             }
             if (Alt)
             {
-                text += "Alt + ";
+                keys.Add("Alt");
             }
             if (Shift)
             {
-                text += "Shift + ";
+                keys.Add("Shift");
             }
             if (Win)
             {
-                text += "Win + ";
+                keys.Add("Win");
             }
 
             if (CharKey != Key.None)
             {
-                text += specialSymbolDictionary.ContainsKey(CharKey)
+                keys.Add(specialSymbolDictionary.ContainsKey(CharKey)
                     ? specialSymbolDictionary[CharKey]
-                    : CharKey.ToString();
+                    : CharKey.ToString());
             }
-            else if (!string.IsNullOrEmpty(text))
-            {
-                text = text.Remove(text.Length - 3);
-            }
+            return string.Join(" + ", keys);
+        }
 
-            return text;
+        private static bool ValidateHotkey(Key key)
+        {
+            HashSet<Key> invalidKeys = new()
+            {
+                Key.LeftAlt, Key.RightAlt,
+                Key.LeftCtrl, Key.RightCtrl,
+                Key.LeftShift, Key.RightShift,
+                Key.LWin, Key.RWin,
+            };
+
+            return !invalidKeys.Contains(key);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is HotkeyModel other)
+            {
+                return ModifierKeys == other.ModifierKeys && CharKey == other.charKey;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ToString().GetHashCode();
         }
     }
 }
