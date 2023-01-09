@@ -54,9 +54,7 @@ namespace Flow.Launcher
                 specialKeyState.CtrlPressed,
                 key);
 
-            var hotkeyString = hotkeyModel.ToString();
-
-            if (hotkeyString == tbHotkey.Text)
+            if (hotkeyModel.Equals(CurrentHotkey))
             {
                 return;
             }
