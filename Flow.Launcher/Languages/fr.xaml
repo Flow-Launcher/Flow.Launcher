@@ -52,9 +52,9 @@
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore les raccourcis lorsqu'une application est en plein écran</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Désactiver l'activation de Flow Launcher lorsqu'une application en plein écran est active (Recommandé pour les jeux).</system:String>
     <system:String x:Key="defaultFileManager">Gestionnaire de fichiers par défaut</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Sélectionnez le gestionnaire de fichiers à utiliser lors de l'ouverture du dossier.</system:String>
     <system:String x:Key="defaultBrowser">Navigateur web par défaut</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Réglage pour Nouvel onglet, Nouvelle fenêtre, Mode privé.</system:String>
     <system:String x:Key="pythonFilePath">Python Path</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
@@ -66,8 +66,8 @@
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
     <system:String x:Key="hideNotifyIcon">Masquer icône du plateau</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+    <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser le pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
@@ -234,7 +234,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Navigateur web par défaut</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Navigateur</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
