@@ -407,7 +407,6 @@ namespace Flow.Launcher.ViewModel
             get { return Settings.Theme; }
             set
             {
-                Settings.Theme = value;
                 ThemeManager.Instance.ChangeTheme(value);
 
                 if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
