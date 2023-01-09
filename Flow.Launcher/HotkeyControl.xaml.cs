@@ -9,7 +9,6 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
-using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
@@ -79,7 +78,7 @@ namespace Flow.Launcher
 
             if (triggerValidate)
             {
-                CurrentHotkeyAvailable = CheckHotkeyAvailability();
+                CurrentHotkeyAvailable = CurrentHotkey.CharKey != Key.None && CheckHotkeyAvailability();
                 if (!CurrentHotkeyAvailable)
                 {
                     tbMsg.Foreground = new SolidColorBrush(Colors.Red);
