@@ -72,7 +72,7 @@
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">L'effet d'ombre n'est pas autorisé lorsque le thème actuel à un effet de flou activé</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -88,27 +88,27 @@
     <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
     <system:String x:Key="newActionKeyword">New action keyword</system:String>
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="currentPriority">Priorité actuelle</system:String>
+    <system:String x:Key="newPriority">Nouvelle priorité</system:String>
+    <system:String x:Key="priority">Priorité</system:String>
     <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Répertoire</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">par</system:String>
     <system:String x:Key="plugin_init_time">Chargement :</system:String>
     <system:String x:Key="plugin_query_time">Utilisation :</system:String>
     <system:String x:Key="plugin_query_version">Version</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Modules</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
-    <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="refresh">Rafraîchir</system:String>
+    <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Désinstaller</system:String>
     <system:String x:Key="updatebtn">Actualiser</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
@@ -121,8 +121,8 @@
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
     <system:String x:Key="browserMoreThemes">Trouver plus de thèmes</system:String>
-    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
-    <system:String x:Key="hiThere">Hi There</system:String>
+    <system:String x:Key="howToCreateTheme">Comment créer un thème</system:String>
+    <system:String x:Key="hiThere">Salut</system:String>
     <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
     <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
@@ -135,29 +135,29 @@
     <system:String x:Key="resultItemFont">Police (liste des résultats)</system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>
     <system:String x:Key="opacity">Opacité</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
-    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
-    <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
-    <system:String x:Key="ColorScheme">Color Scheme</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
-    <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Le thème {0} n'existe pas, retour au thème par défaut</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Impossible de charger le thème {0}, retour au thème par défaut</system:String>
+    <system:String x:Key="ThemeFolder">Dossier des thèmes</system:String>
+    <system:String x:Key="OpenThemeFolder">Ouvrir le dossier des thèmes</system:String>
+    <system:String x:Key="ColorScheme">Mode visuelle</system:String>
+    <system:String x:Key="ColorSchemeSystem">Suivre le système</system:String>
+    <system:String x:Key="ColorSchemeLight">Clair</system:String>
+    <system:String x:Key="ColorSchemeDark">Sombre</system:String>
+    <system:String x:Key="SoundEffect">Effet Sonore</system:String>
+    <system:String x:Key="SoundEffectTip">Jouer un petit son lorsque la fenêtre de recherche s'ouvre</system:String>
     <system:String x:Key="Animation">Animation</system:String>
-    <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
+    <system:String x:Key="AnimationTip">Utiliser l'animation dans l'interface</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
     <system:String x:Key="flowlauncherHotkey">Ouvrir Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Entrez le raccourci pour afficher/masquer Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Modificateurs de résultats ouverts</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Sélectionnez une touche de modification pour ouvrir le résultat sélectionné via le clavier.</system:String>
     <system:String x:Key="showOpenResultHotkey">Afficher le raccourci clavier</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">Requêtes personnalisées</system:String>
@@ -201,7 +201,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">À propos</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Site Web</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
@@ -237,7 +237,7 @@
     <system:String x:Key="defaultBrowserTitle">Navigateur web par défaut</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Navigateur</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nom du navigateur</system:String>
     <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
@@ -310,48 +310,48 @@
     <system:String x:Key="update_flowlauncher_update_error">Une erreur s'est produite lors de l'installation de la mise à jour</system:String>
     <system:String x:Key="update_flowlauncher_update">Actualiser</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annuler</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_fail">La mise à jour a échoué</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Vérifiez votre connexion et essayez de mettre à jour les paramètres du proxy vers github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Flow Launcher doit redémarrer pour installer cette mise à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Les fichiers suivants seront mis à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Fichiers mis à jour</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Description de la mise à jour</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
+    <system:String x:Key="Skip">Passer</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Bienvenue dans Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Bonjour, c'est la première fois que vous utilisez Flow Launcher !</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Avant de commencer, cet assistant vous aidera à configurer Flow Launcher. Vous pouvez sauter cela si vous le souhaitez. Veuillez choisir une langue</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Recherchez et exécutez tous les fichiers et applications sur votre PC</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Recherchez tout, depuis les applications, les fichiers, les signets, YouTube, Twitter et plus encore. Tout cela depuis le confort de votre clavier sans jamais toucher à la souris.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher commence avec le raccourci ci-dessous, allez-y et essayez maintenant. Pour le modifier, cliquez sur l'entrée et appuyez sur la touche de raccourci désirée du clavier.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Raccourcis claviers</system:String>
     <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Recherchez sur le web, lancez des applications ou exécutez diverses fonctions grâce aux plugins Flow Launcher. Certaines fonctions commencent par un mot clé d'action, et si nécessaire, elles peuvent être utilisées sans mots clés d'action. Essayez les requêtes ci-dessous dans Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Démarrons Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Terminé. Profitez de Flow Launcher. N'oubliez pas le raccourci pour le démarrer :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Retour / Menu contextuel</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Ouvrir le Menu Contextuel</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Exécuter en tant qu'Administrateur</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historique des Recherches</system:String>
+    <system:String x:Key="HotkeyESCDesc">Retour au résultat dans le Menu Contextuel</system:String>
+    <system:String x:Key="HotkeyTabDesc">Auto-complétion</system:String>
+    <system:String x:Key="HotkeyRunDesc">Ouvrir/Exécuter l'Élément Sélectionné</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Ouvrir la Fenêtre des Réglages</system:String>
+    <system:String x:Key="HotkeyF5Desc">Recharger les Données des Plugins</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Météo</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Météo dans les résultats Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Commande Shell</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth dans les Paramètres de Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Pense-bêtes</system:String>
 
 </ResourceDictionary>
