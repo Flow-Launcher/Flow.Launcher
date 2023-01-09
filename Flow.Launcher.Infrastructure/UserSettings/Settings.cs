@@ -13,6 +13,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel
     {
         private string language = "en";
+        private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
@@ -29,7 +30,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-        public string Theme { get; set; } = Constant.DefaultTheme;
+        public string Theme
+        {
+            get => _theme;
+            set
+            {
+                if (value == _theme)
+                    return;
+                _theme = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(MaxResultsToShow));
+            }
+        }
         public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
