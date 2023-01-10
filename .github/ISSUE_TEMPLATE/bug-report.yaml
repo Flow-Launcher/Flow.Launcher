@@ -42,13 +42,16 @@ body:
     attributes:
       label: Flow Launcher Version
       description: Go to "Settings" => "About".
-      value: v1.8.3
+    validations:
+      required: true
 
   - type: input
     attributes:
       label: Windows Build Number
-      description: Run "ver" at CMD (command prompt).
-      value: 10.0.19043.1288
+      description: Run "ver" at CMD (command prompt) or go to Windows Settings -> Systems -> About.
+    validations:
+      required: true
+
 
   - type: textarea
     id: logs
@@ -56,10 +59,12 @@ body:
       label: Error Log
       description: >
         Log file place:
+        
+        Go to "Settings" => "About" => "DevTools" => Click Tools Button => "Log Folder".
 
         - The latest version place: `%AppData%\FlowLauncher\Logs\<version>\<date>.txt`
 
-        - For portable mode: `%LocalAppData%\FlowLauncher\<App-Version>\UserData\Logs\<version>\<date>.txt`
+        - For portable mode: `Your-Flow-Location\<App-Version>\UserData\Logs\<version>\<date>.txt`
       value: >
         <details>
 
