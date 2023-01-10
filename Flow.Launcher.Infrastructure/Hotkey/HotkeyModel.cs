@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -148,7 +149,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return string.Join(" + ", keys);
         }
 
-        private static bool ValidateHotkey(Key key)
+        private bool ValidateHotkey(Key key)
         {
             HashSet<Key> invalidKeys = new()
             {
@@ -158,7 +159,15 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 Key.LWin, Key.RWin,
             };
 
-            return !invalidKeys.Contains(key);
+            if (invalidKeys.Contains(key)) 
+            {
+                return false;
+            }
+            if (ModifierKeys == ModifierKeys.None)
+            {
+                return key >= Key.F1 && key <= Key.F24;
+            }
+            return true;
         }
 
         public override bool Equals(object obj)
