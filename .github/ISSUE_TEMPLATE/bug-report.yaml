@@ -60,7 +60,7 @@ body:
     attributes:
       label: Error Log
       description: >
-        Go to "Settings" => "About" => "DevTools" => Click Tools Button => "Log Folder" and find log file containing the error info.
+        From flow type 'open log location' and find log file with the corresponding date containing the error info.
       value: >
         <details>
 
