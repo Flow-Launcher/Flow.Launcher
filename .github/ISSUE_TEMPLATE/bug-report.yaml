@@ -41,7 +41,7 @@ body:
   - type: input
     attributes:
       label: Flow Launcher Version
-      description: Go to "Settings" => "About".
+      description: Go to "Settings" => "About". If you are using a prerelease version please append the build number.
       placeholder: "1.11.0"
     validations:
       required: true
