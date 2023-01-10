@@ -1,5 +1,9 @@
 version: '1.11.0.{build}'
 
+skip_commits:
+  files:
+    - .github/*
+
 init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
