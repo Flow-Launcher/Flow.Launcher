@@ -50,7 +50,7 @@ body:
     attributes:
       label: Windows Build Number
       description: Run "ver" at CMD (command prompt) or go to Windows Settings -> Systems -> About.
-      placeholder: "10.0.19043.1288"
+      placeholder: "Example: 10.0.19043.1288"
     validations:
       required: true
 
