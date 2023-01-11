@@ -14,10 +14,6 @@ namespace Flow.Launcher
 {
     public partial class HotkeyControl : UserControl
     {
-        private Brush tbMsgForegroundColorOriginal;
-
-        private string tbMsgTextOriginal;
-
         public HotkeyModel CurrentHotkey { get; private set; }
         public bool CurrentHotkeyAvailable { get; private set; }
 
@@ -28,8 +24,6 @@ namespace Flow.Launcher
         public HotkeyControl()
         {
             InitializeComponent();
-            tbMsgTextOriginal = tbMsg.Text;
-            tbMsgForegroundColorOriginal = tbMsg.Foreground;
         }
 
         private CancellationTokenSource hotkeyUpdateSource;
@@ -110,7 +104,17 @@ namespace Flow.Launcher
 
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
-            tbMsg.Text = tbMsgTextOriginal;
+            
+        }
+
+        private void tbHotkey_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ResetMessage();
+        }
+
+        private void ResetMessage()
+        {
+            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("flowlauncherPressHotkey");
             tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
         }
     }
