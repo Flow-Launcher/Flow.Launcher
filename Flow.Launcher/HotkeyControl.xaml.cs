@@ -63,14 +63,13 @@ namespace Flow.Launcher
 
         public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
-            CurrentHotkey = keyModel;
-
-            tbHotkey.Text = CurrentHotkey.ToString();
+            tbHotkey.Text = keyModel.ToString();
             tbHotkey.Select(tbHotkey.Text.Length, 0);
 
             if (triggerValidate)
             {
                 bool hotkeyAvailable = CheckHotkeyAvailability(keyModel);
+                CurrentHotkeyAvailable = hotkeyAvailable;
                 SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
 
@@ -78,8 +77,18 @@ namespace Flow.Launcher
                 await Task.Delay(500, token);
                 if (token.IsCancellationRequested)
                     return;
-                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
-                Keyboard.ClearFocus();
+
+                if (CurrentHotkeyAvailable)
+                {
+                    CurrentHotkey = keyModel;
+                    // To trigger LostFocus
+                    FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
+                    Keyboard.ClearFocus();
+                }
+            }
+            else
+            {
+                CurrentHotkey = keyModel;
             }
         }
 
@@ -94,7 +103,7 @@ namespace Flow.Launcher
 
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         private void tbHotkey_GotFocus(object sender, RoutedEventArgs e)
