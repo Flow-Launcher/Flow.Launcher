@@ -70,7 +70,7 @@ namespace Flow.Launcher
 
             if (triggerValidate)
             {
-                bool hotkeyAvailable = keyModel.CharKey != Key.None && CheckHotkeyAvailability(keyModel);
+                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel);
                 SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
 
@@ -88,7 +88,7 @@ namespace Flow.Launcher
             return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
-        private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
+        private static bool CheckHotkeyAvailability(HotkeyModel hotkey) => hotkey.Validate() && HotKeyMapper.CheckAvailability(hotkey);
 
         public new bool IsFocused => tbHotkey.IsFocused;
 
