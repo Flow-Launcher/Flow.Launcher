@@ -103,7 +103,8 @@ namespace Flow.Launcher
 
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
-
+            tbHotkey.Text = CurrentHotkey.ToString();
+            tbHotkey.Select(tbHotkey.Text.Length, 0);
         }
 
         private void tbHotkey_GotFocus(object sender, RoutedEventArgs e)
