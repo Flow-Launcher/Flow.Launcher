@@ -177,7 +177,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override int GetHashCode()
         {
-            return this.ToString().GetHashCode();
+            return HashCode.Combine(ModifierKeys, CharKey);
         }
     }
 }
