@@ -28,19 +28,19 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 ModifierKeys modifierKeys = ModifierKeys.None;
                 if (Alt)
                 {
-                    modifierKeys = ModifierKeys.Alt;
+                    modifierKeys |= ModifierKeys.Alt;
                 }
                 if (Shift)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Shift;
+                    modifierKeys |= ModifierKeys.Shift;
                 }
                 if (Win)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Windows;
+                    modifierKeys |= ModifierKeys.Windows;
                 }
                 if (Ctrl)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Control;
+                    modifierKeys |= ModifierKeys.Control;
                 }
                 return modifierKeys;
             }
