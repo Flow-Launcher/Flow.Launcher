@@ -70,18 +70,8 @@ namespace Flow.Launcher
 
             if (triggerValidate)
             {
-                CurrentHotkeyAvailable = CurrentHotkey.CharKey != Key.None && CheckHotkeyAvailability();
-                if (!CurrentHotkeyAvailable)
-                {
-                    tbMsg.Foreground = new SolidColorBrush(Colors.Red);
-                    tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
-                }
-                else
-                {
-                    tbMsg.Foreground = new SolidColorBrush(Colors.Green);
-                    tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
-                }
-                tbMsg.Visibility = Visibility.Visible;
+                bool hotkeyAvailable = keyModel.CharKey != Key.None && CheckHotkeyAvailability(keyModel);
+                SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
 
                 var token = hotkeyUpdateSource.Token;
@@ -116,6 +106,21 @@ namespace Flow.Launcher
         {
             tbMsg.Text = InternationalizationManager.Instance.GetTranslation("flowlauncherPressHotkey");
             tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
+        }
+
+        private void SetMessage(bool hotkeyAvailable)
+        {
+            if (!hotkeyAvailable)
+            {
+                tbMsg.Foreground = new SolidColorBrush(Colors.Red);
+                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
+            }
+            else
+            {
+                tbMsg.Foreground = new SolidColorBrush(Colors.Green);
+                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
+            }
+            tbMsg.Visibility = Visibility.Visible;
         }
     }
 }
