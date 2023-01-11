@@ -13,18 +13,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public bool Win { get; set; }
         public bool Ctrl { get; set; }
 
-        private Key charKey = Key.None;
-        public Key CharKey
-        {
-            get => charKey;
-            set
-            {
-                if (ValidateHotkey(value))
-                {
-                    charKey = value;
-                }
-            }
-        }
+        public Key CharKey { get; set; } = Key.None;
 
         private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
@@ -149,32 +138,36 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return string.Join(" + ", keys);
         }
 
-        private bool ValidateHotkey(Key key)
+        public bool Validate()
         {
-            HashSet<Key> invalidKeys = new()
+            switch (CharKey)
             {
-                Key.LeftAlt, Key.RightAlt,
-                Key.LeftCtrl, Key.RightCtrl,
-                Key.LeftShift, Key.RightShift,
-                Key.LWin, Key.RWin,
-            };
-
-            if (invalidKeys.Contains(key)) 
-            {
-                return false;
+                case Key.LeftAlt:
+                case Key.RightAlt:
+                case Key.LeftCtrl:
+                case Key.RightCtrl:
+                case Key.LeftShift:
+                case Key.RightShift:
+                case Key.LWin:
+                case Key.RWin:
+                    return false;
+                default:
+                    if (ModifierKeys == ModifierKeys.None)
+                    {
+                        return CharKey >= Key.F1 && CharKey <= Key.F24;
+                    }
+                    else
+                    {
+                        return CharKey != Key.None;
+                    }
             }
-            if (ModifierKeys == ModifierKeys.None)
-            {
-                return key >= Key.F1 && key <= Key.F24;
-            }
-            return true;
         }
 
         public override bool Equals(object obj)
         {
             if (obj is HotkeyModel other)
             {
-                return ModifierKeys == other.ModifierKeys && CharKey == other.charKey;
+                return ModifierKeys == other.ModifierKeys && CharKey == other.CharKey;
             }
             else
             {
