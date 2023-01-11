@@ -154,7 +154,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 default:
                     if (ModifierKeys == ModifierKeys.None)
                     {
-                        return CharKey >= Key.F1 && CharKey <= Key.F24;
+                        return !((CharKey >= Key.A && CharKey <= Key.Z) ||
+                            (CharKey >= Key.D0 && CharKey <= Key.D9) ||
+                            (CharKey >= Key.NumPad0 && CharKey <= Key.NumPad9));
                     }
                     else
                     {
