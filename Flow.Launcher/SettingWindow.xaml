@@ -673,7 +673,7 @@
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
                                         FocusVisualMargin="5"
-                                        IsOn="{Binding Settings.HideWhenDeactive}"
+                                        IsOn="{Binding Settings.HideWhenDeactivated}"
                                         Style="{DynamicResource SideToggleSwitch}" />
                                 </ItemsControl>
                             </Border>
@@ -1821,7 +1821,7 @@
                                                 </Border.Clip>
                                                 <Grid>
                                                     <Grid.RowDefinitions>
-                                                        <RowDefinition Height="54" />
+                                                        <RowDefinition Height="Auto" />
                                                         <RowDefinition />
                                                         <RowDefinition />
                                                     </Grid.RowDefinitions>
@@ -2438,7 +2438,7 @@
                                     <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource previewHotkey}"/>
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource previewHotkey}" />
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource previewHotkeyToolTip}" />
                                             </StackPanel>
                                             <flowlauncher:HotkeyControl
