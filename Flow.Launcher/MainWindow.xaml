@@ -9,6 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
     Name="FlowMainWindow"
     Title="Flow Launcher"
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
