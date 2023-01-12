@@ -13,7 +13,7 @@
     d:DesignWidth="100"
     Focusable="False"
     IsSynchronizedWithCurrentItem="True"
-    ItemsSource="{Binding Results}"
+    ItemsSource="{Binding Display}"
     KeyboardNavigation.DirectionalNavigation="Cycle"
     PreviewMouseDown="ListBox_PreviewMouseDown"
     PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
@@ -26,8 +26,8 @@
     SelectionMode="Single"
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingStackPanel.IsVirtualizing="True"
-    VirtualizingStackPanel.VirtualizationMode="Standard"
-    Visibility="{Binding Visbility}"
+    VirtualizingStackPanel.VirtualizationMode="Recycling"
+    Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 

@@ -173,7 +173,7 @@ namespace Flow.Launcher.ViewModel
                     var token = e.Token == default ? _updateToken : e.Token;
 
                     PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, token)))
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, token)))
                     {
                         Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                     }
@@ -535,13 +535,13 @@ namespace Flow.Launcher.ViewModel
                 _selectedResults = value;
                 if (SelectedIsFromQueryResults())
                 {
-                    ContextMenu.Visbility = Visibility.Collapsed;
-                    History.Visbility = Visibility.Collapsed;
+                    ContextMenu.Visibility = Visibility.Collapsed;
+                    History.Visibility = Visibility.Collapsed;
                     ChangeQueryText(_queryTextBeforeLeaveResults);
                 }
                 else
                 {
-                    Results.Visbility = Visibility.Collapsed;
+                    Results.Visibility = Visibility.Collapsed;
                     _queryTextBeforeLeaveResults = QueryText;
 
 
@@ -559,7 +559,7 @@ namespace Flow.Launcher.ViewModel
                     }
                 }
 
-                _selectedResults.Visbility = Visibility.Visible;
+                _selectedResults.Visibility = Visibility.Visible;
             }
         }
 
@@ -710,7 +710,7 @@ namespace Flow.Launcher.ViewModel
             if (query == null) // shortcut expanded
             {
                 Results.Clear();
-                Results.Visbility = Visibility.Collapsed;
+                // Results.Visbility = Visibility.Collapsed;
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;
@@ -814,7 +814,7 @@ namespace Flow.Launcher.ViewModel
 
                 results ??= _emptyResult;
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, currentCancellationToken)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
@@ -1037,7 +1037,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return;
