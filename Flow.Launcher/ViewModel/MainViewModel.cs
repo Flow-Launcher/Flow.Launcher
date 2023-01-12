@@ -710,7 +710,7 @@ namespace Flow.Launcher.ViewModel
             if (query == null) // shortcut expanded
             {
                 Results.Clear();
-                // Results.Visbility = Visibility.Collapsed;
+                // Results.Visibility = Visibility.Collapsed;
                 PluginIconPath = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;

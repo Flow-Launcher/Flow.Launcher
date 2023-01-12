@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure
         {
             var explorerWindow = GetActiveExplorer();
             string locationUrl = explorerWindow?.LocationURL;
-            return !string.IsNullOrEmpty(locationUrl) ? new Uri(locationUrl).LocalPath : null;
+            return !string.IsNullOrEmpty(locationUrl) ? new Uri(locationUrl).LocalPath + "\\" : null;
         }
 
         /// <summary>

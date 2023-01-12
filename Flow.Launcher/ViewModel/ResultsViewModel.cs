@@ -60,7 +60,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public int MaxHeight => MaxResults * 52;
+        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
 
         public int SelectedIndex { get; set; }
 
