@@ -27,8 +27,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var usePathSearchActionKeyword = Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled;
 
-            var pathSearchActionKeyword = Settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign 
-                ? string.Empty 
+            var pathSearchActionKeyword = Settings.PathSearchActionKeyword == Query.GlobalPluginWildcardSign
+                ? string.Empty
                 : $"{Settings.PathSearchActionKeyword} ";
 
             var searchActionKeyword = Settings.SearchActionKeyword == Query.GlobalPluginWildcardSign
@@ -36,7 +36,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 : $"{Settings.SearchActionKeyword} ";
 
             var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
-            
+
             var formatted_path = path;
 
             if (type == ResultType.Folder)
@@ -49,8 +49,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
         {
             return !Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled
-                        ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
-                        : GetPathWithActionKeyword(path, resultType, query.ActionKeyword);
+                ? $"{query.ActionKeyword} {title}" // Only Quick Access action keyword is used in this scenario
+                : GetPathWithActionKeyword(path, resultType, query.ActionKeyword);
         }
 
         public static Result CreateResult(Query query, SearchResult result)
@@ -215,9 +215,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo {
-                IsMedia = true,
-                PreviewImagePath = filePath,
+            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo
+            {
+                IsMedia = true, PreviewImagePath = filePath,
             } : Result.PreviewInfo.Default;
 
             var title = Path.GetFileName(filePath);
@@ -246,6 +246,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                     {
                                         FileName = filePath,
                                         UseShellExecute = true,
+                                        WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
                                         Verb = "runas",
                                     });
                                 }
@@ -286,8 +287,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public static bool IsMedia(string extension)
         {
             if (string.IsNullOrEmpty(extension))
-            { 
-                return false; 
+            {
+                return false;
             }
             else
             {
@@ -295,7 +296,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
+        public static readonly string[] MediaExtensions =
+        {
+            ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4"
+        };
     }
 
     public enum ResultType
