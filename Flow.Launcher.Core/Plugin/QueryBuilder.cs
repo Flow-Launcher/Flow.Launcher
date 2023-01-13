@@ -34,7 +34,7 @@ namespace Flow.Launcher.Core.Plugin
                 searchTerms = terms;
             }
 
-            var query = new Query(rawQuery, search,terms, searchTerms, actionKeyword);
+            var query = new Query(rawQuery, search, terms, searchTerms, actionKeyword);
 
             return query;
         }
