@@ -4,6 +4,7 @@ using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Plugin.Explorer.Views;
 using System;
+using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -57,6 +58,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+
+            Regex regex = new Regex(@"[<>:""'/|?*\\]");
+            String filteredSearch = regex.Replace(query.Search, "");
+            query = new Query(query.RawQuery, filteredSearch, query.Terms, query.SearchTerms, query.ActionKeyword);
+
             try
             {
                 return await searchManager.SearchAsync(query, token);
