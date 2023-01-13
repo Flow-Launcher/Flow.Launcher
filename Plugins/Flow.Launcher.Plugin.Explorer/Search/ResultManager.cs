@@ -40,8 +40,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var formatted_path = path;
 
             if (type == ResultType.Folder)
-                // the seperator is needed so when navigating the folder structure contents of the folder are listed
-                formatted_path = path.EndsWith(Constants.DirectorySeperator) ? path : path + Constants.DirectorySeperator;
+                // the separator is needed so when navigating the folder structure contents of the folder are listed
+                formatted_path = path.EndsWith(Constants.DirectorySeparator) ? path : path + Constants.DirectorySeparator;
 
             return $"{keyword}{formatted_path}";
         }
@@ -187,9 +187,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateOpenCurrentFolderResult(string path, string actionKeyword, bool windowsIndexed = false)
         {
-            // Path passed from PathSearchAsync ends with Constants.DirectorySeperator ('\'), need to remove the seperator
+            // Path passed from PathSearchAsync ends with Constants.DirectorySeparator ('\'), need to remove the separator
             // so it's consistent with folder results returned by index search which does not end with one
-            var folderPath = path.TrimEnd(Constants.DirectorySeperator);
+            var folderPath = path.TrimEnd(Constants.DirectorySeparator);
 
             return new Result
             {
