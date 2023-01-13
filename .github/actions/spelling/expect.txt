@@ -84,3 +84,5 @@ otf
 searchplugin
 Noresult
 wpftk
+mkv
+flac
