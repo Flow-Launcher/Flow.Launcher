@@ -743,7 +743,7 @@ namespace Flow.Launcher.ViewModel
 
             var plugins = PluginManager.ValidPluginsForQuery(query);
 
-            if (query == null || plugins.Count == 0) // shortcut expanded
+            if (query == null || plugins.Length == 0) // shortcut expanded
             {
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
@@ -751,7 +751,7 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
                 return;
             }
-            else if (plugins.Count == 1)
+            else if (plugins.Length == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
                 SearchIconVisibility = Visibility.Hidden;

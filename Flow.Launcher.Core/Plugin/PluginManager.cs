@@ -164,20 +164,22 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public static ICollection<PluginPair> ValidPluginsForQuery(Query query)
+        public static PluginPair[] ValidPluginsForQuery(Query query)
         {
             if (query is null)
-                return Array.Empty<PluginPair>();
-            
-            if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
-                return GlobalPlugins.Where(x=>!x.Metadata.Disabled).ToList();
-            
-            
-            var plugin = NonGlobalPlugins[query.ActionKeyword];
-            return new List<PluginPair>
             {
-                plugin
-            };
+                return Array.Empty<PluginPair>();
+            }
+            
+            string actionKeyword = query.ActionKeyword;
+            if (NonGlobalPlugins.TryGetValue(actionKeyword, out var plugin))
+            {
+                return plugin.Metadata.Disabled ? Array.Empty<PluginPair>() : new[] { plugin };
+            }
+            else
+            {
+                return GlobalPlugins.Where(x => !x.Metadata.Disabled).ToArray();
+            }
         }
 
         public static async Task<List<Result>> QueryForPluginAsync(PluginPair pair, Query query, CancellationToken token)
