@@ -811,7 +811,7 @@
                                                 DisplayMemberPath="Display"
                                                 FontSize="14"
                                                 ItemsSource="{Binding SearchDelays}"
-                                                SelectedValue="{Binding Settings.SearchDelay}"
+                                                SelectedValue="{Binding Settings.GlobalSearchDelay}"
                                                 SelectedValuePath="Value" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe916;

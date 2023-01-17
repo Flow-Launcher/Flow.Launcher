@@ -68,7 +68,7 @@
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchDelay">Search Delay</system:String>
+    <system:String x:Key="querySearchDelay">Global Search Delay</system:String>
     <system:String x:Key="querySearchDelayToolTip">Sets the speed at which search results appear when typing is stopped. Default is 50ms.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>

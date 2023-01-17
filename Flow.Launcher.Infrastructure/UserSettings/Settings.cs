@@ -60,7 +60,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string DateFormat { get; set; } = "MM'/'dd ddd";
         public bool FirstLaunch { get; set; } = true;
         
-        public int SearchDelay { get; set; } = 50;
+        public int GlobalSearchDelay { get; set; } = 50;
 
         public double SettingWindowWidth { get; set; } = 1000;
         public double SettingWindowHeight { get; set; } = 700;

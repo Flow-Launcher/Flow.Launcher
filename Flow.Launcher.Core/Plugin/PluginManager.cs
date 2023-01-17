@@ -170,7 +170,7 @@ namespace Flow.Launcher.Core.Plugin
                 return Array.Empty<PluginPair>();
             
             if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
-                return GlobalPlugins;
+                return GlobalPlugins.Where(x=>!x.Metadata.Disabled).ToList();
             
             
             var plugin = NonGlobalPlugins[query.ActionKeyword];
