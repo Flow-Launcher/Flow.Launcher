@@ -32,6 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">您确定要关机吗？</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">您确定要重启吗</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">您确定要以高级启动选项重启计算机吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">你确定要注销吗？</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">系统命令</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">系统系统相关的命令。例如，关机，锁定，设置等</system:String>

@@ -32,6 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Tem certeza de que deseja desligar o computador?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Tem a certeza que deseja reiniciar o computador?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Tem certeza de que deseja reiniciar o computador com as opções avançadas de arranque?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Tem certeza de que deseja terminar a sessão?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos do sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Disponibiliza os comandos relacionados com o sistema tais como: desligar, bloquear, reiniciar...</system:String>

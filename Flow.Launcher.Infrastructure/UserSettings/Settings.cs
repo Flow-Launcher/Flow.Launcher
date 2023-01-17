@@ -13,6 +13,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel
     {
         private string language = "en";
+        private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
@@ -29,7 +30,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-        public string Theme { get; set; } = Constant.DefaultTheme;
+        public string Theme
+        {
+            get => _theme;
+            set
+            {
+                if (value == _theme)
+                    return;
+                _theme = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(MaxResultsToShow));
+            }
+        }
         public bool UseDropShadowEffect { get; set; } = false;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
@@ -194,8 +206,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public ObservableCollection<CustomShortcutModel> CustomShortcuts { get; set; } = new ObservableCollection<CustomShortcutModel>();
 
         [JsonIgnore]
-        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new ObservableCollection<BuiltinShortcutModel>() { 
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText)
+        public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
+        {
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText), 
+            new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
         public bool DontPromptUpdateMsg { get; set; }
@@ -214,7 +228,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool LeaveCmdOpen { get; set; }
-        public bool HideWhenDeactive { get; set; } = true;
+        public bool HideWhenDeactivated { get; set; } = true;
         public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 

@@ -95,11 +95,11 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var reuslt = MessageBox.Show(
+                        var result = MessageBox.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (reuslt == MessageBoxResult.Yes)
+                        if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
                         }
@@ -152,7 +152,18 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
-                    Action = c => ExitWindowsEx(EWX_LOGOFF, 0)
+                    Action = c =>
+                    {
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        
+                        if (result == MessageBoxResult.Yes)
+                            ExitWindowsEx(EWX_LOGOFF, 0);
+
+                        return true;
+                    }
                 },
                 new Result
                 {

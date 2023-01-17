@@ -33,7 +33,7 @@ namespace Flow.Launcher.Plugin.Shell
             string cmd = query.Search;
             if (string.IsNullOrEmpty(cmd))
             {
-                return ResultsFromlHistory();
+                return ResultsFromHistory();
             }
             else
             {
@@ -55,8 +55,8 @@ namespace Flow.Launcher.Plugin.Shell
                     else if (Directory.Exists(Path.GetDirectoryName(excmd) ?? string.Empty))
                     {
                         basedir = Path.GetDirectoryName(excmd);
-                        var dirn = Path.GetDirectoryName(cmd);
-                        dir = (dirn.EndsWith("/") || dirn.EndsWith(@"\")) ? dirn : cmd.Substring(0, dirn.Length + 1);
+                        var dirName = Path.GetDirectoryName(cmd);
+                        dir = (dirName.EndsWith("/") || dirName.EndsWith(@"\")) ? dirName : cmd.Substring(0, dirName.Length + 1);
                     }
 
                     if (basedir != null)
@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Shell
             return result;
         }
 
-        private List<Result> ResultsFromlHistory()
+        private List<Result> ResultsFromHistory()
         {
             IEnumerable<Result> history = _settings.CommandHistory.OrderByDescending(o => o.Value)
                 .Select(m => new Result
@@ -204,7 +204,7 @@ namespace Flow.Launcher.Plugin.Shell
                     info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
 
                     //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
-                    //// Previous code using ArgumentList, commands needed to be seperated correctly:                      
+                    //// Previous code using ArgumentList, commands needed to be separated correctly:                      
                     //// Incorrect:
                     // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
                     // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
@@ -377,9 +377,9 @@ namespace Flow.Launcher.Plugin.Shell
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            var resultlist = new List<Result>
+            var results = new List<Result>
             {
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_different_user"),
                     AsyncAction = async c =>
@@ -390,7 +390,7 @@ namespace Flow.Launcher.Plugin.Shell
                     IcoPath = "Images/user.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
                 },
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_run_as_administrator"),
                     Action = c =>
@@ -401,7 +401,7 @@ namespace Flow.Launcher.Plugin.Shell
                     IcoPath = "Images/admin.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
                 },
-                new Result
+                new()
                 {
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
@@ -414,7 +414,7 @@ namespace Flow.Launcher.Plugin.Shell
                 }
             };
 
-            return resultlist;
+            return results;
         }
     }
 }

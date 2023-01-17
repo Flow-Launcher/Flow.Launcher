@@ -38,7 +38,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         public void InitAppsInPackage(Package package)
         {
-            var applist = new List<Application>();
+            var apps = new List<Application>();
             // WinRT
             var appListEntries = package.GetAppListEntries();
             foreach (var app in appListEntries)
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 try
                 {
                     var tmp = new Application(app, this);
-                    applist.Add(tmp);
+                    apps.Add(tmp);
                 }
                 catch (Exception e)
                 {
@@ -55,7 +55,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                            + $"{FullName} from location {Location}", e);
                 }
             }
-            Apps = applist.ToArray();
+            Apps = apps.ToArray();
 
             try
             {
@@ -147,7 +147,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 }
 
                 ProgramLogger.LogException($"|UWP|GetPackageVersionFromManifest|{Location}" +
-                       "|Trying to get the package version of the UWP program, but an unknown UWP appmanifest version in package "
+                       "|Trying to get the package version of the UWP program, but an unknown UWP app-manifest version in package "
                        + $"{FullName} from location {Location}", new FormatException());
                 return PackageVersion.Unknown;
             }
@@ -249,24 +249,24 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Package> CurrentUserPackages()
         {
-            var u = WindowsIdentity.GetCurrent().User;
+            var user = WindowsIdentity.GetCurrent().User;
 
-            if (u != null)
+            if (user != null)
             {
-                var id = u.Value;
-                PackageManager m;
+                var userId = user.Value;
+                PackageManager packageManager;
                 try
                 {
-                    m = new PackageManager();
+                    packageManager = new PackageManager();
                 }
                 catch
                 {
                     // Bug from https://github.com/microsoft/CsWinRT, using Microsoft.Windows.SDK.NET.Ref 10.0.19041.0.
                     // Only happens on the first time, so a try catch can fix it.
-                    m = new PackageManager();
+                    packageManager = new PackageManager();
                 }
-                var ps = m.FindPackagesForUser(id);
-                ps = ps.Where(p =>
+                var packages = packageManager.FindPackagesForUser(userId);
+                packages = packages.Where(p =>
                 {
                     try
                     {
@@ -277,12 +277,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     }
                     catch (Exception e)
                     {
-                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{id}", "An unexpected error occurred and "
+                        ProgramLogger.LogException("UWP", "CurrentUserPackages", $"{p.Id.FullName}", "An unexpected error occurred and "
                                                                                         + $"unable to verify if package is valid", e);
                         return false;
                     }
                 });
-                return ps;
+                return packages;
             }
             else
             {
@@ -378,33 +378,31 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
-                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
+                if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || Name.Equals(Description))
                 {
                     title = Name;
-                    matchResult = StringMatcher.FuzzySearch(query, title);
-                }
-                else if (Description.StartsWith(Name))
-                {
-                    title = Description;
-                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                    matchResult = StringMatcher.FuzzySearch(query, Name);
                 }
                 else
                 {
                     title = $"{Name}: {Description}";
                     var nameMatch = StringMatcher.FuzzySearch(query, Name);
-                    var desciptionMatch = StringMatcher.FuzzySearch(query, Description);
-                    if (desciptionMatch.Score > nameMatch.Score)
+                    var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                    if (descriptionMatch.Score > nameMatch.Score)
                     {
-                        for (int i = 0; i < desciptionMatch.MatchData.Count; i++)
+                        for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
                         {
-                            desciptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
+                            descriptionMatch.MatchData[i] += Name.Length + 2; // 2 is ": "
                         }
-                        matchResult = desciptionMatch;
+                        matchResult = descriptionMatch;
                     }
-                    else matchResult = nameMatch;
+                    else
+                    {
+                        matchResult = nameMatch;
+                    }
                 }
 
-                if (!matchResult.Success)
+                if (!matchResult.IsSearchPrecisionScoreMet())
                     return null;
 
                 var result = new Result
@@ -633,7 +631,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //    }
             //    else
             //    {
-            //        ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Avaliable" : path)}" +
+            //        ProgramLogger.LogException($"|UWP|ImageFromPath|{(string.IsNullOrEmpty(path) ? "Not Available" : path)}" +
             //                                   $"|Unable to get logo for {UserModelId} from {path} and" +
             //                                   $" located in {Location}", new FileNotFoundException());
             //        return new BitmapImage(new Uri(Constant.MissingImgIcon));
@@ -658,8 +656,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             //            var brush = new SolidColorBrush(color);
             //            var pen = new Pen(brush, 1);
             //            var backgroundArea = new Rect(0, 0, width, width);
-            //            var rectabgle = new RectangleGeometry(backgroundArea);
-            //            var rectDrawing = new GeometryDrawing(brush, pen, rectabgle);
+            //            var rectangle = new RectangleGeometry(backgroundArea);
+            //            var rectDrawing = new GeometryDrawing(brush, pen, rectangle);
             //            group.Children.Add(rectDrawing);
 
             //            var imageArea = new Rect(x, y, image.Width, image.Height);
