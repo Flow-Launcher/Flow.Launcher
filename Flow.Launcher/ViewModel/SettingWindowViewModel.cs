@@ -220,29 +220,22 @@ namespace Flow.Launcher.ViewModel
 
         public class SearchDelay
         {
-            public string Display { get; set; }
-            public int Value { get; set; }
-        }
-        public List<SearchDelay> SearchDelays
-        {
-            get
+            public string Display { get; init; }
+            public int Value { get; init; }
+
+            public SearchDelay(int value)
             {
-                List<SearchDelay> delay = new List<SearchDelay>();
-                SearchDelay Fast = new SearchDelay();
-                Fast.Display = "50ms";
-                Fast.Value = 50;
-                SearchDelay Normal = new SearchDelay();
-                Normal.Display = "100ms";
-                Normal.Value = 100;
-                SearchDelay Slow = new SearchDelay();
-                Slow.Display = "150ms";
-                Slow.Value = 150;
-                delay.Add(Fast);
-                delay.Add(Normal);
-                delay.Add(Slow);
-                return delay;
+                Value = value;
+                Display = value.ToString() + " ms";
             }
         }
+
+        public List<SearchDelay> SearchDelays { get; init; } = new()
+        {
+            new SearchDelay(50),
+            new SearchDelay(100),
+            new SearchDelay(150),
+        };
 
         public string Language
         {
