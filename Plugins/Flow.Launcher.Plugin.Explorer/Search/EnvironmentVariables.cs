@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -8,12 +8,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class EnvironmentVariables
     {
+        private static Dictionary<string, string> _envStringPaths = null;
+        private static Dictionary<string, string> EnvStringPaths
+        {
+            get
+            {
+                if (_envStringPaths == null)
+                {
+                    _envStringPaths = LoadEnvironmentStringPaths();
+                }
+                return _envStringPaths;
+            }
+        }
+
         internal static bool IsEnvironmentVariableSearch(string search)
         {
             return search.StartsWith("%") 
                     && search != "%%"
-                    && !search.Contains("\\") &&
-                    LoadEnvironmentStringPaths().Count > 0;
+                    && !search.Contains("\\") 
+                    && EnvStringPaths.Count > 0;
         }
 
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
@@ -44,15 +57,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static string TranslateEnvironmentVariablePath(string environmentVariablePath)
         {
-            var envStringPaths = LoadEnvironmentStringPaths();
             var splitSearch = environmentVariablePath.Substring(1).Split("%");
             var exactEnvStringPath = splitSearch[0];
 
             // if there are more than 2 % characters in the query, don't bother
-            if (splitSearch.Length == 2 && envStringPaths.ContainsKey(exactEnvStringPath))
+            if (splitSearch.Length == 2 && EnvStringPaths.ContainsKey(exactEnvStringPath))
             {
                 var queryPartToReplace = $"%{exactEnvStringPath}%";
-                var expandedPath = envStringPaths[exactEnvStringPath];
+                var expandedPath = EnvStringPaths[exactEnvStringPath];
                 // replace the %envstring% part of the query with its expanded equivalent
                 return environmentVariablePath.Replace(queryPartToReplace, expandedPath);
             }
@@ -64,7 +76,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             var results = new List<Result>();
 
-            var environmentVariables = LoadEnvironmentStringPaths();
             var search = querySearch;
 
             if (querySearch.EndsWith("%") && search.Length > 1)
@@ -72,9 +83,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 // query starts and ends with a %, find an exact match from env-string paths
                 search = querySearch.Substring(1, search.Length - 2);
 
-                if (environmentVariables.ContainsKey(search))
+                if (EnvStringPaths.ContainsKey(search))
                 {
-                    var expandedPath = environmentVariables[search];
+                    var expandedPath = EnvStringPaths[search];
                    
                     results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
                     
@@ -91,7 +102,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 search = search.Substring(1);
             }
             
-            foreach (var p in environmentVariables)
+            foreach (var p in EnvStringPaths)
             {
                 if (p.Key.StartsWith(search, StringComparison.InvariantCultureIgnoreCase))
                 {
