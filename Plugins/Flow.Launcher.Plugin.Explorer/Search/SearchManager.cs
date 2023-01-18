@@ -105,14 +105,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                     results.Add(ResultManager.CreateResult(query, search));
             }
+            catch (OperationCanceledException)
+            {
+                return results.ToList();
+            }
+            catch (EngineNotAvailableException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-                if (e is OperationCanceledException)
-                    return results.ToList();
-
-                if (e is EngineNotAvailableException)
-                    throw;
-
                 throw new SearchException(engineName, e.Message, e);
             }
             
