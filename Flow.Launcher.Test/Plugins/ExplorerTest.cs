@@ -400,8 +400,9 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"c:\foo", @"c:\foo", true)]
         [TestCase(@"C:\Foo\", @"c:\foo\", true)]
         [TestCase(@"c:\foo", @"c:\foo\", false)]
-        public void PathEqualityComparatorEquality(string path1, string path2, bool expectedResult)
+        public void GivenTwoPaths_WhenCompared_ThenShouldBeExpectedSameOrDifferent(string path1, string path2, bool expectedResult)
         {
+            // Given
             var comparator = PathEqualityComparator.Instance;
             var result1 = new Result
             {
@@ -413,13 +414,16 @@ namespace Flow.Launcher.Test.Plugins
                 Title = Path.GetFileName(path2),
                 SubTitle = path2
             };
+
+            // When, Then
             Assert.AreEqual(expectedResult, comparator.Equals(result1, result2));
         }
 
         [TestCase(@"c:\foo\", @"c:\foo\")]
         [TestCase(@"C:\Foo\", @"c:\foo\")]
-        public void PathEqualityComparatorHashCode(string path1, string path2)
+        public void GivenTwoPaths_WhenComparedHasCode_ThenShouldBeSame(string path1, string path2)
         {
+            // Given
             var comparator = PathEqualityComparator.Instance;
             var result1 = new Result
             {
@@ -431,8 +435,11 @@ namespace Flow.Launcher.Test.Plugins
                 Title = Path.GetFileName(path2),
                 SubTitle = path2
             };
+
             var hash1 = comparator.GetHashCode(result1);
             var hash2 = comparator.GetHashCode(result2);
+
+            // When, Then
             Assert.IsTrue(hash1 == hash2);
         }
     }
