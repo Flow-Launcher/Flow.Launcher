@@ -241,5 +241,22 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
             return path;
         }
+
+        /// <summary>
+        /// Returns if <paramref name="subPath"/> is a sub path of <paramref name="basePath"/>.
+        /// From https://stackoverflow.com/a/66877016
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        public static bool IsSubPathOf(string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(basePath, subPath);
+            return rel != "."
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !rel.StartsWith(@"..\")
+                   && !Path.IsPathRooted(rel);
+        }
     }
 }

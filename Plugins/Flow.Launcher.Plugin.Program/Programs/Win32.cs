@@ -471,7 +471,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
 
-            var toFilter = paths.Where(x => commonParents.All(parent => !IsSubPathOf(x, parent)))
+            var toFilter = paths.Where(x => commonParents.All(parent => !FilesFolders.IsSubPathOf(x, parent)))
                 .AsParallel()
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
@@ -763,17 +763,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        // https://stackoverflow.com/a/66877016
-        private static bool IsSubPathOf(string subPath, string basePath)
-        {
-            var rel = Path.GetRelativePath(basePath, subPath);
-            return rel != "."
-                   && rel != ".."
-                   && !rel.StartsWith("../")
-                   && !rel.StartsWith(@"..\")
-                   && !Path.IsPathRooted(rel);
-        }
-
         private static List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
         {
             // To avoid unnecessary io
@@ -785,7 +774,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 HashSet<ProgramSource> parents = group.ToHashSet();
                 foreach (var source in group)
                 {
-                    if (parents.Any(p => IsSubPathOf(source.Location, p.Location) &&
+                    if (parents.Any(p => FilesFolders.IsSubPathOf(source.Location, p.Location) &&
                                          source != p))
                     {
                         parents.Remove(source);

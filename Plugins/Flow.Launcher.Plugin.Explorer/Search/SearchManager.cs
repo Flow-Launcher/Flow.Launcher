@@ -121,7 +121,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                excludedPath => IsSubPathOf(r.SubTitle, excludedPath.Path)));
+                excludedPath => FilesFolders.IsSubPathOf(r.SubTitle, excludedPath.Path)));
 
             return results.ToList();
         }
@@ -255,17 +255,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return search.StartsWith("%") 
                    && search != "%%"
                    && !search.Contains('\\');
-        }
-
-        // https://stackoverflow.com/a/66877016
-        internal static bool IsSubPathOf(string subPath, string basePath)
-        {
-            var rel = Path.GetRelativePath(basePath, subPath);
-            return rel != "."
-                   && rel != ".."
-                   && !rel.StartsWith("../")
-                   && !rel.StartsWith(@"..\")
-                   && !Path.IsPathRooted(rel);
         }
     }
 }
