@@ -60,11 +60,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return envStringPaths;
         }
 
-        internal static string TranslateEnvironmentVariablePath(string environmentVariablePath)
-        {
-            return Environment.ExpandEnvironmentVariables(environmentVariablePath);
-        }
-
         internal static List<Result> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
         {
             var results = new List<Result>();
