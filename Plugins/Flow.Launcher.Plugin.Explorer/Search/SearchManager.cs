@@ -8,7 +8,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -24,14 +23,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private class PathEqualityComparator : IEqualityComparer<Result>
+        /// <summary>
+        /// Note: Assuming all diretories end with "\".
+        /// </summary>
+        public class PathEqualityComparator : IEqualityComparer<Result>
         {
             private static PathEqualityComparator instance;
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
 
             public bool Equals(Result x, Result y)
             {
-                return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase) 
+                return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
             }
 
@@ -178,7 +180,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
             var isEnvironmentVariablePath = EnvironmentVariables.BeginsWithEnvironmentVar(querySearch);
-            
+
             var locationPath = querySearch;
 
             if (isEnvironmentVariablePath)
@@ -249,10 +251,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
-        
+
         internal static bool IsEnvironmentVariableSearch(string search)
         {
-            return search.StartsWith("%") 
+            return search.StartsWith("%")
                    && search != "%%"
                    && !search.Contains('\\');
         }

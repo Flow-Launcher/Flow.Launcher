@@ -7,9 +7,11 @@ using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+using static Flow.Launcher.Plugin.Explorer.Search.SearchManager;
 
 namespace Flow.Launcher.Test.Plugins
 {
@@ -393,6 +395,45 @@ namespace Flow.Launcher.Test.Plugins
 
             // Then
             Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase(@"c:\foo", @"c:\foo", true)]
+        [TestCase(@"C:\Foo\", @"c:\foo\", true)]
+        [TestCase(@"c:\foo", @"c:\foo\", false)]
+        public void PathEqualityComparatorEquality(string path1, string path2, bool expectedResult)
+        {
+            var comparator = PathEqualityComparator.Instance;
+            var result1 = new Result
+            {
+                Title = Path.GetFileName(path1),
+                SubTitle = path1
+            };
+            var result2 = new Result
+            {
+                Title = Path.GetFileName(path2),
+                SubTitle = path2
+            };
+            Assert.AreEqual(expectedResult, comparator.Equals(result1, result2));
+        }
+
+        [TestCase(@"c:\foo\", @"c:\foo\")]
+        [TestCase(@"C:\Foo\", @"c:\foo\")]
+        public void PathEqualityComparatorHashCode(string path1, string path2)
+        {
+            var comparator = PathEqualityComparator.Instance;
+            var result1 = new Result
+            {
+                Title = Path.GetFileName(path1),
+                SubTitle = path1
+            };
+            var result2 = new Result
+            {
+                Title = Path.GetFileName(path2),
+                SubTitle = path2
+            };
+            var hash1 = comparator.GetHashCode(result1);
+            var hash2 = comparator.GetHashCode(result2);
+            Assert.IsTrue(hash1 == hash2);
         }
     }
 }
