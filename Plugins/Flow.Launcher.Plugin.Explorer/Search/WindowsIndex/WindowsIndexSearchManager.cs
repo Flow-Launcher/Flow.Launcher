@@ -97,10 +97,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 
         private IAsyncEnumerable<SearchResult> HandledEngineNotAvailableExceptionAsync()
         {
-            if (!SearchManager.Settings.WarnWindowsSearchServiceOff)
+            if (!Settings.WarnWindowsSearchServiceOff)
                 return AsyncEnumerable.Empty<SearchResult>();
 
-            var api = SearchManager.Context.API;
+            var api = Main.Context.API;
 
             throw new EngineNotAvailableException(
                 "Windows Index",
@@ -108,7 +108,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
                 c =>
                 {
-                    SearchManager.Settings.WarnWindowsSearchServiceOff = false;
+                    Settings.WarnWindowsSearchServiceOff = false;
 
                     // Clears the warning message so user is not mistaken that it has not worked
                     api.ChangeQuery(string.Empty);

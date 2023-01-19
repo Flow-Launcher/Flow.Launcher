@@ -176,7 +176,7 @@ namespace Flow.Launcher.Test.Plugins
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var result = SearchManager.IsFileContentSearch(query.ActionKeyword);
+            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
             Assert.IsTrue(result,
@@ -193,6 +193,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"c:\>*", true)]
         [TestCase(@"c:\>", true)]
         [TestCase(@"c:\SomeLocation\SomeOtherLocation\>", true)]
+        [TestCase(@"c:\SomeLocation\SomeOtherLocation", true)]
         public void WhenGivenQuerySearchString_ThenShouldIndicateIfIsLocationPathString(string querySearchString, bool expectedResult)
         {
             // When, Given

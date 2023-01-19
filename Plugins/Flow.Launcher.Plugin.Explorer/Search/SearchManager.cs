@@ -13,9 +13,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public class SearchManager
     {
-        internal static PluginInitContext Context;
+        internal PluginInitContext Context;
 
-        internal static Settings Settings;
+        internal Settings Settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
@@ -144,7 +144,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        private static List<Result> EverythingContentSearchResult(Query query)
+        private List<Result> EverythingContentSearchResult(Query query)
         {
             return new List<Result>()
             {
@@ -236,7 +236,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return results.ToList();
         }
 
-        public static bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
+        public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
 
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
