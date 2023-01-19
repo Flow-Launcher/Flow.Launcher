@@ -106,6 +106,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 "Windows Index",
                 api.GetTranslation("plugin_explorer_windowsSearchServiceFix"),
                 api.GetTranslation("plugin_explorer_windowsSearchServiceNotRunning"),
+                Constants.WindowsIndexErrorImagePath,
                 c =>
                 {
                     Settings.WarnWindowsSearchServiceOff = false;
@@ -114,10 +115,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                     api.ChangeQuery(string.Empty);
 
                     return ValueTask.FromResult(false);
-                })
-            {
-                ErrorIcon = Constants.WindowsIndexErrorImagePath
-            };
+                });
         }
     }
 }
