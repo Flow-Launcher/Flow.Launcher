@@ -23,10 +23,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static bool IsEnvironmentVariableSearch(string search)
         {
-            return search.StartsWith("%") 
+            return search.StartsWith("%")
                     && search != "%%"
-                    && !search.Contains("\\") 
+                    && !search.Contains('\\')
                     && EnvStringPaths.Count > 0;
+        }
+
+        internal static bool BeginsWithEnvironmentVar(string search)
+        {
+            return search[0] == '%' && search[1..].Contains("%\\");
         }
 
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
@@ -57,19 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static string TranslateEnvironmentVariablePath(string environmentVariablePath)
         {
-            var splitSearch = environmentVariablePath.Substring(1).Split("%");
-            var exactEnvStringPath = splitSearch[0];
-
-            // if there are more than 2 % characters in the query, don't bother
-            if (splitSearch.Length == 2 && EnvStringPaths.ContainsKey(exactEnvStringPath))
-            {
-                var queryPartToReplace = $"%{exactEnvStringPath}%";
-                var expandedPath = EnvStringPaths[exactEnvStringPath];
-                // replace the %envstring% part of the query with its expanded equivalent
-                return environmentVariablePath.Replace(queryPartToReplace, expandedPath);
-            }
-
-            return environmentVariablePath;
+            return Environment.ExpandEnvironmentVariables(environmentVariablePath);
         }
 
         internal static List<Result> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
@@ -86,9 +79,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 if (EnvStringPaths.ContainsKey(search))
                 {
                     var expandedPath = EnvStringPaths[search];
-                   
+
                     results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
-                    
+
                     return results;
                 }
             }
@@ -101,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 search = search.Substring(1);
             }
-            
+
             foreach (var p in EnvStringPaths)
             {
                 if (p.Key.StartsWith(search, StringComparison.InvariantCultureIgnoreCase))
