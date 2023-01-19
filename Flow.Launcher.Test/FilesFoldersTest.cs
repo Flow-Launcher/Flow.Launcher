@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedCommands;
+using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 
 namespace Flow.Launcher.Test
@@ -37,7 +37,7 @@ namespace Flow.Launcher.Test
         [TestCase(@"c:\foo", @"c:\foo", false)]
         [TestCase(@"c:\foo\", @"c:\foo", false)]
         [TestCase(@"c:\foo", @"c:\foo\", false)]
-        public void TestPathContains(string parentPath, string path, bool expectedResult)
+        public void GivenTwoPaths_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
         {
             Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path));
         }
@@ -45,7 +45,7 @@ namespace Flow.Launcher.Test
         [TestCase(@"c:\foo", @"c:\foo", true)]
         [TestCase(@"c:\foo\", @"c:\foo", true)]
         [TestCase(@"c:\foo", @"c:\foo\", true)]
-        public void TestPathContainsWhenEqual(string parentPath, string path, bool expectedResult)
+        public void GivenTwoPathsAreTheSame_WhenCheckPathContains_ThenShouldBeTrue(string parentPath, string path, bool expectedResult)
         {
             Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, true));
         }
