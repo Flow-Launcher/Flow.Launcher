@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+#if !DEBUG
+using System.Windows;
+#endif
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
