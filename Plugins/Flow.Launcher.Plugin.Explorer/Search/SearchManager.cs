@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using System.IO;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -119,7 +120,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                excludedPath => r.SubTitle.StartsWith(excludedPath.Path, StringComparison.OrdinalIgnoreCase)));
+                excludedPath => IsSubPathOf(r.SubTitle, excludedPath.Path)));
 
             return results.ToList();
         }
@@ -253,6 +254,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return search.StartsWith("%") 
                    && search != "%%"
                    && !search.Contains('\\');
+        }
+
+        // https://stackoverflow.com/a/66877016
+        internal static bool IsSubPathOf(string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(basePath, subPath);
+            return rel != "."
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !rel.StartsWith(@"..\")
+                   && !Path.IsPathRooted(rel);
         }
     }
 }
