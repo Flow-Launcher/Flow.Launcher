@@ -31,12 +31,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             public bool Equals(Result x, Result y)
             {
-                return x.Title == y.Title && x.SubTitle == y.SubTitle;
+                return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase) 
+                    && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
             }
 
             public int GetHashCode(Result obj)
             {
-                return HashCode.Combine(obj.Title.GetHashCode(), obj.SubTitle?.GetHashCode() ?? 0);
+                return HashCode.Combine(obj.Title.ToLowerInvariant(), obj.SubTitle?.ToLowerInvariant() ?? "");
             }
         }
 
@@ -118,7 +119,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 throw new SearchException(engineName, e.Message, e);
             }
-            
+
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                 excludedPath => IsSubPathOf(r.SubTitle, excludedPath.Path)));
 
