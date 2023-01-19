@@ -470,8 +470,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
-
-            var toFilter = paths.Where(x => commonParents.All(parent => !FilesFolders.IsSubPathOf(x, parent)))
+            
+            var toFilter = paths.Where(x => commonParents.All(parent => !FilesFolders.PathContains(parent, x)))
                 .AsParallel()
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
@@ -774,8 +774,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 HashSet<ProgramSource> parents = group.ToHashSet();
                 foreach (var source in group)
                 {
-                    if (parents.Any(p => FilesFolders.IsSubPathOf(source.Location, p.Location) &&
-                                         source != p))
+                    if (parents.Any(p => FilesFolders.PathContains(p.Location, source.Location)))
                     {
                         parents.Remove(source);
                     }

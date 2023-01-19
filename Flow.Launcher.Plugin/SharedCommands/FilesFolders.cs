@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
@@ -243,16 +242,17 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
-        /// Returns if <paramref name="subPath"/> is a sub path of <paramref name="basePath"/>.
+        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>.
         /// From https://stackoverflow.com/a/66877016
         /// </summary>
-        /// <param name="subPath"></param>
-        /// <param name="basePath"></param>
+        /// <param name="parentPath">Parent path</param>
+        /// <param name="subPath">Sub path</param>
+        /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
         /// <returns></returns>
-        public static bool IsSubPathOf(string subPath, string basePath)
+        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
         {
-            var rel = Path.GetRelativePath(basePath, subPath);
-            return rel != "."
+            var rel = Path.GetRelativePath(parentPath, subPath);
+            return (rel != "." || allowEqual)
                    && rel != ".."
                    && !rel.StartsWith("../")
                    && !rel.StartsWith(@"..\")
