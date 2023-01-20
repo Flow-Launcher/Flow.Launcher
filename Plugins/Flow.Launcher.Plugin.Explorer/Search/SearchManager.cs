@@ -173,18 +173,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
-
-            if (isEnvironmentVariable)
+            if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch))
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, Context);
 
-            // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
-            var isEnvironmentVariablePath = EnvironmentVariables.BeginsWithEnvironmentVar(querySearch);
-
-            var locationPath = querySearch;
-
-            if (isEnvironmentVariablePath)
-                locationPath = Environment.ExpandEnvironmentVariables(locationPath);
+            // Query is a location path with a full environment variable, eg. %appdata%\somefolder\, c:\users\%USERNAME%\downloads
+            var needToExpand = EnvironmentVariables.HasEnvironmentVar(querySearch);
+            var locationPath = needToExpand ? Environment.ExpandEnvironmentVariables(querySearch) : querySearch;
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())

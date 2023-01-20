@@ -442,5 +442,22 @@ namespace Flow.Launcher.Test.Plugins
             // When, Then
             Assert.IsTrue(hash1 == hash2);
         }
+
+        [TestCase(@"%appdata%", true)]
+        [TestCase(@"%appdata%\123", true)]
+        [TestCase(@"c:\foo %appdata%\", false)]
+        [TestCase(@"c:\users\%USERNAME%\downloads", true)]
+        [TestCase(@"c:\downloads", false)]
+        [TestCase(@"%", false)]
+        [TestCase(@"%%", false)]
+        [TestCase(@"%bla%blabla%", false)]
+        public void GivenPath_WhenHavingEnvironmentVariableOrNot_ThenShouldBeExpected(string path, bool expectedResult)
+        {
+            // When
+            var result = EnvironmentVariables.HasEnvironmentVar(path);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
     }
 }

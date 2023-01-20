@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -29,9 +30,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     && EnvStringPaths.Count > 0;
         }
 
-        internal static bool BeginsWithEnvironmentVar(string search)
+        public static bool HasEnvironmentVar(string search)
         {
-            return search[0] == '%' && search[1..].Contains("%\\");
+            // "c:\foo %appdata%\" returns false
+            var splited = search.Split(Path.DirectorySeparatorChar);
+            return splited.Any(dir => dir.StartsWith('%') && 
+                                        dir.EndsWith('%') &&
+                                        dir.Length > 2 &&
+                                        dir.Split('%').Length == 3);
         }
 
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
