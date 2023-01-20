@@ -52,8 +52,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path);
 
                     // Variables are returned with a mixture of all upper/lower case. 
-                    // Call ToLower() to make the results look consistent
-                    envStringPaths.Add(special.Key.ToString().ToLower(), path);
+                    // Call ToUpper() to make the results look consistent
+                    envStringPaths.Add(special.Key.ToString().ToUpper(), path);
                 }
             }
 
