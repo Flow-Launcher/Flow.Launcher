@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         }
 
         /// <summary>
-        /// Note: Assuming all diretories end with "\".
+        /// Note: A path that ends with "\" and one that doesn't will not be regarded as equal.
         /// </summary>
         public class PathEqualityComparator : IEqualityComparer<Result>
         {
