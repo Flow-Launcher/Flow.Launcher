@@ -254,7 +254,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <returns></returns>
         public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
         {
-            var rel = Path.GetRelativePath(parentPath, subPath);
+            var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
             return (rel != "." || allowEqual)
                    && rel != ".."
                    && !rel.StartsWith("../")
