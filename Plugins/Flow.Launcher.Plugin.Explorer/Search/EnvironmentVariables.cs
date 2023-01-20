@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 if (_envStringPaths == null)
                 {
-                    _envStringPaths = LoadEnvironmentStringPaths();
+                    LoadEnvironmentStringPaths();
                 }
                 return _envStringPaths;
             }
@@ -40,9 +40,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                         dir.Split('%').Length == 3);
         }
 
-        internal static Dictionary<string, string> LoadEnvironmentStringPaths()
+        private static void LoadEnvironmentStringPaths()
         {
-            var envStringPaths = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            _envStringPaths = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var homedrive = Environment.GetEnvironmentVariable("HOMEDRIVE")?.EnsureTrailingSlash() ?? "C:\\";
 
             foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
@@ -61,11 +61,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     // Variables are returned with a mixture of all upper/lower case. 
                     // Call ToUpper() to make the results look consistent
-                    envStringPaths.Add(special.Key.ToString().ToUpper(), path);
+                    _envStringPaths.Add(special.Key.ToString().ToUpper(), path);
                 }
             }
-
-            return envStringPaths;
         }
 
         internal static List<Result> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
