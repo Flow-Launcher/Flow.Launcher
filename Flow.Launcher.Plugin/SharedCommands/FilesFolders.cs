@@ -261,5 +261,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
                    && !rel.StartsWith(@"..\")
                    && !Path.IsPathRooted(rel);
         }
+        
+        /// <summary>
+        /// Returns path ended with "\"
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string EnsureTrailingSlash(this string path)
+        {
+            return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
+        }
     }
 }

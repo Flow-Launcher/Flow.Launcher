@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -37,20 +37,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Dictionary<string, string> LoadEnvironmentStringPaths()
         {
             var envStringPaths = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var homedrive = Environment.GetEnvironmentVariable("HOMEDRIVE")?.EnsureTrailingSlash() ?? "C:\\";
 
             foreach (DictionaryEntry special in Environment.GetEnvironmentVariables())
             {
                 var path = special.Value.ToString();
+                // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
+                // for example, if %systemdrive% is C: we turn it to C:\
+                path = path.EnsureTrailingSlash();
+
+                // if we don't have an absolute path, we use Path.GetFullPath to get one.
+                // for example, if %homepath% is \Users\John we turn it to C:\Users\John
+                // Add basepath for GetFullPath() to parse %HOMEPATH% correctly
+                path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path, homedrive);
+
                 if (Directory.Exists(path))
                 {
-                    // we add a trailing slash to the path to make sure drive paths become valid absolute paths.
-                    // for example, if %systemdrive% is C: we turn it to C:\
-                    path = path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
-
-                    // if we don't have an absolute path, we use Path.GetFullPath to get one.
-                    // for example, if %homepath% is \Users\John we turn it to C:\Users\John
-                    path = Path.IsPathFullyQualified(path) ? path : Path.GetFullPath(path);
-
                     // Variables are returned with a mixture of all upper/lower case. 
                     // Call ToUpper() to make the results look consistent
                     envStringPaths.Add(special.Key.ToString().ToUpper(), path);
