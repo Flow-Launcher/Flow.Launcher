@@ -11,8 +11,8 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
-    MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
+    Width="{Binding MainWindowWidth, Mode=TwoWay}"
+    MinWidth="400"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
     AllowsTransparency="True"
@@ -25,7 +25,7 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
-    ResizeMode="NoResize"
+    ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
     Style="{DynamicResource WindowStyle}"
@@ -34,6 +34,9 @@
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5, 0" />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />

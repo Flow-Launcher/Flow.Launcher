@@ -24,6 +24,7 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -172,6 +173,10 @@ namespace Flow.Launcher
                         break;
                     case nameof(MainViewModel.GameModeStatus):
                         _notifyIcon.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
+                        break;
+                        /* Basically, SizeToContent property removed when after resize the window. this code for restore SizeToContent property after resize the window */
+                    case nameof(MainViewModel.MainWindowWidth):
+                        FlowMainWindow.SizeToContent = SizeToContent.Height;
                         break;
                 }
             };
