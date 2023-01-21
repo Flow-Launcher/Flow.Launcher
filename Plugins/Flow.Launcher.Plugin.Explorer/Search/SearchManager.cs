@@ -111,7 +111,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
             catch (OperationCanceledException)
             {
-                return results.ToList();
+                return new List<Result>();
             }
             catch (EngineNotAvailableException)
             {
