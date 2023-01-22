@@ -62,6 +62,8 @@ TobiasSekan
 Img
 img
 resx
+bak
+tmp
 directx
 mvvm
 dlg
