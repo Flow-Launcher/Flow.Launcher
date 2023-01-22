@@ -378,15 +378,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
-                if (!Main._settings.EnableDescription || Description == null || Name.StartsWith(Description))
+                if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || Name.Equals(Description))
                 {
                     title = Name;
-                    matchResult = StringMatcher.FuzzySearch(query, title);
-                }
-                else if (Description.StartsWith(Name))
-                {
-                    title = Description;
-                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                    matchResult = StringMatcher.FuzzySearch(query, Name);
                 }
                 else
                 {
@@ -401,10 +396,13 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         }
                         matchResult = descriptionMatch;
                     }
-                    else matchResult = nameMatch;
+                    else
+                    {
+                        matchResult = nameMatch;
+                    }
                 }
 
-                if (!matchResult.Success)
+                if (!matchResult.IsSearchPrecisionScoreMet())
                     return null;
 
                 var result = new Result

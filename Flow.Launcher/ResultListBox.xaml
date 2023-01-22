@@ -27,10 +27,14 @@
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
-    Visibility="{Binding Visbility}"
+    Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
+    <ListBox.Resources>
+        <converter:IconRadiusConverter x:Key="IconRadiusConverter" />
+        <converter:DiameterToCenterPointConverter x:Key="DiameterToCenterPointConverter" />
+    </ListBox.Resources>
     <ListBox.ItemTemplate>
         <DataTemplate>
             <Button HorizontalAlignment="Stretch">
@@ -52,7 +56,7 @@
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Style="{DynamicResource ImageAreaWidth}" />
                             <ColumnDefinition Width="9*" />
                             <ColumnDefinition Width="Auto" MinWidth="8" />
                         </Grid.ColumnDefinitions>
@@ -99,20 +103,29 @@
                                 BorderThickness="1">
                                 <Image
                                     x:Name="ImageIcon"
-                                    Width="{Binding IconXY}"
-                                    Height="{Binding IconXY}"
                                     Margin="0,0,0,0"
                                     HorizontalAlignment="Center"
                                     IsHitTestVisible="False"
                                     RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Image, TargetNullValue={x:Null}}"
                                     Stretch="Uniform"
+                                    Style="{DynamicResource ImageIconStyle}"
                                     Visibility="{Binding ShowIcon}">
                                     <Image.Clip>
-                                        <EllipseGeometry
-                                            Center="16 16"
-                                            RadiusX="{Binding IconRadius}"
-                                            RadiusY="{Binding IconRadius}" />
+                                        <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
+                                            <EllipseGeometry.RadiusX>
+                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                    <Binding Path="Result.RoundedIcon" />
+                                                </MultiBinding>
+                                            </EllipseGeometry.RadiusX>
+                                            <EllipseGeometry.RadiusY>
+                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                    <Binding Path="Result.RoundedIcon" />
+                                                </MultiBinding>
+                                            </EllipseGeometry.RadiusY>
+                                        </EllipseGeometry>
                                     </Image.Clip>
                                 </Image>
                             </Border>
@@ -196,7 +209,6 @@
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
                     <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
-                    <Setter TargetName="ImageIcon" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
                     <Setter TargetName="GlyphIcon" Property="Style" Value="{DynamicResource ItemGlyphSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
@@ -207,7 +219,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="52" />
+            <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />

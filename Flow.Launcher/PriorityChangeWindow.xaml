@@ -85,6 +85,8 @@
                     <ui:NumberBox
                         x:Name="tbAction"
                         Width="200"
+                        Maximum="100"
+                        Minimum="-100"
                         Margin="10,0,15,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"

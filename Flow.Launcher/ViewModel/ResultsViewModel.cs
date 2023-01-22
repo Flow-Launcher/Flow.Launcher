@@ -43,13 +43,13 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public int MaxHeight => MaxResults * 52;
+        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
 
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
-        public Visibility Visbility { get; set; } = Visibility.Collapsed;
+        public Visibility Visibility { get; set; } = Visibility.Collapsed;
         
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
@@ -167,14 +167,14 @@ namespace Flow.Launcher.ViewModel
                     SelectedItem = Results[0];
             }
 
-            switch (Visbility)
+            switch (Visibility)
             {
                 case Visibility.Collapsed when Results.Count > 0:
                     SelectedIndex = 0;
-                    Visbility = Visibility.Visible;
+                    Visibility = Visibility.Visible;
                     break;
                 case Visibility.Visible when Results.Count == 0:
-                    Visbility = Visibility.Collapsed;
+                    Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -259,7 +259,7 @@ namespace Flow.Launcher.ViewModel
                     return;
 
                 // manually update event
-                // wpf use directx / double buffered already, so just reset all won't cause ui flickering
+                // wpf use DirectX / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
             private void AddAll(List<ResultViewModel> Items)

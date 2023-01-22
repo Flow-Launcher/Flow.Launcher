@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks
         {
             get
             {
-                var path = Path.EndsWith(Constants.DirectorySeperator) ? Path[0..^1] : Path;
+                var path = Path.EndsWith(Constants.DirectorySeparator) ? Path[0..^1] : Path;
 
                 if (path.EndsWith(':'))
                     return path[0..^1] + " Drive";

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+#pragma warning disable IDE0005
 using System.Windows;
+#pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
@@ -206,22 +208,16 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///</summary>
         public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
         {
-            var previousDirectoryPath = "";
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                previousDirectoryPath = path.Substring(0, index + 1);
-                if (!locationExists(previousDirectoryPath))
-                {
-                    return "";
-                }
+                string previousDirectoryPath = path.Substring(0, index + 1);
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
             }
             else
             {
                 return "";
             }
-
-            return previousDirectoryPath;
         }
 
         ///<summary>
@@ -240,6 +236,34 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
 
             return path;
+        }
+
+        /// <summary>
+        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>.
+        /// From https://stackoverflow.com/a/66877016
+        /// </summary>
+        /// <param name="parentPath">Parent path</param>
+        /// <param name="subPath">Sub path</param>
+        /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
+        /// <returns></returns>
+        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
+        {
+            var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
+            return (rel != "." || allowEqual)
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !rel.StartsWith(@"..\")
+                   && !Path.IsPathRooted(rel);
+        }
+        
+        /// <summary>
+        /// Returns path ended with "\"
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string EnsureTrailingSlash(this string path)
+        {
+            return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
         }
     }
 }

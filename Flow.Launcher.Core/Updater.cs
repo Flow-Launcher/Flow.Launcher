@@ -33,7 +33,7 @@ namespace Flow.Launcher.Core
 
         public async Task UpdateAppAsync(IPublicAPI api, bool silentUpdate = true)
         {
-            await UpdateLock.WaitAsync();
+            await UpdateLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 if (!silentUpdate)
@@ -88,9 +88,13 @@ namespace Flow.Launcher.Core
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
             }
-            catch (Exception e) when (e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException)
+            catch (Exception e)
             {
-                Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                if ((e is HttpRequestException or WebException or SocketException || e.InnerException is TimeoutException))
+                    Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
+                else
+                    Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
+                
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
                         api.GetTranslation("update_flowlauncher_check_connection"));

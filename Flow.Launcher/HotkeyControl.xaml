@@ -48,6 +48,7 @@
             Margin="0,0,18,0"
             VerticalContentAlignment="Center"
             input:InputMethod.IsInputMethodEnabled="False"
+            GotFocus="tbHotkey_GotFocus"
             LostFocus="tbHotkey_LostFocus"
             PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
             TabIndex="100" />
