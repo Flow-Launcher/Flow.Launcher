@@ -27,20 +27,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                         Main.Context.API.GetTranslation("flowlauncher_plugin_everything_click_to_launch_or_install"),
                         Main.Context.API.GetTranslation("flowlauncher_plugin_everything_is_not_running"),
-                        ClickToInstallEverythingAsync)
-                    {
-                        ErrorIcon = Constants.EverythingErrorImagePath
-                    };
+                        Constants.EverythingErrorImagePath,
+                        ClickToInstallEverythingAsync);
             }
             catch (DllNotFoundException)
             {
                 throw new EngineNotAvailableException(
                     Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
                     "Please check whether your system is x86 or x64",
-                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue"))
-                {
-                    ErrorIcon = Constants.GeneralSearchErrorImagePath
-                };
+                    Constants.GeneralSearchErrorImagePath,
+                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue"));
             }
         }
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
@@ -72,16 +68,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (!Settings.EnableEverythingContentSearch)
             {
                 throw new EngineNotAvailableException(Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
-                    "Click to Enable Everything Content Search (only applicable to Everything 1.5+ with indexed content)",
-                    "Everything Content Search is not enabled.",
+                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
+                    Main.Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
+                    Constants.EverythingErrorImagePath,
                     _ =>
                     {
                         Settings.EnableEverythingContentSearch = true;
                         return ValueTask.FromResult(true);
-                    })
-                {
-                    ErrorIcon = Constants.EverythingErrorImagePath
-                };
+                    });
             }
             if (token.IsCancellationRequested)
                 yield break;

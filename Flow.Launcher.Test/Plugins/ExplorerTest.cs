@@ -7,9 +7,11 @@ using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.Versioning;
 using System.Threading;
 using System.Threading.Tasks;
+using static Flow.Launcher.Plugin.Explorer.Search.SearchManager;
 
 namespace Flow.Launcher.Test.Plugins
 {
@@ -176,7 +178,7 @@ namespace Flow.Launcher.Test.Plugins
             var searchManager = new SearchManager(new Settings(), new PluginInitContext());
 
             // When
-            var result = SearchManager.IsFileContentSearch(query.ActionKeyword);
+            var result = searchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
             Assert.IsTrue(result,
@@ -193,6 +195,7 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"c:\>*", true)]
         [TestCase(@"c:\>", true)]
         [TestCase(@"c:\SomeLocation\SomeOtherLocation\>", true)]
+        [TestCase(@"c:\SomeLocation\SomeOtherLocation", true)]
         public void WhenGivenQuerySearchString_ThenShouldIndicateIfIsLocationPathString(string querySearchString, bool expectedResult)
         {
             // When, Given
@@ -389,6 +392,69 @@ namespace Flow.Launcher.Test.Plugins
 
             // When
             var result = ResultManager.GetAutoCompleteText(title, query, path, resultType);
+
+            // Then
+            Assert.AreEqual(result, expectedResult);
+        }
+
+        [TestCase(@"c:\foo", @"c:\foo", true)]
+        [TestCase(@"C:\Foo\", @"c:\foo\", true)]
+        [TestCase(@"c:\foo", @"c:\foo\", false)]
+        public void GivenTwoPaths_WhenCompared_ThenShouldBeExpectedSameOrDifferent(string path1, string path2, bool expectedResult)
+        {
+            // Given
+            var comparator = PathEqualityComparator.Instance;
+            var result1 = new Result
+            {
+                Title = Path.GetFileName(path1),
+                SubTitle = path1
+            };
+            var result2 = new Result
+            {
+                Title = Path.GetFileName(path2),
+                SubTitle = path2
+            };
+
+            // When, Then
+            Assert.AreEqual(expectedResult, comparator.Equals(result1, result2));
+        }
+
+        [TestCase(@"c:\foo\", @"c:\foo\")]
+        [TestCase(@"C:\Foo\", @"c:\foo\")]
+        public void GivenTwoPaths_WhenComparedHasCode_ThenShouldBeSame(string path1, string path2)
+        {
+            // Given
+            var comparator = PathEqualityComparator.Instance;
+            var result1 = new Result
+            {
+                Title = Path.GetFileName(path1),
+                SubTitle = path1
+            };
+            var result2 = new Result
+            {
+                Title = Path.GetFileName(path2),
+                SubTitle = path2
+            };
+
+            var hash1 = comparator.GetHashCode(result1);
+            var hash2 = comparator.GetHashCode(result2);
+
+            // When, Then
+            Assert.IsTrue(hash1 == hash2);
+        }
+
+        [TestCase(@"%appdata%", true)]
+        [TestCase(@"%appdata%\123", true)]
+        [TestCase(@"c:\foo %appdata%\", false)]
+        [TestCase(@"c:\users\%USERNAME%\downloads", true)]
+        [TestCase(@"c:\downloads", false)]
+        [TestCase(@"%", false)]
+        [TestCase(@"%%", false)]
+        [TestCase(@"%bla%blabla%", false)]
+        public void GivenPath_WhenHavingEnvironmentVariableOrNot_ThenShouldBeExpected(string path, bool expectedResult)
+        {
+            // When
+            var result = EnvironmentVariables.HasEnvironmentVar(path);
 
             // Then
             Assert.AreEqual(result, expectedResult);

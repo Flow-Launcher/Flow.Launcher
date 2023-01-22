@@ -3,8 +3,6 @@
 using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Flow.Launcher.Plugin.Explorer.Search.IProvider;
-using JetBrains.Annotations;
 
 namespace Flow.Launcher.Plugin.Explorer.Exceptions;
 
@@ -20,7 +18,7 @@ public class EngineNotAvailableException : Exception
         string engineName,
         string resolution,
         string message,
-        Func<ActionContext, ValueTask<bool>> action = null) : base(message)
+        Func<ActionContext, ValueTask<bool>>? action = null) : base(message)
     {
         EngineName = engineName;
         Resolution = resolution;
@@ -39,6 +37,23 @@ public class EngineNotAvailableException : Exception
     {
         EngineName = engineName;
         Resolution = resolution;
+    }
+    
+    public EngineNotAvailableException(
+    string engineName,
+    string resolution,
+    string message,
+    string errorIconPath,
+    Func<ActionContext, ValueTask<bool>>? action = null) : base(message)
+    {
+        EngineName = engineName;
+        Resolution = resolution;
+        ErrorIcon = errorIconPath;
+        Action = action ?? (_ =>
+        {
+            Clipboard.SetDataObject(this.ToString());
+            return ValueTask.FromResult(true);
+        });
     }
 
     public override string ToString()

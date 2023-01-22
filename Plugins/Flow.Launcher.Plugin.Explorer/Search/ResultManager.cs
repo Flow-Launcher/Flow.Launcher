@@ -71,7 +71,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 Title = title,
                 IcoPath = path,
-                SubTitle = Path.GetDirectoryName(path),
+                SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
