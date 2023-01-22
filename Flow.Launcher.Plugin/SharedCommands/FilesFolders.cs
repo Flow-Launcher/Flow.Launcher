@@ -208,22 +208,16 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///</summary>
         public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
         {
-            var previousDirectoryPath = "";
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                previousDirectoryPath = path.Substring(0, index + 1);
-                if (!locationExists(previousDirectoryPath))
-                {
-                    return "";
-                }
+                string previousDirectoryPath = path.Substring(0, index + 1);
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
             }
             else
             {
                 return "";
             }
-
-            return previousDirectoryPath;
         }
 
         ///<summary>
