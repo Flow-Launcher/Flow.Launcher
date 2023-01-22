@@ -69,7 +69,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 var data = JsonSerializer.Deserialize<T>(File.ReadAllText(BackupFilePath));
                 if (data != null)
                 {
-                    Log.Info($"|JsonStorage.Load|Load backup file {BackupFilePath} successfully");
+                    Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
                     File.Replace(BackupFilePath, FilePath, null);
                     return data;
                 }
