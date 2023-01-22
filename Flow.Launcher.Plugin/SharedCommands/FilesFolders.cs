@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-#if !DEBUG
+#pragma warning disable IDE0005
 using System.Windows;
-#endif
+#pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
