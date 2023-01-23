@@ -62,7 +62,10 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             try
             {
-                return (await searchManager.SearchAsync(query, token)).Select(r => ResultManager.CreateResult(query, r)).ToList();
+                // null means cancelled
+                return (await searchManager.SearchAsync(query, token))?
+                    .Select(r => ResultManager.CreateResult(query, r))
+                    .ToList();
             }
             catch (Exception e) when (e is SearchException or EngineNotAvailableException)
             {
