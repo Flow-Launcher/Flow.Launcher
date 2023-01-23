@@ -6,6 +6,7 @@ using Flow.Launcher.Plugin.Explorer.Views;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -42,11 +43,13 @@ namespace Flow.Launcher.Plugin.Explorer
             contextMenu = new ContextMenu(Context, Settings, viewModel);
             searchManager = new SearchManager(Settings, Context);
             ResultManager.Init(Context, Settings);
-            
+
             SortOptionTranslationHelper.API = context.API;
 
-            EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "EverythingSDK",
+            EverythingApiDllImport.Load(Path.Combine(Context.CurrentPluginMetadata.PluginDirectory,
+                "EverythingSDK",
                 Environment.Is64BitProcess ? "x64" : "x86"));
+
             return Task.CompletedTask;
         }
 
@@ -59,7 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer
         {
             try
             {
-                return await searchManager.SearchAsync(query, token);
+                return (await searchManager.SearchAsync(query, token)).Select(r => ResultManager.CreateResult(query, r)).ToList();
             }
             catch (Exception e) when (e is SearchException or EngineNotAvailableException)
             {
@@ -75,11 +78,12 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = e is EngineNotAvailableException { ErrorIcon: { } iconPath }
                             ? iconPath
                             : Constants.GeneralSearchErrorImagePath,
-                        AsyncAction = e is EngineNotAvailableException {Action: { } action}
+                        AsyncAction = e is EngineNotAvailableException { Action: { } action }
                             ? action
                             : _ =>
                             {
                                 Clipboard.SetDataObject(e.ToString());
+
                                 return new ValueTask<bool>(true);
                             }
                     }

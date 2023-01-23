@@ -246,7 +246,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="subPath">Sub path</param>
         /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
         /// <returns></returns>
-        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
+        public static bool PathContains(this string parentPath, string subPath, bool allowEqual = false)
         {
             var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
             return (rel != "." || allowEqual)

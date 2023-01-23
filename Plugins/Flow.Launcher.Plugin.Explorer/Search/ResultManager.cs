@@ -13,6 +13,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     public static class ResultManager
     {
         private static PluginInitContext Context;
+
         private static Settings Settings { get; set; }
 
         public static void Init(PluginInitContext context, Settings settings)
@@ -57,15 +58,30 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return result.Type switch
             {
-                ResultType.Folder or ResultType.Volume => CreateFolderResult(Path.GetFileName(result.FullPath),
-                    result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
+                ResultType.Folder => CreateFolderResult(Path.GetFileName(result.FullPath),
+                    result.FullPath,
+                    result.FullPath,
+                    query,
+                    0,
+                    result.WindowsIndexed),
+                ResultType.CurrentFolder => CreateOpenCurrentFolderResult(result.FullPath, query.ActionKeyword, result.WindowsIndexed),
+                ResultType.Volume => CreateDriveSpaceDisplayResult(result.FullPath,
+                    query.ActionKeyword,
+                    result.WindowsIndexed),
                 ResultType.File => CreateFileResult(
-                    result.FullPath, query, 0, result.WindowsIndexed),
+                    result.FullPath,
+                    query,
+                    0,
+                    result.WindowsIndexed),
+                ResultType.EnvironmentalVariable => CreateFolderResult(result.Name,
+                    result.FullPath,
+                    result.FullPath,
+                    query),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
+        private static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
             return new Result
             {
@@ -82,11 +98,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         try
                         {
                             Context.API.OpenDirectory(path);
+
                             return true;
                         }
                         catch (Exception ex)
                         {
                             MessageBox.Show(ex.Message, "Could not start " + path);
+
                             return false;
                         }
                     }
@@ -136,6 +154,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Action = c =>
                 {
                     Context.API.OpenDirectory(path);
+
                     return true;
                 },
                 TitleToolTip = path,
@@ -171,6 +190,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Space = " TB";
 
             var returnStr = $"{Convert.ToInt32(drvSize)}{Space}";
+
             if (mok != 0)
             {
                 returnStr = pi switch
@@ -202,6 +222,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Action = _ =>
                 {
                     Context.API.OpenDirectory(folderPath);
+
                     return true;
                 },
                 ContextData = new SearchResult
@@ -213,7 +234,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
+        private static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
             Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo
             {
@@ -281,22 +302,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     WindowsIndexed = windowsIndexed
                 }
             };
+
             return result;
         }
 
-        public static bool IsMedia(string extension)
+        private static bool IsMedia(string extension)
         {
-            if (string.IsNullOrEmpty(extension))
-            {
-                return false;
-            }
-            else
-            {
-                return MediaExtensions.Contains(extension.ToLowerInvariant());
-            }
+            return !string.IsNullOrEmpty(extension) && MediaExtensions.Contains(extension.ToLowerInvariant());
         }
 
-        public static readonly string[] MediaExtensions =
+        private static readonly string[] MediaExtensions =
         {
             ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4"
         };
@@ -306,6 +321,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
     {
         Volume,
         Folder,
-        File
+        CurrentFolder,
+        File,
+        EnvironmentalVariable
     }
 }

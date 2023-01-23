@@ -1,9 +1,9 @@
 ﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
-using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -26,92 +26,87 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         /// <summary>
         /// Note: A path that ends with "\" and one that doesn't will not be regarded as equal.
         /// </summary>
-        public class PathEqualityComparator : IEqualityComparer<Result>
+        public class PathEqualityComparator : IEqualityComparer<SearchResult>
         {
             private static PathEqualityComparator instance;
+
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
 
-            public bool Equals(Result x, Result y)
+            public bool Equals(SearchResult x, SearchResult y)
             {
-                return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
+                return x.FullPath.Equals(y.FullPath, StringComparison.OrdinalIgnoreCase);
             }
 
-            public int GetHashCode(Result obj)
+            public int GetHashCode(SearchResult obj)
             {
-                return HashCode.Combine(obj.Title.ToLowerInvariant(), obj.SubTitle?.ToLowerInvariant() ?? "");
+                return obj.FullPath.GetHashCode();
             }
         }
 
-        internal async Task<List<Result>> SearchAsync(Query query, CancellationToken token)
+        internal async Task<List<SearchResult>> SearchAsync(Query query, CancellationToken token)
         {
-            var results = new HashSet<Result>(PathEqualityComparator.Instance);
+            var results = new HashSet<SearchResult>(PathEqualityComparator.Instance);
+
+            var task = GetQueryTask(query);
 
             // This allows the user to type the below action keywords and see/search the list of quick folder links
-            if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
-                || ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
+            if (task.HasFlag(SearchTask.QuickAccessSearch))
             {
-                if (string.IsNullOrEmpty(query.Search) && ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
-                    return QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks);
-
-                var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
-
-                results.UnionWith(quickAccessLinks);
-            }
-            else
-            {
-                return new List<Result>();
+                if (string.IsNullOrEmpty(query.Search))
+                {
+                    results.UnionWith(QuickAccess.AccessLinkListAll(query, Settings.QuickAccessLinks));
+                }
+                else
+                {
+                    var quickAccessLinks = QuickAccess.AccessLinkListMatched(query, Settings.QuickAccessLinks);
+                    results.UnionWith(quickAccessLinks);
+                }
             }
 
-            IAsyncEnumerable<SearchResult> searchResults;
+            IAsyncEnumerable<SearchResult> searchResults = null;
 
             bool isPathSearch = query.Search.IsLocationPathString() || IsEnvironmentVariableSearch(query.Search);
 
-            string engineName;
+            string engineName = "";
 
-            switch (isPathSearch)
+            if (task.HasFlag(SearchTask.PathSearch) && isPathSearch)
             {
-                case true
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword)
-                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
+                await foreach (var path in PathSearchAsync(query, token).ConfigureAwait(false))
+                {
+                    results.Add(path);
+                }
 
-                    results.UnionWith(await PathSearchAsync(query, token).ConfigureAwait(false));
+                return results.ToList();
+            }
 
-                    return results.ToList();
+            if (task.HasFlag(SearchTask.IndexSearch))
+            {
+                searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
+                engineName = Enum.GetName(Settings.IndexSearchEngine);
+            }
 
-                case false
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword):
+            if (task.HasFlag(SearchTask.FileContentSearch))
+            {
+                if (!Settings.EnableEverythingContentSearch && Settings.ContentSearchEngine == Settings.ContentIndexSearchEngineOption.Everything)
+                    ThrowEverythingContentSearchUnavailable(query);
 
-                    // Intentionally require enabling of Everything's content search due to its slowness
-                    if (Settings.ContentIndexProvider is EverythingSearchManager && !Settings.EnableEverythingContentSearch)
-                        return EverythingContentSearchResult(query);
-
-                    searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
-                    engineName = Enum.GetName(Settings.ContentSearchEngine);
-                    break;
-
-                case false
-                    when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
-                         || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-
-                    searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
-                    engineName = Enum.GetName(Settings.IndexSearchEngine);
-                    break;
-                default:
-                    return results.ToList();
+                searchResults = Settings.ContentIndexProvider.ContentSearchAsync("", query.Search, token);
+                engineName = Enum.GetName(Settings.ContentSearchEngine);
             }
 
             try
             {
-                await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
-                    results.Add(ResultManager.CreateResult(query, search));
+                if (searchResults != null)
+                {
+                    await foreach (var result in searchResults.WithCancellation(token))
+                    {
+                        results.Add(result);
+                    }
+                }
             }
             catch (OperationCanceledException)
             {
-                return new List<Result>();
+                return null;
             }
             catch (EngineNotAvailableException)
             {
@@ -123,9 +118,31 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle)));
+                excludedPath => excludedPath.Path.PathContains(r.FullPath)));
 
             return results.ToList();
+        }
+
+        private SearchTask GetQueryTask(Query query)
+        {
+            SearchTask task = SearchTask.None;
+
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword))
+                task |= SearchTask.IndexSearch | SearchTask.PathSearch | SearchTask.QuickAccessSearch;
+
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.QuickAccessActionKeyword))
+                task |= SearchTask.QuickAccessSearch;
+
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.PathSearchActionKeyword))
+                task |= SearchTask.PathSearch;
+
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword))
+                task |= SearchTask.IndexSearch;
+
+            if (ActionKeywordMatch(query, Settings.ActionKeyword.FileContentSearchActionKeyword))
+                task |= SearchTask.FileContentSearch;
+
+            return task;
         }
 
         private bool ActionKeywordMatch(Query query, Settings.ActionKeyword allowedActionKeyword)
@@ -148,33 +165,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        private List<Result> EverythingContentSearchResult(Query query)
+        [DoesNotReturn]
+        private void ThrowEverythingContentSearchUnavailable(Query query)
         {
-            return new List<Result>()
-            {
-                new()
+            throw new EngineNotAvailableException(nameof(Settings.ContentIndexSearchEngineOption.Everything),
+                Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
+                Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
+                _ =>
                 {
-                    Title = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search"),
-                    SubTitle = Context.API.GetTranslation("flowlauncher_plugin_everything_enable_content_search_tips"),
-                    IcoPath = "Images/index_error.png",
-                    Action = c =>
-                    {
-                        Settings.EnableEverythingContentSearch = true;
-                        Context.API.ChangeQuery(query.RawQuery, true);
-                        return false;
-                    }
-                }
-            };
+                    Settings.EnableEverythingContentSearch = true;
+                    Context.API.ChangeQuery(query.RawQuery, true);
+
+                    return ValueTask.FromResult(false);
+                });
+
         }
 
-        private async Task<List<Result>> PathSearchAsync(Query query, CancellationToken token = default)
+        private async IAsyncEnumerable<SearchResult> PathSearchAsync(Query query, CancellationToken token = default)
         {
             var querySearch = query.Search;
 
-            var results = new HashSet<Result>(PathEqualityComparator.Instance);
-
             if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch))
-                return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, Context);
+            {
+                foreach (var envResult in EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, Context))
+                {
+                    yield return envResult;
+                }
+
+                yield break;
+            }
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\, c:\users\%USERNAME%\downloads
             var needToExpand = EnvironmentVariables.HasEnvironmentVar(querySearch);
@@ -182,19 +201,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())
-                return results.ToList();
+                yield break;
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
                                  && UseWindowsIndexForDirectorySearch(locationPath);
 
             var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
 
-            results.Add(retrievedDirectoryPath.EndsWith(":\\")
-                ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch)
-                : ResultManager.CreateOpenCurrentFolderResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch));
+            yield return new SearchResult()
+            {
+                FullPath = retrievedDirectoryPath,
+                Type = retrievedDirectoryPath.EndsWith(":\\")
+                    ? ResultType.Volume
+                    : ResultType.CurrentFolder,
+                Score = 100,
+                WindowsIndexed = useIndexSearch
+            };
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                yield break;
 
             IAsyncEnumerable<SearchResult> directoryResult;
 
@@ -208,7 +233,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         query.Search[(recursiveIndicatorIndex + 1)..],
                         true,
                         token);
-
             }
             else
             {
@@ -216,22 +240,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (token.IsCancellationRequested)
-                return new List<Result>();
+                yield break;
 
-            try
+            await foreach (var directory in directoryResult.WithCancellation(token).ConfigureAwait(false))
             {
-                await foreach (var directory in directoryResult.WithCancellation(token).ConfigureAwait(false))
-                {
-                    results.Add(ResultManager.CreateResult(query, directory));
-                }
+                yield return directory;
             }
-            catch (Exception e)
-            {
-                throw new SearchException(Enum.GetName(Settings.PathEnumerationEngine), e.Message, e);
-            }
-
-
-            return results.ToList();
         }
 
         public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
@@ -246,11 +260,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
 
-        internal static bool IsEnvironmentVariableSearch(string search)
+        private static bool IsEnvironmentVariableSearch(string search)
         {
             return search.StartsWith("%")
                    && search != "%%"
                    && !search.Contains('\\');
         }
+    }
+
+    [Flags]
+    internal enum SearchTask
+    {
+        None = 0,
+        IndexSearch = 1 << 0,
+        QuickAccessSearch = 1 << 1,
+        PathSearch = 1 << 2,
+        FileContentSearch = 1 << 3,
     }
 }

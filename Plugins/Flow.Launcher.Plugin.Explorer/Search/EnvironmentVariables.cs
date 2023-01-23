@@ -18,6 +18,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     LoadEnvironmentStringPaths();
                 }
+
                 return _envStringPaths;
             }
         }
@@ -25,19 +26,20 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static bool IsEnvironmentVariableSearch(string search)
         {
             return search.StartsWith("%")
-                    && search != "%%"
-                    && !search.Contains('\\')
-                    && EnvStringPaths.Count > 0;
+                   && search != "%%"
+                   && !search.Contains('\\')
+                   && EnvStringPaths.Count > 0;
         }
 
         public static bool HasEnvironmentVar(string search)
         {
             // "c:\foo %appdata%\" returns false
             var splited = search.Split(Path.DirectorySeparatorChar);
-            return splited.Any(dir => dir.StartsWith('%') && 
-                                        dir.EndsWith('%') &&
-                                        dir.Length > 2 &&
-                                        dir.Split('%').Length == 3);
+
+            return splited.Any(dir => dir.StartsWith('%') &&
+                                      dir.EndsWith('%') &&
+                                      dir.Length > 2 &&
+                                      dir.Split('%').Length == 3);
         }
 
         private static void LoadEnvironmentStringPaths()
@@ -66,10 +68,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        internal static List<Result> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
+        internal static IEnumerable<SearchResult> GetEnvironmentStringPathSuggestions(string querySearch, Query query, PluginInitContext context)
         {
-            var results = new List<Result>();
-
             var search = querySearch;
 
             if (querySearch.EndsWith("%") && search.Length > 1)
@@ -81,30 +81,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     var expandedPath = EnvStringPaths[search];
 
-                    results.Add(ResultManager.CreateFolderResult($"%{search}%", expandedPath, expandedPath, query));
-
-                    return results;
+                    yield return new SearchResult
+                    {
+                        Name = $"%{search}%", FullPath = expandedPath
+                    };
                 }
             }
 
-            if (querySearch == "%")
-            {
-                search = ""; // Get all paths
-            }
-            else
-            {
-                search = search.Substring(1);
-            }
+            ReadOnlyMemory<char> slice = querySearch == "%" ? "".AsMemory() : // Get all paths
+                search.AsMemory()[1..];
 
-            foreach (var p in EnvStringPaths)
+            foreach (var pair in EnvStringPaths)
             {
-                if (p.Key.StartsWith(search, StringComparison.InvariantCultureIgnoreCase))
+                if (pair.Key.AsSpan().StartsWith(slice.Span, StringComparison.InvariantCultureIgnoreCase))
                 {
-                    results.Add(ResultManager.CreateFolderResult($"%{p.Key}%", p.Value, p.Value, query));
+                    yield return new SearchResult
+                    {
+                        Name = $"%{pair.Key}%",
+                        FullPath = pair.Value,
+                        Type = ResultType.EnvironmentalVariable
+                    };
                 }
             }
-
-            return results;
         }
     }
 }
