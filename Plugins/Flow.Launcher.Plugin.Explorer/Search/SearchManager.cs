@@ -34,12 +34,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             public bool Equals(SearchResult x, SearchResult y)
             {
-                return x.FullPath.Equals(y.FullPath, StringComparison.OrdinalIgnoreCase);
+                return x.FullPath.Equals(y.FullPath, StringComparison.InvariantCultureIgnoreCase);
             }
 
             public int GetHashCode(SearchResult obj)
             {
-                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj.FullPath);
+                return StringComparer.InvariantCultureIgnoreCase.GetHashCode(obj.FullPath);
             }
         }
 
