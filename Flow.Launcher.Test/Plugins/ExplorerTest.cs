@@ -57,7 +57,8 @@ namespace Flow.Launcher.Test.Plugins
             var result = QueryConstructor.TopLevelDirectoryConstraint(folderPath);
 
             // Then
-            Assert.IsTrue(result == expectedString,
+            Assert.AreEqual(result,
+                expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual: {result}{Environment.NewLine}");
         }
@@ -74,18 +75,23 @@ namespace Flow.Launcher.Test.Plugins
             var queryString = queryConstructor.Directory(folderPath);
 
             // Then
-            Assert.IsTrue(queryString.Replace("  ", " ") == expectedString.Replace("  ", " "),
+            Assert.AreEqual(queryString.Replace("  ", " "),
+                expectedString.Replace("  ", " "),
                 $"Expected string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
 
         [SupportedOSPlatform("windows7.0")]
-        [TestCase("C:\\SomeFolder", "flow.launcher.sln", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType" +
-                                                         " FROM SystemIndex WHERE directory='file:C:\\SomeFolder'" +
-                                                         " AND (System.FileName LIKE 'flow.launcher.sln%' OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"'))" +
-                                                         " ORDER BY System.FileName")]
+        [TestCase("C:\\SomeFolder",
+            "flow.launcher.sln",
+            "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType" +
+            " FROM SystemIndex WHERE directory='file:C:\\SomeFolder'" +
+            " AND (System.FileName LIKE 'flow.launcher.sln%' OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"'))" +
+            " ORDER BY System.FileName")]
         public void GivenWindowsIndexSearchTopLevelDirectory_WhenSearchingForSpecificItem_ThenQueryShouldUseExpectedString(
-            string folderPath, string userSearchString, string expectedString)
+            string folderPath,
+            string userSearchString,
+            string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -109,12 +115,14 @@ namespace Flow.Launcher.Test.Plugins
         }
 
         [SupportedOSPlatform("windows7.0")]
-        [TestCase("flow.launcher.sln", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
-                                       "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
-                                       "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
+        [TestCase("flow.launcher.sln",
+            "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" " +
+            "FROM \"SystemIndex\" WHERE (System.FileName LIKE 'flow.launcher.sln%' " +
+            "OR CONTAINS(System.FileName,'\"flow.launcher.sln*\"',1033)) AND scope='file:' ORDER BY System.FileName")]
         [TestCase("", "SELECT TOP 100 \"System.FileName\", \"System.ItemUrl\", \"System.ItemType\" FROM \"SystemIndex\" WHERE WorkId IS NOT NULL AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchAllFoldersAndFiles_ThenQueryShouldUseExpectedString(
-            string userSearchString, string expectedString)
+            string userSearchString,
+            string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -135,7 +143,8 @@ namespace Flow.Launcher.Test.Plugins
         [SupportedOSPlatform("windows7.0")]
         [TestCase(@"some words", @"FREETEXT('some words')")]
         public void GivenWindowsIndexSearch_WhenQueryWhereRestrictionsIsForFileContentSearch_ThenShouldReturnFreeTextString(
-            string querySearchString, string expectedString)
+            string querySearchString,
+            string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -144,16 +153,19 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = QueryConstructor.RestrictionsForFileContentSearch(querySearchString);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
+            Assert.AreEqual(resultString,
+                expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
         [SupportedOSPlatform("windows7.0")]
-        [TestCase("some words", "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
-                                "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
+        [TestCase("some words",
+            "SELECT TOP 100 System.FileName, System.ItemUrl, System.ItemType " +
+            "FROM SystemIndex WHERE FREETEXT('some words') AND scope='file:' ORDER BY System.FileName")]
         public void GivenWindowsIndexSearch_WhenSearchForFileContent_ThenQueryShouldUseExpectedString(
-            string userSearchString, string expectedString)
+            string userSearchString,
+            string expectedString)
         {
             // Given
             var queryConstructor = new QueryConstructor(new Settings());
@@ -162,7 +174,8 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = queryConstructor.FileContent(userSearchString);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
+            Assert.AreEqual(resultString,
+                expectedString,
                 $"Expected query string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
@@ -202,7 +215,8 @@ namespace Flow.Launcher.Test.Plugins
             var result = FilesFolders.IsLocationPathString(querySearchString);
 
             //Then
-            Assert.IsTrue(result == expectedResult,
+            Assert.AreEqual(result,
+                expectedResult,
                 $"Expected query search string check result is: {expectedResult} {Environment.NewLine} " +
                 $"Actual check result is {result} {Environment.NewLine}");
 
@@ -212,10 +226,13 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"C:\SomeFolder\SomeApp\SomeFile", true, @"C:\SomeFolder\SomeApp\")]
         [TestCase(@"C:\NonExistentFolder\SomeApp", false, "")]
         public void GivenAPartialPath_WhenPreviousLevelDirectoryExists_ThenShouldReturnThePreviousDirectoryPathString(
-            string path, bool previousDirectoryExists, string expectedString)
+            string path,
+            bool previousDirectoryExists,
+            string expectedString)
         {
             // When
             Func<string, bool> previousLocationExists = null;
+
             if (previousDirectoryExists)
             {
                 previousLocationExists = PreviousLocationExistsReturnsTrue;
@@ -229,7 +246,8 @@ namespace Flow.Launcher.Test.Plugins
             var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(previousLocationExists, path);
 
             //Then
-            Assert.IsTrue(previousDirectoryPath == expectedString,
+            Assert.AreEqual(previousDirectoryPath,
+                expectedString,
                 $"Expected path string: {expectedString} {Environment.NewLine} " +
                 $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
@@ -237,12 +255,14 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"C:\NonExistentFolder\SomeApp", @"C:\NonExistentFolder\")]
         [TestCase(@"C:\NonExistentFolder\SomeApp\", @"C:\NonExistentFolder\SomeApp\")]
         public void WhenGivenAPath_ThenShouldReturnThePreviousDirectoryPathIfIncompleteOrOriginalString(
-            string path, string expectedString)
+            string path,
+            string expectedString)
         {
             var returnedPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
             //Then
-            Assert.IsTrue(returnedPath == expectedString,
+            Assert.AreEqual(returnedPath,
+                expectedString,
                 $"Expected path string: {expectedString} {Environment.NewLine} " +
                 $"Actual path string is {returnedPath} {Environment.NewLine}");
         }
@@ -280,23 +300,24 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "p", true, false, "p c:\\somefolder\\someotherfolder\\")]
         [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "", true, true, "c:\\somefolder\\someotherfolder\\")]
         public void GivenFolderResult_WhenGetPath_ThenPathShouldBeExpectedString(
-            string path, 
-            ResultType type, 
+            string path,
+            ResultType type,
             string actionKeyword,
-            bool pathSearchKeywordEnabled, 
+            bool pathSearchKeywordEnabled,
             bool searchActionKeywordEnabled,
             string expectedResult)
         {
             // Given
-            var settings = new Settings() 
+            var settings = new Settings
             {
                 PathSearchKeywordEnabled = pathSearchKeywordEnabled,
                 PathSearchActionKeyword = "p",
                 SearchActionKeywordEnabled = searchActionKeywordEnabled,
                 SearchActionKeyword = Query.GlobalPluginWildcardSign
             };
+
             ResultManager.Init(new PluginInitContext(), settings);
-            
+
             // When
             var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
 
@@ -317,13 +338,14 @@ namespace Flow.Launcher.Test.Plugins
             string expectedResult)
         {
             // Given
-            var settings = new Settings()
+            var settings = new Settings
             {
                 PathSearchKeywordEnabled = pathSearchKeywordEnabled,
                 PathSearchActionKeyword = "p",
                 SearchActionKeywordEnabled = searchActionKeywordEnabled,
                 SearchActionKeyword = "e"
             };
+
             ResultManager.Init(new PluginInitContext(), settings);
 
             // When
@@ -346,8 +368,12 @@ namespace Flow.Launcher.Test.Plugins
             string expectedResult)
         {
             // Given
-            var query = new Query() { ActionKeyword = actionKeyword };
-            var settings = new Settings()
+            var query = new Query
+            {
+                ActionKeyword = actionKeyword
+            };
+
+            var settings = new Settings
             {
                 PathSearchKeywordEnabled = pathSearchKeywordEnabled,
                 PathSearchActionKeyword = "p",
@@ -356,6 +382,7 @@ namespace Flow.Launcher.Test.Plugins
                 QuickAccessActionKeyword = "q",
                 IndexSearchActionKeyword = "i"
             };
+
             ResultManager.Init(new PluginInitContext(), settings);
 
             // When
@@ -378,8 +405,12 @@ namespace Flow.Launcher.Test.Plugins
             string expectedResult)
         {
             // Given
-            var query = new Query() { ActionKeyword = actionKeyword };
-            var settings = new Settings()
+            var query = new Query
+            {
+                ActionKeyword = actionKeyword
+            };
+
+            var settings = new Settings
             {
                 QuickAccessActionKeyword = "q",
                 IndexSearchActionKeyword = "i",
@@ -388,6 +419,7 @@ namespace Flow.Launcher.Test.Plugins
                 SearchActionKeywordEnabled = searchActionKeywordEnabled,
                 SearchActionKeyword = Query.GlobalPluginWildcardSign
             };
+
             ResultManager.Init(new PluginInitContext(), settings);
 
             // When
@@ -404,15 +436,14 @@ namespace Flow.Launcher.Test.Plugins
         {
             // Given
             var comparator = PathEqualityComparator.Instance;
-            var result1 = new Result
+            var result1 = new SearchResult
             {
-                Title = Path.GetFileName(path1),
-                SubTitle = path1
+                FullPath = path1
             };
-            var result2 = new Result
+
+            var result2 = new SearchResult
             {
-                Title = Path.GetFileName(path2),
-                SubTitle = path2
+                FullPath = path2
             };
 
             // When, Then
@@ -425,22 +456,21 @@ namespace Flow.Launcher.Test.Plugins
         {
             // Given
             var comparator = PathEqualityComparator.Instance;
-            var result1 = new Result
+            var result1 = new SearchResult
             {
-                Title = Path.GetFileName(path1),
-                SubTitle = path1
+                FullPath = path1
             };
-            var result2 = new Result
+
+            var result2 = new SearchResult
             {
-                Title = Path.GetFileName(path2),
-                SubTitle = path2
+                FullPath = path2
             };
 
             var hash1 = comparator.GetHashCode(result1);
             var hash2 = comparator.GetHashCode(result2);
 
             // When, Then
-            Assert.IsTrue(hash1 == hash2);
+            Assert.AreEqual(hash1, hash2);
         }
 
         [TestCase(@"%appdata%", true)]

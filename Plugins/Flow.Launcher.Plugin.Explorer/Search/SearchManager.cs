@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             public int GetHashCode(SearchResult obj)
             {
-                return obj.FullPath.GetHashCode();
+                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj.FullPath);
             }
         }
 
