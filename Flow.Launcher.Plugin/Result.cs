@@ -242,7 +242,7 @@ namespace Flow.Launcher.Plugin
             /// </summary>
             public string PreviewImagePath { get; set; }
             /// <summary>
-            /// Determines if the preview image should occupy the full width of the preveiw panel.
+            /// Determines if the preview image should occupy the full width of the preview panel.
             /// </summary>
             public bool IsMedia { get; set; }
             public string Description { get; set; }

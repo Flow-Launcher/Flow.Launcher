@@ -9,16 +9,11 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
-using System.Windows.Interop;
 
 namespace Flow.Launcher
 {
     public partial class HotkeyControl : UserControl
     {
-        private Brush tbMsgForegroundColorOriginal;
-
-        private string tbMsgTextOriginal;
-
         public HotkeyModel CurrentHotkey { get; private set; }
         public bool CurrentHotkeyAvailable { get; private set; }
 
@@ -29,8 +24,6 @@ namespace Flow.Launcher
         public HotkeyControl()
         {
             InitializeComponent();
-            tbMsgTextOriginal = tbMsg.Text;
-            tbMsgForegroundColorOriginal = tbMsg.Foreground;
         }
 
         private CancellationTokenSource hotkeyUpdateSource;
@@ -55,9 +48,7 @@ namespace Flow.Launcher
                 specialKeyState.CtrlPressed,
                 key);
 
-            var hotkeyString = hotkeyModel.ToString();
-
-            if (hotkeyString == tbHotkey.Text)
+            if (hotkeyModel.Equals(CurrentHotkey))
             {
                 return;
             }
@@ -72,33 +63,32 @@ namespace Flow.Launcher
 
         public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
-            CurrentHotkey = keyModel;
-
-            tbHotkey.Text = CurrentHotkey.ToString();
+            tbHotkey.Text = keyModel.ToString();
             tbHotkey.Select(tbHotkey.Text.Length, 0);
 
             if (triggerValidate)
             {
-                CurrentHotkeyAvailable = CheckHotkeyAvailability();
-                if (!CurrentHotkeyAvailable)
-                {
-                    tbMsg.Foreground = new SolidColorBrush(Colors.Red);
-                    tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
-                }
-                else
-                {
-                    tbMsg.Foreground = new SolidColorBrush(Colors.Green);
-                    tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
-                }
-                tbMsg.Visibility = Visibility.Visible;
+                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel);
+                CurrentHotkeyAvailable = hotkeyAvailable;
+                SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
 
                 var token = hotkeyUpdateSource.Token;
                 await Task.Delay(500, token);
                 if (token.IsCancellationRequested)
                     return;
-                FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
-                Keyboard.ClearFocus();
+
+                if (CurrentHotkeyAvailable)
+                {
+                    CurrentHotkey = keyModel;
+                    // To trigger LostFocus
+                    FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
+                    Keyboard.ClearFocus();
+                }
+            }
+            else
+            {
+                CurrentHotkey = keyModel;
             }
         }
 
@@ -107,14 +97,40 @@ namespace Flow.Launcher
             return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
-        private bool CheckHotkeyAvailability() => HotKeyMapper.CheckAvailability(CurrentHotkey);
+        private static bool CheckHotkeyAvailability(HotkeyModel hotkey) => hotkey.Validate() && HotKeyMapper.CheckAvailability(hotkey);
 
         public new bool IsFocused => tbHotkey.IsFocused;
 
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
-            tbMsg.Text = tbMsgTextOriginal;
+            tbHotkey.Text = CurrentHotkey.ToString();
+            tbHotkey.Select(tbHotkey.Text.Length, 0);
+        }
+
+        private void tbHotkey_GotFocus(object sender, RoutedEventArgs e)
+        {
+            ResetMessage();
+        }
+
+        private void ResetMessage()
+        {
+            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("flowlauncherPressHotkey");
             tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
+        }
+
+        private void SetMessage(bool hotkeyAvailable)
+        {
+            if (!hotkeyAvailable)
+            {
+                tbMsg.Foreground = new SolidColorBrush(Colors.Red);
+                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
+            }
+            else
+            {
+                tbMsg.Foreground = new SolidColorBrush(Colors.Green);
+                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
+            }
+            tbMsg.Visibility = Visibility.Visible;
         }
     }
 }

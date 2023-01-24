@@ -262,7 +262,7 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para abrir Flow Laucher y realizar automáticamente la consulta especificada.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Pulse el atajo de teclado personalizado para abrir Flow Launcher y realizar automáticamente la consulta especificada.</system:String>
     <system:String x:Key="preview">Vista previa</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>

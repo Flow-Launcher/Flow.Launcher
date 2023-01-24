@@ -250,7 +250,7 @@ namespace Flow.Launcher
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
-            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+            viewModel.OpenLogFolder();
         }
         private void ClearLogFolder(object sender, RoutedEventArgs e)
         {
@@ -262,8 +262,6 @@ namespace Flow.Launcher
             if (confirmResult == MessageBoxResult.Yes)
             {
                 viewModel.ClearLogFolder();
-                
-                ClearLogFolderBtn.Content = viewModel.CheckLogFolder;
             }
         }
 

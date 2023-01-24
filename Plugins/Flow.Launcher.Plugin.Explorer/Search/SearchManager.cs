@@ -13,9 +13,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public class SearchManager
     {
-        internal static PluginInitContext Context;
+        internal PluginInitContext Context;
 
-        internal static Settings Settings;
+        internal Settings Settings;
 
         public SearchManager(Settings settings, PluginInitContext context)
         {
@@ -23,19 +23,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             Settings = settings;
         }
 
-        private class PathEqualityComparator : IEqualityComparer<Result>
+        /// <summary>
+        /// Note: A path that ends with "\" and one that doesn't will not be regarded as equal.
+        /// </summary>
+        public class PathEqualityComparator : IEqualityComparer<Result>
         {
             private static PathEqualityComparator instance;
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
 
             public bool Equals(Result x, Result y)
             {
-                return x.Title == y.Title && x.SubTitle == y.SubTitle;
+                return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
+                    && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
             }
 
             public int GetHashCode(Result obj)
             {
-                return HashCode.Combine(obj.Title.GetHashCode(), obj.SubTitle?.GetHashCode() ?? 0);
+                return HashCode.Combine(obj.Title.ToLowerInvariant(), obj.SubTitle?.ToLowerInvariant() ?? "");
             }
         }
 
@@ -105,19 +109,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                     results.Add(ResultManager.CreateResult(query, search));
             }
+            catch (OperationCanceledException)
+            {
+                return new List<Result>();
+            }
+            catch (EngineNotAvailableException)
+            {
+                throw;
+            }
             catch (Exception e)
             {
-                if (e is OperationCanceledException)
-                    return results.ToList();
-
-                if (e is EngineNotAvailableException)
-                    throw;
-
                 throw new SearchException(engineName, e.Message, e);
             }
-            
+
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                excludedPath => r.SubTitle.StartsWith(excludedPath.Path, StringComparison.OrdinalIgnoreCase)));
+                excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle)));
 
             return results.ToList();
         }
@@ -142,7 +148,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        private static List<Result> EverythingContentSearchResult(Query query)
+        private List<Result> EverythingContentSearchResult(Query query)
         {
             return new List<Result>()
             {
@@ -167,18 +173,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var results = new HashSet<Result>(PathEqualityComparator.Instance);
 
-            var isEnvironmentVariable = EnvironmentVariables.IsEnvironmentVariableSearch(querySearch);
-
-            if (isEnvironmentVariable)
+            if (EnvironmentVariables.IsEnvironmentVariableSearch(querySearch))
                 return EnvironmentVariables.GetEnvironmentStringPathSuggestions(querySearch, query, Context);
 
-            // Query is a location path with a full environment variable, eg. %appdata%\somefolder\
-            var isEnvironmentVariablePath = querySearch[1..].Contains("%\\");
-
-            var locationPath = querySearch;
-
-            if (isEnvironmentVariablePath)
-                locationPath = EnvironmentVariables.TranslateEnvironmentVariablePath(locationPath);
+            // Query is a location path with a full environment variable, eg. %appdata%\somefolder\, c:\users\%USERNAME%\downloads
+            var needToExpand = EnvironmentVariables.HasEnvironmentVar(querySearch);
+            var locationPath = needToExpand ? Environment.ExpandEnvironmentVariables(querySearch) : querySearch;
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
             if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())
@@ -234,7 +234,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return results.ToList();
         }
 
-        public static bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
+        public bool IsFileContentSearch(string actionKeyword) => actionKeyword == Settings.FileContentSearchActionKeyword;
 
 
         private bool UseWindowsIndexForDirectorySearch(string locationPath)
@@ -245,10 +245,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
-        
+
         internal static bool IsEnvironmentVariableSearch(string search)
         {
-            return search.StartsWith("%") 
+            return search.StartsWith("%")
                    && search != "%%"
                    && !search.Contains('\\');
         }

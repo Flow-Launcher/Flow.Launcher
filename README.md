@@ -242,7 +242,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144533487-2caff162-a8f6-4577-af3f-d1b05d423ee4.png" width="400">
 
-### Github
+### GitHub
 <img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
 
 ### Window Walker
@@ -274,7 +274,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>←</kbd><kbd>→</kbd>                                     | Back to result / Open Context Menu           |
 | <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                      |
 | <kbd>Tab</kbd>                                               | Autocomplete                                 |
-| <kbd>F1</kbd>                                                | Toggle Preveiw Panel (default and configurable)|
+| <kbd>F1</kbd>                                                | Toggle Preview Panel (default and configurable)|
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open flow's settings                         |
@@ -330,6 +330,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
 </p>
 
 ### Mentions

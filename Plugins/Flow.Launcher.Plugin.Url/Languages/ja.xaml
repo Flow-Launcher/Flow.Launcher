@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_new_tab">New Tab</system:String>
     
     <system:String x:Key="flowlauncher_plugin_url_open_url">次のURLを開く:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">次のURLを開くことができません:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">次のURLを開くことができません:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">入力したURLをFlow Launcherから開くプラグインです。</system:String>

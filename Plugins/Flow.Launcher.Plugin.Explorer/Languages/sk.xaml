@@ -79,7 +79,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otvoriť umiestnenie aktuálnej položky</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otvoriť v editore:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Nepodarilo sa otvoriť súbor {0} v editore {1} – {2}</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Otvori v príkazovom riadku:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Otvoriť v príkazovom riadku:</system:String>
     <system:String x:Key="plugin_explorer_openwithshell_error">Nepodarilo sa otvoriť priečinok {0} v prostredí {1} – {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Vylúčiť položku a jej podpriečinky z indexu vyhľadávania</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Vylúčiť z indexu vyhľadávania</system:String>

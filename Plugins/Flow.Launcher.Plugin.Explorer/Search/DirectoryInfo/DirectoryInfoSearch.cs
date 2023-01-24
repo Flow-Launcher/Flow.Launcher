@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             var criteria = ConstructSearchCriteria(search);
 
             if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) >
-                search.LastIndexOf(Constants.DirectorySeperator))
+                search.LastIndexOf(Constants.DirectorySeparator))
                 return DirectorySearch(new EnumerationOptions
                 {
                     RecurseSubdirectories = true
@@ -29,9 +29,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
         {
             string incompleteName = "";
 
-            if (!search.EndsWith(Constants.DirectorySeperator))
+            if (!search.EndsWith(Constants.DirectorySeparator))
             {
-                var indexOfSeparator = search.LastIndexOf(Constants.DirectorySeperator);
+                var indexOfSeparator = search.LastIndexOf(Constants.DirectorySeparator);
 
                 incompleteName = search[(indexOfSeparator + 1)..].ToLower();
 
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
             }
             catch (Exception e)
             {
-                Log.Exception(nameof(DirectoryInfoSearch), "Error occured while searching path", e);
+                Log.Exception(nameof(DirectoryInfoSearch), "Error occurred while searching path", e);
                 
                 throw;
             }

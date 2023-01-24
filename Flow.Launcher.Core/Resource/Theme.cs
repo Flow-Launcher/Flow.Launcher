@@ -36,7 +36,7 @@ namespace Flow.Launcher.Core.Resource
         {
             _themeDirectories.Add(DirectoryPath);
             _themeDirectories.Add(UserDirectoryPath);
-            MakesureThemeDirectoriesExist();
+            MakeSureThemeDirectoriesExist();
 
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.First(d =>
@@ -55,20 +55,17 @@ namespace Flow.Launcher.Core.Resource
             _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
         }
 
-        private void MakesureThemeDirectoriesExist()
+        private void MakeSureThemeDirectoriesExist()
         {
-            foreach (string dir in _themeDirectories)
+            foreach (var dir in _themeDirectories.Where(dir => !Directory.Exists(dir)))
             {
-                if (!Directory.Exists(dir))
+                try
                 {
-                    try
-                    {
-                        Directory.CreateDirectory(dir);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
-                    }
+                    Directory.CreateDirectory(dir);
+                }
+                catch (Exception e)
+                {
+                    Log.Exception($"|Theme.MakesureThemeDirectoriesExist|Exception when create directory <{dir}>", e);
                 }
             }
         }
@@ -82,13 +79,14 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
-
-                Settings.Theme = theme;
-
+                
                 // reload all resources even if the theme itself hasn't changed in order to pickup changes
                 // to things like fonts
-                UpdateResourceDictionary(GetResourceDictionary());
+                UpdateResourceDictionary(GetResourceDictionary(theme));
+                
+                Settings.Theme = theme;
 
+                
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
@@ -134,9 +132,9 @@ namespace Flow.Launcher.Core.Resource
             _oldResource = dictionaryToUpdate;
         }
 
-        private ResourceDictionary CurrentThemeResourceDictionary()
+        private ResourceDictionary GetThemeResourceDictionary(string theme)
         {
-            var uri = GetThemePath(Settings.Theme);
+            var uri = GetThemePath(theme);
             var dict = new ResourceDictionary
             {
                 Source = new Uri(uri, UriKind.Absolute)
@@ -145,10 +143,12 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        public ResourceDictionary GetResourceDictionary()
+        private ResourceDictionary CurrentThemeResourceDictionary() => GetThemeResourceDictionary(Settings.Theme);
+
+        public ResourceDictionary GetResourceDictionary(string theme)
         {
-            var dict = CurrentThemeResourceDictionary();
-           
+            var dict = GetThemeResourceDictionary(theme);
+            
             if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
                 dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
@@ -200,6 +200,11 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
+        private ResourceDictionary GetCurrentResourceDictionary( )
+        {
+            return  GetResourceDictionary(Settings.Theme);
+        }
+
         public List<string> LoadAvailableThemes()
         {
             List<string> themes = new List<string>();
@@ -229,7 +234,7 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            var dict = GetResourceDictionary();
+            var dict = GetCurrentResourceDictionary();
 
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
@@ -273,7 +278,7 @@ namespace Flow.Launcher.Core.Resource
 
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
-            var dict = CurrentThemeResourceDictionary();
+            var dict = GetCurrentResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
             var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;

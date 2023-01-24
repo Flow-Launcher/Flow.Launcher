@@ -41,25 +41,26 @@ body:
   - type: input
     attributes:
       label: Flow Launcher Version
-      description: Go to "Settings" => "About".
-      value: v1.8.3
+      description: Go to "Settings" => "About". If you are using a prerelease version please append the build number.
+      placeholder: "Example: 1.11.0"
+    validations:
+      required: true
 
   - type: input
     attributes:
       label: Windows Build Number
-      description: Run "ver" at CMD (command prompt).
-      value: 10.0.19043.1288
+      description: Run "ver" at CMD (command prompt) or go to Windows Settings -> Systems -> About.
+      placeholder: "Example: 10.0.19043.1288"
+    validations:
+      required: true
+
 
   - type: textarea
     id: logs
     attributes:
       label: Error Log
       description: >
-        Log file place:
-
-        - The latest version place: `%AppData%\FlowLauncher\Logs\<version>\<date>.txt`
-
-        - For portable mode: `%LocalAppData%\FlowLauncher\<App-Version>\UserData\Logs\<version>\<date>.txt`
+        From flow type 'open log location' and find log file with the corresponding date containing the error info.
       value: >
         <details>
 
