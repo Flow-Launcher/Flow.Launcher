@@ -13,12 +13,17 @@ namespace Flow.Launcher.Infrastructure.Storage
     public class JsonStorage<T> where T : new()
     {
         protected T? Data;
+
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";
+
         protected string FilePath { get; init; } = null!;
+
         private string TempFilePath => $"{FilePath}.tmp";
+
         private string BackupFilePath => $"{FilePath}.bak";
+
         protected string DirectoryPath { get; init; } = null!;
 
 
@@ -35,7 +40,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 try
                 {
-                    Data = JsonSerializer.Deserialize<T>(serialized)?? TryLoadBackup() ?? LoadDefault();
+                    Data = JsonSerializer.Deserialize<T>(serialized) ?? TryLoadBackup() ?? LoadDefault();
                 }
                 catch (JsonException)
                 {
@@ -46,6 +51,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             {
                 Data = TryLoadBackup() ?? LoadDefault();
             }
+
             return Data.NonNull();
         }
 
@@ -67,12 +73,15 @@ namespace Flow.Launcher.Infrastructure.Storage
             try
             {
                 var data = JsonSerializer.Deserialize<T>(File.ReadAllText(BackupFilePath));
+
                 if (data != null)
                 {
                     Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
                     File.Replace(BackupFilePath, FilePath, null);
+
                     return data;
                 }
+
                 return default;
             }
             catch (JsonException)
@@ -94,14 +103,22 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(Data, new JsonSerializerOptions
-            {
-                WriteIndented = true
-            });
+            string serialized = JsonSerializer.Serialize(Data,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
 
             File.WriteAllText(TempFilePath, serialized);
-            File.Replace(TempFilePath, FilePath, BackupFilePath);
-            File.Delete(TempFilePath);
+
+            if (!File.Exists(FilePath))
+            {
+                File.Move(TempFilePath, FilePath);
+            }
+            else
+            {
+                File.Replace(TempFilePath, FilePath, BackupFilePath);
+            }
         }
     }
 }
