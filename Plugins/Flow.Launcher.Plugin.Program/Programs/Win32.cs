@@ -83,6 +83,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public Result Result(string query, IPublicAPI api)
         {
             string title;
+            string titleOnly;
             MatchResult matchResult;
 
             // Name of the result
@@ -93,12 +94,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || resultName.Equals(Description))
             {
                 title = resultName;
+                titleOnly = resultName;
                 matchResult = StringMatcher.FuzzySearch(query, resultName);
             }
             else
             {
                 // Search in both
                 title = $"{resultName}: {Description}";
+                titleOnly = resultName;
                 var nameMatch = StringMatcher.FuzzySearch(query, resultName);
                 var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
                 if (descriptionMatch.Score > nameMatch.Score)
@@ -155,6 +158,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
+                AutoCompleteText = titleOnly,
                 SubTitle = subtitle,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
