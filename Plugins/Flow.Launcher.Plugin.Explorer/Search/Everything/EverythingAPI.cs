@@ -152,6 +152,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_SetMax(option.MaxCount);
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
+                EverythingApiDllImport.Everything_SetMatchPath(true);
 
                 if (token.IsCancellationRequested) yield break;
 
