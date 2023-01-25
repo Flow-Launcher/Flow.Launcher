@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         /// Gets or sets a value indicating whether [match path].
         /// </summary>
         /// <value><c>true</c> if [match path]; otherwise, <c>false</c>.</value>
-        public static bool MatchPath
+        public static bool MatchPath // TODO these seem to be unused, and they're related exactly to the feature i want: make everything search through the whole path. How should these be used? Should they be removed instead? IMHO, it seems better to use full path search by default, so i'd remove this completely
         {
             get => EverythingApiDllImport.Everything_GetMatchPath();
             set => EverythingApiDllImport.Everything_SetMatchPath(value);
