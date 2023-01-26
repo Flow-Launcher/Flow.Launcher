@@ -375,20 +375,17 @@ namespace Flow.Launcher.Plugin.Program.Programs
             public Result Result(string query, IPublicAPI api)
             {
                 string title;
-                string titleOnly;
                 MatchResult matchResult;
 
                 // We suppose Name won't be null
                 if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || Name.Equals(Description))
                 {
                     title = Name;
-                    titleOnly = Name;
                     matchResult = StringMatcher.FuzzySearch(query, Name);
                 }
                 else
                 {
                     title = $"{Name}: {Description}";
-                    titleOnly = Name;
                     var nameMatch = StringMatcher.FuzzySearch(query, Name);
                     var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
                     if (descriptionMatch.Score > nameMatch.Score)
@@ -411,7 +408,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 var result = new Result
                 {
                     Title = title,
-                    AutoCompleteText = titleOnly,
+                    AutoCompleteText = Name,
                     SubTitle = Main._settings.HideAppsPath ? string.Empty : Location,
                     IcoPath = LogoPath,
                     Preview = new Result.PreviewInfo
