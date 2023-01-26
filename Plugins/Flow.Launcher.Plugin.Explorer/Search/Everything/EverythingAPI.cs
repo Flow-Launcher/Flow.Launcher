@@ -13,13 +13,12 @@ using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-
     public static class EverythingApi
     {
-
         private const int BufferSize = 4096;
 
         private static SemaphoreSlim _semaphore = new(1, 1);
+
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
 
@@ -33,46 +32,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             CreateThreadError,
             InvalidIndexError,
             InvalidCallError
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match path].
-        /// </summary>
-        /// <value><c>true</c> if [match path]; otherwise, <c>false</c>.</value>
-        public static bool MatchPath // TODO these seem to be unused, and they're related exactly to the feature i want: make everything search through the whole path. How should these be used? Should they be removed instead? IMHO, it seems better to use full path search by default, so i'd remove this completely
-        {
-            get => EverythingApiDllImport.Everything_GetMatchPath();
-            set => EverythingApiDllImport.Everything_SetMatchPath(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match case].
-        /// </summary>
-        /// <value><c>true</c> if [match case]; otherwise, <c>false</c>.</value>
-        public static bool MatchCase
-        {
-            get => EverythingApiDllImport.Everything_GetMatchCase();
-            set => EverythingApiDllImport.Everything_SetMatchCase(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match whole word].
-        /// </summary>
-        /// <value><c>true</c> if [match whole word]; otherwise, <c>false</c>.</value>
-        public static bool MatchWholeWord
-        {
-            get => EverythingApiDllImport.Everything_GetMatchWholeWord();
-            set => EverythingApiDllImport.Everything_SetMatchWholeWord(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable regex].
-        /// </summary>
-        /// <value><c>true</c> if [enable regex]; otherwise, <c>false</c>.</value>
-        public static bool EnableRegex
-        {
-            get => EverythingApiDllImport.Everything_GetRegex();
-            set => EverythingApiDllImport.Everything_SetRegex(value);
         }
 
         /// <summary>
@@ -95,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                EverythingApiDllImport.Everything_GetMajorVersion(); 
+                EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
             }
@@ -122,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             
             await _semaphore.WaitAsync(token);
 
-            
+
             try
             {
                 if (token.IsCancellationRequested)
