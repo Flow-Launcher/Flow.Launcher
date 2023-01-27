@@ -81,7 +81,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                     if(File.Exists(FilePath)
                         File.Replace(BackupFilePath, FilePath, null);
                     else
-                        File.Copy(BackupFilePath, FilePath);
+                        File.Move(BackupFilePath, FilePath);
 
                     return data;
                 }
