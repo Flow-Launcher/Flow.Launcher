@@ -77,7 +77,11 @@ namespace Flow.Launcher.Infrastructure.Storage
                 if (data != null)
                 {
                     Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
-                    File.Replace(BackupFilePath, FilePath, null);
+                    
+                    if(File.Exists(FilePath)
+                        File.Replace(BackupFilePath, FilePath, null);
+                    else
+                        File.Copy(BackupFilePath, FilePath);
 
                     return data;
                 }
