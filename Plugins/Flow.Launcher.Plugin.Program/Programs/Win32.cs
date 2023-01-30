@@ -205,7 +205,9 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
+                            FileName = FullPath, 
+                            WorkingDirectory = ParentDirectory, 
+                            UseShellExecute = true
                         };
 
                         Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
@@ -423,10 +425,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
 
-            return Directory
-                .EnumerateFiles(
-                    directory,
-                    "*",
+            return Directory.EnumerateFiles(
+                    directory, "*",
                     new EnumerationOptions { IgnoreInaccessible = true, RecurseSubdirectories = recursive })
                 .Where(x => suffixes.Contains(Extension(x)));
         }
