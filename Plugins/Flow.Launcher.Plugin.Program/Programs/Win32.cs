@@ -457,14 +457,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> StartMenuPrograms(string[] suffixes, string[] protocols)
         {
-            var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
-            var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            var paths1 = EnumerateProgramsInDir(directory1, suffixes);
-            var paths2 = EnumerateProgramsInDir(directory2, suffixes);
+            var allPrograms = GetStartMenuPaths()
+                .SelectMany(p => EnumerateProgramsInDir(p, suffixes))
+                .Distinct();
 
-            var toFilter = paths1.Concat(paths2);
-
-            var programs = ExceptDisabledSource(toFilter.Distinct())
+            var programs = ExceptDisabledSource(allPrograms)
                 .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
@@ -702,12 +699,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<string> GetStartMenuPaths()
         {
-            var directory1 = Environment.GetFolderPath(Environment.SpecialFolder.Programs);
-            var directory2 = Environment.GetFolderPath(Environment.SpecialFolder.CommonPrograms);
-            return new[]
-            {
-                directory1, directory2
-            };
+            var userStartMenu = Environment.GetFolderPath(Environment.SpecialFolder.StartMenu);
+            var commonStartMenu = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
+
+            return new[] { userStartMenu, commonStartMenu };
         }
 
         public static void WatchProgramUpdate(Settings settings)
