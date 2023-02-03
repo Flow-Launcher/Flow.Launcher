@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
@@ -20,7 +21,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public override List<Bookmark> GetBookmarks()
         {
-            return GetBookmarksFromPath(BrowserDataPath);
+            return GetBookmarksFromPath(Path.Combine(BrowserDataPath, "places.sqlite"));
         }
     }
 }
