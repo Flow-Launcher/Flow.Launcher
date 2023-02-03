@@ -9,6 +9,7 @@
     <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefolderconfirm">Are you sure you want to permanently delete this folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
