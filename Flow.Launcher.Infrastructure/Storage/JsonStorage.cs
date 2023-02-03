@@ -1,4 +1,5 @@
-﻿using System;
+﻿#nullable enable
+using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
@@ -11,62 +12,82 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </summary>
     public class JsonStorage<T> where T : new()
     {
-        protected T _data;
+        protected T? Data;
+
         // need a new directory name
         public const string DirectoryName = "Settings";
         public const string FileSuffix = ".json";
-        public string FilePath { get; set; }
-        public string DirectoryPath { get; set; }
+
+        protected string FilePath { get; init; } = null!;
+
+        private string TempFilePath => $"{FilePath}.tmp";
+
+        private string BackupFilePath => $"{FilePath}.bak";
+
+        protected string DirectoryPath { get; init; } = null!;
 
 
         public T Load()
         {
+            string? serialized = null;
+
             if (File.Exists(FilePath))
             {
-                var serialized = File.ReadAllText(FilePath);
-                if (!string.IsNullOrWhiteSpace(serialized))
+                serialized = File.ReadAllText(FilePath);
+            }
+
+            if (!string.IsNullOrEmpty(serialized))
+            {
+                try
                 {
-                    Deserialize(serialized);
+                    Data = JsonSerializer.Deserialize<T>(serialized) ?? TryLoadBackup() ?? LoadDefault();
                 }
-                else
+                catch (JsonException)
                 {
-                    LoadDefault();
+                    Data = TryLoadBackup() ?? LoadDefault();
                 }
             }
             else
             {
-                LoadDefault();
+                Data = TryLoadBackup() ?? LoadDefault();
             }
-            return _data.NonNull();
+
+            return Data.NonNull();
         }
 
-        private void Deserialize(string serialized)
-        {
-            try
-            {
-                _data = JsonSerializer.Deserialize<T>(serialized);
-            }
-            catch (JsonException e)
-            {
-                LoadDefault();
-                Log.Exception($"|JsonStorage.Deserialize|Deserialize error for json <{FilePath}>", e);
-            }
-
-            if (_data == null)
-            {
-                LoadDefault();
-            }
-        }
-
-        private void LoadDefault()
+        private T LoadDefault()
         {
             if (File.Exists(FilePath))
             {
                 BackupOriginFile();
             }
 
-            _data = new T();
-            Save();
+            return new T();
+        }
+
+        private T? TryLoadBackup()
+        {
+            if (!File.Exists(BackupFilePath))
+                return default;
+
+            try
+            {
+                var data = JsonSerializer.Deserialize<T>(File.ReadAllText(BackupFilePath));
+
+                if (data != null)
+                {
+                    Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
+                    File.Replace(BackupFilePath, FilePath, null);
+
+                    return data;
+                }
+
+                return default;
+            }
+            catch (JsonException)
+            {
+                return default;
+            }
         }
 
         private void BackupOriginFile()
@@ -82,13 +103,22 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public void Save()
         {
-            string serialized = JsonSerializer.Serialize(_data, new JsonSerializerOptions() { WriteIndented = true });
+            string serialized = JsonSerializer.Serialize(Data,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
 
-            File.WriteAllText(FilePath, serialized);
+            File.WriteAllText(TempFilePath, serialized);
+
+            if (!File.Exists(FilePath))
+            {
+                File.Move(TempFilePath, FilePath);
+            }
+            else
+            {
+                File.Replace(TempFilePath, FilePath, BackupFilePath);
+            }
         }
     }
-
-    [Obsolete("Deprecated as of Flow Launcher v1.8.0, on 2021.06.21. " +
-        "This is used only for Everything plugin v1.4.9 or below backwards compatibility")]
-    public class JsonStrorage<T> : JsonStorage<T> where T : new() { }
 }

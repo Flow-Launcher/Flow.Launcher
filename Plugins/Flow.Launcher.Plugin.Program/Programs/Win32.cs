@@ -90,44 +90,28 @@ namespace Flow.Launcher.Plugin.Program.Programs
             bool useLocalizedName = !string.IsNullOrEmpty(LocalizedName) && !Name.Equals(LocalizedName);
             string resultName = useLocalizedName ? LocalizedName : Name;
 
-            if (!Main._settings.EnableDescription)
+            if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || resultName.Equals(Description))
             {
                 title = resultName;
                 matchResult = StringMatcher.FuzzySearch(query, resultName);
             }
             else
             {
-                if (string.IsNullOrEmpty(Description) || resultName.StartsWith(Description))
+                // Search in both
+                title = $"{resultName}: {Description}";
+                var nameMatch = StringMatcher.FuzzySearch(query, resultName);
+                var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
+                if (descriptionMatch.Score > nameMatch.Score)
                 {
-                    // Description is invalid or included in resultName
-                    // Description is always localized, so Name.StartsWith(Description) is generally useless
-                    title = resultName;
-                    matchResult = StringMatcher.FuzzySearch(query, resultName);
-                }
-                else if (Description.StartsWith(resultName))
-                {
-                    // resultName included in Description
-                    title = Description;
-                    matchResult = StringMatcher.FuzzySearch(query, Description);
+                    for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
+                    {
+                        descriptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
+                    }
+                    matchResult = descriptionMatch;
                 }
                 else
                 {
-                    // Search in both
-                    title = $"{resultName}: {Description}";
-                    var nameMatch = StringMatcher.FuzzySearch(query, resultName);
-                    var descriptionMatch = StringMatcher.FuzzySearch(query, Description);
-                    if (descriptionMatch.Score > nameMatch.Score)
-                    {
-                        for (int i = 0; i < descriptionMatch.MatchData.Count; i++)
-                        {
-                            descriptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
-                        }
-                        matchResult = descriptionMatch;
-                    }
-                    else
-                    {
-                        matchResult = nameMatch;
-                    }
+                    matchResult = nameMatch;
                 }
             }
 
@@ -171,6 +155,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var result = new Result
             {
                 Title = title,
+                AutoCompleteText = resultName,
                 SubTitle = subtitle,
                 IcoPath = IcoPath,
                 Score = matchResult.Score,
@@ -486,8 +471,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
 
             var paths = pathEnv.Split(";", StringSplitOptions.RemoveEmptyEntries).DistinctBy(p => p.ToLowerInvariant());
-
-            var toFilter = paths.Where(x => commonParents.All(parent => !IsSubPathOf(x, parent)))
+            
+            var toFilter = paths.Where(x => commonParents.All(parent => !FilesFolders.PathContains(parent, x)))
                 .AsParallel()
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes, recursive: false));
 
@@ -779,17 +764,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        // https://stackoverflow.com/a/66877016
-        private static bool IsSubPathOf(string subPath, string basePath)
-        {
-            var rel = Path.GetRelativePath(basePath, subPath);
-            return rel != "."
-                   && rel != ".."
-                   && !rel.StartsWith("../")
-                   && !rel.StartsWith(@"..\")
-                   && !Path.IsPathRooted(rel);
-        }
-
         private static List<string> GetCommonParents(IEnumerable<ProgramSource> programSources)
         {
             // To avoid unnecessary io
@@ -801,8 +775,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 HashSet<ProgramSource> parents = group.ToHashSet();
                 foreach (var source in group)
                 {
-                    if (parents.Any(p => IsSubPathOf(source.Location, p.Location) &&
-                                         source != p))
+                    if (parents.Any(p => FilesFolders.PathContains(p.Location, source.Location)))
                     {
                         parents.Remove(source);
                     }

@@ -841,15 +841,20 @@ namespace Flow.Launcher.ViewModel
                 queryBuilder.Replace('@' + shortcut.Key, shortcut.Expand());
             }
 
+            string customExpanded = queryBuilder.ToString();
+
             Application.Current.Dispatcher.Invoke(() =>
             {
                 foreach (var shortcut in builtInShortcuts)
                 {
                     try
                     {
-                        var expansion = shortcut.Expand();
-                        queryBuilder.Replace(shortcut.Key, expansion);
-                        queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        if (customExpanded.Contains(shortcut.Key))
+                        {
+                            var expansion = shortcut.Expand();
+                            queryBuilder.Replace(shortcut.Key, expansion);
+                            queryBuilderTmp.Replace(shortcut.Key, expansion);
+                        }
                     }
                     catch (Exception e)
                     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -84,14 +85,14 @@ namespace Flow.Launcher
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
-                
+
                 HotKeyMapper.Initialize(_mainVM);
 
-                // happlebao todo temp fix for instance code logic
+                // todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
-                // main windows needs initialized before theme change because of blur settigns
+                // main windows needs initialized before theme change because of blur settings
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
@@ -130,20 +131,17 @@ namespace Flow.Launcher
         //[Conditional("RELEASE")]
         private void AutoUpdates()
         {
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 if (_settings.AutoUpdates)
                 {
-                    // check udpate every 5 hours
-                    var timer = new Timer(1000 * 60 * 60 * 5);
-                    timer.Elapsed += async (s, e) =>
-                    {
-                        await _updater.UpdateAppAsync(API);
-                    };
-                    timer.Start();
-
-                    // check updates on startup
+                    // check update every 5 hours
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
                     await _updater.UpdateAppAsync(API);
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await _updater.UpdateAppAsync(API);
                 }
             });
         }
