@@ -1,17 +1,7 @@
 ﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
@@ -27,7 +17,9 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             currentCustomBrowser = browser;
             DataContext = new CustomBrowser
             {
-                Name = browser.Name, DataDirectoryPath = browser.DataDirectoryPath
+                Name = browser.Name,
+                DataDirectoryPath = browser.DataDirectoryPath,
+                BrowserType = browser.BrowserType,
             };
         }
 
@@ -39,6 +31,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
                 {
                     currentCustomBrowser.Name = editBrowser.Name;
                     currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
+                    currentCustomBrowser.BrowserType = editBrowser.BrowserType;
                     Close();
                 }
             }
