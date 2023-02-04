@@ -13,13 +13,12 @@ using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
-
     public static class EverythingApi
     {
-
         private const int BufferSize = 4096;
 
         private static SemaphoreSlim _semaphore = new(1, 1);
+
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
 
@@ -33,46 +32,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             CreateThreadError,
             InvalidIndexError,
             InvalidCallError
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match path].
-        /// </summary>
-        /// <value><c>true</c> if [match path]; otherwise, <c>false</c>.</value>
-        public static bool MatchPath
-        {
-            get => EverythingApiDllImport.Everything_GetMatchPath();
-            set => EverythingApiDllImport.Everything_SetMatchPath(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match case].
-        /// </summary>
-        /// <value><c>true</c> if [match case]; otherwise, <c>false</c>.</value>
-        public static bool MatchCase
-        {
-            get => EverythingApiDllImport.Everything_GetMatchCase();
-            set => EverythingApiDllImport.Everything_SetMatchCase(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match whole word].
-        /// </summary>
-        /// <value><c>true</c> if [match whole word]; otherwise, <c>false</c>.</value>
-        public static bool MatchWholeWord
-        {
-            get => EverythingApiDllImport.Everything_GetMatchWholeWord();
-            set => EverythingApiDllImport.Everything_SetMatchWholeWord(value);
-        }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable regex].
-        /// </summary>
-        /// <value><c>true</c> if [enable regex]; otherwise, <c>false</c>.</value>
-        public static bool EnableRegex
-        {
-            get => EverythingApiDllImport.Everything_GetRegex();
-            set => EverythingApiDllImport.Everything_SetRegex(value);
         }
 
         /// <summary>
@@ -95,7 +54,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             try
             {
-                EverythingApiDllImport.Everything_GetMajorVersion(); 
+                EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
                 return result;
             }
@@ -122,7 +81,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             
             await _semaphore.WaitAsync(token);
 
-            
+
             try
             {
                 if (token.IsCancellationRequested)
@@ -152,6 +111,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_SetMax(option.MaxCount);
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
+                EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
 
                 if (token.IsCancellationRequested) yield break;
 
