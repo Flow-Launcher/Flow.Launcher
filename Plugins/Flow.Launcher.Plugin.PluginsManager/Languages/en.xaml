@@ -5,7 +5,7 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
@@ -13,7 +13,7 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plugin Uninstall</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
