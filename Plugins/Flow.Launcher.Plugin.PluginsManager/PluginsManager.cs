@@ -157,7 +157,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), plugin.Name));
 
                 Install(plugin, filePath);
             }
@@ -177,7 +177,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
 
             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
-                Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"));
+                string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"), plugin.Name));
 
             Context.API.RestartApp();
         }
@@ -245,7 +245,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                     Context.API.ShowMsg(
                                         Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                        Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), x.Name));
 
                                     Install(x.PluginNewUserPlugin, downloadToFilePath);
 
