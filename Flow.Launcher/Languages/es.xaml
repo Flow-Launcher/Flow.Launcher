@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No se han encontrado resultados</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Por favor, intente una búsqueda diferente.</system:String>
     <system:String x:Key="plugin">Complementos</system:String>
+    <system:String x:Key="plugins">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
     <system:String x:Key="disable">Desactivado</system:String>
@@ -152,6 +156,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajos de teclado</system:String>
+    <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Atajo de teclado para vista previa</system:String>

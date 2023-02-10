@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">登錄快捷鍵：{0} 失敗</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">插件</system:String>
+    <system:String x:Key="plugins">插件</system:String>
     <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
     <system:String x:Key="enable">啟用</system:String>
     <system:String x:Key="disable">停用</system:String>
@@ -152,6 +156,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
+    <system:String x:Key="hotkeys">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>

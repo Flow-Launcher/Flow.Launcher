@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">プラグインを探す</system:String>
     <system:String x:Key="enable">有効</system:String>
     <system:String x:Key="disable">無効</system:String>
@@ -152,6 +153,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">ホットキー</system:String>
+    <system:String x:Key="hotkeys">ホットキー</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher ホットキー</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>

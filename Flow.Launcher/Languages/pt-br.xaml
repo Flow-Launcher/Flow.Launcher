@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registrar atalho: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Encontrar mais plugins</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Desabilitar</system:String>
@@ -152,6 +156,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atalho</system:String>
+    <system:String x:Key="hotkeys">Atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Atalho do Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>

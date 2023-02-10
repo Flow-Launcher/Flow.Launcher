@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">단축키 등록 실패: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">검색 결과를 찾을 수 없습니다.</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">다른 검색어를 시도해주세요.</system:String>
     <system:String x:Key="plugin">플러그인</system:String>
+    <system:String x:Key="plugins">플러그인</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
     <system:String x:Key="disable">끔</system:String>
@@ -152,6 +156,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
+    <system:String x:Key="hotkeys">단축키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력하세요.</system:String>
     <system:String x:Key="previewHotkey">미리보기 단축키</system:String>
