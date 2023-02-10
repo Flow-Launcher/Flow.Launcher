@@ -177,7 +177,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             try
                             {
                                 if (MessageBox.Show(
-                                        Context.API.GetTranslation("plugin_explorer_deletefilefolderconfirm"),
+                                        string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
                                         string.Empty,
                                         MessageBoxButton.YesNo,
                                         MessageBoxIcon.Warning)
