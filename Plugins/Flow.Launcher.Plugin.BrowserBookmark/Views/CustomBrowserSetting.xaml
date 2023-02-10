@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Plugin.BrowserBookmark.Models"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="clr-namespace:Flow.Launcher.Infrastructure.UI;assembly=Flow.Launcher.Infrastructure"
     Title="{DynamicResource flowlauncher_plugin_browserbookmark_bookmarkDataSetting}"
     Width="520"
     Background="{DynamicResource PopuBGColor}"
@@ -79,6 +80,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition />
                             <RowDefinition />
+                            <RowDefinition />
                         </Grid.RowDefinitions>
                         <TextBlock
                             Grid.Row="0"
@@ -104,9 +106,28 @@
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             FontSize="14"
+                            Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}" />
+                        <ComboBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Width="120"
+                            Height="34"
+                            Margin="5,10,10,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding Source={ui:EnumBindingSource {x:Type local:BrowserType}}}"
+                            SelectedItem="{Binding BrowserType}">
+                        </ComboBox>
+                        <TextBlock
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Margin="5,10,20,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="14"
                             Text="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}" />
                         <TextBox
-                            Grid.Row="1"
+                            Grid.Row="2"
                             Grid.Column="1"
                             Height="34"
                             Margin="5,10,0,0"

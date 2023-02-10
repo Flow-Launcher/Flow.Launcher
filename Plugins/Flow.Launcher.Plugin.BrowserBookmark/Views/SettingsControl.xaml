@@ -46,6 +46,8 @@
                                             Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserName}"/>
                             <GridViewColumn DisplayMemberBinding="{Binding DataDirectoryPath, Mode=OneWay}"
                                             Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory}"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding BrowserType, Mode=OneWay}"
+                                            Header="{DynamicResource flowlauncher_plugin_browserbookmark_browserEngine}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
