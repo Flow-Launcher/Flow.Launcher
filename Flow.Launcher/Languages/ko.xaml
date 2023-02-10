@@ -124,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
+    <system:String x:Key="appearance">외관</system:String>
     <system:String x:Key="browserMoreThemes">테마 갤러리</system:String>
     <system:String x:Key="howToCreateTheme">테마 제작 안내</system:String>
     <system:String x:Key="hiThere">안녕하세요!</system:String>

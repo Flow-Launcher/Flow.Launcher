@@ -1769,7 +1769,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Style="{StaticResource TabMenu}"
-                                Text="{DynamicResource theme}" />
+                                Text="{DynamicResource appearance}" />
                         </Grid>
                     </TabItem.Header>
                     <Border Padding="0,0,0,0">
@@ -1792,7 +1792,7 @@
                                         Margin="0,5,0,5"
                                         FontSize="30"
                                         Style="{StaticResource PageTitle}"
-                                        Text="{DynamicResource theme}"
+                                        Text="{DynamicResource appearance}"
                                         TextAlignment="left" />
                                 </Border>
 

@@ -124,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Design</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
     <system:String x:Key="howToCreateTheme">Wie man ein Design erstellt</system:String>
     <system:String x:Key="hiThere">Hallo!</system:String>

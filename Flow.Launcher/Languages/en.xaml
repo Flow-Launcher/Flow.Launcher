@@ -123,6 +123,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Theme Gallery</system:String>
     <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
     <system:String x:Key="hiThere">Hi There</system:String>

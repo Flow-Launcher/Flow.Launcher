@@ -46,6 +46,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Finn flere temaer</system:String>
     <system:String x:Key="queryBoxFont">Font for spørringsboks</system:String>
     <system:String x:Key="resultItemFont">Font for resultat</system:String>

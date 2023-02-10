@@ -124,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Daha fazla tema bul</system:String>
     <system:String x:Key="howToCreateTheme">Nasıl bir tema yaratılır</system:String>
     <system:String x:Key="hiThere">Merhaba</system:String>

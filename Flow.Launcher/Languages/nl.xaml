@@ -124,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
     <system:String x:Key="howToCreateTheme">Hoe maak je een thema</system:String>
     <system:String x:Key="hiThere">Hallo daar</system:String>
