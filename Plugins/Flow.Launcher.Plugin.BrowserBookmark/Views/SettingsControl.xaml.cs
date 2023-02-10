@@ -70,5 +70,14 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             else
                 CustomBrowsersList.Visibility = Visibility.Collapsed;
         }
+
+        private void EditCustomBrowser(object sender, RoutedEventArgs e)
+        {
+            if (SelectedCustomBrowser is null)
+                return;
+
+            var window = new CustomBrowserSettingWindow(SelectedCustomBrowser);
+            window.ShowDialog();
+        }
     }
 }
