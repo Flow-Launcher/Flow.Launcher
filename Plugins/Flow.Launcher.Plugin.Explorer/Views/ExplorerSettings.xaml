@@ -349,6 +349,15 @@
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
+                        <TextBlock Margin="10" 
+                            VerticalAlignment="Center"
+                            Text="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"/>
+                        <CheckBox Margin="10"
+                            VerticalAlignment="Center"
+                            IsChecked="{Binding Settings.EverythingSearchFullPath}">
+                        </CheckBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
                         <Grid Margin="20,10,0,10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="F" />
