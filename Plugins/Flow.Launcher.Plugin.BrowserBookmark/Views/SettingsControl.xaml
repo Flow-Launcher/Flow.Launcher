@@ -18,15 +18,15 @@
                 <CheckBox
                     Margin="0,0,15,0"
                     Content="Chrome"
-                    IsChecked="{Binding Settings.LoadChromeBookmark}" />
+                    IsChecked="{Binding LoadChromeBookmark}" />
                 <CheckBox
                     Margin="0,0,15,0"
                     Content="Edge"
-                    IsChecked="{Binding Settings.LoadEdgeBookmark}" />
+                    IsChecked="{Binding LoadEdgeBookmark}" />
                 <CheckBox
                     Margin="0,0,15,0"
                     Content="Firefox"
-                    IsChecked="{Binding Settings.LoadFirefoxBookmark}" />
+                    IsChecked="{Binding LoadFirefoxBookmark}" />
                 <Button
                     Margin="0,0,15,0"
                     Click="Others_Click"

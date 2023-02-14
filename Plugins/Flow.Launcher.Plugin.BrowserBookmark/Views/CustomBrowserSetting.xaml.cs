@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Forms;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
@@ -30,7 +29,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
             currentCustomBrowser.Name = editBrowser.Name;
             currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
             currentCustomBrowser.BrowserType = editBrowser.BrowserType;
-            _ = Task.Run(() => Main.ReloadAllBookmarks());
+            DialogResult = true;
             Close();
         }
 
