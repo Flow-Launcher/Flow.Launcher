@@ -174,6 +174,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
     <system:String x:Key="shortcut_clipboard_description">从剪贴板获取文本。</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">从活动的资源管理器窗口获取路径。</system:String>
     <system:String x:Key="queryWindowShadowEffect">查询窗口阴影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">阴影效果将占用大量的GPU资源。 如果您的计算机性能有限，则不建议使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口宽度</system:String>

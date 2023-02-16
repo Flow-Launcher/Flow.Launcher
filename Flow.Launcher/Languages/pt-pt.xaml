@@ -174,6 +174,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Tem a certeza de que deseja remover a tecla de atalho do plugin {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Tem a certeza de que deseja eliminar o atalho: {0} com expansão {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obter texto da área de transferência.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Obter caminho a partir do explorador ativo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efeito de sombra da janela</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Este efeito intensifica a utilização da GPU. Não deve ativar esta opção se o desempenho do seu computador for fraco.</system:String>
     <system:String x:Key="windowWidthSize">Largura da janela</system:String>
