@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ProjectGuid>{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}</ProjectGuid>
     <UseWPF>true</UseWPF>
     <OutputType>Library</OutputType>
@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>3.0.1</Version>
-    <PackageVersion>3.0.1</PackageVersion>
-    <AssemblyVersion>3.0.1</AssemblyVersion>
-    <FileVersion>3.0.1</FileVersion>
+    <Version>4.0.0</Version>
+    <PackageVersion>4.0.0</PackageVersion>
+    <AssemblyVersion>4.0.0</AssemblyVersion>
+    <FileVersion>4.0.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -65,7 +65,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>

@@ -259,9 +259,16 @@ namespace Flow.Launcher.Core.Plugin
 
             await using var registeredEvent = token.Register(() =>
             {
-                if (!process.HasExited)
-                    process.Kill();
-                sourceBuffer.Dispose();
+                try
+                {
+                    if (!process.HasExited)
+                        process.Kill();
+                    sourceBuffer.Dispose();
+                }
+                catch (Exception e)
+                {
+                    Log.Exception("|JsonRPCPlugin.ExecuteAsync|Exception when kill process", e);
+                }
             });
 
             try
@@ -288,7 +295,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             sourceBuffer.Seek(0, SeekOrigin.Begin);
-            
+
             return sourceBuffer;
         }
 
@@ -376,7 +383,8 @@ namespace Flow.Launcher.Core.Plugin
                 sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
                 var panel = new StackPanel
                 {
-                    Orientation = Orientation.Vertical, VerticalAlignment = VerticalAlignment.Center,
+                    Orientation = Orientation.Vertical,
+                    VerticalAlignment = VerticalAlignment.Center,
                     Margin = settingLabelPanelMargin
                 };
                 RowDefinition gridRow = new RowDefinition();
@@ -390,8 +398,10 @@ namespace Flow.Launcher.Core.Plugin
                 };
                 var desc = new TextBlock()
                 {
-                    Text = attribute.Description, FontSize = 12,
-                    VerticalAlignment = VerticalAlignment.Center,Margin = settingDescMargin,
+                    Text = attribute.Description,
+                    FontSize = 12,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = settingDescMargin,
                     TextWrapping = TextWrapping.WrapWithOverflow
                 };
                 desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
@@ -405,7 +415,7 @@ namespace Flow.Launcher.Core.Plugin
                     panel.Children.Add(name);
                     panel.Children.Add(desc);
                 }
-                    
+
 
                 Grid.SetColumn(panel, 0);
                 Grid.SetRow(panel, rowCount);
@@ -420,20 +430,20 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             Text = attribute.Description.Replace("\\r\\n", "\r\n"),
                             Margin = settingTextBlockMargin,
-                            Padding = new Thickness(0,0,0,0),
+                            Padding = new Thickness(0, 0, 0, 0),
                             HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
                             TextAlignment = TextAlignment.Left,
                             TextWrapping = TextWrapping.Wrap
                         };
-                            Grid.SetColumn(contentControl, 0);
-                            Grid.SetColumnSpan(contentControl, 2);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
+                        Grid.SetColumn(contentControl, 0);
+                        Grid.SetColumnSpan(contentControl, 2);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
                     }
                     case "input":
                     {
@@ -449,50 +459,49 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = textBox.Text;
                         };
                         contentControl = textBox;
-                            Grid.SetColumn(contentControl, 1);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
                     }
                     case "inputWithFileBtn":
+                    {
+                        var textBox = new TextBox()
                         {
-                            var textBox = new TextBox()
-                            {
-                                Margin = new Thickness(10, 0, 0, 0),
-                                Text = Settings[attribute.Name] as string ?? string.Empty,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                                ToolTip = attribute.Description
-                            };
-                            textBox.TextChanged += (_, _) =>
-                            {
-                                Settings[attribute.Name] = textBox.Text;
-                            };
-                            var Btn = new System.Windows.Controls.Button()
-                            {
-                                Margin = new Thickness(10,0,0,0),
-                                Content = "Browse"
-                            };
-                            var dockPanel = new DockPanel()
-                            {
-                                Margin = settingControlMargin
-                            };
-                            DockPanel.SetDock(Btn, Dock.Right);
-                            dockPanel.Children.Add(Btn);
-                            dockPanel.Children.Add(textBox);
-                            contentControl = dockPanel;
-                            Grid.SetColumn(contentControl, 1);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
-                        }
+                            Margin = new Thickness(10, 0, 0, 0),
+                            Text = Settings[attribute.Name] as string ?? string.Empty,
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                            ToolTip = attribute.Description
+                        };
+                        textBox.TextChanged += (_, _) =>
+                        {
+                            Settings[attribute.Name] = textBox.Text;
+                        };
+                        var Btn = new System.Windows.Controls.Button()
+                        {
+                            Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
+                        };
+                        var dockPanel = new DockPanel()
+                        {
+                            Margin = settingControlMargin
+                        };
+                        DockPanel.SetDock(Btn, Dock.Right);
+                        dockPanel.Children.Add(Btn);
+                        dockPanel.Children.Add(textBox);
+                        contentControl = dockPanel;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
+                    }
                     case "textarea":
                     {
                         var textBox = new TextBox()
@@ -511,14 +520,14 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((TextBox)sender).Text;
                         };
                         contentControl = textBox;
-                            Grid.SetColumn(contentControl, 1);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
                     }
                     case "passwordBox":
                     {
@@ -535,14 +544,14 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = ((PasswordBox)sender).Password;
                         };
                         contentControl = passwordBox;
-                            Grid.SetColumn(contentControl, 1);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
                     }
                     case "dropdown":
                     {
@@ -559,14 +568,14 @@ namespace Flow.Launcher.Core.Plugin
                             Settings[attribute.Name] = (string)((System.Windows.Controls.ComboBox)sender).SelectedItem;
                         };
                         contentControl = comboBox;
-                            Grid.SetColumn(contentControl, 1);
-                            Grid.SetRow(contentControl, rowCount);
-                            if (rowCount != 0)
-                                mainPanel.Children.Add(sep);
-                            Grid.SetRow(sep, rowCount);
-                            Grid.SetColumn(sep, 0);
-                            Grid.SetColumnSpan(sep, 2);
-                            break;
+                        Grid.SetColumn(contentControl, 1);
+                        Grid.SetRow(contentControl, rowCount);
+                        if (rowCount != 0)
+                            mainPanel.Children.Add(sep);
+                        Grid.SetRow(sep, rowCount);
+                        Grid.SetColumn(sep, 0);
+                        Grid.SetColumnSpan(sep, 2);
+                        break;
                     }
                     case "checkbox":
                         var checkBox = new CheckBox
@@ -592,13 +601,11 @@ namespace Flow.Launcher.Core.Plugin
                     case "hyperlink":
                         var hyperlink = new Hyperlink
                         {
-                            ToolTip = attribute.Description,
-                            NavigateUri = attribute.url
+                            ToolTip = attribute.Description, NavigateUri = attribute.url
                         };
                         var linkbtn = new System.Windows.Controls.Button
                         {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            Margin = settingControlMargin
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Margin = settingControlMargin
                         };
                         linkbtn.Content = attribute.urlLabel;
 
@@ -619,7 +626,7 @@ namespace Flow.Launcher.Core.Plugin
                 mainPanel.Children.Add(panel);
                 mainPanel.Children.Add(contentControl);
                 rowCount++;
-                
+
             }
             return settingWindow;
         }

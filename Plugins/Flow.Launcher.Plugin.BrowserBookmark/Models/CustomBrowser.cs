@@ -4,6 +4,8 @@
     {
         private string _name;
         private string _dataDirectoryPath;
+        private BrowserType browserType = BrowserType.Chromium;
+
         public string Name
         {
             get => _name;
@@ -13,6 +15,7 @@
                 OnPropertyChanged(nameof(Name));
             } 
         }
+        
         public string DataDirectoryPath
         {
             get => _dataDirectoryPath;
@@ -22,5 +25,21 @@
                 OnPropertyChanged(nameof(DataDirectoryPath));
             }
         }
+        
+        public BrowserType BrowserType
+        {
+            get => browserType;
+            set
+            {
+                browserType = value;
+                OnPropertyChanged(nameof(BrowserType));
+            }
+        }
+    }
+
+    public enum BrowserType
+    {
+        Chromium,
+        Firefox,
     }
 }

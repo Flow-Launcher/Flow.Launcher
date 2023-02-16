@@ -330,6 +330,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
 </p>
 
 ### Mentions
@@ -362,8 +364,11 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 ### Developing/Debugging
 
-- Flow Launcher's target framework is .Net 6
+- Flow Launcher's target framework is .Net 7
 
 - Install Visual Studio 2022
 
-- Install .Net 6 SDK via Visual Studio installer or manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.300-windows-x64-installer)
+- Install .Net 7 SDK 
+  - via Visual Studio installer
+  - via winget `winget install Microsoft.DotNet.SDK.7`
+  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)

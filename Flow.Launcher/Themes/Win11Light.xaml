@@ -120,7 +120,7 @@
     </Style>
     <Style
         x:Key="ItemHotkeySelectedStyle"
-        BasedOn="{StaticResource BaseItemHotkeySelecetedStyle}"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="#acacac" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -11,10 +12,10 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public bool Shift { get; set; }
         public bool Win { get; set; }
         public bool Ctrl { get; set; }
-        public Key CharKey { get; set; }
 
+        public Key CharKey { get; set; } = Key.None;
 
-        Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
+        private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
             {Key.Space, "Space"},
             {Key.Oem3, "~"}
@@ -27,19 +28,19 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 ModifierKeys modifierKeys = ModifierKeys.None;
                 if (Alt)
                 {
-                    modifierKeys = ModifierKeys.Alt;
+                    modifierKeys |= ModifierKeys.Alt;
                 }
                 if (Shift)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Shift;
+                    modifierKeys |= ModifierKeys.Shift;
                 }
                 if (Win)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Windows;
+                    modifierKeys |= ModifierKeys.Windows;
                 }
                 if (Ctrl)
                 {
-                    modifierKeys = modifierKeys | ModifierKeys.Control;
+                    modifierKeys |= ModifierKeys.Control;
                 }
                 return modifierKeys;
             }
@@ -86,7 +87,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 Ctrl = true;
                 keys.Remove("Ctrl");
             }
-            if (keys.Count > 0)
+            if (keys.Count == 1)
             {
                 string charKey = keys[0];
                 KeyValuePair<Key, string>? specialSymbolPair = specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
@@ -110,36 +111,75 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override string ToString()
         {
-            string text = string.Empty;
+            List<string> keys = new List<string>();
             if (Ctrl)
             {
-                text += "Ctrl + ";
+                keys.Add("Ctrl");
             }
             if (Alt)
             {
-                text += "Alt + ";
+                keys.Add("Alt");
             }
             if (Shift)
             {
-                text += "Shift + ";
+                keys.Add("Shift");
             }
             if (Win)
             {
-                text += "Win + ";
+                keys.Add("Win");
             }
 
             if (CharKey != Key.None)
             {
-                text += specialSymbolDictionary.ContainsKey(CharKey)
+                keys.Add(specialSymbolDictionary.ContainsKey(CharKey)
                     ? specialSymbolDictionary[CharKey]
-                    : CharKey.ToString();
+                    : CharKey.ToString());
             }
-            else if (!string.IsNullOrEmpty(text))
-            {
-                text = text.Remove(text.Length - 3);
-            }
+            return string.Join(" + ", keys);
+        }
 
-            return text;
+        public bool Validate()
+        {
+            switch (CharKey)
+            {
+                case Key.LeftAlt:
+                case Key.RightAlt:
+                case Key.LeftCtrl:
+                case Key.RightCtrl:
+                case Key.LeftShift:
+                case Key.RightShift:
+                case Key.LWin:
+                case Key.RWin:
+                    return false;
+                default:
+                    if (ModifierKeys == ModifierKeys.None)
+                    {
+                        return !((CharKey >= Key.A && CharKey <= Key.Z) ||
+                            (CharKey >= Key.D0 && CharKey <= Key.D9) ||
+                            (CharKey >= Key.NumPad0 && CharKey <= Key.NumPad9));
+                    }
+                    else
+                    {
+                        return CharKey != Key.None;
+                    }
+            }
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is HotkeyModel other)
+            {
+                return ModifierKeys == other.ModifierKeys && CharKey == other.CharKey;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ModifierKeys, CharKey);
         }
     }
 }
