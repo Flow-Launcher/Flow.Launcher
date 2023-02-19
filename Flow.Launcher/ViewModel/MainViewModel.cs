@@ -967,6 +967,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Hotkey
 
+        [RelayCommand]
         public void ToggleFlowLauncher()
         {
             if (!MainWindowVisibilityStatus)
