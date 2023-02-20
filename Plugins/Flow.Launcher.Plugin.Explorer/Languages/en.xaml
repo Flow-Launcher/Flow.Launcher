@@ -127,7 +127,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">&#x2193;</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search In Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
     
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
