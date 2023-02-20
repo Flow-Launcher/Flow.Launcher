@@ -137,7 +137,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                          PathEnumerationEngine == PathEnumerationEngineOption.Everything ||
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
-        public bool EverythingSearchFullPath { get; set; } = true;
+        public bool EverythingSearchFullPath { get; set; } = false;
         
         #endregion
 
