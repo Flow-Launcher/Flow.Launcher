@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">Nenašli sa žiadne výsledky</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Skúste použiť iné vyhľadávanie.</system:String>
     <system:String x:Key="plugin">Pluginy</system:String>
+    <system:String x:Key="plugins">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zapnuté</system:String>
     <system:String x:Key="disable">Vypnuté</system:String>
@@ -120,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
     <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
@@ -152,6 +157,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
+    <system:String x:Key="hotkeys">Klávesové skratky</system:String>
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
     <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
@@ -304,7 +310,7 @@
     <system:String x:Key="update_flowlauncher_updating">Aktualizuje sa...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher nedokázal presunúť používateľské údaje do aktualizovanej verzie.
-            Prosím, presuňte profilový priečinok data z {0} do {1}
+        Prosím, presuňte profilový priečinok data z {0} do {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nová aktualizácia</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Je dostupná nová verzia Flow Launchera {0}</system:String>

@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Tastenkombinationregistrierung: {0} fehlgeschlagen</system:String>
     <system:String x:Key="couldnotStartCmd">Kann {0} nicht starten</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Erweiterung</system:String>
+    <system:String x:Key="plugins">Erweiterung</system:String>
     <system:String x:Key="browserMorePlugins">Suche nach weiteren Plugins</system:String>
     <system:String x:Key="enable">Aktivieren</system:String>
     <system:String x:Key="disable">Deaktivieren</system:String>
@@ -120,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Design</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
     <system:String x:Key="howToCreateTheme">Wie man ein Design erstellt</system:String>
     <system:String x:Key="hiThere">Hallo!</system:String>
@@ -152,6 +157,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tastenkombination</system:String>
+    <system:String x:Key="hotkeys">Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Tastenkombination</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Verknüpfung eingeben, um Flow Launcher anzuzeigen/auszublenden.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>

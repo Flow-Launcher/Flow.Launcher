@@ -1027,7 +1027,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Style="{StaticResource TabMenu}"
-                                Text="{DynamicResource plugin}" />
+                                Text="{DynamicResource plugins}" />
                         </Grid>
                     </TabItem.Header>
 
@@ -1049,7 +1049,7 @@
                                     DockPanel.Dock="Left"
                                     FontSize="30"
                                     Style="{StaticResource PageTitle}"
-                                    Text="{DynamicResource plugin}"
+                                    Text="{DynamicResource plugins}"
                                     TextAlignment="Left" />
                                 <DockPanel DockPanel.Dock="Right">
                                     <TextBox
@@ -1769,7 +1769,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Style="{StaticResource TabMenu}"
-                                Text="{DynamicResource theme}" />
+                                Text="{DynamicResource appearance}" />
                         </Grid>
                     </TabItem.Header>
                     <Border Padding="0,0,0,0">
@@ -1792,7 +1792,7 @@
                                         Margin="0,5,0,5"
                                         FontSize="30"
                                         Style="{StaticResource PageTitle}"
-                                        Text="{DynamicResource theme}"
+                                        Text="{DynamicResource appearance}"
                                         TextAlignment="left" />
                                 </Border>
 
@@ -2388,7 +2388,7 @@
                             <TextBlock
                                 Grid.Column="1"
                                 Style="{StaticResource TabMenu}"
-                                Text="{DynamicResource hotkey}" />
+                                Text="{DynamicResource hotkeys}" />
                         </Grid>
                     </TabItem.Header>
                     <ScrollViewer
@@ -2404,7 +2404,7 @@
                                     Margin="0,5,0,2"
                                     FontSize="30"
                                     Style="{StaticResource PageTitle}"
-                                    Text="{DynamicResource hotkey}"
+                                    Text="{DynamicResource hotkeys}"
                                     TextAlignment="left" />
 
                                 <StackPanel Grid.Row="1">

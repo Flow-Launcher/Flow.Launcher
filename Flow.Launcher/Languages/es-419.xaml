@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Error al registrar la tecla de acceso directo: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se pudo iniciar {0}</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Encontrar más plugins</system:String>
     <system:String x:Key="enable">Activado</system:String>
     <system:String x:Key="disable">Desactivado</system:String>
@@ -120,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Galería de Temas</system:String>
     <system:String x:Key="howToCreateTheme">Cómo crear un tema</system:String>
     <system:String x:Key="hiThere">Hola</system:String>
@@ -152,6 +157,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla Rápida</system:String>
+    <system:String x:Key="hotkeys">Tecla Rápida</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de acceso a Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>

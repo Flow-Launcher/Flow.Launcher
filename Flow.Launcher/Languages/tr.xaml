@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Kısayol tuşu ataması başarısız oldu: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">{0} başlatılamıyor</system:String>
@@ -80,6 +83,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Eklenti</system:String>
+    <system:String x:Key="plugins">Eklenti</system:String>
     <system:String x:Key="browserMorePlugins">Daha fazla eklenti bul</system:String>
     <system:String x:Key="enable">Açık</system:String>
     <system:String x:Key="disable">Devre Dışı</system:String>
@@ -120,6 +124,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Daha fazla tema bul</system:String>
     <system:String x:Key="howToCreateTheme">Nasıl bir tema yaratılır</system:String>
     <system:String x:Key="hiThere">Merhaba</system:String>
@@ -152,6 +157,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
+    <system:String x:Key="hotkeys">Kısayol Tuşu</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Kısayolu</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
