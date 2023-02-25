@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
-using System.Windows.Navigation;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -99,7 +99,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 {
                     try
                     {
-                        CharKey = (Key) Enum.Parse(typeof (Key), charKey);
+                        CharKey = (Key)Enum.Parse(typeof(Key), charKey);
                     }
                     catch (ArgumentException)
                     {
@@ -137,8 +137,13 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
             return string.Join(" + ", keys);
         }
-
-        public bool Validate()
+        
+        /// <summary>
+        /// Validate hotkey
+        /// </summary>
+        /// <param name="validateKeyGestrue">Try to validate hotkey as a KeyGesture.</param>
+        /// <returns></returns>
+        public bool Validate(bool validateKeyGestrue = false)
         {
             switch (CharKey)
             {
@@ -152,17 +157,52 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.RWin:
                     return false;
                 default:
+                    if (validateKeyGestrue)
+                    {
+                        try
+                        {
+                            KeyGesture keyGesture = new KeyGesture(CharKey, ModifierKeys);
+                        }
+                        catch (System.Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+                        {
+                            return false;
+                        }
+                    }
                     if (ModifierKeys == ModifierKeys.None)
                     {
-                        return !((CharKey >= Key.A && CharKey <= Key.Z) ||
-                            (CharKey >= Key.D0 && CharKey <= Key.D9) ||
-                            (CharKey >= Key.NumPad0 && CharKey <= Key.NumPad9));
+                        return !IsPrintableCharacter(CharKey);
                     }
                     else
                     {
                         return CharKey != Key.None;
                     }
             }
+        }
+
+        private static bool IsPrintableCharacter(Key key)
+        {
+            // https://stackoverflow.com/questions/11881199/identify-if-a-event-key-is-text-not-only-alphanumeric
+            return (key >= Key.A && key <= Key.Z) ||
+                   (key >= Key.D0 && key <= Key.D9) ||
+                   (key >= Key.NumPad0 && key <= Key.NumPad9) ||
+                   key == Key.OemQuestion ||
+                   key == Key.OemQuotes ||
+                   key == Key.OemPlus ||
+                   key == Key.OemOpenBrackets ||
+                   key == Key.OemCloseBrackets ||
+                   key == Key.OemMinus ||
+                   key == Key.DeadCharProcessed ||
+                   key == Key.Oem1 ||
+                   key == Key.Oem7 ||
+                   key == Key.OemPeriod ||
+                   key == Key.OemComma ||
+                   key == Key.OemMinus ||
+                   key == Key.Add ||
+                   key == Key.Divide ||
+                   key == Key.Multiply ||
+                   key == Key.Subtract ||
+                   key == Key.Oem102 ||
+                   key == Key.Decimal;
         }
 
         public override bool Equals(object obj)
