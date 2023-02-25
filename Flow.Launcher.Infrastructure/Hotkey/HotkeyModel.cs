@@ -155,6 +155,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.RightShift:
                 case Key.LWin:
                 case Key.RWin:
+                case Key.None:
                     return false;
                 default:
                     if (validateKeyGestrue)
@@ -174,7 +175,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                     }
                     else
                     {
-                        return CharKey != Key.None;
+                        return true;
                     }
             }
         }
