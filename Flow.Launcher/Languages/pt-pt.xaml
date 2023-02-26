@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registar tecla de atalho: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
@@ -309,7 +306,7 @@
     <system:String x:Key="update_flowlauncher_updating">A atualizar...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher não conseguiu mover o seu perfil de dados para a nova versão.
-        Queira por favor mover a pasta do seu perfil de {0} para {1}
+Queira por favor mover a pasta do seu perfil de {0} para {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Nova atualização</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Está disponível a versão {0} do Flow Launcher</system:String>
