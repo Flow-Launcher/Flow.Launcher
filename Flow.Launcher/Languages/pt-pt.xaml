@@ -121,7 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Aparência</system:String>
     <system:String x:Key="browserMoreThemes">Galeria de temas</system:String>
     <system:String x:Key="howToCreateTheme">Como criar um tema</system:String>
     <system:String x:Key="hiThere">Olá</system:String>
@@ -154,7 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
-    <system:String x:Key="hotkeys">Tecla de atalho</system:String>
+    <system:String x:Key="hotkeys">Teclas de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -163,9 +163,9 @@
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado com o teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
-    <system:String x:Key="customQueryHotkey">Tecla de atalho personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Atalho de consulta personalizada</system:String>
-    <system:String x:Key="builtinShortcuts">Atalho nativo</system:String>
+    <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
+    <system:String x:Key="customQueryShortcut">Atalhos de consultas personalizadas</system:String>
+    <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
     <system:String x:Key="customShortcutExpansion">Expansão</system:String>
