@@ -18,6 +18,11 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">浏览器名称</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">数据文件路径</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">添加</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">编辑</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">删除</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">浏览</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
 </ResourceDictionary>
