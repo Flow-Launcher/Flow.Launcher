@@ -121,7 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Vzhľad</system:String>
     <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
     <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
@@ -163,8 +163,8 @@
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
-    <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="customQueryHotkey">Klávesové skratky vlastného vyhľadávania</system:String>
+    <system:String x:Key="customQueryShortcut">Klávesové skratky vlastného dopytu</system:String>
     <system:String x:Key="builtinShortcuts">Vstavané skratky</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="customShortcut">Skratka</system:String>
