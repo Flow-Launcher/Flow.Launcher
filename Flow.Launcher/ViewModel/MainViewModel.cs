@@ -589,7 +589,7 @@ namespace Flow.Launcher.ViewModel
             get
             {
                 // TODO try to patch issue #1755
-                // Should be removed after some time
+                // Added in v1.14.0, remove after v1.16.0. 
                 try
                 {
                     var converter = new KeyGestureConverter();
