@@ -163,8 +163,8 @@
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
-    <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
+    <system:String x:Key="customQueryShortcut">Accesos directos de consulta personalizada</system:String>
     <system:String x:Key="builtinShortcuts">Accesos directos integrados</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Acceso directo</system:String>
