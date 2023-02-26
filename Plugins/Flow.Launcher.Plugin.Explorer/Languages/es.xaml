@@ -6,7 +6,7 @@
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro que desea eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro que desea eliminar permanentemente este archivo?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Está seguro de que desea eliminar permanentemente este/esta archivo/carpeta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminación correcta</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} se ha eliminado correctamente</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Asignar la palabra clave de acción global podría generar demasiados resultados durante la búsqueda. Por favor, elija una palabra clave de acción específica</system:String>
@@ -125,7 +125,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Advertencia: Esta no es una opción de clasificación rápida, las búsquedas pueden ser lentas</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Buscar ruta completa</system:String>
     
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Hacer clic para lanzar o instalar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalación de Everything</system:String>
