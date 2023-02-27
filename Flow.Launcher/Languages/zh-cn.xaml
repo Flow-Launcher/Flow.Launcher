@@ -121,7 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">外观</system:String>
     <system:String x:Key="browserMoreThemes">浏览更多主题</system:String>
     <system:String x:Key="howToCreateTheme">如何创建一个主题</system:String>
     <system:String x:Key="hiThere">你好！</system:String>
