@@ -24,6 +24,7 @@ using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -583,7 +584,24 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string PreviewHotkey => Settings.PreviewHotkey;
+        public string PreviewHotkey 
+        { 
+            get
+            {
+                // TODO try to patch issue #1755
+                // Added in v1.14.0, remove after v1.16.0. 
+                try
+                {
+                    var converter = new KeyGestureConverter();
+                    var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
+                }
+                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+                {
+                    Settings.PreviewHotkey = "F1";
+                }
+                return Settings.PreviewHotkey;
+            }
+        }
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
