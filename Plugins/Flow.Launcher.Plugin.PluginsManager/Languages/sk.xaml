@@ -3,7 +3,7 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Sťahovanie pluginu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Chyba: Nepodarilo sa stiahnuť plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} od {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
@@ -11,7 +11,7 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Inštaluje sa plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Stiahnuť a nainštalovať {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinštalovať plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin bol úspešne nainštalovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} bol úspešne nainštalovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Inštalácia zlyhala: nepodarilo sa nájsť metadáta súboru plugin.json z extrahovaného súboru ZIP.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Chyba: Plugin s rovnakou alebo vyššou verziou ako {0} už existuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Chyba inštalácie pluginu</system:String>
