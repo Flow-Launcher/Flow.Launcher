@@ -6,7 +6,7 @@
     <system:String x:Key="plugin_explorer_select_folder_link_warning">请选择一个文件夹链接</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">您确定要删除 {0} 吗?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">您确定要永久删除此文件吗？</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">您确定要永久删除此文件/文件夹吗？</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">删除成功</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">已成功删除 {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">使用全局操作关键字可能会在搜索过程中带来太多结果。请使用一个特定的操作关键字。</system:String>
@@ -125,7 +125,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">搜索完整路径</system:String>
     
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
