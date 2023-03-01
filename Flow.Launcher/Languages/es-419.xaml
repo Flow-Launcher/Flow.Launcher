@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Error al registrar la tecla de acceso directo: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se pudo iniciar {0}</system:String>

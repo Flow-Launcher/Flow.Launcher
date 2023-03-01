@@ -3,7 +3,7 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Descargando complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Descargado correctamente</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">{0} se ha descargado correctamente</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Error: No se puede descargar el complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} por {1} {2}{3}¿Desea desinstalar este complemento? Después de la desinstalación Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} por {1} {2}{3}¿Desea instalar este complemento? Después de la instalación Flow se reiniciará automáticamente.</system:String>
@@ -11,7 +11,7 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento {0} instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se ha podido encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error al instalar el complemento</system:String>

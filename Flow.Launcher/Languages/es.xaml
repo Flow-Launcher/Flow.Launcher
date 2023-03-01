@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
@@ -124,7 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Apariencia</system:String>
     <system:String x:Key="browserMoreThemes">Galería de temas</system:String>
     <system:String x:Key="howToCreateTheme">Cómo crear un tema</system:String>
     <system:String x:Key="hiThere">Hola</system:String>
@@ -166,8 +163,8 @@
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
-    <system:String x:Key="customQueryHotkey">Atajo de teclado de consulta personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Acceso directo de consulta personalizada</system:String>
+    <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
+    <system:String x:Key="customQueryShortcut">Accesos directos de consulta personalizada</system:String>
     <system:String x:Key="builtinShortcuts">Accesos directos integrados</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Acceso directo</system:String>
@@ -180,7 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Obtener la ruta del explorador activo.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
@@ -252,7 +249,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Cambiar la prioridad</system:String>
-    <system:String x:Key="priority_tips">A mayor número, más alto aparecerá el resultado. Inténtelo con 5. Si quiere que los resultados aparezcan más abajo que los de cualquier otro complemento, utilice un número negativo</system:String>
+    <system:String x:Key="priority_tips">Cuanto mayor sea el número, más arriba se situará el resultado. Inténtelo con 5. Si desea que los resultados se situén más abajo que los de cualquier otro complemento, utilice un número negativo</system:String>
     <system:String x:Key="invalidPriority">¡Por favor, proporcione un número entero válido para la prioridad!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
