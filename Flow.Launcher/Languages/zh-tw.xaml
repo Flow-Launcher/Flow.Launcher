@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">插件</system:String>
+    <system:String x:Key="plugins">插件</system:String>
     <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
     <system:String x:Key="enable">啟用</system:String>
     <system:String x:Key="disable">停用</system:String>
@@ -120,6 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主題</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
     <system:String x:Key="howToCreateTheme">如何創建一個主題</system:String>
     <system:String x:Key="hiThere">你好呀</system:String>
@@ -152,6 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
+    <system:String x:Key="hotkeys">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -174,6 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的快捷鍵嗎？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">查詢窗口陰影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
@@ -323,7 +327,7 @@
     <system:String x:Key="Welcome_Page1_Text01">你好，這是你第一次運行 Flow Launcher！</system:String>
     <system:String x:Key="Welcome_Page1_Text02">在開始之前，此嚮導將幫助設定 Flow Launcher。如果你想，你可以跳過這個。請選擇一種語言</system:String>
     <system:String x:Key="Welcome_Page2_Title">在PC上搜尋並執行所有文件和應用程式</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">只需使用鍵盤搜尋應用程式、文件、書籤、Youtube、Twitter等</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">只需使用鍵盤搜尋應用程式、文件、書籤、YouTube、Twitter 等。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 需要搭配快捷鍵使用，請馬上試試吧! 如果想更改它，請點擊&quot;輸入&quot;並輸入你想要的快捷鍵。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷鍵</system:String>
     <system:String x:Key="Welcome_Page4_Title">關鍵字與指令</system:String>

@@ -11,6 +11,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -66,12 +67,8 @@
 
   <Target Name="CopyDLLs" AfterTargets="Build">
     <Message Text="Executing CopyDLLs task" Importance="High" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x64" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x86" />
+    <Copy SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x64" />
+    <Copy SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x86" />
   </Target>
 
   <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">

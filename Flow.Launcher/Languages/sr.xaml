@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Neuspešno registrovana prečica: {0}</system:String>
@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Nađi još plugin-a</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Onemogući</system:String>
@@ -120,6 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Pretražite još tema</system:String>
     <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
     <system:String x:Key="hiThere">Hi There</system:String>
@@ -152,6 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Prečica</system:String>
+    <system:String x:Key="hotkeys">Prečica</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher prečica</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -174,6 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Da li ste sigurni da želite da obrišete prečicu za {0} plugin?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
@@ -211,7 +215,7 @@
     <system:String x:Key="newVersionTips">Nove verzija {0} je dostupna, molim Vas ponovo pokrenite Flow Launcher.</system:String>
     <system:String x:Key="checkUpdatesFailed">Neuspešna provera ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Neuspešno preuzimanje ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema github-cloud.s3.amazonaws.com, 
+        Neuspešno preuzimanje ažuriranja, molim Vas proverite vašu vezu i podešavanja za proksi prema github-cloud.s3.amazonaws.com,
         ili posetite https://github.com/Flow-Launcher/Flow.Launcher/releases da preuzmete ažuriranja ručno.
     </system:String>
     <system:String x:Key="releaseNotes">U novoj verziji</system:String>

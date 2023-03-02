@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">Nenašli sa žiadne výsledky</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Skúste použiť iné vyhľadávanie.</system:String>
     <system:String x:Key="plugin">Pluginy</system:String>
+    <system:String x:Key="plugins">Pluginy</system:String>
     <system:String x:Key="browserMorePlugins">Nájsť ďalšie pluginy</system:String>
     <system:String x:Key="enable">Zapnuté</system:String>
     <system:String x:Key="disable">Vypnuté</system:String>
@@ -120,6 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
+    <system:String x:Key="appearance">Vzhľad</system:String>
     <system:String x:Key="browserMoreThemes">Galéria motívov</system:String>
     <system:String x:Key="howToCreateTheme">Ako vytvoriť motív</system:String>
     <system:String x:Key="hiThere">Ahojte</system:String>
@@ -152,6 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
+    <system:String x:Key="hotkeys">Klávesové skratky</system:String>
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
     <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
@@ -160,8 +163,8 @@
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
-    <system:String x:Key="customQueryHotkey">Klávesová skratka vlastného vyhľadávania</system:String>
-    <system:String x:Key="customQueryShortcut">Klávesová skratka vlastného dopytu</system:String>
+    <system:String x:Key="customQueryHotkey">Klávesové skratky vlastného vyhľadávania</system:String>
+    <system:String x:Key="customQueryShortcut">Klávesové skratky vlastného dopytu</system:String>
     <system:String x:Key="builtinShortcuts">Vstavané skratky</system:String>
     <system:String x:Key="customQuery">Dopyt</system:String>
     <system:String x:Key="customShortcut">Skratka</system:String>
@@ -174,6 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Naozaj chcete odstrániť skratku: {0} pre dopyt {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Kopírovať text do schránky.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Získať cestu z aktívneho Prieskumníka.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Tieňový efekt v poli vyhľadávania</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Tieňový efekt významne využíva GPU. Neodporúča sa, ak je výkon počítača obmedzený.</system:String>
     <system:String x:Key="windowWidthSize">Šírka okna</system:String>

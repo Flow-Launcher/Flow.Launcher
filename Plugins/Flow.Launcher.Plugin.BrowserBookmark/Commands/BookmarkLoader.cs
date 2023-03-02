@@ -44,7 +44,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
             foreach (var browser in setting.CustomChromiumBrowsers)
             {
-                var loader = new CustomChromiumBookmarkLoader(browser);
+                IBookmarkLoader loader = browser.BrowserType switch
+                {
+                    BrowserType.Chromium => new CustomChromiumBookmarkLoader(browser),
+                    BrowserType.Firefox => new CustomFirefoxBookmarkLoader(browser),
+                    _ => new CustomChromiumBookmarkLoader(browser),
+                };
                 allBookmarks.AddRange(loader.GetBookmarks());
             }
 

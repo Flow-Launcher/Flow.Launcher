@@ -5,8 +5,8 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Tem que efetuar uma seleção</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Selecione a ligação para a pasta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Tem a certeza de que deseja eliminar {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">Tem a certeza de que pretende eliminar permanentemente esta pasta?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Tem a certeza de que pretende eliminar permanentemente este ficheiro ou pasta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminada com sucesso</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} eliminado(a) com sucesso.</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">A atribuição de uma palavra-chave global pode devolver demasiados resultados. Deve escolher uma palavra-chave específica.</system:String>
@@ -125,6 +125,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Aviso: esta não é uma opção de ordenação rápida e as pesquisas podem ser demoradas</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Pesquisar caminho completo</system:String>
+    
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Clique para iniciar ou instalar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalação Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">A instalar o serviço Everything. Por favor aguarde...</system:String>

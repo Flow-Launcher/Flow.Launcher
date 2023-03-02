@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Плагіни</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
     <system:String x:Key="enable">Увімкнено</system:String>
     <system:String x:Key="disable">Відключити</system:String>
@@ -120,6 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
     <system:String x:Key="howToCreateTheme">Як створити тему</system:String>
     <system:String x:Key="hiThere">Привіт усім</system:String>
@@ -152,6 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
+    <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть ярлик для відображення/приховання потокового запуску.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -174,6 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Ефект тіні вікна запиту</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>

@@ -80,6 +80,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">검색 결과를 찾을 수 없습니다.</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">다른 검색어를 시도해주세요.</system:String>
     <system:String x:Key="plugin">플러그인</system:String>
+    <system:String x:Key="plugins">플러그인</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
     <system:String x:Key="disable">끔</system:String>
@@ -120,6 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
+    <system:String x:Key="appearance">외관</system:String>
     <system:String x:Key="browserMoreThemes">테마 갤러리</system:String>
     <system:String x:Key="howToCreateTheme">테마 제작 안내</system:String>
     <system:String x:Key="hiThere">안녕하세요!</system:String>
@@ -152,6 +154,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
+    <system:String x:Key="hotkeys">단축키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력하세요.</system:String>
     <system:String x:Key="previewHotkey">미리보기 단축키</system:String>
@@ -174,6 +177,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">클립보드에서 텍스트 가져오기</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
