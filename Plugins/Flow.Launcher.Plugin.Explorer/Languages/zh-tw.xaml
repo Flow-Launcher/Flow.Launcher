@@ -5,8 +5,8 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">請選擇一個資料夾</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎？</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">Are you sure you want to permanently delete this folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
@@ -125,6 +125,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安裝程序</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安裝 Everything 服務，請稍後...</system:String>

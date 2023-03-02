@@ -1,8 +1,5 @@
-﻿<?xml version="1.0" ?>
-<ResourceDictionary
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">登錄快捷鍵：{0} 失敗</system:String>
     <system:String x:Key="couldnotStartCmd">啟動命令 {0} 失敗</system:String>
@@ -330,7 +327,7 @@
     <system:String x:Key="Welcome_Page1_Text01">你好，這是你第一次運行 Flow Launcher！</system:String>
     <system:String x:Key="Welcome_Page1_Text02">在開始之前，此嚮導將幫助設定 Flow Launcher。如果你想，你可以跳過這個。請選擇一種語言</system:String>
     <system:String x:Key="Welcome_Page2_Title">在PC上搜尋並執行所有文件和應用程式</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">只需使用鍵盤搜尋應用程式、文件、書籤、Youtube、Twitter等</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">只需使用鍵盤搜尋應用程式、文件、書籤、YouTube、Twitter 等。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 需要搭配快捷鍵使用，請馬上試試吧! 如果想更改它，請點擊&quot;輸入&quot;並輸入你想要的快捷鍵。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷鍵</system:String>
     <system:String x:Key="Welcome_Page4_Title">關鍵字與指令</system:String>
