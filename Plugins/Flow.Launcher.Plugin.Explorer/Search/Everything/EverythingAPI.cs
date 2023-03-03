@@ -172,5 +172,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+        public static async Task IncrementRunCounterAsync(string fileOrFolder)
+        {
+            try
+            {
+                await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
+                
+                if (await IsEverythingRunningAsync())
+                    _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
+            }
+            catch (Exception)
+            {
+                /*ignored*/
+            }
+            finally { _semaphore.Release(); }
+        }
     }
 }

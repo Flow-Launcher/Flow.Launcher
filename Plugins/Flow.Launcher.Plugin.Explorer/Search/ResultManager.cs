@@ -78,10 +78,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 CopyText = path,
                 Action = c =>
                 {
+                    // open folder
                     if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
                     {
                         try
                         {
+                            IncrementRunCounterIfNeeded(path);
                             Context.API.OpenDirectory(path);
                             return true;
                         }
@@ -91,7 +93,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
-
+                    // or make this folder the current query
                     Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
 
                     return false;
@@ -224,16 +226,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         // TODO Why do we check if file exists here, but not in the other if conditions? 
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            RunExplorerAsAdminAtPath(filePath);
+                            IncrementRunCounterIfNeeded(filePath);
+                            OpenFileAsAdmin(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
-                            RunExplorerAtPath(filePath);
-                        }
+                            IncrementRunCounterIfNeeded(filePath);
+                            FilesFolders.OpenContainingFolder(filePath);
+                        }                    
+
                         else
                         {
-                            FilesFolders.OpenPath(filePath);
-                            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
+                            IncrementRunCounterIfNeeded(filePath);
+                            FilesFolders.OpenPath(filePath); 
                         }
                     }
                     catch (Exception ex)
@@ -250,7 +255,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result;
         }
 
-        private static void RunExplorerAsAdminAtPath(string filePath)
+        private static void OpenFileAsAdmin(string filePath)
         {
             _ = Task.Run(() =>
             {
@@ -263,7 +268,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
                         Verb = "runas",
                     });
-                    EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
                 }
                 catch (Exception e)
                 {
@@ -272,12 +276,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             });
         }
 
-        private static void RunExplorerAtPath(string filePath)
+        private static void IncrementRunCounterIfNeeded(string fileOrFolder)
         {
-            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
-            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
+            if (Settings.EverythingEnabled)
+                _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
-
 
         public static bool IsMedia(string extension)
         {
