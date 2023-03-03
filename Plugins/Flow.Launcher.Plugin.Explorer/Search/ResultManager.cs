@@ -58,10 +58,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return result.Type switch
             {
-                ResultType.Folder or ResultType.Volume => CreateFolderResult(Path.GetFileName(result.FullPath),
-                    result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
-                ResultType.File => CreateFileResult(
-                    result.FullPath, query, 0, result.WindowsIndexed),
+                ResultType.Folder or ResultType.Volume =>
+                    CreateFolderResult(Path.GetFileName(result.FullPath), result.FullPath, result.FullPath, query, 0, result.WindowsIndexed),
+                ResultType.File =>
+                    CreateFileResult(result.FullPath, query, 0, result.WindowsIndexed),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
@@ -99,12 +99,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = score,
                 TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Folder,
-                    FullPath = path,
-                    WindowsIndexed = windowsIndexed
-                }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -141,12 +136,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = path,
                 SubTitleToolTip = path,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Volume,
-                    FullPath = path,
-                    WindowsIndexed = windowsIndexed
-                }
+                ContextData = new SearchResult { Type = ResultType.Volume, FullPath = path, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -205,12 +195,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     Context.API.OpenDirectory(folderPath);
                     return true;
                 },
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.Folder,
-                    FullPath = folderPath,
-                    WindowsIndexed = windowsIndexed
-                }
+                ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
             };
         }
 
@@ -260,12 +245,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 },
                 TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
-                ContextData = new SearchResult
-                {
-                    Type = ResultType.File,
-                    FullPath = filePath,
-                    WindowsIndexed = windowsIndexed
-                }
+                ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };
             return result;
         }
@@ -311,10 +291,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        public static readonly string[] MediaExtensions =
-        {
-            ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4"
-        };
+        public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
     }
 
     public enum ResultType
