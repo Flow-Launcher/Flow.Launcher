@@ -17,7 +17,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
     {
         private const int BufferSize = 4096;
 
-        private static SemaphoreSlim _semaphore = new(1, 1);
+        private static readonly SemaphoreSlim _semaphore = new(1, 1);
 
         // cached buffer to remove redundant allocations.
         private static readonly StringBuilder buffer = new(BufferSize);
@@ -78,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             if (option.MaxCount < 0)
                 throw new ArgumentOutOfRangeException(nameof(option.MaxCount), option.MaxCount, "MaxCount must be greater than or equal to 0");
-            
+
             await _semaphore.WaitAsync(token);
 
 
