@@ -23,7 +23,7 @@
     <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速訪問連結</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
@@ -38,7 +38,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速存取：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">確</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">已啟用</system:String>
