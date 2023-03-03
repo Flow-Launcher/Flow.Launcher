@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -249,6 +250,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                                         WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
                                         Verb = "runas",
                                     });
+                                    EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
                                 }
                                 catch (Exception e)
                                 {
@@ -259,10 +261,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
                             Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
+                            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
                         }
                         else
                         {
                             FilesFolders.OpenPath(filePath);
+                            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
                         }
                     }
                     catch (Exception ex)
