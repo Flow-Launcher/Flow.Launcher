@@ -178,9 +178,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             try
             {
                 await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
-                
-                if (await IsEverythingRunningAsync())
-                    _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
+                _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
             }
             catch (Exception)
             {
