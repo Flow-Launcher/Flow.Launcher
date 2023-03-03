@@ -30,7 +30,7 @@
     <system:String x:Key="flowlauncher_settings">設定</system:String>
     <system:String x:Key="general">一般</system:String>
     <system:String x:Key="portableMode">便攜模式</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
+    <system:String x:Key="portableModeToolTIp">將所有設定和使用者資料存儲在同一個文件夾中（使用可移動磁碟機或雲端服務很有用）。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
@@ -55,10 +55,10 @@
     <system:String x:Key="defaultFileManagerToolTip">選擇開啟資料夾時要使用的檔案管理器。</system:String>
     <system:String x:Key="defaultBrowser">預設瀏覽器</system:String>
     <system:String x:Key="defaultBrowserToolTip">設定新增分頁、視窗和無痕模式。</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="pythonFilePath">Python 位置</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
+    <system:String x:Key="selectPythonExecutable">請選擇 pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
@@ -121,7 +121,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主題</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">外觀</system:String>
     <system:String x:Key="browserMoreThemes">瀏覽更多主題</system:String>
     <system:String x:Key="howToCreateTheme">如何創建一個主題</system:String>
     <system:String x:Key="hiThere">你好呀</system:String>
@@ -208,10 +208,10 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">圖標</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">成为支持者</system:String>
     <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
     <system:String x:Key="checkUpdatesFailed">檢查更新失敗，請檢查你對 api.github.com 的連線和代理設定。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -223,8 +223,8 @@
     <system:String x:Key="devtool">開發工具</system:String>
     <system:String x:Key="settingfolder">設定資料夾</system:String>
     <system:String x:Key="logfolder">日誌資料夾</system:String>
-    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
+    <system:String x:Key="clearlogfolder">清除日誌</system:String>
+    <system:String x:Key="clearlogfolderMessage">請確認要刪除所有日誌嗎？</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
 
     <!--  FileManager Setting Dialog  -->
