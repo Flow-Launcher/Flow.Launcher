@@ -29,7 +29,7 @@
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
     <system:String x:Key="general">一般</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
+    <system:String x:Key="portableMode">便攜模式</system:String>
     <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
