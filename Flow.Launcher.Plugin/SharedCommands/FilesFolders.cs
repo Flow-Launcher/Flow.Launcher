@@ -14,8 +14,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
     {
         private const string FileExplorerProgramName = "explorer";
 
-        private const string FileExplorerProgramEXE = "explorer.exe";
-
         /// <summary>
         /// Copies the folder and all of its files and folders 
         /// including subfolders to the target location
@@ -145,13 +143,25 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return File.Exists(filePath);
         }
 
+        /*
+         ❓ 
+        todo does it make sense to remove Flow.Launcher.Plugin.IPublicAPI.OpenDirectory (used as Context.API.OpenDirectory(path)),
+            and replace with this function?
+        todo or the other way around: remove this function and use OpenDirectory
+            because i don't see the point of having 2 functions which do the same thing
+        */
         /// <summary>
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
         /// <param name="fileOrFolderPath"></param>
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
+            var psi = new ProcessStartInfo
+            {
+                FileName = FileExplorerProgramName,
+                UseShellExecute = true,
+                Arguments = '"' + fileOrFolderPath + '"'
+            };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
@@ -173,7 +183,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="path"></param>
         public static void OpenContainingFolder(string path)
         {
-            Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");
+            Process.Start(FileExplorerProgramName, $" /select,\"{path}\"");
         }
 
         ///<summary>
