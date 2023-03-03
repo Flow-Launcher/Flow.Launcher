@@ -216,10 +216,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath)) ? new Result.PreviewInfo
-            {
-                IsMedia = true, PreviewImagePath = filePath,
-            } : Result.PreviewInfo.Default;
+            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
+                ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
+                : Result.PreviewInfo.Default;
 
             var title = Path.GetFileName(filePath);
 
@@ -237,31 +236,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
+                        // TODO Why do we check if file exists here, but not in the other if conditions? 
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            _ = Task.Run(() =>
-                            {
-                                try
-                                {
-                                    Process.Start(new ProcessStartInfo
-                                    {
-                                        FileName = filePath,
-                                        UseShellExecute = true,
-                                        WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
-                                        Verb = "runas",
-                                    });
-                                    EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
-                                }
-                                catch (Exception e)
-                                {
-                                    MessageBox.Show(e.Message, "Could not start " + filePath);
-                                }
-                            });
+                            RunExplorerAsAdminAtPath(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
-                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
-                            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
+                            RunExplorerAtPath(filePath);
                         }
                         else
                         {
@@ -287,6 +269,35 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
             return result;
         }
+
+        private static void RunExplorerAsAdminAtPath(string filePath)
+        {
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    Process.Start(new ProcessStartInfo
+                    {
+                        FileName = filePath,
+                        UseShellExecute = true,
+                        WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
+                        Verb = "runas",
+                    });
+                    EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show(e.Message, "Could not start " + filePath);
+                }
+            });
+        }
+
+        private static void RunExplorerAtPath(string filePath)
+        {
+            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
+            EverythingApiDllImport.Everything_IncRunCountFromFileName(filePath);
+        }
+
 
         public static bool IsMedia(string extension)
         {
