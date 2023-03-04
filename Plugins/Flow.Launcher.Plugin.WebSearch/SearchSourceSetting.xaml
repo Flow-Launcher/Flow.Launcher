@@ -179,7 +179,7 @@
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
                                     FontSize="14"
-                                    Text="{DynamicResource flowlauncher_plugin_websearch_enabled}" />
+                                    Text="{DynamicResource flowlauncher_plugin_websearch_enabled_label}" />
                                 <CheckBox
                                     Grid.Row="4"
                                     Grid.Column="1"
