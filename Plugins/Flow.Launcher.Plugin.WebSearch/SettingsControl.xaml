@@ -146,7 +146,7 @@
                         Margin="0,0,8,0"
                         IsChecked="{Binding Settings.EnableSuggestion}" />
                 </StackPanel>
-                <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSaerchSuggestion is not working  -->
+                <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSearchSuggestion is not working  -->
             </DockPanel>
         </Border>
     </Grid>
