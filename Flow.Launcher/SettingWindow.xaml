@@ -1932,9 +1932,25 @@
 
                                 <StackPanel Grid.Row="3">
                                     <Border
+                                        Height="64"
                                         Margin="0,8,0,0"
+                                        CornerRadius="5 5 0 0"
+                                        Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource theme}" />
+                                            </StackPanel>
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe790;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Border
+                                        Margin="0,0,0,0"
                                         Padding="0"
                                         HorizontalAlignment="Stretch"
+                                        BorderThickness="1,0,1,1"
+                                        CornerRadius="0 0 5 5"
                                         Style="{DynamicResource SettingGroupBox}">
                                         <ListBox
                                             Margin="12,12,12,12"
@@ -2448,11 +2464,11 @@
                                                 Width="300"
                                                 Height="35"
                                                 Margin="0,0,0,0"
-                                                ValidateKeyGesture="True"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
                                                 Loaded="OnPreviewHotkeyControlLoaded"
-                                                LostFocus="OnPreviewHotkeyControlFocusLost" />
+                                                LostFocus="OnPreviewHotkeyControlFocusLost"
+                                                ValidateKeyGesture="True" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe8a1;
                                             </TextBlock>
