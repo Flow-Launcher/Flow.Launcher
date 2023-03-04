@@ -59,6 +59,7 @@
 
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#3c3c3c" />
     <SolidColorBrush x:Key="PopuBGColor" Color="#202020" />
+    <SolidColorBrush x:Key="PopupBGColor" Color="#202020" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#cfcfcf" />
     <SolidColorBrush x:Key="PopupButtonAreaBGColor" Color="#2b2b2b" />
     <SolidColorBrush x:Key="PopupButtonAreaBorderColor" Color="#3f3f3f" />

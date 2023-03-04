@@ -8,7 +8,7 @@
     Title="{DynamicResource flowlauncher_plugin_websearch_window_title}"
     Width="550"
     d:DataContext="{d:DesignInstance vm:SearchSourceViewModel}"
-    Background="{DynamicResource PopuBGColor}"
+    Background="{DynamicResource PopupBGColor}"
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
