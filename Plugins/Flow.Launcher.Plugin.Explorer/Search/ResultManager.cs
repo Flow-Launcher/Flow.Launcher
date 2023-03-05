@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return new Result
             {
-                Title = title,
+                Title = title  + addScoreInDebug(score),
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
@@ -207,7 +207,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
                 : Result.PreviewInfo.Default;
 
-            var title = Path.GetFileName(filePath);
+            var title = Path.GetFileName(filePath) + addScoreInDebug(score);
 
             var result = new Result
             {
@@ -292,6 +292,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 return MediaExtensions.Contains(extension.ToLowerInvariant());
             }
+        }
+
+        private static string addScoreInDebug(int score)
+        {
+            #if DEBUG
+                return " ➡️ " + score;
+            #else
+                return "";
+            #endif
         }
 
         public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
