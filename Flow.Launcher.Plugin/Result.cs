@@ -178,7 +178,7 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override string ToString()
         {
-            return Title + SubTitle;
+            return Title + SubTitle + Score;
         }
 
         /// <summary>
