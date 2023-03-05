@@ -34,6 +34,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             InvalidCallError
         }
 
+        const uint EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME = 0x00000004u;
+        const uint EVERYTHING_REQUEST_RUN_COUNT = 0x00000400u;
+
         /// <summary>
         /// Checks whether the sort option is Fast Sort.
         /// </summary>
@@ -113,6 +116,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
                 EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
 
+                EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT); // todo need flag for this?
+
+
                 if (token.IsCancellationRequested) yield break;
 
                 if (!EverythingApiDllImport.Everything_QueryW(true))
@@ -132,10 +138,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                     var result = new SearchResult
                     {
+                        // todo the types are wrong. Everything expects uint everywhere, but we send int just above. pls fix
                         FullPath = buffer.ToString(),
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
-                            ResultType.Volume
+                            ResultType.Volume,
+                        // todo need flag for this?
+                        Score = (int)EverythingApiDllImport.Everything_GetResultRunCount( (uint)idx) 
                     };
 
                     yield return result;
