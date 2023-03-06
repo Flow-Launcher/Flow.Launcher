@@ -11,8 +11,8 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
-    MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
+    Width="{Binding MainWindowWidth, Mode=TwoWay}"
+    MinWidth="400"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
     AllowsTransparency="True"
@@ -25,7 +25,7 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
-    ResizeMode="NoResize"
+    ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
     Style="{DynamicResource WindowStyle}"
@@ -34,6 +34,9 @@
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="5, 0" />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -335,11 +338,9 @@
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition
-                            Width="0.85*"
-                            MinWidth="244"
-                            MaxWidth="340" />
+                        <ColumnDefinition Width="*" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
                     <StackPanel
                         x:Name="ResultArea"
@@ -394,9 +395,16 @@
                             </ContentControl>
                         </Border>
                     </StackPanel>
+                    <GridSplitter
+                        Grid.Column="1"
+                        Width="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Background="Transparent"
+                        ShowsPreview="True" />
                     <Grid
                         x:Name="Preview"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
                         Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
