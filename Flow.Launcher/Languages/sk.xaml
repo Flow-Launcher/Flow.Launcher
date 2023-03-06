@@ -106,7 +106,7 @@
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nová verzia</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Nedávno aktualizované</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Pluginy</system:String>
     <system:String x:Key="pluginStore_Installed">Nainštalované</system:String>
     <system:String x:Key="refresh">Obnoviť</system:String>
     <system:String x:Key="installbtn">Inštalovať</system:String>
