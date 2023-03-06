@@ -10,6 +10,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Odstrániť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Upraviť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Pridať</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Povolené</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Povolené</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Vypnuté</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potvrdiť</system:String>
