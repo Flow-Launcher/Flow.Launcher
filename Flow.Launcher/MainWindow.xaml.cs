@@ -24,6 +24,8 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
+using Hardcodet.Wpf.TaskbarNotification;
+using System.Security.Policy;
 
 namespace Flow.Launcher
 {
@@ -34,7 +36,7 @@ namespace Flow.Launcher
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
         private bool isProgressBarStoryboardPaused;
         private Settings _settings;
-        private NotifyIcon _notifyIcon;
+        private TaskbarIcon tbi = new TaskbarIcon();
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
         private readonly MediaPlayer animationSound = new();
@@ -75,7 +77,7 @@ namespace Flow.Launcher
         {
             _settings.WindowTop = Top;
             _settings.WindowLeft = Left;
-            _notifyIcon.Visible = false;
+            tbi.Visibility = Visibility.Collapsed;
             _viewModel.Save();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
@@ -171,7 +173,7 @@ namespace Flow.Launcher
                         }
                         break;
                     case nameof(MainViewModel.GameModeStatus):
-                        _notifyIcon.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
+                        tbi.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
                         break;
                 }
             };
@@ -181,7 +183,7 @@ namespace Flow.Launcher
                 switch (e.PropertyName)
                 {
                     case nameof(Settings.HideNotifyIcon):
-                        _notifyIcon.Visible = !_settings.HideNotifyIcon;
+                        tbi.Visibility = TrayIconBoolToVisiblility(_settings.HideNotifyIcon);
                         break;
                     case nameof(Settings.Language):
                         UpdateNotifyIconText();
@@ -237,14 +239,23 @@ namespace Flow.Launcher
 
         }
 
+        private Visibility TrayIconBoolToVisiblility(bool a)
+        {
+            if (a == true)
+            {
+                return Visibility.Collapsed;
+            }
+            else 
+            { 
+                return Visibility.Visible;
+            }
+        }
         private void InitializeNotifyIcon()
         {
-            _notifyIcon = new NotifyIcon
-            {
-                Text = Infrastructure.Constant.FlowLauncher,
-                Icon = Properties.Resources.app,
-                Visible = !_settings.HideNotifyIcon
-            };
+            tbi.Icon = Properties.Resources.app;
+            tbi.ToolTipText = Infrastructure.Constant.FullFlowLauncher;
+            tbi.Visibility = Visibility.Visible;
+            tbi.Visibility = TrayIconBoolToVisiblility(_settings.HideNotifyIcon);
 
             contextMenu = new ContextMenu();
 
@@ -254,7 +265,8 @@ namespace Flow.Launcher
             };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")", Icon = openIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
             var gamemodeIcon = new FontIcon
             {
@@ -262,7 +274,8 @@ namespace Flow.Launcher
             };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon
             {
@@ -270,7 +283,8 @@ namespace Flow.Launcher
             };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon
             {
@@ -278,7 +292,8 @@ namespace Flow.Launcher
             };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
             var exitIcon = new FontIcon
             {
@@ -286,7 +301,8 @@ namespace Flow.Launcher
             };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -304,20 +320,9 @@ namespace Flow.Launcher
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
-            _notifyIcon.MouseClick += (o, e) =>
-            {
-                switch (e.Button)
-                {
-                    case MouseButtons.Left:
-                        _viewModel.ToggleFlowLauncher();
-                        break;
-
-                    case MouseButtons.Right:
-                        contextMenu.IsOpen = true;
-                        break;
-                }
-            };
+            tbi.ContextMenu = contextMenu;
+            tbi.MenuActivation = PopupActivationMode.RightClick;
+            tbi.LeftClickCommand = _viewModel.ToggleFlowLauncherCommand;
         }
 
         private void CheckFirstLaunch()
