@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return new Result
             {
-                Title = title  + addScoreInDebug(score),
+                Title = title  + _addScoreInDebug(score),
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
@@ -83,8 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         try
                         {
-                            IncrementRunCounterIfNeeded(path);
-                            Context.API.OpenDirectory(path);
+                            _openFolder(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -133,7 +132,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ProgressBarColor = progressBarColor,
                 Action = c =>
                 {
-                    Context.API.OpenDirectory(path);
+                    _openFolder(path);
                     return true;
                 },
                 TitleToolTip = path,
@@ -194,7 +193,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 CopyText = folderPath,
                 Action = _ =>
                 {
-                    Context.API.OpenDirectory(folderPath);
+                    _openFolder(folderPath);
                     return true;
                 },
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
@@ -207,7 +206,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
                 : Result.PreviewInfo.Default;
 
-            var title = Path.GetFileName(filePath) + addScoreInDebug(score);
+            var title = Path.GetFileName(filePath) + _addScoreInDebug(score);
 
             var result = new Result
             {
@@ -226,21 +225,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         // TODO Why do we check if file exists here, but not in the other if conditions? 
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            // run the file as admin
-                            IncrementRunCounterIfNeeded(filePath);
-                            OpenFileAsAdmin(filePath);
+                            _openFileAsAdmin(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
-                            // open folder and select this file
-                            IncrementRunCounterIfNeeded(filePath);
-                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
+                            _openFolder(filePath, filePath);
                         }                    
                         else
                         {
-                            // run the file
-                            IncrementRunCounterIfNeeded(filePath);
-                            FilesFolders.OpenPath(filePath); 
+                            _openFile(filePath);
                         }
                     }
                     catch (Exception ex)
@@ -257,12 +250,37 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result;
         }
 
-        private static void OpenFileAsAdmin(string filePath)
+        public static bool IsMedia(string extension)
+        {
+            if (string.IsNullOrEmpty(extension))
+            {
+                return false;
+            }
+            else
+            {
+                return MediaExtensions.Contains(extension.ToLowerInvariant());
+            }
+        }
+
+        private static void _openFile(string filePath)
+        {
+            _incrementEverythingRunCounterIfNeeded(filePath);
+            FilesFolders.OpenPath(filePath);
+        }
+
+        private static void _openFolder(string folderPath, string fileNameOrFilePath=null)
+        {
+            _incrementEverythingRunCounterIfNeeded(folderPath);
+            Context.API.OpenDirectory(Path.GetDirectoryName(folderPath), fileNameOrFilePath);
+        }
+
+        private static void _openFileAsAdmin(string filePath)
         {
             _ = Task.Run(() =>
             {
                 try
                 {
+                    _incrementEverythingRunCounterIfNeeded(filePath);
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = filePath,
@@ -278,25 +296,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             });
         }
 
-        private static void IncrementRunCounterIfNeeded(string fileOrFolder)
+        private static void _incrementEverythingRunCounterIfNeeded(string fileOrFolder)
         {
             if (Settings.EverythingEnabled)
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
 
-        public static bool IsMedia(string extension)
-        {
-            if (string.IsNullOrEmpty(extension))
-            {
-                return false;
-            }
-            else
-            {
-                return MediaExtensions.Contains(extension.ToLowerInvariant());
-            }
-        }
-
-        private static string addScoreInDebug(int score)
+        private static string _addScoreInDebug(int score)
         {
             #if DEBUG
                 return $" ➡️ {score}";
