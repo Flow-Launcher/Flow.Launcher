@@ -226,17 +226,19 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         // TODO Why do we check if file exists here, but not in the other if conditions? 
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
+                            // run the file as admin
                             IncrementRunCounterIfNeeded(filePath);
                             OpenFileAsAdmin(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
+                            // open folder and select this file
                             IncrementRunCounterIfNeeded(filePath);
-                            FilesFolders.OpenContainingFolder(filePath);
+                            Context.API.OpenDirectory(Path.GetDirectoryName(filePath), filePath);
                         }                    
-
                         else
                         {
+                            // run the file
                             IncrementRunCounterIfNeeded(filePath);
                             FilesFolders.OpenPath(filePath); 
                         }
