@@ -184,9 +184,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         public static async Task IncrementRunCounterAsync(string fileOrFolder)
         {
+            await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
             try
             {
-                await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
                 _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
             }
             catch (Exception)
