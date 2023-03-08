@@ -38,13 +38,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var keyword = usePathSearchActionKeyword ? pathSearchActionKeyword : searchActionKeyword;
 
-            var formatted_path = path;
+            var formattedPath = path;
 
             if (type == ResultType.Folder)
                 // the separator is needed so when navigating the folder structure contents of the folder are listed
-                formatted_path = path.EndsWith(Constants.DirectorySeparator) ? path : path + Constants.DirectorySeparator;
+                formattedPath = path.EndsWith(Constants.DirectorySeparator) ? path : path + Constants.DirectorySeparator;
 
-            return $"{keyword}{formatted_path}";
+            return $"{keyword}{formattedPath}";
         }
 
         public static string GetAutoCompleteText(string title, Query query, string path, ResultType resultType)
@@ -70,7 +70,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             return new Result
             {
-                Title = title  + _addScoreInDebug(score),
+                Title = title,
                 IcoPath = path,
                 SubTitle = subtitle,
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
@@ -109,7 +109,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             var progressBarColor = "#26a0da";
             var title = string.Empty; // hide title when use progress bar,
             var driveLetter = path[..1].ToUpper();
-            var driveName = driveLetter + ":\\";
             DriveInfo drv = new DriveInfo(driveLetter);
             var freespace = ToReadableSize(drv.AvailableFreeSpace, 2);
             var totalspace = ToReadableSize(drv.TotalSize, 2);
@@ -130,7 +129,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = 500,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
-                Action = c =>
+                Action = _ =>
                 {
                     _openFolder(path);
                     return true;
@@ -145,7 +144,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             int mok = 0;
             double drvSize = pDrvSize;
-            string Space = "Byte";
+            string space = "Byte";
 
             while (drvSize > 1024.0)
             {
@@ -154,23 +153,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (mok == 1)
-                Space = "KB";
+                space = "KB";
             else if (mok == 2)
-                Space = " MB";
+                space = " MB";
             else if (mok == 3)
-                Space = " GB";
+                space = " GB";
             else if (mok == 4)
-                Space = " TB";
+                space = " TB";
 
-            var returnStr = $"{Convert.ToInt32(drvSize)}{Space}";
+            var returnStr = $"{Convert.ToInt32(drvSize)}{space}";
             if (mok != 0)
             {
                 returnStr = pi switch
                 {
-                    1 => $"{drvSize:F1}{Space}",
-                    2 => $"{drvSize:F2}{Space}",
-                    3 => $"{drvSize:F3}{Space}",
-                    _ => $"{Convert.ToInt32(drvSize)}{Space}"
+                    1 => $"{drvSize:F1}{space}",
+                    2 => $"{drvSize:F2}{space}",
+                    3 => $"{drvSize:F3}{space}",
+                    _ => $"{Convert.ToInt32(drvSize)}{space}"
                 };
             }
 
@@ -202,11 +201,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
+            Result.PreviewInfo preview = _isMedia(Path.GetExtension(filePath))
                 ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
                 : Result.PreviewInfo.Default;
 
-            var title = Path.GetFileName(filePath) + _addScoreInDebug(score);
+            var title = Path.GetFileName(filePath);
 
             var result = new Result
             {
@@ -250,7 +249,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result;
         }
 
-        public static bool IsMedia(string extension)
+        private static bool _isMedia(string extension)
         {
             if (string.IsNullOrEmpty(extension))
             {
@@ -302,16 +301,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
 
-        private static string _addScoreInDebug(int score)
-        {
-            #if DEBUG
-                return $" ➡️ {score}";
-            #else
-                return "";
-            #endif
-        }
-
-        public static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
+        private static readonly string[] MediaExtensions = { ".jpg", ".png", ".avi", ".mkv", ".bmp", ".gif", ".wmv", ".mp3", ".flac", ".mp4" };
     }
 
     public enum ResultType
