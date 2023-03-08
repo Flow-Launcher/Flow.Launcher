@@ -143,13 +143,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
             return File.Exists(filePath);
         }
 
-        /*
-         ❓ 
-        todo does it make sense to remove Flow.Launcher.Plugin.IPublicAPI.OpenDirectory (used as Context.API.OpenDirectory(path)),
-            and replace with this function?
-        todo or the other way around: remove this function and use OpenDirectory
-            because i don't see the point of having 2 functions which do the same thing
-        */
         /// <summary>
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
@@ -175,15 +168,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
-        }
-
-        /// <summary>
-        /// Open the folder that contains <paramref name="path"/>
-        /// </summary>
-        /// <param name="path"></param>
-        public static void OpenContainingFolder(string path)
-        {
-            Process.Start(FileExplorerProgramName, $" /select,\"{path}\"");
         }
 
         ///<summary>
