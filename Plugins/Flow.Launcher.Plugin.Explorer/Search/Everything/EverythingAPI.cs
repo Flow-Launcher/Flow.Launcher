@@ -115,8 +115,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
                 EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
+                
+                if (option.SortOption == SortOption.RUN_COUNT_DESCENDING)
+                {
+                    EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
+                }
+                else
+                {
+                    EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME);
+                }
 
-                EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT); // todo need flag for this?
 
 
                 if (token.IsCancellationRequested) yield break;
@@ -143,7 +151,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
                             ResultType.Volume,
-                        // todo need flag for this?
                         Score = (int)EverythingApiDllImport.Everything_GetResultRunCount( (uint)idx) 
                     };
 
