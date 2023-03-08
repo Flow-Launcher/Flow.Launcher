@@ -297,7 +297,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static string addScoreInDebug(int score)
         {
             #if DEBUG
-                return " ➡️ " + score;
+                return $" ➡️ {score}";
             #else
                 return "";
             #endif
