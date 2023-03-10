@@ -50,7 +50,7 @@
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite la activación de Flow launcher al abrir una aplicación a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
