@@ -22,6 +22,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
+using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -463,23 +464,50 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public class SearchWindowPosition
+        public class SearchWindowScreen
         {
             public string Display { get; set; }
-            public SearchWindowPositions Value { get; set; }
+            public SearchWindowScreens Value { get; set; }
         }
 
-        public List<SearchWindowPosition> SearchWindowPositions
+        public List<SearchWindowScreen> SearchWindowScreens
         {
             get
             {
-                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
-                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                List<SearchWindowScreen> modes = new List<SearchWindowScreen>();
+                var enums = (SearchWindowScreens[])Enum.GetValues(typeof(SearchWindowScreens));
                 foreach (var e in enums)
                 {
-                    var key = $"SearchWindowPosition{e}";
+                    var key = $"SearchWindowScreen{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new SearchWindowPosition
+                    var m = new SearchWindowScreen
+                    {
+                        Display = display,
+                        Value = e,
+                    };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+        public class SearchWindowAlign
+        {
+            public string Display { get; set; }
+            public SearchWindowAligns Value { get; set; }
+        }
+
+        public List<SearchWindowAlign> SearchWindowAligns
+        {
+            get
+            {
+                List<SearchWindowAlign> modes = new List<SearchWindowAlign>();
+                var enums = (SearchWindowAligns[])Enum.GetValues(typeof(SearchWindowAligns));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowAlign{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowAlign
                     {
                         Display = display, Value = e,
                     };

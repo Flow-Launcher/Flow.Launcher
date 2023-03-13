@@ -195,6 +195,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
+        public double CustomWindowLeft { get; set; } = 0;
+        public double CustomWindowTop { get; set; } = 0;
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
@@ -227,7 +229,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
-        public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
+        
+        public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.RememberLastLaunchLocation;
+        public SearchWindowAligns SearchWindowAlign { get; set; } = SearchWindowAligns.Center;
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
@@ -253,12 +257,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Light,
         Dark
     }
-    public enum SearchWindowPositions
+    public enum SearchWindowScreens
     {
         RememberLastLaunchLocation,
-        MouseScreenCenter,
-        MouseScreenCenterTop,
-        MouseScreenLeftTop,
-        MouseScreenRightTop
+        MouseScreen,
+        PrimaryScreen,
+        SecondaryScreen,
+        CustomPosition
+    }
+    public enum SearchWindowAligns
+    {
+        Center,
+        CenterTop,
+        LeftTop,
+        RightTop
     }
 }
