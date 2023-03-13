@@ -24,6 +24,7 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
+using System.Media;
 
 namespace Flow.Launcher
 {
@@ -37,8 +38,8 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
-        private readonly MediaPlayer animationSound = new();
         private bool _animating;
+        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
 
         #endregion
 
@@ -49,8 +50,7 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            InitializePosition();            
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            InitializePosition();                        
         }
 
         public MainWindow()
@@ -114,7 +114,6 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
