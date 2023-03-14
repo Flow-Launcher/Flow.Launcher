@@ -83,7 +83,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         try
                         {
-                            _openFolder(path);
+                            OpenFolder(path);
                             return true;
                         }
                         catch (Exception ex)
@@ -131,7 +131,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 ProgressBarColor = progressBarColor,
                 Action = _ =>
                 {
-                    _openFolder(path);
+                    OpenFolder(path);
                     return true;
                 },
                 TitleToolTip = path,
@@ -192,7 +192,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 CopyText = folderPath,
                 Action = _ =>
                 {
-                    _openFolder(folderPath);
+                    OpenFolder(folderPath);
                     return true;
                 },
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = folderPath, WindowsIndexed = windowsIndexed }
@@ -201,7 +201,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = _isMedia(Path.GetExtension(filePath))
+            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
                 ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
                 : Result.PreviewInfo.Default;
 
@@ -224,15 +224,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         // TODO Why do we check if file exists here, but not in the other if conditions? 
                         if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
-                            _openFileAsAdmin(filePath);
+                            OpenFileAsAdmin(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
-                            _openFolder(filePath, filePath);
+                            OpenFolder(filePath, filePath);
                         }                    
                         else
                         {
-                            _openFile(filePath);
+                            OpenFile(filePath);
                         }
                     }
                     catch (Exception ex)
@@ -249,7 +249,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return result;
         }
 
-        private static bool _isMedia(string extension)
+        private static bool IsMedia(string extension)
         {
             if (string.IsNullOrEmpty(extension))
             {
@@ -261,25 +261,25 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
         }
 
-        private static void _openFile(string filePath)
+        private static void OpenFile(string filePath)
         {
-            _incrementEverythingRunCounterIfNeeded(filePath);
+            IncrementEverythingRunCounterIfNeeded(filePath);
             FilesFolders.OpenPath(filePath);
         }
 
-        private static void _openFolder(string folderPath, string fileNameOrFilePath=null)
+        private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)
         {
-            _incrementEverythingRunCounterIfNeeded(folderPath);
+            IncrementEverythingRunCounterIfNeeded(folderPath);
             Context.API.OpenDirectory(Path.GetDirectoryName(folderPath), fileNameOrFilePath);
         }
 
-        private static void _openFileAsAdmin(string filePath)
+        private static void OpenFileAsAdmin(string filePath)
         {
             _ = Task.Run(() =>
             {
                 try
                 {
-                    _incrementEverythingRunCounterIfNeeded(filePath);
+                    IncrementEverythingRunCounterIfNeeded(filePath);
                     Process.Start(new ProcessStartInfo
                     {
                         FileName = filePath,
@@ -295,7 +295,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             });
         }
 
-        private static void _incrementEverythingRunCounterIfNeeded(string fileOrFolder)
+        private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
         {
             if (Settings.EverythingEnabled)
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
