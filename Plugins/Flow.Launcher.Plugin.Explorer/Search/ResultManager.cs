@@ -92,6 +92,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                             return false;
                         }
                     }
+
                     // or make this folder the current query
                     Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
 
@@ -221,15 +222,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
-                        // TODO Why do we check if file exists here, but not in the other if conditions? 
-                        if (File.Exists(filePath) && c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
+                        if (c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
                         {
                             OpenFileAsAdmin(filePath);
                         }
                         else if (c.SpecialKeyState.CtrlPressed)
                         {
                             OpenFolder(filePath, filePath);
-                        }                    
+                        }
                         else
                         {
                             OpenFile(filePath);
@@ -251,14 +251,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private static bool IsMedia(string extension)
         {
-            if (string.IsNullOrEmpty(extension))
-            {
-                return false;
-            }
-            else
-            {
-                return MediaExtensions.Contains(extension.ToLowerInvariant());
-            }
+            if (string.IsNullOrEmpty(extension)) { return false; }
+
+            return MediaExtensions.Contains(extension.ToLowerInvariant());
         }
 
         private static void OpenFile(string filePath)
