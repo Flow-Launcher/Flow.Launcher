@@ -469,7 +469,7 @@ namespace Flow.Launcher.ViewModel
 
         private void HidePreview()
         {
-            ResultAreaColumn = 2;
+            ResultAreaColumn = 3;
             PreviewVisible = false;
         }
 
