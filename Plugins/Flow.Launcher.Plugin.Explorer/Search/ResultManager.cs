@@ -145,7 +145,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         {
             int mok = 0;
             double drvSize = pDrvSize;
-            string space = "Byte";
+            string uom = "Byte"; // Unit Of Measurement
 
             while (drvSize > 1024.0)
             {
@@ -154,23 +154,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             if (mok == 1)
-                space = "KB";
+                uom = "KB";
             else if (mok == 2)
-                space = " MB";
+                uom = " MB";
             else if (mok == 3)
-                space = " GB";
+                uom = " GB";
             else if (mok == 4)
-                space = " TB";
+                uom = " TB";
 
-            var returnStr = $"{Convert.ToInt32(drvSize)}{space}";
+            var returnStr = $"{Convert.ToInt32(drvSize)}{uom}";
             if (mok != 0)
             {
                 returnStr = pi switch
                 {
-                    1 => $"{drvSize:F1}{space}",
-                    2 => $"{drvSize:F2}{space}",
-                    3 => $"{drvSize:F3}{space}",
-                    _ => $"{Convert.ToInt32(drvSize)}{space}"
+                    1 => $"{drvSize:F1}{uom}",
+                    2 => $"{drvSize:F2}{uom}",
+                    3 => $"{drvSize:F3}{uom}",
+                    _ => $"{Convert.ToInt32(drvSize)}{uom}"
                 };
             }
 
