@@ -29,13 +29,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         public class PathEqualityComparator : IEqualityComparer<Result>
         {
             private static PathEqualityComparator instance;
-
             public static PathEqualityComparator Instance => instance ??= new PathEqualityComparator();
 
             public bool Equals(Result x, Result y)
             {
                 return x.Title.Equals(y.Title, StringComparison.OrdinalIgnoreCase)
-                       && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
+                    && string.Equals(x.SubTitle, y.SubTitle, StringComparison.OrdinalIgnoreCase);
             }
 
             public int GetHashCode(Result obj)
@@ -107,10 +106,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             try
             {
-                await foreach (var search in searchResults.Select((r, i) => r with
-                               {
-                                   Score = -i + 50
-                               }).WithCancellation(token).ConfigureAwait(false))
+                await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
                     results.Add(ResultManager.CreateResult(query, search));
             }
             catch (OperationCanceledException)

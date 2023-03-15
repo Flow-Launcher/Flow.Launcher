@@ -59,7 +59,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             {
                 EverythingApiDllImport.Everything_GetMajorVersion();
                 var result = EverythingApiDllImport.Everything_GetLastError() != StateCode.IPCError;
-
                 return result;
             }
             finally
@@ -67,8 +66,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 _semaphore.Release();
             }
         }
-
-        const int ScoreScaleFactor = 5;
 
         /// <summary>
         /// Searches the specified key word and reset the everything API afterwards
@@ -118,7 +115,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
                 EverythingApiDllImport.Everything_SetSort(option.SortOption);
                 EverythingApiDllImport.Everything_SetMatchPath(option.IsFullPathSearch);
-
+                
                 if (option.SortOption == SortOption.RUN_COUNT_DESCENDING)
                 {
                     EverythingApiDllImport.Everything_SetRequestFlags(EVERYTHING_REQUEST_FULL_PATH_AND_FILE_NAME | EVERYTHING_REQUEST_RUN_COUNT);
@@ -135,13 +132,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 if (!EverythingApiDllImport.Everything_QueryW(true))
                 {
                     CheckAndThrowExceptionOnError();
-
                     yield break;
                 }
 
-                var numResults = EverythingApiDllImport.Everything_GetNumResults();
-
-                for (var idx = 0; idx < numResults; ++idx)
+                for (var idx = 0; idx < EverythingApiDllImport.Everything_GetNumResults(); ++idx)
                 {
                     if (token.IsCancellationRequested)
                     {
@@ -157,8 +151,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                         Type = EverythingApiDllImport.Everything_IsFolderResult(idx) ? ResultType.Folder :
                             EverythingApiDllImport.Everything_IsFileResult(idx) ? ResultType.File :
                             ResultType.Volume,
-                        Score = (option.SortOption is SortOption.RUN_COUNT_DESCENDING ? (int)EverythingApiDllImport.Everything_GetResultRunCount((uint)idx) : 0) * ScoreScaleFactor,
-                        WindowsIndexed = false
+                        Score = (int)EverythingApiDllImport.Everything_GetResultRunCount( (uint)idx) 
                     };
 
                     yield return result;
@@ -199,7 +192,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         public static async Task IncrementRunCounterAsync(string fileOrFolder)
         {
             await _semaphore.WaitAsync(TimeSpan.FromSeconds(1));
-
             try
             {
                 _ = EverythingApiDllImport.Everything_IncRunCountFromFileName(fileOrFolder);
