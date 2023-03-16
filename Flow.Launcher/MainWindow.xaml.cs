@@ -228,7 +228,7 @@ namespace Flow.Launcher
                         Top = 10;
                         break;
                     case SearchWindowAligns.Custom:
-                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X; // TODO not working
+                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
                         Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
                         break;
                 }
