@@ -24,9 +24,8 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
-using System.Threading;
 using System.Media;
-
+using System.Linq;
 
 namespace Flow.Launcher
 {
@@ -207,30 +206,30 @@ namespace Flow.Launcher
                 Top = _settings.WindowTop;
                 Left = _settings.WindowLeft;
             }
-            else if (_settings.SearchWindowScreen == SearchWindowScreens.CustomPosition)
-            {
-                Top = _settings.CustomWindowTop;
-                Left = _settings.CustomWindowLeft;
-            }
             else
             {
+                var screen = SelectedScreen();
                 switch (_settings.SearchWindowAlign)
                 {
                     case SearchWindowAligns.Center:
-                        Left = HorizonCenter();
-                        Top = VerticalCenter();
+                        Left = HorizonCenter(screen);
+                        Top = VerticalCenter(screen);
                         break;
                     case SearchWindowAligns.CenterTop:
-                        Left = HorizonCenter();
+                        Left = HorizonCenter(screen);
                         Top = 10;
                         break;
                     case SearchWindowAligns.LeftTop:
-                        Left = HorizonLeft();
+                        Left = HorizonLeft(screen);
                         Top = 10;
                         break;
                     case SearchWindowAligns.RightTop:
-                        Left = HorizonRight();
+                        Left = HorizonRight(screen);
                         Top = 10;
+                        break;
+                    case SearchWindowAligns.Custom:
+                        Left = screen.WorkingArea.Left + _settings.CustomWindowLeft;
+                        Top = screen.WorkingArea.Top + _settings.CustomWindowTop;
                         break;
                 }
             }
@@ -351,8 +350,9 @@ namespace Flow.Launcher
         {
             _viewModel.Show();
             await Task.Delay(300); // If don't give a time, Positioning will be weird.
-            Left = HorizonCenter();
-            Top = VerticalCenter();
+            var screen = SelectedScreen();
+            Left = HorizonCenter(screen);
+            Top = VerticalCenter(screen);
         }
 
         private void InitProgressbarAnimation()
@@ -536,59 +536,56 @@ namespace Flow.Launcher
 
         public Screen SelectedScreen()
         {
-            if (_settings.SearchWindowScreen == SearchWindowScreens.MouseScreen)
+            Screen screen = null;
+            switch(_settings.SearchWindowScreen)
             {
-                var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                return screen;
+                case SearchWindowScreens.Cursor:
+                    screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+                    break;
+                case SearchWindowScreens.Primary:
+                    screen = Screen.PrimaryScreen;
+                    break;
+                case SearchWindowScreens.Focus:
+                    IntPtr foregroundWindowHandle = WindowsInteropHelper.GetForegroundWindow();
+                    screen = Screen.FromHandle(foregroundWindowHandle);
+                    break;
+                case SearchWindowScreens.Custom:
+                    screen = Screen.AllScreens.FirstOrDefault(s => s.DeviceName == _settings.CustomScreenDeviceName);
+                    break;
+                default:
+                    screen = Screen.AllScreens[0];
+                    break;
             }
-            else if (_settings.SearchWindowScreen == SearchWindowScreens.PrimaryScreen)
-            {
-                var screen = Screen.PrimaryScreen;
-                return screen;
-            }
-            else if (_settings.SearchWindowScreen == SearchWindowScreens.SecondaryScreen)
-            {
-                var screen = Screen.AllScreens[1];
-                return screen;
-            }
-            else 
-            {
-                var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                return screen;
-            }
+            return screen ?? Screen.AllScreens[0];
         }
-        public double HorizonCenter()
+        
+        public double HorizonCenter(Screen screen)
         {
-            var screen = SelectedScreen();
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = (dip2.X - ActualWidth) / 2 + dip1.X;
             return left;
         }
 
-        public double VerticalCenter()
+        public double VerticalCenter(Screen screen)
         {
-            var screen = SelectedScreen();
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
         }
 
-        public double HorizonRight()
+        public double HorizonRight(Screen screen)
         {
-            var screen = SelectedScreen();
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = (dip1.X + dip2.X - ActualWidth) - 10;
             return left;
         }
 
-        public double HorizonLeft()
+        public double HorizonLeft(Screen screen)
         {
-            var screen = SelectedScreen();
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = dip1.X + 10;
             return left;
         }
