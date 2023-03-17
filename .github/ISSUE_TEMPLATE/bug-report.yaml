@@ -15,6 +15,13 @@ body:
         - label: >
             I have checked that this issue has not already been reported.
 
+  - type: checkboxes
+    attributes:
+      label: Checks
+      options:
+        - label: >
+            I am using the latest version of Flow Launcher.
+
   - type: textarea
     attributes:
       label: Problem Description
@@ -53,7 +60,6 @@ body:
       placeholder: "Example: 10.0.19043.1288"
     validations:
       required: true
-
 
   - type: textarea
     id: logs
