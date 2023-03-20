@@ -22,7 +22,7 @@
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Modo Gamer</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+    <system:String x:Key="GameModeToolTip">Suspender o uso de Teclas de Atalho.</system:String>
     <system:String x:Key="PositionReset">Position Reset</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
@@ -54,7 +54,7 @@
     <system:String x:Key="defaultFileManager">Gerenciador de Arquivos Padrões</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecione o gerenciador de arquivos para usar ao abrir a pasta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador da Web Padrão</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Configuração para Nova Aba, Nova Janela, Modo Privado.</system:String>
     <system:String x:Key="pythonFilePath">Python Path</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
