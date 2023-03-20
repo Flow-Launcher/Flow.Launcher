@@ -41,6 +41,7 @@
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
