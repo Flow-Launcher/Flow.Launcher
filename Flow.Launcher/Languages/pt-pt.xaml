@@ -36,7 +36,7 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
-    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Memorizar última posição</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
