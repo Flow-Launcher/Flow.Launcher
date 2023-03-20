@@ -693,7 +693,10 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
+                            <Border 
+                                Margin="0,30,0,0"
+                                Padding="0"
+                                Style="{DynamicResource SettingGroupBox}">
                                 <StackPanel Orientation="Vertical">
                                     <Border
                                         Margin="0"
@@ -742,8 +745,18 @@
 
                                     <Separator
                                         Width="Auto"
-                                        BorderThickness="1"
-                                        Style="{StaticResource SettingSeparatorStyle}"/>
+                                        BorderThickness="1">
+                                        <Separator.Style>
+                                            <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Separator.Style>
+                                    </Separator>
 
                                     <Border
                                         Margin="0"
