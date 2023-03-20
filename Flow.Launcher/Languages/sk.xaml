@@ -41,7 +41,7 @@
     <system:String x:Key="SearchWindowScreenFocus">Monitor s aktívnym oknom</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Primárny monitor</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Vlastný monitor</system:String>
-    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Poloha vyhľadávacieho okna na monitore</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Stred</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Hore v strede</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">Vľavo hore</system:String>
