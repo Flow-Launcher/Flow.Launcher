@@ -693,26 +693,135 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
-                                    </StackPanel>
-                                    <ComboBox
-                                        x:Name="SearchWindowPosition"
-                                        Grid.Column="2"
-                                        MinWidth="220"
-                                        Margin="0,0,18,0"
-                                        VerticalAlignment="Center"
-                                        DisplayMemberPath="Display"
-                                        FontSize="14"
-                                        ItemsSource="{Binding SearchWindowPositions}"
-                                        SelectedValue="{Binding Settings.SearchWindowPosition}"
-                                        SelectedValuePath="Value" />
-                                    <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe7f4;
-                                    </TextBlock>
-                                </ItemsControl>
+                            <Border 
+                                Margin="0,30,0,0"
+                                Padding="0"
+                                Style="{DynamicResource SettingGroupBox}">
+                                <StackPanel Orientation="Vertical">
+                                    <Border
+                                        Margin="0"
+                                        BorderThickness="0"
+                                        Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <ComboBox
+                                                    x:Name="SearchWindowScreen"
+                                                    MinWidth="220"
+                                                    Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
+                                                    DisplayMemberPath="Display"
+                                                    FontSize="14"
+                                                    ItemsSource="{Binding SearchWindowScreens}"
+                                                    SelectedValue="{Binding Settings.SearchWindowScreen}"
+                                                    SelectedValuePath="Value" />
+                                                <ComboBox
+                                                    x:Name="SelectScreen"
+                                                    MinWidth="160"
+                                                    Margin="0,0,18,0" 
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    ItemsSource="{Binding ScreenNumbers}"
+                                                    SelectedValue="{Binding Settings.CustomScreenNumber}">
+                                                    <ComboBox.Style>
+                                                        <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.Custom}">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </ComboBox.Style>
+                                                </ComboBox>
+                                            </StackPanel>
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                            &#xe7f4;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+
+                                    <Separator
+                                        Width="Auto"
+                                        BorderThickness="1">
+                                        <Separator.Style>
+                                            <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Separator.Style>
+                                    </Separator>
+
+                                    <Border
+                                        Margin="0"
+                                        BorderThickness="0">
+                                        <Border.Style>
+                                            <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Search Window position on selected screen" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <ComboBox
+                                                        x:Name="SearchWindowPosition"
+                                                        MinWidth="160"
+                                                        Margin="0,0,18,0"
+                                                        VerticalAlignment="Center"
+                                                        DisplayMemberPath="Display"
+                                                        FontSize="14"
+                                                        ItemsSource="{Binding SearchWindowAligns}"
+                                                        SelectedValue="{Binding Settings.SearchWindowAlign}"
+                                                        SelectedValuePath="Value">
+                                                </ComboBox>
+                                                <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
+                                                    <StackPanel.Style>
+                                                        <Style TargetType="StackPanel">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SearchWindowPosition, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowAligns.Custom}">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </StackPanel.Style>
+                                                    <TextBox
+                                                            Height="35"
+                                                            MinWidth="120"
+                                                            Text="{Binding Settings.CustomWindowLeft}"
+                                                            TextWrapping="NoWrap" />
+                                                    <TextBlock
+                                                            Margin="10"
+                                                            VerticalAlignment="Center"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="x" />
+                                                    <TextBox
+                                                            Height="35"
+                                                            MinWidth="120"
+                                                            Text="{Binding Settings.CustomWindowTop}"
+                                                            TextWrapping="NoWrap" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                            &#xe7f4;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                </StackPanel>
                             </Border>
 
                             <Border Style="{DynamicResource SettingGroupBox}">
