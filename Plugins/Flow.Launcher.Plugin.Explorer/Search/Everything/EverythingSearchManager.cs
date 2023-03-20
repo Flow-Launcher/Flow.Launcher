@@ -39,6 +39,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                     Main.Context.API.GetTranslation("flowlauncher_plugin_everything_sdk_issue"));
             }
         }
+
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
         {
             var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
@@ -68,8 +69,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;
         }
-        public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch,
-            string contentSearch,
+
+        public async IAsyncEnumerable<SearchResult> ContentSearchAsync(string plainSearch, string contentSearch,
             [EnumeratorCancellation] CancellationToken token)
         {
             await ThrowIfEverythingNotAvailableAsync(token);
@@ -102,6 +103,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 yield return result;
             }
         }
+
         public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
         {
             await ThrowIfEverythingNotAvailableAsync(token);
