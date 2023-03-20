@@ -517,6 +517,20 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public List<int> ScreenNumbers
+        {
+            get
+            {
+                var screens = System.Windows.Forms.Screen.AllScreens;
+                var screenNumbers = new List<int>();
+                for (int i = 1; i <= screens.Length; i++)
+                {
+                    screenNumbers.Add(i);
+                }
+                return screenNumbers;
+            }
+        }
+
         public List<string> TimeFormatList { get; } = new()
         {
             "h:mm",

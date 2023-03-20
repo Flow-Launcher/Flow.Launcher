@@ -245,7 +245,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowAligns SearchWindowAlign { get; set; } = SearchWindowAligns.Center;
 
-        public string CustomScreenDeviceName { get; set; } = string.Empty;
+        public int CustomScreenNumber { get; set; } = 1;
 
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 

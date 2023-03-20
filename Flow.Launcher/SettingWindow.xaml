@@ -719,11 +719,9 @@
                                                     MinWidth="160"
                                                     Margin="0,0,18,0" 
                                                     VerticalAlignment="Center"
-                                                    DisplayMemberPath="Display"
                                                     FontSize="14"
-                                                    ItemsSource="{Binding SearchWindowAligns}"
-                                                    SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                    SelectedValuePath="Value">
+                                                    ItemsSource="{Binding ScreenNumbers}"
+                                                    SelectedValue="{Binding Settings.CustomScreenNumber}">
                                                     <ComboBox.Style>
                                                         <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
                                                             <Setter Property="Visibility" Value="Collapsed" />

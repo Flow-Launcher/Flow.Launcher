@@ -550,7 +550,10 @@ namespace Flow.Launcher
                     screen = Screen.FromHandle(foregroundWindowHandle);
                     break;
                 case SearchWindowScreens.Custom:
-                    screen = Screen.AllScreens.FirstOrDefault(s => s.DeviceName == _settings.CustomScreenDeviceName);
+                    if (_settings.CustomScreenNumber <= Screen.AllScreens.Length)
+                        screen = Screen.AllScreens[_settings.CustomScreenNumber - 1];
+                    else
+                        screen = Screen.AllScreens[0];
                     break;
                 default:
                     screen = Screen.AllScreens[0];
