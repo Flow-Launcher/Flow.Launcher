@@ -22,7 +22,6 @@ using Flow.Launcher.Plugin.SharedModels;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
-using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 
 namespace Flow.Launcher.ViewModel
 {

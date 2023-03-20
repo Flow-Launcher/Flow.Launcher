@@ -778,15 +778,15 @@
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <ComboBox
-                                                        x:Name="SearchWindowPosition"
-                                                        MinWidth="160"
-                                                        Margin="0,0,18,0"
-                                                        VerticalAlignment="Center"
-                                                        DisplayMemberPath="Display"
-                                                        FontSize="14"
-                                                        ItemsSource="{Binding SearchWindowAligns}"
-                                                        SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                        SelectedValuePath="Value">
+                                                    x:Name="SearchWindowPosition"
+                                                    MinWidth="160"
+                                                    Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
+                                                    DisplayMemberPath="Display"
+                                                    FontSize="14"
+                                                    ItemsSource="{Binding SearchWindowAligns}"
+                                                    SelectedValue="{Binding Settings.SearchWindowAlign}"
+                                                    SelectedValuePath="Value">
                                                 </ComboBox>
                                                 <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                     <StackPanel.Style>
@@ -800,20 +800,20 @@
                                                         </Style>
                                                     </StackPanel.Style>
                                                     <TextBox
-                                                            Height="35"
-                                                            MinWidth="120"
-                                                            Text="{Binding Settings.CustomWindowLeft}"
-                                                            TextWrapping="NoWrap" />
+                                                        Height="35"
+                                                        MinWidth="120"
+                                                        Text="{Binding Settings.CustomWindowLeft}"
+                                                        TextWrapping="NoWrap" />
                                                     <TextBlock
-                                                            Margin="10"
-                                                            VerticalAlignment="Center"
-                                                            Foreground="{DynamicResource Color05B}"
-                                                            Text="x" />
+                                                        Margin="10"
+                                                        VerticalAlignment="Center"
+                                                        Foreground="{DynamicResource Color05B}"
+                                                        Text="x" />
                                                     <TextBox
-                                                            Height="35"
-                                                            MinWidth="120"
-                                                            Text="{Binding Settings.CustomWindowTop}"
-                                                            TextWrapping="NoWrap" />
+                                                        Height="35"
+                                                        MinWidth="120"
+                                                        Text="{Binding Settings.CustomWindowTop}"
+                                                        TextWrapping="NoWrap" />
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">

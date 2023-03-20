@@ -17,7 +17,6 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
-using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Threading;
@@ -25,7 +24,6 @@ using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
-using System.Linq;
 
 namespace Flow.Launcher
 {
