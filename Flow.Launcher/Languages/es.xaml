@@ -44,9 +44,9 @@
     <system:String x:Key="SearchWindowAlign">Posición de la ventana de búsqueda en el monitor</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Centro</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Arriba en el centro</system:String>
-    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
-    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Arriba a la izquierda</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Arriba a la derecha</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Posición personalizada</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
@@ -56,7 +56,7 @@
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite la activación de Flow launcher al abrir una aplicación a pantalla completa (Recomendado para juegos).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite activar Flow Launcher con aplicaciones a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
