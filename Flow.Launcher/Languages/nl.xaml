@@ -16,15 +16,15 @@
     <system:String x:Key="copy">Kopiëren</system:String>
     <system:String x:Key="cut">Knippen</system:String>
     <system:String x:Key="paste">Plakken</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="undo">Ongedaan maken</system:String>
+    <system:String x:Key="selectAll">Alles selecteren</system:String>
     <system:String x:Key="fileTitle">Bestand</system:String>
     <system:String x:Key="folderTitle">Map</system:String>
     <system:String x:Key="textTitle">Tekst</system:String>
     <system:String x:Key="GameMode">Spelmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionReset">Positie resetten</system:String>
+    <system:String x:Key="PositionResetToolTip">Positie zoekvenster resetten</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
@@ -32,15 +32,15 @@
     <system:String x:Key="portableMode">Draagbare Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Alle instellingen en gebruikersgegevens opslaan in één map (Nuttig bij het gebruik van verwijderbare schijven of cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
-    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
-    <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
-    <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
+    <system:String x:Key="SearchWindowPosition">Positie Zoekvenster</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Laatste Positie Onthouden</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor met Muiscursor</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor met Gefocust Venster</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primaire Monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Aangepaste Monitor</system:String>
     <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
