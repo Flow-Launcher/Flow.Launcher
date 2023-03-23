@@ -3,7 +3,7 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del plugin Flow Launcher no válido</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del complemento de Flow Launcher no válido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Cancelar como primer resultado en esta consulta</system:String>
     <system:String x:Key="executeQuery">Ejecutar consulta: {0}</system:String>
