@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Action = c =>
                 {
                     // open folder
-                    if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift) || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                     {
                         try
                         {
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
                     // Open containing folder
-                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                     {
                         try
                         {
@@ -108,7 +108,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                     }
 
-                    if (Settings.DefaultOpenInFileManager)
+                    // If path search is disabled just open it in file manager
+                    if (Settings.DefaultOpenInFileManager || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
                     {
                         try
                         {
