@@ -123,8 +123,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     else
                     {
-                    // or make this folder the current query
-                    Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
+                        // or make this folder the current query
+                        Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
                     }
 
                     return false;
@@ -255,7 +255,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
-                            OpenFileAsAdmin(filePath);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty, true);
                         }
                         else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
@@ -263,7 +263,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         else
                         {
-                            OpenFile(filePath);
+                            OpenFile(filePath, Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty);
                         }
                     }
                     catch (Exception ex)
@@ -287,38 +287,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return MediaExtensions.Contains(extension.ToLowerInvariant());
         }
 
-        private static void OpenFile(string filePath)
+        private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
             IncrementEverythingRunCounterIfNeeded(filePath);
-            FilesFolders.OpenPath(filePath);
+            FilesFolders.OpenFile(filePath, workingDir, asAdmin);
         }
 
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)
         {
             IncrementEverythingRunCounterIfNeeded(folderPath);
             Context.API.OpenDirectory(folderPath, fileNameOrFilePath);
-        }
-
-        private static void OpenFileAsAdmin(string filePath)
-        {
-            _ = Task.Run(() =>
-            {
-                try
-                {
-                    IncrementEverythingRunCounterIfNeeded(filePath);
-                    Process.Start(new ProcessStartInfo
-                    {
-                        FileName = filePath,
-                        UseShellExecute = true,
-                        WorkingDirectory = Settings.UseLocationAsWorkingDir ? Path.GetDirectoryName(filePath) : string.Empty,
-                        Verb = "runas",
-                    });
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message, "Could not start " + filePath);
-                }
-            });
         }
 
         private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
