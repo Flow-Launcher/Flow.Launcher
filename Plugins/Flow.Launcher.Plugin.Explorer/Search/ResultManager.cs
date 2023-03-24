@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -79,7 +80,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Action = c =>
                 {
                     // open folder
-                    if (c.SpecialKeyState.CtrlPressed || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift) || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
                     {
                         try
                         {
@@ -88,13 +89,43 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, "Could not start " + path);
+                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            return false;
+                        }
+                    }
+                    // Open containing folder
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    {
+                        try
+                        {
+                            Context.API.OpenDirectory(Path.GetDirectoryName(path), path);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
 
+                    if (Settings.DefaultOpenInFileManager)
+                    {
+                        try
+                        {
+                            OpenFolder(path);
+                            return true;
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            return false;
+                        }
+                    }
+                    else
+                    {
                     // or make this folder the current query
                     Context.API.ChangeQuery(GetPathWithActionKeyword(path, ResultType.Folder, query.ActionKeyword));
+                    }
 
                     return false;
                 },
@@ -222,11 +253,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 {
                     try
                     {
-                        if (c.SpecialKeyState.CtrlPressed && c.SpecialKeyState.ShiftPressed)
+                        if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                         {
                             OpenFileAsAdmin(filePath);
                         }
-                        else if (c.SpecialKeyState.CtrlPressed)
+                        else if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control)
                         {
                             OpenFolder(filePath, filePath);
                         }
@@ -237,7 +268,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "Could not start " + filePath);
+                        MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
                     }
 
                     return true;
@@ -265,7 +296,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)
         {
             IncrementEverythingRunCounterIfNeeded(folderPath);
-            Context.API.OpenDirectory(Path.GetDirectoryName(folderPath), fileNameOrFilePath);
+            Context.API.OpenDirectory(folderPath, fileNameOrFilePath);
         }
 
         private static void OpenFileAsAdmin(string filePath)
