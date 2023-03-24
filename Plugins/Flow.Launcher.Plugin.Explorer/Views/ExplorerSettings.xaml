@@ -348,17 +348,11 @@
                 Header="{DynamicResource plugin_explorer_everything_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
-                            TextBlock.Foreground="{DynamicResource Color05B}" />
                         <CheckBox
-                            Margin="10"
-                            VerticalAlignment="Center"
+                        Margin="20,10,0,0"
+                        HorizontalAlignment="Left"
+                        Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
                             IsChecked="{Binding Settings.EverythingSearchFullPath}" />
-                    </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Grid Margin="20,10,0,10">
                             <Grid.ColumnDefinitions>
