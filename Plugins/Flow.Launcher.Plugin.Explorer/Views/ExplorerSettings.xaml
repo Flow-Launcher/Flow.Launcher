@@ -178,7 +178,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
-                                     </Grid.RowDefinitions>
+                                    </Grid.RowDefinitions>
 
                                     <TextBlock
                                         Grid.Row="0"
@@ -291,9 +291,9 @@
                                         Margin="10,15,10,10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        DisplayMemberPath="Description"
                                         ItemsSource="{Binding IndexSearchEngines}"
-                                        SelectedItem="{Binding SelectedIndexSearchEngine}"
-                                        DisplayMemberPath="Description"/>
+                                        SelectedItem="{Binding SelectedIndexSearchEngine}" />
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
@@ -308,9 +308,9 @@
                                         Margin="10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        DisplayMemberPath="Description"
                                         ItemsSource="{Binding ContentIndexSearchEngines}"
-                                        SelectedItem="{Binding SelectedContentSearchEngine}" 
-                                        DisplayMemberPath="Description"/>
+                                        SelectedItem="{Binding SelectedContentSearchEngine}" />
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
@@ -325,8 +325,8 @@
                                         Margin="10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        ItemsSource="{Binding PathEnumerationEngines}"
                                         DisplayMemberPath="Description"
+                                        ItemsSource="{Binding PathEnumerationEngines}"
                                         SelectedItem="{Binding SelectedPathEnumerationEngine}" />
                                 </Grid>
                             </StackPanel>
@@ -349,13 +349,15 @@
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Margin="10" 
+                        <TextBlock
+                            Margin="10"
                             VerticalAlignment="Center"
-                            Text="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"/>
-                        <CheckBox Margin="10"
+                            Text="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
+                            TextBlock.Foreground="{DynamicResource Color05B}" />
+                        <CheckBox
+                            Margin="10"
                             VerticalAlignment="Center"
-                            IsChecked="{Binding Settings.EverythingSearchFullPath}">
-                        </CheckBox>
+                            IsChecked="{Binding Settings.EverythingSearchFullPath}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Grid Margin="20,10,0,10">

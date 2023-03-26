@@ -127,7 +127,8 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 
 <img src="https://user-images.githubusercontent.com/6903107/144517502-5325de01-d0d9-4c2e-aafb-33c3f5d82f81.png" width="400">
 <img src="https://user-images.githubusercontent.com/6903107/144831031-0e01e8ea-3247-4ba4-a7b4-48b0db620bc1.png" width="400">
-<img src="https://user-images.githubusercontent.com/6903107/207141710-50bc0e6b-f0f8-4dc2-a136-621a473689d7.png" width="400">
+<img src="https://user-images.githubusercontent.com/6903107/222829602-aabb1144-db5c-4250-b5ae-66f8342e4ae4.png" width="400">
+
 
 
 ### Browser Bookmarks

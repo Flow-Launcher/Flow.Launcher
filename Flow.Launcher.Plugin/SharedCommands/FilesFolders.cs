@@ -14,8 +14,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
     {
         private const string FileExplorerProgramName = "explorer";
 
-        private const string FileExplorerProgramEXE = "explorer.exe";
-
         /// <summary>
         /// Copies the folder and all of its files and folders 
         /// including subfolders to the target location
@@ -151,7 +149,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="fileOrFolderPath"></param>
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
+            var psi = new ProcessStartInfo
+            {
+                FileName = FileExplorerProgramName,
+                UseShellExecute = true,
+                Arguments = '"' + fileOrFolderPath + '"'
+            };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
@@ -165,15 +168,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
-        }
-
-        /// <summary>
-        /// Open the folder that contains <paramref name="path"/>
-        /// </summary>
-        /// <param name="path"></param>
-        public static void OpenContainingFolder(string path)
-        {
-            Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");
         }
 
         ///<summary>

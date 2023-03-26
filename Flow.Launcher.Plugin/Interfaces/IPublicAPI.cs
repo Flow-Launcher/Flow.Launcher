@@ -233,8 +233,8 @@ namespace Flow.Launcher.Plugin
         /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
         /// </summary>
         /// <param name="DirectoryPath">Directory Path to open</param>
-        /// <param name="FileName">Extra FileName Info</param>
-        public void OpenDirectory(string DirectoryPath, string FileName = null);
+        /// <param name="FileNameOrFilePath">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null);
 
         /// <summary>
         /// Opens the URL with the given Uri object. 
