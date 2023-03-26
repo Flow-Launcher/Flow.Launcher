@@ -41,18 +41,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
                 return new List<PluginPair>();
 
-            // TODO: Remove. This is backwards compatibility for 1.10.0 release- changed PythonEmbeded to Environments/Python
-            if (Language.Equals(AllowedLanguage.Python, StringComparison.OrdinalIgnoreCase))
-            {
-                FilesFolders.RemoveFolderIfExists(Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable"));
-
-                if (!string.IsNullOrEmpty(PluginSettings.PythonDirectory) && PluginSettings.PythonDirectory.StartsWith(Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable")))
-                {
-                    InstallEnvironment();
-                    PluginSettings.PythonDirectory = string.Empty;
-                }
-            }
-
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
                 // Ensure latest only if user is using Flow's environment setup.
@@ -70,7 +58,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 var msg = $"Please select the {EnvName} executable";
-                var selectedFile = string.Empty;
+                string selectedFile;
 
                 selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
@@ -143,14 +131,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             };
 
             var result = dlg.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                return dlg.FileName;
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return result == DialogResult.OK ? dlg.FileName : string.Empty;
+
         }
 
         /// <summary>
