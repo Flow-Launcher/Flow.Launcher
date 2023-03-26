@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
@@ -38,7 +39,7 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            _startInfo.ArgumentList[2] = request.ToString();
+            _startInfo.ArgumentList[2] = JsonSerializer.Serialize(request);
 
             return ExecuteAsync(_startInfo, token);
         }

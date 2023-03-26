@@ -34,6 +34,9 @@ namespace Flow.Launcher.Infrastructure.Storage
         public JsonStorage(string filePath)
         {
             FilePath = filePath;
+            DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
+            
+            Helper.ValidateDirectory(DirectoryPath);
         }
 
         public async Task<T> LoadAsync()

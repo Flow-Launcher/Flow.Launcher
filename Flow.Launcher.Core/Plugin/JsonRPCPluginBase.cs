@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public abstract List<Result> LoadContextMenus(Result selectedResult);
 
-        private static readonly JsonSerializerOptions options = new()
+        protected static readonly JsonSerializerOptions options = new()
         {
             PropertyNameCaseInsensitive = true,
 #pragma warning disable SYSLIB0020
@@ -155,6 +155,8 @@ namespace Flow.Launcher.Core.Plugin
                 API = Context.API
             };
 
+            await Settings.InitializeAsync();
+
         }
 
         public virtual async Task InitAsync(PluginInitContext context)
@@ -165,7 +167,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public void Save()
         {
-            Settings.Save();
+            Settings?.Save();
         }
         public Control CreateSettingPanel()
         {

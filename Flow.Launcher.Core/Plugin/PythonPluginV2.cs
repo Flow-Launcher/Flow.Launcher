@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -8,7 +9,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public class PythonPluginV2 : JsonRpcPluginV2
+    internal class PythonPluginV2 : JsonRpcPluginV2
     {
         private readonly ProcessStartInfo _startInfo;
         private Process _process;
@@ -42,8 +43,16 @@ namespace Flow.Launcher.Core.Plugin
             //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
             _startInfo.ArgumentList.Add("-B");
         }
-        
 
+
+        public override List<Result> LoadContextMenus(Result selectedResult)
+        {
+            throw new NotImplementedException();
+        }
+        protected override Task<bool> ExecuteResultAsync(JsonRPCResult result)
+        {
+            throw new NotImplementedException();
+        }
         public override async Task InitAsync(PluginInitContext context)
         {
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);

@@ -11,7 +11,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public abstract class JsonRpcPluginV2 : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    internal abstract class JsonRpcPluginV2 : JsonRPCPluginBase
     {
         public abstract string SupportedLanguage { get; set; }
         
@@ -56,14 +56,10 @@ namespace Flow.Launcher.Core.Plugin
             await JsonSerializer.SerializeAsync(InputStream, fullMessage, cancellationToken: token);
         }
 
-        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
+        protected override async Task<List<Result>> QueryRequestAsync(JsonRPCRequestModel query, CancellationToken token)
         {
             int currentRequestId = Interlocked.Add(ref RequestId, 1);
-            var message = new JsonRPCRequestModel(currentRequestId, "query", new object[]
-            {
-                query
-            });
-            await InputMessageChannel.Writer.WriteAsync(message, token);
+            await InputMessageChannel.Writer.WriteAsync(query, token);
             await Task.Delay(50, token);
             await InputStream.FlushAsync(token);
             var task = new TaskCompletionSource<JsonRPCQueryResponseModel>();
@@ -72,8 +68,9 @@ namespace Flow.Launcher.Core.Plugin
             //TODO: Parse Result
             return new List<Result>();
         }
-        public virtual Task InitAsync(PluginInitContext context)
+        public override async Task InitAsync(PluginInitContext context)
         {
+            await base.InitAsync(context);
             InputMessageChannel = Channel.CreateUnbounded<JsonRPCRequestModel>();
             MessageCancellationTokenSource = new CancellationTokenSource();
             SendMessageAsync(context.CurrentPluginMetadata, MessageCancellationTokenSource.Token);
@@ -81,20 +78,6 @@ namespace Flow.Launcher.Core.Plugin
             // MessageTask = 
             //     (SendMessageAsync(context.CurrentPluginMetadata, MessageCancellationTokenSource.Token),
             //     ReceiveMessageAsync(MessageCancellationTokenSource.Token));
-            return Task.CompletedTask;
-        }
-        public List<Result> LoadContextMenus(Result selectedResult)
-        {
-            throw new System.NotImplementedException();
-        }
-        public Control CreateSettingPanel()
-        {
-            // TODO: Implement CreateSettingPanel
-            return new Control();
-        }
-        public void Save()
-        {
-            // TODO: Save settings
         }
     }
 }
