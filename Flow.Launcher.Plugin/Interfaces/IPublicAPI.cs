@@ -184,6 +184,13 @@ namespace Flow.Launcher.Plugin
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
 
         /// <summary>
+        /// Check whether specific ActionKeyword is assigned to any of the plugin
+        /// </summary>
+        /// <param name="actionKeyword">The actionkeyword for checking</param>
+        /// <returns>True if the actionkeyword is already assigned, False otherwise</returns>
+        bool ActionKeywordAssigned(string actionKeyword);
+
+        /// <summary>
         /// Log debug message
         /// Message will only be logged in Debug mode
         /// </summary>
@@ -226,8 +233,8 @@ namespace Flow.Launcher.Plugin
         /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
         /// </summary>
         /// <param name="DirectoryPath">Directory Path to open</param>
-        /// <param name="FileName">Extra FileName Info</param>
-        public void OpenDirectory(string DirectoryPath, string FileName = null);
+        /// <param name="FileNameOrFilePath">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null);
 
         /// <summary>
         /// Opens the URL with the given Uri object. 

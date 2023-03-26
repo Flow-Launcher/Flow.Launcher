@@ -2353,7 +2353,7 @@
     <value>Manage Storage Spaces</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
-    <value>Show or hide file extensions</value>
+    <value>是否显示文件扩展名</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
     <value>Allow an app through Windows Firewall</value>
@@ -2509,6 +2509,6 @@
     <value>TaskLink</value>
   </data>
   <data name="AreaUnknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>未知</value>
   </data>
 </root>

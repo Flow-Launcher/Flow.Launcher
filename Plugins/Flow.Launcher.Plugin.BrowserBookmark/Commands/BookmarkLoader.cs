@@ -19,25 +19,37 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Commands
 
         internal static List<Bookmark> LoadAllBookmarks(Settings setting)
         {
-
-            var chromeBookmarks = new ChromeBookmarkLoader();
-            var mozBookmarks = new FirefoxBookmarkLoader();
-            var edgeBookmarks = new EdgeBookmarkLoader();
-
             var allBookmarks = new List<Bookmark>();
 
-            // Add Firefox bookmarks
-            allBookmarks.AddRange(mozBookmarks.GetBookmarks());
+            if (setting.LoadChromeBookmark)
+            {
+                // Add Chrome bookmarks
+                var chromeBookmarks = new ChromeBookmarkLoader();
+                allBookmarks.AddRange(chromeBookmarks.GetBookmarks());
+            }
 
-            // Add Chrome bookmarks
-            allBookmarks.AddRange(chromeBookmarks.GetBookmarks());
+            if (setting.LoadFirefoxBookmark)
+            {
+                // Add Firefox bookmarks
+                var mozBookmarks = new FirefoxBookmarkLoader();
+                allBookmarks.AddRange(mozBookmarks.GetBookmarks());
+            }
 
-            // Add Edge (Chromium) bookmarks
-            allBookmarks.AddRange(edgeBookmarks.GetBookmarks());
+            if (setting.LoadEdgeBookmark)
+            {
+                // Add Edge (Chromium) bookmarks
+                var edgeBookmarks = new EdgeBookmarkLoader();
+                allBookmarks.AddRange(edgeBookmarks.GetBookmarks());
+            }
 
             foreach (var browser in setting.CustomChromiumBrowsers)
             {
-                var loader = new CustomChromiumBookmarkLoader(browser);
+                IBookmarkLoader loader = browser.BrowserType switch
+                {
+                    BrowserType.Chromium => new CustomChromiumBookmarkLoader(browser),
+                    BrowserType.Firefox => new CustomFirefoxBookmarkLoader(browser),
+                    _ => new CustomChromiumBookmarkLoader(browser),
+                };
                 allBookmarks.AddRange(loader.GetBookmarks());
             }
 

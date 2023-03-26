@@ -1,11 +1,19 @@
-version: '1.9.4.{build}'
+version: '1.14.0.{build}'
 
 init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
+      if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
+      {
+        $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
+      }
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
+
+cache:
+  - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
+
 
 assembly_info:
   patch: true
@@ -13,12 +21,6 @@ assembly_info:
   assembly_version: $(flowVersion)
   assembly_file_version: $(flowVersion)
   assembly_informational_version: $(flowVersion)
-
-skip_branch_with_pr: true
-
-skip_commits:
-  files:
-    - '*.md'
 
 image: Visual Studio 2022
 platform: Any CPU
@@ -28,7 +30,9 @@ before_build:
 build:
   project: Flow.Launcher.sln
   verbosity: minimal
-after_build:
+test_script:
+  - dotnet test --no-build -c Release
+after_test:
   - ps: .\Scripts\post_build.ps1
 
 artifacts:
@@ -50,6 +54,17 @@ deploy:
       secure: EwKxUgjI8VGouFq9fdhI68+uj42amAhwE65JixIbqx8VlqLbyEuW97CLjBBOIL0r
     on:
       APPVEYOR_REPO_TAG: true
+
+  - provider: GitHub
+    repository: Flow-Launcher/Prereleases
+    release: v$(prereleaseTag)
+    description: 'This is the early access build of our upcoming release. All changes contained here are reviewed, tested and stable to use.\n\nSee our [release](https://github.com/Flow-Launcher/Flow.Launcher/pulls?q=is%3Aopen+is%3Apr+label%3Arelease) Pull Request for details.\n\nFor latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)\n\nPlease report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
+    auth_token:
+      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
+    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
+    force_update: true
+    on:
+      branch: dev
 
   - provider: GitHub
     release: v$(flowVersion)

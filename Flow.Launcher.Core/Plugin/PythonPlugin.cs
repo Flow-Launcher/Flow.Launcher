@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
@@ -11,7 +11,6 @@ namespace Flow.Launcher.Core.Plugin
     internal class PythonPlugin : JsonRPCPlugin
     {
         private readonly ProcessStartInfo _startInfo;
-        public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
         public PythonPlugin(string filename)
         {
@@ -46,6 +45,7 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
+            // since this is not static, request strings will build up in ArgumentList if index is not specified
             _startInfo.ArgumentList[2] = rpcRequest.ToString();
             _startInfo.WorkingDirectory = Context.CurrentPluginMetadata.PluginDirectory;
             // TODO: Async Action

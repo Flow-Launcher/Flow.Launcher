@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin
@@ -37,7 +38,11 @@ namespace Flow.Launcher.Plugin
         /// user's clipboard when Ctrl + C is pressed on a result. If the text is a file/directory path
         /// flow will copy the actual file/folder instead of just the path text.
         /// </summary>
-        public string CopyText { get; set; } = string.Empty;
+        public string CopyText
+        {
+            get => string.IsNullOrEmpty(_copyText) ? SubTitle : _copyText;
+            set => _copyText = value;
+        }
 
         /// <summary>
         /// This holds the text which can be provided by plugin to help Flow autocomplete text
@@ -56,9 +61,14 @@ namespace Flow.Launcher.Plugin
             get { return _icoPath; }
             set
             {
-                if (!string.IsNullOrEmpty(PluginDirectory) && !Path.IsPathRooted(value))
+                // As a standard this property will handle prepping and converting to absolute local path for icon image processing
+                if (!string.IsNullOrEmpty(value)
+                    && !string.IsNullOrEmpty(PluginDirectory)
+                    && !Path.IsPathRooted(value)
+                    && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
                 {
-                    _icoPath = Path.Combine(value, IcoPath);
+                    _icoPath = Path.Combine(PluginDirectory, value);
                 }
                 else
                 {
@@ -66,6 +76,10 @@ namespace Flow.Launcher.Plugin
                 }
             }
         }
+        /// <summary>
+        /// Determines if Icon has a border radius
+        /// </summary>
+        public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
         /// Delegate function, see <see cref="Icon"/>
@@ -77,6 +91,7 @@ namespace Flow.Launcher.Plugin
         /// Delegate to Get Image Source
         /// </summary>
         public IconDelegate Icon;
+        private string _copyText = string.Empty;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
@@ -131,10 +146,11 @@ namespace Flow.Launcher.Plugin
             set
             {
                 _pluginDirectory = value;
-                if (!string.IsNullOrEmpty(IcoPath) && !Path.IsPathRooted(IcoPath))
-                {
-                    IcoPath = Path.Combine(value, IcoPath);
-                }
+
+                // When the Result object is returned from the query call, PluginDirectory is not provided until
+                // UpdatePluginMetadata call is made at PluginManager.cs L196. Once the PluginDirectory becomes available
+                // we need to update (only if not Uri path) the IcoPath with the full absolute path so the image can be loaded.
+                IcoPath = _icoPath;
             }
         }
 
@@ -162,7 +178,7 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override string ToString()
         {
-            return Title + SubTitle;
+            return Title + SubTitle + Score;
         }
 
         /// <summary>
@@ -189,6 +205,11 @@ namespace Flow.Launcher.Plugin
         public string SubTitleToolTip { get; set; }
 
         /// <summary>
+        /// Customized Preview Panel
+        /// </summary>
+        public Lazy<UserControl> PreviewPanel { get; set; }
+
+        /// <summary>
         /// Run this result, asynchronously
         /// </summary>
         /// <param name="context"></param>
@@ -196,6 +217,44 @@ namespace Flow.Launcher.Plugin
         public ValueTask<bool> ExecuteAsync(ActionContext context)
         {
             return AsyncAction?.Invoke(context) ?? ValueTask.FromResult(Action?.Invoke(context) ?? false);
+        }
+
+        /// <summary>
+        /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result
+        /// </summary>
+        public int? ProgressBar { get; set; }
+
+        /// <summary>
+        /// Optionally set the color of the progress bar
+        /// </summary>
+        /// <default>#26a0da (blue)</default>
+        public string ProgressBarColor { get; set; } = "#26a0da";
+
+        public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+
+        /// <summary>
+        /// Info of the preview image.
+        /// </summary>
+        public record PreviewInfo
+        {
+            /// <summary>
+            /// Full image used for preview panel
+            /// </summary>
+            public string PreviewImagePath { get; set; }
+            /// <summary>
+            /// Determines if the preview image should occupy the full width of the preview panel.
+            /// </summary>
+            public bool IsMedia { get; set; }
+            public string Description { get; set; }
+            public IconDelegate PreviewDelegate { get; set; }
+
+            public static PreviewInfo Default { get; } = new()
+            {
+                PreviewImagePath = null,
+                Description = null,
+                IsMedia = false,
+                PreviewDelegate = null,
+            };
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
 
-            await pluginManager.UpdateManifestAsync();
+            _ = pluginManager.UpdateManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)

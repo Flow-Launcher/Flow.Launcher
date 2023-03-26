@@ -63,7 +63,6 @@
                     <TextBlock
                         Grid.Column="0"
                         Margin="0,0,0,0"
-                        FontFamily="Segoe UI"
                         FontSize="20"
                         FontWeight="SemiBold"
                         Text="{DynamicResource changePriorityWindow}"
@@ -86,6 +85,8 @@
                     <ui:NumberBox
                         x:Name="tbAction"
                         Width="200"
+                        Maximum="100"
+                        Minimum="-100"
                         Margin="10,0,15,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"

@@ -43,7 +43,7 @@ namespace Flow.Launcher.Helper
 
         public static string DependenciesInfo()
         {
-            var info = $"\nPython Path: {Constant.PythonPath}";
+            var info = $"\nPython Path: {Constant.PythonPath}\nNode Path: {Constant.NodePath}";
             return info;
         }
     }

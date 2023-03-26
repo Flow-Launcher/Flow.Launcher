@@ -134,7 +134,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Acceso a trabajo o escuela</value>
+    <value>Acceder a trabajo o escuela</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
@@ -174,7 +174,7 @@
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Configuración de pantalla avanzada</value>
+    <value>Configuración avanzada de pantalla</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
@@ -531,7 +531,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Ubicaciones de guardado predeterminadas</value>
+    <value>Ubicaciones de almacenamiento predeterminadas</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
@@ -995,7 +995,7 @@
     <value>Sólo disponible cuando haya conectado un dispositivo móvil a su dispositivo.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de gráficos avanzados.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de gráficos.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>Sólo disponible en dispositivos que tienen batería, como una tableta.</value>
@@ -1010,7 +1010,7 @@
     <value>Sólo disponible si DirectAccess está habilitado.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Sólo disponible en dispositivos que soporten opciones de pantalla avanzada.</value>
+    <value>Sólo disponible en dispositivos que soporten opciones avanzadas de pantalla.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
     <value>Sólo presente si el usuario está inscrito en el programa de Windows Insider.</value>
@@ -1389,7 +1389,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Atajos</value>
+    <value>Accesos directos</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>
@@ -1995,7 +1995,7 @@
     <value>Comprobar estado del teclado</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Controlar el ordenador sin el ratón o el teclado</value>
+    <value>Controlar el equipo sin el ratón o el teclado</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
     <value>Cambiar o eliminar un programa</value>

@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     MaxHeight="{Binding MaxHeight}"
-    Margin="{Binding Margin}"
     HorizontalContentAlignment="Stretch"
     d:DataContext="{d:DesignInstance vm:ResultsViewModel}"
     d:DesignHeight="100"
@@ -17,6 +16,10 @@
     ItemsSource="{Binding Results}"
     KeyboardNavigation.DirectionalNavigation="Cycle"
     PreviewMouseDown="ListBox_PreviewMouseDown"
+    PreviewMouseLeftButtonDown="ResultList_PreviewMouseLeftButtonDown"
+    PreviewMouseLeftButtonUp="ResultListBox_OnPreviewMouseUp"
+    PreviewMouseMove="ResultList_MouseMove"
+    PreviewMouseRightButtonDown="ResultListBox_OnPreviewMouseRightButtonDown"
     SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
     SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
     SelectionChanged="OnSelectionChanged"
@@ -24,13 +27,17 @@
     Style="{DynamicResource BaseListboxStyle}"
     VirtualizingStackPanel.IsVirtualizing="True"
     VirtualizingStackPanel.VirtualizationMode="Standard"
-    Visibility="{Binding Visbility}"
+    Visibility="{Binding Visibility}"
     mc:Ignorable="d">
     <!--  IsSynchronizedWithCurrentItem: http://stackoverflow.com/a/7833798/2833083  -->
 
+    <ListBox.Resources>
+        <converter:IconRadiusConverter x:Key="IconRadiusConverter" />
+        <converter:DiameterToCenterPointConverter x:Key="DiameterToCenterPointConverter" />
+    </ListBox.Resources>
     <ListBox.ItemTemplate>
         <DataTemplate>
-            <Button>
+            <Button HorizontalAlignment="Stretch">
                 <Button.Template>
                     <ControlTemplate>
                         <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -39,7 +46,7 @@
                 <Button.Content>
                     <Grid
                         Margin="0"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         Cursor="Hand"
                         UseLayoutRounding="False">
@@ -49,21 +56,22 @@
                             <converter:OpenResultHotkeyVisibilityConverter x:Key="OpenResultHotkeyVisibilityConverter" />
                         </Grid.Resources>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="60" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Style="{DynamicResource ImageAreaWidth}" />
+                            <ColumnDefinition Width="9*" />
+                            <ColumnDefinition Width="Auto" MinWidth="8" />
                         </Grid.ColumnDefinitions>
                         <StackPanel
+                            x:Name="HotkeyArea"
                             Grid.Column="2"
                             Margin="0,0,10,0"
+                            VerticalAlignment="Center"
                             Visibility="{Binding ShowOpenResultHotkey}">
                             <TextBlock
                                 x:Name="Hotkey"
                                 Margin="12,0,12,0"
-                                Padding="0,10,0,10"
+                                Padding="0,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Opacity="0.8"
                                 Style="{DynamicResource ItemHotkeyStyle}">
                                 <TextBlock.Visibility>
                                     <Binding Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
@@ -76,49 +84,103 @@
                                 </TextBlock.Text>
                             </TextBlock>
                         </StackPanel>
-                        <Border
-                            Margin="9,0,0,0"
-                            BorderBrush="Transparent"
-                            BorderThickness="0">
-                            <Image
-                                x:Name="ImageIcon"
-                                Width="32"
-                                Height="32"
-                                Margin="0,0,0,0"
-                                HorizontalAlignment="Center"
-                                Source="{Binding Image, TargetNullValue={x:Null}}"
-                                Stretch="Uniform"
-                                Visibility="{Binding ShowIcon}" />
-                        </Border>
-                        <Border
-                            Margin="9,0,0,0"
-                            BorderBrush="Transparent"
-                            BorderThickness="0">
-                            <TextBlock
+
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Border
+                                x:Name="Bullet"
                                 Grid.Column="0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                FontFamily="{Binding Glyph.FontFamily}"
-                                Style="{DynamicResource ItemGlyph}"
-                                Text="{Binding Glyph.Glyph}"
-                                Visibility="{Binding ShowGlyph}" />
-                        </Border>
+                                Style="{DynamicResource BulletStyle}" />
+
+                            <Border
+                                Grid.Column="1"
+                                Margin="9,0,0,0"
+                                BorderBrush="Transparent"
+                                BorderThickness="1">
+                                <Image
+                                    x:Name="ImageIcon"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    IsHitTestVisible="False"
+                                    RenderOptions.BitmapScalingMode="Fant"
+                                    Source="{Binding Image, TargetNullValue={x:Null}}"
+                                    Stretch="Uniform"
+                                    Style="{DynamicResource ImageIconStyle}"
+                                    Visibility="{Binding ShowIcon}">
+                                    <Image.Clip>
+                                        <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
+                                            <EllipseGeometry.RadiusX>
+                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                    <Binding Path="Result.RoundedIcon" />
+                                                </MultiBinding>
+                                            </EllipseGeometry.RadiusX>
+                                            <EllipseGeometry.RadiusY>
+                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                    <Binding Path="Result.RoundedIcon" />
+                                                </MultiBinding>
+                                            </EllipseGeometry.RadiusY>
+                                        </EllipseGeometry>
+                                    </Image.Clip>
+                                </Image>
+                            </Border>
+                            <Border
+                                Grid.Column="1"
+                                Margin="9,0,0,0"
+                                BorderBrush="Transparent"
+                                BorderThickness="0">
+                                <TextBlock
+                                    x:Name="GlyphIcon"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{Binding Glyph.FontFamily}"
+                                    Style="{DynamicResource ItemGlyph}"
+                                    Text="{Binding Glyph.Glyph}"
+                                    Visibility="{Binding ShowGlyph}" />
+                            </Border>
+                        </Grid>
+
                         <Grid
                             Grid.Column="1"
                             Margin="6,0,10,0"
-                            HorizontalAlignment="Stretch">
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition x:Name="SubTitleRowDefinition" Height="Auto" />
                             </Grid.RowDefinitions>
-
+                            <ProgressBar
+                                x:Name="progressbarResult"
+                                Grid.Row="0"
+                                Foreground="{Binding Result.ProgressBarColor}"
+                                Value="{Binding ResultProgress, Mode=OneWay}">
+                                <ProgressBar.Style>
+                                    <Style BasedOn="{StaticResource ProgressBarResult}" TargetType="ProgressBar">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Result.ProgressBar}" Value="{x:Null}">
+                                                <Setter Property="Visibility" Value="Collapsed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ProgressBar.Style>
+                            </ProgressBar>
                             <TextBlock
                                 x:Name="Title"
+                                Grid.Row="0"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
+                                IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
-                                ToolTip="{Binding ShowTitleToolTip}">
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip="{Binding ShowTitleToolTip}"
+                                ToolTipService.ShowOnDisabled="True">
                                 <vm:ResultsViewModel.FormattedText>
                                     <MultiBinding Converter="{StaticResource HighlightTextConverter}">
                                         <Binding Path="Result.Title" />
@@ -129,13 +191,12 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                MinWidth="750"
+                                IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
-                                ToolTip="{Binding ShowSubTitleToolTip}">
-                    
-                            </TextBlock>
-
+                                TextTrimming="CharacterEllipsis"
+                                ToolTip="{Binding ShowSubTitleToolTip}"
+                                ToolTipService.ShowOnDisabled="True" />
                         </Grid>
 
                     </Grid>
@@ -144,10 +205,11 @@
             <!--  a result item height is 52 including margin  -->
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+                    <Setter TargetName="Bullet" Property="Style" Value="{DynamicResource ItemBulletSelectedStyle}" />
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
                     <Setter TargetName="Hotkey" Property="Style" Value="{DynamicResource ItemHotkeySelectedStyle}" />
-                    <Setter TargetName="ImageIcon" Property="Style" Value="{DynamicResource ItemImageSelectedStyle}" />
+                    <Setter TargetName="GlyphIcon" Property="Style" Value="{DynamicResource ItemGlyphSelectedStyle}" />
                 </DataTrigger>
             </DataTemplate.Triggers>
         </DataTemplate>
@@ -157,7 +219,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="52" />
+            <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />
@@ -166,8 +228,10 @@
                     <ControlTemplate TargetType="{x:Type ListBoxItem}">
                         <Border
                             x:Name="Bd"
+                            Margin="{DynamicResource ItemMargin}"
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
+                            CornerRadius="{DynamicResource ItemRadius}"
                             SnapsToDevicePixels="True">
                             <ContentPresenter
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"

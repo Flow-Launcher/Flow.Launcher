@@ -10,22 +10,29 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Añadir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Activado</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Desactivado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palabra clave de acción</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Buscar</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda: </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Usar autocompletado en consultas de búsqueda:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocompletar datos desde:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Por favor, seleccione una búsqueda web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">¿Está seguro que desea eliminar {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si dispone de un servicio de búsqueda web que desea utilizar, puede añadirlo a Flow. Por ejemplo, si desea buscar 'casino' en Netflix puede utilizar el siguiente formato url en la barra de direcciones: &quot;https://www.netflix.com/search?q=Casino. Para ello, cambie el término de búsqueda 'Casino' de la siguiente manera.</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Añadirla a la sección URL, abajo indicada. Ahora puede buscar en Netflix utilizando cualquier término de búsqueda.</system:String>
-   
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Si desea añadir una búsqueda de un sitio web concreto a Flow, introduzca primero una cadena de texto ficticia en la barra de búsqueda de ese sitio web, y ejecute la búsqueda. Ahora copie el contenido de la barra de direcciones del navegador y péguelo en el campo de la URL abajo indicado. Sustituya su cadena de prueba por {q}. Por ejemplo, si busca Casino en Netflix, su barra de direcciones debe decir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
+        Ahora copie la cadena de entrada y péguela en el campo de la URL de la parte inferior.
+        A continuación, sustituya casino por {q}.
+	De esta manera, la fórmula genérica para una búsqueda en Netflix será https://www.netflix.com/search?q={q}
+    </system:String>
 
-    <!--web search edit-->
+
+
+    <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Activar</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Estado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Seleccionar icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Icono</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancelar</system:String>
@@ -35,7 +42,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Por favor, introduzca una URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">La palabra clave de acción ya está en uso, por favor, introduzca una diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Correcto</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Sugerencia: No es necesario copiar imágenes personalizadas en esta carpeta, cuando Flow sea actualizado se perderán. Flow copiará automáticamente cualquier imagen externa a esta carpeta en la ubicación de imágenes personalizada de WebSearch.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Sugerencia: No es necesario colocar imágenes personalizadas en esta carpeta, al actualizar Flow se perderán. Flow copiará automáticamente cualquier imagen externa a esta carpeta en la ubicación de imágenes personalizada de WebSearch.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Búsquedas Web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permite realizar búsquedas web</system:String>

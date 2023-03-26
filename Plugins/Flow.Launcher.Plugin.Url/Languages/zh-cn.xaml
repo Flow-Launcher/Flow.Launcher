@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_new_tab">新标签</system:String>
     
     <system:String x:Key="flowlauncher_plugin_url_open_url">打开链接:{0}</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_canot_open_url">无法打开链接:{0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_cannot_open_url">无法打开链接:{0}</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_name">打开链接</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">从 Flow Launcher 打开链接</system:String>

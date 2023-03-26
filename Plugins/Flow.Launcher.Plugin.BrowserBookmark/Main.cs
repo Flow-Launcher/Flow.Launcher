@@ -17,16 +17,16 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 {
     public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
     {
-        private PluginInitContext context;
+        private static PluginInitContext context;
 
-        private List<Bookmark> cachedBookmarks = new List<Bookmark>();
+        private static List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
-        private Settings _settings { get; set; }
-
+        private static Settings _settings;
+        
         public void Init(PluginInitContext context)
         {
-            this.context = context;
-
+            Main.context = context;
+            
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
@@ -137,6 +137,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public void ReloadData()
         {
+            ReloadAllBookmarks();
+        }
+
+        public static void ReloadAllBookmarks()
+        {
             cachedBookmarks.Clear();
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
@@ -183,7 +188,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                             return false;
                         }
                     },
-                    IcoPath = "Images\\copylink.png"
+                    IcoPath = "Images\\copylink.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
                 }
             };
         }

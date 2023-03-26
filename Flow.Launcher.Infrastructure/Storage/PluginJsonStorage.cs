@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public PluginJsonStorage(T data) : this()
         {
-            _data = data;
+            Data = data;
         }
     }
 }

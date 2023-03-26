@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -11,9 +9,8 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
+using Flow.Launcher.Plugin.Program.Views.Models;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Primitives;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
@@ -82,13 +79,9 @@ namespace Flow.Launcher.Plugin.Program
             Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
-                _win32s = _win32Storage.TryLoad(new Win32[]
-                {
-                });
+                _win32s = _win32Storage.TryLoad(Array.Empty<Win32>());
                 _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
-                _uwps = _uwpStorage.TryLoad(new UWP.Application[]
-                {
-                });
+                _uwps = _uwpStorage.TryLoad(Array.Empty<UWP.Application>());
             });
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
@@ -102,14 +95,14 @@ namespace Flow.Launcher.Plugin.Program
 
             var b = Task.Run(() =>
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexUwpPrograms);
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPPRogram index cost", IndexUwpPrograms);
             });
 
             if (cacheEmpty)
                 await Task.WhenAll(a, b);
 
             Win32.WatchProgramUpdate(_settings);
-            UWP.WatchPackageChange();
+            _ = UWP.WatchPackageChange();
         }
 
         public static void IndexWin32Programs()
@@ -121,20 +114,23 @@ namespace Flow.Launcher.Plugin.Program
 
         public static void IndexUwpPrograms()
         {
-            var windows10 = new Version(10, 0);
-            var support = Environment.OSVersion.Version.Major >= windows10.Major;
-            var applications = support ? UWP.All() : new UWP.Application[]
-            {
-            };
+            var applications = UWP.All(_settings);
             _uwps = applications;
             ResetCache();
         }
 
         public static async Task IndexProgramsAsync()
         {
-            var t1 = Task.Run(IndexWin32Programs);
-            var t2 = Task.Run(IndexUwpPrograms);
-            await Task.WhenAll(t1, t2).ConfigureAwait(false);
+            var a = Task.Run(() =>
+            {
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
+            });
+
+            var b = Task.Run(() =>
+            {
+                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpPrograms);
+            });
+            await Task.WhenAll(a, b).ConfigureAwait(false);
             _settings.LastIndexTime = DateTime.Today;
         }
 
@@ -190,29 +186,33 @@ namespace Flow.Launcher.Plugin.Program
             return menuOptions;
         }
 
-        private void DisableProgram(IProgram programToDelete)
+        private static void DisableProgram(IProgram programToDelete)
         {
             if (_settings.DisabledProgramSources.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
                 return;
 
             if (_uwps.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _uwps.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                    .Enabled = false;
-
-            if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
-                _win32s.FirstOrDefault(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier)
-                    .Enabled = false;
-
-            _settings.DisabledProgramSources
-                .Add(
-                    new Settings.DisabledProgramSource
-                    {
-                        Name = programToDelete.Name,
-                        Location = programToDelete.Location,
-                        UniqueIdentifier = programToDelete.UniqueIdentifier,
-                        Enabled = false
-                    }
-                );
+            {
+                var program = _uwps.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                program.Enabled = false;
+                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                _ = Task.Run(() =>
+                {
+                    IndexUwpPrograms();
+                    _settings.LastIndexTime = DateTime.Today;
+                });
+            }
+            else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
+            {
+                var program = _win32s.First(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier);
+                program.Enabled = false;
+                _settings.DisabledProgramSources.Add(new ProgramSource(program));
+                _ = Task.Run(() =>
+                {
+                    IndexWin32Programs();
+                    _settings.LastIndexTime = DateTime.Today;
+                });
+            }
         }
 
         public static void StartProcess(Func<ProcessStartInfo, Process> runProcess, ProcessStartInfo info)
@@ -223,9 +223,9 @@ namespace Flow.Launcher.Plugin.Program
             }
             catch (Exception)
             {
-                var name = "Plugin: Program";
-                var message = $"Unable to start: {info.FileName}";
-                Context.API.ShowMsg(name, message, string.Empty);
+                var title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
+                var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"), info.FileName);
+                Context.API.ShowMsg(title, string.Format(message, info.FileName), string.Empty);
             }
         }
 
@@ -233,6 +233,7 @@ namespace Flow.Launcher.Plugin.Program
         {
             await IndexProgramsAsync();
         }
+
         public void Dispose()
         {
             Win32.Dispose();

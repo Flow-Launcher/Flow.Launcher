@@ -10,22 +10,29 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Sil</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Düzenle</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Ekle</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Onayla</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Anahtar Kelime</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Ara:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Arama önerilerini etkinleştir </system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from: </system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Arama önerilerini etkinleştir</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Lütfen bir web araması seçin</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">{0} bağlantısını silmek istediğinize emin misiniz?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you have a web search service you want to use, you can add it to Flow. For example, you can follow the url format in the address bar if you want to search 'casino' on Netflix: &quot;https://www.netflix.com/search?q=Casino&quot;. To do this, change the search term 'Casino' as follows.</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q={q}</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">Add it to the URL section below. You can now search Netflix with Flow using any search terms.</system:String>
-   
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
+        Now copy this entire string and paste it in the URL field below.
+        Then replace casino with {q}.
+        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+    </system:String>
 
-    <!--web search edit-->
+
+
+    <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Başlık</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Etkin</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Simge Seç</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Simge</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">İptal</system:String>

@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.BrowserBookmark.Models;
+﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -7,8 +7,10 @@ using System.Linq;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
-    public class FirefoxBookmarkLoader : IBookmarkLoader
+    public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     {
+        public abstract List<Bookmark> GetBookmarks();
+
         private const string queryAllBookmarks = @"SELECT moz_places.url, moz_bookmarks.title
               FROM moz_places
               INNER JOIN moz_bookmarks ON (
@@ -19,21 +21,18 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private const string dbPathFormat = "Data Source ={0};Version=3;New=False;Compress=True;";
 
-        /// <summary>
-        /// Searches the places.sqlite db and returns all bookmarks
-        /// </summary>
-        public List<Bookmark> GetBookmarks()
+        protected static List<Bookmark> GetBookmarksFromPath(string placesPath)
         {
             // Return empty list if the places.sqlite file cannot be found
-            if (string.IsNullOrEmpty(PlacesPath) || !File.Exists(PlacesPath))
+            if (string.IsNullOrEmpty(placesPath) || !File.Exists(placesPath))
                 return new List<Bookmark>();
 
             var bookmarkList = new List<Bookmark>();
-            
-            Main.RegisterBookmarkFile(PlacesPath);
+
+            Main.RegisterBookmarkFile(placesPath);
 
             // create the connection string and init the connection
-            string dbPath = string.Format(dbPathFormat, PlacesPath);
+            string dbPath = string.Format(dbPathFormat, placesPath);
             using var dbConnection = new SQLiteConnection(dbPath);
             // Open connection to the database file and execute the query
             dbConnection.Open();
@@ -41,13 +40,25 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
             // return results in List<Bookmark> format
             bookmarkList = reader.Select(
-                x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(), 
+                x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(),
                     x["url"].ToString())
             ).ToList();
 
             return bookmarkList;
         }
+    }
 
+
+    public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
+    {
+        /// <summary>
+        /// Searches the places.sqlite db and returns all bookmarks
+        /// </summary>
+        public override List<Bookmark> GetBookmarks()
+        {
+            return GetBookmarksFromPath(PlacesPath);
+        }
+        
         /// <summary>
         /// Path to places.sqlite
         /// </summary>

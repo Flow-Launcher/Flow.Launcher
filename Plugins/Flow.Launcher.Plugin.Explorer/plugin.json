@@ -8,9 +8,9 @@
     "*"
   ],
   "Name": "Explorer",
-  "Description": "Search and manage files and folders. Explorer utilises Windows Index Search",
+  "Description": "Find and manage files and folders via Windows Search or Everything",
   "Author": "Jeremy Wu",
-  "Version": "1.11.2",
+  "Version": "3.0.1",
   "Language": "csharp",
   "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
   "ExecuteFileName": "Flow.Launcher.Plugin.Explorer.dll",

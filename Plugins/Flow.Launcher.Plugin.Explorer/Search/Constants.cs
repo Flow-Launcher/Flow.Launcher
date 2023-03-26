@@ -17,6 +17,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string IndexingOptionsIconImagePath = "Images\\windowsindexingoptions.png";
         internal const string QuickAccessImagePath = "Images\\quickaccess.png";
         internal const string RemoveQuickAccessImagePath = "Images\\removequickaccess.png";
+        internal const string ShowContextMenuImagePath = "Images\\context_menu.png";
+        internal const string EverythingErrorImagePath = "Images\\everything_error.png";
+        internal const string IndexSearchWarningImagePath = "Images\\index_error.png";
+        internal const string WindowsIndexErrorImagePath = "Images\\index_error2.png";
+        internal const string GeneralSearchErrorImagePath = "Images\\robot_error.png";
+
 
         internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
 
@@ -26,7 +32,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const string DefaultContentSearchActionKeyword = "doc:";
 
-        internal const char DirectorySeperator = '\\';
+        internal const char DirectorySeparator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
 

@@ -1,28 +1,26 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Core.Plugin;
+﻿using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
-using Microsoft.Win32;
 using ModernWpf;
+using ModernWpf.Controls;
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.Security.Policy;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
-using ListViewItem = System.Windows.Controls.ListViewItem;
+using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
@@ -37,11 +35,13 @@ namespace Flow.Launcher
 
         public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
         {
-            InitializeComponent();
             settings = viewModel.Settings;
             DataContext = viewModel;
             this.viewModel = viewModel;
             API = api;
+            InitializePosition();
+            InitializeComponent();
+
         }
 
         #region General
@@ -54,33 +54,33 @@ namespace Flow.Launcher
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
             hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+
+            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
+            pluginListView.Filter = PluginListFilter;
+
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView.Filter = PluginStoreFilter;
+
+            InitializePosition();
         }
 
-        private void OnSelectPythonDirectoryClick(object sender, RoutedEventArgs e)
+        private void OnSelectPythonPathClick(object sender, RoutedEventArgs e)
         {
-            var dlg = new FolderBrowserDialog
-            {
-                SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-            };
+            var selectedFile = viewModel.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+                                    "Python|pythonw.exe");
 
-            var result = dlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
-            {
-                string pythonDirectory = dlg.SelectedPath;
-                if (!string.IsNullOrEmpty(pythonDirectory))
-                {
-                    var pythonPath = Path.Combine(pythonDirectory, PluginsLoader.PythonExecutable);
-                    if (File.Exists(pythonPath))
-                    {
-                        settings.PluginSettings.PythonDirectory = pythonDirectory;
-                        MessageBox.Show("Remember to restart Flow Launcher use new Python path");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Can't find python in given directory");
-                    }
-                }
-            }
+            if (!string.IsNullOrEmpty(selectedFile))
+                settings.PluginSettings.PythonExecutablePath = selectedFile;
+        }
+
+        private void OnSelectNodePathClick(object sender, RoutedEventArgs e)
+        {
+            var selectedFile = viewModel.GetFileFromDialog(
+                                    InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"));
+
+            if (!string.IsNullOrEmpty(selectedFile))
+                settings.PluginSettings.NodeExecutablePath = selectedFile;
         }
 
         private void OnSelectFileManagerClick(object sender, RoutedEventArgs e)
@@ -123,6 +123,19 @@ namespace Flow.Launcher
             }
         }
 
+        private void OnPreviewHotkeyControlLoaded(object sender, RoutedEventArgs e)
+        {
+            _ = PreviewHotkeyControl.SetHotkeyAsync(settings.PreviewHotkey, false);
+        }
+
+        private void OnPreviewHotkeyControlFocusLost(object sender, RoutedEventArgs e)
+        {
+            if (PreviewHotkeyControl.CurrentHotkeyAvailable)
+            {
+                settings.PreviewHotkey = PreviewHotkeyControl.CurrentHotkey.ToString();
+            }
+        }
+
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
@@ -144,7 +157,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnEditCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             var item = viewModel.SelectedCustomPluginHotkey;
             if (item != null)
@@ -159,7 +172,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnAddCustomeHotkeyClick(object sender, RoutedEventArgs e)
+        private void OnAddCustomHotkeyClick(object sender, RoutedEventArgs e)
         {
             new CustomQueryHotkeySetting(this, settings).ShowDialog();
         }
@@ -179,41 +192,8 @@ namespace Flow.Launcher
         {
             if (sender is Control { DataContext: PluginViewModel pluginViewModel })
             {
-                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, settings, pluginViewModel);
+                PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(pluginViewModel.PluginPair.Metadata.ID, pluginViewModel);
                 priorityChangeWindow.ShowDialog();
-            }
-        }
-
-        private void OnPluginActionKeywordsClick(object sender, RoutedEventArgs e)
-        {
-            var id = viewModel.SelectedPlugin.PluginPair.Metadata.ID;
-            ActionKeywords changeKeywordsWindow = new ActionKeywords(id, settings, viewModel.SelectedPlugin);
-            changeKeywordsWindow.ShowDialog();
-        }
-
-        private void OnPluginNameClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var website = viewModel.SelectedPlugin.PluginPair.Metadata.Website;
-                if (!string.IsNullOrEmpty(website))
-                {
-                    var uri = new Uri(website);
-                    if (Uri.CheckSchemeName(uri.Scheme))
-                    {
-                        website.OpenInBrowserTab();
-                    }
-                }
-            }
-        }
-
-        private void OnPluginDirecotyClick(object sender, MouseButtonEventArgs e)
-        {
-            if (e.ChangedButton == MouseButton.Left)
-            {
-                var directory = viewModel.SelectedPlugin.PluginPair.Metadata.PluginDirectory;
-                if (!string.IsNullOrEmpty(directory))
-                    PluginManager.API.OpenDirectory(directory);
             }
         }
 
@@ -242,6 +222,9 @@ namespace Flow.Launcher
 
         private void OnClosed(object sender, EventArgs e)
         {
+            settings.SettingWindowState = WindowState;
+            settings.SettingWindowTop = Top;
+            settings.SettingWindowLeft = Left;
             viewModel.Save();
         }
 
@@ -267,23 +250,66 @@ namespace Flow.Launcher
         }
         private void OpenLogFolder(object sender, RoutedEventArgs e)
         {
-            PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, Constant.Version));
+            viewModel.OpenLogFolder();
         }
-
-        private void OnPluginStoreRefreshClick(object sender, RoutedEventArgs e)
+        private void ClearLogFolder(object sender, RoutedEventArgs e)
         {
-            _ = viewModel.RefreshExternalPluginsAsync();
+            var confirmResult = MessageBox.Show(
+                InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
+                InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
+                MessageBoxButton.YesNo);
+            
+            if (confirmResult == MessageBoxResult.Yes)
+            {
+                viewModel.ClearLogFolder();
+            }
         }
 
         private void OnExternalPluginInstallClick(object sender, RoutedEventArgs e)
         {
-            if (sender is Button { DataContext: UserPlugin plugin })
+            if (sender is not Button { DataContext: PluginStoreItemViewModel plugin } button)
             {
-                var pluginsManagerPlugin = PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
-                var actionKeyword = pluginsManagerPlugin.Metadata.ActionKeywords.Count == 0 ? "" : pluginsManagerPlugin.Metadata.ActionKeywords[0];
-                API.ChangeQuery($"{actionKeyword} install {plugin.Name}");
-                API.ShowMainWindow();
+                return;
             }
+
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
+            viewModel.DisplayPluginQuery($"install {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                var name = viewModel.SelectedPlugin.PluginPair.Metadata.Name;
+                viewModel.DisplayPluginQuery($"uninstall {name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+            }
+        }
+
+        private void OnExternalPluginUninstallClick(object sender, RoutedEventArgs e)
+        {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"uninstall {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
+        }
+
+        private void OnExternalPluginUpdateClick(object sender, RoutedEventArgs e)
+        {
+            if (storeClickedButton != null)
+            {
+                FlyoutService.GetFlyout(storeClickedButton).Hide();
+            }
+            if (sender is Button { DataContext: PluginStoreItemViewModel plugin })
+                viewModel.DisplayPluginQuery($"update {plugin.Name}", PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7"));
+
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
@@ -319,6 +345,7 @@ namespace Flow.Launcher
 
         private void OnCloseButtonClick(object sender, RoutedEventArgs e)
         {
+
             Close();
         }
 
@@ -335,18 +362,165 @@ namespace Flow.Launcher
                 restoreButton.Visibility = Visibility.Collapsed;
             }
         }
+
         private void Window_StateChanged(object sender, EventArgs e)
         {
             RefreshMaximizeRestoreButton();
         }
 
-        private void SelectedPluginChanged(object sender, SelectionChangedEventArgs e)
+        #region Shortcut
+
+        private void OnDeleteCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            viewModel.DeleteSelectedCustomShortcut();
         }
-        private void ItemSizeChanged(object sender, SizeChangedEventArgs e)
+
+        private void OnEditCustomShortCutClick(object sender, RoutedEventArgs e)
         {
-            Plugins.ScrollIntoView(Plugins.SelectedItem);
+            if (viewModel.EditSelectedCustomShortcut())
+            {
+                customShortcutView.Items.Refresh();
+            }
+        }
+
+        private void OnAddCustomShortCutClick(object sender, RoutedEventArgs e)
+        {
+            viewModel.AddCustomShortcut();
+        }
+
+        #endregion
+        
+        private CollectionView pluginListView;
+        private CollectionView pluginStoreView;
+
+        private bool PluginListFilter(object item)
+        {
+            if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+                return true;
+            if (item is PluginViewModel model)
+            {
+                return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+            }
+            return false;
+        }
+
+        private bool PluginStoreFilter(object item)
+        {
+            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+                return true;
+            if (item is PluginStoreItemViewModel model)
+            {
+                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
+            }
+            return false;
+        }
+
+        private string lastPluginListSearch = "";
+        private string lastPluginStoreSearch = "";
+
+        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginFilterTxb.Text != lastPluginListSearch)
+            {
+                lastPluginListSearch = pluginFilterTxb.Text;
+                pluginListView.Refresh();
+            }
+        }
+
+        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        {
+            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+            {
+                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+                pluginStoreView.Refresh();
+            }
+        }
+
+        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginListEventHandler(sender, e);
+        }
+
+        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                RefreshPluginStoreEventHandler(sender, e);
+        }
+
+        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        {
+            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+                pluginFilterTxb.Focus();
+        }
+
+        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+            {
+                pluginStoreFilterTxb.Focus();
+            }
+        }
+
+        public void InitializePosition()
+        {
+            if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
+            {
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
+            }
+            else
+            {
+                Top = WindowTop();
+                Left = WindowLeft();
+            }
+            WindowState = settings.SettingWindowState;
+        }
+
+        public double WindowLeft()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+            return left;
+        }
+
+        public double WindowTop()
+        {
+            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+            return top;
+        }
+
+        private Button storeClickedButton;
+
+        private void StoreListItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is not Button button)
+                return;
+
+            storeClickedButton = button;
+
+            var flyout = FlyoutService.GetFlyout(button);
+            flyout.Closed += (_, _) =>
+            {
+                storeClickedButton = null;
+            };
+
+        }
+
+        private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginStoreFilterTxb);
+        }
+
+        private void Plugin_GotFocus(object sender, RoutedEventArgs e)
+        {
+            Keyboard.Focus(pluginFilterTxb);
         }
     }
 }
