@@ -39,7 +39,7 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            _startInfo.ArgumentList[2] = JsonSerializer.Serialize(request);
+            _startInfo.ArgumentList[2] = JsonSerializer.Serialize(request, RequestSerializeOption);
 
             return ExecuteAsync(_startInfo, token);
         }
@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Plugin
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             // since this is not static, request strings will build up in ArgumentList if index is not specified
-            _startInfo.ArgumentList[2] = JsonSerializer.Serialize(rpcRequest);
+            _startInfo.ArgumentList[2] = JsonSerializer.Serialize(rpcRequest, RequestSerializeOption);
             _startInfo.WorkingDirectory = Context.CurrentPluginMetadata.PluginDirectory;
             // TODO: Async Action
             return Execute(_startInfo);

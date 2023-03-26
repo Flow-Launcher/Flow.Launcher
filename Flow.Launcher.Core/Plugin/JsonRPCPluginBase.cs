@@ -47,7 +47,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public abstract List<Result> LoadContextMenus(Result selectedResult);
 
-        protected static readonly JsonSerializerOptions options = new()
+        protected static readonly JsonSerializerOptions DeserializeOption = new()
         {
             PropertyNameCaseInsensitive = true,
 #pragma warning disable SYSLIB0020
@@ -63,12 +63,10 @@ namespace Flow.Launcher.Core.Plugin
             }
         };
 
-        private static readonly JsonSerializerOptions settingSerializeOption = new()
+        protected static readonly JsonSerializerOptions RequestSerializeOption = new()
         {
-            WriteIndented = true
+            PropertyNameCaseInsensitive = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
         };
-
-        private readonly Dictionary<string, FrameworkElement> _settingControls = new();
 
         protected abstract Task<bool> ExecuteResultAsync(JsonRPCResult result);
         protected abstract Task<List<Result>> QueryRequestAsync(JsonRPCRequestModel request, CancellationToken token);
