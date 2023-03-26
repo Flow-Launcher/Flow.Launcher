@@ -28,14 +28,14 @@ namespace Flow.Launcher.Core.Plugin
     public record JsonRPCResponseModel(int Id, JsonRPCErrorModel Error = default) : JsonRPCBase(Id, Error);
     public record JsonRPCQueryResponseModel(int Id,
         [property: JsonPropertyName("result")] List<JsonRPCResult> Result,
-        Dictionary<string, object> SettingsChange = null,
+        IReadOnlyDictionary<string, object> SettingsChange = null,
         string DebugMessage = "",
         JsonRPCErrorModel Error = default) : JsonRPCResponseModel(Id, Error);
 
     public record JsonRPCRequestModel(int Id,
         string Method,
         object[] Parameters,
-        Dictionary<string, object> Settings = default,
+        IReadOnlyDictionary<string, object> Settings = default,
         JsonRPCErrorModel Error = default) : JsonRPCBase(Id, Error);
 
 
@@ -46,7 +46,7 @@ namespace Flow.Launcher.Core.Plugin
         int Id,
         string Method,
         object[] Parameters,
-        Dictionary<string, object> Settings,
+        IReadOnlyDictionary<string, object> Settings,
         bool DontHideAfterAction = false,
         JsonRPCErrorModel Error = default) : JsonRPCRequestModel(Id, Method, Parameters, Settings, Error);
     

@@ -64,8 +64,8 @@ namespace Flow.Launcher.Core.Plugin
                 query
             });
             await InputMessageChannel.Writer.WriteAsync(message, token);
-            await Task.Delay(50);
-            await InputStream.FlushAsync();
+            await Task.Delay(50, token);
+            await InputStream.FlushAsync(token);
             var task = new TaskCompletionSource<JsonRPCQueryResponseModel>();
             RequestTaskDictionary[currentRequestId] = task;
             var result = await task.Task;

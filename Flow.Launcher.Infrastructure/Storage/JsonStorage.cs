@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using System.IO;
 using System.Text.Json;
+using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Infrastructure.Storage
@@ -26,6 +27,82 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         protected string DirectoryPath { get; init; } = null!;
 
+        // Let the derived class to set the file path
+        protected JsonStorage()
+        {
+        }
+        public JsonStorage(string filePath)
+        {
+            FilePath = filePath;
+        }
+
+        public async Task<T> LoadAsync()
+        {
+            if (Data != null)
+                return Data;
+
+            string? serialized = null;
+
+            if (File.Exists(FilePath))
+            {
+                serialized = await File.ReadAllTextAsync(FilePath);
+            }
+
+            if (!string.IsNullOrEmpty(serialized))
+            {
+                try
+                {
+                    Data = JsonSerializer.Deserialize<T>(serialized) ?? await LoadBackupOrDefaultAsync();
+                }
+                catch (JsonException)
+                {
+                    Data = await LoadBackupOrDefaultAsync();
+                }
+            }
+            else
+            {
+                Data = await LoadBackupOrDefaultAsync();
+            }
+
+            return Data.NonNull();
+        }
+
+        private async ValueTask<T> LoadBackupOrDefaultAsync()
+        {
+            var backup = await TryLoadBackupAsync();
+
+            return backup ?? LoadDefault();
+        }
+
+        private async ValueTask<T?> TryLoadBackupAsync()
+        {
+            if (!File.Exists(BackupFilePath))
+                return default;
+
+            try
+            {
+                await using var source = File.OpenRead(BackupFilePath);
+                var data = await JsonSerializer.DeserializeAsync<T>(source) ?? default;
+
+                if (data != null)
+                    RestoreBackup();
+
+                return data;
+            }
+            catch (JsonException)
+            {
+                return default;
+            }
+        }
+        private void RestoreBackup()
+        {
+            Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
+
+            if (File.Exists(FilePath))
+                File.Replace(BackupFilePath, FilePath, null);
+            else
+                File.Move(BackupFilePath, FilePath);
+        }
 
         public T Load()
         {
@@ -75,18 +152,9 @@ namespace Flow.Launcher.Infrastructure.Storage
                 var data = JsonSerializer.Deserialize<T>(File.ReadAllText(BackupFilePath));
 
                 if (data != null)
-                {
-                    Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
-                    
-                    if(File.Exists(FilePath))
-                        File.Replace(BackupFilePath, FilePath, null);
-                    else
-                        File.Move(BackupFilePath, FilePath);
+                    RestoreBackup();
 
-                    return data;
-                }
-
-                return default;
+                return data;
             }
             catch (JsonException)
             {
@@ -115,6 +183,20 @@ namespace Flow.Launcher.Infrastructure.Storage
 
             File.WriteAllText(TempFilePath, serialized);
 
+            AtomicWriteSetting();
+        }
+        public async Task SaveAsync()
+        {
+            var tempOutput = File.OpenWrite(TempFilePath);
+            await JsonSerializer.SerializeAsync(tempOutput, Data,
+                new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                });
+            AtomicWriteSetting();
+        }
+        private void AtomicWriteSetting()
+        {
             if (!File.Exists(FilePath))
             {
                 File.Move(TempFilePath, FilePath);
@@ -124,5 +206,6 @@ namespace Flow.Launcher.Infrastructure.Storage
                 File.Replace(TempFilePath, FilePath, BackupFilePath);
             }
         }
+        
     }
 }
