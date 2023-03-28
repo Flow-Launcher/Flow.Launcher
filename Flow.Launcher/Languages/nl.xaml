@@ -86,7 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Zoek meer plugins</system:String>
     <system:String x:Key="enable">Aan</system:String>
     <system:String x:Key="disable">Disable</system:String>
@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
     <system:String x:Key="installbtn">Install</system:String>
