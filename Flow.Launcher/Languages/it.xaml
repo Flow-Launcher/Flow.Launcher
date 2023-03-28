@@ -86,7 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Cerca altri plugins</system:String>
     <system:String x:Key="enable">Attivo</system:String>
     <system:String x:Key="disable">Disabilita</system:String>
