@@ -23,6 +23,6 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">浏览</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">浏览器引擎</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">如果你没有使用 Chrome、 Firefox 或 Edge，或者正在使用它们的绿色版， 那么你需要添加书签数据目录并选择正确的浏览器引擎才能使此插件正常工作。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例如：Brave 浏览器的引擎是 Chromium；其默认书签数据位置是 &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;。 对于 Firefox 引擎的浏览器，书签目录是 places.sqlite 文件所在的用户数据文件夹。</system:String>
 </ResourceDictionary>
