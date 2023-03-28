@@ -85,7 +85,7 @@
     <system:String x:Key="searchpluginToolTip">Ctrl+F para buscar complementos</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">No se han encontrado resultados</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Por favor, intente una búsqueda diferente.</system:String>
-    <system:String x:Key="plugin">Complemento</system:String>
+    <system:String x:Key="plugin">Complementos</system:String>
     <system:String x:Key="plugins">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
