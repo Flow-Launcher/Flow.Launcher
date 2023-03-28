@@ -86,7 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">Nenhum resultado encontrado</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Encontrar mais plugins</system:String>
     <system:String x:Key="enable">Ativado</system:String>
     <system:String x:Key="disable">Desabilitar</system:String>
@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">Loja de Plugins</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nova Versão</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Atualizar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
