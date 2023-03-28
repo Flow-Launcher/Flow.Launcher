@@ -2,13 +2,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Сначала отметьте что-нибудь</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Вы уверены, что хотите удалить {0}?</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">Вы действительно хотите безвозвратно удалить этот файл?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Вы действительно хотите безвозвратно удалить этот файл/папку?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Удаление завершено</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Успешно удалено {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
