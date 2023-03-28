@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">Erweiterungen laden</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Aktualisieren</system:String>
     <system:String x:Key="installbtn">Installieren</system:String>
