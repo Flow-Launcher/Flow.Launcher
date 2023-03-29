@@ -109,7 +109,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
 
                     // If path search is disabled just open it in file manager
-                    if (Settings.DefaultOpenInFileManager || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
+                    if (Settings.DefaultOpenFolderInFileManager || (!Settings.PathSearchKeywordEnabled && !Settings.SearchActionKeywordEnabled))
                     {
                         try
                         {
