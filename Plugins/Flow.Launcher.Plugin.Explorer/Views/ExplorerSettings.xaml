@@ -120,7 +120,7 @@
                                 <Trigger Property="IsEnabled" Value="True">
                                     <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                                 </Trigger>
-                                <Trigger Property="IsEnabled" Value="False">d
+                                <Trigger Property="IsEnabled" Value="False">
                                     <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
                                 </Trigger>
                             </Style.Triggers>
