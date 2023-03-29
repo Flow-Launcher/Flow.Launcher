@@ -168,6 +168,11 @@
                                 HorizontalAlignment="Left"
                                 Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
                                 IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
+                            <CheckBox
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Left"
+                                Content="{DynamicResource plugin_explorer_default_open_in_file_manager}"
+                                IsChecked="{Binding Settings.DefaultOpenInFileManager}" />
                             <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
@@ -348,17 +353,11 @@
                 Header="{DynamicResource plugin_explorer_everything_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Margin="10"
-                            VerticalAlignment="Center"
-                            Text="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
-                            TextBlock.Foreground="{DynamicResource Color05B}" />
-                        <CheckBox
-                            Margin="10"
-                            VerticalAlignment="Center"
-                            IsChecked="{Binding Settings.EverythingSearchFullPath}" />
-                    </StackPanel>
+                    <CheckBox
+                        Margin="20,10,0,0"
+                        HorizontalAlignment="Left"
+                        Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
+                        IsChecked="{Binding Settings.EverythingSearchFullPath}" />
                     <StackPanel Orientation="Horizontal">
                         <Grid Margin="20,10,0,10">
                             <Grid.ColumnDefinitions>

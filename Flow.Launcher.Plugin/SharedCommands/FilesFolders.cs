@@ -170,6 +170,36 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
         }
 
+        /// <summary>
+        /// Open a file with associated application
+        /// </summary>
+        /// <param name="filePath">File path</param>
+        /// <param name="workingDir">Working directory</param>
+        /// <param name="asAdmin">Open as Administrator</param>
+        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
+        {
+            var psi = new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true,
+                WorkingDirectory = workingDir,
+                Verb = asAdmin ? "runas" : string.Empty
+            };
+            try
+            {
+                if (FileExists(filePath))
+                    Process.Start(psi);
+            }
+            catch (Exception)
+            {
+#if DEBUG
+                throw;
+#else
+                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+#endif
+            }
+        }
+
         ///<summary>
         /// This checks whether a given string is a directory path or network location string. 
         /// It does not check if location actually exists.
