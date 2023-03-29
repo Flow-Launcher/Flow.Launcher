@@ -346,8 +346,8 @@
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú contextual</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegación entre elementos</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open A File/Folder's Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
