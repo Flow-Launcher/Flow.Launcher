@@ -346,8 +346,8 @@
     <system:String x:Key="HotkeyUpDownDesc">Späť/kontextová ponuka</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navigácia medzi položkami</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Otvoriť kontextovú ponuku</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Otvoriť umiestnenie priečinka</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open A File/Folder's Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">História dopytov</system:String>
     <system:String x:Key="HotkeyESCDesc">Návrat na výsledky z kontextovej ponuky</system:String>
     <system:String x:Key="HotkeyTabDesc">Automatické dokončovanie</system:String>
