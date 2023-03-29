@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">경고 메시지가 꺼졌습니다. 파일 및 폴더 검색을 위한 대안으로 Everything 플러그인을 설치하시겠습니까?{0}{0}Everything 플러그인을 설치하려면 '예'를 선택하고, 반환하려면 '아니오'를 선택하십시오</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">삭제</system:String>
@@ -32,6 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">쉘 경로</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">색인 제외 경로</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
