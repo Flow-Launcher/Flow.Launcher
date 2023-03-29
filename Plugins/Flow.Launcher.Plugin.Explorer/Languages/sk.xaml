@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Prieskumníka</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Počas vyhľadávania došlo k chybe: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>
@@ -32,6 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
