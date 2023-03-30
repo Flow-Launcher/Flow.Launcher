@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">刪除</system:String>
@@ -23,7 +25,7 @@
     <system:String x:Key="plugin_explorer_add">新增</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速訪問連結</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
@@ -32,13 +34,14 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用程式所在目錄作為工作目錄</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引選項</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜尋:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速存取：</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">確</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">已啟用</system:String>
@@ -56,7 +59,7 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">檔案總管</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">透過 Windows 搜尋或 Everything 搜尋和管理檔案和資料夾</system:String>
 
     <!--  Plugin Tooltip  -->
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
@@ -133,7 +136,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">成功安裝 Everything 服務</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">點此開始</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">無法找到任何已安裝的 Everything，您想手動選擇位置嗎？{0}{0}點擊不 Everything 將會自動為您安裝。</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 

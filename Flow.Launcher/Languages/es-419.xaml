@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Error al registrar la tecla de acceso directo: {0}</system:String>
@@ -36,11 +36,17 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el enfoque</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/Ocultar resultados anteriores cuando Flow Launcher es reactivado.</system:String>
@@ -106,7 +112,7 @@
     <system:String x:Key="pluginStore">Tienda de Plugins</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Recargar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
@@ -340,8 +346,8 @@
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú Contextual</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegación de Elemento</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir Menú Contextual</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir Carpeta Contenedora</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open A File/Folder's Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de Consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al Resultado en el Menú Contextual</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>

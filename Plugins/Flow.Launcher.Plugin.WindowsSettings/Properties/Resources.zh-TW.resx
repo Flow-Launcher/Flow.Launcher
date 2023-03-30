@@ -1755,7 +1755,7 @@
     <value>Change the Narrator’s voice</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>尋找並修復鍵盤問題</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
     <value>Use screen reader</value>
@@ -1770,7 +1770,7 @@
     <value>Manage computer certificates</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>尋找並修復問題</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
     <value>Change settings for content received using Tap and send</value>
@@ -1881,7 +1881,7 @@
     <value>Block or allow third-party cookies</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Find and fix audio recording problems</value>
+    <value>尋找並修復錄音問題</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
     <value>Create a recovery drive</value>
@@ -2025,7 +2025,7 @@
     <value>Change workgroup name</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>尋找並修復列印問題</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
     <value>Change when the computer sleeps</value>
@@ -2073,7 +2073,7 @@
     <value>Connect to the Internet</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
-    <value>Find and fix audio playback problems</value>
+    <value>尋找並修復音訊播放問題。</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
     <value>Change the mouse pointer display or speed</value>
@@ -2191,7 +2191,7 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>調整 Windows 的外觀和效能</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
     <value>Settings for Microsoft IME (Japanese)</value>
@@ -2227,7 +2227,7 @@
     <value>Identify and repair network problems</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Find and fix networking and connection problems</value>
+    <value>尋找並修復網路連接問題</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
     <value>Play CDs or other media automatically</value>
@@ -2368,7 +2368,7 @@
     <value>Turn screen saver on or off</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>尋找並修復 Windows 更新問題</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
     <value>Change Bluetooth settings</value>
@@ -2386,7 +2386,7 @@
     <value>Add a device</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>尋找並修復 Windows 搜尋問題</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
     <value>Choose a power plan</value>
@@ -2476,7 +2476,7 @@
     <value>Ignore repeated keystrokes using FilterKeys</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>尋找並修復藍屏問題</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
     <value>Hear a tone when keys are pressed</value>
