@@ -22,18 +22,20 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        public string GitHubRepository { get; }
+        public bool UpdateToPrerelease { get; set; }
 
-        public Updater(string gitHubRepository)
-        {
-            GitHubRepository = gitHubRepository;
-        }
+        public const string ReleaseRepository = "https://github.com/Flow-Launcher/Flow.Launcher";
+        public const string PrereleaseRepository = "https://github.com/Flow-Launcher/Prereleases";
+
+        public string GitHubRepository => UpdateToPrerelease ? PrereleaseRepository : ReleaseRepository;
+
 
         private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
 
         public async Task UpdateAppAsync(IPublicAPI api, bool silentUpdate = true)
         {
             await UpdateLock.WaitAsync().ConfigureAwait(false);
+
             try
             {
                 if (!silentUpdate)
@@ -54,6 +56,7 @@ namespace Flow.Launcher.Core
                 {
                     if (!silentUpdate)
                         MessageBox.Show(api.GetTranslation("update_flowlauncher_already_on_latest"));
+
                     return;
                 }
 
@@ -94,7 +97,7 @@ namespace Flow.Launcher.Core
                     Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 else
                     Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
-                
+
                 if (!silentUpdate)
                     api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
                         api.GetTranslation("update_flowlauncher_check_connection"));
@@ -134,6 +137,7 @@ namespace Flow.Launcher.Core
             {
                 Proxy = Http.WebProxy
             };
+
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);

@@ -29,7 +29,7 @@ namespace Flow.Launcher
         private Settings _settings;
         private MainViewModel _mainVM;
         private SettingWindowViewModel _settingsVM;
-        private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
+        private readonly Updater _updater = new();
         private readonly Portable _portable = new Portable();
         private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
         private StringMatcher _stringMatcher;
@@ -59,7 +59,7 @@ namespace Flow.Launcher
                 RegisterDispatcherUnhandledException();
 
                 ImageLoader.Initialize();
-
+                
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 

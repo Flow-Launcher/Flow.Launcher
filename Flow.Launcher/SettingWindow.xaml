@@ -3058,12 +3058,13 @@
                                                 Grid.Column="1"
                                                 VerticalAlignment="Center"
                                                 Style="{DynamicResource SettingTitleLabel}"
-                                                Text="Update Source" />
+                                                Text="{DynamicResource updateSource}" />
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
                                             <ComboBox Margin="0,0,8,0" SelectedIndex="0">
-                                                <ComboBoxItem>Release</ComboBoxItem>
-                                                <ComboBoxItem>Preview</ComboBoxItem>
+                                                <ComboBoxItem Content="{DynamicResource release}"/>
+                                                <ComboBoxItem IsSelected="{Binding Settings.PrereleaseUpdateSource}"
+                                                    Content="{DynamicResource prerelease}"/>
                                             </ComboBox>
                                             <Button
                                                 Margin="0,0,14,0"
