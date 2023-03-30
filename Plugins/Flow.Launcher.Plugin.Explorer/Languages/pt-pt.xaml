@@ -16,8 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">A mensagem de aviso foi desativada. Como alternativa ao serviço de pesquisa Windows, gostaria de instalar o plugin Everything?{0}{0}Selecione 'Sim' para instalar ou 'Não' para não instalar.</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternativa</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Ocorreu um erro ao pesquisar: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
-    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Não foi possível abrir a pasta</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Não foi possível abrir o ficheiro</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
@@ -34,7 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Caminho da consola</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Caminhos excluídos do índice de pesquisa</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Utilizar localização do resultado da pesquisa como pasta de trabalho do executável</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Toque Enter para abrir a pasta no gestor de ficheiros</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Utilizar índice de pesquisa para o caminho</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opções de indexação</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Pesquisar:</system:String>
