@@ -693,7 +693,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border 
+                            <Border
                                 Margin="0,30,0,0"
                                 Padding="0"
                                 Style="{DynamicResource SettingGroupBox}">
@@ -720,7 +720,7 @@
                                                 <ComboBox
                                                     x:Name="SelectScreen"
                                                     MinWidth="160"
-                                                    Margin="0,0,18,0" 
+                                                    Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     ItemsSource="{Binding ScreenNumbers}"
@@ -738,14 +738,12 @@
                                                 </ComboBox>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
 
-                                    <Separator
-                                        Width="Auto"
-                                        BorderThickness="1">
+                                    <Separator Width="Auto" BorderThickness="1">
                                         <Separator.Style>
                                             <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -758,9 +756,7 @@
                                         </Separator.Style>
                                     </Separator>
 
-                                    <Border
-                                        Margin="0"
-                                        BorderThickness="0">
+                                    <Border Margin="0" BorderThickness="0">
                                         <Border.Style>
                                             <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -786,8 +782,7 @@
                                                     FontSize="14"
                                                     ItemsSource="{Binding SearchWindowAligns}"
                                                     SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                    SelectedValuePath="Value">
-                                                </ComboBox>
+                                                    SelectedValuePath="Value" />
                                                 <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                     <StackPanel.Style>
                                                         <Style TargetType="StackPanel">
@@ -817,7 +812,7 @@
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
@@ -3014,7 +3009,10 @@
                                     TextAlignment="left" />
 
 
-                                <Border Margin="0,9,0,0" Style="{DynamicResource SettingGroupBox}">
+                                <Border
+                                    Margin="0,9,0,0"
+                                    CornerRadius="8 8 0 0"
+                                    Style="{DynamicResource SettingGroupBox}">
                                     <ItemsControl Style="{StaticResource SettingGrid}">
                                         <StackPanel Style="{StaticResource TextPanel}">
                                             <TextBlock
@@ -3026,11 +3024,6 @@
                                             <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource version}" />
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                            <Button
-                                                Margin="0,0,10,0"
-                                                HorizontalAlignment="Right"
-                                                Click="OnCheckUpdates"
-                                                Content="{DynamicResource checkUpdates}" />
                                             <Button
                                                 Margin="0,0,14,0"
                                                 Padding="0"
@@ -3051,6 +3044,34 @@
                                         <TextBlock Style="{StaticResource Glyph}">
                                             &#xe946;
                                         </TextBlock>
+                                    </ItemsControl>
+                                </Border>
+
+
+                                <Border
+                                    Margin="0,0,0,8"
+                                    CornerRadius="0 0 8 8"
+                                    Style="{DynamicResource SettingGroupBox}">
+                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                        <StackPanel Style="{StaticResource TextPanel}">
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Style="{DynamicResource SettingTitleLabel}"
+                                                Text="Update Source" />
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                            <ComboBox Margin="0,0,8,0" SelectedIndex="0">
+                                                <ComboBoxItem>Release</ComboBoxItem>
+                                                <ComboBoxItem>Preview</ComboBoxItem>
+                                            </ComboBox>
+                                            <Button
+                                                Margin="0,0,14,0"
+                                                HorizontalAlignment="Right"
+                                                Click="OnCheckUpdates"
+                                                Content="{DynamicResource checkUpdates}" />
+                                        </StackPanel>
+                                        <TextBlock Width="50" Style="{StaticResource Glyph}" />
                                     </ItemsControl>
                                 </Border>
 
