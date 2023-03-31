@@ -1017,6 +1017,7 @@ namespace Flow.Launcher.ViewModel
             switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
+                    //SelectedResults = Results;
                     ChangeQueryText(string.Empty);
                     await Task.Delay(100); //Time for change to opacity
                     break;
