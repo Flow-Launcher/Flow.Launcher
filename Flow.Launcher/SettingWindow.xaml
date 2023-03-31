@@ -3062,9 +3062,8 @@
                                         </StackPanel>
                                         <StackPanel Grid.Column="2" Orientation="Horizontal">
                                             <ComboBox Margin="0,0,8,0" SelectedIndex="0">
-                                                <ComboBoxItem Content="{DynamicResource release}"/>
-                                                <ComboBoxItem IsSelected="{Binding Settings.PrereleaseUpdateSource}"
-                                                    Content="{DynamicResource prerelease}"/>
+                                                <ComboBoxItem Content="{DynamicResource release}" />
+                                                <ComboBoxItem Content="{DynamicResource prerelease}" IsSelected="{Binding Settings.PrereleaseUpdateSource}" />
                                             </ComboBox>
                                             <Button
                                                 Margin="0,0,14,0"
