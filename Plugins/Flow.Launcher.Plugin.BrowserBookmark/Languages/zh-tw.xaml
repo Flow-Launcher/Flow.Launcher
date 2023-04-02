@@ -3,7 +3,7 @@
 
     <!--  Plugin Info  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">瀏覽器書籤</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜索你的瀏覽器書籤</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">搜尋你的瀏覽器書籤</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">書籤資料</system:String>
@@ -21,8 +21,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">編輯</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">刪除</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">瀏覽</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">其他</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">瀏覽器引擎</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">如果你沒有使用 Chrome、Firefox 或 Edge，或者使用它們的便攜版，你需要添加書籤資料位置並選擇正確的瀏覽器引擎，才能讓這個插件正常運作。</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">例如：Brave 瀏覽器的引擎是 Chromium；而它的預設書籤資料位置是「%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData」。對於 Firefox 瀏覽器引擎，書籤資料位置是包含 places.sqlite 檔案的 userdata 資料夾。</system:String>
 </ResourceDictionary>

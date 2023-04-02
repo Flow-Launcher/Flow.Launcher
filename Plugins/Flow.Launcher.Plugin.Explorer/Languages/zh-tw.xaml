@@ -7,8 +7,8 @@
     <system:String x:Key="plugin_explorer_delete_folder_link">你確認要刪除{0}嗎？</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">成功刪除</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">已成功刪除 {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
@@ -62,7 +62,7 @@
     <system:String x:Key="plugin_explorer_plugin_description">透過 Windows 搜尋或 Everything 搜尋和管理檔案和資料夾</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter 以開啟該目錄。</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
 
     <!--  Context menu items  -->
@@ -91,13 +91,13 @@
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">添加成功</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">從快速訪問中移除</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">從快速訪問中移除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
     

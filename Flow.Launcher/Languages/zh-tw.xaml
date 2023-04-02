@@ -24,34 +24,34 @@
     <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">暫停使用快捷鍵。</system:String>
     <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionResetToolTip">重設搜尋視窗位置</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">設定</system:String>
     <system:String x:Key="general">一般</system:String>
     <system:String x:Key="portableMode">便攜模式</system:String>
-    <system:String x:Key="portableModeToolTIp">將所有設定和使用者資料存儲在同一個文件夾中（使用可移動磁碟機或雲端服務很有用）。</system:String>
+    <system:String x:Key="portableModeToolTIp">將所有設定和使用者資料存儲在一個資料夾中（當與可移動磁碟或雲服務一起使用時很有用）。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowPosition">搜尋視窗位置</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">記住最後位置</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
-    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">搜尋視窗在螢幕上的位置</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">自訂搜尋視窗位置</system:String>
     <system:String x:Key="language">語言</system:String>
-    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
-    <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
-    <system:String x:Key="LastQuerySelected">Select last Query</system:String>
+    <system:String x:Key="lastQueryMode">最後查詢樣式</system:String>
+    <system:String x:Key="lastQueryModeToolTip">重啟 Flow Launcher 顯示／隱藏以前的結果。</system:String>
+    <system:String x:Key="LastQueryPreserved">保留上一個查詢</system:String>
+    <system:String x:Key="LastQuerySelected">選擇上一個查詢</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
@@ -65,19 +65,19 @@
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">請選擇 pythonw.exe</system:String>
-    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
-    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
+    <system:String x:Key="typingStartEn">一律以英文模式開始輸入</system:String>
+    <system:String x:Key="typingStartEnTooltip">啟動 Flow 時暫時將輸入法切換為英文模式。</system:String>
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchPrecision">查詢搜索精確度</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
-    <system:String x:Key="ShouldUsePinyin">拼音搜索</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜索.</system:String>
-    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">當圖標從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
+    <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
+    <system:String x:Key="ShouldUsePinyin">拼音搜尋</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜尋。拼音是將中文轉換為羅馬字母拼寫的標準系統。</system:String>
+    <system:String x:Key="AlwaysPreview">一律預覽</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">當 Flow 啟動時，一律開啟預覽面板。按下 {0} 可切換預覽。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
 
     <!--  Setting Plugin  -->
@@ -99,7 +99,7 @@
     <system:String x:Key="newPriority">新增優先</system:String>
     <system:String x:Key="priority">優先</system:String>
     <system:String x:Key="priorityToolTip">更改插件結果優先順序</system:String>
-    <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
+    <system:String x:Key="pluginDirectory">插件資料夾</system:String>
     <system:String x:Key="author">作者</system:String>
     <system:String x:Key="plugin_init_time">載入耗時：</system:String>
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
@@ -109,7 +109,7 @@
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">外掛商店</system:String>
+    <system:String x:Key="pluginStore">插件商店</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">外掛</system:String>
@@ -132,11 +132,11 @@
     <system:String x:Key="howToCreateTheme">如何創建一個主題</system:String>
     <system:String x:Key="hiThere">你好呀</system:String>
     <system:String x:Key="SampleTitleExplorer">檔案總管</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">搜尋檔案、資料夾和檔案內容</system:String>
+    <system:String x:Key="SampleTitleWebSearch">網路搜尋</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
     <system:String x:Key="SampleTitleProgram">程式</system:String>
-    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
+    <system:String x:Key="SampleSubTitleProgram">以系統管理員或其他使用者啟用應用程式</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="queryBoxFont">查詢框字體</system:String>
@@ -152,45 +152,45 @@
     <system:String x:Key="ColorSchemeLight">亮色系</system:String>
     <system:String x:Key="ColorSchemeDark">暗色系</system:String>
     <system:String x:Key="SoundEffect">音效</system:String>
-    <system:String x:Key="SoundEffectTip">搜索窗口打開時播放音效</system:String>
+    <system:String x:Key="SoundEffectTip">搜尋窗口打開時播放音效</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="Clock">時鐘</system:String>
+    <system:String x:Key="Date">日期</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
     <system:String x:Key="hotkeys">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">執行縮寫以顯示 / 隱藏 Flow Launcher。</system:String>
+    <system:String x:Key="previewHotkey">預覽快捷鍵</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">自定義查詢快捷鍵</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="customQueryShortcut">自訂查詢縮寫</system:String>
+    <system:String x:Key="builtinShortcuts">內建縮寫</system:String>
     <system:String x:Key="customQuery">查詢</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">描述</system:String>
+    <system:String x:Key="customShortcut">縮寫</system:String>
+    <system:String x:Key="customShortcutExpansion">展開</system:String>
+    <system:String x:Key="builtinShortcutDescription">簡介</system:String>
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
     <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的快捷鍵嗎？</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">你確定你要刪除縮寫：{0} 展開為 {1}？</system:String>
+    <system:String x:Key="shortcut_clipboard_description">從剪貼簿取得文字。</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">從使用中的檔案總管獲得路徑。</system:String>
     <system:String x:Key="queryWindowShadowEffect">查詢窗口陰影效果</system:String>
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖標</system:String>
     <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖標</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">按下按鍵</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP 代理</system:String>
@@ -217,7 +217,7 @@
     <system:String x:Key="icons">圖標</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
-    <system:String x:Key="BecomeASponsor">成为支持者</system:String>
+    <system:String x:Key="BecomeASponsor">成為贊助者</system:String>
     <system:String x:Key="newVersionTips">發現有新版本 {0}， 請重新啟動 Flow Launcher。</system:String>
     <system:String x:Key="checkUpdatesFailed">檢查更新失敗，請檢查你對 api.github.com 的連線和代理設定。</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -350,13 +350,13 @@
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查詢歷史</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
+    <system:String x:Key="HotkeyTabDesc">自動完成</system:String>
+    <system:String x:Key="HotkeyRunDesc">開啟／運行選擇項目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">開啟視窗設定</system:String>
-    <system:String x:Key="HotkeyF5Desc">重新載入外掛資料</system:String>
+    <system:String x:Key="HotkeyF5Desc">重新載入插件資料</system:String>
 
     <system:String x:Key="RecommendWeather">天氣</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Google 搜索的天氣結果</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Google 搜尋的天氣結果</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Shell 指令</system:String>
     <system:String x:Key="RecommendBluetooth">s 藍牙</system:String>
