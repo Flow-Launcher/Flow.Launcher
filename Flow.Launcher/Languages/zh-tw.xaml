@@ -99,7 +99,7 @@
     <system:String x:Key="newPriority">新增優先</system:String>
     <system:String x:Key="priority">優先</system:String>
     <system:String x:Key="priorityToolTip">更改插件結果優先順序</system:String>
-    <system:String x:Key="pluginDirectory">外掛資料夾</system:String>
+    <system:String x:Key="pluginDirectory">插件資料夾</system:String>
     <system:String x:Key="author">作者</system:String>
     <system:String x:Key="plugin_init_time">載入耗時：</system:String>
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
@@ -109,7 +109,7 @@
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">外掛商店</system:String>
+    <system:String x:Key="pluginStore">插件商店</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">外掛</system:String>
@@ -162,7 +162,7 @@
     <system:String x:Key="hotkey">快捷鍵</system:String>
     <system:String x:Key="hotkeys">快捷鍵</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">執行快捷鍵以顯示 / 隱藏 Flow Launcher。</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">執行縮寫以顯示 / 隱藏 Flow Launcher。</system:String>
     <system:String x:Key="previewHotkey">預覽快捷鍵</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
@@ -170,12 +170,12 @@
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="customQueryHotkey">自定義查詢快捷鍵</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="customQueryShortcut">自訂查詢縮寫</system:String>
+    <system:String x:Key="builtinShortcuts">內建縮寫</system:String>
     <system:String x:Key="customQuery">查詢</system:String>
     <system:String x:Key="customShortcut">縮寫</system:String>
     <system:String x:Key="customShortcutExpansion">展開</system:String>
-    <system:String x:Key="builtinShortcutDescription">描述</system:String>
+    <system:String x:Key="builtinShortcutDescription">簡介</system:String>
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
@@ -353,7 +353,7 @@
     <system:String x:Key="HotkeyTabDesc">自動完成</system:String>
     <system:String x:Key="HotkeyRunDesc">開啟／運行選擇項目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">開啟視窗設定</system:String>
-    <system:String x:Key="HotkeyF5Desc">重新載入外掛資料</system:String>
+    <system:String x:Key="HotkeyF5Desc">重新載入插件資料</system:String>
 
     <system:String x:Key="RecommendWeather">天氣</system:String>
     <system:String x:Key="RecommendWeatherDesc">Google 搜尋的天氣結果</system:String>
