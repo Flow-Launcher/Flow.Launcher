@@ -48,8 +48,8 @@
     <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">語言</system:String>
-    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
+    <system:String x:Key="lastQueryMode">最後查詢樣式</system:String>
+    <system:String x:Key="lastQueryModeToolTip">重啟 Flow Launcher 顯示／隱藏以前的結果。</system:String>
     <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
