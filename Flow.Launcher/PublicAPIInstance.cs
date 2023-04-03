@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -23,7 +23,6 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Diagnostics;
 
 namespace Flow.Launcher
@@ -83,7 +82,7 @@ namespace Flow.Launcher
             ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData() => PluginManager.ReloadData();
+        public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
@@ -142,6 +141,8 @@ namespace Flow.Launcher
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
 
+        public bool ActionKeywordAssigned(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
+
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
 
@@ -194,24 +195,26 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void OpenDirectory(string DirectoryPath, string FileName = null)
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
             explorer.StartInfo = new ProcessStartInfo
             {
                 FileName = explorerInfo.Path,
-                Arguments = FileName is null ?
-                    explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
-                    explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
-                        Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+                Arguments = FileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                    : explorerInfo.FileArgument
+                        .Replace("%d", DirectoryPath)
+                        .Replace("%f",
+                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
+                        )
             };
             explorer.Start();
         }
 
-        public void OpenUri(string url, bool? inPrivate = null, bool isAppUri = false)
+        private void OpenUri(Uri uri, bool? inPrivate = null)
         {
-            var uri = new Uri(url);
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
                 var browserInfo = _settingsVM.Settings.CustomBrowser;
@@ -220,38 +223,43 @@ namespace Flow.Launcher
 
                 if (browserInfo.OpenInTab)
                 {
-                    url.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
                 }
                 else
                 {
-                    url.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
                 }
-
-                return;
             }
-
-            if (isAppUri)
+            else
             {
                 Process.Start(new ProcessStartInfo()
                 {
-                    FileName = url,
+                    FileName = uri.AbsoluteUri,
                     UseShellExecute = true
                 })?.Dispose();
 
                 return;
             }
-
-            throw new InvalidOperationException("URI scheme not specified or supported ");
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
+        {
+            OpenUri(new Uri(url), inPrivate);
+        }
+
+        public void OpenUrl(Uri url, bool? inPrivate = null)
         {
             OpenUri(url, inPrivate);
         }
 
         public void OpenAppUri(string appUri)
         {
-            OpenUri(appUri, isAppUri: true);
+            OpenUri(new Uri(appUri));
+        }
+
+        public void OpenAppUri(Uri appUri)
+        {
+            OpenUri(appUri);
         }
 
         public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;

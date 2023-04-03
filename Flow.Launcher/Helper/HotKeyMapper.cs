@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Hotkey;
+﻿using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using NHotkey;
@@ -17,7 +17,7 @@ namespace Flow.Launcher.Helper
         internal static void Initialize(MainViewModel mainVM)
         {
             mainViewModel = mainVM;
-            settings = mainViewModel._settings;
+            settings = mainViewModel.Settings;
 
             SetHotkey(settings.Hotkey, OnToggleHotkey);
             LoadCustomPluginHotkey();
@@ -25,7 +25,7 @@ namespace Flow.Launcher.Helper
 
         internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
         {
-            if (!mainViewModel.GameModeStatus)
+            if (!mainViewModel.ShouldIgnoreHotkeys())
                 mainViewModel.ToggleFlowLauncher();
         }
 
@@ -74,7 +74,7 @@ namespace Flow.Launcher.Helper
         {
             SetHotkey(hotkey.Hotkey, (s, e) =>
             {
-                if (mainViewModel.ShouldIgnoreHotkeys() || mainViewModel.GameModeStatus)
+                if (mainViewModel.ShouldIgnoreHotkeys())
                     return;
 
                 mainViewModel.Show();

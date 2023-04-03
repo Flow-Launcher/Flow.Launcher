@@ -1,9 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Flow.Launcher.Infrastructure.Image
@@ -25,11 +24,11 @@ namespace Flow.Launcher.Infrastructure.Image
     public class ImageCache
     {
         private const int MaxCached = 50;
-        public ConcurrentDictionary<string, ImageUsage> Data { get; private set; } = new ConcurrentDictionary<string, ImageUsage>();
+        public ConcurrentDictionary<(string, bool), ImageUsage> Data { get; } = new();
         private const int permissibleFactor = 2;
         private SemaphoreSlim semaphore = new(1, 1);
 
-        public void Initialization(Dictionary<string, int> usage)
+        public void Initialization(Dictionary<(string, bool), int> usage)
         {
             foreach (var key in usage.Keys)
             {
@@ -37,29 +36,29 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        public ImageSource this[string path]
+        public ImageSource this[string path, bool isFullImage = false]
         {
             get
             {
-                if (Data.TryGetValue(path, out var value))
+                if (!Data.TryGetValue((path, isFullImage), out var value))
                 {
-                    value.usage++;
-                    return value.imageSource;
+                    return null;
                 }
+                value.usage++;
+                return value.imageSource;
 
-                return null;
             }
             set
             {
                 Data.AddOrUpdate(
-                        path,
-                        new ImageUsage(0, value),
-                        (k, v) =>
-                            {
-                                v.imageSource = value;
-                                v.usage++;
-                                return v;
-                            }
+                    (path, isFullImage),
+                    new ImageUsage(0, value),
+                    (k, v) =>
+                    {
+                        v.imageSource = value;
+                        v.usage++;
+                        return v;
+                    }
                 );
 
                 SliceExtra();
@@ -74,7 +73,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         // To delete the images from the data dictionary based on the resizing of the Usage Dictionary
                         // Double Check to avoid concurrent remove
                         if (Data.Count > permissibleFactor * MaxCached)
-                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key).ToArray())
+                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
                                 Data.TryRemove(key, out _);
                         semaphore.Release();
                     }
@@ -82,9 +81,24 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        public bool ContainsKey(string key)
+        public bool ContainsKey(string key, bool isFullImage)
         {
-            return key is not null && Data.ContainsKey(key) && Data[key].imageSource != null;
+            return key is not null && Data.ContainsKey((key, isFullImage)) && Data[(key, isFullImage)].imageSource != null;
+        }
+
+        public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
+        {
+            if (key is not null)
+            {
+                bool hasKey = Data.TryGetValue((key, isFullImage), out var imageUsage);
+                image = hasKey ? imageUsage.imageSource : null;
+                return hasKey;
+            }
+            else
+            {
+                image = null;
+                return false;
+            }
         }
 
         public int CacheSize()

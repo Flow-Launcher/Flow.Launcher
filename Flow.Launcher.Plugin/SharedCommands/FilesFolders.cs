@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+#pragma warning disable IDE0005
 using System.Windows;
+#pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
+    /// <summary>
+    /// Commands that are useful to run on files... and folders!
+    /// </summary>
     public static class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
-
-        private const string FileExplorerProgramEXE = "explorer.exe";
 
         /// <summary>
         /// Copies the folder and all of its files and folders 
@@ -53,10 +56,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
                     CopyAll(subdir.FullName, temppath);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
                 RemoveFolderIfExists(targetPath);
@@ -65,6 +68,13 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         }
 
+        /// <summary>
+        /// Check if the files and directories are identical between <paramref name="fromPath"/> 
+        /// and <paramref name="toPath"/>
+        /// </summary>
+        /// <param name="fromPath"></param>
+        /// <param name="toPath"></param>
+        /// <returns></returns>
         public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath)
         {
             try
@@ -80,10 +90,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
@@ -92,6 +102,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         }
 
+        /// <summary>
+        /// Deletes a folder if it exists
+        /// </summary>
+        /// <param name="path"></param>
         public static void RemoveFolderIfExists(this string path)
         {
             try
@@ -99,47 +113,91 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (Directory.Exists(path))
                     Directory.Delete(path, true);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
         }
 
+        /// <summary>
+        /// Checks if a directory exists
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static bool LocationExists(this string path)
         {
             return Directory.Exists(path);
         }
 
+        /// <summary>
+        /// Checks if a file exists
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static bool FileExists(this string filePath)
         {
             return File.Exists(filePath);
         }
 
+        /// <summary>
+        /// Open a directory window (using the OS's default handler, usually explorer)
+        /// </summary>
+        /// <param name="fileOrFolderPath"></param>
         public static void OpenPath(string fileOrFolderPath)
         {
-            var psi = new ProcessStartInfo { FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"' };
+            var psi = new ProcessStartInfo
+            {
+                FileName = FileExplorerProgramName,
+                UseShellExecute = true,
+                Arguments = '"' + fileOrFolderPath + '"'
+            };
             try
             {
                 if (LocationExists(fileOrFolderPath) || FileExists(fileOrFolderPath))
                     Process.Start(psi);
             }
-            catch (Exception e)
+            catch (Exception)
             {
 #if DEBUG
-                throw e;
+                throw;
 #else
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
 
-        public static void OpenContainingFolder(string path)
+        /// <summary>
+        /// Open a file with associated application
+        /// </summary>
+        /// <param name="filePath">File path</param>
+        /// <param name="workingDir">Working directory</param>
+        /// <param name="asAdmin">Open as Administrator</param>
+        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
-            Process.Start(FileExplorerProgramEXE, $" /select,\"{path}\"");
+            var psi = new ProcessStartInfo
+            {
+                FileName = filePath,
+                UseShellExecute = true,
+                WorkingDirectory = workingDir,
+                Verb = asAdmin ? "runas" : string.Empty
+            };
+            try
+            {
+                if (FileExists(filePath))
+                    Process.Start(psi);
+            }
+            catch (Exception)
+            {
+#if DEBUG
+                throw;
+#else
+                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+#endif
+            }
         }
 
         ///<summary>
@@ -174,22 +232,16 @@ namespace Flow.Launcher.Plugin.SharedCommands
         ///</summary>
         public static string GetPreviousExistingDirectory(Func<string, bool> locationExists, string path)
         {
-            var previousDirectoryPath = "";
             var index = path.LastIndexOf('\\');
             if (index > 0 && index < (path.Length - 1))
             {
-                previousDirectoryPath = path.Substring(0, index + 1);
-                if (!locationExists(previousDirectoryPath))
-                {
-                    return "";
-                }
+                string previousDirectoryPath = path.Substring(0, index + 1);
+                return locationExists(previousDirectoryPath) ? previousDirectoryPath : "";
             }
             else
             {
                 return "";
             }
-
-            return previousDirectoryPath;
         }
 
         ///<summary>
@@ -208,6 +260,34 @@ namespace Flow.Launcher.Plugin.SharedCommands
             }
 
             return path;
+        }
+
+        /// <summary>
+        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>.
+        /// From https://stackoverflow.com/a/66877016
+        /// </summary>
+        /// <param name="parentPath">Parent path</param>
+        /// <param name="subPath">Sub path</param>
+        /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
+        /// <returns></returns>
+        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
+        {
+            var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
+            return (rel != "." || allowEqual)
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !rel.StartsWith(@"..\")
+                   && !Path.IsPathRooted(rel);
+        }
+        
+        /// <summary>
+        /// Returns path ended with "\"
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string EnsureTrailingSlash(this string path)
+        {
+            return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
         }
     }
 }

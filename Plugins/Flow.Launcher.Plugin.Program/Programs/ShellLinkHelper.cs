@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.IO;
 using Accessibility;
 using System.Runtime.InteropServices.ComTypes;
-using System.Security.Policy;
+using Flow.Launcher.Plugin.Program.Logger;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -100,8 +98,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
         }
 
         // To initialize the app description
-        public String description = String.Empty;
-
+        public string description = string.Empty;
+        public string arguments = string.Empty;
 
         // Retrieve the target path using Shell Link
         public string retrieveTargetPath(string path)
@@ -122,16 +120,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
             // To set the app description
             if (!String.IsNullOrEmpty(target))
             {
-                buffer = new StringBuilder(MAX_PATH);
-                ((IShellLinkW)link).GetDescription(buffer, MAX_PATH);
-                description = buffer.ToString();
+                try
+                {
+                    buffer = new StringBuilder(MAX_PATH);
+                    ((IShellLinkW)link).GetDescription(buffer, MAX_PATH);
+                    description = buffer.ToString();
+                }
+                catch (COMException e)
+                {
+                    // C:\\ProgramData\\Microsoft\\Windows\\Start Menu\\Programs\\MiracastView.lnk always cause exception
+                    ProgramLogger.LogException($"|IShellLinkW|retrieveTargetPath|{path}" +
+                                               "|Error caused likely due to trying to get the description of the program",
+                        e);
+                }
+
+                buffer.Clear();
+                ((IShellLinkW)link).GetArguments(buffer, MAX_PATH);
+                arguments = buffer.ToString();
             }
             
             // To release unmanaged memory
             Marshal.ReleaseComObject(link);
 
             return target;
-
         }
     }
 }

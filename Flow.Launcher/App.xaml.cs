@@ -1,11 +1,13 @@
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -61,6 +63,8 @@ namespace Flow.Launcher
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
 
+                AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
+
                 _alphabet.Initialize(_settings);
                 _stringMatcher = new StringMatcher(_alphabet);
                 StringMatcher.Instance = _stringMatcher;
@@ -74,21 +78,21 @@ namespace Flow.Launcher
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePlugins(API);
+                await PluginManager.InitializePluginsAsync(API);
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
-                
+
                 HotKeyMapper.Initialize(_mainVM);
 
-                // happlebao todo temp fix for instance code logic
+                // todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
-                // main windows needs initialized before theme change because of blur settigns
+                // main windows needs initialized before theme change because of blur settings
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
@@ -104,14 +108,22 @@ namespace Flow.Launcher
             });
         }
 
-
         private void AutoStartup()
         {
-            if (_settings.StartFlowLauncherOnSystemStartup)
+            // we try to enable auto-startup on first launch, or reenable if it was removed
+            // but the user still has the setting set
+            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
-                if (!SettingWindow.StartupSet())
+                try
                 {
-                    SettingWindow.SetStartup();
+                    Helper.AutoStartup.Enable();
+                }
+                catch (Exception e)
+                {
+                    // but if it fails (permissions, etc) then don't keep retrying
+                    // this also gives the user a visual indication in the Settings widget
+                    _settings.StartFlowLauncherOnSystemStartup = false;
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }
@@ -119,20 +131,17 @@ namespace Flow.Launcher
         //[Conditional("RELEASE")]
         private void AutoUpdates()
         {
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 if (_settings.AutoUpdates)
                 {
-                    // check udpate every 5 hours
-                    var timer = new Timer(1000 * 60 * 60 * 5);
-                    timer.Elapsed += async (s, e) =>
-                    {
-                        await _updater.UpdateAppAsync(API);
-                    };
-                    timer.Start();
-
-                    // check updates on startup
+                    // check update every 5 hours
+                    var timer = new PeriodicTimer(TimeSpan.FromHours(5));
                     await _updater.UpdateAppAsync(API);
+
+                    while (await timer.WaitForNextTickAsync())
+                        // check updates on startup
+                        await _updater.UpdateAppAsync(API);
                 }
             });
         }
@@ -175,7 +184,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            Current.MainWindow.Show();
+            _mainVM.Show();
         }
     }
 }

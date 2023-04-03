@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>net7.0-windows</TargetFramework>
     <ProjectGuid>{4FD29318-A8AB-4D8F-AA47-60BC241B8DA3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <UseWpf>true</UseWpf>
@@ -53,27 +53,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.10.56" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.4.27" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="NLog.Schema" Version="4.7.10" />
     <PackageReference Include="NLog.Web.AspNetCore" Version="4.13.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
-    <PackageReference Include="System.Drawing.Common" Version="5.0.2" />
+    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <!--ToolGood.Words.Pinyin v3.0.2.6 results in high memory usage when search with pinyin is enabled-->
     <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->
     <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="pinyindb\pinyin_gwoyeu_mapping.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="pinyindb\pinyin_mapping.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="pinyindb\unicode_to_hanyu_pinyin.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
   
 </Project>

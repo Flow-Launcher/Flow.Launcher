@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -95,11 +95,11 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var reuslt = MessageBox.Show(
+                        var result = MessageBox.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        if (reuslt == MessageBoxResult.Yes)
+                        if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
                         }
@@ -152,7 +152,18 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
-                    Action = c => ExitWindowsEx(EWX_LOGOFF, 0)
+                    Action = c =>
+                    {
+                        var result = MessageBox.Show(
+                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
+                            context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                        
+                        if (result == MessageBoxResult.Yes)
+                            ExitWindowsEx(EWX_LOGOFF, 0);
+
+                        return true;
+                    }
                 },
                 new Result
                 {
@@ -191,6 +202,21 @@ namespace Flow.Launcher.Plugin.Sys
                         return true;
                     }
                 },
+                 new Result
+                {
+                    Title = "Index Option",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
+                    IcoPath = "Images\\indexoption.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
+                    Action = c =>
+                    {
+                        {
+                            System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
+                        }
+
+                        return true;
+                    }
+                },
                 new Result
                 {
                     Title = "Empty Recycle Bin",
@@ -209,6 +235,21 @@ namespace Flow.Launcher.Plugin.Sys
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Open Recycle Bin",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
+                    IcoPath = "Images\\openrecyclebin.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    Action = c =>
+                    {
+                        {
+                                   System.Diagnostics.Process.Start("explorer", "shell:RecycleBinFolder");
                         }
 
                         return true;
@@ -270,11 +311,12 @@ namespace Flow.Launcher.Plugin.Sys
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
                         Application.Current.MainWindow.Hide();
 
-                        context.API.ReloadAllPluginData().ContinueWith(_ =>
+                        _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
                             context.API.ShowMsg(
                                 context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
                                 context.API.GetTranslation(
-                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")));
+                                    "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
+                            System.Threading.Tasks.TaskScheduler.Current);
                         
                         return true;
                     }

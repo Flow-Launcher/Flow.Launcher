@@ -96,27 +96,29 @@ namespace Flow.Launcher.Plugin.WebSearch
             var columnBinding = headerClicked.Column.DisplayMemberBinding as Binding;
             var sortBy = columnBinding?.Path.Path ?? headerClicked.Column.Header as string;
 
-            Sort(sortBy, direction);
+            if(sortBy != null) { 
+                Sort(sortBy, direction);
 
-            if (direction == ListSortDirection.Ascending)
-            {
-                headerClicked.Column.HeaderTemplate =
-                  Resources["HeaderTemplateArrowUp"] as DataTemplate;
-            }
-            else
-            {
-                headerClicked.Column.HeaderTemplate =
-                  Resources["HeaderTemplateArrowDown"] as DataTemplate;
-            }
+                if (direction == ListSortDirection.Ascending)
+                {
+                    headerClicked.Column.HeaderTemplate =
+                      Resources["HeaderTemplateArrowUp"] as DataTemplate;
+                }
+                else
+                {
+                    headerClicked.Column.HeaderTemplate =
+                      Resources["HeaderTemplateArrowDown"] as DataTemplate;
+                }
 
-            // Remove arrow from previously sorted header
-            if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
-            {
-                _lastHeaderClicked.Column.HeaderTemplate = null;
-            }
+                // Remove arrow from previously sorted header
+                if (_lastHeaderClicked != null && _lastHeaderClicked != headerClicked)
+                {
+                    _lastHeaderClicked.Column.HeaderTemplate = null;
+                }
 
-            _lastHeaderClicked = headerClicked;
-            _lastDirection = direction;
+                _lastHeaderClicked = headerClicked;
+                _lastDirection = direction;
+            }
         }
         private void Sort(string sortBy, ListSortDirection direction)
         {

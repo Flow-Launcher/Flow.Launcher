@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
-    <!--Dialogues-->
+    <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Descarregar plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Descarregado com sucesso</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_error">Erro: não foi possível descarregar o plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Descarregado com sucesso {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Não foi possível descarregar o plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende desinstalar este plugin? Após a desinstalação, Flow Launcher será reiniciado.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} de{1} {2}{3}Tem a certeza de que pretende instalar este plugin? Após a instalação, Flow Launcher será reiniciado.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende instalar este plugin? Após a instalação, Flow Launcher será reiniciado.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Instalador de plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando plugin...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descarregar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalador de plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin instalado com sucesso. Por favor aguarde, estamos a reiniciar Flow launcher...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} instalado com sucesso. Estamos a reiniciar Flow launcher. Por favor aguarde.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Não foi possível localizar o ficheiro plugin.json a partir do ficheiro extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Erro: já está instalado um plugin com uma versão igual ou superior a {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Erro ao instalar o plugin</system:String>
@@ -26,14 +27,14 @@
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalar a partir de fontes desconhecidas</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Está a instalar este plugin a partir de uma fonte desconhecida o que pode ser perigoso!{0}{0}Certifique-se de que este plugin é seguro.{0}{0}Ainda assim, pretende continuar com a instalação?{0}{0}(Pode desativar este aviso nas definições da aplicação)</system:String>
 
-    <!--Controls-->
-    
-    <!--Plugin Infos-->
+    <!--  Controls  -->
+
+    <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestor de plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Módulo para instalar, desinstalar e atualizar os plugins do Flow Launcher</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Autor desconhecido</system:String>
 
-    <!--Context menu items-->
+    <!--  Context menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Abrir site</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Aceder ao site do plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Ver código fonte</system:String>
@@ -43,6 +44,6 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Ir para o repositório de plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Aceda ao repositório para ver os plugins submetidos pela comunidade</system:String>
 
-    <!--Settings menu items-->
+    <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Aviso ao instalar de fontes desconhecidas</system:String>
 </ResourceDictionary>

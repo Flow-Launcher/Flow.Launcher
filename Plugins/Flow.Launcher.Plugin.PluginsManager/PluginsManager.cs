@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -109,7 +109,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             };
         }
 
-        internal async Task InstallOrUpdate(UserPlugin plugin)
+        internal async Task InstallOrUpdateAsync(UserPlugin plugin)
         {
             if (PluginExists(plugin.ID))
             {
@@ -157,7 +157,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), plugin.Name));
 
                 Install(plugin, filePath);
             }
@@ -171,18 +171,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
 
-                Log.Exception("PluginsManager", "An error occured while downloading plugin", e, "InstallOrUpdate");
+                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e, "InstallOrUpdate");
 
                 return;
             }
 
-            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
-                Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"));
+            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
+                string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"), plugin.Name));
 
             Context.API.RestartApp();
         }
 
-        internal async ValueTask<List<Result>> RequestUpdate(string search, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token)
         {
             await UpdateManifestAsync(token);
 
@@ -245,7 +245,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                     Context.API.ShowMsg(
                                         Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                        Context.API.GetTranslation("plugin_pluginsmanager_download_success"));
+                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), x.Name));
 
                                     Install(x.PluginNewUserPlugin, downloadToFilePath);
 
@@ -336,7 +336,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     }
 
                     Application.Current.MainWindow.Hide();
-                    _ = InstallOrUpdate(plugin);
+                    _ = InstallOrUpdateAsync(plugin);
 
                     return ShouldHideWindow;
                 }
@@ -383,7 +383,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }
 
                                 Application.Current.MainWindow.Hide();
-                                _ = InstallOrUpdate(x); // No need to wait
+                                _ = InstallOrUpdateAsync(x); // No need to wait
                                 return ShouldHideWindow;
                             },
                             ContextData = x

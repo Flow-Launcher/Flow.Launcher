@@ -1,7 +1,8 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -41,7 +42,7 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Copy Text to clipboard
         /// </summary>
-        /// <param name="Text">Text to save on clipboard</param>
+        /// <param name="text">Text to save on clipboard</param>
         public void CopyToClipboard(string text);
 
         /// <summary>
@@ -163,6 +164,7 @@ namespace Flow.Launcher.Plugin
         /// Download the specific url to a cretain file path
         /// </summary>
         /// <param name="url">URL to download file</param>
+        /// <param name="filePath">path to save downloaded file</param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
@@ -178,8 +180,15 @@ namespace Flow.Launcher.Plugin
         /// Remove ActionKeyword for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
-        /// <param name="newActionKeyword">The actionkeyword that is supposed to be removed</param>
+        /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
         void RemoveActionKeyword(string pluginId, string oldActionKeyword);
+
+        /// <summary>
+        /// Check whether specific ActionKeyword is assigned to any of the plugin
+        /// </summary>
+        /// <param name="actionKeyword">The actionkeyword for checking</param>
+        /// <returns>True if the actionkeyword is already assigned, False otherwise</returns>
+        bool ActionKeywordAssigned(string actionKeyword);
 
         /// <summary>
         /// Log debug message
@@ -224,16 +233,30 @@ namespace Flow.Launcher.Plugin
         /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
         /// </summary>
         /// <param name="DirectoryPath">Directory Path to open</param>
-        /// <param name="FileName">Extra FileName Info</param>
-        public void OpenDirectory(string DirectoryPath, string FileName = null);
+        /// <param name="FileNameOrFilePath">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null);
 
         /// <summary>
-        /// Opens the url. The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Opens the URL with the given Uri object. 
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// </summary>
+        public void OpenUrl(Uri url, bool? inPrivate = null);
+
+        /// <summary>
+        /// Opens the URL with the given string. 
+        /// The browser and mode used is based on what's configured in Flow's default browser settings.
+        /// Non-C# plugins should use this method.
         /// </summary>
         public void OpenUrl(string url, bool? inPrivate = null);
 
         /// <summary>
-        /// Opens the application URI.
+        /// Opens the application URI with the given Uri object, e.g. obsidian://search-query-example
+        /// </summary>
+        public void OpenAppUri(Uri appUri);
+
+        /// <summary>
+        /// Opens the application URI with the given string, e.g. obsidian://search-query-example
+        /// Non-C# plugins should use this method
         /// </summary>
         public void OpenAppUri(string appUri);
     }
