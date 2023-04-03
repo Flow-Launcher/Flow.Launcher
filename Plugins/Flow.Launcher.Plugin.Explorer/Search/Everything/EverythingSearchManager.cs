@@ -94,8 +94,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
             var option = new EverythingSearchOption(plainSearch,
                 Settings.SortOption,
-                true,
-                contentSearch,
+                IsContentSearch: true,
+                ContentSearchKeyword: contentSearch,
                 IsFullPathSearch: Settings.EverythingSearchFullPath);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
@@ -118,9 +118,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 IsFullPathSearch: Settings.EverythingSearchFullPath);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
-            {
                 yield return result;
-            }
         }
     }
 }
