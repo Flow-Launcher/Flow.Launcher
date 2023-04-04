@@ -159,7 +159,7 @@
     <system:String x:Key="Date">Fecha</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Atajos de teclado</system:String>
+    <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
