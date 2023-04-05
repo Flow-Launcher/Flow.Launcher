@@ -280,19 +280,16 @@ namespace Flow.Launcher.ViewModel
                 })
                 .ConfigureAwait(false);
 
-            if (hideWindow)
-            {
-                Hide();
-            }
 
             if (SelectedIsFromQueryResults())
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
             }
-            else
+
+            if (hideWindow)
             {
-                SelectedResults = Results;
+                Hide();
             }
         }
 
@@ -1014,6 +1011,10 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
+            if (!SelectedIsFromQueryResults())
+            {
+                SelectedResults = Results;
+            }
             switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
