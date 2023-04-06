@@ -196,22 +196,23 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (token.IsCancellationRequested)
                 return new List<Result>();
 
-            IAsyncEnumerable<SearchResult> userSelectionResult;
+            IAsyncEnumerable<SearchResult> directoryResult;
 
             var recursiveIndicatorIndex = query.Search.IndexOf('>');
 
             if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.DirectEnumeration)
             {
-                userSelectionResult =
+                directoryResult =
                     Settings.PathEnumerator.EnumerateAsync(
                         query.Search[..recursiveIndicatorIndex].Trim(),
                         query.Search[(recursiveIndicatorIndex + 1)..],
                         true,
                         token);
+
             }
             else
             {
-                userSelectionResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token).ToAsyncEnumerable();
+                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token).ToAsyncEnumerable();
             }
 
             if (token.IsCancellationRequested)
@@ -219,7 +220,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             try
             {
-                await foreach (var directory in userSelectionResult.WithCancellation(token).ConfigureAwait(false))
+                await foreach (var directory in directoryResult.WithCancellation(token).ConfigureAwait(false))
                 {
                     results.Add(ResultManager.CreateResult(query, directory));
                 }
