@@ -14,6 +14,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using System.Threading.Channels;
 using System.Xml;
 using Windows.ApplicationModel.Core;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -422,12 +423,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     ContextData = this,
                     Action = e =>
                     {
-                        var elevated = (
-                            e.SpecialKeyState.CtrlPressed &&
-                            e.SpecialKeyState.ShiftPressed &&
-                            !e.SpecialKeyState.AltPressed &&
-                            !e.SpecialKeyState.WinPressed
-                            );
+                        // Ctrl + Enter to open containing folder
+                        bool openFolder = e.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
+                        if (openFolder)
+                        {
+                            Main.Context.API.OpenDirectory(Location);
+                            return true;
+                        }
+
+                        // Ctrl + Shift + Enter to run elevated
+                        bool elevated = e.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
                         bool shouldRunElevated = elevated && CanRunElevated;
                         _ = Task.Run(() => Launch(shouldRunElevated)).ConfigureAwait(false);

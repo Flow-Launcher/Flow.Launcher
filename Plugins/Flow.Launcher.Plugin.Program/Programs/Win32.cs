@@ -16,6 +16,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -169,12 +170,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ContextData = this,
                 Action = c =>
                 {
-                    var runAsAdmin = (
-                        c.SpecialKeyState.CtrlPressed &&
-                        c.SpecialKeyState.ShiftPressed &&
-                        !c.SpecialKeyState.AltPressed &&
-                        !c.SpecialKeyState.WinPressed
-                        );
+                    // Ctrl + Enter to open containing folder
+                    bool openFolder = c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
+                    if (openFolder)
+                    {
+                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
+                        return true;
+                    }
+
+                    // Ctrl + Shift + Enter to run as admin
+                    bool runAsAdmin = c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
                     var info = new ProcessStartInfo
                     {
