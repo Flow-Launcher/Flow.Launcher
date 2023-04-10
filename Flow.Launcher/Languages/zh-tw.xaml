@@ -17,13 +17,13 @@
     <system:String x:Key="cut">剪下</system:String>
     <system:String x:Key="paste">貼上</system:String>
     <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="selectAll">全選</system:String>
     <system:String x:Key="fileTitle">檔案</system:String>
     <system:String x:Key="folderTitle">資料夾</system:String>
     <system:String x:Key="textTitle">文字</system:String>
     <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">暫停使用快捷鍵。</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionReset">重設位置</system:String>
     <system:String x:Key="PositionResetToolTip">重設搜尋視窗位置</system:String>
 
     <!--  Setting General  -->
