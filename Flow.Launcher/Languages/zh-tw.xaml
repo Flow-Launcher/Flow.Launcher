@@ -70,8 +70,8 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
-    <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">當圖標從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
+    <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜尋</system:String>
@@ -188,8 +188,8 @@
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖標</system:String>
-    <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖標</system:String>
+    <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖示</system:String>
+    <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖示</system:String>
     <system:String x:Key="flowlauncherPressHotkey">按下按鍵</system:String>
 
     <!--  Setting Proxy  -->
@@ -214,7 +214,7 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="icons">圖標</system:String>
+    <system:String x:Key="icons">圖示</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
     <system:String x:Key="BecomeASponsor">成為贊助者</system:String>
