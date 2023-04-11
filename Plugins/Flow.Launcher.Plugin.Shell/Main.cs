@@ -234,6 +234,22 @@ namespace Flow.Launcher.Plugin.Shell
                     }
                     break;
                 }
+                
+                case Shell.Terminal:
+                {
+                    info.FileName = "wt.exe";
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                        info.ArgumentList.Add(command);
+                    }
+                    else
+                    {
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add(command);
+                    }
+                    break;
+                }
 
                 case Shell.RunCommand:
                 {
