@@ -111,9 +111,9 @@
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado recientemente</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
-    <system:String x:Key="pluginStore_Installed">Instalado</system:String>
+    <system:String x:Key="pluginStore_Installed">Instalado(s)</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
