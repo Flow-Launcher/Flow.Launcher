@@ -1866,7 +1866,7 @@
     <value>从网络安装程序</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
-    <value>View scanners and cameras</value>
+    <value>查看扫描仪和照相机</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
     <value>Microsoft IME Register Word (Japanese)</value>
@@ -2173,7 +2173,7 @@
     <value>Change mouse click settings</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
-    <value>Change advanced colour management settings for displays, scanners and printers</value>
+    <value>更改显示器、扫描仪和打印机的高级颜色管理设置</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
     <value>Let Windows suggest Ease of Access settings</value>
@@ -2254,70 +2254,70 @@
     <value>View network status and tasks</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>启用或关闭放大镜</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>查看该计算机的名称</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
-    <value>View network connections</value>
+    <value>查看网络连接</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
-    <value>Perform recommended maintenance tasks automatically</value>
+    <value>自动执行推荐的维护任务</value>
   </data>
   <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
-    <value>Manage disk space used by your offline files</value>
+    <value>管理脱机文件</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Turn High Contrast on or off</value>
+    <value>启用或关闭高对比度</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>更改时间的显示方式</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Change how web pages are displayed in tabs</value>
+    <value>更改在选项卡中显示网页的方式</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
-    <value>Change the way dates and lists are displayed</value>
+    <value>更改日期和列表的显示方式</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
-    <value>Manage audio devices</value>
+    <value>管理音频设备</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Change security settings</value>
+    <value>更改安全设置</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
-    <value>Check security status</value>
+    <value>检查安全状态</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>删除 cookie 或临时文件</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>左右手使用习惯</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
     <value>Change touch input settings</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>如何更改虚拟内存的大小</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
     <value>聆听讲述人朗读的文本</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Set up USB game controllers</value>
+    <value>设置 USB 游戏控制器</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
     <value>Show which domain your computer is on</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>查看所有问题报告</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
     <value>16-Bit Application Support</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
-    <value>Set up dialling rules</value>
+    <value>设置拨号规则</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
     <value>Enable or disable session cookies</value>
@@ -2413,43 +2413,43 @@
     <value>Change input methods</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
-    <value>Manage advanced sharing settings</value>
+    <value>管理高级共享设置</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>更改电池设置</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
-    <value>Rename this computer</value>
+    <value>重命名此计算机</value>
   </data>
   <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
-    <value>Lock or unlock the taskbar</value>
+    <value>锁定或解锁任务栏</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Manage Web Credentials</value>
+    <value>管理 Web 凭据</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>更改时区</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>启动语音识别</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>查看已安装的更新</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
-    <value>What's happened to the Quick Launch toolbar?</value>
+    <value>快速启动工具栏发生了什么问题？</value>
   </data>
   <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
-    <value>Change search options for files and folders</value>
+    <value>更改文件和文件夹的搜索选项</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
-    <value>Adjust settings before giving a presentation</value>
+    <value>在给出演示文档之前调整设置</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
-    <value>Scan a document or picture</value>
+    <value>扫描文档或图片</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
-    <value>Change the way measurements are displayed</value>
+    <value>更改日期、时间或数字格式</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
     <value>Press key combinations one at a time</value>
@@ -2458,7 +2458,7 @@
     <value>从备份中还原数据、文件或计算机(Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Set your default programs</value>
+    <value>设置默认程序</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
     <value>设置宽带连接</value>
