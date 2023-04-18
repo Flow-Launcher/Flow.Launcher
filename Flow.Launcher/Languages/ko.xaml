@@ -346,7 +346,7 @@
     <system:String x:Key="HotkeyUpDownDesc">뒤로/ 콘텍스트 메뉴</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">아이템 이동</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">콘텍스트 메뉴 열기</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open A File/Folder's Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
     <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
