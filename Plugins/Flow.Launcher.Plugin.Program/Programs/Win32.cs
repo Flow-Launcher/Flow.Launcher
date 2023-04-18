@@ -603,13 +603,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
+            var startMenuPaths = GetStartMenuPaths();
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
+                    // is shortcut and in start menu
+                    var startMenu = g.Where(g => g.LnkResolvedPath != null && startMenuPaths.Any(x => FilesFolders.PathContains(x, g.FullPath))).ToList();
+                    if (startMenu.Any())
+                        return startMenu.Take(1);
+
+                    // distinct by description
                     var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();
                     if (temp.Any())
-                        return DistinctBy(temp, x => x.Description);
+                        return temp.Take(1);
                     return g.Take(1);
                 });
         }
