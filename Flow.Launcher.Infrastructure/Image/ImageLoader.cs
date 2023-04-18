@@ -269,7 +269,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        img = ImageCache[key, false] ?? img;
+                        img = ImageCache[key, loadFullImage] ?? img;
                     }
                     else
                     { // new guid
