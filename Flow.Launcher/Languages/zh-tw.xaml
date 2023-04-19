@@ -17,13 +17,13 @@
     <system:String x:Key="cut">剪下</system:String>
     <system:String x:Key="paste">貼上</system:String>
     <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="selectAll">全選</system:String>
     <system:String x:Key="fileTitle">檔案</system:String>
     <system:String x:Key="folderTitle">資料夾</system:String>
     <system:String x:Key="textTitle">文字</system:String>
     <system:String x:Key="GameMode">遊戲模式</system:String>
     <system:String x:Key="GameModeToolTip">暫停使用快捷鍵。</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
+    <system:String x:Key="PositionReset">重設位置</system:String>
     <system:String x:Key="PositionResetToolTip">重設搜尋視窗位置</system:String>
 
     <!--  Setting General  -->
@@ -70,8 +70,8 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
-    <system:String x:Key="hideNotifyIcon">隱藏任務欄圖標</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">當圖標從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
+    <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜尋</system:String>
@@ -188,8 +188,8 @@
     <system:String x:Key="shadowEffectCPUUsage">陰影效果將佔用大量的 GPU 資源。如果你的電腦效能有限，不建議使用。</system:String>
     <system:String x:Key="windowWidthSize">窗口寬度</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖標</system:String>
-    <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖標</system:String>
+    <system:String x:Key="useGlyphUI">使用 Segoe Fluent 圖示</system:String>
+    <system:String x:Key="useGlyphUIEffect">在支援的情況下，在查詢結果使用 Segoe Fluent 圖示</system:String>
     <system:String x:Key="flowlauncherPressHotkey">按下按鍵</system:String>
 
     <!--  Setting Proxy  -->
@@ -214,7 +214,7 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">文檔</system:String>
     <system:String x:Key="version">版本</system:String>
-    <system:String x:Key="icons">圖標</system:String>
+    <system:String x:Key="icons">圖示</system:String>
     <system:String x:Key="about_activate_times">您已經啟動了 Flow Launcher {0} 次</system:String>
     <system:String x:Key="checkUpdates">檢查更新</system:String>
     <system:String x:Key="BecomeASponsor">成為贊助者</system:String>
@@ -346,7 +346,7 @@
     <system:String x:Key="HotkeyUpDownDesc">返回 / 快捷選單</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">打開選單</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open A File/Folder's Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查詢歷史</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>

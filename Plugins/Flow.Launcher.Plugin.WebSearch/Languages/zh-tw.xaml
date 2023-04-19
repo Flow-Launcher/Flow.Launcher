@@ -3,8 +3,8 @@
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">搜尋來源設定</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">新增視窗</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">新索引標籤</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">設定瀏覽器路徑:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">選擇</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">刪除</system:String>
@@ -34,8 +34,8 @@
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">標題</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">選擇圖標</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_icon">圖標</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">選擇圖示</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_icon">圖示</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">取消</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">無效的網頁搜尋</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_title">請輸入標題</system:String>

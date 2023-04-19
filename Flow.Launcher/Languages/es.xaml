@@ -111,9 +111,9 @@
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado recientemente</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
-    <system:String x:Key="pluginStore_Installed">Instalado</system:String>
+    <system:String x:Key="pluginStore_Installed">Instalado(s)</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
@@ -159,7 +159,7 @@
     <system:String x:Key="Date">Fecha</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Atajos de teclado</system:String>
+    <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
@@ -346,7 +346,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú contextual</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegación entre elementos</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir la carpeta que contiene un archivo/carpeta</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador / Abrir la carpeta en el administrador de archivos predeterminado</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
