@@ -44,8 +44,15 @@ namespace Flow.Launcher
             catch (InvalidOperationException e)
             {
                 // Temporary fix for the Windows 11 notification issue
-                Log.Exception("Flow.Launcher.Notification|Notification Error", e);
-                LegacyShow(title, subTitle, iconPath);
+                Log.Exception("Flow.Launcher.Notification|Notification InvalidOperationException Error", e);
+                if (Environment.OSVersion.Version.Build >= 22621)
+                {
+                    return;
+                }
+                else
+                {
+                    throw;
+                }
             }
             catch (Exception e)
             {
