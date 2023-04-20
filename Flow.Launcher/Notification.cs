@@ -35,18 +35,23 @@ namespace Flow.Launcher
 
             try
             {
-                // Temporary fix for the Windows 11 notification issue
                 new ToastContentBuilder()
                     .AddText(title, hintMaxLines: 1)
                     .AddText(subTitle)
                     .AddAppLogoOverride(new Uri(Icon))
                     .Show();
             }
+            catch (InvalidOperationException e)
+            {
+                // Temporary fix for the Windows 11 notification issue
+                Log.Exception("Flow.Launcher.Notification|Notification Error", e);
+                LegacyShow(title, subTitle, iconPath);
+            }
             catch (Exception e)
             {
                 Log.Exception("Flow.Launcher.Notification|Notification Error", e);
-                LegacyShow(title, subTitle, iconPath);
-            }            
+                throw;
+            }
         }
 
         private static void LegacyShow(string title, string subTitle, string iconPath)
