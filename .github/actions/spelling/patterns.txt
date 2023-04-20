@@ -115,3 +115,6 @@
 
 #http/https
 (?:\b(?:https?|ftp|file)://)[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]
+
+# UWP
+/[Uu][Ww][Pp]/
