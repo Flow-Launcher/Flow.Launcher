@@ -62,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Exception
             sb.AppendLine($"* Command Line: {Environment.CommandLine}");
             sb.AppendLine($"* Timestamp: {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
             sb.AppendLine($"* Flow Launcher version: {Constant.Version}");
-            sb.AppendLine($"* OS Version: {GetWindowsBuildVersionFromRegistry()}");
+            sb.AppendLine($"* OS Version: {GetWindowsFullVersionFromRegistry()}");
             sb.AppendLine($"* IntPtr Length: {IntPtr.Size}");
             sb.AppendLine($"* x64: {Environment.Is64BitOperatingSystem}");
             sb.AppendLine($"* Python Path: {Constant.PythonPath}");
@@ -172,13 +172,14 @@ namespace Flow.Launcher.Infrastructure.Exception
             }
 
         }
-        public static string GetWindowsBuildVersionFromRegistry()
+
+        public static string GetWindowsFullVersionFromRegistry()
         {
             try
             {
                 using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\"))
                 {
-                    var buildRevision = registryKey.GetValue("UBR").ToString();
+                    var buildRevision = GetWindowsRevisionFromRegistry();
                     var currentBuild = registryKey.GetValue("CurrentBuild").ToString();
                     return currentBuild + "." + buildRevision;
                 }
@@ -186,6 +187,22 @@ namespace Flow.Launcher.Infrastructure.Exception
             catch
             {
                 return Environment.OSVersion.VersionString;
+            }
+        }
+
+        public static string GetWindowsRevisionFromRegistry()
+        {
+            try
+            {
+                using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\"))
+                {
+                    var buildRevision = registryKey.GetValue("UBR").ToString();
+                    return buildRevision;
+                }
+            }
+            catch
+            {
+                return "0";
             }
         }
     }
