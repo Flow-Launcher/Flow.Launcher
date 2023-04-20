@@ -177,12 +177,9 @@ namespace Flow.Launcher.Infrastructure.Exception
         {
             try
             {
-                using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\"))
-                {
-                    var buildRevision = GetWindowsRevisionFromRegistry();
-                    var currentBuild = registryKey.GetValue("CurrentBuild").ToString();
-                    return currentBuild + "." + buildRevision;
-                }
+                var buildRevision = GetWindowsRevisionFromRegistry();
+                var currentBuild = Environment.OSVersion.Version.Build;
+                return currentBuild.ToString() + "." + buildRevision;
             }
             catch
             {
