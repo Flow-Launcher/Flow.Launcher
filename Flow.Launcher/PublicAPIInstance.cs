@@ -92,10 +92,7 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Notification.Show(title, subTitle, iconPath);
-            });
+            Notification.Show(title, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()

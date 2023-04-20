@@ -3,6 +3,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.IO;
+using System.Windows;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
 
@@ -18,8 +19,16 @@ namespace Flow.Launcher
                 ToastNotificationManagerCompat.Uninstall();
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
         public static void Show(string title, string subTitle, string iconPath = null)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                ShowInternal(title, subTitle, iconPath);
+            });
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Interoperability", "CA1416:Validate platform compatibility", Justification = "<Pending>")]
+        private static void ShowInternal(string title, string subTitle, string iconPath = null)
         {
             // Handle notification for win7/8/early win10
             if (legacy)
