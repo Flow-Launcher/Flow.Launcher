@@ -68,6 +68,7 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
+        [Obsolete("Typo")]
         public void RestarApp() => RestartApp();
 
         public void ShowMainWindow() => _mainVM.Show();
