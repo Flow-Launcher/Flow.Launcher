@@ -1,4 +1,5 @@
 ﻿using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.IO;
