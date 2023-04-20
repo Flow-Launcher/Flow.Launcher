@@ -68,6 +68,7 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
+        [Obsolete("Typo")]
         public void RestarApp() => RestartApp();
 
         public void ShowMainWindow() => _mainVM.Show();
@@ -92,10 +93,7 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Notification.Show(title, subTitle, iconPath);
-            });
+            Notification.Show(title, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()
