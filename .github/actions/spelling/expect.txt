@@ -22,6 +22,7 @@ Google
 Customise
 UWP
 uwp
+Uwp
 Bokmal
 Bokm
 uninstallation
