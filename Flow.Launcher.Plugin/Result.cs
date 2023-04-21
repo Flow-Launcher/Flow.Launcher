@@ -240,19 +240,19 @@ namespace Flow.Launcher.Plugin
             /// <summary>
             /// Full image used for preview panel
             /// </summary>
-            public string PreviewImagePath { get; set; }
-            
+            public string PreviewImagePath { get; set; } = null;
+
             /// <summary>
             /// Determines if the preview image should occupy the full width of the preview panel.
             /// </summary>
-            public bool IsMedia { get; set; }
-            public string Description { get; set; }
-            public IconDelegate PreviewDelegate { get; set; }
+            public bool IsMedia { get; set; } = false;
+            public string Description { get; set; } = null;
+            public IconDelegate PreviewDelegate { get; set; } = null;
 
             /// <summary>
             /// File path of the result. For third-party preview programs such as QuickLook.
             /// </summary>
-            public string FilePath { get; set; }
+            public string FilePath { get; set; } = null;
 
             public static PreviewInfo Default { get; } = new()
             {
