@@ -235,7 +235,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
             Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
-                ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
+                ? new Result.PreviewInfo
+                {
+                    IsMedia = true,
+                    PreviewImagePath = filePath,
+                    FilePath = filePath,
+                }
                 : Result.PreviewInfo.Default;
 
             var title = Path.GetFileName(filePath);
