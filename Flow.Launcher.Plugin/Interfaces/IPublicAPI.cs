@@ -20,8 +20,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
-        /// force requery By default, Flow Launcher will not fire query if your query is same with existing one. 
-        /// Set this to true to force Flow Launcher requerying
+        /// Force requery. By default, Flow Launcher will not fire query if your query is same with existing one. 
+        /// Set this to <see langword="true"/> to force Flow Launcher requerying
         /// </param>
         void ChangeQuery(string query, bool requery = false);
 
