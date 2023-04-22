@@ -579,7 +579,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (Settings.AlwaysPreview == true && PreviewVisible)
                 {
-                    HidePreview(); // When Always preview, toggle off rather than open external
+                    HideInternalPreview(); // When Always preview, toggle off rather than open external
                 }
                 else if (!ExternalPreviewOpen)
                 {
@@ -592,22 +592,22 @@ namespace Flow.Launcher.ViewModel
             }
             else if (!PreviewVisible)
             {
-                ShowPreview();
+                ShowInternalPreview();
             }
             else
             {
-                HidePreview();
+                HideInternalPreview();
             }
         }
 
-        private void ShowPreview()
+        private void ShowInternalPreview()
         {
             ResultAreaColumn = 1;
             PreviewVisible = true;
             Results.SelectedItem?.LoadPreviewImage();
         }
 
-        private void HidePreview()
+        private void HideInternalPreview()
         {
             ResultAreaColumn = 3;
             PreviewVisible = false;
@@ -617,11 +617,11 @@ namespace Flow.Launcher.ViewModel
         {
             if (Settings.AlwaysPreview == true)
             {
-                ShowPreview();
+                ShowInternalPreview();
             }
             else
             {
-                HidePreview();
+                HideInternalPreview();
             }
         }
         
@@ -632,7 +632,7 @@ namespace Flow.Launcher.ViewModel
                 _ = ToggleQuickLookPreviewAsync(path, ExternalPreviewOpen);
                 if (PreviewVisible)
                 {
-                    HidePreview();
+                    HideInternalPreview();
                 }
             }
             else if (PreviewVisible)
@@ -643,7 +643,7 @@ namespace Flow.Launcher.ViewModel
             {
                 // When external is open and select a result that can't be previewed by external program
                 _ = CloseQuickLookPreviewAsync();
-                ShowPreview();
+                ShowInternalPreview();
             }
         }
 
