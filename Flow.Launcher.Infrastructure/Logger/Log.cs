@@ -5,11 +5,9 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Flow.Launcher.Infrastructure.UserSettings;
-using JetBrains.Annotations;
 using NLog.Fluent;
 using NLog.Targets.Wrappers;
 using System.Runtime.ExceptionServices;
-using System.Text;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
@@ -76,7 +74,6 @@ namespace Flow.Launcher.Infrastructure.Logger
             return valid;
         }
 
-
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
         {
             exception = exception.Demystify();
@@ -115,8 +112,6 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             var logger = LogManager.GetLogger(classAndMethod);
 
-            var messageBuilder = new StringBuilder();
-
             logger.Error(e, message);
         }
 
@@ -136,7 +131,8 @@ namespace Flow.Launcher.Infrastructure.Logger
             }
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
+        /// <param name="message">Example: "|ClassName.MethodName|Message" </param>
         /// <param name="e">Exception</param>
         public static void Exception(string message, System.Exception e)
         {
@@ -158,7 +154,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 #endif
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Error(string message)
         {
             LogInternal(message, LogLevel.Error);
@@ -183,7 +179,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Debug, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message""
         public static void Debug(string message)
         {
             LogInternal(message, LogLevel.Debug);
@@ -194,7 +190,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Info, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Info(string message)
         {
             LogInternal(message, LogLevel.Info);
@@ -205,7 +201,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Warn, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Warn(string message)
         {
             LogInternal(message, LogLevel.Warn);
