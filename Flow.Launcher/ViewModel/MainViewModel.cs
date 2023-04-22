@@ -564,6 +564,8 @@ namespace Flow.Launcher.ViewModel
 
         public bool PreviewVisible { get; set; } = false;
 
+        public bool ExternalPreviewOpen { get; set; } = false;
+        
         public int ResultAreaColumn { get; set; } = 1;
 
         #endregion
@@ -571,9 +573,21 @@ namespace Flow.Launcher.ViewModel
         #region Preview
 
         [RelayCommand]
-        public void TogglePreview()
+        private void TogglePreview()
         {
-            if (!PreviewVisible)
+            bool useThirdPartyPreview = true;
+            if (useThirdPartyPreview)
+            {
+                if (!ExternalPreviewOpen)
+                {
+                    _ = OpenQuickLookPreviewAsync();
+                }
+                else
+                {
+                    _ = CloseQuickLookPreviewAsync();
+                }
+            }
+            else if (!PreviewVisible)
             {
                 ShowPreview();
             }
@@ -610,9 +624,60 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdatePreview()
         {
-            if (PreviewVisible)
+            bool useThirdPartyPreview = true;
+            if (useThirdPartyPreview)
+            {
+                if (ExternalPreviewOpen)
+                {
+                    _ = ToggleQuickLookPreviewAsync(true);
+                }
+            }
+            else if (PreviewVisible)
             {
                 Results.SelectedItem?.LoadPreviewImage();
+            }
+        }
+
+        private async Task ToggleQuickLookPreviewAsync(bool switchFile = false)
+        {
+            if (!SelectedIsFromQueryResults())
+                return;
+
+            var result = Results.SelectedItem?.Result;
+
+            if (result is null || string.IsNullOrEmpty(result.Preview.FilePath))
+                return;
+
+            bool success = await QuickLookHelper.ToggleQuickLookAsync(result.Preview.FilePath, switchFile);
+            if (success)
+            {
+                ExternalPreviewOpen = !ExternalPreviewOpen;
+            }
+        }
+
+        private async Task OpenQuickLookPreviewAsync()
+        {
+            if (!SelectedIsFromQueryResults())
+                return;
+
+            var result = Results.SelectedItem?.Result;
+
+            if (result is null || string.IsNullOrEmpty(result.Preview.FilePath))
+                return;
+
+            bool success = await QuickLookHelper.OpenQuickLookAsync(result.Preview.FilePath);
+            if (success)
+            {
+                ExternalPreviewOpen = true;
+            }
+        }
+
+        private async Task CloseQuickLookPreviewAsync()
+        {
+            bool success = await QuickLookHelper.CloseQuickLookAsync();
+            if (success)
+            {
+                ExternalPreviewOpen = false;
             }
         }
 
