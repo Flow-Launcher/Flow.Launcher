@@ -647,6 +647,8 @@ namespace Flow.Launcher.ViewModel
         {
             if (Settings.UseQuickLook && CanExternalPreviewSelectedResult(out var path))
             {
+                // TODO: When always preview (internal is open) and select another result can use external preview
+                // then switched to external, looks bad
                 // Should use external preview for selected result
                 if (ExternalPreviewOpen)
                 {
