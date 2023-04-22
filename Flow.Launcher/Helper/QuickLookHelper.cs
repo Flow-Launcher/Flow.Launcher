@@ -9,12 +9,14 @@ using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Helper
 {
-    internal class QuickLookHelper
+    internal static class QuickLookHelper
     {
         private const int TIMEOUT = 500;
         private static readonly string pipeName = $"QuickLook.App.Pipe.{WindowsIdentity.GetCurrent().User?.Value}";
         private static readonly string pipeMessageSwitch = "QuickLook.App.PipeMessages.Switch";
         private static readonly string pipeMessageToggle = "QuickLook.App.PipeMessages.Toggle";
+        private static readonly string pipeMessageClose = "QuickLook.App.PipeMessages.Close";
+        private static readonly string pipeMessageInvoke = "QuickLook.App.PipeMessages.Invoke";
 
         /// <summary>
         /// Toggle QuickLook
@@ -22,35 +24,60 @@ namespace Flow.Launcher.Helper
         /// <param name="path">File path to preview</param>
         /// <param name="switchPreview">Is swtiching file</param>
         /// <returns></returns>
-        public static async Task ToggleQuickLookPreviewAsync(string path, bool switchPreview = false)
+        public static async Task<bool> ToggleQuickLookAsync(string path, bool switchPreview = false)
         {
-            bool isQuickLookAvailable = await DetectQuickLookAvailabilityAsync();
+            //bool isQuickLookAvailable = await DetectQuickLookAvailabilityAsync();
 
-            if (!isQuickLookAvailable)
-            {
-                if (!switchPreview)
-                {
-                    Log.Warn($"{nameof(QuickLookHelper)}", "QuickLook not detected");
-                }
-                return;
-            }
+            //if (!isQuickLookAvailable)
+            //{
+            //    if (!switchPreview)
+            //    {
+            //        Log.Warn($"{nameof(QuickLookHelper)}", "QuickLook not detected");
+            //    }
+            //    return;
+            //}
 
-            string pipeName = $"QuickLook.App.Pipe.{WindowsIdentity.GetCurrent().User?.Value}";
-            string message = switchPreview ? pipeMessageSwitch : pipeMessageToggle;
+            if (string.IsNullOrEmpty(path))
+                return false;
             
+            return await SendQuickLookPipeMsgAsync(switchPreview ? pipeMessageSwitch : pipeMessageToggle, path);
+        }
+
+        public static async Task<bool> CloseQuickLookAsync()
+        {
+            return await SendQuickLookPipeMsgAsync(pipeMessageClose);
+        }
+
+        public static async Task<bool> OpenQuickLookAsync(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+            return await SendQuickLookPipeMsgAsync(pipeMessageInvoke, path);
+        }
+
+        private static async Task<bool> SendQuickLookPipeMsgAsync(string message, string arg = "")
+        {
             await using var client = new NamedPipeClientStream(".", pipeName, PipeDirection.Out);
             try
             {
                 await client.ConnectAsync(TIMEOUT);
 
                 await using var writer = new StreamWriter(client);
-                await writer.WriteLineAsync($"{message}|{path}");
+                await writer.WriteLineAsync($"{message}|{arg}");
                 await writer.FlushAsync();
             }
             catch (TimeoutException)
             {
                 client.Close();
+                Log.Error($"{nameof(QuickLookHelper)}", "QuickLook timeout");
+                return false;
             }
+            catch (Exception e)
+            {
+                Log.Exception($"{nameof(QuickLookHelper)}", "QuickLook error", e);
+                return false;
+            }
+            return true;
         }
 
         private static async Task<bool> DetectQuickLookAvailabilityAsync()
