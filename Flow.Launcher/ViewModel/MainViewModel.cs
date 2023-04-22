@@ -293,6 +293,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        #region BasicCommands
+
         [RelayCommand]
         private void OpenSetting()
         {
@@ -356,6 +358,8 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
+        #endregion
+        
         #region ViewModel Properties
 
         public Settings Settings { get; }
@@ -442,52 +446,6 @@ namespace Flow.Launcher.ViewModel
                 return;
 
             Settings.MaxResultsToShow -= 1;
-        }
-
-        [RelayCommand]
-        public void TogglePreview()
-        {
-            if (!PreviewVisible)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-        }
-
-        private void ShowPreview()
-        {
-            ResultAreaColumn = 1;
-            PreviewVisible = true;
-            Results.SelectedItem?.LoadPreviewImage();
-        }
-
-        private void HidePreview()
-        {
-            ResultAreaColumn = 3;
-            PreviewVisible = false;
-        }
-
-        public void ResetPreview()
-        {
-            if (Settings.AlwaysPreview == true)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-        }
-
-        private void UpdatePreview()
-        {
-            if (PreviewVisible)
-            {
-                Results.SelectedItem?.LoadPreviewImage();
-            }
         }
 
         /// <summary>
@@ -607,6 +565,56 @@ namespace Flow.Launcher.ViewModel
         public bool PreviewVisible { get; set; } = false;
 
         public int ResultAreaColumn { get; set; } = 1;
+
+        #endregion
+
+        #region Preview
+
+        [RelayCommand]
+        public void TogglePreview()
+        {
+            if (!PreviewVisible)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
+        private void ShowPreview()
+        {
+            ResultAreaColumn = 1;
+            PreviewVisible = true;
+            Results.SelectedItem?.LoadPreviewImage();
+        }
+
+        private void HidePreview()
+        {
+            ResultAreaColumn = 3;
+            PreviewVisible = false;
+        }
+
+        public void ResetPreview()
+        {
+            if (Settings.AlwaysPreview == true)
+            {
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
+            }
+        }
+
+        private void UpdatePreview()
+        {
+            if (PreviewVisible)
+            {
+                Results.SelectedItem?.LoadPreviewImage();
+            }
+        }
 
         #endregion
 
