@@ -34,7 +34,7 @@ namespace Flow.Launcher
                 return Constant.Issue;
             }
             var treeIndex = website.IndexOf("tree", StringComparison.Ordinal);
-            return treeIndex == -1 ? $"{website}/issues/new" : $"{website[..treeIndex]}/issues/new";
+            return treeIndex == -1 ? $"{website}/issues" : $"{website[..treeIndex]}/issues";
         }
 
         private void SetException(Exception exception)
