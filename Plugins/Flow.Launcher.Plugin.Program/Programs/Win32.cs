@@ -315,7 +315,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     program.LnkResolvedPath = Path.GetFullPath(target);
                     program.ExecutableName = Path.GetFileName(target);
-
+                    
+                    if (IsUninstallProgram(program.LnkResolvedPath))
+                    {
+                        return Default;
+                    }
+                    
                     var args = _helper.arguments;
                     if (!string.IsNullOrEmpty(args))
                     {
@@ -403,6 +408,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
         {
             try
             {
+                if (IsUninstallProgram(path))
+                {
+                    return Default;
+                }
+                
                 var program = Win32Program(path);
                 var info = FileVersionInfo.GetVersionInfo(path);
                 if (!string.IsNullOrEmpty(info.FileDescription))
@@ -571,7 +581,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 UrlExtension => UrlProgram(path, protocols),
                 _ => Win32Program(path)
             };
-            ;
         }
 
         public static IEnumerable<string> ExceptDisabledSource(IEnumerable<string> paths)
@@ -808,6 +817,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 result.AddRange(parents.Select(x => x.Location));
             }
             return result.DistinctBy(x => x.ToLowerInvariant()).ToList();
+        }
+        
+        private static bool IsUninstallProgram(string path)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(path).ToLowerInvariant();
+            return fileName.StartsWith("unins");
         }
     }
 }
