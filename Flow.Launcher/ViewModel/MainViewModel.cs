@@ -1110,6 +1110,11 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
+            if (ExternalPreviewOpen)
+            {
+                _ = CloseQuickLookPreviewAsync();
+            }
+
             if (!SelectedIsFromQueryResults())
             {
                 SelectedResults = Results;
