@@ -615,7 +615,7 @@ namespace Flow.Launcher.ViewModel
 
         public void ResetPreview()
         {
-            if (Settings.AlwaysPreview == true)
+            if (Settings.AlwaysPreview == true && !PreviewVisible)
             {
                 ShowInternalPreview();
             }
