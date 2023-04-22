@@ -170,7 +170,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ContextData = this,
                 Preview = new Result.PreviewInfo
                 {
-                    FilePath = ExecutablePath,
+                    FilePath = FullPath,
                 },
                 Action = c =>
                 {
