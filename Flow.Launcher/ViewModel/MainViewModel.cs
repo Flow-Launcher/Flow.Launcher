@@ -575,8 +575,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void TogglePreview()
         {
-            bool useThirdPartyPreview = true;
-            if (useThirdPartyPreview)
+            if (Settings.UseQuickLook)
             {
                 if (!ExternalPreviewOpen)
                 {
@@ -624,8 +623,7 @@ namespace Flow.Launcher.ViewModel
 
         private void UpdatePreview()
         {
-            bool useThirdPartyPreview = true;
-            if (useThirdPartyPreview)
+            if (Settings.UseQuickLook)
             {
                 if (ExternalPreviewOpen)
                 {
