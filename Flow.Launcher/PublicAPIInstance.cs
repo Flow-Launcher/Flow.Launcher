@@ -200,6 +200,7 @@ namespace Flow.Launcher
             explorer.StartInfo = new ProcessStartInfo
             {
                 FileName = explorerInfo.Path,
+                UseShellExecute = true,
                 Arguments = FileNameOrFilePath is null
                     ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                     : explorerInfo.FileArgument
