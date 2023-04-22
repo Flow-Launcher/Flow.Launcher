@@ -230,8 +230,11 @@ namespace Flow.Launcher.Plugin
         /// <default>#26a0da (blue)</default>
         public string ProgressBarColor { get; set; } = "#26a0da";
 
+        /// <summary>
+        /// Preview info of the result to show on preview panel.
+        /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
-
+        
         /// <summary>
         /// Info of the preview image.
         /// </summary>

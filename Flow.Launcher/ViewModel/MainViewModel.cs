@@ -575,11 +575,15 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void TogglePreview()
         {
-            if (Settings.UseQuickLook)
+            if (Settings.UseQuickLook && CanExternalPreviewSelectedResult(out var path))
             {
-                if (!ExternalPreviewOpen)
+                if (Settings.AlwaysPreview == true && PreviewVisible)
                 {
-                    _ = OpenQuickLookPreviewAsync();
+                    HidePreview(); // When Always preview, toggle off rather than open external
+                }
+                else if (!ExternalPreviewOpen)
+                {
+                    _ = OpenQuickLookPreviewAsync(path);
                 }
                 else
                 {
@@ -620,50 +624,41 @@ namespace Flow.Launcher.ViewModel
                 HidePreview();
             }
         }
-
+        
         private void UpdatePreview()
         {
-            if (Settings.UseQuickLook)
+            if (Settings.UseQuickLook && CanExternalPreviewSelectedResult(out var path))
             {
-                if (ExternalPreviewOpen)
+                _ = ToggleQuickLookPreviewAsync(path, ExternalPreviewOpen);
+                if (PreviewVisible)
                 {
-                    _ = ToggleQuickLookPreviewAsync(true);
+                    HidePreview();
                 }
             }
             else if (PreviewVisible)
             {
                 Results.SelectedItem?.LoadPreviewImage();
             }
+            else
+            {
+                // When external is open and select a result that can't be previewed by external program
+                _ = CloseQuickLookPreviewAsync();
+                ShowPreview();
+            }
         }
 
-        private async Task ToggleQuickLookPreviewAsync(bool switchFile = false)
+        private async Task ToggleQuickLookPreviewAsync(string path, bool switchFile = false)
         {
-            if (!SelectedIsFromQueryResults())
-                return;
-
-            var result = Results.SelectedItem?.Result;
-
-            if (result is null || string.IsNullOrEmpty(result.Preview.FilePath))
-                return;
-
-            bool success = await QuickLookHelper.ToggleQuickLookAsync(result.Preview.FilePath, switchFile);
+            bool success = await QuickLookHelper.ToggleQuickLookAsync(path, switchFile);
             if (success)
             {
                 ExternalPreviewOpen = switchFile || !ExternalPreviewOpen;
             }
         }
 
-        private async Task OpenQuickLookPreviewAsync()
+        private async Task OpenQuickLookPreviewAsync(string path)
         {
-            if (!SelectedIsFromQueryResults())
-                return;
-
-            var result = Results.SelectedItem?.Result;
-
-            if (result is null || string.IsNullOrEmpty(result.Preview.FilePath))
-                return;
-
-            bool success = await QuickLookHelper.OpenQuickLookAsync(result.Preview.FilePath);
+            bool success = await QuickLookHelper.OpenQuickLookAsync(path);
             if (success)
             {
                 ExternalPreviewOpen = true;
@@ -677,6 +672,12 @@ namespace Flow.Launcher.ViewModel
             {
                 ExternalPreviewOpen = false;
             }
+        }
+
+        private bool CanExternalPreviewSelectedResult(out string path)
+        {
+            path = Results.SelectedItem?.Result?.Preview.FilePath;
+            return string.IsNullOrEmpty(path);
         }
 
         #endregion
