@@ -651,7 +651,7 @@ namespace Flow.Launcher.ViewModel
             bool success = await QuickLookHelper.ToggleQuickLookAsync(result.Preview.FilePath, switchFile);
             if (success)
             {
-                ExternalPreviewOpen = !ExternalPreviewOpen;
+                ExternalPreviewOpen = switchFile || !ExternalPreviewOpen;
             }
         }
 
