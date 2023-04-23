@@ -293,6 +293,8 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        #endregion
+
         #region BasicCommands
 
         [RelayCommand]
@@ -358,8 +360,6 @@ namespace Flow.Launcher.ViewModel
 
         #endregion
 
-        #endregion
-        
         #region ViewModel Properties
 
         public Settings Settings { get; }
