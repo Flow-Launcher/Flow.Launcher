@@ -96,9 +96,10 @@ namespace Flow.Launcher.Helper
 
                     return serverInstances;
                 }
-                catch (TimeoutException)
+                catch (TimeoutException e)
                 {
                     client.Close();
+                    Log.Exception($"{nameof(QuickLookHelper)}", "QuickLook connection timeout", e);
                     return 0;
                 }
             }
