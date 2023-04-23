@@ -6,6 +6,7 @@ using System.IO;
 using System.Security.Principal;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Helper
 {
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Helper
         private static readonly string pipeMessageToggle = "QuickLook.App.PipeMessages.Toggle";
         private static readonly string pipeMessageClose = "QuickLook.App.PipeMessages.Close";
         private static readonly string pipeMessageInvoke = "QuickLook.App.PipeMessages.Invoke";
-
+        
         /// <summary>
         /// Toggle QuickLook
         /// </summary>
@@ -25,34 +26,39 @@ namespace Flow.Launcher.Helper
         /// <param name="switchPreview">Is swtiching file</param>
         /// <returns></returns>
         public static async Task<bool> ToggleQuickLookAsync(string path, bool switchPreview = false)
-        {
-            //bool isQuickLookAvailable = await DetectQuickLookAvailabilityAsync();
-
-            //if (!isQuickLookAvailable)
-            //{
-            //    if (!switchPreview)
-            //    {
-            //        Log.Warn($"{nameof(QuickLookHelper)}", "QuickLook not detected");
-            //    }
-            //    return;
-            //}
-
+        {           
             if (string.IsNullOrEmpty(path))
                 return false;
             
-            return await SendQuickLookPipeMsgAsync(switchPreview ? pipeMessageSwitch : pipeMessageToggle, path);
+            bool success = await SendQuickLookPipeMsgAsync(switchPreview ? pipeMessageSwitch : pipeMessageToggle, path);
+            if (!success)
+            {
+                ShowQuickLookUnavailableToast();
+            }
+            return success;
         }
 
         public static async Task<bool> CloseQuickLookAsync()
         {
-            return await SendQuickLookPipeMsgAsync(pipeMessageClose);
+            bool success = await SendQuickLookPipeMsgAsync(pipeMessageClose);
+            if (!success)
+            {
+                ShowQuickLookUnavailableToast();
+            }
+            return success;
         }
 
         public static async Task<bool> OpenQuickLookAsync(string path)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
-            return await SendQuickLookPipeMsgAsync(pipeMessageInvoke, path);
+
+            bool success = await SendQuickLookPipeMsgAsync(pipeMessageInvoke, path);
+            if (!success)
+            {
+                ShowQuickLookUnavailableToast();
+            }
+            return success;
         }
 
         private static async Task<bool> SendQuickLookPipeMsgAsync(string message, string arg = "")
@@ -80,7 +86,7 @@ namespace Flow.Launcher.Helper
             return true;
         }
 
-        private static async Task<bool> DetectQuickLookAvailabilityAsync()
+        public static async Task<bool> DetectQuickLookAvailabilityAsync()
         {
             static async Task<int> QuickLookServerAvailable()
             {
@@ -114,6 +120,12 @@ namespace Flow.Launcher.Helper
                 Log.Exception($"{nameof(QuickLookHelper)}", "QuickLook unavailable", e);
                 return false;
             }
+        }
+        
+        private static void ShowQuickLookUnavailableToast()
+        {
+            Notification.Show(InternationalizationManager.Instance.GetTranslation("QuickLookFail"),
+                              InternationalizationManager.Instance.GetTranslation("QuickLookFailTips"));
         }
     }
 }

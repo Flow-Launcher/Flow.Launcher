@@ -309,6 +309,8 @@
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="QuickLookFail">Failed to launch QuickLook</system:String>
+    <system:String x:Key="QuickLookFailTips">Please check if QuickLook is running.</system:String>
 
     <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
