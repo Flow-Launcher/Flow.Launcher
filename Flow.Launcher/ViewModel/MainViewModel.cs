@@ -610,11 +610,11 @@ namespace Flow.Launcher.ViewModel
         {
             if (!ExternalPreviewOpen)
             {
-                _ = OpenQuickLookPreviewAsync(path);
+                _ = OpenQuickLookPreviewAsync(path).ConfigureAwait(false);
             }
             else
             {
-                _ = CloseQuickLookPreviewAsync();
+                _ = CloseQuickLookPreviewAsync().ConfigureAwait(false);
             }
         }
 
@@ -652,12 +652,12 @@ namespace Flow.Launcher.ViewModel
                 // Should use external preview for selected result
                 if (ExternalPreviewOpen)
                 {
-                    _ = ToggleQuickLookPreviewAsync(path, true);
+                    _ = ToggleQuickLookPreviewAsync(path, true).ConfigureAwait(false);
                 }
                 else if(PreviewVisible)
                 {
                     // When internal is open and select a result that should use external preview
-                    _ = OpenQuickLookPreviewAsync(path);
+                    _ = OpenQuickLookPreviewAsync(path).ConfigureAwait(false);
                     HideInternalPreview();
                 }
             }
@@ -670,7 +670,7 @@ namespace Flow.Launcher.ViewModel
                 else if (ExternalPreviewOpen)
                 {
                     // When external is open and select a result that can't use external preview
-                    _ = CloseQuickLookPreviewAsync();
+                    _ = CloseQuickLookPreviewAsync().ConfigureAwait(false);
                     ShowInternalPreview();
                 }
             }
@@ -1114,7 +1114,7 @@ namespace Flow.Launcher.ViewModel
 
             if (ExternalPreviewOpen)
             {
-                _ = CloseQuickLookPreviewAsync();
+                _ = CloseQuickLookPreviewAsync().ConfigureAwait(false);
             }
 
             if (!SelectedIsFromQueryResults())
