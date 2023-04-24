@@ -88,21 +88,24 @@ namespace Flow.Launcher.Plugin.Program
 
             bool cacheEmpty = !_win32s.Any() && !_uwps.Any();
 
-            var a = Task.Run(() =>
+            if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Win32Program index cost", IndexWin32Programs);
-            });
-
-            var b = Task.Run(() =>
+                _ = Task.Run(async () =>
+                {
+                    await IndexProgramsAsync().ConfigureAwait(false);
+                    WatchProgramUpdate();
+                });
+            }
+            else
             {
-                Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPPRogram index cost", IndexUwpPrograms);
-            });
+                WatchProgramUpdate();
+            }
 
-            if (cacheEmpty)
-                await Task.WhenAll(a, b);
-
-            Win32.WatchProgramUpdate(_settings);
-            _ = UWP.WatchPackageChange();
+            static void WatchProgramUpdate()
+            {
+                Win32.WatchProgramUpdate(_settings);
+                _ = UWP.WatchPackageChange();
+            }
         }
 
         public static void IndexWin32Programs()
