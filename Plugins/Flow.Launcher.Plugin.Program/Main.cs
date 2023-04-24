@@ -110,6 +110,8 @@ namespace Flow.Launcher.Plugin.Program
             var win32S = Win32.All(_settings);
             _win32s = win32S;
             ResetCache();
+            _win32Storage.Save(_win32s);
+            _settings.LastIndexTime = DateTime.Now;
         }
 
         public static void IndexUwpPrograms()
@@ -117,6 +119,8 @@ namespace Flow.Launcher.Plugin.Program
             var applications = UWP.All(_settings);
             _uwps = applications;
             ResetCache();
+            _uwpStorage.Save(_uwps);
+            _settings.LastIndexTime = DateTime.Now;
         }
 
         public static async Task IndexProgramsAsync()
@@ -131,7 +135,6 @@ namespace Flow.Launcher.Plugin.Program
                 Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|UWPProgram index cost", IndexUwpPrograms);
             });
             await Task.WhenAll(a, b).ConfigureAwait(false);
-            _settings.LastIndexTime = DateTime.Today;
         }
 
         internal static void ResetCache()
@@ -199,7 +202,6 @@ namespace Flow.Launcher.Plugin.Program
                 _ = Task.Run(() =>
                 {
                     IndexUwpPrograms();
-                    _settings.LastIndexTime = DateTime.Today;
                 });
             }
             else if (_win32s.Any(x => x.UniqueIdentifier == programToDelete.UniqueIdentifier))
@@ -210,7 +212,6 @@ namespace Flow.Launcher.Plugin.Program
                 _ = Task.Run(() =>
                 {
                     IndexWin32Programs();
-                    _settings.LastIndexTime = DateTime.Today;
                 });
             }
         }
