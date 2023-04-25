@@ -2,7 +2,6 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {

@@ -1,6 +1,4 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;
 

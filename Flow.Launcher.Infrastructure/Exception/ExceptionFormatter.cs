@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Infrastructure.Exception

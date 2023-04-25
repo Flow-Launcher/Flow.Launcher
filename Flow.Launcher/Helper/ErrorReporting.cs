@@ -3,8 +3,6 @@ using System.Windows.Threading;
 using NLog;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
-using NLog.Fluent;
-using Log = Flow.Launcher.Infrastructure.Logger.Log;
 
 namespace Flow.Launcher.Helper
 {
