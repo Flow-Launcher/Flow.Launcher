@@ -36,6 +36,14 @@ namespace Flow.Launcher
                 LegacyShow(title, subTitle, iconPath);
                 return;
             }
+            
+            // Test LegacyShow() usability on win 11 22621
+            // REMOVE BEFORE MERGING
+            if (Environment.OSVersion.Version.Build >= 22621)
+            {
+                LegacyShow(title, subTitle, iconPath);
+                return;
+            }
 
             // Using Windows Notification System
             var Icon = !File.Exists(iconPath)
