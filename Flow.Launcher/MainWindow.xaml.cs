@@ -69,13 +69,11 @@ namespace Flow.Launcher
                 _viewModel.ResultCopy(QueryTextBox.SelectedText);
             }
         }
-
+        
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            _settings.WindowTop = Top;
-            _settings.WindowLeft = Left;
             _notifyIcon.Visible = false;
-            _viewModel.Save();
+            App.API.SaveAppAllSettings();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
             Notification.Uninstall();
