@@ -57,6 +57,7 @@ namespace Flow.Launcher
                 Log.Exception("Flow.Launcher.Notification|Notification InvalidOperationException Error", e);
                 if (Environment.OSVersion.Version.Build >= 22621)
                 {
+                    LegacyShow(title, subTitle, iconPath);
                     return;
                 }
                 else
