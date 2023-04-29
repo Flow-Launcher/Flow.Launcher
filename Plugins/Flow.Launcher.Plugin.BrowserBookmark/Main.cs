@@ -48,15 +48,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 var returnList = cachedBookmarks.Select(c => new Result()
                 {
                     Title = c.Name,
-                    SubTitle = c.Url,
+                    SubTitle = !String.IsNullOrEmpty(c.Source) ? $"{c.Source}: {c.Url}" : c.Url,
                     IcoPath = @"Images\bookmark.png",
                     Score = BookmarkLoader.MatchProgram(c, param).Score,
-                    Action = _ =>
-                    {
-                        context.API.OpenUrl(c.Url);
-
-                        return true;
-                    },
+                    Action = _ => ActionOpenUrl(_, c),
                     ContextData = new BookmarkAttributes
                     {
                         Url = c.Url
@@ -69,14 +64,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 return cachedBookmarks.Select(c => new Result()
                 {
                     Title = c.Name,
-                    SubTitle = c.Url,
+                    SubTitle = !String.IsNullOrEmpty(c.Source) ? $"{c.Source}: {c.Url}" : c.Url,
                     IcoPath = @"Images\bookmark.png",
                     Score = 5,
-                    Action = _ =>
-                    {
-                        context.API.OpenUrl(c.Url);
-                        return true;
-                    },
+                    Action = _ => ActionOpenUrl(_, c),
                     ContextData = new BookmarkAttributes
                     {
                         Url = c.Url
@@ -85,6 +76,24 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             }
         }
 
+        private static bool ActionOpenUrl(ActionContext _, Bookmark c)
+        {
+            string profileArg = GetProfileArg(c);
+            context.API.OpenUrl(c.Url, true, profileArg);
+            return true;
+        }
+
+        private static string GetProfileArg(Bookmark c)
+        {
+            try
+            {
+                return c.Source.Split('(', ')')[1];
+            }
+            catch (Exception e)
+            {
+                return "";
+            }
+        }
 
         private static Channel<byte> refreshQueue = Channel.CreateBounded<byte>(1);
 

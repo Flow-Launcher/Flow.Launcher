@@ -215,7 +215,7 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        private void OpenUri(Uri uri, bool? inPrivate = null)
+        private void OpenUri(Uri uri, bool? inPrivate = null, string profileArg = "")
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
@@ -225,7 +225,7 @@ namespace Flow.Launcher
 
                 if (browserInfo.OpenInTab)
                 {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, profileArg);
                 }
                 else
                 {
@@ -243,7 +243,17 @@ namespace Flow.Launcher
                 return;
             }
         }
-
+        public void OpenUrl(string url, bool hasProfile, string profileArg = "")
+        {
+            if (hasProfile)
+            {
+                OpenUri(new Uri(url), profileArg: profileArg);
+            }
+            else
+            {
+                OpenUri(new Uri(url));
+            }
+        }
         public void OpenUrl(string url, bool? inPrivate = null)
         {
             OpenUri(new Uri(url), inPrivate);

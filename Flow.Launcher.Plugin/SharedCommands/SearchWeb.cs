@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <summary> 
         /// Opens search as a tab in the default browser chosen in Windows settings.
         /// </summary>
-        public static void OpenInBrowserTab(this string url, string browserPath = "", bool inPrivate = false, string privateArg = "")
+        public static void OpenInBrowserTab(this string url, string browserPath = "", bool inPrivate = false, string privateArg = "", string profileArg = "")
         {
             browserPath = string.IsNullOrEmpty(browserPath) ? GetDefaultBrowserPath() : browserPath;
 
@@ -93,7 +93,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 if (!string.IsNullOrEmpty(browserPath))
                 {
                     psi.FileName = browserPath;
-                    psi.Arguments = (inPrivate ? $"{privateArg} " : "") + url;
+                    if (inPrivate)
+                    {
+                        psi.Arguments = (inPrivate ? $"{privateArg} " : "") + url;    
+                    }
+                    else
+                    {
+                        psi.Arguments = (!String.IsNullOrEmpty(profileArg) ? $"--profile-directory=\"{profileArg}\" " : "") + url;
+                    }
+                    
                 }
                 else
                 {
