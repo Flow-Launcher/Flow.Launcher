@@ -50,6 +50,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Management" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
   </ItemGroup>

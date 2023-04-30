@@ -38,10 +38,19 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             var processlist = new List<ProcessResult>();
 
+            int portNum;
+            bool canConvert = int.TryParse(searchTerm, out portNum);
+            Tuple<bool, PortDetail> tcpPortListeningProcess = null;
+            if(canConvert)
+                tcpPortListeningProcess = PortHelper.GetPortDetails(portNum);
+
             foreach (var p in Process.GetProcesses())
             {
                 if (IsSystemProcess(p)) continue;
-
+                if (tcpPortListeningProcess != null && tcpPortListeningProcess.Item1 && tcpPortListeningProcess.Item2.Process.Id == p.Id)
+                {
+                    continue;
+                }
                 if (string.IsNullOrWhiteSpace(searchTerm))
                 {
                     // show all non-system processes
@@ -56,7 +65,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     }
                 }
             }
-
+            if (tcpPortListeningProcess != null && tcpPortListeningProcess.Item1)
+            {
+                var p = tcpPortListeningProcess.Item2.Process;
+                processlist.Add(new ProcessResult(p, StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score, portNum));
+            }
             return processlist;
         }
 
@@ -80,6 +93,26 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             catch (Exception e)
             {
                 Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+                TryKillRunAs(p);
+            }
+        }
+
+        public void TryKillRunAs(Process p)
+        {
+            try
+            {
+                Process process = new Process();
+                ProcessStartInfo startInfo = new ProcessStartInfo();
+                startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                startInfo.FileName = "powershell.exe";
+                startInfo.Arguments = $"Start cmd.exe -ArgumentList \"/k\",\"taskkill\",\"/f\",\"/pid\", \"{p.Id}\" -Verb Runas";
+                startInfo.UseShellExecute = false;
+                process.StartInfo = startInfo;
+                process.Start();
+            }
+            catch(Exception e)
+            {
+                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process again of run as admin {p.ProcessName}", e);
             }
         }
 
