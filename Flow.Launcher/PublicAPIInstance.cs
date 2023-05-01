@@ -68,6 +68,7 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
+        [Obsolete("Typo")]
         public void RestarApp() => RestartApp();
 
         public void ShowMainWindow() => _mainVM.Show();
@@ -76,7 +77,7 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
-            SavePluginSettings();
+            PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
             ImageLoader.Save();
@@ -92,10 +93,7 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Notification.Show(title, subTitle, iconPath);
-            });
+            Notification.Show(title, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()
@@ -160,6 +158,9 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
+        /// <summary>
+        /// Save plugin settings.
+        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
@@ -202,6 +203,7 @@ namespace Flow.Launcher
             explorer.StartInfo = new ProcessStartInfo
             {
                 FileName = explorerInfo.Path,
+                UseShellExecute = true,
                 Arguments = FileNameOrFilePath is null
                     ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
                     : explorerInfo.FileArgument
