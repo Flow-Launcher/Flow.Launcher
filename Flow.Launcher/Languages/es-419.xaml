@@ -346,7 +346,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Atrás / Menú Contextual</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navegación de Elemento</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir Menú Contextual</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Abrir Carpeta Contenedora</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de Consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al Resultado en el Menú Contextual</system:String>
