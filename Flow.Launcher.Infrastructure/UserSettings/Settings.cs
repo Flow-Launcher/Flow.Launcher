@@ -240,7 +240,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool HideWhenDeactivated { get; set; } = true;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.RememberLastLaunchLocation;
+        public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
         
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowAligns SearchWindowAlign { get; set; } = SearchWindowAligns.Center;

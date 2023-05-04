@@ -37,6 +37,8 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var usage = LoadStorageToConcurrentDictionary();
 
+            ImageCache.Initialize(usage.ToDictionary(x => x.Key, x => x.Value));
+
             foreach (var icon in new[]
                      {
                          Constant.DefaultIcon, Constant.MissingImgIcon

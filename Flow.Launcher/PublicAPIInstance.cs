@@ -77,7 +77,7 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
-            SavePluginSettings();
+            PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
             ImageLoader.Save();
@@ -158,6 +158,9 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
+        /// <summary>
+        /// Save plugin settings.
+        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)

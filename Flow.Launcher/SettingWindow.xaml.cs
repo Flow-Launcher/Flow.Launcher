@@ -224,6 +224,7 @@ namespace Flow.Launcher
             settings.SettingWindowTop = Top;
             settings.SettingWindowLeft = Left;
             viewModel.Save();
+            API.SavePluginSettings();
         }
 
         private void OnCloseExecuted(object sender, ExecutedRoutedEventArgs e)

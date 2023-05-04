@@ -465,7 +465,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes))
                 .Distinct();
 
+            var startupPaths = GetStartupPaths();
+            
             var programs = ExceptDisabledSource(allPrograms)
+                .Where(x => !startupPaths.Any(startup => FilesFolders.PathContains(startup, x)))
                 .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
@@ -714,6 +717,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var commonStartMenu = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
 
             return new[] { userStartMenu, commonStartMenu };
+        }
+
+        private static IEnumerable<string> GetStartupPaths()
+        {
+            var userStartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            var commonStartup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
+
+            return new[] { userStartup, commonStartup };
         }
 
         public static void WatchProgramUpdate(Settings settings)
