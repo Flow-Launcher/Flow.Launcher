@@ -48,6 +48,9 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        /// <summary>
+        /// Save json and ISavable 
+        /// </summary>
         public static void Save()
         {
             foreach (var plugin in AllPlugins)

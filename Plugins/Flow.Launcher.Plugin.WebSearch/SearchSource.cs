@@ -35,6 +35,9 @@ namespace Flow.Launcher.Plugin.WebSearch
         }
 
         public string Url { get; set; }
+
+        [JsonIgnore]
+        public bool Status => Enabled;
         public bool Enabled { get; set; }
 
         public SearchSource DeepCopy()

@@ -3,7 +3,7 @@
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">取代 Win+R</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">執行後不關閉命令提示字元視窗</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Always run as administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">一律以系統管理員身分執行</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Run as different user</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">命令提示字元</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">提供從 Flow Launcher 中執行命令提示字元的功能，指令應該以&gt;開頭</system:String>

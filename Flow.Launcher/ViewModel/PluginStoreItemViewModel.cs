@@ -26,12 +26,18 @@ namespace Flow.Launcher.ViewModel
         public string IcoPath => _plugin.IcoPath;
 
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
-        public bool LabelUpdate => LabelInstalled && _plugin.Version != PluginManager.GetPluginForId(_plugin.ID).Metadata.Version;
+        public bool LabelUpdate => LabelInstalled && VersionConvertor(_plugin.Version) > VersionConvertor(PluginManager.GetPluginForId(_plugin.ID).Metadata.Version);
 
         internal const string None = "None";
         internal const string RecentlyUpdated = "RecentlyUpdated";
         internal const string NewRelease = "NewRelease";
         internal const string Installed = "Installed";
+
+        public Version VersionConvertor(string version)
+        {
+            Version ResultVersion = new Version(version);
+            return ResultVersion;
+        }
 
         public string Category
         {

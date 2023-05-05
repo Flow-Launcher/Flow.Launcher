@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">警告消息已关闭。 作为搜索文件和文件夹的一个替代办法，你想要安装 Everything 插件吗？{0}{0}选择 '是'安装Everything插件'，或者'否' 退出</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">资源管理器选项</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">搜索时发生错误：{0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">无法打开文件夹</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">无法打开文件</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">删除</system:String>
@@ -32,6 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell 路径</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">索引搜索排除的路径</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">使用搜索结果的位置作为应用程序的工作目录</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">点击回车在默认文件管理器中打开文件夹</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">使用索引进行路径搜索</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引选项</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜索：</system:String>

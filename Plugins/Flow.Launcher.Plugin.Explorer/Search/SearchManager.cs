@@ -204,7 +204,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             {
                 directoryResult =
                     Settings.PathEnumerator.EnumerateAsync(
-                        query.Search[..recursiveIndicatorIndex],
+                        query.Search[..recursiveIndicatorIndex].Trim(),
                         query.Search[(recursiveIndicatorIndex + 1)..],
                         true,
                         token);

@@ -133,6 +133,9 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        /// <summary>
+        /// Save Flow settings. Plugins settings are not included.
+        /// </summary>
         public void Save()
         {
             foreach (var vm in PluginViewModels)
@@ -143,7 +146,6 @@ namespace Flow.Launcher.ViewModel
                 Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
-            PluginManager.Save();
             _storage.Save();
         }
 
@@ -463,29 +465,70 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public class SearchWindowPosition
+        public class SearchWindowScreen
         {
             public string Display { get; set; }
-            public SearchWindowPositions Value { get; set; }
+            public SearchWindowScreens Value { get; set; }
         }
 
-        public List<SearchWindowPosition> SearchWindowPositions
+        public List<SearchWindowScreen> SearchWindowScreens
         {
             get
             {
-                List<SearchWindowPosition> modes = new List<SearchWindowPosition>();
-                var enums = (SearchWindowPositions[])Enum.GetValues(typeof(SearchWindowPositions));
+                List<SearchWindowScreen> modes = new List<SearchWindowScreen>();
+                var enums = (SearchWindowScreens[])Enum.GetValues(typeof(SearchWindowScreens));
                 foreach (var e in enums)
                 {
-                    var key = $"SearchWindowPosition{e}";
+                    var key = $"SearchWindowScreen{e}";
                     var display = _translater.GetTranslation(key);
-                    var m = new SearchWindowPosition
+                    var m = new SearchWindowScreen
+                    {
+                        Display = display,
+                        Value = e,
+                    };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
+        public class SearchWindowAlign
+        {
+            public string Display { get; set; }
+            public SearchWindowAligns Value { get; set; }
+        }
+
+        public List<SearchWindowAlign> SearchWindowAligns
+        {
+            get
+            {
+                List<SearchWindowAlign> modes = new List<SearchWindowAlign>();
+                var enums = (SearchWindowAligns[])Enum.GetValues(typeof(SearchWindowAligns));
+                foreach (var e in enums)
+                {
+                    var key = $"SearchWindowAlign{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new SearchWindowAlign
                     {
                         Display = display, Value = e,
                     };
                     modes.Add(m);
                 }
                 return modes;
+            }
+        }
+
+        public List<int> ScreenNumbers
+        {
+            get
+            {
+                var screens = System.Windows.Forms.Screen.AllScreens;
+                var screenNumbers = new List<int>();
+                for (int i = 1; i <= screens.Length; i++)
+                {
+                    screenNumbers.Add(i);
+                }
+                return screenNumbers;
             }
         }
 

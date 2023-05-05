@@ -69,23 +69,11 @@
                     <GridViewColumn
                         Width="130"
                         DisplayMemberBinding="{Binding ActionKeyword}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding ActionKeyword}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        Header="{DynamicResource flowlauncher_plugin_websearch_action_keyword}"/>
                     <GridViewColumn
                         Width="350"
                         DisplayMemberBinding="{Binding Title}"
-                        Header="{DynamicResource flowlauncher_plugin_websearch_title}">
-                        <GridViewColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Title}" />
-                            </DataTemplate>
-                        </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                        Header="{DynamicResource flowlauncher_plugin_websearch_title}"/>
                     <GridViewColumn Width="140" Header="{DynamicResource flowlauncher_plugin_websearch_enable}">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
@@ -94,7 +82,7 @@
                                         <Style TargetType="TextBlock">
                                             <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_false}" />
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding Enabled, UpdateSourceTrigger=PropertyChanged}" Value="True">
+                                                <DataTrigger Binding="{Binding Status, UpdateSourceTrigger=PropertyChanged}" Value="True">
                                                     <Setter Property="Text" Value="{DynamicResource flowlauncher_plugin_websearch_true}" />
                                                 </DataTrigger>
                                             </Style.Triggers>
@@ -158,7 +146,7 @@
                         Margin="0,0,8,0"
                         IsChecked="{Binding Settings.EnableSuggestion}" />
                 </StackPanel>
-                <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSaerchSuggestion is not working  -->
+                <!--  Not sure why binding IsEnabled directly to Settings.EnableWebSearchSuggestion is not working  -->
             </DockPanel>
         </Border>
     </Grid>

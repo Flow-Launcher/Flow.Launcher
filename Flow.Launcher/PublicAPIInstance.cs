@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -77,7 +77,7 @@ namespace Flow.Launcher
 
         public void SaveAppAllSettings()
         {
-            SavePluginSettings();
+            PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
             ImageLoader.Save();
@@ -158,6 +158,9 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
+        /// <summary>
+        /// Save plugin settings.
+        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
@@ -193,17 +196,21 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void OpenDirectory(string DirectoryPath, string FileName = null)
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
             explorer.StartInfo = new ProcessStartInfo
             {
                 FileName = explorerInfo.Path,
-                Arguments = FileName is null ?
-                    explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
-                    explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
-                        Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+                UseShellExecute = true,
+                Arguments = FileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                    : explorerInfo.FileArgument
+                        .Replace("%d", DirectoryPath)
+                        .Replace("%f",
+                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
+                        )
             };
             explorer.Start();
         }

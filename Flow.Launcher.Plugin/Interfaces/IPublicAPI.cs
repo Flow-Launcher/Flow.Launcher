@@ -20,8 +20,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
-        /// force requery By default, Flow Launcher will not fire query if your query is same with existing one. 
-        /// Set this to true to force Flow Launcher requerying
+        /// Force requery. By default, Flow Launcher will not fire query if your query is same with existing one. 
+        /// Set this to <see langword="true"/> to force Flow Launcher requerying
         /// </param>
         void ChangeQuery(string query, bool requery = false);
 
@@ -233,8 +233,8 @@ namespace Flow.Launcher.Plugin
         /// Open directory in an explorer configured by user via Flow's Settings. The default is Windows Explorer
         /// </summary>
         /// <param name="DirectoryPath">Directory Path to open</param>
-        /// <param name="FileName">Extra FileName Info</param>
-        public void OpenDirectory(string DirectoryPath, string FileName = null);
+        /// <param name="FileNameOrFilePath">Extra FileName Info</param>
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null);
 
         /// <summary>
         /// Opens the URL with the given Uri object. 

@@ -32,6 +32,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool ShowWindowsContextMenu { get; set; } = true;
 
+        public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
