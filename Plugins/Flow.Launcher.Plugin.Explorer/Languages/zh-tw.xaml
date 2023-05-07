@@ -38,7 +38,7 @@
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">索引選項</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">搜尋:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">路徑搜尋：</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">快速存取：</system:String>
