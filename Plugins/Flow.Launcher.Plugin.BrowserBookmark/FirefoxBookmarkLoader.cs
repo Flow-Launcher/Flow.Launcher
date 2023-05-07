@@ -43,6 +43,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(),
                     x["url"].ToString())
             ).ToList();
+            dbConnection.Close();
 
             return bookmarkList;
         }
