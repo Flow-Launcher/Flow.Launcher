@@ -20,21 +20,21 @@
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">休眠计算机</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">保存所有 Flow Launcher 设置</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data">用新内容刷新插件数据</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">打开 Flow Launcher 的日志目录</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location">打开 Flow Launcher 的日志文件夹</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">检查新的 Flow Launcher 更新</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">访问 Flow Launcher 的文档以获取更多帮助以及使用技巧</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">打开存储 Flow Launcher 设置的位置</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">打开Flow Launcher 设置文件夹</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">成功</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">所有 Flow Launcher 设置已保存</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">重新加载了所有插件数据</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">您确定要关机吗？</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">您确定要重启吗</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">您确定要以高级启动选项重启计算机吗？</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">你确定要注销吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">您确定要重启吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">您确定要以高级启动选项重启吗？</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">您确定要注销吗？</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">系统命令</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">系统系统相关的命令。例如，关机，锁定，设置等</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">提供操作系统相关的命令，如关机、锁定、设置等。</system:String>
 
 </ResourceDictionary>
