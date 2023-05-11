@@ -81,6 +81,17 @@ namespace Flow.Launcher.Plugin
         void ShowMainWindow();
 
         /// <summary>
+        /// Hide MainWindow
+        /// </summary>
+        void HideMainWindow();
+
+        /// <summary>
+        /// Representing whether the main window is visible
+        /// </summary>
+        /// <returns></returns>
+        bool IsMainWindowVisible();
+        
+        /// <summary>
         /// Show message box
         /// </summary>
         /// <param name="title">Message title</param>
