@@ -215,7 +215,7 @@ namespace Flow.Launcher
             explorer.Start();
         }
 
-        private void OpenUri(Uri uri, bool? inPrivate = null, string profileArg = "")
+        private void OpenUri(Uri uri, bool? inPrivate = null, string additionalArgs = "")
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
@@ -225,11 +225,11 @@ namespace Flow.Launcher
 
                 if (browserInfo.OpenInTab)
                 {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, profileArg);
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, additionalArgs);
                 }
                 else
                 {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg, additionalArgs);
                 }
             }
             else
@@ -243,25 +243,15 @@ namespace Flow.Launcher
                 return;
             }
         }
-        public void OpenUrl(string url, bool hasProfile, string profileArg = "")
+
+        public void OpenUrl(string url, bool? inPrivate = null, string additionalArgs = "")
         {
-            if (hasProfile)
-            {
-                OpenUri(new Uri(url), profileArg: profileArg);
-            }
-            else
-            {
-                OpenUri(new Uri(url));
-            }
-        }
-        public void OpenUrl(string url, bool? inPrivate = null)
-        {
-            OpenUri(new Uri(url), inPrivate);
+            OpenUri(new Uri(url), inPrivate, additionalArgs);
         }
 
-        public void OpenUrl(Uri url, bool? inPrivate = null)
+        public void OpenUrl(Uri url, bool? inPrivate = null, string additionalArgs = "")
         {
-            OpenUri(url, inPrivate);
+            OpenUri(url, inPrivate, additionalArgs);
         }
 
         public void OpenAppUri(string appUri)

@@ -240,22 +240,14 @@ namespace Flow.Launcher.Plugin
         /// Opens the URL with the given Uri object. 
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// </summary>
-        public void OpenUrl(Uri url, bool? inPrivate = null);
-
-        /// <summary>
-        /// Opens the URL with the given Uri object. 
-        /// The browser and mode used is based on what's configured in Flow's default browser settings.
-        /// Non-C# plugins can use this method.
-        /// </summary>
-        /// <param name="profileArg">Optional Profile name</param>
-        public void OpenUrl(string url, bool hasProfile, string profileArg);
+        public void OpenUrl(Uri url, bool? inPrivate = null, string additionalArgs = "");
         
         /// <summary>
         /// Opens the URL with the given string. 
         /// The browser and mode used is based on what's configured in Flow's default browser settings.
         /// Non-C# plugins should use this method.
         /// </summary>
-        public void OpenUrl(string url, bool? inPrivate = null);
+        public void OpenUrl(string url, bool? inPrivate = null, string additionalArgs = "");
 
         /// <summary>
         /// Opens the application URI with the given Uri object, e.g. obsidian://search-query-example
