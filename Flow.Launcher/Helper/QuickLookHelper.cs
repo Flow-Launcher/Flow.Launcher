@@ -23,14 +23,13 @@ namespace Flow.Launcher.Helper
         /// Toggle QuickLook
         /// </summary>
         /// <param name="path">File path to preview</param>
-        /// <param name="switchPreview">Is swtiching file</param>
         /// <returns></returns>
-        public static async Task<bool> ToggleQuickLookAsync(string path, bool switchPreview = false)
+        public static async Task<bool> ToggleQuickLookAsync(string path)
         {           
             if (string.IsNullOrEmpty(path))
                 return false;
-            
-            bool success = await SendQuickLookPipeMsgAsync(switchPreview ? pipeMessageSwitch : pipeMessageToggle, path);
+
+            bool success = await SendQuickLookPipeMsgAsync(pipeMessageToggle, path);
             if (!success)
             {
                 ShowQuickLookUnavailableToast();
@@ -54,6 +53,24 @@ namespace Flow.Launcher.Helper
                 return false;
 
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageInvoke, path);
+            if (!success)
+            {
+                ShowQuickLookUnavailableToast();
+            }
+            return success;
+        }
+
+        /// <summary>
+        /// Switch QuickLook to preview another file if it's on
+        /// </summary>
+        /// <param name="path">File path to preview</param>
+        /// <returns></returns>
+        public static async Task<bool> SwitchQuickLookAsync(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+                return false;
+
+            bool success = await SendQuickLookPipeMsgAsync(pipeMessageSwitch, path);
             if (!success)
             {
                 ShowQuickLookUnavailableToast();
