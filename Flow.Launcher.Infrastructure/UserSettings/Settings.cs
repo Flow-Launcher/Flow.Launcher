@@ -160,7 +160,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        public bool UseQuickLook { get; set; } = false;
+        public bool UseExternalPreview { get; set; } = false;
         
         public bool AlwaysPreview { get; set; } = false;
         

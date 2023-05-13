@@ -573,7 +573,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void TogglePreview()
         {
-            if (Settings.UseQuickLook && CanExternalPreviewSelectedResult(out var path))
+            if (Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
             {
                 if (Settings.AlwaysPreview == true && PreviewVisible)
                 {
@@ -653,7 +653,7 @@ namespace Flow.Launcher.ViewModel
         
         private void UpdatePreview()
         {
-            if (Settings.UseQuickLook)
+            if (Settings.UseExternalPreview)
             {
                 if (CanExternalPreviewSelectedResult(out var path))
                 {

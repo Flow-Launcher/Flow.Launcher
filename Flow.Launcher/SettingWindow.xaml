@@ -868,7 +868,7 @@
                                     <ui:ToggleSwitch
                                         Grid.Column="2"
                                         FocusVisualMargin="5"
-                                        IsOn="{Binding Settings.UseQuickLook}"
+                                        IsOn="{Binding Settings.UseExternalPreview}"
                                         Style="{DynamicResource SideToggleSwitch}"
                                         ToolTip="{DynamicResource UseQuickLookToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
