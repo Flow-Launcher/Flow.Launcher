@@ -1114,37 +1114,30 @@ namespace Flow.Launcher.ViewModel
         {
             if (string.IsNullOrEmpty(stringToCopy))
             {
-                var result = Results.SelectedItem?.Result;
-                if (result != null)
-                {
-                    string copyText = result.CopyText;
-                    var isFile = File.Exists(copyText);
-                    var isFolder = Directory.Exists(copyText);
-                    if (isFile || isFolder)
-                    {
-                        var paths = new StringCollection
-                        {
-                            copyText
-                        };
-
-                        Clipboard.SetFileDropList(paths);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                    else
-                    {
-                        Clipboard.SetDataObject(copyText);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                }
-
                 return;
             }
+            var isFile = File.Exists(stringToCopy);
+            var isFolder = Directory.Exists(stringToCopy);
+            if (isFile || isFolder)
+            {
+                var paths = new StringCollection
+                {
+                    stringToCopy
+                };
 
-            Clipboard.SetDataObject(stringToCopy);
+                Clipboard.SetFileDropList(paths);
+                App.API.ShowMsg(
+                    $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
+                    App.API.GetTranslation("completedSuccessfully"));
+            }
+            else
+            {
+                Clipboard.SetDataObject(stringToCopy);
+                App.API.ShowMsg(
+                    $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
+                    App.API.GetTranslation("completedSuccessfully"));
+            }
+            return;
         }
 
         #endregion
