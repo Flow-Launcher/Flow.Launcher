@@ -168,10 +168,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
-                Preview = new Result.PreviewInfo
-                {
-                    FilePath = FullPath,
-                },
                 Action = c =>
                 {
                     // Ctrl + Enter to open containing folder
