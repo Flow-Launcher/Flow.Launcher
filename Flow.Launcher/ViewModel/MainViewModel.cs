@@ -570,25 +570,23 @@ namespace Flow.Launcher.ViewModel
 
         #region Preview
 
+        // Not accurate
+        public bool ExternalPreviewOpen { get; set; } = false;
+
         [RelayCommand]
         private void TogglePreview()
         {
-            if (Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
+            if (PreviewVisible)
             {
-                if (Settings.AlwaysPreview == true && PreviewVisible)
-                {
-                    // Only hit this line at first preview toggle after toggle on Flow
-                    HideInternalPreview(); // When Always preview, toggle off rather than open external
-                }
-                else
-                {
-                    ToggleExternalPreview(path);
-                }
+                HideInternalPreview();
+            }
+            else if(Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
+            {
+                _ = ToggleExternalPreviewAsync(path);
             }
             else
             {
-                // Fallback
-                ToggleInternalPreview();
+                ShowInternalPreview();
             }
         }
 
@@ -604,22 +602,34 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void ToggleExternalPreview(string path)
+        private async Task ToggleExternalPreviewAsync(string path)
         {
-            _ = QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
+            bool success = await QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = !ExternalPreviewOpen;
+            }
         }
 
-        private void OpenExternalPreview(string path)
+        private async Task OpenExternalPreviewAsync(string path)
         {
-            _ = QuickLookHelper.OpenQuickLookAsync(path).ConfigureAwait(false);
+            bool success = await QuickLookHelper.OpenQuickLookAsync(path).ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = true;
+            }
+        }
+
+        private async Task CloseExternalPreviewAsync()
+        {
+            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = false;
+            }
         }
         
-        private void CloseExternalPreview()
-        {
-            _ = QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
-        }
-
-        private void SwitchExternalPreview(string path)
+        private async Task SwitchExternalPreviewAsync(string path)
         {
             // Switches preview content
             // When external is off, do nothing
@@ -653,41 +663,20 @@ namespace Flow.Launcher.ViewModel
         
         private void UpdatePreview()
         {
-            if (Settings.UseExternalPreview)
+            if (PreviewVisible)
+            {
+                Results.SelectedItem?.LoadPreviewImage();
+            }
+            else if (Settings.UseExternalPreview)
             {
                 if (CanExternalPreviewSelectedResult(out var path))
                 {
-                    // Should use external preview for selected result
-                    if (PreviewVisible)
-                    {
-                        // Previewing
-                        // When internal is open and select a result that should use external preview
-                        // External must be off when PreviewVisible
-                        HideInternalPreview();
-                        OpenExternalPreview(path);
-                    }
-                    else
-                    {
-                        // Internal is off, try to switch preview content
-                        SwitchExternalPreview(path);
-                    }
+                    _ = SwitchExternalPreviewAsync(path);
                 }
                 else
                 {
-                    // Should use internal preview for selected result
-                    if (PreviewVisible)
-                    {
-                        Results.SelectedItem?.LoadPreviewImage();
-                    }
-                    else
-                    {
-                        CloseExternalPreview(); // Forcibly close, ideally should only close when it's on
-                    }
+                    _ = CloseExternalPreviewAsync();
                 }
-            }
-            else if(PreviewVisible)
-            {
-                Results.SelectedItem?.LoadPreviewImage();
             }
         }
 
@@ -1100,7 +1089,7 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            CloseExternalPreview();
+            _ = CloseExternalPreviewAsync();
 
             if (!SelectedIsFromQueryResults())
             {
