@@ -106,17 +106,19 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         internal static void RegisterBookmarkFile(string path)
         {
             var directory = Path.GetDirectoryName(path);
-            if (!Directory.Exists(directory))
-                return;
-            var watcher = new FileSystemWatcher(directory!);
-            if (File.Exists(path))
+            if (!Directory.Exists(directory) || !File.Exists(path))
             {
-                var fileName = Path.GetFileName(path);
-                watcher.Filter = fileName;
+                return;
             }
+            if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+            
+            var watcher = new FileSystemWatcher(directory!);
+            watcher.Filter = Path.GetFileName(path);
 
             watcher.NotifyFilter = NotifyFilters.FileName |
-                                   NotifyFilters.LastAccess |
                                    NotifyFilters.LastWrite |
                                    NotifyFilters.Size;
 
@@ -131,7 +133,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             };
 
             watcher.EnableRaisingEvents = true;
-
+            
             Watchers.Add(watcher);
         }
 
