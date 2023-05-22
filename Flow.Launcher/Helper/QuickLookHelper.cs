@@ -13,12 +13,15 @@ namespace Flow.Launcher.Helper
     internal static class QuickLookHelper
     {
         private const int TIMEOUT = 500;
+        private static DateTime lastNotificationTime = DateTime.MinValue;
+        
         private static readonly string pipeName = $"QuickLook.App.Pipe.{WindowsIdentity.GetCurrent().User?.Value}";
         private static readonly string pipeMessageSwitch = "QuickLook.App.PipeMessages.Switch";
         private static readonly string pipeMessageToggle = "QuickLook.App.PipeMessages.Toggle";
         private static readonly string pipeMessageClose = "QuickLook.App.PipeMessages.Close";
         private static readonly string pipeMessageInvoke = "QuickLook.App.PipeMessages.Invoke";
-        
+
+
         /// <summary>
         /// Toggle QuickLook
         /// </summary>
@@ -64,14 +67,15 @@ namespace Flow.Launcher.Helper
         /// Switch QuickLook to preview another file if it's on
         /// </summary>
         /// <param name="path">File path to preview</param>
+        /// <param name="sendFailToast">Send notification if fail</param>
         /// <returns></returns>
-        public static async Task<bool> SwitchQuickLookAsync(string path)
+        public static async Task<bool> SwitchQuickLookAsync(string path, bool sendFailToast = false)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
 
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageSwitch, path);
-            if (!success)
+            if (sendFailToast && !success)
             {
                 ShowQuickLookUnavailableToast();
             }
@@ -141,8 +145,12 @@ namespace Flow.Launcher.Helper
         
         private static void ShowQuickLookUnavailableToast()
         {
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("QuickLookFail"),
+            if (lastNotificationTime.AddSeconds(10) < DateTime.Now)
+            {
+                Notification.Show(InternationalizationManager.Instance.GetTranslation("QuickLookFail"),
                               InternationalizationManager.Instance.GetTranslation("QuickLookFailTips"));
+                lastNotificationTime = DateTime.Now;
+            }
         }
     }
 }
