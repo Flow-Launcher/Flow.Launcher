@@ -872,7 +872,7 @@
                                         Style="{DynamicResource SideToggleSwitch}"
                                         ToolTip="{DynamicResource UseQuickLookToolTip}" />
                                     <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe8a1;
+                                        &#xe773;
                                     </TextBlock>
                                 </ItemsControl>
                             </Border>

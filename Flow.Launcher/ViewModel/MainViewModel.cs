@@ -578,6 +578,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (PreviewVisible)
             {
+                // To deal with always preview
                 HideInternalPreview();
             }
             else if(Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
