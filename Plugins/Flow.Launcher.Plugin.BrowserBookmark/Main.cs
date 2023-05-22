@@ -29,6 +29,13 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
+            if (context.CurrentPluginMetadata.Disabled)
+            {
+                // Don't load and monitor files if disabled
+                // Note: It doesn't start loading or monitoring if enabled later
+                return;
+            }
+
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
 
             _ = MonitorRefreshQueue();
