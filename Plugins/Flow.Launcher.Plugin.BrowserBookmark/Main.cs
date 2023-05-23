@@ -12,6 +12,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using System.IO;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
@@ -22,23 +23,27 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         private static List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
         private static Settings _settings;
-        
+
         public void Init(PluginInitContext context)
         {
             Main.context = context;
-            
+
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
+            LoadBookmarksIfEnabled();
+        }
+
+        private static void LoadBookmarksIfEnabled()
+        {
             if (context.CurrentPluginMetadata.Disabled)
             {
-                // Don't load and monitor files if disabled
-                // Note: It doesn't start loading or monitoring if enabled later
+                // Don't load or monitor files if disabled
+                // Note: It doesn't start loading or monitoring if enabled later, you need to manually reload data
                 return;
             }
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
-
-            _ = MonitorRefreshQueue();
+            _ = MonitorRefreshQueueAsync();
         }
 
         public List<Result> Query(Query query)
@@ -95,17 +100,25 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private static Channel<byte> refreshQueue = Channel.CreateBounded<byte>(1);
 
-        private async Task MonitorRefreshQueue()
+        private static SemaphoreSlim fileMonitorSemaphore = new(1, 1);
+
+        private static async Task MonitorRefreshQueueAsync()
         {
+            if (fileMonitorSemaphore.CurrentCount < 1)
+            {
+                return;
+            }
+            await fileMonitorSemaphore.WaitAsync();
             var reader = refreshQueue.Reader;
             while (await reader.WaitToReadAsync())
             {
-                await Task.Delay(2000);
+                await Task.Delay(5000);
                 if (reader.TryRead(out _))
                 {
-                    ReloadData();
+                    ReloadAllBookmarks();
                 }
             }
+            fileMonitorSemaphore.Release();
         }
 
         private static readonly List<FileSystemWatcher> Watchers = new();
@@ -114,6 +127,10 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             var directory = Path.GetDirectoryName(path);
             if (!Directory.Exists(directory) || !File.Exists(path))
+            {
+                return;
+            }
+            if (context.CurrentPluginMetadata.Disabled)
             {
                 return;
             }
@@ -152,8 +169,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         public static void ReloadAllBookmarks()
         {
             cachedBookmarks.Clear();
-
-            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
+            DisposeFileWatchers();
+            LoadBookmarksIfEnabled();
         }
 
         public string GetTranslatedPluginTitle()
@@ -207,12 +224,19 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             internal string Url { get; set; }
         }
+
         public void Dispose()
+        {
+            DisposeFileWatchers();
+        }
+
+        private static void DisposeFileWatchers()
         {
             foreach (var watcher in Watchers)
             {
                 watcher.Dispose();
             }
+            Watchers.Clear();
         }
     }
 }
