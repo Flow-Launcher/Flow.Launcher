@@ -65,7 +65,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             string termToSearch = query.Search;
             var processlist = processHelper.GetMatchingProcesses(termToSearch);
-            
+
             if (!processlist.Any())
             {
                 return null;
@@ -89,7 +89,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);
-                        _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        if (_context.API.GetLastQueryMode() != "Empty")
+                        {
+                            _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        }
                         return true;
                     }
                 });
@@ -114,7 +117,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         {
                             processHelper.TryKill(p.Process);
                         }
-                        _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        if (_context.API.GetLastQueryMode() != "Empty")
+                        {
+                            _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        }
                         return true;
                     }
                 });

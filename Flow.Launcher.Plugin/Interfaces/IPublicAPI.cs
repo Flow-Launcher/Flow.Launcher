@@ -270,5 +270,11 @@ namespace Flow.Launcher.Plugin
         /// Non-C# plugins should use this method
         /// </summary>
         public void OpenAppUri(string appUri);
+
+        /// <summary>
+        /// Get Settings.LastQueryMode
+        /// Possible return values: "Empty", "Selcted", "Preserved"
+        /// </summary>
+        public string GetLastQueryMode();
     }
 }

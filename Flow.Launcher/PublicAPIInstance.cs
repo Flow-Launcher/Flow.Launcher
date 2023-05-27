@@ -275,6 +275,11 @@ namespace Flow.Launcher
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
 
+        public string GetLastQueryMode()
+        {
+            return _settingsVM.Settings.LastQueryMode.ToString();
+        }
+
         #endregion
 
         #region Private Methods
