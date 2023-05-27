@@ -273,7 +273,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Get Settings.LastQueryMode
-        /// Possible return values: "Empty", "Selcted", "Preserved"
+        /// Possible return values: "Empty", "Selected", "Preserved"
         /// </summary>
         public string GetLastQueryMode();
     }
