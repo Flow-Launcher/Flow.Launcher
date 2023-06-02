@@ -2,10 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
+using Microsoft.VisualStudio.Threading;
+using StreamJsonRpc;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -13,11 +17,11 @@ namespace Flow.Launcher.Core.Plugin
     {
         private readonly ProcessStartInfo _startInfo;
         private Process _process;
+
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
-        protected override Stream InputStream { get; set; }
-        protected override Stream OutputStream { get; set; }
-        protected override StreamReader ErrorStream { get; set; }
+        protected override JsonRpc Rpc { get; set; }
+
 
         public PythonPluginV2(string filename)
         {
@@ -49,23 +53,26 @@ namespace Flow.Launcher.Core.Plugin
         {
             throw new NotImplementedException();
         }
-        protected override Task<bool> ExecuteResultAsync(JsonRPCResult result)
-        {
-            throw new NotImplementedException();
-        }
+        
         public override async Task InitAsync(PluginInitContext context)
         {
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             _process = Process.Start(_startInfo);
-            
+
             ArgumentNullException.ThrowIfNull(_process);
-            
-            InputStream = _process.StandardInput.BaseStream;
-            OutputStream = _process.StandardOutput.BaseStream;
-            ErrorStream = _process.StandardError;
-            
+
+            var formatter = new JsonMessageFormatter();
+            var handler = new NewLineDelimitedMessageHandler(_process.StandardInput.BaseStream,
+                _process.StandardOutput.BaseStream,
+                formatter);
+
+            Rpc = new JsonRpc(handler, context.API);
+            Rpc.StartListening();
+
+            _ = _process.StandardError.ReadToEndAsync().ContinueWith(e => throw new Exception(e.Result));
+
             await base.InitAsync(context);
         }
     }

@@ -31,12 +31,12 @@ namespace Flow.Launcher
             var Icon = !File.Exists(iconPath)
                 ? Path.Combine(Constant.ProgramDirectory, "Images\\app.png")
                 : iconPath;
-
-            new ToastContentBuilder()
-                .AddText(title, hintMaxLines: 1)
-                .AddText(subTitle)
-                .AddAppLogoOverride(new Uri(Icon))
-                .Show();
+            
+            // new ToastContentBuilder()
+            //     .AddText(title, hintMaxLines: 1)
+            //     .AddText(subTitle)
+            //     .AddAppLogoOverride(new Uri(Icon))
+            //     .Show();
         }
 
         private static void LegacyShow(string title, string subTitle, string iconPath)

@@ -251,10 +251,18 @@ namespace Flow.Launcher.Core.Plugin
             return sourceBuffer;
         }
 
-
-        protected override async Task<List<Result>> QueryRequestAsync(JsonRPCRequestModel request, CancellationToken token)
+        public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
+            var request = new JsonRPCRequestModel(RequestId++,
+                "query",
+                new object[]
+                {
+                    query.Search
+                },
+                Settings.Inner);
+
             var output = await RequestAsync(request, token);
+
             return await DeserializedResultAsync(output);
         }
     }

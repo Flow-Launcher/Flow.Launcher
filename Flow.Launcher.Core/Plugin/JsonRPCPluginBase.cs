@@ -69,7 +69,6 @@ namespace Flow.Launcher.Core.Plugin
         };
 
         protected abstract Task<bool> ExecuteResultAsync(JsonRPCResult result);
-        protected abstract Task<List<Result>> QueryRequestAsync(JsonRPCRequestModel request, CancellationToken token);
 
         protected PortableSettings Settings { get; set; }
 
@@ -96,7 +95,7 @@ namespace Flow.Launcher.Core.Plugin
 
             results.AddRange(queryResponseModel.Result);
 
-            Settings.UpdateSettings(queryResponseModel.SettingsChange);
+            Settings.UpdateSettings(queryResponseModel.SettingsChanges);
 
             return results;
         }
@@ -123,19 +122,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
-        {
-            var request = new JsonRPCRequestModel(RequestId++,
-                "query",
-                new object[]
-                {
-                    query.Search
-                },
-                Settings.Inner);
-
-            return await QueryRequestAsync(request, token);
-
-        }
+        public abstract Task<List<Result>> QueryAsync(Query query, CancellationToken token);
 
 
         private async Task InitSettingAsync()

@@ -57,11 +57,16 @@
     <PackageReference Include="FSharp.Core" Version="7.0.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.1" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
+    <PackageReference Include="StreamJsonRpc" Version="2.15.29" />
   </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Helper" />
   </ItemGroup>
 
 </Project>
