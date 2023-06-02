@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">El mensaje de advertencia se ha desactivado. Como alternativa para buscar archivos y carpetas, ¿desea instalar el complemento Everything?{0}{0}Seleccione 'Sí' para instalar el complemento Everything, o 'No' para volver</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorador alternativo</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Se ha producido un error durante la búsqueda: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">No se ha podido abrir la carpeta</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">No se ha podido abrir el archivo</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Eliminar</system:String>
@@ -32,6 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Ruta del Shell</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Rutas excluídas del índice de búsqueda</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Usar la ubicación de los resultados de búsqueda como directorio de trabajo del ejecutable</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Pulsar Entrar para abrir la carpeta en el administrador de archivos predeterminado</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Usar búsqueda indexada para buscar rutas</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Opciones de indexación</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Buscar:</system:String>

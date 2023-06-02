@@ -12,179 +12,185 @@
     <system:String x:Key="iconTraySettings">Настройки</system:String>
     <system:String x:Key="iconTrayAbout">О Flow Launcher</system:String>
     <system:String x:Key="iconTrayExit">Выйти</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
-    <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="closeWindow">Закрыть</system:String>
+    <system:String x:Key="copy">Копировать</system:String>
+    <system:String x:Key="cut">Вырезать</system:String>
+    <system:String x:Key="paste">Вставить</system:String>
+    <system:String x:Key="undo">Отмена</system:String>
+    <system:String x:Key="selectAll">Выбрать все</system:String>
+    <system:String x:Key="fileTitle">Файл</system:String>
+    <system:String x:Key="folderTitle">Папка</system:String>
+    <system:String x:Key="textTitle">Текст</system:String>
+    <system:String x:Key="GameMode">Игровой режим</system:String>
+    <system:String x:Key="GameModeToolTip">Приостановить использование горячих клавиш.</system:String>
+    <system:String x:Key="PositionReset">Сброс положения</system:String>
+    <system:String x:Key="PositionResetToolTip">Сброс положения окна поиска</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Настройки</system:String>
     <system:String x:Key="general">Общие</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
+    <system:String x:Key="portableMode">Портативный режим</system:String>
+    <system:String x:Key="portableModeToolTIp">Храните все настройки и данные пользователя в одной папке (полезно при использовании со съёмными дисками или облачными сервисами).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускать Flow Launcher при запуске системы</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">Ошибка настройки запуска при запуске</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Скрывать Flow Launcher, если потерян фокуc</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не отображать сообщение об обновлении, когда доступна новая версия</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowPosition">Положение окна поиска</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Запомнить последнее положение</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Монитор с курсором мыши</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Монитор с фокусированным окном</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Основной монитор</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Свой монитор</system:String>
+    <system:String x:Key="SearchWindowAlign">Положение окна поиска на мониторе</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">По центру</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">По центру сверху</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Слева сверху</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Справа сверху</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Своё положение</system:String>
     <system:String x:Key="language">Язык</system:String>
-    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
-    <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
-    <system:String x:Key="LastQuerySelected">Select last Query</system:String>
-    <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
+    <system:String x:Key="lastQueryMode">Вид последнего запроса</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Показать/скрыть предыдущие результаты при повторном запуске Flow Launcher.</system:String>
+    <system:String x:Key="LastQueryPreserved">Сохранение последнего запроса</system:String>
+    <system:String x:Key="LastQuerySelected">Выбор последнего запроса</system:String>
+    <system:String x:Key="LastQueryEmpty">Очистить последний запрос</system:String>
     <system:String x:Key="maxShowResults">Максимальное количество результатов</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Вы также можете быстро настроить это с помощью CTRL+плюс и CTRL+минус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Игнорировать горячие клавиши в полноэкранном режиме</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
-    <system:String x:Key="defaultFileManager">Default File Manager</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
-    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
-    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
-    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
-    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
-    <system:String x:Key="autoUpdates">Auto Update</system:String>
-    <system:String x:Key="select">Select</system:String>
-    <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
-    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
-    <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
-    <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
-    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Отключить запуск Flow Launcher при запущенном полноэкранном приложении (рекомендуется для игр).</system:String>
+    <system:String x:Key="defaultFileManager">Файловый менеджер по умолчанию</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">Выберите файловый менеджер, который будет использоваться при открытии папки.</system:String>
+    <system:String x:Key="defaultBrowser">Браузер по умолчанию</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Настройки для новой вкладки, нового окна, приватного режима.</system:String>
+    <system:String x:Key="pythonFilePath">Путь к Python</system:String>
+    <system:String x:Key="nodeFilePath">Путь к Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Пожалуйста, выберите исполняемый файл Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Пожалуйста, выберите pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Всегда начинать печатать в английском режиме</system:String>
+    <system:String x:Key="typingStartEnTooltip">Временно изменить способ ввода на английский при запуске Flow.</system:String>
+    <system:String x:Key="autoUpdates">Автообновление</system:String>
+    <system:String x:Key="select">Выбор</system:String>
+    <system:String x:Key="hideOnStartup">Скрыть Flow Launcher при запуске</system:String>
+    <system:String x:Key="hideNotifyIcon">Скрыть значок в трее</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Когда значок скрыт в трее, меню настройки можно открыть, щёлкнув правой кнопкой мыши на окне поиска.</system:String>
+    <system:String x:Key="querySearchPrecision">Точность поиска запросов</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Изменение минимального количества совпадений при поиске, необходимого для получения результатов.</system:String>
+    <system:String x:Key="ShouldUsePinyin">Поиск с использованием пиньинь</system:String>
+    <system:String x:Key="ShouldUsePinyinToolTip">Позволяет использовать пиньинь для поиска. Пиньинь - это стандартная система латинизированной орфографии для перевода китайского языка.</system:String>
+    <system:String x:Key="AlwaysPreview">Всегда предпросмотр</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Всегда открывать панель предварительного просмотра при запуске Flow. Нажмите {0}, чтобы переключить предварительный просмотр.</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Эффект тени не допускается, если в текущей теме включён эффект размытия</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
-    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
-    <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="searchplugin">Поиск плагина</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F для поиска плагинов</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">Результаты не найдены</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Пожалуйста, попробуйте другой запрос.</system:String>
+    <system:String x:Key="plugin">Плагины</system:String>
     <system:String x:Key="plugins">Плагины</system:String>
     <system:String x:Key="browserMorePlugins">Найти больше плагинов</system:String>
-    <system:String x:Key="enable">On</system:String>
+    <system:String x:Key="enable">Вкл.</system:String>
     <system:String x:Key="disable">Отключить</system:String>
-    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
+    <system:String x:Key="actionKeywordsTitle">Настройка ключевого слова действия</system:String>
     <system:String x:Key="actionKeywords">Горячая клавиша</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="currentActionKeywords">Ключевое слово текущего действия</system:String>
+    <system:String x:Key="newActionKeyword">Ключевое слово нового действия</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Изменить ключевое слово действия</system:String>
+    <system:String x:Key="currentPriority">Текущий приоритет</system:String>
+    <system:String x:Key="newPriority">Новый приоритет</system:String>
+    <system:String x:Key="priority">Приоритет</system:String>
+    <system:String x:Key="priorityToolTip">Изменение приоритета результатов плагина</system:String>
     <system:String x:Key="pluginDirectory">Директория плагинов</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">автор</system:String>
     <system:String x:Key="plugin_init_time">Инициализация:</system:String>
     <system:String x:Key="plugin_query_time">Запрос:</system:String>
     <system:String x:Key="plugin_query_version">Версия</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Веб-сайт</system:String>
     <system:String x:Key="plugin_uninstall">Удалить</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore">Магазин плагинов</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Новый выпуск</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Недавно обновлено</system:String>
     <system:String x:Key="pluginStore_None">Плагины</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
-    <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="pluginStore_Installed">Установлено</system:String>
+    <system:String x:Key="refresh">Обновить</system:String>
+    <system:String x:Key="installbtn">Установить</system:String>
     <system:String x:Key="uninstallbtn">Удалить</system:String>
     <system:String x:Key="updatebtn">Обновить</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Плагин уже установлен</system:String>
+    <system:String x:Key="LabelNew">Новая версия</system:String>
+    <system:String x:Key="LabelNewToolTip">Этот плагин был обновлён за последние 7 дней</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Доступно новое обновление</system:String>
 
 
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Внешний вид</system:String>
     <system:String x:Key="browserMoreThemes">Найти больше тем</system:String>
-    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
-    <system:String x:Key="hiThere">Hi There</system:String>
-    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
-    <system:String x:Key="SampleTitleProgram">Program</system:String>
-    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
-    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
+    <system:String x:Key="howToCreateTheme">Как создать тему</system:String>
+    <system:String x:Key="hiThere">Привет</system:String>
+    <system:String x:Key="SampleTitleExplorer">Проводник</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Поиск файлов, папок и содержимого файлов</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Веб-поиск</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Поиск в Интернете с помощью различных поисковых систем</system:String>
+    <system:String x:Key="SampleTitleProgram">Программа</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Запуск программ от имени администратора или другого пользователя</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Удалятор процессов</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Завершение нежелательных процессов</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запросов</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатов</system:String>
     <system:String x:Key="windowMode">Оконный режим</system:String>
     <system:String x:Key="opacity">Прозрачность</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
-    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
-    <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
-    <system:String x:Key="ColorScheme">Color Scheme</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
-    <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
-    <system:String x:Key="Animation">Animation</system:String>
-    <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Тема {0} не существует, откат к теме по умолчанию</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Не удалось загрузить тему {0}, откат к теме по умолчанию</system:String>
+    <system:String x:Key="ThemeFolder">Папка тем</system:String>
+    <system:String x:Key="OpenThemeFolder">Открыть папку с темами</system:String>
+    <system:String x:Key="ColorScheme">Цветовая схема</system:String>
+    <system:String x:Key="ColorSchemeSystem">Системное по умолчанию</system:String>
+    <system:String x:Key="ColorSchemeLight">Светлая</system:String>
+    <system:String x:Key="ColorSchemeDark">Тёмная</system:String>
+    <system:String x:Key="SoundEffect">Звуковой эффект</system:String>
+    <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
+    <system:String x:Key="Animation">Анимация</system:String>
+    <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
+    <system:String x:Key="Clock">Часы</system:String>
+    <system:String x:Key="Date">Дата</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Горячая клавиша</system:String>
     <system:String x:Key="hotkeys">Горячая клавиша</system:String>
     <system:String x:Key="flowlauncherHotkey">Горячая клавиша Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Введите ярлык, чтобы показать/скрыть Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Просмотр горячей клавиши</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Введите ярлык для показа/скрытия предварительного просмотра в окне поиска.</system:String>
     <system:String x:Key="openResultModifiers">Открыть ключ модификации результата</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Выберите клавишу-модификатор, чтобы открыть выбранный результат с помощью клавиатуры.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показать горячую клавишу</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Показать горячую клавишу выбора результата с результатами.</system:String>
     <system:String x:Key="customQueryHotkey">Задаваемые горячие клавиши для запросов</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="customQuery">Запрос</system:String>
+    <system:String x:Key="customShortcut">Ярлык</system:String>
+    <system:String x:Key="customShortcutExpansion">Расширение</system:String>
+    <system:String x:Key="builtinShortcutDescription">Описание</system:String>
     <system:String x:Key="delete">Удалить</system:String>
     <system:String x:Key="edit">Редактировать</system:String>
     <system:String x:Key="add">Добавить</system:String>
     <system:String x:Key="pleaseSelectAnItem">Сначала выберите элемент</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Вы уверены что хотите удалить горячую клавишу для плагина {0}?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Вы уверены, что хотите удалить ярлык: {0} с расширением {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Получение текста из буфера обмена.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Получение пути из активного проводника.</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Эффект тени в окне запроса</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Эффект тени существенно задействует ресурсы видеокарты. Не рекомендуется, если производительность вашего компьютера ограничена.</system:String>
+    <system:String x:Key="windowWidthSize">Размер ширины окна</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Вы также можете быстро настроить это с помощью Ctrl+[ и Ctrl+].</system:String>
+    <system:String x:Key="useGlyphUI">Использование значков Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Использовать значки Segoe Fluent для результатов запросов, где они поддерживаются</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Нажмите клавишу</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Прокси</system:String>
@@ -204,53 +210,53 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">О Flow Launcher</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Веб-сайт</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">Документация</system:String>
     <system:String x:Key="version">Версия</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">Значки</system:String>
     <system:String x:Key="about_activate_times">Вы воспользовались Flow Launcher уже {0} раз</system:String>
-    <system:String x:Key="checkUpdates">Check for Updates</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="checkUpdates">Проверить наличие обновлений</system:String>
+    <system:String x:Key="BecomeASponsor">Стать спонсором</system:String>
     <system:String x:Key="newVersionTips">Доступна новая версия {0}. Вы хотите перезапустить Flow Launcher, чтобы использовать обновление?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="checkUpdatesFailed">Проверка обновлений не удалась, пожалуйста, проверьте настройки подключения и прокси-сервера к api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Загрузка обновлений не удалась, пожалуйста, проверьте настройки соединения и прокси на github-cloud.s3.amazonaws.com,
+        или перейдите по адресу https://github.com/Flow-Launcher/Flow.Launcher/releases, чтобы загрузить обновления вручную.
     </system:String>
     <system:String x:Key="releaseNotes">Список изменений</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
-    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="documentation">Советы по применению</system:String>
+    <system:String x:Key="devtool">Инструменты разработчика</system:String>
+    <system:String x:Key="settingfolder">Папка настроек</system:String>
+    <system:String x:Key="logfolder">Папка журнала</system:String>
+    <system:String x:Key="clearlogfolder">Очистить журнал</system:String>
+    <system:String x:Key="clearlogfolderMessage">Вы уверены, что хотите удалить все журналы?</system:String>
+    <system:String x:Key="welcomewindow">Мастер</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerWindow">Выбор менеджера файлов</system:String>
+    <system:String x:Key="fileManager_tips">Укажите расположение файла в файловом менеджере, который вы используете, и добавьте аргументы, если необходимо. По умолчанию аргументами являются «%d», и путь вводится в этом месте. Например, если требуется команда, такая как «totalcmd.exe /A c:\windows», аргументом будет /A «%d».</system:String>
+    <system:String x:Key="fileManager_tips2">«%f» - это аргумент, представляющий путь к файлу.  Он используется для подчёркивания имени файла/папки при открытии определённого местоположения файла в стороннем файловом менеджере. Этот аргумент доступен только в пункте «Аргумент для файла». Если файловый менеджер не имеет такой функции, вы можете использовать «%d».</system:String>
+    <system:String x:Key="fileManager_name">Файловый менеджер</system:String>
+    <system:String x:Key="fileManager_profile_name">Имя профиля</system:String>
+    <system:String x:Key="fileManager_path">Путь к файловому менеджеру</system:String>
+    <system:String x:Key="fileManager_directory_arg">Аргумент для папки</system:String>
+    <system:String x:Key="fileManager_file_arg">Аргумент для файла</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowserTitle">Браузер по умолчанию</system:String>
+    <system:String x:Key="defaultBrowser_tips">Настройка по умолчанию соответствует настройке браузера по умолчанию в ОС. Если указано отдельно, Flow использует этот браузер.</system:String>
+    <system:String x:Key="defaultBrowser_name">Браузер</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Название браузера</system:String>
+    <system:String x:Key="defaultBrowser_path">Путь к браузеру</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Новое окно</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Новая вкладка</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Приватный режим</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Изменить приоритет</system:String>
+    <system:String x:Key="priority_tips">Чем больше число, тем выше будет оцениваться результат. Попробуйте установить значение 5. Если вы хотите, чтобы результаты были ниже, чем у любого другого плагина, укажите отрицательное число</system:String>
+    <system:String x:Key="invalidPriority">Пожалуйста, укажите действительное целое число для приоритета!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Текущая горячая клавиша</system:String>
@@ -261,22 +267,22 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Новая горячая клавиша не может быть пустой</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Новая горячая клавиша уже используется другим плагином. Пожалуйста, задайте новую</system:String>
     <system:String x:Key="success">Успешно</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Выполнено успешно</system:String>
     <system:String x:Key="actionkeyword_tips">Введите горячую клавишу, которое вы хотите использовать для запуска плагина. Используйте *, если вы не хотите ничего указывать, и плагин будет запускаться без каких-либо горячих клавиш.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Задаваемые горячие клавиши для запросов</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Нажмите свою горячую клавишу, чтобы открыть Flow Launcher и автоматически ввести заданный запрос.</system:String>
     <system:String x:Key="preview">Предпросмотр</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Горячая клавиша недоступна. Пожалуйста, задайте новую</system:String>
     <system:String x:Key="invalidPluginHotkey">Недействительная горячая клавиша плагина</system:String>
     <system:String x:Key="update">Обновить</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Ярлык пользовательского запроса</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Введите ярлык, который автоматически расширяется до указанного запроса.</system:String>
+    <system:String x:Key="duplicateShortcut">Ярлык уже существует, пожалуйста, введите новый ярлык или измените существующий.</system:String>
+    <system:String x:Key="emptyShortcut">Ярлык и/или его расширение пусты.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Горячая клавиша недоступна</system:String>
@@ -298,64 +304,64 @@
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Произошёл сбой в Flow Launcher</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">Пожалуйста, подождите...</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Проверка наличия нового обновления</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">У вас уже установлена последняя версия Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Найдено обновление</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Обновление...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcher не смог переместить данные профиля пользователя в новую версию обновления.
+        Пожалуйста, вручную переместите папку с данными профиля из {0} в {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Новое обновление</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Доступна новая версия Flow Launcher {0}</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Произошла ошибка при попытке установить обновление</system:String>
     <system:String x:Key="update_flowlauncher_update">Обновить</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Отменить</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Обновление не удалось</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Проверьте соединение и попробуйте обновить настройки прокси на github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Это обновление перезапустит Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Следующие файлы будут обновлены</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Обновить файлы</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Обновить описание</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Skip">Пропустить</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Добро пожаловать в Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Здравствуйте, вы впервые запускаете Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Перед началом, этот мастер поможет настроить Flow Launcher. При желании его можно пропустить. Пожалуйста, выберите язык</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Поиск и запуск всех файлов и приложений на вашем ПК</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Ищите всё: приложения, файлы, закладки, YouTube, Твиттер и многое другое. И всё это с удобной клавиатуры, не прикасаясь к мыши.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher запускается с приведённой ниже горячей клавишей, попробуйте использовать её прямо сейчас. Чтобы изменить её, щёлкните на вводе и нажмите нужную горячую клавишу на клавиатуре.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Горячие клавиши</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Ключевое слово и команды</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Поиск в Интернете, запуск приложений или выполнение различных функций с помощью плагинов Flow Launcher. Некоторые функции начинаются с ключевого слова действия, и при необходимости их можно использовать без ключевых слов действия. Попробуйте выполнить приведённые ниже запросы в Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Давайте запустим Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Готово. Наслаждайтесь Flow Launcher. Не забудьте про горячую клавишу для запуска :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Назад / контекстное меню</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Навигация по элементам</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Открыть контекстное меню</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Открыть папку с содержимым</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Запустить от имени администратора / Открыть папку в файловом менеджере по умолчанию</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">История запросов</system:String>
+    <system:String x:Key="HotkeyESCDesc">Вернуться к результату в контекстном меню</system:String>
+    <system:String x:Key="HotkeyTabDesc">Автозаполнение</system:String>
+    <system:String x:Key="HotkeyRunDesc">Открыть / Выполнить выбранный элемент</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Открыть окно настроек</system:String>
+    <system:String x:Key="HotkeyF5Desc">Перезагрузить данные плагинов</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Команда Weather</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Погода в результатах Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
-    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
-    <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendShellDesc">Команда Shell</system:String>
+    <system:String x:Key="RecommendBluetooth">Команда s - Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth в настройках Windows</system:String>
+    <system:String x:Key="RecommendAcronyms">Команда sn</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Заметки</system:String>
 
 </ResourceDictionary>

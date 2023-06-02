@@ -1,6 +1,7 @@
 crowdin
 DWM
 workflows
+Wpf
 wpf
 actionkeyword
 stackoverflow
@@ -21,6 +22,7 @@ Google
 Customise
 UWP
 uwp
+Uwp
 Bokmal
 Bokm
 uninstallation
@@ -88,3 +90,8 @@ Noresult
 wpftk
 mkv
 flac
+IPublic
+keyevent
+KListener
+requery
+vkcode

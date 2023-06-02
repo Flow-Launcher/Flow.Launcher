@@ -40,6 +40,8 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var usage = LoadStorageToConcurrentDictionary();
 
+            ImageCache.Initialize(usage.ToDictionary(x => x.Key, x => x.Value));
+
             foreach (var icon in new[]
                      {
                          Constant.DefaultIcon, Constant.MissingImgIcon
@@ -269,7 +271,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        img = ImageCache[key, false] ?? img;
+                        img = ImageCache[key, loadFullImage] ?? img;
                     }
                     else
                     { // new guid

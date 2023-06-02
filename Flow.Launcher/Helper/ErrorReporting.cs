@@ -3,8 +3,6 @@ using System.Windows.Threading;
 using NLog;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Exception;
-using NLog.Fluent;
-using Log = Flow.Launcher.Infrastructure.Logger.Log;
 
 namespace Flow.Launcher.Helper
 {
@@ -31,11 +29,11 @@ namespace Flow.Launcher.Helper
             //prevent application exist, so the user can copy prompted error info
             e.Handled = true;
         }
-
+        
         public static string RuntimeInfo()
         {
             var info = $"\nFlow Launcher version: {Constant.Version}" +
-                       $"\nOS Version: {Environment.OSVersion.VersionString}" +
+                       $"\nOS Version: {ExceptionFormatter.GetWindowsFullVersionFromRegistry()}" +
                        $"\nIntPtr Length: {IntPtr.Size}" +
                        $"\nx64: {Environment.Is64BitOperatingSystem}";
             return info;

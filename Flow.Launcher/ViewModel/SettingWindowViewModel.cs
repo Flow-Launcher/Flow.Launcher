@@ -133,6 +133,9 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        /// <summary>
+        /// Save Flow settings. Plugins settings are not included.
+        /// </summary>
         public void Save()
         {
             foreach (var vm in PluginViewModels)
@@ -143,7 +146,6 @@ namespace Flow.Launcher.ViewModel
                 Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
-            PluginManager.Save();
             _storage.Save();
         }
 

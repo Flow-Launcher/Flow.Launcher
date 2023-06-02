@@ -19,7 +19,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string RootDirectory = Directory.GetParent(ApplicationDirectory).ToString();
         
         public static readonly string PreinstalledDirectory = Path.Combine(ProgramDirectory, Plugins);
-        public const string Issue = "https://github.com/Flow-Launcher/Flow.Launcher/issues/new";
+        public const string IssuesUrl = "https://github.com/Flow-Launcher/Flow.Launcher/issues";
         public static readonly string Version = FileVersionInfo.GetVersionInfo(Assembly.Location.NonNull()).ProductVersion;
         public static readonly string Dev = "Dev";
         public const string Documentation = "https://flowlauncher.com/docs/#/usage-tips";

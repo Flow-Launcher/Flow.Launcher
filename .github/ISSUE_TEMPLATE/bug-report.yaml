@@ -10,18 +10,13 @@ body:
 
   - type: checkboxes
     attributes:
-      label: Check New Issue
+      label: Checks
       options:
         - label: >
             I have checked that this issue has not already been reported.
-
-  - type: checkboxes
-    attributes:
-      label: Check Latest Version
-      options:
         - label: >
             I am using the latest version of Flow Launcher.
-
+        
   - type: textarea
     attributes:
       label: Problem Description

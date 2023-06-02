@@ -3,7 +3,7 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del plugin Flow Launcher no válido</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del complemento de Flow Launcher no válido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Cancelar como primer resultado en esta consulta</system:String>
     <system:String x:Key="executeQuery">Ejecutar consulta: {0}</system:String>
@@ -36,11 +36,17 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
     <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Recordar última posición</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Centro de la pantalla enfocada con el ratón</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Arriba en el centro de la pantalla enfocada con el ratón</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Arriba a la izquierda de la pantalla enfocada con el ratón</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Arriba a la derecha de la pantalla enfocada con el ratón</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Recordar última posición</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor con cursor del ratón</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor con ventana enfocada</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Monitor principal</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Monitor personalizado</system:String>
+    <system:String x:Key="SearchWindowAlign">Posición de la ventana de búsqueda en el monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Centro</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Arriba en el centro</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Arriba a la izquierda</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Arriba a la derecha</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Posición personalizada</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo de la última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Muestra/Oculta resultados anteriores cuando Flow Launcher es reactivado.</system:String>
@@ -50,7 +56,7 @@
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Desactiva Flow Launcher cuando una aplicación de pantalla completa está activa (Recomendado para juegos).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite activar Flow Launcher con aplicaciones a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecciona el administrador de archivos que se desea utilizar para abrir la carpeta.</system:String>
     <system:String x:Key="defaultBrowser">Navegador web predeterminado</system:String>
@@ -64,7 +70,7 @@
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
-    <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja del sistema</system:String>
+    <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
@@ -79,7 +85,7 @@
     <system:String x:Key="searchpluginToolTip">Ctrl+F para buscar complementos</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">No se han encontrado resultados</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Por favor, intente una búsqueda diferente.</system:String>
-    <system:String x:Key="plugin">Complementos</system:String>
+    <system:String x:Key="plugin">Complemento</system:String>
     <system:String x:Key="plugins">Complementos</system:String>
     <system:String x:Key="browserMorePlugins">Buscar más complementos</system:String>
     <system:String x:Key="enable">Activado</system:String>
@@ -104,10 +110,10 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
-    <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado recientemente</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nuevo(s) lanzamiento(s)</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
-    <system:String x:Key="pluginStore_Installed">Instalado</system:String>
+    <system:String x:Key="pluginStore_Installed">Instalado(s)</system:String>
     <system:String x:Key="refresh">Refrescar</system:String>
     <system:String x:Key="installbtn">Instalar</system:String>
     <system:String x:Key="uninstallbtn">Desinstalar</system:String>
@@ -153,7 +159,7 @@
     <system:String x:Key="Date">Fecha</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Atajos de teclado</system:String>
+    <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
@@ -341,7 +347,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">Navegación entre elementos</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menú contextual</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir carpeta contenedora</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Ejecutar como administrador / Abrir la carpeta en el administrador de archivos predeterminado</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historial de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Volver al resultado en menú contextual</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocompletar</system:String>
