@@ -1104,47 +1104,39 @@ namespace Flow.Launcher.ViewModel
         }
 
         /// <summary>
-        /// This is the global copy method for an individual result. If no text is passed, 
-        /// the method will work out what is to be copied based on the result, so plugin can offer the text 
-        /// to be copied via the result model. If the text is a directory/file path, 
-        /// then actual file/folder will be copied instead. 
-        /// The result's subtitle text is the default text to be copied
+        /// Copies the specified file or folder path to the clipboard, or the specified text if it is not a valid file or folder path.
+        /// Shows a message indicating whether the operation was completed successfully.
         /// </summary>
+        /// <param name="stringToCopy">The file or folder path, or text to copy to the clipboard.</param>
+        /// <returns>Nothing.</returns>
         public void ResultCopy(string stringToCopy)
         {
             if (string.IsNullOrEmpty(stringToCopy))
             {
-                var result = Results.SelectedItem?.Result;
-                if (result != null)
-                {
-                    string copyText = result.CopyText;
-                    var isFile = File.Exists(copyText);
-                    var isFolder = Directory.Exists(copyText);
-                    if (isFile || isFolder)
-                    {
-                        var paths = new StringCollection
-                        {
-                            copyText
-                        };
-
-                        Clipboard.SetFileDropList(paths);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                    else
-                    {
-                        Clipboard.SetDataObject(copyText);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                }
-
                 return;
             }
+            var isFile = File.Exists(stringToCopy);
+            var isFolder = Directory.Exists(stringToCopy);
+            if (isFile || isFolder)
+            {
+                var paths = new StringCollection
+                {
+                    stringToCopy
+                };
 
-            Clipboard.SetDataObject(stringToCopy);
+                Clipboard.SetFileDropList(paths);
+                App.API.ShowMsg(
+                    $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
+                    App.API.GetTranslation("completedSuccessfully"));
+            }
+            else
+            {
+                Clipboard.SetDataObject(stringToCopy);
+                App.API.ShowMsg(
+                    $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
+                    App.API.GetTranslation("completedSuccessfully"));
+            }
+            return;
         }
 
         #endregion
