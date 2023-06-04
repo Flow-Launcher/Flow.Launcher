@@ -219,6 +219,26 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+
+        public class SearchDelay
+        {
+            public string Display { get; init; }
+            public int Value { get; init; }
+
+            public SearchDelay(int value)
+            {
+                Value = value;
+                Display = value.ToString() + " ms";
+            }
+        }
+
+        public List<SearchDelay> SearchDelays { get; init; } = new()
+        {
+            new SearchDelay(50),
+            new SearchDelay(100),
+            new SearchDelay(150),
+        };
+
         public string Language
         {
             get
