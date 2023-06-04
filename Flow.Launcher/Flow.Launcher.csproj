@@ -94,10 +94,6 @@
     <!-- https://github.com/Flow-Launcher/Flow.Launcher/issues/1772#issuecomment-1502440801 -->
     <PackageReference Include="ModernWpfUI" Version="0.9.4" />
     <PackageReference Include="NHotkey.Wpf" Version="2.1.0" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.8.1" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
