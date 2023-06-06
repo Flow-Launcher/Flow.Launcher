@@ -85,9 +85,9 @@
     <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
-    <system:String x:Key="plugin">擴充功能</system:String>
-    <system:String x:Key="plugins">擴充功能</system:String>
-    <system:String x:Key="browserMorePlugins">瀏覽更多擴充功能</system:String>
+    <system:String x:Key="plugin">插件</system:String>
+    <system:String x:Key="plugins">插件</system:String>
+    <system:String x:Key="browserMorePlugins">瀏覽更多插件</system:String>
     <system:String x:Key="enable">啟用</system:String>
     <system:String x:Key="disable">停用</system:String>
     <system:String x:Key="actionKeywordsTitle">觸發關鍵字設定</system:String>
@@ -98,8 +98,8 @@
     <system:String x:Key="currentPriority">目前優先</system:String>
     <system:String x:Key="newPriority">新增優先</system:String>
     <system:String x:Key="priority">優先</system:String>
-    <system:String x:Key="priorityToolTip">更改擴充功能結果優先順序</system:String>
-    <system:String x:Key="pluginDirectory">擴充功能資料夾</system:String>
+    <system:String x:Key="priorityToolTip">更改插件結果優先順序</system:String>
+    <system:String x:Key="pluginDirectory">插件資料夾</system:String>
     <system:String x:Key="author">作者</system:String>
     <system:String x:Key="plugin_init_time">載入耗時：</system:String>
     <system:String x:Key="plugin_query_time">查詢耗時：</system:String>
@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">插件商店</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">擴充功能</system:String>
+    <system:String x:Key="pluginStore_None">插件</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="installbtn">安裝</system:String>
@@ -180,7 +180,7 @@
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
     <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除擴充功能 {0} 的快捷鍵嗎？</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除插件 {0} 的快捷鍵嗎？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你確定你要刪除縮寫：{0} 展開為 {1}？</system:String>
     <system:String x:Key="shortcut_clipboard_description">從剪貼簿取得文字。</system:String>
     <system:String x:Key="shortcut_active_explorer_path">從使用中的檔案總管獲得路徑。</system:String>
@@ -255,7 +255,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改優先度</system:String>
-    <system:String x:Key="priority_tips">數字越大，查詢結果會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他擴充功能，請提供負數</system:String>
+    <system:String x:Key="priority_tips">數字越大，查詢結果會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他插件，請提供負數</system:String>
     <system:String x:Key="invalidPriority">請為優先度提供一個有效的整數！</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -263,9 +263,9 @@
     <system:String x:Key="newActionKeywords">新觸發關鍵字</system:String>
     <system:String x:Key="cancel">取消</system:String>
     <system:String x:Key="done">確定</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的擴充功能</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的插件</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新觸發關鍵字不能為空白</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一擴充功能，請設定其他關鍵字。</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一個插件，請設定其他關鍵字。</system:String>
     <system:String x:Key="success">成功</system:String>
     <system:String x:Key="completedSuccessfully">成功完成</system:String>
     <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
