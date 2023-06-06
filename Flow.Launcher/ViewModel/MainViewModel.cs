@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -202,6 +202,15 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 SelectedResults = Results;
+            }
+        }
+
+        [RelayCommand]
+        private void ReQuery()
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                QueryResults(reQuery: true);
             }
         }
 
