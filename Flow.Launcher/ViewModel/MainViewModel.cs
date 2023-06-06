@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -512,7 +512,7 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (reQuery)
                 {
-                    Query();
+                    Query(reQuery: true);
                 }
                 QueryTextCursorMovedToEnd = true;
             });
@@ -612,11 +612,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query()
+        public void Query(bool reQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults();
+                QueryResults(reQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -716,7 +716,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults()
+        private async void QueryResults(bool reQuery = false)
         {
             _updateSource?.Cancel();
 
@@ -747,6 +747,8 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
+            // Update the query's IsForced property to true if this is a re-query
+            query.IsForced = reQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);

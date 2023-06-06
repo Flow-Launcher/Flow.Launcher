@@ -30,6 +30,12 @@ namespace Flow.Launcher.Plugin
         public string RawQuery { get; internal init; }
 
         /// <summary>
+        /// Determines whether the query was forced to execute again.
+        /// When this property is true, plugins handling this query should avoid serving cached results.
+        /// </summary>
+        public bool IsForced { get; internal set; } = false;
+
+        /// <summary>
         /// Search part of a query.
         /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
         /// Since we allow user to switch a exclusive plugin to generic plugin, 
