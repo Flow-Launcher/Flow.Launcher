@@ -756,8 +756,8 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
-            // Update the query's IsForced property to true if this is a re-query
-            query.IsForced = reQuery;
+            // Update the query's IsReQuery property to true if this is a re-query
+            query.IsReQuery = reQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
