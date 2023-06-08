@@ -40,7 +40,8 @@ namespace Flow.Launcher.Plugin
         void ShellRun(string cmd, string filename = "cmd.exe");
         
         /// <summary>
-        /// Copy Text to clipboard
+        /// If the passed in text is the path to a file or directory, the actual file/directory will
+        /// be copied to clipboard. Otherwise the text itself will be copied to clipboard.
         /// </summary>
         /// <param name="text">Text to save on clipboard</param>
         public void CopyToClipboard(string text);

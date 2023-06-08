@@ -124,7 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetText(record.FullPath);
+                            Clipboard.SetDataObject(record.FullPath);
                             return true;
                         }
                         catch (Exception e)

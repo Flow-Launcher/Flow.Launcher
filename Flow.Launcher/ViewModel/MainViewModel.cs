@@ -1112,11 +1112,10 @@ namespace Flow.Launcher.ViewModel
         public void ResultCopy(string stringToCopy)
         {
             if (string.IsNullOrEmpty(stringToCopy))
-            {
                 return;
-            }
+
             var isFile = File.Exists(stringToCopy);
-            var isFolder = Directory.Exists(stringToCopy);
+            var isFolder = isFile ? false : Directory.Exists(stringToCopy); // No need to eval directory exists if determined that file exists 
             if (isFile || isFolder)
             {
                 var paths = new StringCollection
@@ -1125,6 +1124,7 @@ namespace Flow.Launcher.ViewModel
                 };
 
                 Clipboard.SetFileDropList(paths);
+                
                 App.API.ShowMsg(
                     $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
                     App.API.GetTranslation("completedSuccessfully"));
@@ -1132,6 +1132,7 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 Clipboard.SetDataObject(stringToCopy);
+                
                 App.API.ShowMsg(
                     $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
                     App.API.GetTranslation("completedSuccessfully"));
