@@ -124,7 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetDataObject(record.FullPath);
+                            Context.API.CopyToClipboard(record.FullPath);
                             return true;
                         }
                         catch (Exception e)
@@ -147,10 +147,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection
-                            {
-                                record.FullPath
-                            });
+                            Context.API.CopyToClipboard(record.FullPath, directCopy: true);
                             return true;
                         }
                         catch (Exception e)

@@ -406,7 +406,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        Clipboard.SetDataObject(selectedResult.Title);
+                        context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
                     IcoPath = "Images/copy.png",

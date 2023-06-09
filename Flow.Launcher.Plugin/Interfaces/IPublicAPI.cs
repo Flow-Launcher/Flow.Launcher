@@ -38,13 +38,15 @@ namespace Flow.Launcher.Plugin
         /// <exception cref="FileNotFoundException">Thrown when unable to find the file specified in the command </exception>
         /// <exception cref="Win32Exception">Thrown when error occurs during the execution of the command </exception>
         void ShellRun(string cmd, string filename = "cmd.exe");
-        
+
         /// <summary>
-        /// If the passed in text is the path to a file or directory, the actual file/directory will
-        /// be copied to clipboard. Otherwise the text itself will be copied to clipboard.
+        /// Copies the passed in text and shows a message indicating whether the operation was completed successfully.
+        /// When directCopy is set to true and passed in text is the path to a file or directory,
+        /// the actual file/directory will be copied to clipboard. Otherwise the text itself will still be copied to clipboard.
         /// </summary>
         /// <param name="text">Text to save on clipboard</param>
-        public void CopyToClipboard(string text);
+        /// <param name="directCopy">When true it will directly copy the file/folder from the path specified in text</param>
+        public void CopyToClipboard(string text, bool directCopy = false);
 
         /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings
