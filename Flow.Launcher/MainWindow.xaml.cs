@@ -63,12 +63,11 @@ namespace Flow.Launcher
             if (QueryTextBox.SelectionLength == 0 && result != null)
             {
                 string copyText = result.CopyText;
-                _viewModel.ResultCopy(copyText);
-
+                App.API.CopyToClipboard(copyText, directCopy: true);
             }
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
-                System.Windows.Clipboard.SetText(QueryTextBox.SelectedText);
+                App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
             }
         }
         

@@ -84,7 +84,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                                 Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
-                            }
+                            },
+                            CopyText = m
                         }));
                     }
                 }
@@ -123,7 +124,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                             Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
-                        }
+                        },
+                        CopyText = m.Key
                     };
                     return ret;
                 }).Where(o => o != null);
@@ -152,7 +154,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                     Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
-                }
+                },
+                CopyText = cmd
             };
 
             return result;
@@ -176,7 +179,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
-                    }
+                    },
+                    CopyText = m.Key
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
@@ -406,7 +410,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        Clipboard.SetDataObject(selectedResult.Title);
+                        context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
                     IcoPath = "Images/copy.png",

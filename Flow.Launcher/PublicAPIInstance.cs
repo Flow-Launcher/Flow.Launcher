@@ -24,6 +24,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Collections.Specialized;
 
 namespace Flow.Launcher
 {
@@ -116,9 +117,35 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string text)
+        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
-            _mainVM.ResultCopy(text);
+            if (string.IsNullOrEmpty(stringToCopy))
+                return;
+
+            var isFile = File.Exists(stringToCopy);
+            if (directCopy && (isFile || Directory.Exists(stringToCopy)))
+            {
+                var paths = new StringCollection
+                {
+                    stringToCopy
+                };
+
+                Clipboard.SetFileDropList(paths);
+
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                        GetTranslation("completedSuccessfully"));
+            }
+            else
+            {
+                Clipboard.SetDataObject(stringToCopy);
+
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                        GetTranslation("completedSuccessfully"));
+            }
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;

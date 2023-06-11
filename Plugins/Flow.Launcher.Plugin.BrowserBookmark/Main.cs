@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     {
                         try
                         {
-                            Clipboard.SetDataObject(((BookmarkAttributes)selectedResult.ContextData).Url);
+                            context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
 
                             return true;
                         }
