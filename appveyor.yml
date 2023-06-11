@@ -72,15 +72,6 @@ deploy:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
     artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
     draft: true
-    force_update: true
     on:
       branch: master
-
-  - provider: GitHub
-    release: v$(flowVersion)
-    auth_token:
-      secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
-    artifact: Squirrel Installer, Portable Version, Squirrel nupkg, Squirrel RELEASES
-    force_update: true
-    on:
-      APPVEYOR_REPO_TAG: true
+      APPVEYOR_REPO_TAG: false
