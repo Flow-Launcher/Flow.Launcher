@@ -4,10 +4,6 @@ init:
 - ps: |
       $version = new-object System.Version $env:APPVEYOR_BUILD_VERSION
       $env:flowVersion = "{0}.{1}.{2}" -f $version.Major, $version.Minor, $version.Build
-      if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
-      {
-        $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
-      }
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
@@ -57,7 +53,7 @@ deploy:
 
   - provider: GitHub
     repository: Flow-Launcher/Prereleases
-    release: v$(prereleaseTag)
+    release: v$(APPVEYOR_BUILD_VERSION)
     description: 'This is the early access build of our upcoming release. All changes contained here are reviewed, tested and stable to use.\n\nSee our [release](https://github.com/Flow-Launcher/Flow.Launcher/pulls?q=is%3Aopen+is%3Apr+label%3Arelease) Pull Request for details.\n\nFor latest production release visit [here](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest)\n\nPlease report any bugs or issues over at the [main repository](https://github.com/Flow-Launcher/Flow.Launcher/issues)'
     auth_token:
       secure: ij4UeXUYQBDJxn2YRAAhUOjklOGVKDB87Hn5J8tKIzj13yatoI7sLM666QDQFEgv
