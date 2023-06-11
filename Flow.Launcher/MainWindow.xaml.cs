@@ -59,14 +59,16 @@ namespace Flow.Launcher
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
-            if (QueryTextBox.SelectionLength == 0)
+            var result = _viewModel.Results.SelectedItem?.Result;
+            if (QueryTextBox.SelectionLength == 0 && result != null)
             {
-                _viewModel.ResultCopy(string.Empty);
+                string copyText = result.CopyText;
+                _viewModel.ResultCopy(copyText);
 
             }
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
-                _viewModel.ResultCopy(QueryTextBox.SelectedText);
+                System.Windows.Clipboard.SetText(QueryTextBox.SelectedText);
             }
         }
         
