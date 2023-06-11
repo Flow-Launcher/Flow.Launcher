@@ -117,7 +117,7 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string stringToCopy, bool directCopy = false)
+        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
                 return;
@@ -132,20 +132,21 @@ namespace Flow.Launcher
 
                 Clipboard.SetFileDropList(paths);
 
-                ShowMsg(
-                    $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                    GetTranslation("completedSuccessfully"));
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                        GetTranslation("completedSuccessfully"));
             }
             else
             {
                 Clipboard.SetDataObject(stringToCopy);
 
-                ShowMsg(
-                    $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                    GetTranslation("completedSuccessfully"));
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                        GetTranslation("completedSuccessfully"));
             }
         }
-    
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
 

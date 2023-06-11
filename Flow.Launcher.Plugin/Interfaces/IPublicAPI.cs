@@ -46,7 +46,10 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="text">Text to save on clipboard</param>
         /// <param name="directCopy">When true it will directly copy the file/folder from the path specified in text</param>
-        public void CopyToClipboard(string text, bool directCopy = false);
+        /// <param name="showDefaultNotification">Whether to show the default notification from this method after copy is done. 
+        ///                                         It will show file/folder/text is copied successfully.
+        ///                                         Turn this off to show your own notification after copy is done.</param>>
+        public void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true);
 
         /// <summary>
         /// Save everything, all of Flow Launcher and plugins' data and settings

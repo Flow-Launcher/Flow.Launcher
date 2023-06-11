@@ -67,7 +67,7 @@ namespace Flow.Launcher
             }
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
-                System.Windows.Clipboard.SetDataObject(QueryTextBox.SelectedText);
+                App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
             }
         }
         
