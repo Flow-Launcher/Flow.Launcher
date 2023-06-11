@@ -210,7 +210,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(reQuery: true);
+                QueryResults(isReQuery: true);
             }
         }
 
@@ -504,8 +504,8 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
-        /// <param name="reQuery">Force query even when Query Text doesn't change</param>
-        public void ChangeQueryText(string queryText, bool reQuery = false)
+        /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
+        public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -519,9 +519,9 @@ namespace Flow.Launcher.ViewModel
                     QueryTextCursorMovedToEnd = false;
 
                 }
-                else if (reQuery)
+                else if (isReQuery)
                 {
-                    Query(reQuery: true);
+                    Query(isReQuery: true);
                 }
                 QueryTextCursorMovedToEnd = true;
             });
@@ -621,11 +621,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query(bool reQuery = false)
+        public void Query(bool isReQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(reQuery);
+                QueryResults(isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -725,7 +725,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool reQuery = false)
+        private async void QueryResults(bool isReQuery = false)
         {
             _updateSource?.Cancel();
 
@@ -757,7 +757,7 @@ namespace Flow.Launcher.ViewModel
                 return;
 
             // Update the query's IsReQuery property to true if this is a re-query
-            query.IsReQuery = reQuery;
+            query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
