@@ -9,6 +9,7 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ModernWpf.Controls;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Data;
@@ -56,10 +57,22 @@ namespace Flow.Launcher
             pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
             pluginListView.Filter = PluginListFilter;
 
-            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource); 
+            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
             pluginStoreView.Filter = PluginStoreFilter;
 
+            viewModel.PropertyChanged += new PropertyChangedEventHandler(SettingsWindowViewModelChanged);
+
             InitializePosition();
+        }
+
+        private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(viewModel.ExternalPlugins))
+            {
+                pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+                pluginStoreView.Filter = PluginStoreFilter;
+                pluginStoreView.Refresh();
+            }
         }
 
         private void OnSelectPythonPathClick(object sender, RoutedEventArgs e)
@@ -255,9 +268,9 @@ namespace Flow.Launcher
         {
             var confirmResult = MessageBox.Show(
                 InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
-                InternationalizationManager.Instance.GetTranslation("clearlogfolder"), 
+                InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
                 MessageBoxButton.YesNo);
-            
+
             if (confirmResult == MessageBoxResult.Yes)
             {
                 viewModel.ClearLogFolder();
@@ -388,7 +401,7 @@ namespace Flow.Launcher
         }
 
         #endregion
-        
+
         private CollectionView pluginListView;
         private CollectionView pluginStoreView;
 

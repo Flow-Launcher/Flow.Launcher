@@ -121,13 +121,6 @@ namespace Flow.Launcher.Plugin.Program
         public bool EnablePathSource { get; set; } = false;
         public bool EnableUWP { get; set; } = true;
 
-        public string CustomizedExplorer { get; set; } = Explorer;
-        public string CustomizedArgs { get; set; } = ExplorerArgs;
-
         internal const char SuffixSeparator = ';';
-
-        internal const string Explorer = "explorer";
-
-        internal const string ExplorerArgs = "%s";
     }
 }

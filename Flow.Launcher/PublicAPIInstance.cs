@@ -73,6 +73,10 @@ namespace Flow.Launcher
 
         public void ShowMainWindow() => _mainVM.Show();
 
+        public void HideMainWindow() => _mainVM.Hide();
+
+        public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
+
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
@@ -114,7 +118,7 @@ namespace Flow.Launcher
 
         public void CopyToClipboard(string text)
         {
-            Clipboard.SetDataObject(text);
+            _mainVM.ResultCopy(text);
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
