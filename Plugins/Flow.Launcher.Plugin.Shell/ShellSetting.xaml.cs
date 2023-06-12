@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -72,6 +72,7 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 Shell.Cmd => 0,
                 Shell.Powershell => 1,
+                Shell.Pwsh => 2,
                 _ => ShellComboBox.Items.Count - 1
             };
 
@@ -81,6 +82,7 @@ namespace Flow.Launcher.Plugin.Shell
                 {
                     0 => Shell.Cmd,
                     1 => Shell.Powershell,
+                    2 => Shell.Pwsh,
                     _ => Shell.RunCommand
                 };
                 LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
