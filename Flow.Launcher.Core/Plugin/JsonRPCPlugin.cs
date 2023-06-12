@@ -23,9 +23,6 @@ using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
 using System.Windows.Documents;
-using static System.Windows.Forms.LinkLabel;
-using Droplex;
-using System.Windows.Forms;
 
 namespace Flow.Launcher.Core.Plugin
 {

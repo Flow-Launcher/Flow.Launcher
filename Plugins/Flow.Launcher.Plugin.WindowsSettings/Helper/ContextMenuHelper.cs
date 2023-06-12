@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.WindowsSettings.Classes;
-using Flow.Launcher.Plugin.WindowsSettings.Properties;
 
 namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 {
