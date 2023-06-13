@@ -206,6 +206,15 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void ReQuery()
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                QueryResults(isReQuery: true);
+            }
+        }
+
+        [RelayCommand]
         private void LoadContextMenu()
         {
             if (SelectedIsFromQueryResults())
@@ -495,8 +504,8 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
-        /// <param name="reQuery">Force query even when Query Text doesn't change</param>
-        public void ChangeQueryText(string queryText, bool reQuery = false)
+        /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
+        public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -510,9 +519,9 @@ namespace Flow.Launcher.ViewModel
                     QueryTextCursorMovedToEnd = false;
 
                 }
-                else if (reQuery)
+                else if (isReQuery)
                 {
-                    Query();
+                    Query(isReQuery: true);
                 }
                 QueryTextCursorMovedToEnd = true;
             });
@@ -612,11 +621,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query()
+        public void Query(bool isReQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults();
+                QueryResults(isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -716,7 +725,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults()
+        private async void QueryResults(bool isReQuery = false)
         {
             _updateSource?.Cancel();
 
@@ -747,6 +756,8 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
+            // Update the query's IsReQuery property to true if this is a re-query
+            query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);

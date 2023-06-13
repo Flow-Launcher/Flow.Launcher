@@ -87,6 +87,10 @@
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
+            Key="R"
+            Command="{Binding ReQueryCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
