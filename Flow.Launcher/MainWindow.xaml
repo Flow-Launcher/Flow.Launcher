@@ -63,6 +63,10 @@
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
+            Key="S"
+            Command="{Binding SelectNextItemCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="D"
             Command="{Binding SelectNextPageCommand}"
             Modifiers="Ctrl" />
@@ -72,6 +76,10 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="K"
+            Command="{Binding SelectPrevItemCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
+            Key="W"
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
