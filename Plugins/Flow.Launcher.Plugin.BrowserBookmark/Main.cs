@@ -24,6 +24,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private static Settings _settings;
 
+        private static bool initialized = false;
+
         public void Init(PluginInitContext context)
         {
             Main.context = context;
@@ -31,6 +33,8 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             LoadBookmarksIfEnabled();
+
+            initialized = true;
         }
 
         private static void LoadBookmarksIfEnabled()
@@ -48,6 +52,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public List<Result> Query(Query query)
         {
+            if (!initialized)
+            {
+                LoadBookmarksIfEnabled();
+                initialized = true;
+            }
+
             string param = query.Search.TrimStart();
 
             // Should top results be returned? (true if no search parameters have been passed)
