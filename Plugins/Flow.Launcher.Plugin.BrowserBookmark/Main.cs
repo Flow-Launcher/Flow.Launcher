@@ -33,8 +33,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
             LoadBookmarksIfEnabled();
-
-            initialized = true;
         }
 
         private static void LoadBookmarksIfEnabled()
@@ -42,12 +40,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             if (context.CurrentPluginMetadata.Disabled)
             {
                 // Don't load or monitor files if disabled
-                // Note: It doesn't start loading or monitoring if enabled later, you need to manually reload data
                 return;
             }
 
             cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
             _ = MonitorRefreshQueueAsync();
+            initialized = true;
         }
 
         public List<Result> Query(Query query)
@@ -55,7 +53,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             if (!initialized)
             {
                 LoadBookmarksIfEnabled();
-                initialized = true;
             }
 
             string param = query.Search.TrimStart();
@@ -137,10 +134,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             var directory = Path.GetDirectoryName(path);
             if (!Directory.Exists(directory) || !File.Exists(path))
-            {
-                return;
-            }
-            if (context.CurrentPluginMetadata.Disabled)
             {
                 return;
             }
