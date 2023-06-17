@@ -47,7 +47,7 @@ namespace Flow.Launcher.Helper
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
+                key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
             }
             catch (Exception e)
             {
