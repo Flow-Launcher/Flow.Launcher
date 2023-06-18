@@ -42,6 +42,7 @@
             <ComboBoxItem>CMD</ComboBoxItem>
             <ComboBoxItem>PowerShell</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
+            <ComboBoxItem>Terminal</ComboBoxItem>
         </ComboBox>
         <StackPanel Grid.Row="4" Orientation="Horizontal">
             <CheckBox
