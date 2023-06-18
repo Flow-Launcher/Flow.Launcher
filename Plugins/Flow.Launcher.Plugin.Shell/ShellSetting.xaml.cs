@@ -17,25 +17,34 @@ namespace Flow.Launcher.Plugin.Shell
         private void CMDSetting_OnLoaded(object sender, RoutedEventArgs re)
         {
             ReplaceWinR.IsChecked = _settings.ReplaceWinR;
-            
+
             LeaveShellOpen.IsChecked = _settings.LeaveShellOpen;
-            
+
             AlwaysRunAsAdministrator.IsChecked = _settings.RunAsAdministrator;
-            
+
+            UseWindowsTerminal.IsChecked = _settings.UseWindowsTerminal;
+
+            WindowsTerminalProfile.Text = _settings.WindowsTerminalProfile;
+
+            if ((bool) !UseWindowsTerminal.IsChecked)
+                WindowsTerminalProfile.IsEnabled = false;
+
             LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
-            
+
             ShowOnlyMostUsedCMDs.IsChecked = _settings.ShowOnlyMostUsedCMDs;
-            
-            if ((bool)!ShowOnlyMostUsedCMDs.IsChecked)
+
+            if ((bool) !ShowOnlyMostUsedCMDs.IsChecked)
                 ShowOnlyMostUsedCMDsNumber.IsEnabled = false;
 
-            ShowOnlyMostUsedCMDsNumber.ItemsSource = new List<int>() { 5, 10, 20 };
+            ShowOnlyMostUsedCMDsNumber.ItemsSource =
+                new List<int>() { 5, 10, 20 };
 
             if (_settings.ShowOnlyMostUsedCMDsNumber == 0)
             {
                 ShowOnlyMostUsedCMDsNumber.SelectedIndex = 0;
 
-                _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
+                _settings.ShowOnlyMostUsedCMDsNumber =
+                    (int) ShowOnlyMostUsedCMDsNumber.SelectedItem;
             }
 
             LeaveShellOpen.Checked += (o, e) =>
@@ -56,6 +65,25 @@ namespace Flow.Launcher.Plugin.Shell
             AlwaysRunAsAdministrator.Unchecked += (o, e) =>
             {
                 _settings.RunAsAdministrator = false;
+            };
+
+            UseWindowsTerminal.Checked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = true;
+
+                WindowsTerminalProfile.IsEnabled = true;
+            };
+
+            UseWindowsTerminal.Unchecked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = false;
+
+                WindowsTerminalProfile.IsEnabled = false;
+            };
+
+            WindowsTerminalProfile.TextChanged += (o, e) =>
+            {
+                _settings.WindowsTerminalProfile = WindowsTerminalProfile.Text;
             };
 
             ReplaceWinR.Checked += (o, e) =>
@@ -89,12 +117,13 @@ namespace Flow.Launcher.Plugin.Shell
                 ShowOnlyMostUsedCMDsNumber.IsEnabled = false;
             };
 
-            ShowOnlyMostUsedCMDsNumber.SelectedItem = _settings.ShowOnlyMostUsedCMDsNumber;
+            ShowOnlyMostUsedCMDsNumber.SelectedItem =
+                _settings.ShowOnlyMostUsedCMDsNumber;
             ShowOnlyMostUsedCMDsNumber.SelectionChanged += (o, e) =>
             {
-                _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
+                _settings.ShowOnlyMostUsedCMDsNumber =
+                    (int) ShowOnlyMostUsedCMDsNumber.SelectedItem;
             };
-
         }
     }
 }

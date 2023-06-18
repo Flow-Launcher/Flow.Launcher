@@ -237,6 +237,20 @@ namespace Flow.Launcher.Plugin.Shell
                     break;
                 }
 
+                case Shell.Pwsh:
+                    {
+                        info.FileName = "pwsh.exe";
+                        if (_settings.LeaveShellOpen)
+                        {
+                            info.ArgumentList.Add("-NoExit");
+                        }
+
+                        info.ArgumentList.Add("-Command");
+                        info.ArgumentList.Add(command);
+
+                        break;
+                    }
+
                 case Shell.RunCommand:
                 {
                     var parts = command.Split(new[]
@@ -266,6 +280,26 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 default:
                     throw new NotImplementedException();
+            }
+
+            if (_settings.UseWindowsTerminal)
+            {
+                ProcessStartInfo wtInfo = new();
+                wtInfo.FileName = "wt.exe";
+                wtInfo.ArgumentList.Add("-p");
+                wtInfo.ArgumentList.Add(_settings.WindowsTerminalProfile);
+
+                wtInfo.ArgumentList.Add(info.FileName);
+
+                foreach (var argument in info.ArgumentList)
+                {
+                    wtInfo.ArgumentList.Add(argument);
+                }
+            
+                wtInfo.WorkingDirectory = info.WorkingDirectory;
+                wtInfo.Verb = info.Verb;
+
+                info = wtInfo;
             }
 
             info.UseShellExecute = true;
