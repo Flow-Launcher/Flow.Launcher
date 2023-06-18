@@ -122,7 +122,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 await Task.Delay(5000);
                 if (reader.TryRead(out _))
                 {
-                    ReloadAllBookmarks();
+                    ReloadAllBookmarks(false);
                 }
             }
             fileMonitorSemaphore.Release();
@@ -169,10 +169,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             ReloadAllBookmarks();
         }
 
-        public static void ReloadAllBookmarks()
+        public static void ReloadAllBookmarks(bool disposeFileWatchers = true)
         {
             cachedBookmarks.Clear();
-            DisposeFileWatchers();
+            if (disposeFileWatchers)
+                DisposeFileWatchers();
             LoadBookmarksIfEnabled();
         }
 
