@@ -36,13 +36,14 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Search part of a query.
         /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
-        /// Since we allow user to switch a exclusive plugin to generic plugin, 
+        /// Since we allow user to switch a exclusive plugin to generic plugin,
         /// so this property will always give you the "real" query part of the query
         /// </summary>
         public string Search { get; internal init; }
 
         /// <summary>
         /// The search string split into a string array.
+        /// Does not include the <see cref="ActionKeyword"/>.
         /// </summary>
         public string[] SearchTerms { get; init; }
 
@@ -59,6 +60,7 @@ namespace Flow.Launcher.Plugin
 
         [Obsolete("Typo")]
         public const string TermSeperater = TermSeparator;
+
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
@@ -69,15 +71,22 @@ namespace Flow.Launcher.Plugin
 
 
         /// <summary>
-        /// '*' is used for System Plugin
+        /// Wildcard action keyword. Plugins using this value will be queried on every search.
         /// </summary>
         public const string GlobalPluginWildcardSign = "*";
 
+        /// <summary>
+        /// The action keyword part of this query.
+        /// For global plugins this value will be empty.
+        /// </summary>
         public string ActionKeyword { get; init; }
 
         /// <summary>
-        /// Return first search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the first item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         public string FirstSearch => SplitSearch(0);
 
         private string _secondToEndSearch;
@@ -88,13 +97,19 @@ namespace Flow.Launcher.Plugin
         public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
-        /// Return second search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the second item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         public string SecondSearch => SplitSearch(1);
 
         /// <summary>
-        /// Return third search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the third item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         public string ThirdSearch => SplitSearch(2);
 
         private string SplitSearch(int index)
@@ -102,6 +117,7 @@ namespace Flow.Launcher.Plugin
             return index < SearchTerms.Length ? SearchTerms[index] : string.Empty;
         }
 
+        /// <inheritdoc />
         public override string ToString() => RawQuery;
     }
 }
