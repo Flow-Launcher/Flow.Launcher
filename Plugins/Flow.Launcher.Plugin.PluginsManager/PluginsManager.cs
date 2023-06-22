@@ -184,13 +184,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token)
         {
-            await UpdateManifestAsync(token);
-
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
-                join pluginFromManifest in PluginsManifest.UserPlugins
+                join pluginFromManifest in (await PluginsManifest.RetrieveManifestAsync())
                     on existingPlugin.Metadata.ID equals pluginFromManifest.ID
-                where existingPlugin.Metadata.Version.CompareTo(pluginFromManifest.Version) <
+                where String.Compare(existingPlugin.Metadata.Version, pluginFromManifest.Version, StringComparison.InvariantCulture) <
                       0 // if current version precedes manifest version
                 select
                     new
@@ -359,15 +357,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token)
         {
-            await UpdateManifestAsync(token);
-
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)
                 return InstallFromWeb(search);
 
             var results =
-                PluginsManifest
-                    .UserPlugins
+                (await PluginsManifest
+                    .RetrieveManifestAsync())
                     .Select(x =>
                         new Result
                         {

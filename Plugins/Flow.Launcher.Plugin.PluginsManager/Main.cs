@@ -33,8 +33,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             viewModel = new SettingsViewModel(context, Settings);
             contextMenu = new ContextMenu(Context);
             pluginManager = new PluginsManager(Context, Settings);
-
-            _ = pluginManager.UpdateManifestAsync();
         }
 
         public List<Result> LoadContextMenus(Result selectedResult)
