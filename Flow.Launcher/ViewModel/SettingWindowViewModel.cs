@@ -598,6 +598,12 @@ namespace Flow.Launcher.ViewModel
             set => Settings.UseAnimation = value;
         }
 
+        public int AnimationLength
+        {
+            get => Settings.AnimationLength;
+            set => Settings.AnimationLength = value;
+        }
+
         public bool UseSound
         {
             get => Settings.UseSound;

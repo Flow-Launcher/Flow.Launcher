@@ -2414,6 +2414,40 @@
                                                         </TextBlock>
                                                     </ItemsControl>
                                                 </Border>
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource animationLength}" />
+                                                            <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource animationLengthToolTip}" />
+                                                        </StackPanel>
+                                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Width="Auto"
+                                                                Margin="0,0,8,2"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="{DynamicResource Color05B}"
+                                                                Text="{Binding ElementName=AnimationLengthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                                TextAlignment="Right" />
+                                                            <Slider
+                                                                Name="AnimationLengthValue"
+                                                                Width="250"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="2000"
+                                                                Minimum="100"
+                                                                TickFrequency="10"
+                                                                Value="{Binding AnimationLength, Mode=TwoWay}" />
+                                                        </StackPanel>
+                                                        <TextBlock Style="{StaticResource Glyph}">
+                                                            &#xe916;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
                                                 <Separator
                                                     Width="Auto"
                                                     BorderThickness="1"
