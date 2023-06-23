@@ -87,18 +87,6 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        public string CustomizedExplorerPath
-        {
-            get => _settings.CustomizedExplorer;
-            set => _settings.CustomizedExplorer = value;
-        }
-
-        public string CustomizedExplorerArg
-        {
-            get => _settings.CustomizedArgs;
-            set => _settings.CustomizedArgs = value;
-        }
-
         public bool ShowUWPCheckbox => UWP.SupportUWP();
 
         public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)

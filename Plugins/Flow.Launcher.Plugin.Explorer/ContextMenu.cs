@@ -9,8 +9,6 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
-using System.Windows.Controls;
-using System.Windows.Input;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
@@ -124,7 +122,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetText(record.FullPath);
+                            Context.API.CopyToClipboard(record.FullPath);
                             return true;
                         }
                         catch (Exception e)
@@ -147,10 +145,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         try
                         {
-                            Clipboard.SetFileDropList(new System.Collections.Specialized.StringCollection
-                            {
-                                record.FullPath
-                            });
+                            Context.API.CopyToClipboard(record.FullPath, directCopy: true);
                             return true;
                         }
                         catch (Exception e)

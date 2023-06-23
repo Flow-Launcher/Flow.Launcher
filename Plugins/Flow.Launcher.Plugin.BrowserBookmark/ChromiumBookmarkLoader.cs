@@ -1,5 +1,4 @@
 ﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
-using Microsoft.AspNetCore.Authentication;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;

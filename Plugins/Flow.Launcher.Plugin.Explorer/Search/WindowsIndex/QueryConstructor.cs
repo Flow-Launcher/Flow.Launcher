@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Buffers;
 using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex

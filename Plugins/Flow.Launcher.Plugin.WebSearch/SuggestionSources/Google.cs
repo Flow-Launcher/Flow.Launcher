@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
 using System.Net.Http;
 using System.Threading;
 using System.Text.Json;
-using System.IO;
 
 namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
 {

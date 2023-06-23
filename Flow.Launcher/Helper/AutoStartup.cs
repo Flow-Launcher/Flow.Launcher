@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Win32;
@@ -51,7 +47,7 @@ namespace Flow.Launcher.Helper
             try
             {
                 using var key = Registry.CurrentUser.OpenSubKey(StartupPath, true);
-                key?.SetValue(Constant.FlowLauncher, Constant.ExecutablePath);
+                key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
             }
             catch (Exception e)
             {

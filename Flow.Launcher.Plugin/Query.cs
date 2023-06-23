@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -29,6 +28,13 @@ namespace Flow.Launcher.Plugin
         /// We didn't recommend use this property directly. You should always use Search property.
         /// </summary>
         public string RawQuery { get; internal init; }
+
+        /// <summary>
+        /// Determines whether the query was forced to execute again.
+        /// For example, the value will be true when the user presses Ctrl + R.
+        /// When this property is true, plugins handling this query should avoid serving cached results.
+        /// </summary>
+        public bool IsReQuery { get; internal set; } = false;
 
         /// <summary>
         /// Search part of a query.

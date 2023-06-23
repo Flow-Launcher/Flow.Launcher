@@ -4,8 +4,6 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.IO;
 using System.Windows;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 
 namespace Flow.Launcher
 {

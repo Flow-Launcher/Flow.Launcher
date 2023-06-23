@@ -5,7 +5,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
+#pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
+#pragma warning restore IDE0005
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;

@@ -1,7 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Infrastructure.UserSettings;
-
-namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
+﻿namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
 {
     internal class SettingsViewModel
     {

@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
@@ -75,6 +75,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 if (!p.HasExited)
                 {
                     p.Kill();
+                    p.WaitForExit(50);
                 }
             }
             catch (Exception e)

@@ -1,7 +1,5 @@
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Infrastructure.Http;
 
