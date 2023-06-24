@@ -161,6 +161,8 @@ namespace Flow.Launcher.Plugin
 
             var equality = string.Equals(r?.Title, Title) &&
                            string.Equals(r?.SubTitle, SubTitle) &&
+                           string.Equals(r?.AutoCompleteText, AutoCompleteText) &&
+                           string.Equals(r?.CopyText, CopyText) &&
                            string.Equals(r?.IcoPath, IcoPath) &&
                            TitleHighlightData == r.TitleHighlightData;
 
