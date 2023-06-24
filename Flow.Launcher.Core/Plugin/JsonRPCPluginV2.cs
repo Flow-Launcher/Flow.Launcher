@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using System.Threading;
-using System.Threading.Channels;
 using System.Threading.Tasks;
-using System.Windows.Controls;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
 using Flow.Launcher.Plugin;
 using StreamJsonRpc;
@@ -14,13 +10,13 @@ using StreamJsonRpc;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal abstract class JsonRpcPluginV2 : JsonRPCPluginBase
+    internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IDisposable
     {
         public abstract string SupportedLanguage { get; set; }
 
         public const string JsonRpc = "JsonRPC";
 
-        protected abstract JsonRpc Rpc { get; set; }
+        protected abstract JsonRpc RPC { get; set; }
 
         protected StreamReader ErrorStream { get; set; }
 
@@ -29,7 +25,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             try
             {
-                var res = await Rpc.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method, argument: result.JsonRPCAction.Parameters);
+                var res = await RPC.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method,
+                    argument: result.JsonRPCAction.Parameters);
 
                 return res.Hide;
             }
@@ -43,7 +40,9 @@ namespace Flow.Launcher.Core.Plugin
         {
             try
             {
-                var res = await Rpc.InvokeAsync<JsonRPCQueryResponseModel>("query", query);
+                var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query", 
+                    new[] { query },
+                    token);
 
                 var results = ParseResults(res);
 
@@ -51,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch
             {
-                return new List<Result>();
+                 return new List<Result>();
             }
         }
 
@@ -71,6 +70,12 @@ namespace Flow.Launcher.Core.Plugin
                     throw new Exception(error);
                 }
             }
+        }
+
+        public void Dispose()
+        {
+            RPC?.Dispose();
+            ErrorStream?.Dispose();
         }
     }
 }

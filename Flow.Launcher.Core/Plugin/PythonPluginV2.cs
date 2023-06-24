@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Microsoft.VisualStudio.Threading;
@@ -13,14 +14,14 @@ using StreamJsonRpc;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal class PythonPluginV2 : JsonRpcPluginV2
+    internal class PythonPluginV2 : JsonRPCPluginV2, IReloadable, IDisposable
     {
         private readonly ProcessStartInfo _startInfo;
         private Process _process;
 
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
-        protected override JsonRpc Rpc { get; set; }
+        protected override JsonRpc RPC { get; set; }
 
 
         public PythonPluginV2(string filename)
@@ -53,7 +54,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             throw new NotImplementedException();
         }
-        
+
         public override async Task InitAsync(PluginInitContext context)
         {
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
@@ -63,17 +64,44 @@ namespace Flow.Launcher.Core.Plugin
 
             ArgumentNullException.ThrowIfNull(_process);
 
-            var formatter = new JsonMessageFormatter();
-            var handler = new NewLineDelimitedMessageHandler(_process.StandardInput.BaseStream,
-                _process.StandardOutput.BaseStream,
-                formatter);
-
-            Rpc = new JsonRpc(handler, context.API);
-            Rpc.StartListening();
-
-            _ = _process.StandardError.ReadToEndAsync().ContinueWith(e => throw new Exception(e.Result));
+            SetupJsonRPC(_process, context.API);
 
             await base.InitAsync(context);
+        }
+
+        public void Dispose()
+        {
+            _process.Kill(true);
+            _process.Dispose();
+            base.Dispose();
+        }
+
+        public void ReloadData()
+        {
+            var oldProcess = _process;
+            _process = Process.Start(_startInfo);
+            ArgumentNullException.ThrowIfNull(_process);
+            SetupJsonRPC(_process, Context.API);
+            oldProcess.Kill(true);
+            oldProcess.Dispose();
+        }
+
+        private void SetupJsonRPC(Process process, IPublicAPI api)
+        {
+            var formatter = new JsonMessageFormatter();
+            var handler = new NewLineDelimitedMessageHandler(process.StandardInput.BaseStream,
+                process.StandardOutput.BaseStream,
+                formatter);
+
+            RPC = new JsonRpc(handler, new JsonRPCPublicAPI(api));
+            RPC.SynchronizationContext = null;
+            RPC.StartListening();
+            
+            _ = process.StandardError.ReadToEndAsync().ContinueWith(e =>
+            {
+                if (e.Result.Length > 0)
+                    throw new Exception(e.Result);
+            });
         }
     }
 }

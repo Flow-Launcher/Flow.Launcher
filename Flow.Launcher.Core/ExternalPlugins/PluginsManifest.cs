@@ -12,7 +12,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public static class PluginsManifest
     {
-        private const string manifestFileUrl = "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
+        private const string manifestFileUrl = "https://jsdelivr.bobocdn.tk/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 

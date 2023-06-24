@@ -41,9 +41,11 @@ namespace Flow.Launcher.Core.Plugin
 
         private int RequestId { get; set; }
 
-        private string SettingConfigurationPath => Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
+        private string SettingConfigurationPath =>
+            Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
 
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, Context.CurrentPluginMetadata.Name, "Settings.json");
+        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory,
+            Context.CurrentPluginMetadata.Name, "Settings.json");
 
         public abstract List<Result> LoadContextMenus(Result selectedResult);
 
@@ -57,10 +59,7 @@ namespace Flow.Launcher.Core.Plugin
             // see: https://github.com/dotnet/runtime/issues/39152
             IgnoreNullValues = true,
 #pragma warning restore SYSLIB0020 // Type or member is obsolete
-            Converters =
-            {
-                new JsonObjectConverter()
-            }
+            Converters = { new JsonObjectConverter() }
         };
 
         protected static readonly JsonSerializerOptions RequestSerializeOption = new()
@@ -83,9 +82,9 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var result in queryResponseModel.Result)
             {
-                result.AsyncAction = async c =>
+                result.AsyncAction = async _ =>
                 {
-                    Settings.UpdateSettings(result.SettingsChange);
+                    Settings?.UpdateSettings(result.SettingsChange);
 
                     return await ExecuteResultAsync(result);
                 };
@@ -95,7 +94,7 @@ namespace Flow.Launcher.Core.Plugin
 
             results.AddRange(queryResponseModel.Result);
 
-            Settings.UpdateSettings(queryResponseModel.SettingsChanges);
+            Settings?.UpdateSettings(queryResponseModel.SettingsChanges);
 
             return results;
         }
@@ -130,18 +129,18 @@ namespace Flow.Launcher.Core.Plugin
             if (!File.Exists(SettingConfigurationPath))
                 return;
 
-            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-            var configuration = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
+            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
+                .Build();
+            var configuration =
+                deserializer.Deserialize<JsonRpcConfigurationModel>(
+                    await File.ReadAllTextAsync(SettingConfigurationPath));
 
             Settings ??= new PortableSettings
             {
-                Configuration = configuration,
-                SettingPath = SettingPath,
-                API = Context.API
+                Configuration = configuration, SettingPath = SettingPath, API = Context.API
             };
 
             await Settings.InitializeAsync();
-
         }
 
         public virtual async Task InitAsync(PluginInitContext context)
@@ -154,10 +153,10 @@ namespace Flow.Launcher.Core.Plugin
         {
             Settings?.Save();
         }
+
         public Control CreateSettingPanel()
         {
             return Settings.CreateSettingPanel();
         }
     }
-
 }
