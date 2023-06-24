@@ -1,7 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using ICSharpCode.SharpZipLib.Zip;
+﻿using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
-using System.Net;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
