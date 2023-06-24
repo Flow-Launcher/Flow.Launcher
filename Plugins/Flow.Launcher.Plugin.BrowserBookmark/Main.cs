@@ -119,7 +119,6 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             var reader = refreshQueue.Reader;
             while (await reader.WaitToReadAsync())
             {
-                await Task.Delay(5000);
                 if (reader.TryRead(out _))
                 {
                     ReloadAllBookmarks(false);
