@@ -19,7 +19,6 @@ using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public record JsonRPCRequestMessage(PluginMetadata PluginMetadata, IAsyncEnumerable<JsonRPCRequestModel> Requests);
     public record JsonRPCBase(int Id, JsonRPCErrorModel Error = default);
     public record JsonRPCErrorModel(int Code, string Message, string Data);
 
