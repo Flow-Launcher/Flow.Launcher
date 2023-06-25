@@ -172,9 +172,16 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            var hashcode = (Title?.GetHashCode() ?? 0) ^
-                           (SubTitle?.GetHashCode() ?? 0);
-            return hashcode;
+            unchecked
+            {
+                // 17 and 23 are prime numbers
+                int hashcode = 17;
+                hashcode = hashcode * 23 + (Title?.GetHashCode() ?? 0);
+                hashcode = hashcode * 23 + (SubTitle?.GetHashCode() ?? 0);
+                hashcode = hashcode * 23 + (AutoCompleteText?.GetHashCode() ?? 0);
+                hashcode = hashcode * 23 + (CopyText?.GetHashCode() ?? 0);
+                return hashcode;
+            }
         }
 
         /// <inheritdoc />
