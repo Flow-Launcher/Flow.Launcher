@@ -40,7 +40,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             try
             {
-                var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query", 
+                var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
                     new[] { query },
                     token);
 
@@ -50,7 +50,7 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch
             {
-                 return new List<Result>();
+                return new List<Result>();
             }
         }
 
@@ -60,6 +60,8 @@ namespace Flow.Launcher.Core.Plugin
             await base.InitAsync(context);
 
             _ = ReadErrorAsync();
+
+            await RPC.InvokeAsync("initialize", context);
 
             async Task ReadErrorAsync()
             {

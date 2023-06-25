@@ -96,12 +96,6 @@ namespace Flow.Launcher.Core.Plugin
             RPC = new JsonRpc(handler, new JsonRPCPublicAPI(api));
             RPC.SynchronizationContext = null;
             RPC.StartListening();
-            
-            _ = process.StandardError.ReadToEndAsync().ContinueWith(e =>
-            {
-                if (e.Result.Length > 0)
-                    throw new Exception(e.Result);
-            });
         }
     }
 }
