@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -172,16 +173,7 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            unchecked
-            {
-                // 17 and 23 are prime numbers
-                int hashcode = 17;
-                hashcode = hashcode * 23 + (Title?.GetHashCode() ?? 0);
-                hashcode = hashcode * 23 + (SubTitle?.GetHashCode() ?? 0);
-                hashcode = hashcode * 23 + (AutoCompleteText?.GetHashCode() ?? 0);
-                hashcode = hashcode * 23 + (CopyText?.GetHashCode() ?? 0);
-                return hashcode;
-            }
+            return HashCode.Combine(Title, SubTitle, AutoCompleteText, CopyText, IcoPath);
         }
 
         /// <inheritdoc />
