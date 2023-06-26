@@ -68,10 +68,23 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.ReplaceWinR = false;
             };
 
-            ShellComboBox.SelectedIndex = (int) _settings.Shell;
+            ShellComboBox.SelectedIndex = _settings.Shell switch
+            {
+                Shell.Cmd => 0,
+                Shell.Powershell => 1,
+                Shell.Pwsh => 2,
+                _ => ShellComboBox.Items.Count - 1
+            };
+
             ShellComboBox.SelectionChanged += (o, e) =>
             {
-                _settings.Shell = (Shell) ShellComboBox.SelectedIndex;
+                _settings.Shell = ShellComboBox.SelectedIndex switch
+                {
+                    0 => Shell.Cmd,
+                    1 => Shell.Powershell,
+                    2 => Shell.Pwsh,
+                    _ => Shell.RunCommand
+                };
                 LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
             };
 

@@ -276,6 +276,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open flow's settings                         |
+| <kbd>Ctrl</kbd> +<kbd>R</kbd>                                | Run the current query again (refresh results)|
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
 | <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode when in search window       |
 | <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quickly change maximum results shown         |

@@ -41,6 +41,7 @@
             HorizontalAlignment="Left">
             <ComboBoxItem>CMD</ComboBoxItem>
             <ComboBoxItem>PowerShell</ComboBoxItem>
+            <ComboBoxItem>Pwsh</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
         </ComboBox>
         <StackPanel Grid.Row="4" Orientation="Horizontal">

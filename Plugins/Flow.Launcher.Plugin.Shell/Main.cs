@@ -237,6 +237,19 @@ namespace Flow.Launcher.Plugin.Shell
                     break;
                 }
 
+                case Shell.Pwsh:
+                {
+                    info.FileName = "pwsh.exe";
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                    }
+                    info.ArgumentList.Add("-Command");
+                    info.ArgumentList.Add(command);
+
+                    break;
+                }
+
                 case Shell.RunCommand:
                 {
                     var parts = command.Split(new[]
