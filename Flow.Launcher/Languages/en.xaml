@@ -234,6 +234,9 @@
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="updateSource">Release Channel</system:String>
+    <system:String x:Key="release">Stable</system:String>
+    <system:String x:Key="prerelease">Pre-release</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>

@@ -64,8 +64,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double SettingWindowTop { get; set; }
         public double SettingWindowLeft { get; set; }
-        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+        public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
+        public bool PrereleaseUpdateSource { get; set; }
+        
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
@@ -253,8 +255,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
-
-
+        
+        
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
     }
