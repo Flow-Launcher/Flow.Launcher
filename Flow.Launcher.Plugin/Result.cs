@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -168,6 +169,8 @@ namespace Flow.Launcher.Plugin
 
             var equality = string.Equals(r?.Title, Title) &&
                            string.Equals(r?.SubTitle, SubTitle) &&
+                           string.Equals(r?.AutoCompleteText, AutoCompleteText) &&
+                           string.Equals(r?.CopyText, CopyText) &&
                            string.Equals(r?.IcoPath, IcoPath) &&
                            TitleHighlightData == r.TitleHighlightData;
 
@@ -177,9 +180,7 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            var hashcode = (Title?.GetHashCode() ?? 0) ^
-                           (SubTitle?.GetHashCode() ?? 0);
-            return hashcode;
+            return HashCode.Combine(Title, SubTitle, AutoCompleteText, CopyText, IcoPath);
         }
 
         /// <inheritdoc />
