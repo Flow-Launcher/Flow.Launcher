@@ -155,12 +155,12 @@
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
     <system:String x:Key="AnimationTip">Animovať používateľské rozhranie</system:String>
-    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
-    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
-    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
-    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
-    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
-    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
+    <system:String x:Key="AnimationSpeed">Rýchlosť animácie</system:String>
+    <system:String x:Key="AnimationSpeedTip">Rýchlosť animácie grafického rozhrania</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Pomaly</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Stredne</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rýchlo</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
 
