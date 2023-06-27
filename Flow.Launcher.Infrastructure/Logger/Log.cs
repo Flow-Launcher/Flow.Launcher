@@ -5,7 +5,6 @@ using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Flow.Launcher.Infrastructure.UserSettings;
-using NLog.Fluent;
 using NLog.Targets.Wrappers;
 using System.Runtime.ExceptionServices;
 

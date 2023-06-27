@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
-using Windows.Devices.PointOfService;
 
 namespace Flow.Launcher.Converters
 {

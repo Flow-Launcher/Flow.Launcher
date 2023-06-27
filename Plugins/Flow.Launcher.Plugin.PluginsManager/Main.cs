@@ -1,14 +1,11 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Plugin.PluginsManager.ViewModels;
+﻿using Flow.Launcher.Plugin.PluginsManager.ViewModels;
 using Flow.Launcher.Plugin.PluginsManager.Views;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
-using System;
 using System.Threading.Tasks;
 using System.Threading;
-using System.Windows;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {

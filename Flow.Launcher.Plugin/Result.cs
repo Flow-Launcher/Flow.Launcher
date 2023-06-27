@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Windows.Media;
 namespace Flow.Launcher.Plugin
 {
     /// <summary>
-    /// Describes the result of a plugin
+    /// Describes a result of a <see cref="Query"/> executed by a plugin
     /// </summary>
     public class Result
     {
@@ -16,6 +17,8 @@ namespace Flow.Launcher.Plugin
         private string _pluginDirectory;
 
         private string _icoPath;
+
+        private string _copyText = string.Empty;
 
         /// <summary>
         /// The title of the result. This is always required.
@@ -28,13 +31,13 @@ namespace Flow.Launcher.Plugin
         public string SubTitle { get; set; } = string.Empty;
 
         /// <summary>
-        /// This holds the action keyword that triggered the result. 
+        /// This holds the action keyword that triggered the result.
         /// If result is triggered by global keyword: *, this should be empty.
         /// </summary>
         public string ActionKeywordAssigned { get; set; }
 
         /// <summary>
-        /// This holds the text which can be provided by plugin to be copied to the 
+        /// This holds the text which can be provided by plugin to be copied to the
         /// user's clipboard when Ctrl + C is pressed on a result. If the text is a file/directory path
         /// flow will copy the actual file/folder instead of just the path text.
         /// </summary>
@@ -46,16 +49,17 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// This holds the text which can be provided by plugin to help Flow autocomplete text
-        /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have 
+        /// for user on the plugin result. If autocomplete action for example is tab, pressing tab will have
         /// the default constructed autocomplete text (result's Title), or the text provided here if not empty.
         /// </summary>
+        /// <remarks>When a value is not set, the <see cref="Title"/> will be used.</remarks>
         public string AutoCompleteText { get; set; }
 
         /// <summary>
-        /// Image Displayed on the result
-        /// <value>Relative Path to the Image File</value>
-        /// <remarks>GlyphInfo is prioritized if not null</remarks>
+        /// The image to be displayed for the result.
         /// </summary>
+        /// <value>Can be a local file path or a URL.</value>
+        /// <remarks>GlyphInfo is prioritized if not null</remarks>
         public string IcoPath
         {
             get { return _icoPath; }
@@ -76,22 +80,22 @@ namespace Flow.Launcher.Plugin
                 }
             }
         }
+
         /// <summary>
         /// Determines if Icon has a border radius
         /// </summary>
         public bool RoundedIcon { get; set; } = false;
 
         /// <summary>
-        /// Delegate function, see <see cref="Icon"/>
+        /// Delegate function that produces an <see cref="ImageSource"/>
         /// </summary>
         /// <returns></returns>
         public delegate ImageSource IconDelegate();
 
         /// <summary>
-        /// Delegate to Get Image Source
+        /// Delegate to load an icon for this result.
         /// </summary>
         public IconDelegate Icon;
-        private string _copyText = string.Empty;
 
         /// <summary>
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
@@ -100,37 +104,35 @@ namespace Flow.Launcher.Plugin
 
 
         /// <summary>
-        /// Delegate. An action to take in the form of a function call when the result has been selected
-        /// <returns>
-        /// true to hide flowlauncher after select result
-        /// </returns>
+        /// An action to take in the form of a function call when the result has been selected.
         /// </summary>
+        /// <remarks>
+        /// The function is invoked with an <see cref="ActionContext"/> as the only parameter.
+        /// Its result determines what happens to Flow Launcher's query form:
+        /// when true, the form will be hidden; when false, it will stay in focus.
+        /// </remarks>
         public Func<ActionContext, bool> Action { get; set; }
 
         /// <summary>
-        /// Delegate. An Async action to take in the form of a function call when the result has been selected
-        /// <returns>
-        /// true to hide flowlauncher after select result
-        /// </returns>
+        /// An async action to take in the form of a function call when the result has been selected.
         /// </summary>
+        /// <remarks>
+        /// The function is invoked with an <see cref="ActionContext"/> as the only parameter and awaited.
+        /// Its result determines what happens to Flow Launcher's query form:
+        /// when true, the form will be hidden; when false, it will stay in focus.
+        /// </remarks>
         public Func<ActionContext, ValueTask<bool>> AsyncAction { get; set; }
 
         /// <summary>
         /// Priority of the current result
-        /// <value>default: 0</value>
         /// </summary>
+        /// <value>default: 0</value>
         public int Score { get; set; }
 
         /// <summary>
         /// A list of indexes for the characters to be highlighted in Title
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
-
-        /// <summary>
-        /// Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered
-        /// </summary>
-        [Obsolete("Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered")]
-        public IList<int> SubTitleHighlightData { get; set; }
 
         /// <summary>
         /// Query information associated with the result
@@ -161,6 +163,8 @@ namespace Flow.Launcher.Plugin
 
             var equality = string.Equals(r?.Title, Title) &&
                            string.Equals(r?.SubTitle, SubTitle) &&
+                           string.Equals(r?.AutoCompleteText, AutoCompleteText) &&
+                           string.Equals(r?.CopyText, CopyText) &&
                            string.Equals(r?.IcoPath, IcoPath) &&
                            TitleHighlightData == r.TitleHighlightData;
 
@@ -170,9 +174,7 @@ namespace Flow.Launcher.Plugin
         /// <inheritdoc />
         public override int GetHashCode()
         {
-            var hashcode = (Title?.GetHashCode() ?? 0) ^
-                           (SubTitle?.GetHashCode() ?? 0);
-            return hashcode;
+            return HashCode.Combine(Title, SubTitle, AutoCompleteText, CopyText, IcoPath);
         }
 
         /// <inheritdoc />
@@ -183,10 +185,10 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Additional data associated with this result
+        /// </summary>
         /// <example>
         /// As external information for ContextMenu
         /// </example>
-        /// </summary>
         public object ContextData { get; set; }
 
         /// <summary>
@@ -230,10 +232,13 @@ namespace Flow.Launcher.Plugin
         /// <default>#26a0da (blue)</default>
         public string ProgressBarColor { get; set; } = "#26a0da";
 
+        /// <summary>
+        /// Contains data used to populate the the preview section of this result.
+        /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
 
         /// <summary>
-        /// Info of the preview image.
+        /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo
         {
@@ -241,13 +246,28 @@ namespace Flow.Launcher.Plugin
             /// Full image used for preview panel
             /// </summary>
             public string PreviewImagePath { get; set; }
+
             /// <summary>
             /// Determines if the preview image should occupy the full width of the preview panel.
             /// </summary>
             public bool IsMedia { get; set; }
+
+            /// <summary>
+            /// Result description text that is shown at the bottom of the preview panel.
+            /// </summary>
+            /// <remarks>
+            /// When a value is not set, the <see cref="SubTitle"/> will be used.
+            /// </remarks>
             public string Description { get; set; }
+
+            /// <summary>
+            /// Delegate to get the preview panel's image
+            /// </summary>
             public IconDelegate PreviewDelegate { get; set; }
 
+            /// <summary>
+            /// Default instance of <see cref="PreviewInfo"/>
+            /// </summary>
             public static PreviewInfo Default { get; } = new()
             {
                 PreviewImagePath = null,

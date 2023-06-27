@@ -95,7 +95,7 @@ namespace Flow.Launcher.Plugin.Caculator
                             {
                                 try
                                 {
-                                    Clipboard.SetDataObject(newResult);
+                                    Context.API.CopyToClipboard(newResult);
                                     return true;
                                 }
                                 catch (ExternalException)

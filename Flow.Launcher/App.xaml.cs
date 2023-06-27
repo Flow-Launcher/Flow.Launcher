@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;

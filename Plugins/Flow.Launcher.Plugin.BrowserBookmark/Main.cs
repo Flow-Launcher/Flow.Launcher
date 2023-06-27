@@ -4,11 +4,9 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.IO;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -174,7 +172,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     {
                         try
                         {
-                            Clipboard.SetDataObject(((BookmarkAttributes)selectedResult.ContextData).Url);
+                            context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
 
                             return true;
                         }

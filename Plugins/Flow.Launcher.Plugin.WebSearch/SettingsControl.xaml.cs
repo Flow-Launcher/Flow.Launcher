@@ -1,4 +1,3 @@
-using Microsoft.Win32;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Core.Plugin;
