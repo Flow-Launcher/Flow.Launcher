@@ -69,9 +69,6 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
-        [Obsolete("Typo")]
-        public void RestarApp() => RestartApp();
-
         public void ShowMainWindow() => _mainVM.Show();
 
         public void HideMainWindow() => _mainVM.Hide();
@@ -295,8 +292,6 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
-
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
@@ -309,10 +304,6 @@ namespace Flow.Launcher
         private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
         {
             var continueHook = true;
-            if (GlobalKeyboardEvent != null)
-            {
-                continueHook = GlobalKeyboardEvent((int)keyevent, vkcode, state);
-            }
             foreach (var x in _globalKeyboardHandlers)
             {
                 continueHook &= x((int)keyevent, vkcode, state);

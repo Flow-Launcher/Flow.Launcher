@@ -15,10 +15,19 @@ namespace Flow.Launcher.Test
                 {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}}}}
             };
 
-            Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
+            Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", nonGlobalPlugins);
 
-            Assert.AreEqual("file.txt    file2 file3", q.Search);
+            Assert.AreEqual(">   ping    google.com   -n 20  -6", q.RawQuery);
+            Assert.AreEqual("ping    google.com   -n 20  -6", q.Search, "Search should not start with the ActionKeyword.");
             Assert.AreEqual(">", q.ActionKeyword);
+
+            Assert.AreEqual(5, q.SearchTerms.Length, "The length of SearchTerms should match.");
+
+            Assert.AreEqual("ping", q.FirstSearch);
+            Assert.AreEqual("google.com", q.SecondSearch);
+            Assert.AreEqual("-n", q.ThirdSearch);
+
+            Assert.AreEqual("google.com -n 20 -6", q.SecondToEndSearch, "SecondToEndSearch should be trimmed of multiple whitespace characters");
         }
 
         [Test]
@@ -29,9 +38,13 @@ namespace Flow.Launcher.Test
                 {">", new PluginPair {Metadata = new PluginMetadata {ActionKeywords = new List<string> {">"}, Disabled = true}}}
             };
 
-            Query q = QueryBuilder.Build(">   file.txt    file2 file3", nonGlobalPlugins);
+            Query q = QueryBuilder.Build(">   ping    google.com   -n 20  -6", nonGlobalPlugins);
 
-            Assert.AreEqual(">   file.txt    file2 file3", q.Search);
+            Assert.AreEqual(">   ping    google.com   -n 20  -6", q.Search);
+            Assert.AreEqual(q.Search, q.RawQuery, "RawQuery should be equal to Search.");
+            Assert.AreEqual(6, q.SearchTerms.Length, "The length of SearchTerms should match.");
+            Assert.AreNotEqual(">", q.ActionKeyword, "ActionKeyword should not match that of a disabled plugin.");
+            Assert.AreEqual("ping google.com -n 20 -6", q.SecondToEndSearch, "SecondToEndSearch should be trimmed of multiple whitespace characters");
         }
 
         [Test]

@@ -135,12 +135,6 @@ namespace Flow.Launcher.Plugin
         public IList<int> TitleHighlightData { get; set; }
 
         /// <summary>
-        /// Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered
-        /// </summary>
-        [Obsolete("Deprecated as of Flow Launcher v1.9.1. Subtitle highlighting is no longer offered")]
-        public IList<int> SubTitleHighlightData { get; set; }
-
-        /// <summary>
         /// Query information associated with the result
         /// </summary>
         internal Query OriginQuery { get; set; }

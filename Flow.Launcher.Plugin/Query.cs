@@ -6,16 +6,11 @@ namespace Flow.Launcher.Plugin
     {
         public Query() { }
 
-        /// <summary>
-        /// to allow unit tests for plug ins
-        /// </summary>
+        [Obsolete("Use the default Query constructor.")]
         public Query(string rawQuery, string search, string[] terms, string[] searchTerms, string actionKeyword = "")
         {
             Search = search;
             RawQuery = rawQuery;
-#pragma warning disable CS0618
-            Terms = terms;
-#pragma warning restore CS0618
             SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
@@ -48,26 +43,14 @@ namespace Flow.Launcher.Plugin
         public string[] SearchTerms { get; init; }
 
         /// <summary>
-        /// The raw query split into a string array
-        /// </summary>
-        [Obsolete("It may or may not include action keyword, which can be confusing. Use SearchTerms instead")]
-        public string[] Terms { get; init; }
-
-        /// <summary>
         /// Query can be splited into multiple terms by whitespace
         /// </summary>
         public const string TermSeparator = " ";
-
-        [Obsolete("Typo")]
-        public const string TermSeperater = TermSeparator;
 
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
         public const string ActionKeywordSeparator = ";";
-
-        [Obsolete("Typo")]
-        public const string ActionKeywordSeperater = ActionKeywordSeparator;
 
 
         /// <summary>
