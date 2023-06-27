@@ -17,7 +17,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_title">安裝擴充功能時發生錯誤</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">嘗試安裝 {0} 時發生錯誤</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">無可用更新</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">所有擴充功能均為最新版本</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">所有插件均為最新版本</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">擴充功能更新</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">This plugin has an update, would you like to see it?</system:String>
