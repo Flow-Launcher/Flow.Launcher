@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">搜尋窗口打開時播放音效</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">時鐘</system:String>
     <system:String x:Key="Date">日期</system:String>
 
