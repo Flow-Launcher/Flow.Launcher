@@ -24,6 +24,7 @@ using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
+using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 
 namespace Flow.Launcher
 {
@@ -379,11 +380,19 @@ namespace Flow.Launcher
             CircleEase easing = new CircleEase();
             easing.EasingMode = EasingMode.EaseInOut;
 
+            var animationLength = _settings.AnimationSpeed switch
+            {
+                AnimationSpeeds.Slow => 560,
+                AnimationSpeeds.Medium => 360,
+                AnimationSpeeds.Fast => 160,
+                _ => _settings.CustomAnimationLength
+            };
+
             var WindowOpacity = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(0.25),
+                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -391,7 +400,7 @@ namespace Flow.Launcher
             {
                 From = Top + 10,
                 To = Top,
-                Duration = TimeSpan.FromSeconds(0.25),
+                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
             var IconMotion = new DoubleAnimation
@@ -399,7 +408,7 @@ namespace Flow.Launcher
                 From = 12,
                 To = 0,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -408,7 +417,7 @@ namespace Flow.Launcher
                 From = 0,
                 To = 1,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
             double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
@@ -417,7 +426,7 @@ namespace Flow.Launcher
                 From = 0,
                 To = TargetIconOpacity,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -427,7 +436,7 @@ namespace Flow.Launcher
                 From = new Thickness(0, 12, right, 0),
                 To = new Thickness(0, 0, right, 0),
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
