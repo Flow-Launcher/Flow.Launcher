@@ -48,6 +48,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         public List<Result> Query(Query query)
         {
+            // For when the plugin being previously disabled and is now renabled 
             if (!initialized)
             {
                 LoadBookmarksIfEnabled();
