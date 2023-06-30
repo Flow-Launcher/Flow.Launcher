@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
@@ -244,7 +250,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Веб-браузер за замовчуванням</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>

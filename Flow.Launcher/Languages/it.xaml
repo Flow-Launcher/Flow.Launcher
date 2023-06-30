@@ -86,7 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugins</system:String>
+    <system:String x:Key="plugins">Plugin</system:String>
     <system:String x:Key="browserMorePlugins">Cerca altri plugins</system:String>
     <system:String x:Key="enable">Attivo</system:String>
     <system:String x:Key="disable">Disabilita</system:String>
@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Riproduce un piccolo suono all'apertura della finestra di ricerca</system:String>
     <system:String x:Key="Animation">Animazione</system:String>
     <system:String x:Key="AnimationTip">Usa l'animazione nell'interfaccia utente</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
@@ -166,13 +172,13 @@
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Apri modificatori di risultato</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Seleziona un tasto modificatore per aprire il risultato selezionato via tastiera.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostra tasto di scelta rapida</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Mostra tasto di scelta rapida dei risultati con i risultati.</system:String>
     <system:String x:Key="customQueryHotkey">Tasti scelta rapida per ricerche personalizzate</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customQuery">Ricerca</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
     <system:String x:Key="builtinShortcutDescription">Description</system:String>
@@ -184,12 +190,12 @@
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Effetto ombra della finestra di ricerca</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">L'effetto ombra utilizzerà in maniera sostanziale la GPU. Non consigliato se le performance del tuo computer sono limitate.</system:String>
+    <system:String x:Key="windowWidthSize">Dimensione larghezza della finestra</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Usa Icone Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Usa Icone Segoe Fluent per risultati di ricerca dove supportate</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
@@ -225,38 +231,38 @@
         oppure vai su https://github.com/Flow-Launcher/Flow.Launcher/releases per scaricare gli aggiornamenti manualmente.
     </system:String>
     <system:String x:Key="releaseNotes">Note di rilascio</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="documentation">Suggerimenti di utilizzo</system:String>
+    <system:String x:Key="devtool">Strumenti per sviluppatori</system:String>
+    <system:String x:Key="settingfolder">Cartella delle impostazioni</system:String>
+    <system:String x:Key="logfolder">Cartella dei Log</system:String>
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerWindow">Seleziona Gestore File</system:String>
+    <system:String x:Key="fileManager_tips">Specificare la posizione del gestore file che si sta utilizzando e aggiungere argomenti se necessario. Gli argomenti di default sono &quot;%d&quot;, e un percorso è inserito in quella posizione. Per esempio, se è richiesto un comando come &quot;totalcmd.exe /A c:\windows&quot;, l'argomento è /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; è un argomento che rappresenta il percorso del file. Viene usato per sottolineare il nome del file/cartella quando si apre una posizione specifica del file in file manager di terze parti. Questo argomento è disponibile solo nell'elemento &quot;Arg per File&quot;. Se il file manager non dispone di tale funzione, è possibile utilizzare &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_name">Gestore File</system:String>
+    <system:String x:Key="fileManager_profile_name">Nome Profilo</system:String>
+    <system:String x:Key="fileManager_path">Percorso Gestore File</system:String>
+    <system:String x:Key="fileManager_directory_arg">Arg Per Cartella</system:String>
+    <system:String x:Key="fileManager_file_arg">Arg Per Cartella</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Browser predefinito</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_tips">L'impostazione predefinita segue l'opzione del browser predefinito del sistema operativo. Se specificato separatamente, Flow utilizza quel browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nome del browser</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">Percorso Browser</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Modalità Privata</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Cambia Priorità</system:String>
+    <system:String x:Key="priority_tips">Maggiore è il numero, maggiore sarà il risultato che verrà classificato. Prova ad impostarlo a 5. Se si desidera che i risultati siano inferiori a qualsiasi altro plugin, fornire un numero negativo</system:String>
+    <system:String x:Key="invalidPriority">Si prega di fornire un numero intero valido per la priorità!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Vecchia parola chiave d'azione</system:String>
@@ -267,7 +273,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nuova parola chiave d'azione non può essere vuota</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">La nuova parola chiave d'azione è stata assegnata ad un altro plugin, per favore sceglierne una differente</system:String>
     <system:String x:Key="success">Successo</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Completato con successo</system:String>
     <system:String x:Key="actionkeyword_tips">Usa * se non vuoi specificare una parola chiave d'azione</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -304,24 +310,24 @@
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher ha riportato un errore</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">Attendere prego...</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Controllando per un nuovo aggiornamento</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Al momento hai la versione più recente di Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Aggiornamento trovato</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Aggiornando...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcher non è stato in grado di spostare i dati del tuo profilo alla nuova versione aggiornata.
+        Si prega di spostare manualmente la cartella dei tuoi dati da {0} a {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Nuovo Aggiornamento</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">E' disponibile la nuova release {0} di Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Errore durante l'installazione degli aggiornamenti software</system:String>
     <system:String x:Key="update_flowlauncher_update">Aggiorna</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Annulla</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Aggiornamento fallito</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Controlla la tua connessione e prova ad aggiornare le impostazioni del proxy su github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Questo aggiornamento riavvierà Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">I seguenti file saranno aggiornati</system:String>
     <system:String x:Key="update_flowlauncher_update_files">File aggiornati</system:String>
@@ -329,9 +335,9 @@
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Salta</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Benvenuto su Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Ciao, questa è la prima volta che stai eseguendo Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Prima di iniziare, questa procedura guidata aiuterà nella creazione di Flow Launcher. Puoi saltarla se vuoi. Scegli una lingua</system:String>
     <system:String x:Key="Welcome_Page2_Title">Cerca ed esegue tutti i file e le applicazioni presenti sul PC</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Cerca tutto da applicazioni, file, segnalibri, YouTube, Twitter e altro ancora. Tutto dalla comodità della tastiera senza mai toccare il mouse.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher si avvia con il tasto di scelta rapida qui sotto, provatelo subito. Per cambiarlo, fate clic sull'input e premete il tasto di scelta rapida desiderato sulla tastiera.</system:String>

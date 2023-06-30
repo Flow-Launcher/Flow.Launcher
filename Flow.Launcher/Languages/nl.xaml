@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Een klein geluid afspelen wanneer het zoekvenster wordt geopend</system:String>
     <system:String x:Key="Animation">Animatie</system:String>
     <system:String x:Key="AnimationTip">Animatie gebruiken in UI</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
