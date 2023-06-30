@@ -78,6 +78,7 @@ WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
+Firefox
 msedge
 svgc
 ime
