@@ -69,11 +69,13 @@ namespace Flow.Launcher
             {
                 tbSubTitle.Visibility = Visibility.Collapsed;
             }
+            
             if (!File.Exists(iconPath))
             {
                 imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
-            else {
+            else 
+            {
                 imgIco.Source = await ImageLoader.LoadAsync(iconPath);
             }
 
