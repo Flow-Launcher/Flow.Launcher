@@ -21,17 +21,17 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} da {1} {2}{3}Vuoi aggiornare questo plugin? Dopo l'aggiornamento, Flow si riavvierà automaticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aggiornamento del plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Questo plugin ha un aggiornamento, vuoi vederlo?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Plugin Manifest Download Failed</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Questo plugin è già stato installato</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Download del manifesto del plugin fallito</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Controlla se puoi connetterti a github.com. Questo errore significa che potresti non essere in grado di installare o aggiornare i plugin.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installazione da una fonte sconosciuta</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Stai installando questo plugin da una fonte sconosciuta e potrebbe contenere potenziali rischi!{0}{0}Si prega di assicurarsi di capire la provenienza di questo plugin e se sia sicuro.{0}{0}Vuoi comunque continuare?{0}{0}(Puoi disattivare questo avviso dalle impostazioni)</system:String>
 
     <!--  Controls  -->
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestore dei plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Gestione dell'installazione, disinstallazione o aggiornamento dei plugin di Flow Launcher</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
 
     <!--  Context menu items  -->
