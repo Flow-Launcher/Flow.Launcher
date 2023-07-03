@@ -134,13 +134,6 @@ namespace Flow.Launcher.Plugin
         List<PluginPair> GetAllPlugins();
 
         /// <summary>
-        /// Fired after global keyboard events
-        /// if you want to hook something like Ctrl+R, you should use this event
-        /// </summary>
-        [Obsolete("Unable to Retrieve correct return value")]
-        event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
-        
-        /// <summary>
         /// Register a callback for Global Keyboard Event
         /// </summary>
         /// <param name="callback"></param>

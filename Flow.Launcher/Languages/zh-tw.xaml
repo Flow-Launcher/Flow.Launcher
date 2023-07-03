@@ -52,7 +52,7 @@
     <system:String x:Key="lastQueryModeToolTip">重啟 Flow Launcher 顯示／隱藏以前的結果。</system:String>
     <system:String x:Key="LastQueryPreserved">保留上一個查詢</system:String>
     <system:String x:Key="LastQuerySelected">選擇上一個查詢</system:String>
-    <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
+    <system:String x:Key="LastQueryEmpty">清空上次搜尋關鍵字</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
@@ -87,7 +87,7 @@
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">插件</system:String>
     <system:String x:Key="plugins">插件</system:String>
-    <system:String x:Key="browserMorePlugins">瀏覽更多外掛</system:String>
+    <system:String x:Key="browserMorePlugins">瀏覽更多插件</system:String>
     <system:String x:Key="enable">啟用</system:String>
     <system:String x:Key="disable">停用</system:String>
     <system:String x:Key="actionKeywordsTitle">觸發關鍵字設定</system:String>
@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">插件商店</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">外掛</system:String>
+    <system:String x:Key="pluginStore_None">插件</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">重新整理</system:String>
     <system:String x:Key="installbtn">安裝</system:String>
@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">搜尋窗口打開時播放音效</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">時鐘</system:String>
     <system:String x:Key="Date">日期</system:String>
 
@@ -180,7 +186,7 @@
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
     <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除外掛 {0} 的快捷鍵嗎？</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除插件 {0} 的快捷鍵嗎？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你確定你要刪除縮寫：{0} 展開為 {1}？</system:String>
     <system:String x:Key="shortcut_clipboard_description">從剪貼簿取得文字。</system:String>
     <system:String x:Key="shortcut_active_explorer_path">從使用中的檔案總管獲得路徑。</system:String>
@@ -255,7 +261,7 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">更改優先度</system:String>
-    <system:String x:Key="priority_tips">數字越大，查詢結果會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他外掛，請提供負數</system:String>
+    <system:String x:Key="priority_tips">數字越大，查詢結果會排在越前面。嘗試將其設定為 5。如果你希望查詢結果低於任何其他插件，請提供負數</system:String>
     <system:String x:Key="invalidPriority">請為優先度提供一個有效的整數！</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
@@ -263,9 +269,9 @@
     <system:String x:Key="newActionKeywords">新觸發關鍵字</system:String>
     <system:String x:Key="cancel">取消</system:String>
     <system:String x:Key="done">確定</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的外掛</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">找不到指定的插件</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">新觸發關鍵字不能為空白</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一外掛，請設定其他關鍵字。</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">新觸發關鍵字已經被指派給另一個插件，請設定其他關鍵字。</system:String>
     <system:String x:Key="success">成功</system:String>
     <system:String x:Key="completedSuccessfully">成功完成</system:String>
     <system:String x:Key="actionkeyword_tips">如果不想設定觸發關鍵字，可以使用*代替</system:String>
@@ -275,7 +281,7 @@
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
     <system:String x:Key="preview">預覽</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">快捷鍵不存在，請設定一個新的快捷鍵</system:String>
-    <system:String x:Key="invalidPluginHotkey">外掛熱鍵無法使用</system:String>
+    <system:String x:Key="invalidPluginHotkey">擴充功能熱鍵無法使用</system:String>
     <system:String x:Key="update">更新</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -312,8 +318,8 @@
     <system:String x:Key="update_flowlauncher_update_found">找到更新</system:String>
     <system:String x:Key="update_flowlauncher_updating">更新中...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcher 無法將您的個人資料移動到新版本。
+        請手動將您的個人資料資料夾從 {0} 到 {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">新的更新</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">發現 Flow Launcher 新版本 V{0}</system:String>
@@ -321,7 +327,7 @@
     <system:String x:Key="update_flowlauncher_update">更新</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">取消</system:String>
     <system:String x:Key="update_flowlauncher_fail">更新失敗</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">檢查您的連線，並嘗試更新到 github-cloud.s3.amazonaws.com 的 Proxy 伺服器設定。</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">此更新需要重新啟動 Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">下列檔案會被更新</system:String>
     <system:String x:Key="update_flowlauncher_update_files">更新檔案</system:String>
@@ -337,7 +343,7 @@
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 需要搭配快捷鍵使用，請馬上試試吧! 如果想更改它，請點擊&quot;輸入&quot;並輸入你想要的快捷鍵。</system:String>
     <system:String x:Key="Welcome_Page3_Title">快捷鍵</system:String>
     <system:String x:Key="Welcome_Page4_Title">關鍵字與指令</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">透過 Flow Launcher 的擴充功能，您可以搜尋網頁、啟動應用程式或執行各種功能。某些功能以動作關鍵字開頭，若需要，也可以不使用動作關鍵字。請嘗試在 Flow Launcher 中輸入以下查詢。</system:String>
     <system:String x:Key="Welcome_Page5_Title">開始使用 Flow Launcher吧!</system:String>
     <system:String x:Key="Welcome_Page5_Text01">大功告成! 別忘了使用快捷鍵以開始 :)</system:String>
 

@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
+    <system:String x:Key="AnimationSpeed">动画速度</system:String>
+    <system:String x:Key="AnimationSpeedTip">UI 动画速度</system:String>
+    <system:String x:Key="AnimationSpeedSlow">慢</system:String>
+    <system:String x:Key="AnimationSpeedMedium">中</system:String>
+    <system:String x:Key="AnimationSpeedFast">快</system:String>
+    <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
 

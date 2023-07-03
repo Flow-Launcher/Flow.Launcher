@@ -9,16 +9,11 @@ namespace Flow.Launcher.Plugin
     {
         public Query() { }
 
-        /// <summary>
-        /// to allow unit tests for plug ins
-        /// </summary>
+        [Obsolete("Use the default Query constructor.")]
         public Query(string rawQuery, string search, string[] terms, string[] searchTerms, string actionKeyword = "")
         {
             Search = search;
             RawQuery = rawQuery;
-#pragma warning disable CS0618
-            Terms = terms;
-#pragma warning restore CS0618
             SearchTerms = searchTerms;
             ActionKeyword = actionKeyword;
         }
@@ -39,49 +34,46 @@ namespace Flow.Launcher.Plugin
         /// <summary>
         /// Search part of a query.
         /// This will not include action keyword if exclusive plugin gets it, otherwise it should be same as RawQuery.
-        /// Since we allow user to switch a exclusive plugin to generic plugin, 
+        /// Since we allow user to switch a exclusive plugin to generic plugin,
         /// so this property will always give you the "real" query part of the query
         /// </summary>
         public string Search { get; internal init; }
 
         /// <summary>
         /// The search string split into a string array.
+        /// Does not include the <see cref="ActionKeyword"/>.
         /// </summary>
         public string[] SearchTerms { get; init; }
-
-        /// <summary>
-        /// The raw query split into a string array
-        /// </summary>
-        [Obsolete("It may or may not include action keyword, which can be confusing. Use SearchTerms instead")]
-        public string[] Terms { get; init; }
 
         /// <summary>
         /// Query can be splited into multiple terms by whitespace
         /// </summary>
         public const string TermSeparator = " ";
 
-        [Obsolete("Typo")]
-        public const string TermSeperater = TermSeparator;
         /// <summary>
         /// User can set multiple action keywords seperated by ';'
         /// </summary>
         public const string ActionKeywordSeparator = ";";
 
-        [Obsolete("Typo")]
-        public const string ActionKeywordSeperater = ActionKeywordSeparator;
-
 
         /// <summary>
-        /// '*' is used for System Plugin
+        /// Wildcard action keyword. Plugins using this value will be queried on every search.
         /// </summary>
         public const string GlobalPluginWildcardSign = "*";
 
+        /// <summary>
+        /// The action keyword part of this query.
+        /// For global plugins this value will be empty.
+        /// </summary>
         public string ActionKeyword { get; init; }
 
         [JsonIgnore]
         /// <summary>
-        /// Return first search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the first item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         public string FirstSearch => SplitSearch(0);
         
         [JsonIgnore]
@@ -94,14 +86,20 @@ namespace Flow.Launcher.Plugin
         public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
-        /// Return second search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the second item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         [JsonIgnore]
         public string SecondSearch => SplitSearch(1);
 
         /// <summary>
-        /// Return third search split by space if it has
+        /// Splits <see cref="SearchTerms"/> by spaces and returns the third item.
         /// </summary>
+        /// <remarks>
+        /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
+        /// </remarks>
         [JsonIgnore]
         public string ThirdSearch => SplitSearch(2);
 
@@ -110,6 +108,7 @@ namespace Flow.Launcher.Plugin
             return index < SearchTerms.Length ? SearchTerms[index] : string.Empty;
         }
 
+        /// <inheritdoc />
         public override string ToString() => RawQuery;
     }
 }
