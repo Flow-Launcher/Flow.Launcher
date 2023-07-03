@@ -578,6 +578,8 @@ namespace Flow.Launcher.ViewModel
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
+        public event VisibilityChangedEventHandler VisibilityChanged;
+
         public Visibility SearchIconVisibility { get; set; }
 
         public double MainWindowWidth
@@ -1014,6 +1016,7 @@ namespace Flow.Launcher.ViewModel
                 MainWindowOpacity = 1;
 
                 MainWindowVisibilityStatus = true;
+                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
@@ -1048,6 +1051,7 @@ namespace Flow.Launcher.ViewModel
 
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
+            VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
 
         /// <summary>

@@ -96,7 +96,12 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns></returns>
         bool IsMainWindowVisible();
-        
+
+        /// <summary>
+        /// Invoked when the visibility of the main window has changed
+        /// </summary>
+        event VisibilityChangedEventHandler VisibilityChanged;
+
         /// <summary>
         /// Show message box
         /// </summary>
