@@ -256,7 +256,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     query.Search
                 },
-                Settings.Inner);
+                Settings?.Inner);
 
             var output = await RequestAsync(request, token);
 
