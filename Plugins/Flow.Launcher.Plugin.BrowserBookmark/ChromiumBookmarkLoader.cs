@@ -22,7 +22,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 
                 Main.RegisterBookmarkFile(bookmarkPath);
 
-                var source = name + (Path.GetFileName(profile) == "Default" ? "" : $" ({Path.GetFileName(profile)})");
+                var source = name + $" ({Path.GetFileName(profile)})";
                 bookmarks.AddRange(LoadBookmarksFromFile(bookmarkPath, source));
             }
             return bookmarks;
