@@ -93,6 +93,8 @@ namespace Flow.Launcher.Core.Plugin
                 process.StandardOutput.BaseStream,
                 formatter);
 
+            ErrorStream = _process.StandardError;
+
             RPC = new JsonRpc(handler, new JsonRPCPublicAPI(api));
             RPC.SynchronizationContext = null;
             RPC.StartListening();
