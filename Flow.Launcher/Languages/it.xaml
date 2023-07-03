@@ -131,7 +131,7 @@
     <system:String x:Key="browserMoreThemes">Sfoglia per altri temi</system:String>
     <system:String x:Key="howToCreateTheme">Come creare un tema</system:String>
     <system:String x:Key="hiThere">Ciao</system:String>
-    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleTitleExplorer">Esplora Risorse</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
     <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
@@ -181,7 +181,7 @@
     <system:String x:Key="customQuery">Ricerca</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="builtinShortcutDescription">Descrizione</system:String>
     <system:String x:Key="delete">Cancella</system:String>
     <system:String x:Key="edit">Modifica</system:String>
     <system:String x:Key="add">Aggiungi</system:String>
@@ -255,8 +255,8 @@
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Nome del browser</system:String>
     <system:String x:Key="defaultBrowser_path">Percorso Browser</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nuova Finestra</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nuova Scheda</system:String>
     <system:String x:Key="defaultBrowser_parameter">Modalità Privata</system:String>
 
     <!--  Priority Setting Dialog  -->
