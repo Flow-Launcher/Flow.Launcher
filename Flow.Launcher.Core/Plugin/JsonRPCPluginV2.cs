@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Pipelines;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
@@ -10,15 +11,17 @@ using StreamJsonRpc;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IDisposable
+    internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
     {
         public abstract string SupportedLanguage { get; set; }
 
         public const string JsonRpc = "JsonRPC";
 
-        protected abstract JsonRpc RPC { get; set; }
+        protected abstract IDuplexPipe ClientPipe { get; set; }
 
         protected StreamReader ErrorStream { get; set; }
+
+        private JsonRpc RPC { get; set; }
 
 
         protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
@@ -59,6 +62,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             await base.InitAsync(context);
 
+            SetupJsonRPC();
+
             _ = ReadErrorAsync();
 
             await RPC.InvokeAsync("initialize", context);
@@ -74,10 +79,40 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        public void Dispose()
+        public event ResultUpdatedEventHandler ResultsUpdated;
+
+
+        private void SetupJsonRPC()
+        {
+            var formatter = new JsonMessageFormatter();
+            var handler = new NewLineDelimitedMessageHandler(ClientPipe,
+                formatter);
+
+            RPC = new JsonRpc(handler, new JsonRPCPublicAPI(Context.API));
+
+            RPC.AddLocalRpcMethod("UpdateResults", new Action<string, JsonRPCQueryResponseModel>((rawQuery, response) =>
+            {
+                var results = ParseResults(response);
+                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs { Query = new Query()
+                {
+                    RawQuery = rawQuery
+                }, Results = results });
+            }));
+            RPC.SynchronizationContext = null;
+            RPC.StartListening();
+        }
+
+        public virtual Task ReloadDataAsync()
+        {
+            SetupJsonRPC();
+            return Task.CompletedTask;
+        }
+
+        public virtual ValueTask DisposeAsync()
         {
             RPC?.Dispose();
             ErrorStream?.Dispose();
+            return ValueTask.CompletedTask;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Pipelines;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,18 +11,19 @@ using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Microsoft.VisualStudio.Threading;
+using Nerdbank.Streams;
 using StreamJsonRpc;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    internal class PythonPluginV2 : JsonRPCPluginV2, IReloadable, IDisposable
+    internal class PythonPluginV2 : JsonRPCPluginV2
     {
         private readonly ProcessStartInfo _startInfo;
         private Process _process;
 
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
 
-        protected override JsonRpc RPC { get; set; }
+        protected override IDuplexPipe ClientPipe { get; set; }
 
 
         public PythonPluginV2(string filename)
@@ -61,43 +63,38 @@ namespace Flow.Launcher.Core.Plugin
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
             _process = Process.Start(_startInfo);
-
             ArgumentNullException.ThrowIfNull(_process);
-
-            SetupJsonRPC(_process, context.API);
+            
+            SetupPipe(_process);
 
             await base.InitAsync(context);
         }
 
-        public void Dispose()
+        public override async ValueTask DisposeAsync()
         {
             _process.Kill(true);
+            await _process.WaitForExitAsync();
             _process.Dispose();
-            base.Dispose();
+            await base.DisposeAsync();
         }
 
-        public void ReloadData()
+        private void SetupPipe(Process process)
+        {
+            var (reader, writer) = (PipeReader.Create(process.StandardOutput.BaseStream),
+                PipeWriter.Create(process.StandardInput.BaseStream));
+            ClientPipe = new DuplexPipe(reader, writer);
+        }
+        
+        public override async Task ReloadDataAsync()
         {
             var oldProcess = _process;
             _process = Process.Start(_startInfo);
             ArgumentNullException.ThrowIfNull(_process);
-            SetupJsonRPC(_process, Context.API);
+            SetupPipe(_process);
+            await base.ReloadDataAsync();
             oldProcess.Kill(true);
+            await oldProcess.WaitForExitAsync();
             oldProcess.Dispose();
-        }
-
-        private void SetupJsonRPC(Process process, IPublicAPI api)
-        {
-            var formatter = new JsonMessageFormatter();
-            var handler = new NewLineDelimitedMessageHandler(process.StandardInput.BaseStream,
-                process.StandardOutput.BaseStream,
-                formatter);
-
-            ErrorStream = _process.StandardError;
-
-            RPC = new JsonRpc(handler, new JsonRPCPublicAPI(api));
-            RPC.SynchronizationContext = null;
-            RPC.StartListening();
         }
     }
 }
