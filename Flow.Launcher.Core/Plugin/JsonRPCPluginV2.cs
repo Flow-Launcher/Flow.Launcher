@@ -6,7 +6,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
 using Flow.Launcher.Plugin;
+using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
+using IAsyncDisposable = System.IAsyncDisposable;
 
 
 namespace Flow.Launcher.Core.Plugin
@@ -37,6 +39,11 @@ namespace Flow.Launcher.Core.Plugin
             {
                 return false;
             }
+        }
+
+        public override List<Result> LoadContextMenus(Result selectedResult)
+        {
+            throw new NotImplementedException();
         }
 
         public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
