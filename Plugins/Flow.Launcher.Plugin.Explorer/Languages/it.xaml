@@ -134,7 +134,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installazione di Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installazione di everything. Si prega di attendere...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything è stato installato con successo</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Impossibile installare automaticamente il servizio Everything. Si prega di installarlo manualmente da https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Premi per avviare</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">Impossibile trovare l'installazione di Everything, vuoi inserire manualmente un percorso? {0} {0} Premi no per installare automaticamente Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
