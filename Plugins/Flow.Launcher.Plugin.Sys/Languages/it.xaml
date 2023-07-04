@@ -12,10 +12,10 @@
     <system:String x:Key="flowlauncher_plugin_sys_lock">Blocca questo computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Chiudi Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Riavvia Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_setting">Tweak Flow Launcher's settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting">Modifica le impostazioni di Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep">Metti il computer in modalità sospensione</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin">Svuota il Cestino</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Open recycle bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin">Apri il Cestino</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption">Opzioni di Indicizzazione</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate">Iberna il computer</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings">Salva tutte le impostazioni di Flow Launcher</system:String>
@@ -32,7 +32,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Sei sicuro di voler spegnere il computer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Sei sicuro di voler riavviare il computer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Sei sicuro di voler riavviare il computer con le Opzioni di Avvio Avanzate?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Sei sicuro di volerti disconettere?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandi di Sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Fornisce comandi relativi al sistema, ad esempio spegnimento, blocco, impostazioni ecc.</system:String>
