@@ -25,6 +25,7 @@ namespace Flow.Launcher.Core.Resource
         public static Language Norwegian_Bokmal = new Language("nb-NO", "Norsk Bokmål");
         public static Language Slovak = new Language("sk", "Slovenský");
         public static Language Turkish = new Language("tr", "Türkçe");
+        public static Language Czech = new Language("cs", "čeština");
 
         public static List<Language> GetAvailableLanguages()
         {
@@ -50,7 +51,8 @@ namespace Flow.Launcher.Core.Resource
                 Italian,
                 Norwegian_Bokmal,
                 Slovak,
-                Turkish
+                Turkish,
+                Czech
             };
             return languages;
         }
