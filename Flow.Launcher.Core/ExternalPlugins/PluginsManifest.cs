@@ -10,6 +10,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
     {
         private static readonly CommunityPluginStore mainPluginStore =
             new("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json",
+                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json",
+                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json",
                 "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json");
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
