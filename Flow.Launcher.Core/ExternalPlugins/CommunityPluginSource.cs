@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
-using System.Text.Json;
+using System.Net.Http.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -36,9 +36,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                await using var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
-
-                this.plugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
+                this.plugins = await response.Content.ReadFromJsonAsync<List<UserPlugin>>(cancellationToken: token).ConfigureAwait(false);
                 this.latestEtag = response.Headers.ETag.Tag;
 
                 Log.Info(nameof(CommunityPluginSource), $"Loaded {this.plugins.Count} plugins from {ManifestFileUrl}");
