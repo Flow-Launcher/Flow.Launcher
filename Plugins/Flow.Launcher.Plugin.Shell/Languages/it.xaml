@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permette di eseguire comandi di sistema da Flow Launcher. I comandi dovrebbero iniziare con &gt;</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">questo comando è stato eseguito {0} volte</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">esegui il comando attraverso riga di comando</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Run As Administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Esegui Come Amministratore</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copia il comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_history">Mostra solo il numero di comandi più usati:</system:String>
 </ResourceDictionary>
