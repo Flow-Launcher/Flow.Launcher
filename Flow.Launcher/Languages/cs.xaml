@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey: {0}</system:String>
-    <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
+    <system:String x:Key="registerHotkeyFailed">Nepodařilo se zaregistrovat zkratku: {0}</system:String>
+    <system:String x:Key="couldnotStartCmd">Nepodařilo se spustit {0}</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný typ souboru pluginu aplikace Flow Launcher</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Nastavit jako nejvyšší v tomto dotazu</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">Cancel topmost in this query</system:String>
     <system:String x:Key="executeQuery">Execute query: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Last execution time: {0}</system:String>
