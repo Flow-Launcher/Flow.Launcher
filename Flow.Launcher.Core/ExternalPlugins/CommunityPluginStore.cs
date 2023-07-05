@@ -20,16 +20,16 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 .Select(url => new CommunityPluginSource(url))
                 .ToList();
 
-        public async Task<List<UserPlugin>> FetchAsync(CancellationToken token)
+        public async Task<List<UserPlugin>> FetchAsync(CancellationToken token, bool onlyFromPrimaryUrl = false)
         {
             // we create a new cancellation token source linked to the given token.
             // Once any of the http requests completes successfully, we call cancel
             // to stop the rest of the running http requests.
             var cts = CancellationTokenSource.CreateLinkedTokenSource(token);
 
-            var tasks = pluginSources
-                .Select(pluginSource => pluginSource.FetchAsync(cts.Token))
-                .ToList();
+            var tasks = onlyFromPrimaryUrl
+                ? new() { pluginSources.Last().FetchAsync(cts.Token) }
+                : pluginSources.Select(pluginSource => pluginSource.FetchAsync(cts.Token)).ToList();
 
             var pluginResults = new List<UserPlugin>();
 

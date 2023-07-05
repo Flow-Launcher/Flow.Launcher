@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -162,9 +162,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context.API.RestartApp();
         }
 
-        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
@@ -337,9 +337,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(contructedUrlPart));
         }
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
         {
-            await PluginsManifest.UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)

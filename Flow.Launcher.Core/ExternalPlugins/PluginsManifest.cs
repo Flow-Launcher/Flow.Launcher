@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,15 +21,15 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default)
+        public static async Task UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
         {
             try
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
-                if (UserPlugins == null || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
+                if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
-                    var results = await mainPluginStore.FetchAsync(token).ConfigureAwait(false);
+                    var results = await mainPluginStore.FetchAsync(token, usePrimaryUrlOnly).ConfigureAwait(false);
 
                     UserPlugins = results;
                     lastFetchedAt = DateTime.Now;
