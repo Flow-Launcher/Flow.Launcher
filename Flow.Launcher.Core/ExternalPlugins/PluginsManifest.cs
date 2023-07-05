@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -16,6 +16,9 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
+        private static DateTime lastFetchedAt = DateTime.MinValue;
+        private static TimeSpan fetchTimeout = TimeSpan.FromSeconds(10);
+
         public static List<UserPlugin> UserPlugins { get; private set; }
 
         public static async Task UpdateManifestAsync(CancellationToken token = default)
@@ -24,9 +27,13 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
-                var results = await mainPluginStore.FetchAsync(token).ConfigureAwait(false);
+                if (UserPlugins == null || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
+                {
+                    var results = await mainPluginStore.FetchAsync(token).ConfigureAwait(false);
 
-                UserPlugins = results;
+                    UserPlugins = results;
+                    lastFetchedAt = DateTime.Now;
+                }
             }
             catch (Exception e)
             {

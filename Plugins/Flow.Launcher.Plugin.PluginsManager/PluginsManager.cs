@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -47,26 +47,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             Context = context;
             Settings = settings;
-        }
-
-        private Task _downloadManifestTask = Task.CompletedTask;
-
-        internal Task UpdateManifestAsync(CancellationToken token = default, bool silent = false)
-        {
-            if (_downloadManifestTask.Status == TaskStatus.Running)
-            {
-                return _downloadManifestTask;
-            }
-            else
-            {
-                _downloadManifestTask = PluginsManifest.UpdateManifestAsync(token);
-                if (!silent)
-                    _downloadManifestTask.ContinueWith(_ =>
-                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
-                                Context.API.GetTranslation("plugin_pluginsmanager_update_failed_subtitle"), icoPath, false),
-                        TaskContinuationOptions.OnlyOnFaulted);
-                return _downloadManifestTask;
-            }
         }
 
         internal List<Result> GetDefaultHotKeys()
@@ -184,7 +164,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token)
         {
-            await UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token);
 
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
@@ -359,7 +339,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token)
         {
-            await UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)
