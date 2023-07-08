@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
         private static DateTime lastFetchedAt = DateTime.MinValue;
-        private static TimeSpan fetchTimeout = TimeSpan.FromSeconds(10);
+        private static TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
