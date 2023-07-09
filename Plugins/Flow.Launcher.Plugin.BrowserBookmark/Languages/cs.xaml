@@ -18,9 +18,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Název prohlížeče</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Cesta ke složce dat</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Přidat</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Editovat</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Smazat</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Procházet</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
