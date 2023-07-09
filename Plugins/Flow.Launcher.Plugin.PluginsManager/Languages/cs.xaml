@@ -5,39 +5,39 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Stahování pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Úspěšně staženo {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Chyba: Nepodařilo se stáhnout plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_from_web">Download and install {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plugin Uninstall</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} successfully installed. Restarting Flow, please wait...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Unable to find the plugin.json metadata file from the extracted zip file.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: A plugin which has the same or greater version with {0} already exists.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_title">Plugin Update</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">This plugin has an update, would you like to see it?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Plugin Manifest Download Failed</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} z {1} {2}{3}Chcete odinstalovat tento plugin? Flow se po odinstalování automaticky restartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} z {1} {2}{3}Chcete nainstalovat tento plugin? Po instalaci se Flow automaticky restartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_title">Instalovat plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instaluje se plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_from_web">Stáhnout a nainstalovat {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinstalovat plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} byl úspěšně nainstalován. Restartuje se Flow, vyčkejte prosím...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Instalace se nezdařila: nepodařilo se najít metadata souboru plugin.json z rozbaleného souboru Zip.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Chyba: Zásuvný modul se stejnou nebo vyšší verzí než {0} již existuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_title">Chyba instalace pluginu</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Došlo k chybě při pokusu o instalaci {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Nejsou dostupné žádné aktualizace</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Všechny pluginy jsou aktuální</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} z {1} {2}{3}Chcete tento zásuvný modul aktualizovat? Flow se po aktualizaci automaticky restartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizace Pluginu</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizace tohoto pluginu je k dispozici, chcete ji zobrazit?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je již nainstalován</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stahování manifestu pluginu se nezdařilo</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Zkontrolujte, zda se můžete připojit k webu github.com. Tato chyba pravděpodobně znamená, že nemůžete instalovat nebo aktualizovat zásuvné moduly.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalace z neznámého zdroje</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin instalujete z neznámého zdroje a může obsahovat potenciální rizika!{0}{0}Ujistěte se, že víte, odkud tento plugin pochází a že je bezpečný.{0}{0}Chcete pokračovat?{0}{0}(Toto varování můžete vypnout v nastavení)</system:String>
 
     <!--  Controls  -->
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">Správce pluginů</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_description">Správa instalace, odinstalace nebo aktualizace pluginů Flow Launcheru</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">Neznámý autor</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Open website</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Visit the plugin's website</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">See source code</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Otevřít webovou stránku</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Navštivte webové stránky pluginu</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Zobrazit zdrojový kód</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">See the plugin's source code</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Suggest an enhancement or submit an issue</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Suggest an enhancement or submit an issue to the plugin developer</system:String>
