@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Přidat</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
