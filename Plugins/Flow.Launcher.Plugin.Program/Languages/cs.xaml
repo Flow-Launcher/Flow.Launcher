@@ -77,16 +77,16 @@
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Neplatná cesta</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Vlastní Průzkumník</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Arg</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadejte argumenty, které chcete přidat pro správce souborů. %s pro nadřazenou složku, %f pro úplnou cestu (funguje pouze pro win32). Podrobnosti naleznete na webové stránce správce souborů.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Success</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Tento program se již nebude zobrazovat ve výsledcích vyhledávání</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Tato aplikace není určena ke spuštění jako administrátor</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>
