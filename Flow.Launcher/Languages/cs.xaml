@@ -72,13 +72,13 @@
     <system:String x:Key="hideOnStartup">Skrýt Flow Launcher při spuštění</system:String>
     <system:String x:Key="hideNotifyIcon">Skrýt ikonu v systémové liště</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+    <system:String x:Key="querySearchPrecision">Přesnost vyhledávání</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">Změní minimální skóre shody, které je nutné pro zobrazení výsledků.</system:String>
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">Stínový efekt není povolen, pokud je aktivní efekt rozostření</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -86,8 +86,8 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugins</system:String>
-    <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
+    <system:String x:Key="plugins">Pluginy</system:String>
+    <system:String x:Key="browserMorePlugins">Najít další pluginy</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
@@ -103,7 +103,7 @@
     <system:String x:Key="author">by</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
-    <system:String x:Key="plugin_query_version">Version</system:String>
+    <system:String x:Key="plugin_query_version">Verze</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
@@ -112,7 +112,7 @@
     <system:String x:Key="pluginStore">Plugin Store</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugins</system:String>
+    <system:String x:Key="pluginStore_None">Pluginy</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
     <system:String x:Key="installbtn">Install</system:String>
@@ -166,7 +166,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
-    <system:String x:Key="hotkeys">Hotkeys</system:String>
+    <system:String x:Key="hotkeys">Klávesové zkratky</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -184,77 +184,77 @@
     <system:String x:Key="builtinShortcutDescription">Description</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
-    <system:String x:Key="add">Add</system:String>
-    <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
+    <system:String x:Key="add">Přidat</system:String>
+    <system:String x:Key="pleaseSelectAnItem">Vyberte prosím položku</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">Jste si jisti, že chcete odstranit klávesovou zkratku {0} pro plugin?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Efekt stínu ve vyhledávacím poli</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">GPU výrazně využívá stínový efekt. Nedoporučuje se, pokud je výkon počítače omezený.</system:String>
+    <system:String x:Key="windowWidthSize">Šířka okna</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Použít ikony Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Použití ikon Segoe Fluent, pokud jsou podporovány</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP Proxy</system:String>
-    <system:String x:Key="enableProxy">Enable HTTP Proxy</system:String>
+    <system:String x:Key="enableProxy">Povolit HTTP proxy</system:String>
     <system:String x:Key="server">HTTP Server</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">User Name</system:String>
-    <system:String x:Key="password">Password</system:String>
-    <system:String x:Key="testProxy">Test Proxy</system:String>
-    <system:String x:Key="save">Save</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
-    <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
-    <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
-    <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
-    <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
-    <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
+    <system:String x:Key="userName">Uživatelské jméno</system:String>
+    <system:String x:Key="password">Heslo</system:String>
+    <system:String x:Key="testProxy">Test proxy serveru</system:String>
+    <system:String x:Key="save">Uložit</system:String>
+    <system:String x:Key="serverCantBeEmpty">Pole Server nesmí být prázdné</system:String>
+    <system:String x:Key="portCantBeEmpty">Pole Port nesmí být prázdné</system:String>
+    <system:String x:Key="invalidPortFormat">Nesprávný formát portu</system:String>
+    <system:String x:Key="saveProxySuccessfully">Nastavení proxy úspěšně uloženo</system:String>
+    <system:String x:Key="proxyIsCorrect">Nastavení proxy je v pořádku</system:String>
+    <system:String x:Key="proxyConnectFailed">Připojení k serveru proxy se nezdařilo</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
+    <system:String x:Key="about">O aplikaci</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
-    <system:String x:Key="version">Version</system:String>
+    <system:String x:Key="docs">Dokumentace</system:String>
+    <system:String x:Key="version">Verze</system:String>
     <system:String x:Key="icons">Icons</system:String>
-    <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
-    <system:String x:Key="checkUpdates">Check for Updates</system:String>
+    <system:String x:Key="about_activate_times">Flow Launcher byl aktivován {0} krát</system:String>
+    <system:String x:Key="checkUpdates">Zkontrolovat Aktualizace</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
-    <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="newVersionTips">Je k dispozici nová verze {0}, chcete Flow Launcher restartovat, aby se mohl aktualizovat?</system:String>
+    <system:String x:Key="checkUpdatesFailed">Hledání aktualizací se nezdařilo, zkontrolujte prosím své internetové připojení a nastavení proxy serveru k api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Stažení aktualizací se nezdařilo, zkontrolujte nastavení internetového připojení a proxy serveru na github-cloud.s3.amazonaws.com,
+        nebo přejděte na stránku https://github.com/Flow-Launcher/Flow.Launcher/releases a stáhněte aktualizaci ručně.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="releaseNotes">Poznámky k vydání</system:String>
+    <system:String x:Key="documentation">Tipy pro používání</system:String>
+    <system:String x:Key="devtool">Vývojářské nástroje</system:String>
+    <system:String x:Key="settingfolder">Složka s nastavením</system:String>
+    <system:String x:Key="logfolder">Složka s logy</system:String>
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="welcomewindow">Průvodce</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments if necessary. The default arguments are &quot;%d&quot;, and a path is entered at that location. For example, If a command is required such as &quot;totalcmd.exe /A c:\windows&quot;, argument is /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManagerWindow">Vybrat správce souborů</system:String>
+    <system:String x:Key="fileManager_tips">Zadejte umístění souboru správce souborů, který používáte, a v případě potřeby přidejte argumenty. Výchozí argumenty jsou &quot;%d&quot; a cesta se zadává v tomto umístění. Pokud je například požadován příkaz jako &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, který představuje cestu k souboru.  Používá se ke zvýraznění názvu souboru/složky při otevření konkrétního umístění souboru ve správci souborů třetí strany. Tento argument je k dispozici pouze v položce &quot;Arg. pro soubor&quot;. Pokud správce souborů tuto funkci nemá, můžete použít &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_name">Správce souborů</system:String>
+    <system:String x:Key="fileManager_profile_name">Jméno profilu</system:String>
+    <system:String x:Key="fileManager_path">Cesta k správci souborů</system:String>
+    <system:String x:Key="fileManager_directory_arg">Argumenty pro složku</system:String>
+    <system:String x:Key="fileManager_file_arg">Argumenty pro Soubor</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Výchozí prohlížeč</system:String>
+    <system:String x:Key="defaultBrowser_tips">Výchozí nastavení je podle nastavení v systému. Pokud je zadáno samostatně, bude Flow používat tento prohlížeč.</system:String>
+    <system:String x:Key="defaultBrowser_name">Prohlížeč</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">Cesta k prohlížeči</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
     <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
@@ -294,12 +294,12 @@
     <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version">Version</system:String>
+    <system:String x:Key="reportWindow_version">Verze</system:String>
     <system:String x:Key="reportWindow_time">Time</system:String>
     <system:String x:Key="reportWindow_reproduce">Please tell us how application crashed so we can fix it</system:String>
     <system:String x:Key="reportWindow_send_report">Send Report</system:String>
     <system:String x:Key="reportWindow_cancel">Cancel</system:String>
-    <system:String x:Key="reportWindow_general">General</system:String>
+    <system:String x:Key="reportWindow_general">Základní nastavení</system:String>
     <system:String x:Key="reportWindow_exceptions">Exceptions</system:String>
     <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
     <system:String x:Key="reportWindow_source">Source</system:String>
@@ -331,40 +331,40 @@
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Aktualizovat popis</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Skip">Přeskočit</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Vítejte v Flow Launcheru</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Dobrý den, Flow Launcher spouštíte poprvé!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Tento průvodce vám pomůže nastavit Flow Launcher ještě předtím, než začnete. Pokud chcete, můžete ho přeskočit. Zvolte si jazyk</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Vyhledávání a spouštění všech souborů a aplikací v počítači</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Vyhledávejte v aplikacích, souborech, záložkách, YouTube, Twitteru a dalších. To vše z pohodlí klávesnice, aniž byste se museli dotknout myši.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Aplikace Flow Launcher se spouští pomocí níže uvedené klávesové zkratky, pojďte si ji vyzkoušet. Chcete-li ji změnit, klikněte na vstupní pole a stiskněte požadovanou klávesovou zkratku.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Klávesové zkratky</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Klíčové slovo a příkazy</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Pomocí doplňků Flow Launcher můžete vyhledávat na webu, spouštět aplikace nebo spouštět různé funkce. Některé funkce se spouštějí aktivačním příkazem a v případě potřeby je lze používat bez aktivačních příkazů. Vyzkoušejte si níže uvedené výrazy ve Flow Launcheru.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Spuštění aplikace Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Hotovo. Užijte si Flow Launcher. Nezapomeňte na klávesovou zkratku pro spuštění :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Zpět / Kontextové menu</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Navigace mezi položkami</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Otevřít kontextovou nabídku</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historie Dotazů</system:String>
+    <system:String x:Key="HotkeyESCDesc">Zpět na výsledek v kontextové nabídce</system:String>
+    <system:String x:Key="HotkeyTabDesc">Automatické dokončování</system:String>
+    <system:String x:Key="HotkeyRunDesc">Otevřít / Spustit vybranou položku</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Otevřít okno s nastavením</system:String>
+    <system:String x:Key="HotkeyF5Desc">Znovu načíst data pluginů</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
-    <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendWeather">Počasí</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Výsledky počasí Google</system:String>
+    <system:String x:Key="RecommendShell">&gt; ping 8.8.8</system:String>
+    <system:String x:Key="RecommendShellDesc">Příkazový řádek</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
