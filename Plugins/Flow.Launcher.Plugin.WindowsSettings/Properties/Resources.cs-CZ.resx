@@ -126,66 +126,66 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Accessibility Options</value>
+    <value>Zjednodušené možnosti ovládání</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value>Doplňkové aplikace</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Access work or school</value>
+    <value>Přístup na pracoviště či do školy</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
-    <value>Account info</value>
+    <value>Informace o účtu</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Účty</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="ActionCenter" xml:space="preserve">
-    <value>Action Center</value>
+    <value>Centrum akcí</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>Activation</value>
+    <value>Aktivace</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Activity history</value>
+    <value>Historie aktivity</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Add Hardware</value>
+    <value>Přidat hardware</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Add/Remove Programs</value>
+    <value>Přidat a odebrat programy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Add your phone</value>
+    <value>Přidejte svůj telefon</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
-    <value>Administrative Tools</value>
+    <value>Nástroje pro správu</value>
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Advanced display settings</value>
+    <value>Rozšířené nastavení obrazovky</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Advanced graphics</value>
+    <value>Pokročilé grafické nastavení</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
-    <value>Advertising ID</value>
+    <value>Reklamní identifikace</value>
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
-    <value>Airplane mode</value>
+    <value>Režim „V letadle“</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
@@ -193,40 +193,40 @@
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
-    <value>Alternative names</value>
+    <value>Alternativní názvy</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animations</value>
+    <value>Animace</value>
   </data>
   <data name="AppColor" xml:space="preserve">
-    <value>App color</value>
+    <value>Barva aplikace</value>
   </data>
   <data name="AppDiagnostics" xml:space="preserve">
-    <value>App diagnostics</value>
+    <value>Diagnostika aplikací</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AppFeatures" xml:space="preserve">
-    <value>App features</value>
+    <value>Funkce aplikace</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>App</value>
+    <value>Aplikace</value>
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Apps and Features</value>
+    <value>Aplikace a funkce</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
-    <value>System settings</value>
+    <value>Nastavení systému</value>
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Apps for websites</value>
+    <value>Aplikace pro weby</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>App volume and device preferences</value>
+    <value>Hlasitost aplikací a předvolby zařízení</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -234,48 +234,48 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Area</value>
+    <value>Oblast</value>
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Účty</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
-    <value>Administrative Tools</value>
+    <value>Nástroje pro správu</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Appearance and Personalization</value>
+    <value>Vzhled a přizpůsobení</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
-    <value>Apps</value>
+    <value>Aplikace</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>Clock and Region</value>
+    <value>Hodiny a oblast</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Ovládací panel</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
   </data>
   <data name="AreaDevices" xml:space="preserve">
-    <value>Devices</value>
+    <value>Zařízení</value>
   </data>
   <data name="AreaEaseOfAccess" xml:space="preserve">
-    <value>Ease of access</value>
+    <value>Snadný přístup</value>
   </data>
   <data name="AreaExtras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Extra</value>
   </data>
   <data name="AreaGaming" xml:space="preserve">
-    <value>Gaming</value>
+    <value>Hraní her</value>
   </data>
   <data name="AreaHardwareAndSound" xml:space="preserve">
-    <value>Hardware and Sound</value>
+    <value>Hardware a zvuk</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Home page</value>
+    <value>Hlavní stránka</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
     <value>Mixed reality</value>
@@ -456,7 +456,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
-    <value>Command</value>
+    <value>Příkaz</value>
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
@@ -468,14 +468,14 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Ovládací panel</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>Copy command</value>
+    <value>Kopírovat příkaz</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
-    <value>Core Isolation</value>
+    <value>Izolace jádra</value>
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
@@ -483,59 +483,59 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana across my devices</value>
+    <value>Cortana na mých zařízeních</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
-    <value>Cortana - Language</value>
+    <value>Cortana – jazyk</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CredentialManager" xml:space="preserve">
-    <value>Credential manager</value>
+    <value>Správce pověření</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Crossdevice</value>
+    <value>Několik zařízení</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
-    <value>Custom devices</value>
+    <value>Vlastní zařízení</value>
   </data>
   <data name="DarkColor" xml:space="preserve">
-    <value>Dark color</value>
+    <value>Tmavá barva</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Dark mode</value>
+    <value>Tmavý režim</value>
   </data>
   <data name="DataUsage" xml:space="preserve">
-    <value>Data usage</value>
+    <value>Využití dat</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DateAndTime" xml:space="preserve">
-    <value>Date and time</value>
+    <value>Datum a čas</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Default apps</value>
+    <value>Výchozí aplikace</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
-    <value>Default camera</value>
+    <value>Výchozí fotoaparát</value>
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Default location</value>
+    <value>Výchozí umístění</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Default programs</value>
+    <value>Výchozí programy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Default Save Locations</value>
+    <value>Výchozí místo uložení</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
-    <value>Delivery Optimization</value>
+    <value>Optimalizace doručení</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="desk.cpl" xml:space="preserve">
@@ -543,7 +543,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Desktop themes</value>
+    <value>Motiv plochy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
@@ -551,11 +551,11 @@
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
-    <value>Device manager</value>
+    <value>Správce zařízení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DevicesAndPrinters" xml:space="preserve">
-    <value>Devices and printers</value>
+    <value>Zařízení a tiskárny</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Dhcp" xml:space="preserve">
@@ -563,23 +563,23 @@
     <comment>Should not translated</comment>
   </data>
   <data name="DialUp" xml:space="preserve">
-    <value>Dial-up</value>
+    <value>Telefonní připojení</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DirectAccess" xml:space="preserve">
-    <value>Direct access</value>
+    <value>Přímý přístup</value>
     <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
   </data>
   <data name="DirectOpenYourPhone" xml:space="preserve">
-    <value>Direct open your phone</value>
+    <value>Přímé otevření telefonu</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Obrazovka</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="DisplayProperties" xml:space="preserve">
-    <value>Display properties</value>
+    <value>Vlastnosti zobrazení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DNS" xml:space="preserve">
@@ -587,39 +587,39 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Documents" xml:space="preserve">
-    <value>Documents</value>
+    <value>Dokumenty</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="DuplicatingMyDisplay" xml:space="preserve">
-    <value>Duplicating my display</value>
+    <value>Duplikování obrazovky</value>
     <comment>Area System</comment>
   </data>
   <data name="DuringTheseHours" xml:space="preserve">
-    <value>During these hours</value>
+    <value>Během těchto hodin</value>
     <comment>Area System</comment>
   </data>
   <data name="EaseOfAccessCenter" xml:space="preserve">
-    <value>Ease of access center</value>
+    <value>Centrum pro zjednodušení přístupu</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
-    <value>Edition</value>
+    <value>Vydání</value>
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-mail</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Email and app accounts</value>
+    <value>E-mail a účty</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Šifrování</value>
     <comment>Area System</comment>
   </data>
   <data name="Environment" xml:space="preserve">
-    <value>Environment</value>
+    <value>Prostředí</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Ethernet" xml:space="preserve">
@@ -627,34 +627,34 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Exploit Protection</value>
+    <value>Ochrana před zneužitím</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Extra</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
-    <value>Eye control</value>
+    <value>Ovládání zrakem</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="EyeTracker" xml:space="preserve">
-    <value>Eye tracker</value>
+    <value>Senzor očí</value>
     <comment>Area Privacy, requires eyetracker hardware</comment>
   </data>
   <data name="FamilyAndOtherPeople" xml:space="preserve">
-    <value>Family and other people</value>
+    <value>Rodina a další uživatelé</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
-    <value>Feedback and diagnostics</value>
+    <value>Využití a diagnostika</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
-    <value>File system</value>
+    <value>Souborový systém</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value>Rychlé vyhledávání</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -662,14 +662,14 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Find My Device</value>
+    <value>Najít moje zařízení</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
     <value>Firewall</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Focus assist - Quiet hours</value>
+    <value>Asistent pro lepší soustředění</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
@@ -872,7 +872,7 @@
     <value>Metered connection</value>
   </data>
   <data name="Microphone" xml:space="preserve">
-    <value>Microphone</value>
+    <value>Mikrofon</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
@@ -888,10 +888,10 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Mobile devices</value>
+    <value>Mobilní zařízení</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Mobile hotspot</value>
+    <value>Mobilní přístupový bod</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -902,31 +902,31 @@
     <value>Mono</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>More details</value>
+    <value>Další podrobnosti</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
-    <value>Motion</value>
+    <value>Poloha</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Mouse" xml:space="preserve">
-    <value>Mouse</value>
+    <value>Myš</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
-    <value>Mouse and touchpad</value>
+    <value>Myš a touchpad</value>
     <comment>Area Device</comment>
   </data>
   <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
-    <value>Mouse, Fonts, Keyboard, and Printers properties</value>
+    <value>Vlastnosti myší, písma, klávesnice a tiskárny</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
-    <value>Mouse pointer</value>
+    <value>Textový kurzor</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
-    <value>Multimedia properties</value>
+    <value>Spravovat zvuková zařízení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Multitasking" xml:space="preserve">
@@ -934,11 +934,11 @@
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
-    <value>Narrator</value>
+    <value>Moderátor</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="NavigationBar" xml:space="preserve">
-    <value>Navigation bar</value>
+    <value>Navigační panel</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="netcpl.cpl" xml:space="preserve">
@@ -950,27 +950,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Síť</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Network and sharing center</value>
+    <value>Síť a centrum sdílení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Připojení k síti</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkProperties" xml:space="preserve">
-    <value>Network properties</value>
+    <value>Vlastnosti sítě</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkSetupWizard" xml:space="preserve">
-    <value>Network Setup Wizard</value>
+    <value>Průvodce nastavení sítě</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network status</value>
+    <value>Stav sítě</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFC" xml:space="preserve">
@@ -978,75 +978,75 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>NFC Transactions</value>
+    <value>NFC transakce</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value>Noční světlo</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
-    <value>Night light settings</value>
+    <value>Nastavení nočního světla</value>
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Poznámka</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>K dispozici pouze v případě, že je k zařízení připojeno mobilní zařízení.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>K dispozici pouze na zařízeních, která podporují pokročilé grafické možnosti.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>K dispozici pouze v zařízeních s baterií, například v tabletu.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>V systému Windows 10 verze 1809 (sestavení 17763) a novějším zastaralé.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>K dispozici pouze v případě, že je spárováno zařízení Dial.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Dostupné pouze pokud je povolen DirectAccess.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>Dostupné pouze na zařízeních, která podporují pokročilé možnosti zobrazení.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Zobrazí se pouze v případě, že je uživatel zaregistrován ve WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Vyžaduje eyetracker hardware.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>K dispozici, pokud je nainstalován editor vstupních metod Microsoft Japan.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>K dispozici, pokud je nainstalován editor vstupních metod Microsoft Pinyin.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>K dispozici, pokud je nainstalován editor vstupních metod Microsoft Wubi.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>K dispozici pouze v případě, že je nainstalována aplikace Mixed Reality Portal.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>K dispozici pouze v mobilních zařízeních a v případě, že podnik nasadil balíček provisioningu.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Added in Windows 10, version 1903 (build 18362).</value>
+    <value>Přidáno ve Windows 10, verze 1903 (build 18362).</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Added in Windows 10, version 2004 (build 19041).</value>
+    <value>Přidáno ve Windows 10, verze 2004 (build 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>K dispozici pouze v případě, že jsou nainstalována "nastavení aplikace", např. třetí stranou.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Only available if touchpad hardware is present.</value>
+    <value>K dispozici pouze v případě, že je nainstalován hardware na touchpad.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Only available if the device has a Wi-Fi adapter.</value>
+    <value>Dostupná pouze v případě, že zařízení má Wi-Fi adaptér.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
     <value>Device must be Windows Anywhere-capable.</value>
@@ -1243,11 +1243,11 @@
     <value>Processor</value>
   </data>
   <data name="ProgramsAndFeatures" xml:space="preserve">
-    <value>Programs and features</value>
+    <value>Programy a funkce</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ProjectingToThisPc" xml:space="preserve">
-    <value>Projecting to this PC</value>
+    <value>Promítání na toto PC</value>
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
@@ -1259,7 +1259,7 @@
     <comment>Area UserAccounts, only available if enterprise has deployed a provisioning package</comment>
   </data>
   <data name="Proximity" xml:space="preserve">
-    <value>Proximity</value>
+    <value>Vzdálenost</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Proxy" xml:space="preserve">
@@ -1271,166 +1271,166 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="QuietMomentsGame" xml:space="preserve">
-    <value>Quiet moments game</value>
+    <value>Hraní hry na celou obrazovku</value>
   </data>
   <data name="Radios" xml:space="preserve">
-    <value>Radios</value>
+    <value>Vysílače</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Ram" xml:space="preserve">
-    <value>RAM</value>
+    <value>Paměť RAM</value>
     <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
   </data>
   <data name="Recognition" xml:space="preserve">
-    <value>Recognition</value>
+    <value>Rozpoznání</value>
   </data>
   <data name="Recovery" xml:space="preserve">
-    <value>Recovery</value>
+    <value>Obnovení</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="RedEye" xml:space="preserve">
-    <value>Red eye</value>
+    <value>Červené oči</value>
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
-    <value>Red-green</value>
+    <value>Červená-zelená</value>
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
-    <value>Red week</value>
+    <value>Červený týden</value>
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Oblast</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalLanguage" xml:space="preserve">
-    <value>Regional language</value>
+    <value>Regionální jazyk</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
-    <value>Regional settings properties</value>
+    <value>Vlastnosti regionálního nastavení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionAndLanguage" xml:space="preserve">
-    <value>Region and language</value>
+    <value>Oblast a jazyk</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionFormatting" xml:space="preserve">
-    <value>Region formatting</value>
+    <value>Formáty datumu a času</value>
   </data>
   <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
-    <value>RemoteApp and desktop connections</value>
+    <value>Připojení aplikace RemoteApp a plochy</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Vzdálená pracovní plocha</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
-    <value>Scanners and cameras</value>
+    <value>Skenery a fotoaparáty</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
-    <value>schedtasks</value>
+    <value>úkoly</value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Naplánované</value>
   </data>
   <data name="ScheduledTasks" xml:space="preserve">
-    <value>Scheduled tasks</value>
+    <value>Naplánované úkoly</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Screen rotation</value>
+    <value>Orientace obrazovky</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
-    <value>Scroll bars</value>
+    <value>Posuvné lišty</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
     <value>Scroll Lock</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
-    <value>SDNS</value>
+    <value>#SDNS</value>
     <comment>Should not translated</comment>
   </data>
   <data name="SearchingWindows" xml:space="preserve">
-    <value>Searching Windows</value>
+    <value>Vyhledávání ve Windows</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
-    <value>SecureDNS</value>
+    <value>ZabezpečenáDNS</value>
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Bezpečnostní centrum</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
-    <value>Security Processor</value>
+    <value>Bezpečnostní procesor</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
-    <value>Session cleanup</value>
+    <value>Vyčistit relaci</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
-    <value>Settings home page</value>
+    <value>Domovská stránka</value>
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Set up a kiosk</value>
+    <value>Nastavení automatické prezentace</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
-    <value>Shared experiences</value>
+    <value>Sdílené možnosti</value>
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Zástupci</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
-    <value>wifi</value>
+    <value>WiFi</value>
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
-    <value>Sign-in options</value>
+    <value>Možnosti přihlášení</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Sign-in options - Dynamic lock</value>
+    <value>Možnosti přihlášení - dynamický zámek</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Velikost</value>
     <comment>Size for text and symbols</comment>
   </data>
   <data name="Sound" xml:space="preserve">
-    <value>Sound</value>
+    <value>Zvuk</value>
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Řeč</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
-    <value>Speech recognition</value>
+    <value>Rozpoznávání řeči</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SpeechTyping" xml:space="preserve">
-    <value>Speech typing</value>
+    <value>Zadávání textu hlasem</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value>Start places</value>
+    <value>Složky v nabídce Start</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
-    <value>Startup apps</value>
+    <value>Aplikace při spouštění</value>
     <comment>Area Apps</comment>
   </data>
   <data name="sticpl.cpl" xml:space="preserve">
@@ -1628,18 +1628,18 @@
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiCalling" xml:space="preserve">
-    <value>Wi-Fi Calling</value>
+    <value>Hovory přes Wi-Fi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Wi-Fi settings</value>
+    <value>Nastavení Wi-Fi</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
-    <value>Window border</value>
+    <value>Okraj okna</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Windows Anytime Upgrade</value>
+    <value>Windows kdykoliv aktualizovat</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
@@ -1647,7 +1647,7 @@
     <comment>Area UserAccounts, device must be Windows Anywhere-capable</comment>
   </data>
   <data name="WindowsCardSpace" xml:space="preserve">
-    <value>Windows CardSpace</value>
+    <value>Windows Cardspace</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsDefender" xml:space="preserve">
@@ -1659,11 +1659,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Windows Hello setup - Face</value>
+    <value>Nastavení Windows Hello - Tvář</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Windows Hello setup - Fingerprint</value>
+    <value>Nastavení Windows Hello - otisk prstu</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
@@ -1671,69 +1671,69 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
-    <value>Windows Mobility Center</value>
+    <value>Centrum nastavení mobilních zařízení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
-    <value>Windows search</value>
+    <value>Vyhledávání Windows</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
-    <value>Windows Security</value>
+    <value>Zabezpečení Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Aktualizace systému Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Windows Update - Advanced options</value>
+    <value>Aktualizace Windows - Pokročilé možnosti</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update - Check for updates</value>
+    <value>Aktualizace Windows - Zkontrolovat aktualizace</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
-    <value>Windows Update - Restart options</value>
+    <value>Aktualizace Windows - možnosti restartu</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update - View optional updates</value>
+    <value>Aktualizace systému Windows - Zobrazit volitelné aktualizace</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update - View update history</value>
+    <value>Aktualizace Windows - Zobrazit historii aktualizací</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Bezdrátové</value>
   </data>
   <data name="Workplace" xml:space="preserve">
-    <value>Workplace</value>
+    <value>Pracovní prostor</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
-    <value>Workplace provisioning</value>
+    <value>Zabezpečení pracoviště</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Wubi IME settings</value>
+    <value>Nastavení Wubi IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Wubi IME settings - UDP</value>
+    <value>Nastavení Wubi IME - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Xbox Networking</value>
+    <value>Xbox síť</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>Your info</value>
+    <value>Vaše info</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Přibližování</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Ovládací panel</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
