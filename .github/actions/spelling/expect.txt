@@ -96,3 +96,10 @@ keyevent
 KListener
 requery
 vkcode
+čeština
+Polski
+Srpski
+Português
+Português (Brasil)
+Italiano
+Slovenský
