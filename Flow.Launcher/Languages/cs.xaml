@@ -253,7 +253,7 @@
     <system:String x:Key="defaultBrowserTitle">Výchozí prohlížeč</system:String>
     <system:String x:Key="defaultBrowser_tips">Výchozí nastavení je podle nastavení v systému. Pokud je zadáno samostatně, bude Flow používat tento prohlížeč.</system:String>
     <system:String x:Key="defaultBrowser_name">Prohlížeč</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Název prohlížeče</system:String>
     <system:String x:Key="defaultBrowser_path">Cesta k prohlížeči</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
@@ -368,6 +368,6 @@
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Označené poznámky</system:String>
 
 </ResourceDictionary>
