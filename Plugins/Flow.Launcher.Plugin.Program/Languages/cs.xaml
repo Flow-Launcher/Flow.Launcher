@@ -5,7 +5,7 @@
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">Delete</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Edit</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">Přidat</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
