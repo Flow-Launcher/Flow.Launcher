@@ -3,15 +3,15 @@
 
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete">Cancella</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">Modifica</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">Aggiungi</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">Edit</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">Přidat</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enabled">Abilitato</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_true">Abilitato</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
@@ -47,7 +47,7 @@
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">Aggiorna</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update">Update</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
@@ -69,7 +69,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Apri percorso file</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
@@ -78,15 +78,15 @@
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Parametri</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Inserisci i parametri personalizzati che vuoi aggiungere per il tuo Esplora Risorse personalizzato. %s per la cartella superiore, %f per il percorso completo (che funziona solo per win32). Controlla il sito dell'Esplora Risorse per i dettagli.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Successo</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Success</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Questo programma è stato disabilitato con successo dall'apparire nella tua ricerca</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Questa applicazione non è destinata ad essere eseguita come amministratore</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
 
 </ResourceDictionary>
