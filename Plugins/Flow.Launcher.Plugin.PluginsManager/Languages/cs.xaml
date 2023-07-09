@@ -2,9 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Downloading plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_error">Error: Unable to download the plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Stahování pluginu</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Úspěšně staženo {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_error">Chyba: Nepodařilo se stáhnout plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Plugin Install</system:String>
