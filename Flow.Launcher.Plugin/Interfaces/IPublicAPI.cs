@@ -98,7 +98,7 @@ namespace Flow.Launcher.Plugin
         bool IsMainWindowVisible();
 
         /// <summary>
-        /// Invoked when the visibility of the main window has changed
+        /// Invoked when the visibility of the main window has changed. Currently, the plugin will continue to be subscribed even if it is turned off. 
         /// </summary>
         event VisibilityChangedEventHandler VisibilityChanged;
 
