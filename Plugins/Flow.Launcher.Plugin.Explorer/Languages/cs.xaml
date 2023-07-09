@@ -5,19 +5,19 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Nejprve vyberte položku</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Vyberte odkaz na složku</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Opravdu chcete odstranit {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">Opravdu chcete trvale odstranit tento soubor?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Opravdu chcete trvale smazat tento soubor/složku?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Úspěšně odstraněno</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Úspěšně odstraněno {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Přiřazení globálního aktivačního příkazu může při vyhledávání poskytnout příliš mnoho výsledků. Zvolte konkrétní aktivační příkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Pokud je povolen rychlý přístup, nelze nastavit globální aktivační příkaz. Zvolte konkrétní aktivační příkaz</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Nezdá se, že by požadovaná služba Windows Index Search byla spuštěna</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Chcete-li to opravit, spusťte vyhledávání ve Windows. Chcete-li toto upozornění odstranit, klikněte zde</system:String>
     <system:String x:Key="plugin_explorer_alternative">Upozornění bylo vypnuto. Chcete nainstalovat zásuvný modul Everything jako alternativu pro vyhledávání souborů a složek?{0}{0}Pro instalaci zásuvného modulu Everything vyberte &quot;Ano&quot;, pro návrat vyberte &quot;Ne&quot;</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternativa pro Průzkumníka</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
-    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Při vyhledávání došlo k chybě: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Adresář nelze otevřít</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Nelze otevřít soubor</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Smazat</system:String>
@@ -113,31 +113,31 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Size</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Velikost</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date Created</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Date Modified</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributes</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date Recently Changed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Date Accessed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date Run</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Počet spuštění</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Poslední změna data</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Datum přístupu</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Datum spouštění</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Poznámka: Toto není možnost Fast Sort, vyhledávání může být pomalé</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Hledat celou cestu</system:String>
     
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte nebo nainstalujete aplikaci Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalace Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Služba Everything se nainstaluje. Počkejte prosím...</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Služba Everything bylo úspěšně nainstalována</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Automatická instalace aplikace Everything se nezdařila. Nainstalujte ji prosím ručně ze stránek https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">Klikni zde pro spuštění</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Nepodařilo se najít instalaci Everything, chcete ručně vybrat její umístění?{0}{0}Kliknutím na ne se Everything nainstaluje automaticky</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povolit vyhledávání obsahu prostřednictvím služby Everything?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (který je podporován pouze ve verzi Everything v1.5+) může být velmi pomalý</system:String>
 
 </ResourceDictionary>
