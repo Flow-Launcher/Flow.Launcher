@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin
@@ -31,6 +32,24 @@ namespace Flow.Launcher.Plugin
     /// <param name="state"></param>
     /// <returns>return true to continue handling, return false to intercept system handling</returns>
     public delegate bool FlowLauncherGlobalKeyboardEventHandler(int keyevent, int vkcode, SpecialKeyState state);
+
+    /// <summary>
+    /// A delegate for when the visibility is changed
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="args"></param>
+    public delegate void VisibilityChangedEventHandler(object sender, VisibilityChangedEventArgs args);
+    
+    /// <summary>
+    /// The event args for <see cref="VisibilityChangedEventHandler"/>
+    /// </summary>
+    public class VisibilityChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// <see langword="true"/> if the main window has become visible
+        /// </summary>
+        public bool IsVisible { get; init; }
+    }
 
     /// <summary>
     /// Arguments container for the Key Down event
