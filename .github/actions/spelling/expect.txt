@@ -78,6 +78,7 @@ WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
+Firefox
 msedge
 svgc
 ime
@@ -95,3 +96,10 @@ keyevent
 KListener
 requery
 vkcode
+čeština
+Polski
+Srpski
+Português
+Português (Brasil)
+Italiano
+Slovenský

@@ -49,26 +49,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Settings = settings;
         }
 
-        private Task _downloadManifestTask = Task.CompletedTask;
-
-        internal Task UpdateManifestAsync(CancellationToken token = default, bool silent = false)
-        {
-            if (_downloadManifestTask.Status == TaskStatus.Running)
-            {
-                return _downloadManifestTask;
-            }
-            else
-            {
-                _downloadManifestTask = PluginsManifest.UpdateManifestAsync(token);
-                if (!silent)
-                    _downloadManifestTask.ContinueWith(_ =>
-                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_failed_title"),
-                                Context.API.GetTranslation("plugin_pluginsmanager_update_failed_subtitle"), icoPath, false),
-                        TaskContinuationOptions.OnlyOnFaulted);
-                return _downloadManifestTask;
-            }
-        }
-
         internal List<Result> GetDefaultHotKeys()
         {
             return new List<Result>()
@@ -182,9 +162,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context.API.RestartApp();
         }
 
-        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
         {
-            await UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
             var resultsForUpdate =
                 from existingPlugin in Context.API.GetAllPlugins()
@@ -357,9 +337,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(contructedUrlPart));
         }
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token)
+        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
         {
-            await UpdateManifestAsync(token);
+            await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)

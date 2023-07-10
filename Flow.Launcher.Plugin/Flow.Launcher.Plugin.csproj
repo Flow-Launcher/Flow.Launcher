@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>4.0.1</Version>
-    <PackageVersion>4.0.1</PackageVersion>
-    <AssemblyVersion>4.0.1</AssemblyVersion>
-    <FileVersion>4.0.1</FileVersion>
+    <Version>4.1.0</Version>
+    <PackageVersion>4.1.0</PackageVersion>
+    <AssemblyVersion>4.1.0</AssemblyVersion>
+    <FileVersion>4.1.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -26,6 +26,7 @@
     <PackageTags>flowlauncher</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(APPVEYOR)' == 'True'">
@@ -56,7 +57,7 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="README.md" />
+    <None Include="Readme.md" Pack="true" PackagePath="\"/>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
 

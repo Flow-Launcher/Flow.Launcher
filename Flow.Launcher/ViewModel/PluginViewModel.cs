@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Infrastructure.Image;

@@ -79,7 +79,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             ? action
                             : _ =>
                             {
-                                Clipboard.SetDataObject(e.ToString());
+                                Context.API.CopyToClipboard(e.ToString());
                                 return new ValueTask<bool>(true);
                             }
                     }

@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
@@ -89,7 +88,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);
-                        _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        // Re-query to refresh process list
+                        _context.API.ChangeQuery(query.RawQuery, true);
                         return true;
                     }
                 });
@@ -114,19 +114,14 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         {
                             processHelper.TryKill(p.Process);
                         }
-                        _ = DelayAndReQueryAsync(query.RawQuery); // Re-query after killing process to refresh process list
+                        // Re-query to refresh process list
+                        _context.API.ChangeQuery(query.RawQuery, true);
                         return true;
                     }
                 });
             }
 
             return sortedResults;
-        }
-
-        private static async Task DelayAndReQueryAsync(string query)
-        {
-            await Task.Delay(500);
-            _context.API.ChangeQuery(query, true);
         }
     }
 }

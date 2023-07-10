@@ -1794,7 +1794,7 @@
     <value>Give other users access to this computer</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>显示隐藏文件与文件夹</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
     <value>Change Windows To Go start-up options</value>
@@ -1809,7 +1809,7 @@
     <value>Add clocks for different time zones</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>添加蓝牙设备</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
     <value>Customise the mouse buttons</value>
@@ -1818,13 +1818,13 @@
     <value>Set tablet buttons to perform certain tasks</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>View installed fonts</value>
+    <value>查看已安装的字体</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
     <value>Change the way currency is displayed</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>编辑群组政策</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
     <value>Manage browser add-ons</value>
@@ -1833,13 +1833,13 @@
     <value>Check processor speed</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>查看防火墙状态</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>发送或接受文件</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>添加或移除用户账号</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
     <value>Edit the system environment variables</value>
@@ -1980,7 +1980,7 @@
     <value>View advanced system settings</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
-    <value>How to install a program</value>
+    <value>如何安装程序</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
     <value>Change how your keyboard works</value>
@@ -1992,7 +1992,7 @@
     <value>Change the order of Windows SideShow gadgets</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>检查键盘状态</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
     <value>Control the computer without the mouse or keyboard</value>
@@ -2070,7 +2070,7 @@
     <value>Change temporary Internet file settings</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Connect to the Internet</value>
+    <value>连接互联网</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
     <value>Find and fix audio playback problems</value>
@@ -2100,7 +2100,7 @@
     <value>编辑电源计划</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Adjust system volume</value>
+    <value>调整音量</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
     <value>Defragment and optimise your drives</value>
@@ -2109,7 +2109,7 @@
     <value>Set up ODBC data sources (32-bit)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Change Font Settings</value>
+    <value>更改字体设置</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
     <value>Magnify portions of the screen using Magnifier</value>
@@ -2124,7 +2124,7 @@
     <value>Manage Windows Credentials</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Set up a microphone</value>
+    <value>设置麦克风</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
     <value>Change how the mouse pointer looks</value>
@@ -2248,7 +2248,7 @@
     <value>Turn flicks on or off</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>添加语言</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
     <value>View network status and tasks</value>
@@ -2341,13 +2341,13 @@
     <value>Change text-to-speech settings</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Set the time and date</value>
+    <value>设置时间和日期</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>Change location settings</value>
+    <value>更改位置设定</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Change mouse settings</value>
+    <value>更改鼠标设置</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
     <value>Manage Storage Spaces</value>
@@ -2359,7 +2359,7 @@
     <value>Allow an app through Windows Firewall</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
-    <value>Change system sounds</value>
+    <value>更改系统声音</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
     <value>Adjust ClearType text</value>
@@ -2371,7 +2371,7 @@
     <value>Find and fix windows update problems</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
-    <value>Change Bluetooth settings</value>
+    <value>更改蓝牙设备</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
     <value>Connect to a network</value>
@@ -2383,7 +2383,7 @@
     <value>Join a domain</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Add a device</value>
+    <value>添加设备</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
     <value>Find and fix problems with Windows Search</value>
@@ -2395,13 +2395,13 @@
     <value>Change how the mouse pointer looks when it’s moving</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
-    <value>Uninstall a program</value>
+    <value>卸载程序</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
     <value>Create and format hard disk partitions</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>更改日期、时间或数字格式</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
     <value>Change PC wake-up settings</value>

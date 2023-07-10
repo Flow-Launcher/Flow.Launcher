@@ -222,9 +222,6 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
 </p>
 
-### Everything
-<img src="https://user-images.githubusercontent.com/6903107/144533510-6880ecf4-5f93-4b6a-9c1f-4fcdb99110c3.png" width="400">
-
 ### SpotifyPremium
 <img src="https://user-images.githubusercontent.com/6903107/144533469-da920295-8c36-46e8-89eb-a9cdd94b74ef.png" width="400">
 
@@ -279,6 +276,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
 | <kbd>Esc</kbd>                                               | Back to results / hide search window         |
 | <kbd>Ctrl</kbd> +<kbd>C</kbd>                                | Copy the actual folder / file                |
 | <kbd>Ctrl</kbd> +<kbd>I</kbd>                                | Open flow's settings                         |
+| <kbd>Ctrl</kbd> +<kbd>R</kbd>                                | Run the current query again (refresh results)|
 | <kbd>F5</kbd>                                                | Reload all plugin data                       |
 | <kbd>Ctrl</kbd> + <kbd>F12</kbd>                             | Toggle Game Mode when in search window       |
 | <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                  | Quickly change maximum results shown         |
@@ -341,6 +339,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/dis
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
+  <a href="https://github.com/benflap"><img src="https://avatars.githubusercontent.com/u/62034481?v=4" width="10%" /></a>
 </p>
 
 ### Mentions

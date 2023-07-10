@@ -1,9 +1,10 @@
 ﻿using Flow.Launcher.Infrastructure.Image;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+#pragma warning disable IDE0005
 using System.Windows;
+#pragma warning restore IDE0005
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch

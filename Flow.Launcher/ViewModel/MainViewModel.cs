@@ -206,6 +206,15 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void ReQuery()
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                QueryResults(isReQuery: true);
+            }
+        }
+
+        [RelayCommand]
         private void LoadContextMenu()
         {
             if (SelectedIsFromQueryResults())
@@ -495,8 +504,8 @@ namespace Flow.Launcher.ViewModel
         /// but we don't want to move cursor to end when query is updated from TextBox
         /// </summary>
         /// <param name="queryText"></param>
-        /// <param name="reQuery">Force query even when Query Text doesn't change</param>
-        public void ChangeQueryText(string queryText, bool reQuery = false)
+        /// <param name="isReQuery">Force query even when Query Text doesn't change</param>
+        public void ChangeQueryText(string queryText, bool isReQuery = false)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -510,9 +519,9 @@ namespace Flow.Launcher.ViewModel
                     QueryTextCursorMovedToEnd = false;
 
                 }
-                else if (reQuery)
+                else if (isReQuery)
                 {
-                    Query();
+                    Query(isReQuery: true);
                 }
                 QueryTextCursorMovedToEnd = true;
             });
@@ -569,6 +578,8 @@ namespace Flow.Launcher.ViewModel
         // because it is more accurate and reliable representation than using Visibility as a condition check
         public bool MainWindowVisibilityStatus { get; set; } = true;
 
+        public event VisibilityChangedEventHandler VisibilityChanged;
+
         public Visibility SearchIconVisibility { get; set; }
 
         public double MainWindowWidth
@@ -612,11 +623,11 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query()
+        public void Query(bool isReQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults();
+                QueryResults(isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -716,7 +727,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults()
+        private async void QueryResults(bool isReQuery = false)
         {
             _updateSource?.Cancel();
 
@@ -747,6 +758,8 @@ namespace Flow.Launcher.ViewModel
             if (currentCancellationToken.IsCancellationRequested)
                 return;
 
+            // Update the query's IsReQuery property to true if this is a re-query
+            query.IsReQuery = isReQuery;
 
             // handle the exclusiveness of plugin using action keyword
             RemoveOldQueryResults(query);
@@ -1003,6 +1016,7 @@ namespace Flow.Launcher.ViewModel
                 MainWindowOpacity = 1;
 
                 MainWindowVisibilityStatus = true;
+                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
@@ -1037,6 +1051,7 @@ namespace Flow.Launcher.ViewModel
 
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
+            VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
 
         /// <summary>
@@ -1101,50 +1116,6 @@ namespace Flow.Launcher.ViewModel
             }
 
             Results.AddResults(resultsForUpdates, token);
-        }
-
-        /// <summary>
-        /// This is the global copy method for an individual result. If no text is passed, 
-        /// the method will work out what is to be copied based on the result, so plugin can offer the text 
-        /// to be copied via the result model. If the text is a directory/file path, 
-        /// then actual file/folder will be copied instead. 
-        /// The result's subtitle text is the default text to be copied
-        /// </summary>
-        public void ResultCopy(string stringToCopy)
-        {
-            if (string.IsNullOrEmpty(stringToCopy))
-            {
-                var result = Results.SelectedItem?.Result;
-                if (result != null)
-                {
-                    string copyText = result.CopyText;
-                    var isFile = File.Exists(copyText);
-                    var isFolder = Directory.Exists(copyText);
-                    if (isFile || isFolder)
-                    {
-                        var paths = new StringCollection
-                        {
-                            copyText
-                        };
-
-                        Clipboard.SetFileDropList(paths);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {(isFile ? App.API.GetTranslation("fileTitle") : App.API.GetTranslation("folderTitle"))}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                    else
-                    {
-                        Clipboard.SetDataObject(copyText);
-                        App.API.ShowMsg(
-                            $"{App.API.GetTranslation("copy")} {App.API.GetTranslation("textTitle")}",
-                            App.API.GetTranslation("completedSuccessfully"));
-                    }
-                }
-
-                return;
-            }
-
-            Clipboard.SetDataObject(stringToCopy);
         }
 
         #endregion
