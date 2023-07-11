@@ -26,37 +26,38 @@ namespace Flow.Launcher.Helper
         /// Toggle QuickLook
         /// </summary>
         /// <param name="path">File path to preview</param>
+        /// <param name="sendFailToast">Send toast when fails.</param>
         /// <returns></returns>
-        public static async Task<bool> ToggleQuickLookAsync(string path)
+        public static async Task<bool> ToggleQuickLookAsync(string path, bool sendFailToast = true)
         {           
             if (string.IsNullOrEmpty(path))
                 return false;
 
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageToggle, path);
-            if (!success)
+            if (sendFailToast && !success)
             {
                 ShowQuickLookUnavailableToast();
             }
             return success;
         }
 
-        public static async Task<bool> CloseQuickLookAsync()
+        public static async Task<bool> CloseQuickLookAsync(bool sendFailToast = true)
         {
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageClose);
-            if (!success)
+            if (sendFailToast && !success)
             {
                 ShowQuickLookUnavailableToast();
             }
             return success;
         }
 
-        public static async Task<bool> OpenQuickLookAsync(string path)
+        public static async Task<bool> OpenQuickLookAsync(string path, bool sendFailToast = true)
         {
             if (string.IsNullOrEmpty(path))
                 return false;
 
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageInvoke, path);
-            if (!success)
+            if (sendFailToast && !success)
             {
                 ShowQuickLookUnavailableToast();
             }
@@ -69,7 +70,7 @@ namespace Flow.Launcher.Helper
         /// <param name="path">File path to preview</param>
         /// <param name="sendFailToast">Send notification if fail</param>
         /// <returns></returns>
-        public static async Task<bool> SwitchQuickLookAsync(string path, bool sendFailToast = false)
+        public static async Task<bool> SwitchQuickLookAsync(string path, bool sendFailToast = true)
         {
             if (string.IsNullOrEmpty(path))
                 return false;

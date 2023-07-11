@@ -612,29 +612,29 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task OpenExternalPreviewAsync(string path)
+        private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
         {
-            bool success = await QuickLookHelper.OpenQuickLookAsync(path).ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = true;
-            }
-        }
-
-        private async Task CloseExternalPreviewAsync()
-        {
-            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
+            bool success = await QuickLookHelper.OpenQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
             if (success)
             {
                 ExternalPreviewOpen = false;
             }
         }
-        
-        private async Task SwitchExternalPreviewAsync(string path)
+
+        private async Task CloseExternalPreviewAsync(bool sendFailToast = true)
+        {
+            bool success = await QuickLookHelper.CloseQuickLookAsync(sendFailToast).ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = false;
+            }
+        }
+
+        private async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
         {
             // Switches preview content
             // When external is off, do nothing
-            _ = QuickLookHelper.SwitchQuickLookAsync(path).ConfigureAwait(false);
+            _ = QuickLookHelper.SwitchQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
         }
 
         private void ShowInternalPreview()
@@ -672,7 +672,7 @@ namespace Flow.Launcher.ViewModel
             {
                 if (CanExternalPreviewSelectedResult(out var path))
                 {
-                    _ = SwitchExternalPreviewAsync(path);
+                    _ = SwitchExternalPreviewAsync(path, false);
                 }
                 else
                 {
@@ -1090,7 +1090,8 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            _ = CloseExternalPreviewAsync();
+            if (Settings.UseExternalPreview)
+                _ = CloseExternalPreviewAsync(false);
 
             if (!SelectedIsFromQueryResults())
             {
