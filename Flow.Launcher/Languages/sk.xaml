@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
     <system:String x:Key="AnimationTip">Animovať používateľské rozhranie</system:String>
+    <system:String x:Key="AnimationSpeed">Rýchlosť animácie</system:String>
+    <system:String x:Key="AnimationSpeedTip">Rýchlosť animácie grafického rozhrania</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Pomaly</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Stredne</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rýchlo</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
 
@@ -346,7 +352,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Späť/kontextová ponuka</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Navigácia medzi položkami</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Otvoriť kontextovú ponuku</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Spustiť ako správca/Otvoriť priečinok v predvolenom správcovi súborov</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">História dopytov</system:String>
     <system:String x:Key="HotkeyESCDesc">Návrat na výsledky z kontextovej ponuky</system:String>

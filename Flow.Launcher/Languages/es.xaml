@@ -110,7 +110,7 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda de complementos</system:String>
-    <system:String x:Key="pluginStore_NewRelease">Nuevo lanzamiento</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Nuevo(s) lanzamiento(s)</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
     <system:String x:Key="pluginStore_Installed">Instalado(s)</system:String>
@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Usar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationSpeed">Velocidad de animación</system:String>
+    <system:String x:Key="AnimationSpeedTip">Velocidad de animación de la interfaz de usuario</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Lenta</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Media</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rápida</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
 

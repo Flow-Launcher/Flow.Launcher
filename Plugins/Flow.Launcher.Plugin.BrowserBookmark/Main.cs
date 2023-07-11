@@ -4,14 +4,13 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.BrowserBookmark.Commands;
 using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using Flow.Launcher.Plugin.BrowserBookmark.Views;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.IO;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark
 {
@@ -22,20 +21,39 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         private static List<Bookmark> cachedBookmarks = new List<Bookmark>();
 
         private static Settings _settings;
-        
+
+        private static bool initialized = false;
+
         public void Init(PluginInitContext context)
         {
             Main.context = context;
-            
+
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
+            LoadBookmarksIfEnabled();
+        }
 
-            _ = MonitorRefreshQueue();
+        private static void LoadBookmarksIfEnabled()
+        {
+            if (context.CurrentPluginMetadata.Disabled)
+            {
+                // Don't load or monitor files if disabled
+                return;
+            }
+
+            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
+            _ = MonitorRefreshQueueAsync();
+            initialized = true;
         }
 
         public List<Result> Query(Query query)
         {
+            // For when the plugin being previously disabled and is now renabled 
+            if (!initialized)
+            {
+                LoadBookmarksIfEnabled();
+            }
+
             string param = query.Search.TrimStart();
 
             // Should top results be returned? (true if no search parameters have been passed)
@@ -88,17 +106,24 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         private static Channel<byte> refreshQueue = Channel.CreateBounded<byte>(1);
 
-        private async Task MonitorRefreshQueue()
+        private static SemaphoreSlim fileMonitorSemaphore = new(1, 1);
+
+        private static async Task MonitorRefreshQueueAsync()
         {
+            if (fileMonitorSemaphore.CurrentCount < 1)
+            {
+                return;
+            }
+            await fileMonitorSemaphore.WaitAsync();
             var reader = refreshQueue.Reader;
             while (await reader.WaitToReadAsync())
             {
-                await Task.Delay(2000);
                 if (reader.TryRead(out _))
                 {
-                    ReloadData();
+                    ReloadAllBookmarks(false);
                 }
             }
+            fileMonitorSemaphore.Release();
         }
 
         private static readonly List<FileSystemWatcher> Watchers = new();
@@ -106,17 +131,19 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         internal static void RegisterBookmarkFile(string path)
         {
             var directory = Path.GetDirectoryName(path);
-            if (!Directory.Exists(directory))
-                return;
-            var watcher = new FileSystemWatcher(directory!);
-            if (File.Exists(path))
+            if (!Directory.Exists(directory) || !File.Exists(path))
             {
-                var fileName = Path.GetFileName(path);
-                watcher.Filter = fileName;
+                return;
             }
+            if (Watchers.Any(x => x.Path.Equals(directory, StringComparison.OrdinalIgnoreCase)))
+            {
+                return;
+            }
+            
+            var watcher = new FileSystemWatcher(directory!);
+            watcher.Filter = Path.GetFileName(path);
 
             watcher.NotifyFilter = NotifyFilters.FileName |
-                                   NotifyFilters.LastAccess |
                                    NotifyFilters.LastWrite |
                                    NotifyFilters.Size;
 
@@ -131,7 +158,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             };
 
             watcher.EnableRaisingEvents = true;
-
+            
             Watchers.Add(watcher);
         }
 
@@ -140,11 +167,12 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
             ReloadAllBookmarks();
         }
 
-        public static void ReloadAllBookmarks()
+        public static void ReloadAllBookmarks(bool disposeFileWatchers = true)
         {
             cachedBookmarks.Clear();
-
-            cachedBookmarks = BookmarkLoader.LoadAllBookmarks(_settings);
+            if (disposeFileWatchers)
+                DisposeFileWatchers();
+            LoadBookmarksIfEnabled();
         }
 
         public string GetTranslatedPluginTitle()
@@ -174,7 +202,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                     {
                         try
                         {
-                            Clipboard.SetDataObject(((BookmarkAttributes)selectedResult.ContextData).Url);
+                            context.API.CopyToClipboard(((BookmarkAttributes)selectedResult.ContextData).Url);
 
                             return true;
                         }
@@ -198,12 +226,19 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
         {
             internal string Url { get; set; }
         }
+
         public void Dispose()
+        {
+            DisposeFileWatchers();
+        }
+
+        private static void DisposeFileWatchers()
         {
             foreach (var watcher in Watchers)
             {
                 watcher.Dispose();
             }
+            Watchers.Clear();
         }
     }
 }

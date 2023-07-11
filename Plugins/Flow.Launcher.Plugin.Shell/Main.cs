@@ -10,9 +10,7 @@ using WindowsInput;
 using WindowsInput.Native;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.SharedCommands;
-using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
@@ -84,7 +82,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                                 Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
-                            }
+                            },
+                            CopyText = m
                         }));
                     }
                 }
@@ -123,7 +122,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                             Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
-                        }
+                        },
+                        CopyText = m.Key
                     };
                     return ret;
                 }).Where(o => o != null);
@@ -152,7 +152,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                     Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
-                }
+                },
+                CopyText = cmd
             };
 
             return result;
@@ -176,7 +177,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
-                    }
+                    },
+                    CopyText = m.Key
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
@@ -232,6 +234,19 @@ namespace Flow.Launcher.Plugin.Shell
                         info.ArgumentList.Add("-Command");
                         info.ArgumentList.Add(command);
                     }
+                    break;
+                }
+
+                case Shell.Pwsh:
+                {
+                    info.FileName = "pwsh.exe";
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                    }
+                    info.ArgumentList.Add("-Command");
+                    info.ArgumentList.Add(command);
+
                     break;
                 }
 
@@ -406,7 +421,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        Clipboard.SetDataObject(selectedResult.Title);
+                        context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
                     IcoPath = "Images/copy.png",

@@ -1,6 +1,4 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
@@ -53,7 +51,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     {
                         // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/Flow.Launcher.Plugin.Putty/tree/master
                         var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com") 
-                                        ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues/new/choose"
+                                        ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues"
                                         : pluginManifestInfo.UrlSourceCode;
 
                         Context.API.OpenUrl(link);

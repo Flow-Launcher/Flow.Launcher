@@ -1,12 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Diagnostics;
-using System.Dynamic;
-using System.Runtime.InteropServices;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
@@ -23,13 +17,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         public List<Result> Query(Query query)
         {
-            var termToSearch = query.Search;
-
-            var processlist = processHelper.GetMatchingProcesses(termToSearch);
-
-            return !processlist.Any()
-                ? null
-                : CreateResultsFromProcesses(processlist, termToSearch);
+            return CreateResultsFromQuery(query);
         }
 
         public string GetTranslatedPluginTitle()
@@ -50,7 +38,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // get all non-system processes whose file path matches that of the given result (processPath)
             var similarProcesses = processHelper.GetSimilarProcesses(processPath);
 
-            if (similarProcesses.Count() > 0)
+            if (similarProcesses.Any())
             {
                 menuOptions.Add(new Result
                 {
@@ -72,8 +60,16 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             return menuOptions;
         }
 
-        private List<Result> CreateResultsFromProcesses(List<ProcessResult> processlist, string termToSearch)
+        private List<Result> CreateResultsFromQuery(Query query)
         {
+            string termToSearch = query.Search;
+            var processlist = processHelper.GetMatchingProcesses(termToSearch);
+            
+            if (!processlist.Any())
+            {
+                return null;
+            }
+
             var results = new List<Result>();
 
             foreach (var pr in processlist)
@@ -92,6 +88,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     Action = (c) =>
                     {
                         processHelper.TryKill(p);
+                        // Re-query to refresh process list
+                        _context.API.ChangeQuery(query.RawQuery, true);
                         return true;
                     }
                 });
@@ -116,7 +114,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         {
                             processHelper.TryKill(p.Process);
                         }
-
+                        // Re-query to refresh process list
+                        _context.API.ChangeQuery(query.RawQuery, true);
                         return true;
                     }
                 });

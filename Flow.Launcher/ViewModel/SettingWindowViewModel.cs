@@ -133,6 +133,9 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        /// <summary>
+        /// Save Flow settings. Plugins settings are not included.
+        /// </summary>
         public void Save()
         {
             foreach (var vm in PluginViewModels)
@@ -143,7 +146,6 @@ namespace Flow.Launcher.ViewModel
                 Settings.PluginSettings.Plugins[id].Priority = vm.Priority;
             }
 
-            PluginManager.Save();
             _storage.Save();
         }
 
@@ -594,6 +596,33 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.UseAnimation;
             set => Settings.UseAnimation = value;
+        }
+
+        public class AnimationSpeed
+        {
+            public string Display { get; set; }
+            public AnimationSpeeds Value { get; set; }
+        }
+
+        public List<AnimationSpeed> AnimationSpeeds
+        {
+            get
+            {
+                List<AnimationSpeed> speeds = new List<AnimationSpeed>();
+                var enums = (AnimationSpeeds[])Enum.GetValues(typeof(AnimationSpeeds));
+                foreach (var e in enums)
+                {
+                    var key = $"AnimationSpeed{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new AnimationSpeed
+                    {
+                        Display = display,
+                        Value = e,
+                    };
+                    speeds.Add(m);
+                }
+                return speeds;
+            }
         }
 
         public bool UseSound

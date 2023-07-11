@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
+    <system:String x:Key="AnimationSpeed">动画速度</system:String>
+    <system:String x:Key="AnimationSpeedTip">UI 动画速度</system:String>
+    <system:String x:Key="AnimationSpeedSlow">慢</system:String>
+    <system:String x:Key="AnimationSpeedMedium">中</system:String>
+    <system:String x:Key="AnimationSpeedFast">快</system:String>
+    <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
 
@@ -346,7 +352,7 @@
     <system:String x:Key="HotkeyUpDownDesc">返回/上下文菜单</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">选项导航</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">打开上下文菜单</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">打开所在目录</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">以管理员身份运行/在默认文件管理器中打开文件夹</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">查询历史</system:String>
     <system:String x:Key="HotkeyESCDesc">返回查询界面</system:String>

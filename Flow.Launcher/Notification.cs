@@ -4,8 +4,6 @@ using Microsoft.Toolkit.Uwp.Notifications;
 using System;
 using System.IO;
 using System.Windows;
-using Windows.Data.Xml.Dom;
-using Windows.UI.Notifications;
 
 namespace Flow.Launcher
 {
@@ -55,19 +53,12 @@ namespace Flow.Launcher
                 // Temporary fix for the Windows 11 notification issue
                 // Possibly from 22621.1413 or 22621.1485, judging by post time of #2024
                 Log.Exception("Flow.Launcher.Notification|Notification InvalidOperationException Error", e);
-                if (Environment.OSVersion.Version.Build >= 22621)
-                {
-                    return;
-                }
-                else
-                {
-                    throw;
-                }
+                LegacyShow(title, subTitle, iconPath);
             }
             catch (Exception e)
             {
                 Log.Exception("Flow.Launcher.Notification|Notification Error", e);
-                throw;
+                LegacyShow(title, subTitle, iconPath);
             }
         }
 

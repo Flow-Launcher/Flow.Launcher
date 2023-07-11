@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Регистрация хоткея {0} не удалась</system:String>
+    <system:String x:Key="registerHotkeyFailed">Регистрация горячей клавиши {0} не удалась</system:String>
     <system:String x:Key="couldnotStartCmd">Не удалось запустить {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Недопустимый формат файла плагина Flow Launcher</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Отображать это окно выше всех при этом запросе</system:String>
@@ -89,7 +89,7 @@
     <system:String x:Key="plugins">Плагины</system:String>
     <system:String x:Key="browserMorePlugins">Найти больше плагинов</system:String>
     <system:String x:Key="enable">Вкл.</system:String>
-    <system:String x:Key="disable">Отключить</system:String>
+    <system:String x:Key="disable">Откл.</system:String>
     <system:String x:Key="actionKeywordsTitle">Настройка ключевого слова действия</system:String>
     <system:String x:Key="actionKeywords">Горячая клавиша</system:String>
     <system:String x:Key="currentActionKeywords">Ключевое слово текущего действия</system:String>
@@ -143,8 +143,8 @@
     <system:String x:Key="resultItemFont">Шрифт результатов</system:String>
     <system:String x:Key="windowMode">Оконный режим</system:String>
     <system:String x:Key="opacity">Прозрачность</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Тема {0} не существует, откат к теме по умолчанию</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Не удалось загрузить тему {0}, откат к теме по умолчанию</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Тема «{0}» не существует, откат к теме по умолчанию</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Не удалось загрузить тему «{0}», откат к теме по умолчанию</system:String>
     <system:String x:Key="ThemeFolder">Папка тем</system:String>
     <system:String x:Key="OpenThemeFolder">Открыть папку с темами</system:String>
     <system:String x:Key="ColorScheme">Цветовая схема</system:String>
@@ -155,6 +155,12 @@
     <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
     <system:String x:Key="Animation">Анимация</system:String>
     <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Часы</system:String>
     <system:String x:Key="Date">Дата</system:String>
 
@@ -164,14 +170,14 @@
     <system:String x:Key="flowlauncherHotkey">Горячая клавиша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введите ярлык, чтобы показать/скрыть Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Просмотр горячей клавиши</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Введите ярлык для показа/скрытия предварительного просмотра в окне поиска.</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Введите ярлык для показа/скрытия предпросмотра в окне поиска.</system:String>
     <system:String x:Key="openResultModifiers">Открыть ключ модификации результата</system:String>
     <system:String x:Key="openResultModifiersToolTip">Выберите клавишу-модификатор, чтобы открыть выбранный результат с помощью клавиатуры.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показать горячую клавишу</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Показать горячую клавишу выбора результата с результатами.</system:String>
-    <system:String x:Key="customQueryHotkey">Задаваемые горячие клавиши для запросов</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
+    <system:String x:Key="customQueryHotkey">Горячие клавиши пользовательского запроса</system:String>
+    <system:String x:Key="customQueryShortcut">Ярлыки пользовательского запроса</system:String>
+    <system:String x:Key="builtinShortcuts">Встроенные ярлыки</system:String>
     <system:String x:Key="customQuery">Запрос</system:String>
     <system:String x:Key="customShortcut">Ярлык</system:String>
     <system:String x:Key="customShortcutExpansion">Расширение</system:String>
@@ -193,8 +199,8 @@
     <system:String x:Key="flowlauncherPressHotkey">Нажмите клавишу</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP Прокси</system:String>
-    <system:String x:Key="enableProxy">Включить HTTP прокси</system:String>
+    <system:String x:Key="proxy">НТТР-прокси</system:String>
+    <system:String x:Key="enableProxy">Включить НТТР-прокси</system:String>
     <system:String x:Key="server">HTTP-сервер</system:String>
     <system:String x:Key="port">Порт</system:String>
     <system:String x:Key="userName">Имя пользователя</system:String>
@@ -346,7 +352,7 @@
     <system:String x:Key="HotkeyUpDownDesc">Назад / контекстное меню</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Навигация по элементам</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Открыть контекстное меню</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Открыть папку с содержимым</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Запустить от имени администратора / Открыть папку в файловом менеджере по умолчанию</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">История запросов</system:String>
     <system:String x:Key="HotkeyESCDesc">Вернуться к результату в контекстном меню</system:String>

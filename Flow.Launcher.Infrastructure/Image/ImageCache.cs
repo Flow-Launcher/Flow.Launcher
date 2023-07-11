@@ -28,7 +28,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private const int permissibleFactor = 2;
         private SemaphoreSlim semaphore = new(1, 1);
 
-        public void Initialization(Dictionary<(string, bool), int> usage)
+        public void Initialize(Dictionary<(string, bool), int> usage)
         {
             foreach (var key in usage.Keys)
             {
