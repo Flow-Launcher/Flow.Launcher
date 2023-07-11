@@ -266,6 +266,11 @@ namespace Flow.Launcher.Plugin
             public IconDelegate PreviewDelegate { get; set; } = null;
 
             /// <summary>
+            /// File path of the result. For third-party preview programs such as QuickLook.
+            /// </summary>
+            public string FilePath { get; set; } = null;
+
+            /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
             /// </summary>
             public static PreviewInfo Default { get; } = new()
