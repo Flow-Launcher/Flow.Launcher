@@ -11,14 +11,12 @@ namespace Flow.Launcher.ViewModel
         public PluginMetadata Metadata { get; }
         public string ID { get; }
 
-        public Query Query { get; }
         public CancellationToken Token { get; }
 
-        public ResultsForUpdate(IReadOnlyList<Result> results, PluginMetadata metadata, Query query, CancellationToken token)
+        public ResultsForUpdate(IReadOnlyList<Result> results, PluginMetadata metadata, CancellationToken token)
         {
             Results = results;
             Metadata = metadata;
-            Query = query;
             Token = token;
             ID = metadata.ID;
         }
