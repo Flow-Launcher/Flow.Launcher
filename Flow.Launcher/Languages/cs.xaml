@@ -132,9 +132,9 @@
     <system:String x:Key="howToCreateTheme">Jak vytvořit motiv</system:String>
     <system:String x:Key="hiThere">Vítejte</system:String>
     <system:String x:Key="SampleTitleExplorer">Průzkumník</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Vyhledávání souborů, složek a obsahu souborů</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Webové vyhledávání</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Webové vyhledávání s podporou různých vyhledávačů</system:String>
     <system:String x:Key="SampleTitleProgram">Program </system:String>
     <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
@@ -255,32 +255,32 @@
     <system:String x:Key="defaultBrowser_name">Prohlížeč</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Název prohlížeče</system:String>
     <system:String x:Key="defaultBrowser_path">Cesta k prohlížeči</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nové okno</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nová karta</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Soukromý režim</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Změnit prioritu</system:String>
+    <system:String x:Key="priority_tips">Větší číslo znamená, že výsledek bude vyšší. Zkuste například nastavit hodnotu 5. Pokud chcete, aby byl výsledek nižší než u ostatních zásuvných modulů, zadejte záporné číslo</system:String>
+    <system:String x:Key="invalidPriority">Zadejte prosím platné číslo pro prioritu!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
-    <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
-    <system:String x:Key="cancel">Cancel</system:String>
-    <system:String x:Key="done">Done</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
-    <system:String x:Key="success">Success</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="oldActionKeywords">Starý aktivační příkaz</system:String>
+    <system:String x:Key="newActionKeywords">Nový aktivační příkaz</system:String>
+    <system:String x:Key="cancel">Zrušit</system:String>
+    <system:String x:Key="done">Hotovo</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">Nepodařilo se najít zadaný plugin</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nový aktivační příkaz nemůže být prázdný</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Nový aktivační příkaz byl již přiřazen jinému pluginu, vyberte jiný aktivační příkaz</system:String>
+    <system:String x:Key="success">Úspěšné</system:String>
+    <system:String x:Key="completedSuccessfully">Úspěšně dokončeno</system:String>
+    <system:String x:Key="actionkeyword_tips">Zadejte aktivační příkaz, který je nutný ke spuštění pluginu. Pokud nechcete zadávat aktivační příkaz, použijte * a plugin bude spuštěn bez aktivačního příkazu.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Vlastní klávesová zkratka pro vyhledávání</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
-    <system:String x:Key="preview">Preview</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
+    <system:String x:Key="preview">Náhled</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Klávesová zkratka je nedostupná, zadejte prosím novou zkratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová zkratka pluginu</system:String>
     <system:String x:Key="update">Aktualizovat</system:String>
 
