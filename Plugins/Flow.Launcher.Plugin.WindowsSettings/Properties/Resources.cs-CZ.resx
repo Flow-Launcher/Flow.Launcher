@@ -278,10 +278,10 @@
     <value>Hlavní stránka</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
-    <value>Mixed reality</value>
+    <value>Smíšená realita</value>
   </data>
   <data name="AreaNetworkAndInternet" xml:space="preserve">
-    <value>Network and Internet</value>
+    <value>Síť a internet</value>
   </data>
   <data name="AreaPersonalization" xml:space="preserve">
     <value>Personalization</value>
@@ -371,22 +371,22 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BitLockerDriveEncryption" xml:space="preserve">
-    <value>BitLocker Drive Encryption</value>
+    <value>Šifrování BitLocker disku</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Blue light</value>
+    <value>Modré světlo</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Bluetooth</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
-    <value>Bluetooth devices</value>
+    <value>Zařízení Bluetooth</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
-    <value>Blue-yellow</value>
+    <value>Modrá-žlutá</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
     <value>Bopomofo IME</value>
@@ -397,22 +397,22 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
-    <value>Broadcasting</value>
+    <value>Vysílání</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Calendar" xml:space="preserve">
-    <value>Calendar</value>
+    <value>Kalendář</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CallHistory" xml:space="preserve">
-    <value>Call history</value>
+    <value>Historie hovorů</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
-    <value>calling</value>
+    <value>volá</value>
   </data>
   <data name="Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Fotoaparát</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CangjieIme" xml:space="preserve">
@@ -424,27 +424,27 @@
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Cellular and SIM</value>
+    <value>Mobilní síť a SIM karta</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Choose which folders appear on Start</value>
+    <value>Výběr složek, které se mají zobrazit v nabídce Start</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
-    <value>Client service for NetWare</value>
+    <value>Klientská služba pro NetWare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>Schránka</value>
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Closed captions</value>
+    <value>Skryté titulky</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Color filters</value>
+    <value>Barevné filtry</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
@@ -857,19 +857,19 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
-    <value>Manage known networks</value>
+    <value>Spravovat známé sítě</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ManageOptionalFeatures" xml:space="preserve">
-    <value>Manage optional features</value>
+    <value>Spravovat volitelné funkce</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Zasílání zpráv</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
-    <value>Metered connection</value>
+    <value>Připojení zpoplatněné podle objemu dat</value>
   </data>
   <data name="Microphone" xml:space="preserve">
     <value>Mikrofon</value>
@@ -1049,17 +1049,17 @@
     <value>Dostupná pouze v případě, že zařízení má Wi-Fi adaptér.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Device must be Windows Anywhere-capable.</value>
+    <value>Zařízení musí podporovat Windows Anywhere.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value>K dispozici pouze v případě, že podnik nasadil balíček provisioningu.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Oznámení</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notifications and actions</value>
+    <value>Oznámení a akce</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
@@ -1075,45 +1075,45 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (32-bit)</value>
+    <value>Správce zdroje dat ODBC (32-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (64-bit)</value>
+    <value>Správce zdroje dat ODBC (64-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
+    <value>Offline soubory</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Offline mapy</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Maps - Download maps</value>
+    <value>Offline mapy - Stáhnout mapy</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>On-Screen</value>
+    <value>Na obrazovce</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>OS</value>
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
-    <value>Other devices</value>
+    <value>Ostatní zařízení</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Other options</value>
+    <value>Další možnosti</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
-    <value>Other users</value>
+    <value>Další uživatelé</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Parental controls</value>
+    <value>Rodičovská kontrola</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
@@ -1124,62 +1124,62 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="PasswordProperties" xml:space="preserve">
-    <value>Password properties</value>
+    <value>Vlastnosti hesla</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndInputDevices" xml:space="preserve">
-    <value>Pen and input devices</value>
+    <value>Pero a vstupní zařízení</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndTouch" xml:space="preserve">
-    <value>Pen and touch</value>
+    <value>Pero a dotykové ovládání</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PenAndWindowsInk" xml:space="preserve">
-    <value>Pen and Windows Ink</value>
+    <value>Pero a Windows Ink</value>
     <comment>Area Device</comment>
   </data>
   <data name="PeopleNearMe" xml:space="preserve">
-    <value>People Near Me</value>
+    <value>Lidé v okolí</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PerformanceInformationAndTools" xml:space="preserve">
-    <value>Performance information and tools</value>
+    <value>Informace o výkonnosti a nástroje</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PermissionsAndHistory" xml:space="preserve">
-    <value>Permissions and history</value>
+    <value>Oprávnění a historie</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="PersonalizationCategory" xml:space="preserve">
-    <value>Personalization (category)</value>
+    <value>Přizpůsobení (kategorie)</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
+    <value>Telefon</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
-    <value>Phone and modem</value>
+    <value>Telefon a modem</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneAndModemOptions" xml:space="preserve">
-    <value>Phone and modem - Options</value>
+    <value>Telefon a modem - volby</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="PhoneCalls" xml:space="preserve">
-    <value>Phone calls</value>
+    <value>Telefonní hovory</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PhoneDefaultApps" xml:space="preserve">
-    <value>Phone - Default apps</value>
+    <value>Telefon - Výchozí aplikace</value>
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
-    <value>Picture</value>
+    <value>Obrázek</value>
   </data>
   <data name="Pictures" xml:space="preserve">
-    <value>Pictures</value>
+    <value>Obrázky</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="PinyinImeSettings" xml:space="preserve">
@@ -1612,7 +1612,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WelcomeScreen" xml:space="preserve">
-    <value>Welcome screen</value>
+    <value>Úvodní obrazovka</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="wgpocpl.cpl" xml:space="preserve">
@@ -1620,7 +1620,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Wheel" xml:space="preserve">
-    <value>Wheel</value>
+    <value>Kolo</value>
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
