@@ -30,7 +30,7 @@
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
-    <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_editor_path">Cesta k editoru</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vyloučená místa indexování</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
