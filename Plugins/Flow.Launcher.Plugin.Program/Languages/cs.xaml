@@ -19,19 +19,19 @@
     <system:String x:Key="flowlauncher_plugin_program_reindex">Přeindexovat</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexování</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_source">Zdroje indexu</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_option">Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP Apps</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">When enabled, Flow will load UWP Applications</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_start">Start Menu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_option">Možnosti</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp">UWP aplikace</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_uwp_tooltip">Pokud je povoleno, služba Flow načítá aplikace UWP</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_start">Nabídka Start</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Pokud je povoleno, Flow načítá programy z nabídky Start</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry">Registr</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Pokud je tato možnost povolena, bude služba Flow načítat programy z databáze registru</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Pokud je tato možnost povolena, Flow načte programy z proměnné prostředí PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Skrýt cestu k aplikaci</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">U spustitelných souborů, jako jsou UWP nebo odkazy, nezobrazujte cestu k souborům</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Povolit popis programu</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow bude vyhledávat v popisu programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Přípony</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Max. hloubka</system:String>
 
@@ -42,29 +42,29 @@
 
     <system:String x:Key="flowlauncher_plugin_program_pls_select_program_source">Prosím vyberte zdroj programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete_program_source">Jste si jisti, že chcete odstranit vybrané zdroje programů?</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Another program source with the same location already exists.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_duplicate_program_source">Již existuje jiný zdroj programu se stejným umístěním.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Zdroj programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Upravit adresář a stav tohoto zdroje programu.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_update">Aktualizovat</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Plugin programu bude indexovat pouze soubory s vybranými příponami a .url soubory s vybranými protokoly.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Přípony souboru byly úspěšně aktualizovány</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Pole přípony nesmí být prázdné</system:String>
-    <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protocols can't be empty</system:String>
+    <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protokoly musí být vyplněny</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">File Suffixes</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL Protocols</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Přípony souborů</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">Protokoly URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Hry ve službě Steam</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Hry v službě Epic Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">Custom URL Protocols</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Custom File Suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">Vlastní URL protokoly</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Vlastní přípony souborů</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
-        Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
+        Vložte přípony souborů, které chcete indexovat. Přípony by měly být odděleny znakem ';'. (ex&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
-        Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
+        Vložte protokoly souborů .url, které chcete indexovat. Protokoly by měly být odděleny ';' a měly by skončit &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Spustit jako jiný uživatel</system:String>
@@ -79,14 +79,14 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Vlastní Průzkumník</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Arg</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Umístění úvodní složky můžete upravit vložením proměnných prostředí, které chcete použít. Dostupnost proměnných prostředí můžete otestovat pomocí příkazového řádku.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadejte argumenty, které chcete přidat pro správce souborů. %s pro nadřazenou složku, %f pro úplnou cestu (funguje pouze pro win32). Podrobnosti naleznete na webové stránce správce souborů.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Úspěšné</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Chyba</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Tento program se již nebude zobrazovat ve výsledcích vyhledávání</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Tato aplikace není určena ke spuštění jako administrátor</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">Nelze spustit {0}</system:String>
 
 </ResourceDictionary>
