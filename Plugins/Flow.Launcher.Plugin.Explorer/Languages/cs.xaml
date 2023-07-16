@@ -23,19 +23,19 @@
     <system:String x:Key="plugin_explorer_delete">Smazat</system:String>
     <system:String x:Key="plugin_explorer_edit">Editovat</system:String>
     <system:String x:Key="plugin_explorer_add">Přidat</system:String>
-    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">Všeobecné nastavení</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upravit aktivační příkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy rychlého přístupu</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
-    <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Nastavení Everything</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Možnosti řazení:</system:String>
+    <system:String x:Key="plugin_explorer_everything_installed_path">Umístění Everything:</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Spustit skryté</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Cesta k editoru</system:String>
-    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Cesta k příkazovému řádku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vyloučená místa indexování</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použít umístění výsledků vyhledávání jako pracovní adresář spustitelného souboru</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Klepnutím na Enter otevřete složku ve výchozím správci souborů</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">K vyhledání cesty použijte indexové vyhledávání</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexování</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Hledat:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Cesta vyhledávání:</system:String>
@@ -47,22 +47,22 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Povoleno</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Pokud je tato možnost vypnuta, Flow tuto možnost vyhledávání neprovede a vrátí se zpět k &quot;*&quot;, aby uvolnila akční zkratku</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
-    <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
-    <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Index Windowsu</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Seznam složek</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">Cesta k editoru souborů</system:String>
+    <system:String x:Key="plugin_explorer_folder_editor_path">Cesta k editoru složek</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Vyhledávač obsahu</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Rekurzivní vyhledávač ve složce</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Indexový vyhledávač</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Otevření možností vyhledávání v systému Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Průzkumník</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Vyhledává a spravuje soubory a složky pomocí funkce Windows Search nebo Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter pro otevření adresáře</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter pro otevření umístění složky</system:String>
 
     <!--  Context menu items  -->
