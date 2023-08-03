@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Vždy spustit jako správce</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Spustit jako jiný uživatel</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožňuje spouštět systémové příkazy z nástroje Flow Launcher. Příkazy začínají znakem &gt;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Umožní spouštět systémové příkazy z Flow Launcheru</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">tento příkaz byl spuštěn {0} krát</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">spustit příkaz prostřednictvím příkazového řádku</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Spustit jako správce</system:String>
