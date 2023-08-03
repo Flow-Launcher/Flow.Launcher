@@ -31,7 +31,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             FilesFolders.RemoveFolderIfExists(InstallPath);
 
             // Python 3.8.9 is used for Windows 7 compatibility
-            DroplexPackage.Drop(App.python_3_8_9_embeddable, InstallPath).Wait();
+            DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath).Wait();
 
             PluginsSettingsFilePath = ExecutablePath;
         }
