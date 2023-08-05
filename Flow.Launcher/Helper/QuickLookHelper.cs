@@ -41,13 +41,9 @@ namespace Flow.Launcher.Helper
             return success;
         }
 
-        public static async Task<bool> CloseQuickLookAsync(bool sendFailToast = true)
+        public static async Task<bool> CloseQuickLookAsync()
         {
             bool success = await SendQuickLookPipeMsgAsync(pipeMessageClose);
-            if (sendFailToast && !success)
-            {
-                ShowQuickLookUnavailableToast();
-            }
             return success;
         }
 

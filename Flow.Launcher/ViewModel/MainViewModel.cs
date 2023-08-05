@@ -632,9 +632,9 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task CloseExternalPreviewAsync(bool sendFailToast = true)
+        private async Task CloseExternalPreviewAsync()
         {
-            bool success = await QuickLookHelper.CloseQuickLookAsync(sendFailToast).ConfigureAwait(false);
+            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
             if (success)
             {
                 ExternalPreviewOpen = false;
@@ -1105,7 +1105,7 @@ namespace Flow.Launcher.ViewModel
             MainWindowOpacity = 0;
 
             if (Settings.UseExternalPreview)
-                _ = CloseExternalPreviewAsync(false);
+                _ = CloseExternalPreviewAsync();
 
             if (!SelectedIsFromQueryResults())
             {
