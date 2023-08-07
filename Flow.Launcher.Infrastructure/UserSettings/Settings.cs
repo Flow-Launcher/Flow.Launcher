@@ -195,6 +195,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
+        
+        /// <summary>
+        /// Custom left position on selected monitor
+        /// </summary>
+        public double CustomWindowLeft { get; set; } = 0;
+        
+        /// <summary>
+        /// Custom top position on selected monitor
+        /// </summary>
+        public double CustomWindowTop { get; set; } = 0;
+        
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
@@ -227,13 +238,25 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
-        public SearchWindowPositions SearchWindowPosition { get; set; } = SearchWindowPositions.MouseScreenCenter;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
+        
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public SearchWindowAligns SearchWindowAlign { get; set; } = SearchWindowAligns.Center;
+
+        public int CustomScreenNumber { get; set; } = 1;
+
         public bool IgnoreHotkeysOnFullscreen { get; set; }
 
         public HttpProxy Proxy { get; set; } = new HttpProxy();
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public LastQueryMode LastQueryMode { get; set; } = LastQueryMode.Selected;
+
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
+        public int CustomAnimationLength { get; set; } = 360;
 
 
         // This needs to be loaded last by staying at the bottom
@@ -253,12 +276,30 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Light,
         Dark
     }
-    public enum SearchWindowPositions
+    
+    public enum SearchWindowScreens
     {
         RememberLastLaunchLocation,
-        MouseScreenCenter,
-        MouseScreenCenterTop,
-        MouseScreenLeftTop,
-        MouseScreenRightTop
+        Cursor,
+        Focus,
+        Primary,
+        Custom
+    }
+    
+    public enum SearchWindowAligns
+    {
+        Center,
+        CenterTop,
+        LeftTop,
+        RightTop,
+        Custom
+    }
+
+    public enum AnimationSpeeds
+    {
+        Slow,
+        Medium,
+        Fast,
+        Custom
     }
 }

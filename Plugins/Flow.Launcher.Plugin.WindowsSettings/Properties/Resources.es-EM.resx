@@ -1389,7 +1389,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Atajos</value>
+    <value>Accesos directos</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>

@@ -5,8 +5,8 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">항목을 먼저 선택하세요</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">폴더 링크를 선택하세요</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">{0} - 삭제하시겠습니까?</system:String>
-    <system:String x:Key="plugin_explorer_deletefolderconfirm">이 폴더를 영구적으로 삭제하시겠습니까?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">이 파일을 영구적으로 삭제하시겠습니까?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">삭제 완료</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} - 성공적으로 삭제했습니다.</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">글로벌 액션 키워드는 너무 많은 결과를 불러오게 될 수 있습니다. 특정한 액션 키워드를 선택하세요.</system:String>
@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">경고 메시지가 꺼졌습니다. 파일 및 폴더 검색을 위한 대안으로 Everything 플러그인을 설치하시겠습니까?{0}{0}Everything 플러그인을 설치하려면 '예'를 선택하고, 반환하려면 '아니오'를 선택하십시오</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">삭제</system:String>
@@ -32,6 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">쉘 경로</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">색인 제외 경로</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
@@ -125,6 +128,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything을 실행 또는 설치하려면 클릭</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 설치</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Everything 서비스 설치 중. 잠시 기다려주세요...</system:String>

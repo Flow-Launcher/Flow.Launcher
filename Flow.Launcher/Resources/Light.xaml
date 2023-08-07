@@ -51,7 +51,9 @@
     <SolidColorBrush x:Key="BasicLabelColor" Color="#1b1b1b" />
 
     <SolidColorBrush x:Key="ThemeHoverButton" Color="#f6f6f6" />
+    <!--  Typo  -->
     <SolidColorBrush x:Key="PopuBGColor" Color="#ffffff" />
+    <SolidColorBrush x:Key="PopupBGColor" Color="#ffffff" />
     <SolidColorBrush x:Key="PopupTextColor" Color="#1b1b1b" />
     <SolidColorBrush x:Key="PopupButtonAreaBGColor" Color="#f3f3f3" />
     <SolidColorBrush x:Key="PopupButtonAreaBorderColor" Color="#e5e5e5" />

@@ -36,11 +36,17 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Сховати Flow Launcher, якщо втрачено фокус</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не повідомляти про доступні нові версії</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">Мова</system:String>
     <system:String x:Key="lastQueryMode">Останній стиль запиту</system:String>
     <system:String x:Key="lastQueryModeToolTip">Показати/приховати попередні результати коли реактивований Flow Launcher знову.</system:String>
@@ -80,6 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Плагіни</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
     <system:String x:Key="enable">Увімкнено</system:String>
     <system:String x:Key="disable">Відключити</system:String>
@@ -120,6 +127,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
     <system:String x:Key="howToCreateTheme">Як створити тему</system:String>
     <system:String x:Key="hiThere">Привіт усім</system:String>
@@ -147,11 +155,18 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
+    <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть ярлик для відображення/приховання потокового запуску.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -174,6 +189,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Ефект тіні вікна запиту</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
@@ -234,7 +250,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Веб-браузер за замовчуванням</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
@@ -337,7 +353,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>

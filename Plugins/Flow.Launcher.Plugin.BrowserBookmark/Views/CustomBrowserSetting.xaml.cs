@@ -1,7 +1,7 @@
 ﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Forms;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark.Views
 {
@@ -22,29 +22,36 @@ namespace Flow.Launcher.Plugin.BrowserBookmark.Views
                 BrowserType = browser.BrowserType,
             };
         }
-
-        private void ConfirmCancelEditCustomBrowser(object sender, RoutedEventArgs e)
+        
+        private void ConfirmEditCustomBrowser(object sender, RoutedEventArgs e)
         {
-            if (DataContext is CustomBrowser editBrowser && e.Source is Button button)
-            {
-                if (button.Name == "btnConfirm")
-                {
-                    currentCustomBrowser.Name = editBrowser.Name;
-                    currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
-                    currentCustomBrowser.BrowserType = editBrowser.BrowserType;
-                    Close();
-                }
-            }
-
+            CustomBrowser editBrowser = (CustomBrowser)DataContext;
+            currentCustomBrowser.Name = editBrowser.Name;
+            currentCustomBrowser.DataDirectoryPath = editBrowser.DataDirectoryPath;
+            currentCustomBrowser.BrowserType = editBrowser.BrowserType;
+            DialogResult = true;
             Close();
         }
 
-        private void WindowKeyDown(object sender, KeyEventArgs e)
+        private void CancelEditCustomBrowser(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void WindowKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
             {
-                ConfirmCancelEditCustomBrowser(sender, e);
+                ConfirmEditCustomBrowser(sender, e);
             }
+        }
+
+        private void OnSelectPathClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new FolderBrowserDialog();
+            dialog.ShowDialog();
+            CustomBrowser editBrowser = (CustomBrowser)DataContext;
+            editBrowser.DataDirectoryPath = dialog.SelectedPath;
         }
     }
 }

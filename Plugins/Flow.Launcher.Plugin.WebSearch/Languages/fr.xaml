@@ -5,11 +5,12 @@
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
-    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
+    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Définir le navigateur à partir du chemin :</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choisir</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Supprimer</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Modifier</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Ajouter</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>

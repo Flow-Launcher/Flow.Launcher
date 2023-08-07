@@ -1,8 +1,5 @@
 ﻿using System.Windows;
-using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.Exception;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 
@@ -37,6 +34,7 @@ namespace Flow.Launcher
             var oldActionKeyword = plugin.Metadata.ActionKeywords[0];
             var newActionKeyword = tbAction.Text.Trim();
             newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
+            
             if (!PluginViewModel.IsActionKeywordRegistered(newActionKeyword))
             {
                 pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);

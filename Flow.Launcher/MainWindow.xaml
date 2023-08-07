@@ -87,6 +87,10 @@
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
+            Key="R"
+            Command="{Binding ReQueryCommand}"
+            Modifiers="Ctrl" />
+        <KeyBinding
             Key="H"
             Command="{Binding LoadHistoryCommand}"
             Modifiers="Ctrl" />
@@ -335,11 +339,9 @@
                 </Grid>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition
-                            Width="0.85*"
-                            MinWidth="244"
-                            MaxWidth="340" />
+                        <ColumnDefinition Width="*" MinWidth="100" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
                     <StackPanel
                         x:Name="ResultArea"
@@ -394,9 +396,16 @@
                             </ContentControl>
                         </Border>
                     </StackPanel>
+                    <GridSplitter
+                        Grid.Column="1"
+                        Width="5"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Stretch"
+                        Background="Transparent"
+                        ShowsPreview="True" />
                     <Grid
                         x:Name="Preview"
-                        Grid.Column="1"
+                        Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
                         Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">

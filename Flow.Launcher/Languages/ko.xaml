@@ -36,11 +36,17 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
     <system:String x:Key="SearchWindowPosition">검색 창 위치</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">마지막 위치 기억</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">마우스 위치 화면 - 중앙</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">마우스 위치 화면 - 중앙 상단</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">마우스 위치 화면 - 좌측 상단</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">마우스 위치 화면 - 우측 상단</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">언어</system:String>
     <system:String x:Key="lastQueryMode">마지막 쿼리 스타일</system:String>
     <system:String x:Key="lastQueryModeToolTip">쿼리박스를 열었을 때 쿼리 처리 방식</system:String>
@@ -80,6 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">검색 결과를 찾을 수 없습니다.</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">다른 검색어를 시도해주세요.</system:String>
     <system:String x:Key="plugin">플러그인</system:String>
+    <system:String x:Key="plugins">플러그인</system:String>
     <system:String x:Key="browserMorePlugins">플러그인 더 찾아보기</system:String>
     <system:String x:Key="enable">켬</system:String>
     <system:String x:Key="disable">끔</system:String>
@@ -120,6 +127,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
+    <system:String x:Key="appearance">외관</system:String>
     <system:String x:Key="browserMoreThemes">테마 갤러리</system:String>
     <system:String x:Key="howToCreateTheme">테마 제작 안내</system:String>
     <system:String x:Key="hiThere">안녕하세요!</system:String>
@@ -147,11 +155,18 @@
     <system:String x:Key="SoundEffectTip">검색창을 열 때 작은 소리를 재생합니다.</system:String>
     <system:String x:Key="Animation">애니메이션</system:String>
     <system:String x:Key="AnimationTip">일부 UI에 애니메이션을 사용합니다.</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">시계</system:String>
     <system:String x:Key="Date">날짜</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
+    <system:String x:Key="hotkeys">단축키</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력하세요.</system:String>
     <system:String x:Key="previewHotkey">미리보기 단축키</system:String>
@@ -174,6 +189,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">클립보드에서 텍스트 가져오기</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">그림자 효과</system:String>
     <system:String x:Key="shadowEffectCPUUsage">그림자 효과는 GPU를 사용합니다. 컴퓨터 퍼포먼스가 제한적인 경우 사용을 추천하지 않습니다.</system:String>
     <system:String x:Key="windowWidthSize">창 넓이</system:String>
@@ -337,7 +353,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">아이템 이동</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">콘텍스트 메뉴 열기</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">포함된 폴더 열기</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">관리자 권한으로 실행</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">검색 기록</system:String>
     <system:String x:Key="HotkeyESCDesc">콘텍스트 메뉴에서 뒤로 가기</system:String>
     <system:String x:Key="HotkeyTabDesc">자동완성</system:String>

@@ -4,10 +4,8 @@ using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
@@ -32,6 +30,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool ShowWindowsContextMenu { get; set; } = true;
 
+        public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -137,6 +136,8 @@ namespace Flow.Launcher.Plugin.Explorer
                                          PathEnumerationEngine == PathEnumerationEngineOption.Everything ||
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
+        public bool EverythingSearchFullPath { get; set; } = false;
+        
         #endregion
 
         internal enum ActionKeyword

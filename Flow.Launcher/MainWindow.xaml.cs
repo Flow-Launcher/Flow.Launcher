@@ -17,13 +17,14 @@ using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
-using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
+using System.Media;
+using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 
 namespace Flow.Launcher
 {
@@ -37,8 +38,8 @@ namespace Flow.Launcher
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
-        private readonly MediaPlayer animationSound = new();
         private bool _animating;
+        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
 
         #endregion
 
@@ -49,8 +50,7 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            InitializePosition();            
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            InitializePosition();                        
         }
 
         public MainWindow()
@@ -60,23 +60,22 @@ namespace Flow.Launcher
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
-            if (QueryTextBox.SelectionLength == 0)
+            var result = _viewModel.Results.SelectedItem?.Result;
+            if (QueryTextBox.SelectionLength == 0 && result != null)
             {
-                _viewModel.ResultCopy(string.Empty);
-
+                string copyText = result.CopyText;
+                App.API.CopyToClipboard(copyText, directCopy: true);
             }
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
-                _viewModel.ResultCopy(QueryTextBox.SelectedText);
+                App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
             }
         }
-
+        
         private async void OnClosing(object sender, CancelEventArgs e)
         {
-            _settings.WindowTop = Top;
-            _settings.WindowLeft = Left;
             _notifyIcon.Visible = false;
-            _viewModel.Save();
+            App.API.SaveAppAllSettings();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
             Notification.Uninstall();
@@ -114,7 +113,6 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
@@ -201,29 +199,39 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
-            switch (_settings.SearchWindowPosition)
+            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                case SearchWindowPositions.RememberLastLaunchLocation:
-                    Top = _settings.WindowTop;
-                    Left = _settings.WindowLeft;
-                    break;
-                case SearchWindowPositions.MouseScreenCenter:
-                    Left = HorizonCenter();
-                    Top = VerticalCenter();
-                    break;
-                case SearchWindowPositions.MouseScreenCenterTop:
-                    Left = HorizonCenter();
-                    Top = 10;
-                    break;
-                case SearchWindowPositions.MouseScreenLeftTop:
-                    Left = 10;
-                    Top = 10;
-                    break;
-                case SearchWindowPositions.MouseScreenRightTop:
-                    Left = HorizonRight();
-                    Top = 10;
-                    break;
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
             }
+            else
+            {
+                var screen = SelectedScreen();
+                switch (_settings.SearchWindowAlign)
+                {
+                    case SearchWindowAligns.Center:
+                        Left = HorizonCenter(screen);
+                        Top = VerticalCenter(screen);
+                        break;
+                    case SearchWindowAligns.CenterTop:
+                        Left = HorizonCenter(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.LeftTop:
+                        Left = HorizonLeft(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.RightTop:
+                        Left = HorizonRight(screen);
+                        Top = 10;
+                        break;
+                    case SearchWindowAligns.Custom:
+                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
+                        Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                        break;
+                }
+            }
+
         }
 
         private void UpdateNotifyIconText()
@@ -340,8 +348,9 @@ namespace Flow.Launcher
         {
             _viewModel.Show();
             await Task.Delay(300); // If don't give a time, Positioning will be weird.
-            Left = HorizonCenter();
-            Top = VerticalCenter();
+            var screen = SelectedScreen();
+            Left = HorizonCenter(screen);
+            Top = VerticalCenter(screen);
         }
 
         private void InitProgressbarAnimation()
@@ -371,11 +380,19 @@ namespace Flow.Launcher
             CircleEase easing = new CircleEase();
             easing.EasingMode = EasingMode.EaseInOut;
 
+            var animationLength = _settings.AnimationSpeed switch
+            {
+                AnimationSpeeds.Slow => 560,
+                AnimationSpeeds.Medium => 360,
+                AnimationSpeeds.Fast => 160,
+                _ => _settings.CustomAnimationLength
+            };
+
             var WindowOpacity = new DoubleAnimation
             {
                 From = 0,
                 To = 1,
-                Duration = TimeSpan.FromSeconds(0.25),
+                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -383,7 +400,7 @@ namespace Flow.Launcher
             {
                 From = Top + 10,
                 To = Top,
-                Duration = TimeSpan.FromSeconds(0.25),
+                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
             var IconMotion = new DoubleAnimation
@@ -391,7 +408,7 @@ namespace Flow.Launcher
                 From = 12,
                 To = 0,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -400,7 +417,7 @@ namespace Flow.Launcher
                 From = 0,
                 To = 1,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
             double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
@@ -409,7 +426,7 @@ namespace Flow.Launcher
                 From = 0,
                 To = TargetIconOpacity,
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -419,7 +436,7 @@ namespace Flow.Launcher
                 From = new Thickness(0, 12, right, 0),
                 To = new Thickness(0, 0, right, 0),
                 EasingFunction = easing,
-                Duration = TimeSpan.FromSeconds(0.36),
+                Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.Stop
             };
 
@@ -503,7 +520,7 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
-            if (_settings.SearchWindowPosition == SearchWindowPositions.RememberLastLaunchLocation)
+            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 _settings.WindowLeft = Left;
                 _settings.WindowTop = Top;
@@ -523,30 +540,62 @@ namespace Flow.Launcher
             }
         }
 
-        public double HorizonCenter()
+        public Screen SelectedScreen()
         {
-            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            Screen screen = null;
+            switch(_settings.SearchWindowScreen)
+            {
+                case SearchWindowScreens.Cursor:
+                    screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+                    break;
+                case SearchWindowScreens.Primary:
+                    screen = Screen.PrimaryScreen;
+                    break;
+                case SearchWindowScreens.Focus:
+                    IntPtr foregroundWindowHandle = WindowsInteropHelper.GetForegroundWindow();
+                    screen = Screen.FromHandle(foregroundWindowHandle);
+                    break;
+                case SearchWindowScreens.Custom:
+                    if (_settings.CustomScreenNumber <= Screen.AllScreens.Length)
+                        screen = Screen.AllScreens[_settings.CustomScreenNumber - 1];
+                    else
+                        screen = Screen.AllScreens[0];
+                    break;
+                default:
+                    screen = Screen.AllScreens[0];
+                    break;
+            }
+            return screen ?? Screen.AllScreens[0];
+        }
+        
+        public double HorizonCenter(Screen screen)
+        {
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = (dip2.X - ActualWidth) / 2 + dip1.X;
             return left;
         }
 
-        public double VerticalCenter()
+        public double VerticalCenter(Screen screen)
         {
-            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
         }
 
-        public double HorizonRight()
+        public double HorizonRight(Screen screen)
         {
-            var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
-            var left = (dip2.X - ActualWidth) - 10;
+            var left = (dip1.X + dip2.X - ActualWidth) - 10;
+            return left;
+        }
+
+        public double HorizonLeft(Screen screen)
+        {
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var left = dip1.X + 10;
             return left;
         }
 

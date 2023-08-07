@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
@@ -75,11 +75,12 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 if (!p.HasExited)
                 {
                     p.Kill();
+                    p.WaitForExit(50);
                 }
             }
             catch (Exception e)
             {
-                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to kill process {p.ProcessName}", e);
+                Log.Exception($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
             }
         }
 

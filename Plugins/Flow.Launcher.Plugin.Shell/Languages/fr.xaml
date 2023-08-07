@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Toujours exécuter en tant qu'administrateur</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permet d'exécuter des commandes système à partir de Flow Launcher. Les commandes doivent commencer par &gt;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">cette commande a été exécutée {0} fois</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">exécuter la commande via le shell de commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Exécuter en tant qu'administrateur</system:String>

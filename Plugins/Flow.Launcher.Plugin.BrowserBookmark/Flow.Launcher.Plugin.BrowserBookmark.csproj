@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
@@ -11,6 +11,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+    <UseWindowsForms>true</UseWindowsForms>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -55,7 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Data.SQLite" Version="1.0.116" />
+    <PackageReference Include="System.Data.SQLite" Version="1.0.118" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.117" />
     <PackageReference Include="UnidecodeSharp" Version="1.0.0" />
   </ItemGroup>
@@ -66,12 +67,8 @@
 
   <Target Name="CopyDLLs" AfterTargets="Build">
     <Message Text="Executing CopyDLLs task" Importance="High" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x64" />
-    <Copy
-      SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll"
-      DestinationFolder="$(TargetDir)\x86" />
+    <Copy SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x64" />
+    <Copy SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x86" />
   </Target>
 
   <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">

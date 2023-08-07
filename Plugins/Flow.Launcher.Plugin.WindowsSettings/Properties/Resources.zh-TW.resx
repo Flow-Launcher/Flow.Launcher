@@ -254,7 +254,7 @@
     <value>時鐘與地區</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>控制台</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -420,7 +420,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="CapsLock" xml:space="preserve">
-    <value>Caps Lock</value>
+    <value>大寫鎖定</value>
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>控制台</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -654,7 +654,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value>快速搜尋</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -899,7 +899,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Mono" xml:space="preserve">
-    <value>Mono</value>
+    <value>單聲道</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
     <value>詳細資料</value>
@@ -1063,7 +1063,7 @@
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
-    <value>Num Lock</value>
+    <value>數字鎖定</value>
     <comment>Mean the "Num Lock" key</comment>
   </data>
   <data name="nwc.cpl" xml:space="preserve">
@@ -1278,7 +1278,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="Ram" xml:space="preserve">
-    <value>RAM</value>
+    <value>記憶體</value>
     <comment>Means the Read-Access-Memory (typical the used to inform about the size)</comment>
   </data>
   <data name="Recognition" xml:space="preserve">
@@ -1350,7 +1350,7 @@
     <value>捲軸</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
-    <value>Scroll Lock</value>
+    <value>捲動鎖定</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
@@ -1389,7 +1389,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>快速鍵</value>
+    <value>縮寫</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>
@@ -1450,7 +1450,7 @@
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>in</value>
+    <value>在</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
@@ -1737,7 +1737,7 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>更改裝置安裝設定</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
     <value>Turn off background images</value>
@@ -1749,13 +1749,13 @@
     <value>Media streaming options</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>讓某種檔案類型始終以特定程式開啟</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>更改語音助理的聲音</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>尋找並修復鍵盤問題</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
     <value>Use screen reader</value>
@@ -1764,19 +1764,19 @@
     <value>Show which workgroup this computer is on</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>更改滑鼠滾輪設定</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
     <value>Manage computer certificates</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>尋找並修復問題</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>更改使用點按傳送接收的內容的設定</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>更改使用媒體或裝置的預設設定</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
     <value>Print the speech reference card</value>
@@ -1851,7 +1851,7 @@
     <value>Auto-hide the taskbar</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>更改聲音卡設定</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
     <value>Make changes to accounts</value>
@@ -1881,7 +1881,7 @@
     <value>Block or allow third-party cookies</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Find and fix audio recording problems</value>
+    <value>尋找並修復錄音問題</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
     <value>Create a recovery drive</value>
@@ -2025,7 +2025,7 @@
     <value>Change workgroup name</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>尋找並修復列印問題</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
     <value>Change when the computer sleeps</value>
@@ -2073,7 +2073,7 @@
     <value>Connect to the Internet</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
-    <value>Find and fix audio playback problems</value>
+    <value>尋找並修復音訊播放問題。</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
     <value>Change the mouse pointer display or speed</value>
@@ -2191,7 +2191,7 @@
     <value>Record steps to reproduce a problem</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>調整 Windows 的外觀和效能</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
     <value>Settings for Microsoft IME (Japanese)</value>
@@ -2227,7 +2227,7 @@
     <value>Identify and repair network problems</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Find and fix networking and connection problems</value>
+    <value>尋找並修復網路連接問題</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
     <value>Play CDs or other media automatically</value>
@@ -2368,7 +2368,7 @@
     <value>Turn screen saver on or off</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>尋找並修復 Windows 更新問題</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
     <value>Change Bluetooth settings</value>
@@ -2386,7 +2386,7 @@
     <value>Add a device</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>尋找並修復 Windows 搜尋問題</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
     <value>Choose a power plan</value>
@@ -2476,7 +2476,7 @@
     <value>Ignore repeated keystrokes using FilterKeys</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>尋找並修復藍屏問題</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
     <value>Hear a tone when keys are pressed</value>
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>控制台</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>

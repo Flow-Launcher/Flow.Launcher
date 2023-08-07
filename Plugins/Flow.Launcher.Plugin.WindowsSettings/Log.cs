@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Plugin.WindowsSettings
 {

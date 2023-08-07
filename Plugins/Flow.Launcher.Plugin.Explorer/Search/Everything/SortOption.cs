@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Flow.Launcher.Plugin.Everything.Everything
+﻿namespace Flow.Launcher.Plugin.Everything.Everything
 {
     public enum SortOption : uint
     {
@@ -27,7 +20,6 @@ namespace Flow.Launcher.Plugin.Everything.Everything
         ATTRIBUTES_DESCENDING = 16u,
         FILE_LIST_FILENAME_ASCENDING = 17u,
         FILE_LIST_FILENAME_DESCENDING = 18u,
-        RUN_COUNT_ASCENDING = 19u,
         RUN_COUNT_DESCENDING = 20u,
         DATE_RECENTLY_CHANGED_ASCENDING = 21u,
         DATE_RECENTLY_CHANGED_DESCENDING = 22u,

@@ -1,6 +1,5 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
 using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Text;
@@ -23,7 +22,7 @@ namespace Flow.Launcher
             SetException(exception);
         }
 
-        private static string GetIssueUrl(string website)
+        private static string GetIssuesUrl(string website)
         {
             if (!website.StartsWith("https://github.com"))
             {
@@ -31,10 +30,10 @@ namespace Flow.Launcher
             }
             if(website.Contains("Flow-Launcher/Flow.Launcher"))
             {
-                return Constant.Issue;
+                return Constant.IssuesUrl;
             }
             var treeIndex = website.IndexOf("tree", StringComparison.Ordinal);
-            return treeIndex == -1 ? $"{website}/issues/new" : $"{website[..treeIndex]}/issues/new";
+            return treeIndex == -1 ? $"{website}/issues" : $"{website[..treeIndex]}/issues";
         }
 
         private void SetException(Exception exception)
@@ -45,8 +44,8 @@ namespace Flow.Launcher
 
             var websiteUrl = exception switch
                 {
-                    FlowPluginException pluginException =>GetIssueUrl(pluginException.Metadata.Website),
-                    _ => Constant.Issue
+                    FlowPluginException pluginException =>GetIssuesUrl(pluginException.Metadata.Website),
+                    _ => Constant.IssuesUrl
                 };
                 
 

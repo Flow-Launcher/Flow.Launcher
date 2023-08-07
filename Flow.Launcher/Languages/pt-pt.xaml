@@ -36,11 +36,17 @@
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
     <system:String x:Key="SearchWindowPosition">Posição da janela de pesquisa</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Memorizar última posição</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Ecrã do rato - Centro</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Ecrã do rato - Centro, cima</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Ecrã do rato - Esquerda, cima</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Ecrã do rato - Direita, cima</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Memorizar última posição</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor com o cursor do rato</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor com a janela focada</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Monitor principal</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Monitor personalizado</system:String>
+    <system:String x:Key="SearchWindowAlign">Posição da janela de pesquisa no monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Centro</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Centro, cima</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Esquerda, cima</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Direita, cima</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Posição personalizada</system:String>
     <system:String x:Key="language">Idioma</system:String>
     <system:String x:Key="lastQueryMode">Estilo da última consulta</system:String>
     <system:String x:Key="lastQueryModeToolTip">Mostrar/ocultar resultados anteriores ao reiniciar Flow Launcher</system:String>
@@ -80,6 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">Não existem resultados</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Experimente outro termo de pesquisa.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Mais plugins</system:String>
     <system:String x:Key="enable">Ativo</system:String>
     <system:String x:Key="disable">Inativo</system:String>
@@ -120,6 +127,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
+    <system:String x:Key="appearance">Aparência</system:String>
     <system:String x:Key="browserMoreThemes">Galeria de temas</system:String>
     <system:String x:Key="howToCreateTheme">Como criar um tema</system:String>
     <system:String x:Key="hiThere">Olá</system:String>
@@ -147,11 +155,18 @@
     <system:String x:Key="SoundEffectTip">Reproduzir um som ao abrir a janela de pesquisa</system:String>
     <system:String x:Key="Animation">Animação</system:String>
     <system:String x:Key="AnimationTip">Utilizar animações na aplicação</system:String>
+    <system:String x:Key="AnimationSpeed">Velocidade da animação</system:String>
+    <system:String x:Key="AnimationSpeedTip">A velocidade da animação da interface</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Lenta</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Média</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rápida</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
+    <system:String x:Key="hotkeys">Teclas de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -160,9 +175,9 @@
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado com o teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
-    <system:String x:Key="customQueryHotkey">Tecla de atalho personalizada</system:String>
-    <system:String x:Key="customQueryShortcut">Atalho de consulta personalizada</system:String>
-    <system:String x:Key="builtinShortcuts">Atalho nativo</system:String>
+    <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
+    <system:String x:Key="customQueryShortcut">Atalhos de consultas personalizadas</system:String>
+    <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
     <system:String x:Key="customQuery">Consulta</system:String>
     <system:String x:Key="customShortcut">Atalho</system:String>
     <system:String x:Key="customShortcutExpansion">Expansão</system:String>
@@ -174,6 +189,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Tem a certeza de que deseja remover a tecla de atalho do plugin {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Tem a certeza de que deseja eliminar o atalho: {0} com expansão {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obter texto da área de transferência.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Obter caminho a partir do explorador ativo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efeito de sombra da janela</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Este efeito intensifica a utilização da GPU. Não deve ativar esta opção se o desempenho do seu computador for fraco.</system:String>
     <system:String x:Key="windowWidthSize">Largura da janela</system:String>
@@ -336,7 +352,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyLeftRightDesc">Navegação nos itens</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Abrir menu de contexto</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Abrir pasta do resultado</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Executar como administrador/Abrir pasta no gestor de ficheiros</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Histórico de consultas</system:String>
     <system:String x:Key="HotkeyESCDesc">Voltar aos resultados no menu de contexto</system:String>
     <system:String x:Key="HotkeyTabDesc">Conclusão automática</system:String>

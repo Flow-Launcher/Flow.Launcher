@@ -16,15 +16,15 @@
     <system:String x:Key="copy">Kopiëren</system:String>
     <system:String x:Key="cut">Knippen</system:String>
     <system:String x:Key="paste">Plakken</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
+    <system:String x:Key="undo">Ongedaan maken</system:String>
+    <system:String x:Key="selectAll">Alles selecteren</system:String>
     <system:String x:Key="fileTitle">Bestand</system:String>
     <system:String x:Key="folderTitle">Map</system:String>
     <system:String x:Key="textTitle">Tekst</system:String>
     <system:String x:Key="GameMode">Spelmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stop het gebruik van Sneltoetsen.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionReset">Positie resetten</system:String>
+    <system:String x:Key="PositionResetToolTip">Positie zoekvenster resetten</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Instellingen</system:String>
@@ -32,15 +32,21 @@
     <system:String x:Key="portableMode">Draagbare Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Alle instellingen en gebruikersgegevens opslaan in één map (Nuttig bij het gebruik van verwijderbare schijven of cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowPositionRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenter">Mouse Focused Screen - Center</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenCenterTop">Mouse Focused Screen - Center Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenLeftTop">Mouse Focused Screen - Left Top</system:String>
-    <system:String x:Key="SearchWindowPositionMouseScreenRightTop">Mouse Focused Screen - Right Top</system:String>
+    <system:String x:Key="SearchWindowPosition">Positie Zoekvenster</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Laatste Positie Onthouden</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Monitor met Muiscursor</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Monitor met Gefocust Venster</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primaire Monitor</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Aangepaste Monitor</system:String>
+    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">Taal</system:String>
     <system:String x:Key="lastQueryMode">Laatste Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Toon/Verberg vorige resultaten wanneer Flow Launcher wordt gereactiveerd.</system:String>
@@ -80,6 +86,7 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="plugins">Plugins</system:String>
     <system:String x:Key="browserMorePlugins">Zoek meer plugins</system:String>
     <system:String x:Key="enable">Aan</system:String>
     <system:String x:Key="disable">Disable</system:String>
@@ -105,7 +112,7 @@
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugin</system:String>
+    <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
     <system:String x:Key="installbtn">Install</system:String>
@@ -120,6 +127,7 @@
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
+    <system:String x:Key="appearance">Appearance</system:String>
     <system:String x:Key="browserMoreThemes">Zoek meer thema´s</system:String>
     <system:String x:Key="howToCreateTheme">Hoe maak je een thema</system:String>
     <system:String x:Key="hiThere">Hallo daar</system:String>
@@ -147,11 +155,18 @@
     <system:String x:Key="SoundEffectTip">Een klein geluid afspelen wanneer het zoekvenster wordt geopend</system:String>
     <system:String x:Key="Animation">Animatie</system:String>
     <system:String x:Key="AnimationTip">Animatie gebruiken in UI</system:String>
+    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
+    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
+    <system:String x:Key="hotkeys">Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Sneltoets</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Voer snelkoppeling in om Flow Launcher te tonen/verbergen.</system:String>
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
@@ -174,6 +189,7 @@
     <system:String x:Key="deleteCustomHotkeyWarning">Weet u zeker dat je {0} plugin sneltoets wilt verwijderen?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
@@ -199,7 +215,7 @@
     <system:String x:Key="proxyConnectFailed">Proxy connectie mislukt</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
+    <system:String x:Key="about">Over</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
@@ -337,7 +353,7 @@
     <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>

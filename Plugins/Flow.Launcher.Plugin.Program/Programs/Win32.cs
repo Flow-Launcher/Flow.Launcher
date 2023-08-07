@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +15,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
+using System.Windows.Input;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -169,12 +169,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 ContextData = this,
                 Action = c =>
                 {
-                    var runAsAdmin = (
-                        c.SpecialKeyState.CtrlPressed &&
-                        c.SpecialKeyState.ShiftPressed &&
-                        !c.SpecialKeyState.AltPressed &&
-                        !c.SpecialKeyState.WinPressed
-                        );
+                    // Ctrl + Enter to open containing folder
+                    bool openFolder = c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
+                    if (openFolder)
+                    {
+                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
+                        return true;
+                    }
+
+                    // Ctrl + Shift + Enter to run as admin
+                    bool runAsAdmin = c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
                     var info = new ProcessStartInfo
                     {
@@ -461,7 +465,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes))
                 .Distinct();
 
+            var startupPaths = GetStartupPaths();
+            
             var programs = ExceptDisabledSource(allPrograms)
+                .Where(x => !startupPaths.Any(startup => FilesFolders.PathContains(startup, x)))
                 .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
@@ -603,13 +610,20 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
+            var startMenuPaths = GetStartMenuPaths();
             return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
+                    // is shortcut and in start menu
+                    var startMenu = g.Where(g => g.LnkResolvedPath != null && startMenuPaths.Any(x => FilesFolders.PathContains(x, g.FullPath))).ToList();
+                    if (startMenu.Any())
+                        return startMenu.Take(1);
+
+                    // distinct by description
                     var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();
                     if (temp.Any())
-                        return DistinctBy(temp, x => x.Description);
+                        return temp.Take(1);
                     return g.Take(1);
                 });
         }
@@ -703,6 +717,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             var commonStartMenu = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu);
 
             return new[] { userStartMenu, commonStartMenu };
+        }
+
+        private static IEnumerable<string> GetStartupPaths()
+        {
+            var userStartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            var commonStartup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
+
+            return new[] { userStartup, commonStartup };
         }
 
         public static void WatchProgramUpdate(Settings settings)

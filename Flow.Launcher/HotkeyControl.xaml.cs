@@ -19,6 +19,11 @@ namespace Flow.Launcher
 
         public event EventHandler HotkeyChanged;
 
+        /// <summary>
+        /// Designed for Preview Hotkey and KeyGesture.
+        /// </summary>
+        public bool ValidateKeyGesture { get; set; } = false;
+
         protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
 
         public HotkeyControl()
@@ -68,7 +73,7 @@ namespace Flow.Launcher
 
             if (triggerValidate)
             {
-                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel);
+                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
                 CurrentHotkeyAvailable = hotkeyAvailable;
                 SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
@@ -91,13 +96,13 @@ namespace Flow.Launcher
                 CurrentHotkey = keyModel;
             }
         }
-
+        
         public Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
         {
             return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
-        private static bool CheckHotkeyAvailability(HotkeyModel hotkey) => hotkey.Validate() && HotKeyMapper.CheckAvailability(hotkey);
+        private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) => hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
         public new bool IsFocused => tbHotkey.IsFocused;
 

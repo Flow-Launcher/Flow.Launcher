@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -39,6 +36,8 @@ namespace Flow.Launcher.Infrastructure.Image
             _hashGenerator = new ImageHashGenerator();
 
             var usage = LoadStorageToConcurrentDictionary();
+
+            ImageCache.Initialize(usage.ToDictionary(x => x.Key, x => x.Value));
 
             foreach (var icon in new[]
                      {
@@ -269,7 +268,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
                     if (GuidToKey.TryGetValue(hash, out string key))
                     { // image already exists
-                        img = ImageCache[key, false] ?? img;
+                        img = ImageCache[key, loadFullImage] ?? img;
                     }
                     else
                     { // new guid

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using System.Xml;
 using Microsoft.Win32;
 
 namespace Flow.Launcher.Infrastructure.Exception
@@ -63,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Exception
             sb.AppendLine($"* Command Line: {Environment.CommandLine}");
             sb.AppendLine($"* Timestamp: {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
             sb.AppendLine($"* Flow Launcher version: {Constant.Version}");
-            sb.AppendLine($"* OS Version: {Environment.OSVersion.VersionString}");
+            sb.AppendLine($"* OS Version: {GetWindowsFullVersionFromRegistry()}");
             sb.AppendLine($"* IntPtr Length: {IntPtr.Size}");
             sb.AppendLine($"* x64: {Environment.Is64BitOperatingSystem}");
             sb.AppendLine($"* Python Path: {Constant.PythonPath}");
@@ -172,6 +171,36 @@ namespace Flow.Launcher.Infrastructure.Exception
                 return new List<string>();
             }
 
+        }
+
+        public static string GetWindowsFullVersionFromRegistry()
+        {
+            try
+            {
+                var buildRevision = GetWindowsRevisionFromRegistry();
+                var currentBuild = Environment.OSVersion.Version.Build;
+                return currentBuild.ToString() + "." + buildRevision;
+            }
+            catch
+            {
+                return Environment.OSVersion.VersionString;
+            }
+        }
+
+        public static string GetWindowsRevisionFromRegistry()
+        {
+            try
+            {
+                using (RegistryKey registryKey = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion\"))
+                {
+                    var buildRevision = registryKey.GetValue("UBR").ToString();
+                    return buildRevision;
+                }
+            }
+            catch
+            {
+                return "0";
+            }
         }
     }
 }
