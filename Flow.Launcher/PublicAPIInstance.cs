@@ -75,6 +75,8 @@ namespace Flow.Launcher
 
         public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
 
+        public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
+
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
         public void SaveAppAllSettings()
