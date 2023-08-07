@@ -49,7 +49,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 token.ThrowIfCancellationRequested();
                 if (dataReader.GetValue(0) is DBNull
                     || dataReader.GetValue(1) is not string rawFragmentPath
-                    || string.Equals(rawFragmentPath, "file:", StringComparison.OrdinalIgnoreCase))
+                    || string.Equals(rawFragmentPath, "file:", StringComparison.OrdinalIgnoreCase)
+                    || dataReader.GetValue(2) is not string extension)
                 {
                     continue;
                 }
@@ -61,7 +62,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
                 yield return new SearchResult
                 {
                     FullPath = path,
-                    Type = dataReader.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    Type = string.Equals(extension, "Directory", StringComparison.Ordinal) ? ResultType.Folder : ResultType.File,
                     WindowsIndexed = true
                 };
             }
