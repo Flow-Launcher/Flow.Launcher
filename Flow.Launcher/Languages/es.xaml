@@ -35,8 +35,8 @@
     <system:String x:Key="setAutoStartFailed">Error de configuración de arranque al iniciar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
-    <system:String x:Key="SearchWindowPosition">Posición de la ventana de búsqueda</system:String>
-    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Recordar última posición</system:String>
+    <system:String x:Key="SearchWindowPosition">Ubicación de la ventana de búsqueda</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Recordar última ubicación</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor con cursor del ratón</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor con ventana enfocada</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Monitor principal</system:String>
