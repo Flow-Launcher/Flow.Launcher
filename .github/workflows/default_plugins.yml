@@ -32,6 +32,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.PluginIndicator/plugin.json'
             pluginsmanager:
               - 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
+            processkiller
+              - 'Plugins/Flow.Launcher.Plugin.ProcessKiller/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -159,5 +161,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginsManager"
           files: "Flow.Launcher.Plugin.PluginsManager.zip"
           tag_name: "v${{steps.updated-version-pluginsmanager.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get ProcessKiller Version
+        if: steps.changes.outputs.processkiller == 'true'
+        id: updated-version-processkiller
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.ProcessKiller/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build ProcessKiller
+        if: steps.changes.outputs.processkiller == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.ProcessKiller/Flow.Launcher.Plugin.ProcessKiller.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.ProcessKiller"
+          7z a -tzip "Flow.Launcher.Plugin.ProcessKiller.zip" "./Flow.Launcher.Plugin.ProcessKiller/*"
+          rm -r "Flow.Launcher.Plugin.ProcessKiller"
+
+      - name: Publish ProcessKiller
+        if: steps.changes.outputs.processkiller == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller"
+          files: "Flow.Launcher.Plugin.ProcessKiller.zip"
+          tag_name: "v${{steps.updated-version-processkiller.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
