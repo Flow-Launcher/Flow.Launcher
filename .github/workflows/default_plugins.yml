@@ -1,0 +1,51 @@
+name: Publish Default Plugins
+
+on:
+  push:
+    branches: ['master']
+    paths: ['Plugins/**']
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 7.0.x
+
+      - name: Determine New Plugin Updates
+        uses: dorny/paths-filter@v2
+        id: changes
+        with:
+          filters: |
+            browserbookmark:
+              - 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/plugin.json'
+
+      - name: Get BrowserBookmark Version
+        if: steps.changes.outputs.browserbookmark == 'true'
+        id: updated-version-browserbookmark
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build BrowserBookmark
+        if: steps.changes.outputs.browserbookmark == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/Flow.Launcher.Plugin.BrowserBookmark.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.BrowserBookmark"
+          7z a -tzip "Flow.Launcher.Plugin.BrowserBookmark.zip" "./Flow.Launcher.Plugin.BrowserBookmark/*"
+          rm -r "Flow.Launcher.Plugin.BrowserBookmark"
+
+      - name: Publish BrowserBookmark
+        if: steps.changes.outputs.browserbookmark == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.BrowserBookmark"
+          files: "Flow.Launcher.Plugin.BrowserBookmark.zip"
+          tag_name: "v${{steps.updated-version-browserbookmark.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
