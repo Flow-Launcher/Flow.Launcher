@@ -32,19 +32,19 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.PluginIndicator/plugin.json'
             pluginsmanager:
               - 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
-            processkiller
+            processkiller:
               - 'Plugins/Flow.Launcher.Plugin.ProcessKiller/plugin.json'
-            program
+            program:
               - 'Plugins/Flow.Launcher.Plugin.Program/plugin.json'
-            shell
+            shell:
               - 'Plugins/Flow.Launcher.Plugin.Shell/plugin.json'
-            sys
+            sys:
               - 'Plugins/Flow.Launcher.Plugin.Sys/plugin.json'
-            url
+            url:
               - 'Plugins/Flow.Launcher.Plugin.Url/plugin.json'
-            websearch
+            websearch:
               - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
-            windowssettings
+            windowssettings:
               - 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
 
       - name: Get BrowserBookmark Version
