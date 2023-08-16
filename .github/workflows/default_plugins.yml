@@ -42,6 +42,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.Sys/plugin.json'
             url
               - 'Plugins/Flow.Launcher.Plugin.Url/plugin.json'
+            websearch
+              - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -299,5 +301,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Url"
           files: "Flow.Launcher.Plugin.Url.zip"
           tag_name: "v${{steps.updated-version-url.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get WebSearch Version
+        if: steps.changes.outputs.websearch == 'true'
+        id: updated-version-websearch
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build WebSearch
+        if: steps.changes.outputs.websearch == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.WebSearch/Flow.Launcher.Plugin.WebSearch.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.WebSearch"
+          7z a -tzip "Flow.Launcher.Plugin.WebSearch.zip" "./Flow.Launcher.Plugin.WebSearch/*"
+          rm -r "Flow.Launcher.Plugin.WebSearch"
+
+      - name: Publish WebSearch
+        if: steps.changes.outputs.websearch == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.WebSearch"
+          files: "Flow.Launcher.Plugin.WebSearch.zip"
+          tag_name: "v${{steps.updated-version-websearch.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
