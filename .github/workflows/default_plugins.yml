@@ -220,7 +220,7 @@ jobs:
       - name: Build Program
         if: steps.changes.outputs.program == 'true'
         run: |
-          dotnet publish 'Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Program"
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj' --framework net7.0-windows10.0.19041.0  -c Release -o "Flow.Launcher.Plugin.Program"
           7z a -tzip "Flow.Launcher.Plugin.Program.zip" "./Flow.Launcher.Plugin.Program/*"
           rm -r "Flow.Launcher.Plugin.Program"
 
