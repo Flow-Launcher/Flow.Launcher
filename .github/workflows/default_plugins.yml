@@ -30,6 +30,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.Explorer/plugin.json'
             pluginindicator:
               - 'Plugins/Flow.Launcher.Plugin.PluginIndicator/plugin.json'
+            pluginsmanager:
+              - 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -131,5 +133,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginIndicator"
           files: "Flow.Launcher.Plugin.PluginIndicator.zip"
           tag_name: "v${{steps.updated-version-pluginindicator.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get PluginsManager Version
+        if: steps.changes.outputs.pluginsmanager == 'true'
+        id: updated-version-pluginsmanager
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build PluginsManager
+        if: steps.changes.outputs.pluginsmanager == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.PluginsManager/Flow.Launcher.Plugin.PluginsManager.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.PluginsManager"
+          7z a -tzip "Flow.Launcher.Plugin.PluginsManager.zip" "./Flow.Launcher.Plugin.PluginsManager/*"
+          rm -r "Flow.Launcher.Plugin.PluginsManager"
+
+      - name: Publish PluginsManager
+        if: steps.changes.outputs.pluginsmanager == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginsManager"
+          files: "Flow.Launcher.Plugin.PluginsManager.zip"
+          tag_name: "v${{steps.updated-version-pluginsmanager.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
