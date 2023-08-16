@@ -34,6 +34,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.PluginsManager/plugin.json'
             processkiller
               - 'Plugins/Flow.Launcher.Plugin.ProcessKiller/plugin.json'
+            program
+              - 'Plugins/Flow.Launcher.Plugin.Program/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -187,5 +189,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller"
           files: "Flow.Launcher.Plugin.ProcessKiller.zip"
           tag_name: "v${{steps.updated-version-processkiller.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get Program Version
+        if: steps.changes.outputs.program == 'true'
+        id: updated-version-program
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.Program/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build Program
+        if: steps.changes.outputs.program == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Program/Flow.Launcher.Plugin.Program.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Program"
+          7z a -tzip "Flow.Launcher.Plugin.Program.zip" "./Flow.Launcher.Plugin.Program/*"
+          rm -r "Flow.Launcher.Plugin.Program"
+
+      - name: Publish Program
+        if: steps.changes.outputs.program == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.Program"
+          files: "Flow.Launcher.Plugin.Program.zip"
+          tag_name: "v${{steps.updated-version-program.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
