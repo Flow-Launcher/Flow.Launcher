@@ -24,6 +24,8 @@ jobs:
           filters: |
             browserbookmark:
               - 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/plugin.json'
+            calculator:
+              - 'Plugins/Flow.Launcher.Plugin.Calculator/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -47,5 +49,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.BrowserBookmark"
           files: "Flow.Launcher.Plugin.BrowserBookmark.zip"
           tag_name: "v${{steps.updated-version-browserbookmark.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get Calculator Version
+        if: steps.changes.outputs.calculator == 'true'
+        id: updated-version-calculator
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.Calculator/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build Calculator
+        if: steps.changes.outputs.calculator == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Calculator/Flow.Launcher.Plugin.Calculator.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Calculator"
+          7z a -tzip "Flow.Launcher.Plugin.Calculator.zip" "./Flow.Launcher.Plugin.Calculator/*"
+          rm -r "Flow.Launcher.Plugin.Calculator"
+
+      - name: Publish Calculator
+        if: steps.changes.outputs.calculator == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.Calculator"
+          files: "Flow.Launcher.Plugin.Calculator.zip"
+          tag_name: "v${{steps.updated-version-calculator.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
