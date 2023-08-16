@@ -38,6 +38,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.Program/plugin.json'
             shell
               - 'Plugins/Flow.Launcher.Plugin.Shell/plugin.json'
+            sys
+              - 'Plugins/Flow.Launcher.Plugin.Sys/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -243,5 +245,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Shell"
           files: "Flow.Launcher.Plugin.Shell.zip"
           tag_name: "v${{steps.updated-version-shell.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get Sys Version
+        if: steps.changes.outputs.sys == 'true'
+        id: updated-version-sys
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.Sys/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build Sys
+        if: steps.changes.outputs.sys == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Sys/Flow.Launcher.Plugin.Sys.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Sys"
+          7z a -tzip "Flow.Launcher.Plugin.Sys.zip" "./Flow.Launcher.Plugin.Sys/*"
+          rm -r "Flow.Launcher.Plugin.Sys"
+
+      - name: Publish Sys
+        if: steps.changes.outputs.sys == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.Sys"
+          files: "Flow.Launcher.Plugin.Sys.zip"
+          tag_name: "v${{steps.updated-version-sys.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
