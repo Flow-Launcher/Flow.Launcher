@@ -44,6 +44,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.Url/plugin.json'
             websearch
               - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
+            windowssettings
+              - 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -327,5 +329,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.WebSearch"
           files: "Flow.Launcher.Plugin.WebSearch.zip"
           tag_name: "v${{steps.updated-version-websearch.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get WindowsSettings Version
+        if: steps.changes.outputs.windowssettings == 'true'
+        id: updated-version-windowssettings
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build WindowsSettings
+        if: steps.changes.outputs.windowssettings == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.WindowsSettings/Flow.Launcher.Plugin.WindowsSettings.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.WindowsSettings"
+          7z a -tzip "Flow.Launcher.Plugin.WindowsSettings.zip" "./Flow.Launcher.Plugin.WindowsSettings/*"
+          rm -r "Flow.Launcher.Plugin.WindowsSettings"
+
+      - name: Publish WindowsSettings
+        if: steps.changes.outputs.windowssettings == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.WindowsSettings"
+          files: "Flow.Launcher.Plugin.WindowsSettings.zip"
+          tag_name: "v${{steps.updated-version-windowssettings.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
