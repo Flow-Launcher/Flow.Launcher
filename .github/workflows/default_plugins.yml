@@ -26,6 +26,8 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.BrowserBookmark/plugin.json'
             calculator:
               - 'Plugins/Flow.Launcher.Plugin.Calculator/plugin.json'
+            explorer:
+              - 'Plugins/Flow.Launcher.Plugin.Explorer/plugin.json'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
@@ -75,5 +77,31 @@ jobs:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Calculator"
           files: "Flow.Launcher.Plugin.Calculator.zip"
           tag_name: "v${{steps.updated-version-calculator.outputs.prop}}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
+
+
+      - name: Get Explorer Version
+        if: steps.changes.outputs.explorer == 'true'
+        id: updated-version-explorer
+        uses: notiz-dev/github-action-json-property@release
+        with:
+          path: 'Plugins/Flow.Launcher.Plugin.Explorer/plugin.json'
+          prop_path: 'Version'
+
+      - name: Build Explorer
+        if: steps.changes.outputs.explorer == 'true'
+        run: |
+          dotnet publish 'Plugins/Flow.Launcher.Plugin.Explorer/Flow.Launcher.Plugin.Explorer.csproj' --framework net7.0-windows  -c Release -o "Flow.Launcher.Plugin.Explorer"
+          7z a -tzip "Flow.Launcher.Plugin.Explorer.zip" "./Flow.Launcher.Plugin.Explorer/*"
+          rm -r "Flow.Launcher.Plugin.Explorer"
+
+      - name: Publish Explorer
+        if: steps.changes.outputs.explorer == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          repository: "Flow-Launcher/Flow.Launcher.Plugin.Explorer"
+          files: "Flow.Launcher.Plugin.Explorer.zip"
+          tag_name: "v${{steps.updated-version-explorer.outputs.prop}}"
         env:
           GITHUB_TOKEN: ${{ secrets.PUBLISH_PLUGINS }}
