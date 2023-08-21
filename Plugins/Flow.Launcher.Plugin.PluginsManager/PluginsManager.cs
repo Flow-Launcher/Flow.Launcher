@@ -332,9 +332,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             var author = url.Split('/')[3];
             var acceptedSource = "https://github.com";
-            var contructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
+            var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
-            return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(contructedUrlPart));
+            return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(constructedUrlPart));
         }
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
