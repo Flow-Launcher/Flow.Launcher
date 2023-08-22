@@ -35,7 +35,6 @@ namespace Flow.Launcher.Core.Plugin
                 RedirectStandardInput = true
             };
 
-            // temp fix for issue #667
             var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
             StartInfo.EnvironmentVariables["PYTHONPATH"] = path;
 
