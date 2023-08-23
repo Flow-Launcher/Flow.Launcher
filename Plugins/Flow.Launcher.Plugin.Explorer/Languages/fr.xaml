@@ -135,8 +135,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">Cliquez ici pour le lancer</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Impossible de trouver une installation Everything, voulez-vous sélectionner manuellement un emplacement ?{0}{0}Cliquez non et tout sera automatiquement installé pour vous</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
