@@ -20,9 +20,9 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Ajouter</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Modifier</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Supprimer</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Parcourir</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Autres</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Navigateur</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Si vous n'utilisez pas Chrome, Firefox ou Edge, ou que vous utilisez leur version portable, vous devez ajouter un dossier de favoris et sélectionner le bon navigateur pour que ce plugin fonctionne.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Par exemple : le moteur de Brave est Chromium ; et son emplacement par défaut des favoris est : &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Pour le moteur Firefox, le dossier des favoris est le dossier userdata contenant le fichier places.sqlite.</system:String>
 </ResourceDictionary>
