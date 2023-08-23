@@ -155,12 +155,12 @@
     <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
     <system:String x:Key="Animation">Анимация</system:String>
     <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
-    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
-    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
-    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
-    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
-    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
-    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
+    <system:String x:Key="AnimationSpeed">Скорость анимации</system:String>
+    <system:String x:Key="AnimationSpeedTip">Скорость анимации интерфейса</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Медленная</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Средняя</system:String>
+    <system:String x:Key="AnimationSpeedFast">Быстрая</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Своя</system:String>
     <system:String x:Key="Clock">Часы</system:String>
     <system:String x:Key="Date">Дата</system:String>
 
