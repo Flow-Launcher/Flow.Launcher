@@ -23,7 +23,7 @@ namespace Flow.Launcher.Core.Resource
         public static Language Spanish_LatinAmerica = new Language("es-419", "Spanish (Latin America)");
         public static Language Italian = new Language("it", "Italiano");
         public static Language Norwegian_Bokmal = new Language("nb-NO", "Norsk Bokmål");
-        public static Language Slovak = new Language("sk", "Slovenský");
+        public static Language Slovak = new Language("sk", "Slovenčina");
         public static Language Turkish = new Language("tr", "Türkçe");
         public static Language Czech = new Language("cs", "čeština");
         public static Language Arabic = new Language("ar", "اللغة العربية");

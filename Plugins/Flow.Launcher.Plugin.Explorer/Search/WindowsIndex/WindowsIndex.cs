@@ -47,21 +47,22 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             while (await dataReader.ReadAsync(token))
             {
                 token.ThrowIfCancellationRequested();
-                if (dataReader.GetValue(0) == DBNull.Value || dataReader.GetValue(1) == DBNull.Value)
+                if (dataReader.GetValue(0) is DBNull
+                    || dataReader.GetValue(1) is not string rawFragmentPath
+                    || string.Equals(rawFragmentPath, "file:", StringComparison.OrdinalIgnoreCase)
+                    || dataReader.GetValue(2) is not string extension)
                 {
                     continue;
                 }
                 // # is URI syntax for the fragment component, need to be encoded so LocalPath returns complete path   
-                var encodedFragmentPath = dataReader
-                    .GetString(1)
-                    .Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
+                var encodedFragmentPath = rawFragmentPath.Replace("#", "%23", StringComparison.OrdinalIgnoreCase);
 
                 var path = new Uri(encodedFragmentPath).LocalPath;
 
                 yield return new SearchResult
                 {
                     FullPath = path,
-                    Type = dataReader.GetString(2) == "Directory" ? ResultType.Folder : ResultType.File,
+                    Type = string.Equals(extension, "Directory", StringComparison.Ordinal) ? ResultType.Folder : ResultType.File,
                     WindowsIndexed = true
                 };
             }
