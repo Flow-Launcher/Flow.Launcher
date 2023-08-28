@@ -91,7 +91,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private void SetupJsonRPC()
         {
-            var formatter = new JsonMessageFormatter();
+            var formatter = new SystemTextJsonFormatter();
             var handler = new NewLineDelimitedMessageHandler(ClientPipe,
                 formatter);
 
