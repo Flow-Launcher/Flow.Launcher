@@ -837,7 +837,7 @@
     <value>Mode clair</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Emplacement</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
