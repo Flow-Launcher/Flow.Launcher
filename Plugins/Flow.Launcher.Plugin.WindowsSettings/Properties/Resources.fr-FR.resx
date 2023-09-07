@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>À propos</value>
+    <value>À propos de</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -162,7 +162,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Ajouter/Supprimer des programmes</value>
+    <value>Ajout/Suppression de programmes</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
@@ -547,7 +547,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
-    <value>deuteranopia</value>
+    <value>Deutéranopie</value>
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Bureau de poste Microsoft Mail</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -1176,7 +1176,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Picture" xml:space="preserve">
-    <value>Picture</value>
+    <value>Image</value>
   </data>
   <data name="Pictures" xml:space="preserve">
     <value>Images</value>
@@ -1206,7 +1206,7 @@
     <value>Plug-in de recherche de paramètres Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Paramètres Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Alimentation et mise en veille</value>
@@ -1251,7 +1251,7 @@
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
-    <value>protanopia</value>
+    <value>Protanopie</value>
     <comment>Medical: Mean you don't can see green colors</comment>
   </data>
   <data name="Provisioning" xml:space="preserve">
@@ -1366,7 +1366,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Centre de sécurité</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
@@ -1412,7 +1412,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Synthèse vocale</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
@@ -1450,7 +1450,7 @@
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>in</value>
+    <value>dans</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
@@ -1544,7 +1544,7 @@
     <value>Transparence</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopia</value>
+    <value>Tritanopie</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
@@ -1556,7 +1556,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
-    <value>Typing</value>
+    <value>Écriture en cours</value>
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
@@ -1683,7 +1683,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Mises à jour Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
@@ -1725,7 +1725,7 @@
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Xbox Networking</value>
+    <value>Réseau Xbox</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
@@ -1733,7 +1733,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Zoomer</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Panneau de configuration</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
