@@ -123,7 +123,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             }
 
             results.RemoveWhere(r => Settings.IndexSearchExcludedSubdirectoryPaths.Any(
-                excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle)));
+                excludedPath => FilesFolders.PathContains(excludedPath.Path, r.SubTitle, true)));
 
             return results.ToList();
         }
