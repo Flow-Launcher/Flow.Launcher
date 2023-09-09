@@ -102,7 +102,7 @@
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Afficher le menu contextuel de Windows</system:String>
     
     <!-- Special Results-->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} libres sur {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Ouvrir dans le gestionnaire de fichiers par défaut</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Utilisez '&gt;' pour effectuer une recherche dans ce répertoire, '*' pour rechercher les extensions de fichiers ou '&gt;*' pour combiner les deux recherches.</system:String>
 
