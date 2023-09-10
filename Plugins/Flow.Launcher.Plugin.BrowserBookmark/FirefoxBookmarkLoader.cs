@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
               ORDER BY moz_places.visit_count DESC
             ";
 
-        private const string dbPathFormat = "Data Source ={0};Version=3;New=False;Compress=True;";
+        private const string dbPathFormat = "Data Source ={0}";
 
         protected static List<Bookmark> GetBookmarksFromPath(string placesPath)
         {
