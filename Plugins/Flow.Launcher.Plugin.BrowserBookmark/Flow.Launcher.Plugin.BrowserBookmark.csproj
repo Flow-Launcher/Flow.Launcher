@@ -63,15 +63,4 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.10" />
   </ItemGroup>
 
-  <!--<Target Name="CopyDLLs" AfterTargets="Build">
-    <Message Text="Executing CopyDLLs task" Importance="High" />
-    <Copy SourceFiles="$(TargetDir)\runtimes\win-x64\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x64" />
-    <Copy SourceFiles="$(TargetDir)\runtimes\win-x86\native\SQLite.Interop.dll" DestinationFolder="$(TargetDir)\x86" />
-  </Target>
-
-  <Target Name="DeleteRuntimesFolder" AfterTargets="CopyDLLs">
-    <Message Text="Deleting runtimes folder" Importance="High" />
-    <RemoveDir Directories="$(TargetDir)\runtimes" />
-  </Target>-->
-
 </Project>
