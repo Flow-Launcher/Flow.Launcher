@@ -1,7 +1,7 @@
 ﻿using Flow.Launcher.Plugin.BrowserBookmark.Models;
+using Microsoft.Data.Sqlite;
 using System;
 using System.Collections.Generic;
-using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 
@@ -33,11 +33,11 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
             // create the connection string and init the connection
             string dbPath = string.Format(dbPathFormat, placesPath);
-            using var dbConnection = new SQLiteConnection(dbPath);
+            using var dbConnection = new SqliteConnection(dbPath);
             // Open connection to the database file and execute the query
             dbConnection.Open();
-            var reader = new SQLiteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
-
+            var reader = new SqliteCommand(queryAllBookmarks, dbConnection).ExecuteReader();
+            
             // return results in List<Bookmark> format
             bookmarkList = reader.Select(
                 x => new Bookmark(x["title"] is DBNull ? string.Empty : x["title"].ToString(),
@@ -133,7 +133,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
     public static class Extensions
     {
-        public static IEnumerable<T> Select<T>(this SQLiteDataReader reader, Func<SQLiteDataReader, T> projection)
+        public static IEnumerable<T> Select<T>(this SqliteDataReader reader, Func<SqliteDataReader, T> projection)
         {
             while (reader.Read())
             {
