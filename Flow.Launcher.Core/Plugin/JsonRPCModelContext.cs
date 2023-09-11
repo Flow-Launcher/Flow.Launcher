@@ -2,7 +2,6 @@
 
 namespace Flow.Launcher.Core.Plugin
 {
-    // TODO: After Upgrading to .Net 7, adding Source Generating Context for IAsyncEnumerable JsonRPCMessage
 
     [JsonSerializable(typeof(JsonRPCQueryResponseModel))]
     public partial class JsonRPCQueryResponseModelContext : JsonSerializerContext
