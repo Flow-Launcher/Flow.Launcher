@@ -47,7 +47,7 @@ namespace Flow.Launcher.Test
         [TestCase(@"c:\foo", @"c:\foo\", true)]
         public void GivenTwoPathsAreTheSame_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
         {
-            Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, expectedResult));
+            Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, allowEqual: expectedResult));
         }
     }
 }
