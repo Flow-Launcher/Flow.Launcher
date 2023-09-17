@@ -288,9 +288,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
     <system:String x:Key="customeQueryShortcutTips">Zadajte skratku, ktorá automaticky vloží konkrétny dopyt.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Skratka sa rozbalí, keď sa presne zhoduje s dopytom. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s ľubovoľnou pozíciou v dotaze. Vstavané skratky zodpovedajú akejkoľvek pozícii v dotaze.
     </system:String>
     <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
     <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
