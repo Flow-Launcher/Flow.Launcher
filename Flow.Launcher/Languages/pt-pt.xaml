@@ -287,6 +287,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
     <system:String x:Key="customeQueryShortcutTips">Introduza o atalho que se expande automaticamente para a consulta especificada.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+
+If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
     <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
 
