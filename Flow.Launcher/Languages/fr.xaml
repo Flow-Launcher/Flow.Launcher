@@ -287,6 +287,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
     <system:String x:Key="customeQueryShortcutTips">Entrez un raccourci qui s'étend automatiquement à la requête spécifiée.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+
+If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
 
