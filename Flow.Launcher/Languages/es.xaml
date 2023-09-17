@@ -288,9 +288,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
     <system:String x:Key="customeQueryShortcutTips">Introduzca un acceso directo para expandir automáticamente la consulta especificada.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Un acceso directo se expande cuando coincide exactamente con la consulta. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coincidirá con cualquier posición de la consulta. Los accesos directos integrados coinciden con cualquier posición de la consulta.
     </system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
