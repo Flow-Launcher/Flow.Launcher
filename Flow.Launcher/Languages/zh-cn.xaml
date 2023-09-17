@@ -288,6 +288,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
     <system:String x:Key="customeQueryShortcutTips">输入一个捷径，它将自动展开为一个查询。</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+
+If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">捷径已存在，请输入一个新的或者编辑已有的。</system:String>
     <system:String x:Key="emptyShortcut">捷径及其展开均不能为空。</system:String>
 
