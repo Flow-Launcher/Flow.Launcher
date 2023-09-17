@@ -288,6 +288,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Vlastní klávesová zkratka pro zadávání dotazů</system:String>
     <system:String x:Key="customeQueryShortcutTips">Zadejte zkratku, která automaticky vloží konkrétní dotaz.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+
+If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Zkratka již existuje, zadejte novou zkratku nebo upravte stávající.</system:String>
     <system:String x:Key="emptyShortcut">Zkratka a/nebo její plné znění je prázdné.</system:String>
 
