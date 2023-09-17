@@ -44,7 +44,7 @@ namespace Flow.Launcher.Helper
             }
             catch (Exception)
             {
-                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),hotkeyStr);
+                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
                 string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
                 MessageBox.Show(errorMsg,errorMsgTitle);
             }
