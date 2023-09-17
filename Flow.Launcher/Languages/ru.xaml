@@ -288,6 +288,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Ярлык пользовательского запроса</system:String>
     <system:String x:Key="customeQueryShortcutTips">Введите ярлык, который автоматически расширяется до указанного запроса.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+
+If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Ярлык уже существует, пожалуйста, введите новый ярлык или измените существующий.</system:String>
     <system:String x:Key="emptyShortcut">Ярлык и/или его расширение пусты.</system:String>
 
