@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">ホットキー「{0}」の登録に失敗しました</system:String>
+    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0}の起動に失敗しました</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcherプラグインの形式が正しくありません</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">このクエリを最上位にセットする</system:String>
