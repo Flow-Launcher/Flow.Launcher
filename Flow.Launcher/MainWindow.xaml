@@ -38,6 +38,7 @@
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <converters:SplitterConverter x:Key="SplitterConverter" />
         <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter" />
         <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter" />
         <converters:StringToKeyBindingConverter x:Key="StringToKeyBindingConverter" />
@@ -398,7 +399,7 @@
                     </StackPanel>
                     <GridSplitter
                         Grid.Column="1"
-                        Width="5"
+                        Width="{Binding PreviewVisible, Converter={StaticResource SplitterConverter}}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Stretch"
                         Background="Transparent"
