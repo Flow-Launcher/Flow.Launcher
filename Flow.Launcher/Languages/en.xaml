@@ -3,7 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey "{0}". The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
@@ -289,6 +290,8 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
     <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. &#10;&#10;If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 

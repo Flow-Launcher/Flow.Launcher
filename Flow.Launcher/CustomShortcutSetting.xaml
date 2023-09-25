@@ -75,6 +75,12 @@
                         Text="{DynamicResource customeQueryShortcutTips}"
                         TextAlignment="Left"
                         TextWrapping="WrapWithOverflow" />
+                    <TextBlock
+                        Margin="0,20,0,0"
+                        FontSize="14"
+                        Text="{DynamicResource customeQueryShortcutGuide}"
+                        TextAlignment="Left"
+                        TextWrapping="WrapWithOverflow" />
                     <Image
                         Width="478"
                         Margin="0,20,0,0"

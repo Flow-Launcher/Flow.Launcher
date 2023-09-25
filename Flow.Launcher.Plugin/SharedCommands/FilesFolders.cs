@@ -263,7 +263,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
-        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>.
+        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>. Equal paths are not considered to be contained by default.
         /// From https://stackoverflow.com/a/66877016
         /// </summary>
         /// <param name="parentPath">Parent path</param>
