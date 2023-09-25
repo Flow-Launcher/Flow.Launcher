@@ -103,3 +103,9 @@ Português
 Português (Brasil)
 Italiano
 Slovenský
+Droplex
+Preinstalled
+errormetadatafile
+noresult
+pluginsmanager
+alreadyexists
