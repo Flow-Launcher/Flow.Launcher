@@ -104,7 +104,7 @@
     <system:String x:Key="author">par</system:String>
     <system:String x:Key="plugin_init_time">Chargement :</system:String>
     <system:String x:Key="plugin_query_time">Utilisation :</system:String>
-    <system:String x:Key="plugin_query_version">| Version</system:String>
+    <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
 
