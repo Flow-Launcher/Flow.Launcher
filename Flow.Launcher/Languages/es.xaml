@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado &quot;{0}&quot;. El atajo de teclado puede estar siendo utilizado por otro programa. Seleccione un atajo de teclado diferente o salga del otro programa.</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del complemento de Flow Launcher no válido</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Establecer como primer resultado en esta consulta</system:String>
@@ -287,6 +288,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
     <system:String x:Key="customeQueryShortcutTips">Introduzca un acceso directo para expandir automáticamente la consulta especificada.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Un acceso directo se expande cuando coincide exactamente con la consulta. 
+
+Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coincidirá con cualquier posición de la consulta. Los accesos directos integrados coinciden con cualquier posición de la consulta.
+    </system:String>
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
 

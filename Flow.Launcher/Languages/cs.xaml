@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Nepodařilo se zaregistrovat zkratku: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">Nepodařilo se zaregistrovat hotkey &quot;{0}&quot;. Klávesová zkratka může být používána jiným programem. Změňte na jinou klávesu nebo ukončíte jiný program.</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodařilo se spustit {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný typ souboru pluginu aplikace Flow Launcher</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Připnout jako první výsledek tohoto hledání</system:String>
@@ -287,6 +288,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Vlastní klávesová zkratka pro zadávání dotazů</system:String>
     <system:String x:Key="customeQueryShortcutTips">Zadejte zkratku, která automaticky vloží konkrétní dotaz.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Zkratka se rozbalí, pokud přesně odpovídá dotazu. 
+
+Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovídat libovolné pozici v dotazu. Vestavěné zkratky odpovídají libovolné pozici v dotazu.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Zkratka již existuje, zadejte novou zkratku nebo upravte stávající.</system:String>
     <system:String x:Key="emptyShortcut">Zkratka a/nebo její plné znění je prázdné.</system:String>
 
