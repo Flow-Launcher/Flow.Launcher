@@ -28,7 +28,7 @@
     <system:String x:Key="PositionResetToolTip">Rétablir la position de la fenêtre de recherche</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Paramètres - Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_settings">Paramètres</system:String>
     <system:String x:Key="general">Général</system:String>
     <system:String x:Key="portableMode">Mode Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Stocker tous les paramètres et données utilisateur dans un seul dossier (Pratique en cas d'utilisation de disques amovibles ou de services cloud).</system:String>
@@ -287,9 +287,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
     <system:String x:Key="customeQueryShortcutTips">Entrez un raccourci qui s'étend automatiquement à la requête spécifiée.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Un raccourci est développé lorsqu'il correspond exactement à la requête. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celui-ci correspond à n'importe quelle position dans la requête. Les raccourcis intégrés correspondent à n'importe quelle position dans une requête.
     </system:String>
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
