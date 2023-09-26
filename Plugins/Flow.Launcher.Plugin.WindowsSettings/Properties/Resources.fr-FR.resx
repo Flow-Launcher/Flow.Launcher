@@ -1737,67 +1737,67 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Modifier les paramètres d'installation de l'appareil</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Désactiver les images d'arrière-plan</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Propriétés de navigation</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Options de diffusion des médias</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>Faire en sorte qu'un type de fichier s'ouvre toujours dans un programme spécifique</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Changer la voix du Narrateur</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>Trouver et résoudre les problèmes liés au clavier</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Utiliser le lecteur d'écran</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Afficher le groupe de travail sur lequel cet ordinateur est allumé</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>Modifier les paramètres de la molette de la souris</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Manage computer certificates</value>
+    <value>Gérer les certificats de l'ordinateur</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>Trouver et résoudre les problèmes</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Modifier les paramètres pour le contenu reçu en utilisant Tap and send</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>Modifier les paramètres par défaut pour les médias ou appareils</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
-    <value>Print the speech reference card</value>
+    <value>Imprimer la carte de référence vocale</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrate display colour</value>
+    <value>Calibrer la couleur de l'affichage</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
-    <value>Manage file encryption certificates</value>
+    <value>Gérer les certificats de chiffrement de fichiers</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>View recent messages about your computer</value>
+    <value>Voir les messages récents à propos de votre ordinateur</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
-    <value>Give other users access to this computer</value>
+    <value>Donner accès à cet ordinateur aux autres utilisateurs</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>Afficher les fichiers et dossiers cachés</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
-    <value>Change Windows To Go start-up options</value>
+    <value>Modifier les options de démarrage de Windows To Go</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
     <value>See which processes start up automatically when you start Windows</value>
@@ -1899,10 +1899,10 @@
     <value>Back up and Restore (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
-    <value>Preview, delete, show or hide fonts</value>
+    <value>Aperçu, supprimer, afficher ou masquer les polices</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Paramètres rapides Microsoft</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
     <value>View reliability history</value>
