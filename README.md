@@ -105,7 +105,7 @@ Dedicated to making your workflow flow more seamless. Search everything from app
 
 > When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
-And you can download <a href="https://github.com/Flow-Launcher/Flow.Launcher/discussions" target="_blank">early access version</a>.
+And you can download <a href="https://github.com/Flow-Launcher/Prereleases/releases" target="_blank">early access version</a>.
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
