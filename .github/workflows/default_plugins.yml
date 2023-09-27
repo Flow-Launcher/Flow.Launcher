@@ -2,7 +2,7 @@ name: Publish Default Plugins
 
 on:
   push:
-    branches: ['master']
+    branches: ['dev']
     paths: ['Plugins/**']
   workflow_dispatch:
 
@@ -46,6 +46,7 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
             windowssettings:
               - 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
+          base: 'master'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'
