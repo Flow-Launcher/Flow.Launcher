@@ -136,9 +136,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             {
                 await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
-                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), plugin.Name));
-
                 Install(plugin, filePath);
             }
             catch (Exception e)
@@ -222,10 +219,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 {
                                     await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
                                         .ConfigureAwait(false);
-
-                                    Context.API.ShowMsg(
-                                        Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"),
-                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_download_success"), x.Name));
 
                                     Install(x.PluginNewUserPlugin, downloadToFilePath);
 
