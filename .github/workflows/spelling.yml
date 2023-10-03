@@ -90,10 +90,16 @@ jobs:
         quit_without_error: true
         extra_dictionaries:
           cspell:software-terms/dict/softwareTerms.txt
+          cspell:win32/src/win32.txt
+          cspell:php/php.txt
           cspell:filetypes/filetypes.txt
+          cspell:csharp/csharp.txt
+          cspell:dotnet/dotnet.txt
           cspell:aws/aws.txt
           cspell:python/src/common/extra.txt
           cspell:python/src/python/python-lib.txt
+          cspell:aws/aws.txt
+          cspell:companies/src/companies.txt
         warnings:
           binary-file,deprecated-feature,large-file,limited-references,noisy-file,non-alpha-in-dictionary,unexpected-line-ending,whitespace-in-dictionary,minified-file,unsupported-configuration,unrecognized-spelling,no-newline-at-eof
 
