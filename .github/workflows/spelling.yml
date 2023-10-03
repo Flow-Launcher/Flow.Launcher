@@ -95,7 +95,6 @@ jobs:
           cspell:filetypes/filetypes.txt
           cspell:csharp/csharp.txt
           cspell:dotnet/dotnet.txt
-          cspell:aws/aws.txt
           cspell:python/src/common/extra.txt
           cspell:python/src/python/python-lib.txt
           cspell:aws/aws.txt
