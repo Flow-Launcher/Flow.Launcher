@@ -3,7 +3,7 @@
 
     <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Activate {0} plugin action keyword</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Plugin Indicator</system:String>
-    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Provides plugins action words suggestions</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Індикатор плагіну</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Надає плагінам пропозиції щодо слів дії</system:String>
 
 </ResourceDictionary>
