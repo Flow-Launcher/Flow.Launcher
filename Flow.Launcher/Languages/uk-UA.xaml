@@ -182,7 +182,7 @@
     <system:String x:Key="customQuery">Запит</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="builtinShortcutDescription">Опис</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Редагувати</system:String>
     <system:String x:Key="add">Додати</system:String>
@@ -256,8 +256,8 @@
     <system:String x:Key="defaultBrowser_name">Браузер</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Назва браузера</system:String>
     <system:String x:Key="defaultBrowser_path">Шлях до браузера</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Нове вікно</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Нова вкладка</system:String>
     <system:String x:Key="defaultBrowser_parameter">Приватний режим</system:String>
 
     <!--  Priority Setting Dialog  -->
