@@ -24,28 +24,28 @@
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Якщо ви хочете додати до Flow пошук певного веб-сайту, спочатку введіть фіктивний текстовий рядок у пошуковий рядок цього веб-сайту і розпочніть пошук. Тепер скопіюйте вміст адресного рядка браузера і вставте його в поле URL нижче. Замініть тестовий рядок на {q}. Наприклад, якщо ви шукаєте казино на сайті Netflix, його адресний рядок матиме такий вигляд</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Now copy this entire string and paste it in the URL field below.
-        Then replace casino with {q}.
-        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+        Тепер скопіюйте весь цей рядок і вставте його в поле URL нижче.
+        Потім замініть casino на {q}.
+        Таким чином, загальна формула для пошуку на Netflix має вигляд https://www.netflix.com/search?q={q}
     </system:String>
 
 
 
     <!--  web search edit  -->
-    <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_title">Назва</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Статус</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Select Icon</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_icon">Icon</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Обрати значок</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_icon">Іконка</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Скасувати</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Invalid web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Please enter a title</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Please enter an action keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_input_url">Please enter a URL</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Action keyword already exists, please enter a different one</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Неправильний веб-пошук</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_title">Будь ласка, введіть назву</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Будь ласка, введіть ключове слово дії</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_input_url">Будь ласка, введіть URL-адресу</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Ключове слово дії вже існує, будь ласка, введіть інше</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Успішно</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hint: You do not need to place custom images in this directory, if Flow's version is updated they will be lost. Flow will automatically copy any images outside of this directory across to WebSearch's custom image location.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Підказка: Вам не потрібно розміщувати власні зображення в цьому каталозі, якщо версія Flow оновиться, вони будуть втрачені. Flow автоматично копіює всі зображення з цього каталогу до спеціального каталогу WebSearch.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web Searches</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Allows to perform web searches</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Веб-пошук</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Дозволяє здійснювати веб-пошук</system:String>
 
 </ResourceDictionary>
