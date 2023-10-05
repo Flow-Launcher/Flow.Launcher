@@ -126,66 +126,66 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Accessibility Options</value>
+    <value>Параметри доступності</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value>Додаткові програми</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Access work or school</value>
+    <value>Доступ до роботи або навчання</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
-    <value>Account info</value>
+    <value>Інформація про обліковий запис</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Облікові записи</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="ActionCenter" xml:space="preserve">
-    <value>Action Center</value>
+    <value>Центр дій</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>Activation</value>
+    <value>Активація</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Activity history</value>
+    <value>Історія активності</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Add Hardware</value>
+    <value>Додати обладнання</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Add/Remove Programs</value>
+    <value>Додавання/видалення програм</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Add your phone</value>
+    <value>Додайте свій телефон</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
-    <value>Administrative Tools</value>
+    <value>Адміністративні інструменти</value>
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Advanced display settings</value>
+    <value>Розширені налаштування дисплея</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Advanced graphics</value>
+    <value>Розширена графіка</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
-    <value>Advertising ID</value>
+    <value>Рекламний ідентифікатор</value>
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
-    <value>Airplane mode</value>
+    <value>Режим польоту</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
@@ -193,40 +193,40 @@
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
-    <value>Alternative names</value>
+    <value>Альтернативні назви</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animations</value>
+    <value>Анімації</value>
   </data>
   <data name="AppColor" xml:space="preserve">
-    <value>App color</value>
+    <value>Колір програми</value>
   </data>
   <data name="AppDiagnostics" xml:space="preserve">
-    <value>App diagnostics</value>
+    <value>Діагностика програми</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AppFeatures" xml:space="preserve">
-    <value>App features</value>
+    <value>Можливості програми</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Application" xml:space="preserve">
-    <value>App</value>
+    <value>Застосунок</value>
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Apps and Features</value>
+    <value>Додатки та функції</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
-    <value>System settings</value>
+    <value>Налаштування системи</value>
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Apps for websites</value>
+    <value>Додатки для веб-сайтів</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>App volume and device preferences</value>
+    <value>Гучність програми та налаштування пристрою</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -234,27 +234,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Area</value>
+    <value>Область</value>
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Облікові записи</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
-    <value>Administrative Tools</value>
+    <value>Адміністративні інструменти</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Appearance and Personalization</value>
+    <value>Зовнішній вигляд та персоналізація</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
-    <value>Apps</value>
+    <value>Додатки</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>Clock and Region</value>
+    <value>Час і регіон</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Панель управління</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Кортана</value>
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Панель управління</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -849,7 +849,7 @@
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Mail - Microsoft Exchange or Windows Messaging</value>
+    <value>Пошта - Microsoft Exchange або Windows Messaging</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
@@ -950,27 +950,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Мережа</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Network and sharing center</value>
+    <value>Мережа та центр обміну даними</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Підключення до мережі</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkProperties" xml:space="preserve">
-    <value>Network properties</value>
+    <value>Властивості мережі</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkSetupWizard" xml:space="preserve">
-    <value>Network Setup Wizard</value>
+    <value>Майстер налаштування мережі</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network status</value>
+    <value>Стан мережі</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFC" xml:space="preserve">
@@ -978,57 +978,57 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>NFC Transactions</value>
+    <value>NFC-транзакції</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value>Нічник</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
-    <value>Night light settings</value>
+    <value>Налаштування нічника</value>
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Примітка</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Доступно лише після підключення мобільного пристрою до вашого пристрою.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Доступно лише на пристроях, що підтримують розширені графічні опції.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Доступно лише на пристроях з акумулятором, таких як планшет.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Застаріла у Windows 10, версії 1809 (збірка 17763) та пізніших версіях.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>Доступно, якщо циферблат під'єднано.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Доступно, якщо увімкнено DirectAccess.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>Доступно лише на пристроях, які підтримують розширені параметри відображення.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Присутній лише якщо користувач зареєстрований у WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Вимагає обладнання для відстеження очей.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>Доступно, якщо встановлено редактор методів введення Microsoft Japan.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>Доступно, якщо встановлено редактор способів введення Microsoft Pinyin.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>Доступно, якщо встановлено редактор методів введення Microsoft Wubi.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>Доступно лише якщо встановлено додаток Портал змішаної реальності.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
     <value>Доступно лише на мобільних пристроях або якщо на підприємстві розгорнуто пакет забезпечення.</value>
@@ -1206,7 +1206,7 @@
     <value>Плагін для пошуку налаштувань Windows</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Налаштування Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Живлення та сон</value>
@@ -1389,7 +1389,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Ярлики</value>
+    <value>Скорочення</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>
@@ -1620,7 +1620,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Wheel" xml:space="preserve">
-    <value>Wheel</value>
+    <value>Колесо</value>
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
@@ -1628,18 +1628,18 @@
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiCalling" xml:space="preserve">
-    <value>Wi-Fi Calling</value>
+    <value>Дзвінки через Wi-Fi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Wi-Fi settings</value>
+    <value>Налаштування Wi-Fi</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
-    <value>Window border</value>
+    <value>Рамка вікна</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Windows Anytime Upgrade</value>
+    <value>Оновлення Windows у будь-який час</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
@@ -1651,709 +1651,709 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsDefender" xml:space="preserve">
-    <value>Windows Defender</value>
+    <value>Захисник Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsFirewall" xml:space="preserve">
-    <value>Windows Firewall</value>
+    <value>Брандмауер Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Windows Hello setup - Face</value>
+    <value>Налаштування Windows Hello - Обличчя</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Windows Hello setup - Fingerprint</value>
+    <value>Налаштування Windows Hello - Відбиток пальця</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
-    <value>Windows Insider Program</value>
+    <value>Програма для інсайдерів Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
-    <value>Windows Mobility Center</value>
+    <value>Центр мобільності Windows</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
-    <value>Windows search</value>
+    <value>Пошук у Windows</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
-    <value>Windows Security</value>
+    <value>Безпека Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Оновлення Windows</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Windows Update - Advanced options</value>
+    <value>Оновлення Windows - Додаткові параметри</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update - Check for updates</value>
+    <value>Оновлення Windows - перевірка наявності оновлень</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
-    <value>Windows Update - Restart options</value>
+    <value>Оновлення Windows - Параметри перезапуску</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update - View optional updates</value>
+    <value>Оновлення Windows - Перегляд додаткових оновлень</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update - View update history</value>
+    <value>Оновлення Windows - Перегляд журналу оновлень</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Бездротовий</value>
   </data>
   <data name="Workplace" xml:space="preserve">
-    <value>Workplace</value>
+    <value>Робоче місце</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
-    <value>Workplace provisioning</value>
+    <value>Забезпечення робочого місця</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Wubi IME settings</value>
+    <value>Налаштування Wubi IME</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Wubi IME settings - UDP</value>
+    <value>Налаштування Wubi IME - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Xbox Networking</value>
+    <value>Мережа Xbox Networking</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>Your info</value>
+    <value>Ваша інформація</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Збільшити</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Зміна налаштувань встановлення пристрою</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Вимкнути фонові зображення</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Властивості навігації</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Параметри потокової передачі медіа</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
-    <value>Make a file type always open in a specific program</value>
+    <value>Завжди відкривати файл певного типу у визначеній програмі</value>
   </data>
   <data name="ChangeTheNarratorSVoice" xml:space="preserve">
-    <value>Change the Narrator’s voice</value>
+    <value>Змінити голос диктора</value>
   </data>
   <data name="FindAndFixKeyboardProblems" xml:space="preserve">
-    <value>Find and fix keyboard problems</value>
+    <value>Пошук та усунення проблем з клавіатурою</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Використовуйте програму для читання з екрана</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
-    <value>Show which workgroup this computer is on</value>
+    <value>Показати, в якій робочій групі знаходиться цей комп'ютер</value>
   </data>
   <data name="ChangeMouseWheelSettings" xml:space="preserve">
-    <value>Change mouse wheel settings</value>
+    <value>Зміна налаштувань коліщатка миші</value>
   </data>
   <data name="ManageComputerCertificates" xml:space="preserve">
-    <value>Manage computer certificates</value>
+    <value>Керування комп'ютерними сертифікатами</value>
   </data>
   <data name="FindAndFixProblems" xml:space="preserve">
-    <value>Find and fix problems</value>
+    <value>Пошук та усунення проблем</value>
   </data>
   <data name="ChangeSettingsForContentReceivedUsingTapAndSend" xml:space="preserve">
-    <value>Change settings for content received using Tap and send</value>
+    <value>Зміна налаштувань для вмісту, отриманого за допомогою функції "Доторкнутись і відправити"</value>
   </data>
   <data name="ChangeDefaultSettingsForMediaOrDevices" xml:space="preserve">
-    <value>Change default settings for media or devices</value>
+    <value>Зміна налаштувань за замовчуванням для носіїв або пристроїв</value>
   </data>
   <data name="PrintTheSpeechReferenceCard" xml:space="preserve">
-    <value>Print the speech reference card</value>
+    <value>Роздрукувати мовленнєву довідкову картку</value>
   </data>
   <data name="CalibrateDisplayColour" xml:space="preserve">
-    <value>Calibrate display colour</value>
+    <value>Відкалібрувати колір дисплея</value>
   </data>
   <data name="ManageFileEncryptionCertificates" xml:space="preserve">
-    <value>Manage file encryption certificates</value>
+    <value>Керування сертифікатами шифрування файлів</value>
   </data>
   <data name="ViewRecentMessagesAboutYourComputer" xml:space="preserve">
-    <value>View recent messages about your computer</value>
+    <value>Перегляд останніх повідомлень про комп'ютер</value>
   </data>
   <data name="GiveOtherUsersAccessToThisComputer" xml:space="preserve">
-    <value>Give other users access to this computer</value>
+    <value>Надати іншим користувачам доступ до цього комп'ютера</value>
   </data>
   <data name="ShowHiddenFilesAndFolders" xml:space="preserve">
-    <value>Show hidden files and folders</value>
+    <value>Показувати приховані файли та папки</value>
   </data>
   <data name="ChangeWindowsToGoStartUpOptions" xml:space="preserve">
-    <value>Change Windows To Go start-up options</value>
+    <value>Зміна параметрів запуску Windows To Go</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
-    <value>See which processes start up automatically when you start Windows</value>
+    <value>Переглянути, які процеси запускаються автоматично під час запуску Windows</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
-    <value>Tell if an RSS feed is available on a website</value>
+    <value>Визначити, чи є на веб-сайті RSS-канал</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Add clocks for different time zones</value>
+    <value>Додати годинник для різних часових поясів</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Додати пристрій Bluetooth</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>Налаштування кнопок миші</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
-    <value>Set tablet buttons to perform certain tasks</value>
+    <value>Налаштування кнопок планшета на виконання певних завдань</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>View installed fonts</value>
+    <value>Переглянути встановлені шрифти</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
-    <value>Change the way currency is displayed</value>
+    <value>Змінити спосіб відображення валюти</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>Редагування групової політики</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
-    <value>Manage browser add-ons</value>
+    <value>Керування доповненнями браузера</value>
   </data>
   <data name="CheckProcessorSpeed" xml:space="preserve">
-    <value>Check processor speed</value>
+    <value>Перевірити швидкість процесора</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>Перевірити стан брандмауера</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>Надіслати або отримати файл</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>Додавання або видалення облікових записів користувачів</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
-    <value>Edit the system environment variables</value>
+    <value>Редагування змінних системного середовища</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Manage BitLocker</value>
+    <value>Керування BitLocker</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>Автоматичне приховування панелі завдань</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>Зміна налаштувань звукової карти</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
-    <value>Make changes to accounts</value>
+    <value>Внесення змін до облікових записів</value>
   </data>
   <data name="EditLocalUsersAndGroups" xml:space="preserve">
-    <value>Edit local users and groups</value>
+    <value>Редагування локальних користувачів і груп</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>View network computers and devices</value>
+    <value>Перегляд мережевих комп'ютерів і пристроїв</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
-    <value>Install a program from the network</value>
+    <value>Встановлення програми з мережі</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
-    <value>View scanners and cameras</value>
+    <value>Перегляд сканерів та камер</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
-    <value>Microsoft IME Register Word (Japanese)</value>
+    <value>Microsoft IME Register Word (японська)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Відновлення файлів за допомогою Історії файлів</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
-    <value>Turn On-Screen keyboard on or off</value>
+    <value>Увімкнення або вимкнення екранної клавіатури</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
-    <value>Block or allow third-party cookies</value>
+    <value>Блокувати або дозволяти сторонні файли cookie</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Find and fix audio recording problems</value>
+    <value>Пошук та усунення проблем із записом звуку</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
-    <value>Create a recovery drive</value>
+    <value>Створення диска відновлення</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
-    <value>Microsoft New Phonetic Settings</value>
+    <value>Нові фонетичні параметри Microsoft</value>
   </data>
   <data name="GenerateASystemHealthReport" xml:space="preserve">
-    <value>Generate a system health report</value>
+    <value>Створення звіту про стан системи</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Fix problems with your computer</value>
+    <value>Вирішення проблем з комп'ютером</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Back up and Restore (Windows 7)</value>
+    <value>Резервне копіювання та відновлення (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
-    <value>Preview, delete, show or hide fonts</value>
+    <value>Попередній перегляд, видалення, показ або приховування шрифтів</value>
   </data>
   <data name="MicrosoftQuickSettings" xml:space="preserve">
-    <value>Microsoft Quick Settings</value>
+    <value>Швидкі налаштування Microsoft</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
-    <value>View reliability history</value>
+    <value>Переглянути історію надійності</value>
   </data>
   <data name="AccessRemoteappAndDesktops" xml:space="preserve">
-    <value>Access RemoteApp and desktops</value>
+    <value>Доступ до RemoteApp і робочих столів</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Set up ODBC data sources</value>
+    <value>Налаштування джерел даних ODBC</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
-    <value>Reset Security Policies</value>
+    <value>Скидання політик безпеки</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Block or allow pop-ups</value>
+    <value>Блокувати або дозволяти спливаючі вікна</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Turn autocomplete in Internet Explorer on or off</value>
+    <value>Увімкнення або вимкнення автозаповнення в Internet Explorer</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
-    <value>Microsoft Pinyin SimpleFast Options</value>
+    <value>Параметри Microsoft Pinyin SimpleFast</value>
   </data>
   <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
-    <value>Change what closing the lid does</value>
+    <value>Зміна ефекту від закриття корпусу</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>Вимкнути непотрібні анімації</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>Створення точки відновлення</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Turn off automatic window arrangement</value>
+    <value>Вимкнення автоматичного розташування вікон</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Історія усунення несправностей</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>Діагностика проблем з пам'яттю комп'ютера</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
-    <value>View recommended actions to keep Windows running smoothly</value>
+    <value>Переглянути рекомендовані дії для забезпечення безперебійної роботи Windows</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Change cursor blink rate</value>
+    <value>Змінити частоту блимання курсору</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
-    <value>Add or remove programs</value>
+    <value>Додавання або видалення програм</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
-    <value>Create a password reset disk</value>
+    <value>Створення диска для скидання пароля</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
-    <value>Configure advanced user profile properties</value>
+    <value>Налаштування розширених властивостей профілю користувача</value>
   </data>
   <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
-    <value>Start or stop using AutoPlay for all media and devices</value>
+    <value>Увімкнути або вимкнути автоматичне відтворення для всіх медіа та пристроїв</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Змінити налаштування автоматичного обслуговування</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
-    <value>Specify single- or double-click to open</value>
+    <value>Вкажіть одинарний або подвійний клік для відкриття</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Вибір користувачів, які можуть використовувати віддалений робочий стіл</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
-    <value>Show which programs are installed on your computer</value>
+    <value>Показати, які програми встановлені на вашому комп'ютері</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Дозволити віддалений доступ до комп'ютера</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
-    <value>View advanced system settings</value>
+    <value>Перегляд розширених налаштувань системи</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
-    <value>How to install a program</value>
+    <value>Як встановити програму</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Change how your keyboard works</value>
+    <value>Змінити роботу клавіатури</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
-    <value>Automatically adjust for daylight saving time</value>
+    <value>Автоматичне переведення на літній час</value>
   </data>
   <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
-    <value>Change the order of Windows SideShow gadgets</value>
+    <value>Зміна порядку розташування гаджетів Windows SideShow</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>Перевірити стан клавіатури</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>Керування комп'ютером без миші або клавіатури</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>Змінити або видалити програму</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Change multi-touch gesture settings</value>
+    <value>Зміна налаштувань жестів мультидотику</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (64-bit)</value>
+    <value>Налаштування джерел даних ODBC (64-біт)</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
-    <value>Configure proxy server</value>
+    <value>Налаштування проксі-сервера</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Change your homepage</value>
+    <value>Змінити домашню сторінку</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
-    <value>Group similar windows on the taskbar</value>
+    <value>Групувати схожі вікна на панелі завдань</value>
   </data>
   <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
-    <value>Change Windows SideShow settings</value>
+    <value>Зміна налаштувань Windows SideShow</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>Використання аудіодискрипції для відео</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Змінити назву робочої групи</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>Пошук і усунення проблем із друком</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Змінити коли комп'ютер перебуває в режимі сну</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
-    <value>Set up a virtual private network (VPN) connection</value>
+    <value>Налаштування підключення до віртуальної приватної мережі (VPN)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Accommodate learning abilities</value>
+    <value>Враховувати здібності до навчання</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Set up a dial-up connection</value>
+    <value>Налаштування комутованого з'єднання</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Set up a connection or network</value>
+    <value>Налаштування з'єднання або мережі</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
-    <value>How to change your Windows password</value>
+    <value>Як змінити пароль до Windows</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
-    <value>Make it easier to see the mouse pointer</value>
+    <value>Полегшити видимість вказівника миші</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
-    <value>Set up iSCSI initiator</value>
+    <value>Налаштування ініціатора iSCSI</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
-    <value>Accommodate low vision</value>
+    <value>Пристосовано для людей зі слабким зором</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Manage offline files</value>
+    <value>Керування офлайн-файлами</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
-    <value>Review your computer's status and resolve issues</value>
+    <value>Перегляд стану комп'ютера та вирішення проблем</value>
   </data>
   <data name="MicrosoftChangjieSettings" xml:space="preserve">
-    <value>Microsoft ChangJie Settings</value>
+    <value>Налаштування Microsoft ChangJie</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>Замінити звуки візуальними підказками</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
-    <value>Change temporary Internet file settings</value>
+    <value>Зміна налаштувань тимчасового інтернет-файлу</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
-    <value>Connect to the Internet</value>
+    <value>Підключення до Інтернету</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
-    <value>Find and fix audio playback problems</value>
+    <value>Пошук та усунення проблем із відтворенням аудіо</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
-    <value>Change the mouse pointer display or speed</value>
+    <value>Змінити відображення або швидкість вказівника миші</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>Створення резервної копії ключа відновлення</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
-    <value>Save backup copies of your files with File History</value>
+    <value>Збереження резервних копій файлів за допомогою Історії файлів</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
-    <value>View current accessibility settings</value>
+    <value>Перегляд поточних налаштувань доступності</value>
   </data>
   <data name="ChangeTabletPenSettings" xml:space="preserve">
-    <value>Change tablet pen settings</value>
+    <value>Зміна налаштувань пера планшета</value>
   </data>
   <data name="ChangeHowYourMouseWorks" xml:space="preserve">
-    <value>Change how your mouse works</value>
+    <value>Змінити роботу миші</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>Показати обсяг оперативної пам'яті на цьому комп'ютері</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
-    <value>Edit power plan</value>
+    <value>Редагування плану енергоспоживання</value>
   </data>
   <data name="AdjustSystemVolume" xml:space="preserve">
-    <value>Adjust system volume</value>
+    <value>Регулювання гучності системи</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Defragment and optimise your drives</value>
+    <value>Дефрагментація та оптимізація дисків</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (32-bit)</value>
+    <value>Налаштування джерел даних ODBC (32-біт)</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
-    <value>Change Font Settings</value>
+    <value>Зміна параметрів шрифту</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
-    <value>Magnify portions of the screen using Magnifier</value>
+    <value>Збільшити частину екрана за допомогою лупи</value>
   </data>
   <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
-    <value>Change the file type associated with a file extension</value>
+    <value>Зміна типу файлу, пов'язаного з розширенням файлу</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
-    <value>View event logs</value>
+    <value>Перегляд журналів подій</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
-    <value>Manage Windows Credentials</value>
+    <value>Керування обліковими даними Windows</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
-    <value>Set up a microphone</value>
+    <value>Налаштування мікрофона</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Change how the mouse pointer looks</value>
+    <value>Змінити вигляд вказівника миші</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Change power-saving settings</value>
+    <value>Зміна налаштувань енергозбереження</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimise for blindness</value>
+    <value>Оптимізація для незрячих</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
     </value>
   </data>
   <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
-    <value>Turn Windows features on or off</value>
+    <value>Увімкнення чи вимкнення функцій Windows</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>Показати, яка операційна система працює на вашому комп'ютері</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
-    <value>View local services</value>
+    <value>Перегляд локальних послуг</value>
   </data>
   <data name="ManageWorkFolders" xml:space="preserve">
-    <value>Manage Work Folders</value>
+    <value>Керування робочими папками</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
-    <value>Encrypt your offline files</value>
+    <value>Шифрування офлайн-файлів</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Train the computer to recognise your voice</value>
+    <value>Навчити комп'ютер розпізнавати ваш голос</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
-    <value>Advanced printer setup</value>
+    <value>Розширене налаштування принтера</value>
   </data>
   <data name="ChangeDefaultPrinter" xml:space="preserve">
-    <value>Change default printer</value>
+    <value>Змінити принтер за замовчуванням</value>
   </data>
   <data name="EditEnvironmentVariablesForYourAccount" xml:space="preserve">
-    <value>Edit environment variables for your account</value>
+    <value>Редагування змінних середовища для вашого облікового запису</value>
   </data>
   <data name="OptimiseVisualDisplay" xml:space="preserve">
-    <value>Optimise visual display</value>
+    <value>Оптимізація візуального відображення</value>
   </data>
   <data name="ChangeMouseClickSettings" xml:space="preserve">
-    <value>Change mouse click settings</value>
+    <value>Змінити налаштування клацання мишею</value>
   </data>
   <data name="ChangeAdvancedColourManagementSettingsForDisplaysScannersAndPrinters" xml:space="preserve">
-    <value>Change advanced colour management settings for displays, scanners and printers</value>
+    <value>Зміна розширених параметрів керування кольором для дисплеїв, сканерів і принтерів</value>
   </data>
   <data name="LetWindowsSuggestEaseOfAccessSettings" xml:space="preserve">
-    <value>Let Windows suggest Ease of Access settings</value>
+    <value>Дозволити Windows пропонувати налаштування Ease of Access</value>
   </data>
   <data name="ClearDiskSpaceByDeletingUnnecessaryFiles" xml:space="preserve">
-    <value>Clear disk space by deleting unnecessary files</value>
+    <value>Звільнити місце на диску, видаливши непотрібні файли</value>
   </data>
   <data name="ViewDevicesAndPrinters" xml:space="preserve">
-    <value>View devices and printers</value>
+    <value>Перегляд пристроїв і принтерів</value>
   </data>
   <data name="PrivateCharacterEditor" xml:space="preserve">
-    <value>Private Character Editor</value>
+    <value>Приватний редактор символів</value>
   </data>
   <data name="RecordStepsToReproduceAProblem" xml:space="preserve">
-    <value>Record steps to reproduce a problem</value>
+    <value>Записати кроки для відтворення проблеми</value>
   </data>
   <data name="AdjustTheAppearanceAndPerformanceOfWindows" xml:space="preserve">
-    <value>Adjust the appearance and performance of Windows</value>
+    <value>Налаштування зовнішнього вигляду та продуктивності Windows</value>
   </data>
   <data name="SettingsForMicrosoftIMEJapanese" xml:space="preserve">
-    <value>Settings for Microsoft IME (Japanese)</value>
+    <value>Налаштування для Microsoft IME (японська)</value>
   </data>
   <data name="InviteSomeoneToConnectToYourPCAndHelpYouOrOfferToHelpSomeoneElse" xml:space="preserve">
-    <value>Invite someone to connect to your PC and help you, or offer to help someone else</value>
+    <value>Запросіть когось підключитися до вашого комп'ютера і допомогти вам, або запропонуйте допомогти комусь іншому</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>Запуск програм, створених для попередніх версій Windows</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
-    <value>Choose the order of how your screen rotates</value>
+    <value>Виберіть порядок обертання екрана</value>
   </data>
   <data name="ChangeHowWindowsSearches" xml:space="preserve">
-    <value>Change how Windows searches</value>
+    <value>Зміна способу пошуку в Windows</value>
   </data>
   <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
-    <value>Set flicks to perform certain tasks</value>
+    <value>Налаштувати кліки на виконання певних завдань</value>
   </data>
   <data name="ChangeAccountType" xml:space="preserve">
-    <value>Change account type</value>
+    <value>Змінити тип облікового запису</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Change screen saver</value>
+    <value>Змінити режим заощадження екрана</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
-    <value>Change User Account Control settings</value>
+    <value>Зміна налаштувань контролю облікових записів користувачів</value>
   </data>
   <data name="TurnOnEasyAccessKeys" xml:space="preserve">
-    <value>Turn on easy access keys</value>
+    <value>Увімкнути клавіші швидкого доступу</value>
   </data>
   <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
-    <value>Identify and repair network problems</value>
+    <value>Виявлення та усунення мережевих проблем</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
-    <value>Find and fix networking and connection problems</value>
+    <value>Пошук та усунення проблем з мережею та з'єднанням</value>
   </data>
   <data name="PlayCdsOrOtherMediaAutomatically" xml:space="preserve">
-    <value>Play CDs or other media automatically</value>
+    <value>Автоматичне відтворення компакт-дисків та інших носіїв</value>
   </data>
   <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
-    <value>View basic information about your computer</value>
+    <value>Перегляд основних відомостей про ваш комп'ютер</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Choose how you open links</value>
+    <value>Виберіть спосіб відкриття посилань</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+    <value>Дозволити надсилання запрошень до віддаленої допомоги з цього комп'ютера</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager</value>
+    <value>Диспетчер завдань</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
-    <value>Turn flicks on or off</value>
+    <value>Увімкнення або вимкнення фліків</value>
   </data>
   <data name="AddALanguage" xml:space="preserve">
-    <value>Add a language</value>
+    <value>Додати мову</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
-    <value>View network status and tasks</value>
+    <value>Перегляд стану мережі та завдань</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
-    <value>Turn Magnifier on or off</value>
+    <value>Увімкнути або вимкнути лупу</value>
   </data>
   <data name="SeeTheNameOfThisComputer" xml:space="preserve">
-    <value>See the name of this computer</value>
+    <value>Подивитися ім'я цього комп'ютера</value>
   </data>
   <data name="ViewNetworkConnections" xml:space="preserve">
-    <value>View network connections</value>
+    <value>Перегляд мережевих підключень</value>
   </data>
   <data name="PerformRecommendedMaintenanceTasksAutomatically" xml:space="preserve">
-    <value>Perform recommended maintenance tasks automatically</value>
+    <value>Автоматичне виконання рекомендованих завдань з технічного обслуговування</value>
   </data>
   <data name="ManageDiskSpaceUsedByYourOfflineFiles" xml:space="preserve">
-    <value>Manage disk space used by your offline files</value>
+    <value>Керування дисковим простором, що використовується офлайн-файлами</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Turn High Contrast on or off</value>
+    <value>Увімкнути або вимкнути високу контрастність</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>Змінити спосіб відображення часу</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Change how web pages are displayed in tabs</value>
+    <value>Зміна способу відображення веб-сторінок у вкладках</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
-    <value>Change the way dates and lists are displayed</value>
+    <value>Зміна способу відображення дат і списків</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
-    <value>Manage audio devices</value>
+    <value>Керування аудіопристроями</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Change security settings</value>
+    <value>Зміна налаштувань безпеки</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
-    <value>Check security status</value>
+    <value>Перевірити стан безпеки</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
-    <value>Delete cookies or temporary files</value>
+    <value>Видалення файлів cookie або тимчасових файлів</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>Вкажіть, якою рукою ви пишете</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Change touch input settings</value>
+    <value>Зміна налаштувань сенсорного введення</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>Як змінити розмір віртуальної пам'яті</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Послухайте текст, прочитаний вголос диктором</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Set up USB game controllers</value>
+    <value>Налаштування ігрових контролерів USB</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Показати, в якому домені знаходиться ваш комп'ютер</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>Переглянути всі звіти про проблеми</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>Підтримка 16-бітних додатків</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
-    <value>Set up dialling rules</value>
+    <value>Налаштуйте правила набору</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
-    <value>Enable or disable session cookies</value>
+    <value>Увімкнути або вимкнути сесійні файли cookie</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Give administrative rights to a domain user</value>
+    <value>Надання адміністративних прав користувачеві домену</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
-    <value>Choose when to turn off display</value>
+    <value>Виберіть, коли вимкнути дисплей</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
-    <value>Move the pointer with the keypad using MouseKeys</value>
+    <value>Переміщення вказівника за допомогою клавіатури через MouseKeys</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
-    <value>Change Windows SideShow-compatible device settings</value>
+    <value>Зміна налаштувань пристрою, сумісного з Windows SideShow</value>
   </data>
   <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
-    <value>Adjust commonly used mobility settings</value>
+    <value>Налаштування часто використовуваних параметрів мобільності</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
-    <value>Change text-to-speech settings</value>
+    <value>Зміна налаштувань перетворення тексту в мовлення</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
-    <value>Set the time and date</value>
+    <value>Встановлення часу та дати</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>Change location settings</value>
+    <value>Змінити налаштування місцезнаходження</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
-    <value>Change mouse settings</value>
+    <value>Зміна налаштувань миші</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
-    <value>Manage Storage Spaces</value>
+    <value>Керування простором для зберігання</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
-    <value>Show or hide file extensions</value>
+    <value>Показати або приховати розширення файлів</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
     <value>Дозволити програму через брандмауер Windows</value>
@@ -2377,124 +2377,124 @@
     <value>Підключення до мережі</value>
   </data>
   <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
-    <value>Change the search provider in Internet Explorer</value>
+    <value>Зміна пошукового провайдера в Internet Explorer</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
-    <value>Join a domain</value>
+    <value>Приєднатися до домену</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
-    <value>Add a device</value>
+    <value>Додати пристрій</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>Виявлення та усунення проблем із пошуком Windows</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
-    <value>Choose a power plan</value>
+    <value>Оберіть план живлення</value>
   </data>
   <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
-    <value>Change how the mouse pointer looks when it’s moving</value>
+    <value>Змінити вигляд вказівника миші під час руху</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
-    <value>Uninstall a program</value>
+    <value>Видалення програми</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
-    <value>Create and format hard disk partitions</value>
+    <value>Створення та форматування розділів жорсткого диска</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
-    <value>Change date, time or number formats</value>
+    <value>Зміна форматів дати, часу або чисел</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
-    <value>Change PC wake-up settings</value>
+    <value>Зміна налаштувань пробудження комп'ютера</value>
   </data>
   <data name="ManageNetworkPasswords" xml:space="preserve">
-    <value>Manage network passwords</value>
+    <value>Керування мережевими паролями</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
-    <value>Change input methods</value>
+    <value>Змінити методи введення</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
-    <value>Manage advanced sharing settings</value>
+    <value>Керування розширеними налаштуваннями спільного доступу</value>
   </data>
   <data name="ChangeBatterySettings" xml:space="preserve">
-    <value>Change battery settings</value>
+    <value>Зміна налаштувань акумулятора</value>
   </data>
   <data name="RenameThisComputer" xml:space="preserve">
-    <value>Rename this computer</value>
+    <value>Перейменувати цей комп'ютер</value>
   </data>
   <data name="LockOrUnlockTheTaskbar" xml:space="preserve">
-    <value>Lock or unlock the taskbar</value>
+    <value>Блокування або розблокування панелі завдань</value>
   </data>
   <data name="ManageWebCredentials" xml:space="preserve">
-    <value>Manage Web Credentials</value>
+    <value>Керування веб-обліковими даними</value>
   </data>
   <data name="ChangeTheTimeZone" xml:space="preserve">
-    <value>Change the time zone</value>
+    <value>Зміна часового поясу</value>
   </data>
   <data name="StartSpeechRecognition" xml:space="preserve">
-    <value>Start speech recognition</value>
+    <value>Запустити розпізнавання мови</value>
   </data>
   <data name="ViewInstalledUpdates" xml:space="preserve">
-    <value>View installed updates</value>
+    <value>Перегляд встановлених оновлень</value>
   </data>
   <data name="WhatsHappenedToTheQuickLaunchToolbar" xml:space="preserve">
-    <value>What's happened to the Quick Launch toolbar?</value>
+    <value>Що сталося з панеллю швидкого запуску?</value>
   </data>
   <data name="ChangeSearchOptionsForFilesAndFolders" xml:space="preserve">
-    <value>Change search options for files and folders</value>
+    <value>Зміна параметрів пошуку файлів і папок</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
-    <value>Adjust settings before giving a presentation</value>
+    <value>Налаштування параметрів перед проведенням презентації</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
-    <value>Scan a document or picture</value>
+    <value>Сканувати документ або зображення</value>
   </data>
   <data name="ChangeTheWayMeasurementsAreDisplayed" xml:space="preserve">
-    <value>Change the way measurements are displayed</value>
+    <value>Змінити спосіб відображення вимірювань</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>Натискайте комбінації клавіш по черзі</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restore data, files or computer from backup (Windows 7)</value>
+    <value>Відновлення даних, файлів або комп'ютера з резервної копії (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
-    <value>Set your default programs</value>
+    <value>Налаштування програм за замовчуванням</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>Налаштування широкосмугового з'єднання</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>Калібрування екрана для введення пером або сенсорного керування</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>Керування сертифікатами користувачів</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
-    <value>Schedule tasks</value>
+    <value>Планування завдань</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
-    <value>Ignore repeated keystrokes using FilterKeys</value>
+    <value>Ігнорувати повторні натискання клавіш за допомогою FilterKeys</value>
   </data>
   <data name="FindAndFixBluescreenProblems" xml:space="preserve">
-    <value>Find and fix bluescreen problems</value>
+    <value>Пошук та усунення проблем із синім екраном</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>Чути тон під час натискання клавіш</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Delete browsing history</value>
+    <value>Видалити історію переглядів</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
-    <value>Change what the power buttons do</value>
+    <value>Змінити призначення кнопок увімкнення</value>
   </data>
   <data name="CreateStandardUserAccount" xml:space="preserve">
-    <value>Create standard user account</value>
+    <value>Створення стандартного облікового запису користувача</value>
   </data>
   <data name="TakeSpeechTutorials" xml:space="preserve">
-    <value>Take speech tutorials</value>
+    <value>Візьміть уроки мовлення</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Перегляд використання системних ресурсів у диспетчері завдань</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
     <value>Створити обліковий запис</value>
