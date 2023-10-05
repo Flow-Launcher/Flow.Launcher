@@ -13,10 +13,10 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Встановити браузер за шляхом:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Обрати</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Скопіювати URL-адресу</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Скопіюйте URL-адресу закладки в буфер обміну</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Завантажити браузер з:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Назва браузера</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Шлях до каталогу з даними</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Додати</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Редагувати</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Видалити</system:String>
