@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Завжди запускати від імені адміністратора</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Запустити від імені іншого користувача</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Дозволяє виконувати системні команди з Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">цю команду було виконано {0} разів</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">виконати команду через командну оболонку</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Запустити від імені адміністратора</system:String>
