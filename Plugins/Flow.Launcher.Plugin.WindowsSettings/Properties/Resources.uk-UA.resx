@@ -857,26 +857,26 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="ManageKnownNetworks" xml:space="preserve">
-    <value>Manage known networks</value>
+    <value>Керування відомими мережами</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ManageOptionalFeatures" xml:space="preserve">
-    <value>Manage optional features</value>
+    <value>Керування додатковими функціями</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Обмін повідомленнями</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
-    <value>Metered connection</value>
+    <value>Дозоване підключення</value>
   </data>
   <data name="Microphone" xml:space="preserve">
-    <value>Microphone</value>
+    <value>Мікрофон</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Поштова служба Microsoft Mail</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -888,10 +888,10 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Mobile devices</value>
+    <value>Мобільні пристрої</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
-    <value>Mobile hotspot</value>
+    <value>Мобільна точка доступу</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="modem.cpl" xml:space="preserve">
@@ -899,26 +899,26 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Mono" xml:space="preserve">
-    <value>Mono</value>
+    <value>Моно</value>
   </data>
   <data name="MoreDetails" xml:space="preserve">
-    <value>More details</value>
+    <value>Детальніше</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Motion" xml:space="preserve">
-    <value>Motion</value>
+    <value>Рух</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Mouse" xml:space="preserve">
-    <value>Mouse</value>
+    <value>Миша</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MouseAndTouchpad" xml:space="preserve">
-    <value>Mouse and touchpad</value>
+    <value>Миша та тачпад</value>
     <comment>Area Device</comment>
   </data>
   <data name="MouseFontsKeyboardAndPrintersProperties" xml:space="preserve">
-    <value>Mouse, Fonts, Keyboard, and Printers properties</value>
+    <value>Властивості миші, шрифтів, клавіатури та принтерів</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
