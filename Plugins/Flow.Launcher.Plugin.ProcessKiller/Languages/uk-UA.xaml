@@ -4,8 +4,8 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Вбивця процесів</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Завершення запущених процесів через Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">kill all instances of &quot;{0}&quot;</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">kill {0} processes</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">kill all instances</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">вбити всі екземпляри &quot;{0}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">вбити {0} процесів</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">вбити всі екземпляри</system:String>
 
 </ResourceDictionary>
