@@ -8,14 +8,14 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} від {1} {2}{3}Бажаєте видалити цей плагін? Після видалення Flow автоматично перезапуститься.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} від {1} {2}{3}Бажаєте встановити цей плагін? Після встановлення Flow автоматично перезапуститься.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Встановлення плагіна</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Завантажити та встановити {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Видалення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Не вдалося знайти файл метаданих plugin.json у розпакованому zip-архіві.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Помилка: Плагін, який має ідентичну або новішу версію з {0}, вже існує.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Помилка під час встановлення плагіна</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Виникла помилка при спробі встановити {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Оновлень не знайдено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Всі плагіни оновлено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} від {1} {2}{3}Бажаєте оновити цей плагін? Після оновлення Flow буде автоматично перезапущено.</system:String>
