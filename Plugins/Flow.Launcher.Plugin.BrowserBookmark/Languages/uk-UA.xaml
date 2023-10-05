@@ -21,8 +21,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Редагувати</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Видалити</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Перегляд</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Інші</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Браузерний рушій</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Якщо ви не використовуєте Chrome, Firefox або Edge, або використовуєте їхні портативні версії, вам потрібно додати каталог даних закладок і вибрати правильний рушій браузера, щоб цей плагін працював.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Наприклад: Рушій Brave - Chromium, і за замовчуванням розташування даних закладок: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Для браузера Firefox директорія закладок - це папка userdata, що містить файл places.sqlite.</system:String>
 </ResourceDictionary>
