@@ -111,9 +111,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Попередження: Служба Everything не запущена</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Помилка при виконанні запиту Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Сортувати за</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Назва</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Шлях</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Size</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Розмір</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Розширення</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Назва типу</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Дата створення</system:String>
