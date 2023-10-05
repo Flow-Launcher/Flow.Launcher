@@ -55,38 +55,38 @@
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
-    <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Вимкнути активацію Flow Launcher коли активовано повноекранний додаток (Рекомендується для ігор).</system:String>
     <system:String x:Key="defaultFileManager">Стандартний Файловий Менеджер</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Виберіть файловий менеджер для використання під час відкриття теки.</system:String>
     <system:String x:Key="defaultBrowser">Браузер за замовчуванням</system:String>
     <system:String x:Key="defaultBrowserToolTip">Налаштування нової вкладки, нового вікна, приватного режиму.</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
-    <system:String x:Key="nodeFilePath">Node.js Path</system:String>
-    <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
-    <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
-    <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
-    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
+    <system:String x:Key="pythonFilePath">Шлях до Python</system:String>
+    <system:String x:Key="nodeFilePath">Шлях до Node.js</system:String>
+    <system:String x:Key="selectNodeExecutable">Виберіть виконуваний файл Node.js</system:String>
+    <system:String x:Key="selectPythonExecutable">Виберіть pythonw.exe</system:String>
+    <system:String x:Key="typingStartEn">Завжди починати введення тексту в англійському режимі</system:String>
+    <system:String x:Key="typingStartEnTooltip">Тимчасово змінити спосіб введення на англійський при активації Flow.</system:String>
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
     <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Коли піктограму приховано з трею, меню налаштувань можна відкрити, клацнувши правою кнопкою миші у вікні пошуку.</system:String>
     <system:String x:Key="querySearchPrecision">Точність пошуку запитів</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
-    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
+    <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
 
     <!--  Setting Plugin  -->
-    <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
-    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
-    <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
-    <system:String x:Key="plugin">Plugin</system:String>
+    <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
+    <system:String x:Key="searchpluginToolTip">Ctrl+F для пошуку плагінів</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">Результатів не знайдено</system:String>
+    <system:String x:Key="searchplugin_Noresult_Subtitle">Будь ласка, спробуйте інший запит.</system:String>
+    <system:String x:Key="plugin">Плагін</system:String>
     <system:String x:Key="plugins">Плагіни</system:String>
     <system:String x:Key="browserMorePlugins">Знайти більше плагінів</system:String>
     <system:String x:Key="enable">Увімкнено</system:String>
@@ -99,47 +99,47 @@
     <system:String x:Key="currentPriority">Поточний пріоритет</system:String>
     <system:String x:Key="newPriority">Новий пріоритет</system:String>
     <system:String x:Key="priority">Пріоритет</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="priorityToolTip">Змінити пріоритет результатів плагіна</system:String>
     <system:String x:Key="pluginDirectory">Директорія плагінів</system:String>
     <system:String x:Key="author">за</system:String>
     <system:String x:Key="plugin_init_time">Ініціалізація:</system:String>
     <system:String x:Key="plugin_query_time">Запит:</system:String>
     <system:String x:Key="plugin_query_version">Версія</system:String>
     <system:String x:Key="plugin_query_web">Сайт</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
+    <system:String x:Key="plugin_uninstall">Видалити</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагінів</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Новий реліз</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Нещодавно оновлено</system:String>
     <system:String x:Key="pluginStore_None">Плагіни</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">Встановлено</system:String>
     <system:String x:Key="refresh">Оновити</system:String>
     <system:String x:Key="installbtn">Встановити</system:String>
-    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="uninstallbtn">Видалити</system:String>
     <system:String x:Key="updatebtn">Оновити</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Плагін вже встановлено</system:String>
+    <system:String x:Key="LabelNew">Нова версія</system:String>
+    <system:String x:Key="LabelNewToolTip">Цей плагін було оновлено протягом останніх 7 днів</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Доступне нове оновлення</system:String>
 
 
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Зовнішній вигляд</system:String>
     <system:String x:Key="browserMoreThemes">Знайти більше тем</system:String>
     <system:String x:Key="howToCreateTheme">Як створити тему</system:String>
     <system:String x:Key="hiThere">Привіт усім</system:String>
     <system:String x:Key="SampleTitleExplorer">Провідник</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
-    <system:String x:Key="SampleTitleProgram">Program</system:String>
-    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
-    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Пошук файлів, папок і вмісту файлів</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Веб-пошук</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Пошук в Інтернеті за допомогою різних пошукових систем</system:String>
+    <system:String x:Key="SampleTitleProgram">Програма</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Запуск програм від імені адміністратора або іншого користувача</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Процес-кілер</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Припинення небажаних процесів</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
     <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
@@ -156,14 +156,14 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
-    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
-    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
-    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
-    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
-    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
-    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="AnimationSpeed">Швидкість анімації</system:String>
+    <system:String x:Key="AnimationSpeedTip">Швидкість анімації інтерфейсу</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Повільна</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Середня</system:String>
+    <system:String x:Key="AnimationSpeedFast">Швидка</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Користувацька</system:String>
+    <system:String x:Key="Clock">Годинник</system:String>
+    <system:String x:Key="Date">Дата</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
