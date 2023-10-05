@@ -170,8 +170,8 @@
     <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
     <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть ярлик для відображення/приховання потокового запуску.</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="previewHotkey">Гаряча клавіша попереднього перегляду</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Введіть комбінацію клавіш, щоб показати/приховати попередній перегляд у вікні пошуку.</system:String>
     <system:String x:Key="openResultModifiers">Відкрити ключ зміни результатів</system:String>
     <system:String x:Key="openResultModifiersToolTip">Виберіть ключ модифікатора для відкриття вибраних результатів за допомогою клавіатури.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показати гарячу клавішу</system:String>
@@ -180,24 +180,24 @@
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
     <system:String x:Key="customQuery">Запит</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="customShortcut">Гарячі клавіші</system:String>
+    <system:String x:Key="customShortcutExpansion">Розширення</system:String>
     <system:String x:Key="builtinShortcutDescription">Опис</system:String>
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Редагувати</system:String>
     <system:String x:Key="add">Додати</system:String>
     <system:String x:Key="pleaseSelectAnItem">Спочатку виберіть елемент</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Ви впевнені, що хочете видалити ярлик: {0} з розширенням {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Отримати текст з буфера обміну.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Отримати шлях з активного провідника.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Ефект тіні вікна запиту</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Тіньовий ефект суттєво навантажує графічний процесор. Не рекомендується, якщо потужність вашого комп'ютера є обмеженою.</system:String>
     <system:String x:Key="windowWidthSize">Розмір ширини вікна</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Ви також можете швидко налаштувати цей параметр за допомогою комбінації клавіш Ctrl+[ та Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Використання іконок Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Використання іконок Segoe Fluent Icons для результатів запитів, де це підтримується</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Натисніть клавішу</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP-проксі</system:String>
@@ -221,10 +221,10 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Документація</system:String>
     <system:String x:Key="version">Версія</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">Іконки</system:String>
     <system:String x:Key="about_activate_times">Ви скористалися Flow Launcher вже {0} разів</system:String>
     <system:String x:Key="checkUpdates">Перевірити наявність оновлень</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Стати спонсором</system:String>
     <system:String x:Key="newVersionTips">Доступна нова версія {0}, будь ласка, перезавантажте Flow Launcher</system:String>
     <system:String x:Key="checkUpdatesFailed">Перевірити оновлення не вдалося, будь ласка, перевірте ваше з'єднання та налаштування проксі-сервера до api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
