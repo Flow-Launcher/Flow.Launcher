@@ -313,7 +313,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (!string.IsNullOrEmpty(target) && File.Exists(target))
                 {
                     program.LnkResolvedPath = Path.GetFullPath(target);
-                    program.ExecutableName = Path.GetFileName(target);
+                    program.ExecutableName = Path.GetFileNameWithoutExtension(target);
 
                     var args = _helper.arguments;
                     if (!string.IsNullOrEmpty(args))
