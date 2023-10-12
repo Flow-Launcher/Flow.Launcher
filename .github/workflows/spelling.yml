@@ -91,10 +91,10 @@ jobs:
         extra_dictionaries:
           cspell:software-terms/dict/softwareTerms.txt
           cspell:win32/src/win32.txt
-          cspell:php/php.txt
+          cspell:php/src/php.txt
           cspell:filetypes/filetypes.txt
           cspell:csharp/csharp.txt
-          cspell:dotnet/dotnet.txt
+          cspell:dotnet/src/dotnet.txt
           cspell:python/src/common/extra.txt
           cspell:python/src/python/python-lib.txt
           cspell:aws/aws.txt
