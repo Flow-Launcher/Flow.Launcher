@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Falha ao registar tecla de atalho: {0}</system:String>
+    <system:String x:Key="registerHotkeyFailed">Falha ao registar a tecla de atalho &quot;{0}&quot;. A tecla de atalho pode estar a ser usada por outra aplicação. Utilize uma tecla de atalho diferente ou feche o outro programa.</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Não foi possível iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato do ficheiro inválido como plugin</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Definir como principal para esta consulta</system:String>
@@ -286,6 +287,10 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
     <system:String x:Key="customeQueryShortcutTips">Introduza o atalho que se expande automaticamente para a consulta especificada.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Um atalho será expandido se coincidir exatamente com a consulta.
+
+Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qualquer posição na consulta. Os atalhos nativos funcionam desta forma.
+    </system:String>
     <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
     <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
 
