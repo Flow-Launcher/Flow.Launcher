@@ -56,10 +56,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Bookmark.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="7.0.10" />
   </ItemGroup>
 
