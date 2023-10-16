@@ -54,7 +54,7 @@
     <system:String x:Key="LastQueryPreserved">Behoud laatste zoekopdracht</system:String>
     <system:String x:Key="LastQuerySelected">Selecteer laatste zoekopdracht</system:String>
     <system:String x:Key="LastQueryEmpty">Laatste zoekopdracht verwijderen</system:String>
-    <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>
+    <system:String x:Key="maxShowResults">Toon maximaal aantal resultaten</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in fullscreen mode</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">De activatie van Flow Launcher uitschakelen als er een applicatie actief is die zich in een volledig scherm bevind (Aanbevolen voor spellen).</system:String>
@@ -92,7 +92,7 @@
     <system:String x:Key="enable">Aan</system:String>
     <system:String x:Key="disable">Disable</system:String>
     <system:String x:Key="actionKeywordsTitle">Actie sneltoets instelling</system:String>
-    <system:String x:Key="actionKeywords">Action terfwoorden</system:String>
+    <system:String x:Key="actionKeywords">Actie sneltoets</system:String>
     <system:String x:Key="currentActionKeywords">Huidige actie sneltoets</system:String>
     <system:String x:Key="newActionKeyword">Nieuw actie sneltoets</system:String>
     <system:String x:Key="actionKeywordsTooltip">Wijzig actie-sneltoets</system:String>
@@ -223,7 +223,7 @@
     <system:String x:Key="version">Versie</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">U heeft Flow Launcher {0} keer opgestart</system:String>
-    <system:String x:Key="checkUpdates">Zoek naar Updates</system:String>
+    <system:String x:Key="checkUpdates">Controleren op updates</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
     <system:String x:Key="newVersionTips">Nieuwe versie {0} beschikbaar, start Flow Launcher opnieuw op</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
@@ -283,7 +283,7 @@
     <system:String x:Key="preview">Voorbeeld</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Sneltoets is niet beschikbaar, selecteer een nieuwe sneltoets</system:String>
     <system:String x:Key="invalidPluginHotkey">Ongeldige plugin sneltoets</system:String>
-    <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="update">Bijwerken</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
@@ -334,8 +334,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Deze upgrade zal Flow Launcher opnieuw opstarten</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_files">Volgende bestanden zullen worden geüpdatet</system:String>
-    <system:String x:Key="update_flowlauncher_update_files">Update bestanden</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">De volgende bestanden worden bijgewerkt</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Bijgewerkte bestanden</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update beschrijving</system:String>
 
     <!--  Welcome Window  -->
