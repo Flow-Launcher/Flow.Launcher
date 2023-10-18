@@ -35,7 +35,6 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="{DynamicResource Color01B}" />
         <Setter Property="Foreground" Value="{DynamicResource QuerySuggestionBoxForeground}" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0,4,66,0" />
