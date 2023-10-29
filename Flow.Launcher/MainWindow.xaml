@@ -27,7 +27,7 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
-    ResizeMode="CanResize"
+    ResizeMode="NoResize"
     ShowInTaskbar="False"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -192,7 +192,10 @@
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </ui:FluentWindow.InputBindings>
     <Grid>
-        <Border Background="{DynamicResource ControlOnImageFillColorDefaultBrush}" MouseDown="OnMouseDown">
+        <Border MouseDown="OnMouseDown">
+            <Border.Background>
+                <SolidColorBrush Opacity="0.6" Color="Black" />
+            </Border.Background>
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
