@@ -54,6 +54,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                 switch (subElement.GetProperty("type").GetString())
                 {
                     case "folder":
+                    case "workspace": // Edge Workspace
                         EnumerateFolderBookmark(subElement, bookmarks, source);
                         break;
                     default:
