@@ -187,7 +187,7 @@ namespace Flow.Launcher.Plugin.Shell
             return history.ToList();
         }
 
-        private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
+        private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false) //TODO: implement logic for CloseCMDAfterPress
         {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
@@ -203,7 +203,7 @@ namespace Flow.Launcher.Plugin.Shell
                 case Shell.Cmd:
                 {
                     info.FileName = "cmd.exe";
-                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? "& pause" : "")}";
 
                     //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
                     //// Previous code using ArgumentList, commands needed to be separated correctly:                      
@@ -233,6 +233,10 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         info.ArgumentList.Add("-Command");
                         info.ArgumentList.Add(command);
+                        if (_settings.CloseShellAfterPress)
+                        {
+                            info.ArgumentList.Add("; pause");
+                        }
                     }
                     break;
                 }
@@ -246,6 +250,10 @@ namespace Flow.Launcher.Plugin.Shell
                     }
                     info.ArgumentList.Add("-Command");
                     info.ArgumentList.Add(command);
+                    if (_settings.CloseShellAfterPress)
+                        {
+                            info.ArgumentList.Add("; pause");
+                        }
 
                     break;
                 }

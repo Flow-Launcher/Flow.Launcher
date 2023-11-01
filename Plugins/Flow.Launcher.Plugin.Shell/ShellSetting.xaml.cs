@@ -17,6 +17,8 @@ namespace Flow.Launcher.Plugin.Shell
         private void CMDSetting_OnLoaded(object sender, RoutedEventArgs re)
         {
             ReplaceWinR.IsChecked = _settings.ReplaceWinR;
+
+            CloseShellAfterPress.IsChecked = _settings.CloseShellAfterPress;
             
             LeaveShellOpen.IsChecked = _settings.LeaveShellOpen;
             
@@ -37,6 +39,16 @@ namespace Flow.Launcher.Plugin.Shell
 
                 _settings.ShowOnlyMostUsedCMDsNumber = (int)ShowOnlyMostUsedCMDsNumber.SelectedItem;
             }
+
+            CloseShellAfterPress.Checked += (o, e) =>
+            {
+                _settings.CloseShellAfterPress = true;
+            };
+
+            CloseShellAfterPress.Unchecked += (o, e) =>
+            {
+                _settings.CloseShellAfterPress = false;
+            };
 
             LeaveShellOpen.Checked += (o, e) =>
             {

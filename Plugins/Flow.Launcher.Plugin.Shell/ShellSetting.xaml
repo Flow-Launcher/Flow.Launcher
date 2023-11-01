@@ -23,6 +23,12 @@
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" />
         <CheckBox
+            x:Name="CloseShellAfterPress"
+            Grid.Row="1"
+            Margin="10,5,5,5"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}" />
+        <CheckBox
             x:Name="LeaveShellOpen"
             Grid.Row="1"
             Margin="10,5,5,5"
