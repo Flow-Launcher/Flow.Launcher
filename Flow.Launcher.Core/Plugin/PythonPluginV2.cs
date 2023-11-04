@@ -19,8 +19,6 @@ namespace Flow.Launcher.Core.Plugin
     internal sealed class PythonPluginV2 : ProcessStreamPluginV2
     {
         public override string SupportedLanguage { get; set; } = AllowedLanguage.Python;
-
-        protected override IDuplexPipe ClientPipe { get; set; }
         protected override ProcessStartInfo StartInfo { get; set; }
         
         public PythonPluginV2(string filename)

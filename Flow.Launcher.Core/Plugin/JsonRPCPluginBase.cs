@@ -69,7 +69,7 @@ namespace Flow.Launcher.Core.Plugin
 
         protected abstract Task<bool> ExecuteResultAsync(JsonRPCResult result);
 
-        protected PortableSettings Settings { get; set; }
+        protected JsonRPCPluginSettings Settings { get; set; }
 
         protected List<Result> ParseResults(JsonRPCQueryResponseModel queryResponseModel)
         {
@@ -135,7 +135,7 @@ namespace Flow.Launcher.Core.Plugin
                 deserializer.Deserialize<JsonRpcConfigurationModel>(
                     await File.ReadAllTextAsync(SettingConfigurationPath));
 
-            Settings ??= new PortableSettings
+            Settings ??= new JsonRPCPluginSettings
             {
                 Configuration = configuration, SettingPath = SettingPath, API = Context.API
             };

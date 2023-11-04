@@ -8,7 +8,7 @@ using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Plugin
 {
-    public class PortableSettings
+    public class JsonRPCPluginSettings
     {
         public required JsonRpcConfigurationModel Configuration { get; init; }
 

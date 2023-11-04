@@ -13,7 +13,7 @@ namespace Flow.Launcher.Core.Plugin
     {
 
         public override string SupportedLanguage { get; set; }
-        protected override IDuplexPipe ClientPipe { get; set; }
+        protected sealed override IDuplexPipe ClientPipe { get; set; }
 
         protected abstract ProcessStartInfo StartInfo { get; set; }
 

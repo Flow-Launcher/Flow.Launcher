@@ -19,25 +19,33 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
-            
+
             var pythonEnv = new PythonEnvironment(metadatas, settings);
             var pythonV2Env = new PythonV2Environment(metadatas, settings);
             var tsEnv = new TypeScriptEnvironment(metadatas, settings);
             var jsEnv = new JavaScriptEnvironment(metadatas, settings);
+            var tsV2Env = new TypeScriptV2Environment(metadatas, settings);
+            var jsV2Env = new JavaScriptV2Environment(metadatas, settings);
             var pythonPlugins = pythonEnv.Setup();
             var pythonV2Plugins = pythonV2Env.Setup();
             var tsPlugins = tsEnv.Setup();
             var jsPlugins = jsEnv.Setup();
-            
+            var tsV2Plugins = tsV2Env.Setup();
+            var jsV2Plugins = jsV2Env.Setup();
+
             var executablePlugins = ExecutablePlugins(metadatas);
-            
+            var executableV2Plugins = ExecutableV2Plugins(metadatas);
+
             var plugins = dotnetPlugins
-                            .Concat(pythonPlugins)
-                            .Concat(pythonV2Plugins)
-                            .Concat(tsPlugins)
-                            .Concat(jsPlugins)
-                            .Concat(executablePlugins)
-                            .ToList();
+                .Concat(pythonPlugins)
+                .Concat(pythonV2Plugins)
+                .Concat(tsPlugins)
+                .Concat(jsPlugins)
+                .Concat(tsV2Plugins)
+                .Concat(jsV2Plugins)
+                .Concat(executablePlugins)
+                .Concat(executableV2Plugins)
+                .ToList();
             return plugins;
         }
 
@@ -96,7 +104,7 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
+                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -121,13 +129,23 @@ namespace Flow.Launcher.Core.Plugin
             return plugins;
         }
 
-    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => new PluginPair
                 {
                     Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
+                });
+        }
+
+        public static IEnumerable<PluginPair> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
+        {
+            return source
+                .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
+                .Select(metadata => new PluginPair
+                {
+                    Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath), Metadata = metadata
                 });
         }
     }
