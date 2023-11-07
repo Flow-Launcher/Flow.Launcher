@@ -53,21 +53,14 @@ namespace Flow.Launcher.Test.Plugins
 
         public static List<JsonRPCQueryResponseModel> ResponseModelsSource = new()
         {
-            new()
+            new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>()),
+            new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>
             {
-                Result = new()
-            },
-            new()
-            {
-                Result = new()
+                new JsonRPCResult
                 {
-                    new JsonRPCResult
-                    {
-                        Title = "Test1",
-                        SubTitle = "Test2"
-                    }
+                    Title = "Test1", SubTitle = "Test2"
                 }
-            }
+            })
         };
 
         [TestCaseSource(typeof(JsonRPCPluginTest), nameof(ResponseModelsSource))]
