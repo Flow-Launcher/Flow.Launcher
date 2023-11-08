@@ -107,7 +107,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="title">Message title</param>
         /// <param name="subTitle">Message subtitle</param>
-        /// <param name="iconPath">Full path to icon</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
         void ShowMsg(string title, string subTitle = "", string iconPath = "");
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="title">Message title</param>
         /// <param name="subTitle">Message subtitle</param>
-        /// <param name="iconPath">Full path to icon</param>
+        /// <param name="iconPath">Message icon path (relative path to your plugin folder)</param>
         /// <param name="useMainWindowAsOwner">when true will use main windows as the owner</param>
         void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true);
 
