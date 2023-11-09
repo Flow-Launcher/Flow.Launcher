@@ -58,7 +58,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
             {
                 var msg = $"Please select the {EnvName} executable";
-                var selectedFile = string.Empty;
+                string selectedFile;
 
                 selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
@@ -131,14 +131,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             };
 
             var result = dlg.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                return dlg.FileName;
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return result == DialogResult.OK ? dlg.FileName : string.Empty;
+
         }
 
         /// <summary>

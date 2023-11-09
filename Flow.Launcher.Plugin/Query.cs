@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
@@ -64,6 +67,7 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public string ActionKeyword { get; init; }
 
+        [JsonIgnore]
         /// <summary>
         /// Splits <see cref="SearchTerms"/> by spaces and returns the first item.
         /// </summary>
@@ -71,12 +75,14 @@ namespace Flow.Launcher.Plugin
         /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
         /// </remarks>
         public string FirstSearch => SplitSearch(0);
-
+        
+        [JsonIgnore]
         private string _secondToEndSearch;
-
+        
         /// <summary>
         /// strings from second search (including) to last search
         /// </summary>
+        [JsonIgnore]
         public string SecondToEndSearch => SearchTerms.Length > 1 ? (_secondToEndSearch ??= string.Join(' ', SearchTerms[1..])) : "";
 
         /// <summary>
@@ -85,6 +91,7 @@ namespace Flow.Launcher.Plugin
         /// <remarks>
         /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
         /// </remarks>
+        [JsonIgnore]
         public string SecondSearch => SplitSearch(1);
 
         /// <summary>
@@ -93,6 +100,7 @@ namespace Flow.Launcher.Plugin
         /// <remarks>
         /// returns an empty string when <see cref="SearchTerms"/> does not have enough items.
         /// </remarks>
+        [JsonIgnore]
         public string ThirdSearch => SplitSearch(2);
 
         private string SplitSearch(int index)
