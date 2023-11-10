@@ -25,6 +25,10 @@ using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
+using System.Threading;
+
 
 namespace Flow.Launcher
 {
@@ -43,8 +47,14 @@ namespace Flow.Launcher
 
         #endregion
 
+        // Remove OS minimizing/maximizing animation
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int attr, ref int attrValue, int attrSize);
+        private const int DWMWA_TRANSITIONS_FORCEDISABLED = 3;
+
         public MainWindow(Settings settings, MainViewModel mainVM)
         {
+
             DataContext = mainVM;
             _viewModel = mainVM;
             _settings = settings;
@@ -88,6 +98,11 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // Remove OS minimizing/maximizing animation
+            IntPtr WinHandle = new WindowInteropHelper(this).Handle;
+            int BOOL_TRUE = 1;
+            DwmSetWindowAttribute(WinHandle, DWMWA_TRANSITIONS_FORCEDISABLED, ref BOOL_TRUE, Marshal.SizeOf(BOOL_TRUE));
+
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
