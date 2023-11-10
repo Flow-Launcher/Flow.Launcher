@@ -148,19 +148,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 Install(plugin, filePath);
             }
+            catch (HttpRequestException e)
+            {
+                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
+                            Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
+                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+                return;
+            }
             catch (Exception e)
             {
-                // TODO use toast to optimize error prompt
-                if (e is HttpRequestException)
-                    MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_download_error"),
-                        Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"));
-
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
-
-                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e, "InstallOrUpdate");
-
+                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 return;
             }
 
