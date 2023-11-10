@@ -382,6 +382,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var results =
                 PluginsManifest
                     .UserPlugins
+                    .Where(x => !PluginExists(x.ID))
                     .Select(x =>
                         new Result
                         {
