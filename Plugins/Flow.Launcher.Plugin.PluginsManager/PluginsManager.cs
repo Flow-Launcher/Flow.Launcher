@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -151,19 +150,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (HttpRequestException e)
             {
                 Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
-                            Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
+                                         Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 return;
             }
             catch (Exception e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                        plugin.Name));
+                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                                         plugin.Name));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 return;
             }
-
+            
             if (Settings.AutoRestartAfterChanging)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
@@ -411,77 +410,22 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             if (!File.Exists(downloadedFilePath))
                 return;
-
-            var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
-            var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
-
-            if (Directory.Exists(tempFolderPath))
-                Directory.Delete(tempFolderPath, true);
-
-            Directory.CreateDirectory(tempFolderPath);
-
-            var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
-
-            File.Copy(downloadedFilePath, zipFilePath);
-
-            File.Delete(downloadedFilePath);
-
-            Utilities.UnZip(zipFilePath, tempFolderPluginPath, true);
-
-            var pluginFolderPath = Utilities.GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
-
-            var metadataJsonFilePath = string.Empty;
-            if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
-                metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
-
-            if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
+            try
             {
+                PluginManager.Install(plugin, downloadedFilePath);
+            }
+            catch(FileNotFoundException e)
+            {
+                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
                 MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"),
-                    Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
-
-                throw new FileNotFoundException(
-                    string.Format("Unable to find plugin.json from the extracted zip file, or this path {0} does not exist", pluginFolderPath));
+                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
             }
-
-            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
+            catch(InvalidOperationException e)
             {
+                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
                 MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"), plugin.Name),
-                    Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
-
-                throw new InvalidOperationException(
-                    string.Format("A plugin with the same ID and version already exists, " +
-                                  "or the version is greater than this downloaded plugin {0}",
-                        plugin.Name));
+                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
             }
-
-            var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
-
-            var defaultPluginIDs = new List<string>
-                                    {
-                                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
-                                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
-                                        "572be03c74c642baae319fc283e561a8", // Explorer
-                                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
-                                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
-                                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
-                                        "791FC278BA414111B8D1886DFE447410", // Program
-                                        "D409510CD0D2481F853690A07E6DC426", // Shell
-                                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
-                                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
-                                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
-                                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
-                                    };
-
-            // Treat default plugin differently, it needs to be removable along with each flow release
-            var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
-                                    ? DataLocation.PluginsDirectory
-                                    : Constant.PreinstalledDirectory;
-
-            var newPluginPath = Path.Combine(installDirectory, folderName);
-
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
-
-            Directory.Delete(pluginFolderPath, true);
         }
 
         internal List<Result> RequestUninstall(string search)
@@ -537,24 +481,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Search(results, search);
         }
 
-        private void Uninstall(PluginMetadata plugin, bool removedSetting = true)
+        private static void Uninstall(PluginMetadata plugin, bool removeSettings = true)
         {
-            if (removedSetting)
-            {
-                PluginManager.Settings.Plugins.Remove(plugin.ID);
-                PluginManager.AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
-            }
-
-            // Marked for deletion. Will be deleted on next start up
-            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
-        }
-
-        private bool SameOrLesserPluginVersionExists(string metadataPath)
-        {
-            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
-            return Context.API.GetAllPlugins()
-                .Any(x => x.Metadata.ID == newMetadata.ID
-                          && newMetadata.Version.CompareTo(x.Metadata.Version) <= 0);
+            PluginManager.Uninstall(plugin, removeSettings);
         }
     }
 }

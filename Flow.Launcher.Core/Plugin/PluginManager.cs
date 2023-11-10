@@ -11,6 +11,9 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ISavable = Flow.Launcher.Plugin.ISavable;
+using Flow.Launcher.Plugin.SharedCommands;
+using Mono.Cecil;
+using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -330,6 +333,107 @@ namespace Flow.Launcher.Core.Plugin
                 AddActionKeyword(id, newActionKeyword);
                 RemoveActionKeyword(id, oldActionKeyword);
             }
+        }
+
+        private static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)
+        {
+            var unzippedFolderCount = Directory.GetDirectories(unzippedParentFolderPath).Length;
+            var unzippedFilesCount = Directory.GetFiles(unzippedParentFolderPath).Length;
+
+            // adjust path depending on how the plugin is zipped up
+            // the recommended should be to zip up the folder not the contents
+            if (unzippedFolderCount == 1 && unzippedFilesCount == 0)
+                // folder is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/pluginFolderName/
+                return Directory.GetDirectories(unzippedParentFolderPath)[0];
+
+            if (unzippedFilesCount > 1)
+                // content is zipped up, unzipped plugin directory structure: tempPath/unzippedParentPluginFolder/
+                return unzippedParentFolderPath;
+
+            return string.Empty;
+        }
+
+        private static bool SameOrLesserPluginVersionExists(string metadataPath)
+        {
+            var newMetadata = JsonSerializer.Deserialize<PluginMetadata>(File.ReadAllText(metadataPath));
+            return AllPlugins.Any(x => x.Metadata.ID == newMetadata.ID
+                          && newMetadata.Version.CompareTo(x.Metadata.Version) <= 0);
+        }
+
+        public static void Install(UserPlugin plugin, string downloadedFilePath)
+        {
+            var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
+            var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
+
+            if (Directory.Exists(tempFolderPath))
+                Directory.Delete(tempFolderPath, true);
+
+            Directory.CreateDirectory(tempFolderPath);
+
+            var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
+
+            File.Copy(downloadedFilePath, zipFilePath);
+
+            File.Delete(downloadedFilePath);
+
+            System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
+
+            var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
+
+            var metadataJsonFilePath = string.Empty;
+            if (File.Exists(Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName)))
+                metadataJsonFilePath = Path.Combine(pluginFolderPath, Constant.PluginMetadataFileName);
+
+            if (string.IsNullOrEmpty(metadataJsonFilePath) || string.IsNullOrEmpty(pluginFolderPath))
+            {
+                throw new FileNotFoundException($"Unable to find plugin.json from the extracted zip file, or this path {pluginFolderPath} does not exist");
+            }
+
+            if (SameOrLesserPluginVersionExists(metadataJsonFilePath))
+            {
+                throw new InvalidOperationException($"A plugin with the same ID and version already exists, or the version is greater than this downloaded plugin {plugin.Name}");
+            }
+
+            var folderName = string.IsNullOrEmpty(plugin.Version) ? $"{plugin.Name}-{Guid.NewGuid()}" : $"{plugin.Name}-{plugin.Version}";
+
+            var defaultPluginIDs = new List<string>
+                                    {
+                                        "0ECADE17459B49F587BF81DC3A125110", // BrowserBookmark
+                                        "CEA0FDFC6D3B4085823D60DC76F28855", // Calculator
+                                        "572be03c74c642baae319fc283e561a8", // Explorer
+                                        "6A122269676E40EB86EB543B945932B9", // PluginIndicator
+                                        "9f8f9b14-2518-4907-b211-35ab6290dee7", // PluginsManager
+                                        "b64d0a79-329a-48b0-b53f-d658318a1bf6", // ProcessKiller
+                                        "791FC278BA414111B8D1886DFE447410", // Program
+                                        "D409510CD0D2481F853690A07E6DC426", // Shell
+                                        "CEA08895D2544B019B2E9C5009600DF4", // Sys
+                                        "0308FD86DE0A4DEE8D62B9B535370992", // URL
+                                        "565B73353DBF4806919830B9202EE3BF", // WebSearch
+                                        "5043CETYU6A748679OPA02D27D99677A" // WindowsSettings
+                                    };
+
+            // Treat default plugin differently, it needs to be removable along with each flow release
+            var installDirectory = !defaultPluginIDs.Any(x => x == plugin.ID)
+                                    ? DataLocation.PluginsDirectory
+                                    : Constant.PreinstalledDirectory;
+
+            var newPluginPath = Path.Combine(installDirectory, folderName);
+
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
+
+            Directory.Delete(pluginFolderPath, true);
+        }
+
+        public static void Uninstall(PluginMetadata plugin, bool removeSettings = true)
+        {
+            if (removeSettings)
+            {
+                Settings.Plugins.Remove(plugin.ID);
+                AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+            }
+
+            // Marked for deletion. Will be deleted on next start up
+            using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
         }
     }
 }
