@@ -12,7 +12,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
-using Mono.Cecil;
 using System.Text.Json;
 
 namespace Flow.Launcher.Core.Plugin
