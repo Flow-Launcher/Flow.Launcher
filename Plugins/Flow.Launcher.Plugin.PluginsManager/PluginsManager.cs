@@ -388,7 +388,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             Title = $"{x.Name} by {x.Author}",
                             SubTitle = x.Description,
-                            IcoPath = icoPath,
+                            IcoPath = x.IcoPath,
                             Action = e =>
                             {
                                 if (e.SpecialKeyState.CtrlPressed)
