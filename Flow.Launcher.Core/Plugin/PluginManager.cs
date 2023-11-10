@@ -29,8 +29,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IPublicAPI API { private set; get; }
 
-        // todo happlebao, this should not be public, the indicator function should be embeded 
-        public static PluginsSettings Settings;
+        private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
 
         /// <summary>
