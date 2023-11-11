@@ -366,18 +366,28 @@ namespace Flow.Launcher.Core.Plugin
             return _modifiedPlugins.Contains(uuid);
         }
 
-        public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string downloadedFilePath)
+
+        /// <summary>
+        /// Update a plugin to new version, from a zip file. Will Delete zip after updating.
+        /// </summary>
+        public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
-            InstallPlugin(newVersion, downloadedFilePath, checkModified:false);
+            InstallPlugin(newVersion, zipFilePath, checkModified:false);
             UninstallPlugin(existingVersion, removeSettings:false, checkModified:false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
 
-        public static void InstallPlugin(UserPlugin plugin, string downloadedFilePath)
+        /// <summary>
+        /// Install a plugin. Will Delete zip after updating.
+        /// </summary>
+        public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, downloadedFilePath, true);
+            InstallPlugin(plugin, zipFilePath, true);
         }
 
+        /// <summary>
+        /// Uninstall a plugin.
+        /// </summary>
         public static void UninstallPlugin(PluginMetadata plugin, bool removeSettings = true)
         {
             UninstallPlugin(plugin, removeSettings, true);
@@ -387,7 +397,7 @@ namespace Flow.Launcher.Core.Plugin
 
         #region Internal functions
 
-        internal static void InstallPlugin(UserPlugin plugin, string downloadedFilePath, bool checkModified)
+        internal static void InstallPlugin(UserPlugin plugin, string zipFilePath, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
@@ -395,21 +405,10 @@ namespace Flow.Launcher.Core.Plugin
                 throw new ArgumentException($"Plugin {plugin.Name} {plugin.ID} has been modified.", nameof(plugin));
             }
 
-            var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
-            var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
-
-            if (Directory.Exists(tempFolderPath))
-                Directory.Delete(tempFolderPath, true);
-
-            Directory.CreateDirectory(tempFolderPath);
-
-            var zipFilePath = Path.Combine(tempFolderPath, Path.GetFileName(downloadedFilePath));
-
-            File.Copy(downloadedFilePath, zipFilePath);
-
-            File.Delete(downloadedFilePath);
-
+            // Unzip plugin files to temp folder
+            var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
+            File.Delete(zipFilePath);
 
             var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
 
@@ -454,7 +453,7 @@ namespace Flow.Launcher.Core.Plugin
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
 
-            Directory.Delete(pluginFolderPath, true);
+            Directory.Delete(tempFolderPluginPath, true);
 
             if (checkModified)
             {

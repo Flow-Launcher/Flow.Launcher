@@ -139,7 +139,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 ? $"{plugin.Name}-{Guid.NewGuid()}.zip"
                 : $"{plugin.Name}-{plugin.Version}.zip";
 
-            var filePath = Path.Combine(DataLocation.PluginsDirectory, downloadFilename);
+            var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
             try
             {
@@ -240,7 +240,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory,
+                                var downloadToFilePath = Path.Combine(Path.GetTempPath(),
                                     $"{x.Name}-{x.NewVersion}.zip");
 
                                 _ = Task.Run(async delegate
@@ -414,6 +414,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             try
             {
                 PluginManager.InstallPlugin(plugin, downloadedFilePath);
+                File.Delete(downloadedFilePath);
             }
             catch (FileNotFoundException e)
             {
