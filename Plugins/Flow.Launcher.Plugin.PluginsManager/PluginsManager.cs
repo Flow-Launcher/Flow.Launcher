@@ -318,7 +318,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var plugin = new UserPlugin
             {
-                // FIXME installing in store then install web ver 
                 ID = "",
                 Name = name,
                 Version = string.Empty,
