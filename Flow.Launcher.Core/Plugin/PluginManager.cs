@@ -31,6 +31,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
+        private static List<string> _modifiedPlugins = new List<string>();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -358,8 +359,42 @@ namespace Flow.Launcher.Core.Plugin
                           && newMetadata.Version.CompareTo(x.Metadata.Version) <= 0);
         }
 
-        public static void Install(UserPlugin plugin, string downloadedFilePath)
+        #region Public functions
+
+        public static bool PluginModified(string uuid)
         {
+            return _modifiedPlugins.Contains(uuid);
+        }
+
+        public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string downloadedFilePath)
+        {
+            InstallPlugin(newVersion, downloadedFilePath, checkModified:false);
+            UninstallPlugin(existingVersion, removeSettings:false, checkModified:false);
+            _modifiedPlugins.Add(existingVersion.ID);
+        }
+
+        public static void InstallPlugin(UserPlugin plugin, string downloadedFilePath)
+        {
+            InstallPlugin(plugin, downloadedFilePath, true);
+        }
+
+        public static void UninstallPlugin(PluginMetadata plugin, bool removeSettings = true)
+        {
+            UninstallPlugin(plugin, removeSettings, true);
+        }
+
+        #endregion
+
+        #region Internal functions
+
+        internal static void InstallPlugin(UserPlugin plugin, string downloadedFilePath, bool checkModified)
+        {
+            if (checkModified && PluginModified(plugin.ID))
+            {
+                // Distinguish exception from installing same or less version
+                throw new ArgumentException($"Plugin {plugin.Name} {plugin.ID} has been modified.", nameof(plugin));
+            }
+
             var tempFolderPath = Path.Combine(Path.GetTempPath(), "flowlauncher");
             var tempFolderPluginPath = Path.Combine(tempFolderPath, "plugin");
 
@@ -420,10 +455,20 @@ namespace Flow.Launcher.Core.Plugin
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
 
             Directory.Delete(pluginFolderPath, true);
+
+            if (checkModified)
+            {
+                _modifiedPlugins.Add(plugin.ID);
+            }
         }
 
-        public static void Uninstall(PluginMetadata plugin, bool removeSettings = true)
+        internal static void UninstallPlugin(PluginMetadata plugin, bool removeSettings, bool checkModified)
         {
+            if (checkModified && PluginModified(plugin.ID))
+            {
+                throw new ArgumentException($"Plugin {plugin.Name} has been modified");
+            }
+
             if (removeSettings)
             {
                 Settings.Plugins.Remove(plugin.ID);
@@ -432,6 +477,13 @@ namespace Flow.Launcher.Core.Plugin
 
             // Marked for deletion. Will be deleted on next start up
             using var _ = File.CreateText(Path.Combine(plugin.PluginDirectory, "NeedDelete.txt"));
+
+            if (checkModified)
+            {
+                _modifiedPlugins.Add(plugin.ID);
+            }
         }
+
+        #endregion
     }
 }

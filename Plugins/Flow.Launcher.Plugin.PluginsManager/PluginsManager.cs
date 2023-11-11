@@ -239,8 +239,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                Uninstall(x.PluginExistingMetadata, false);
-
                                 var downloadToFilePath = Path.Combine(DataLocation.PluginsDirectory,
                                     $"{x.Name}-{x.NewVersion}.zip");
 
@@ -249,7 +247,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
                                         .ConfigureAwait(false);
 
-                                    Install(x.PluginNewUserPlugin, downloadToFilePath);
+                                    PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin, downloadToFilePath);
 
                                     if (Settings.AutoRestartAfterChanging)
                                     {
@@ -413,19 +411,24 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}", downloadedFilePath);
             try
             {
-                PluginManager.Install(plugin, downloadedFilePath);
+                PluginManager.InstallPlugin(plugin, downloadedFilePath);
             }
-            catch(FileNotFoundException e)
+            catch (FileNotFoundException e)
             {
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                         Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
-                MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"),
-                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
             }
-            catch(InvalidOperationException e)
+            catch (InvalidOperationException e)
             {
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"), plugin.Name));
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
-                MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"), plugin.Name),
-                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"));
+            }
+            catch (ArgumentException e) {
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"), plugin.Name));
+                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
             }
         }
 
@@ -482,9 +485,18 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return Search(results, search);
         }
 
-        private static void Uninstall(PluginMetadata plugin, bool removeSettings = true)
+        private void Uninstall(PluginMetadata plugin)
         {
-            PluginManager.Uninstall(plugin, removeSettings);
+            try
+            {
+                PluginManager.UninstallPlugin(plugin, removeSettings:true);
+            }
+            catch (ArgumentException e)
+            {
+                Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_error_title"),
+                                         Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"));
+            }
         }
     }
 }
