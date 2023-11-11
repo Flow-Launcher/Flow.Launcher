@@ -188,6 +188,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     on existingPlugin.Metadata.ID equals pluginFromManifest.ID
                 where existingPlugin.Metadata.Version.CompareTo(pluginFromManifest.Version) <
                       0 // if current version precedes manifest version
+                      && !PluginManager.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
                     {
@@ -317,6 +318,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var plugin = new UserPlugin
             {
+                // FIXME installing in store then install web ver 
                 ID = "",
                 Name = name,
                 Version = string.Empty,
@@ -380,7 +382,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var results =
                 PluginsManifest
                     .UserPlugins
-                    .Where(x => !PluginExists(x.ID))
+                    .Where(x => !PluginExists(x.ID) && !PluginManager.PluginModified(x.ID))
                     .Select(x =>
                         new Result
                         {
