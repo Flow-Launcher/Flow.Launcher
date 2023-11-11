@@ -267,7 +267,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }).ContinueWith(t =>
                                 {
                                     Log.Exception("PluginsManager", $"Update failed for {x.Name}",
-                                        t.Exception.InnerException, "RequestUpdate");
+                                        t.Exception.InnerException);
                                     Context.API.ShowMsg(
                                         Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                                         string.Format(
@@ -410,7 +410,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private void Install(UserPlugin plugin, string downloadedFilePath)
         {
             if (!File.Exists(downloadedFilePath))
-                return;
+                throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}", downloadedFilePath);
             try
             {
                 PluginManager.Install(plugin, downloadedFilePath);
