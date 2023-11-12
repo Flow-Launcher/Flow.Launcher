@@ -143,6 +143,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+                }
+
                 await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
 
                 Install(plugin, filePath);
@@ -245,6 +250,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 _ = Task.Run(async delegate
                                 {
+                                    if (File.Exists(downloadToFilePath))
+                                    {
+                                        File.Delete(downloadToFilePath);
+                                    }
+
                                     await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
                                         .ConfigureAwait(false);
 
