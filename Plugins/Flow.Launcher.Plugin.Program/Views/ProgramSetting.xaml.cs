@@ -87,9 +87,9 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        public bool ShowUWPCheckbox => UWP.SupportUWP();
+        public bool ShowUWPCheckbox => UWPPackage.SupportUWP();
 
-        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
+        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWPApp[] uwps)
         {
             this.context = context;
             _settings = settings;
@@ -149,9 +149,9 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void DeleteProgramSources(List<ProgramSource> itemsToDelete)
         {
             itemsToDelete.ForEach(t1 => _settings.ProgramSources
-                                                    .Remove(_settings.ProgramSources
-                                                                        .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
-                                                                        .FirstOrDefault()));
+                .Remove(_settings.ProgramSources
+                    .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
+                    .FirstOrDefault()));
             itemsToDelete.ForEach(x => ProgramSettingDisplayList.Remove(x));
 
             ReIndexing();
@@ -182,16 +182,20 @@ namespace Flow.Launcher.Plugin.Program.Views
                 {
                     if (selectedProgramSource.Enabled)
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, true);  // sync status in win32, uwp and disabled
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                            true); // sync status in win32, uwp and disabled
                         ProgramSettingDisplay.RemoveDisabledFromSettings();
                     }
                     else
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, false);
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                            false);
                         ProgramSettingDisplay.StoreDisabledInSettings();
                     }
+
                     ReIndexing();
                 }
+
                 programSourceView.SelectedIndex = selectedIndex;
             }
         }
@@ -233,7 +237,8 @@ namespace Flow.Launcher.Plugin.Program.Views
                 foreach (string directory in directories)
                 {
                     if (Directory.Exists(directory)
-                        && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
+                        && !ProgramSettingDisplayList.Any(x =>
+                            x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
                     {
                         var source = new ProgramSource(directory);
 
@@ -262,8 +267,8 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItems = programSourceView
-                                .SelectedItems.Cast<ProgramSource>()
-                                .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
             if (selectedItems.Count == 0)
             {
@@ -274,7 +279,8 @@ namespace Flow.Launcher.Plugin.Program.Views
 
             if (IsAllItemsUserAdded(selectedItems))
             {
-                var msg = string.Format(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
+                var msg = string.Format(
+                    context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
                 if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
@@ -364,8 +370,8 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = programSourceView
-                                    .SelectedItems.Cast<ProgramSource>()
-                                    .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
             if (IsAllItemsUserAdded(selectedItems))
             {
@@ -400,7 +406,8 @@ namespace Flow.Launcher.Plugin.Program.Views
             ListView listView = sender as ListView;
             GridView gView = listView.View as GridView;
 
-            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
             var col1 = 0.25;
             var col2 = 0.15;
             var col3 = 0.60;
