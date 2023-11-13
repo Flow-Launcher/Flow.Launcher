@@ -69,7 +69,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Als Administrator ausführen</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Enthaltenden Ordner öffnen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programm</system:String>
