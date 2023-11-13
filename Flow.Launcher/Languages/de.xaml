@@ -173,7 +173,7 @@
     <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="openResultModifiers">Öffnen Sie die Ergebnismodifikatoren</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Wähle eine Modifikatortaste, um das ausgewählte Ergebnis über die Tastatur zu öffnen.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Wählen Sie eine Modifikatortaste, um das ausgewählte Ergebnis über die Tastatur zu öffnen.</system:String>
     <system:String x:Key="showOpenResultHotkey">Hotkey anzeigen</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Hotkey für die Ergebnisauswahl mit Ergebnissen anzeigen.</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
@@ -228,13 +228,13 @@
     <system:String x:Key="newVersionTips">Eine neue Version ({0}) ist vorhanden. Bitte starten Sie Flow Launcher neu.</system:String>
     <system:String x:Key="checkUpdatesFailed">Überprüfung der Updates fehlgeschlagen. Bitte überprüfen Sie Ihre Verbindungs- und Proxy-Einstellungen zu api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Das Herunterladen von Updates ist fehlgeschlagen. Bitte überprüfen Sie Ihre Verbindungs- und Proxy-Einstellungen zu github-cloud.s3.amazonaws.com,
+        oder gehen Sie zu https://github.com/Flow-Launcher/Flow.Launcher/releases, um Updates manuell herunterzuladen.
     </system:String>
     <system:String x:Key="releaseNotes">Versionshinweise</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
+    <system:String x:Key="documentation">Verwendungshinweise</system:String>
+    <system:String x:Key="devtool">Entwicklerwerkzeuge</system:String>
+    <system:String x:Key="settingfolder">Einstellungsordner</system:String>
     <system:String x:Key="logfolder">Protokoll-Verzeichnis</system:String>
     <system:String x:Key="clearlogfolder">Protokolldateien leeren</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Protokolle löschen möchten?</system:String>
