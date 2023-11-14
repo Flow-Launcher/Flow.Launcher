@@ -96,7 +96,7 @@
     <PackageReference Include="NHotkey.Wpf" Version="2.1.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.8.2" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.7" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.8" />
   </ItemGroup>
 
   <ItemGroup>
