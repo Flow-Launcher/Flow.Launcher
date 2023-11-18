@@ -36,6 +36,11 @@ namespace Flow.Launcher.Core.Plugin
             _storage = new JsonStorage<Dictionary<string, object>>(SettingPath);
             Settings = await _storage.LoadAsync();
 
+            if (Settings != null)
+            {
+                return;
+            }
+
             foreach (var (type, attributes) in Configuration.Body) 
             {
                 if (attributes.Name == null)
