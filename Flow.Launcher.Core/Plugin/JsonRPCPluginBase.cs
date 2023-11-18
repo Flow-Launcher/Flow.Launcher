@@ -126,12 +126,15 @@ namespace Flow.Launcher.Core.Plugin
 
         private async Task InitSettingAsync()
         {
+            JsonRpcConfigurationModel configuration = null;
+            if (File.Exists(SettingConfigurationPath))
+            {
+                var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+                configuration =
+                    deserializer.Deserialize<JsonRpcConfigurationModel>(
+                        await File.ReadAllTextAsync(SettingConfigurationPath));
+            }
 
-            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
-                .Build();
-            var configuration =
-                deserializer.Deserialize<JsonRpcConfigurationModel>(
-                    await File.ReadAllTextAsync(SettingConfigurationPath));
 
             Settings ??= new JsonRPCPluginSettings
             {
