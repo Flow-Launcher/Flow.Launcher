@@ -315,7 +315,6 @@ namespace Flow.Launcher.Core.Plugin
         public async Task InitSettingAsync()
         {
 
-
             if (File.Exists(SettingPath))
             {
                 await using var fileStream = File.OpenRead(SettingPath);
