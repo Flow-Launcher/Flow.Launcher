@@ -126,8 +126,6 @@ namespace Flow.Launcher.Core.Plugin
 
         private async Task InitSettingAsync()
         {
-            if (!File.Exists(SettingConfigurationPath))
-                return;
 
             var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
