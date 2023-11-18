@@ -47,7 +47,7 @@ namespace Flow.Launcher.Infrastructure
         {
             if (WordsHelper.HasChinese(content))
             {
-                var resultList = WordsHelper.GetPinyinList(content).Select(ToDoublePin).ToArray();
+                var resultList = WordsHelper.GetPinyinList(content);
                 StringBuilder resultBuilder = new StringBuilder();
                 TranslationMapping map = new TranslationMapping();
 
@@ -57,9 +57,10 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                     {
-                        map.AddNewIndex(i, resultBuilder.Length, resultList[i].Length + 1);
+                        string dp = ToDoublePin(resultList[i].ToLower());
+                        map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
                         resultBuilder.Append(' ');
-                        resultBuilder.Append(resultList[i]);
+                        resultBuilder.Append(dp);
                         pre = true;
                     }
                     else
