@@ -32,11 +32,11 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
+        private readonly DoublePinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, DoublePinAlphabet alphabet)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
