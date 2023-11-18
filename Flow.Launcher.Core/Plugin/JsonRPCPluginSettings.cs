@@ -83,6 +83,7 @@ namespace Flow.Launcher.Core.Plugin
                             break;
                     }
                 }
+                Save();
             }
         }
         
