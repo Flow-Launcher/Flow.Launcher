@@ -645,7 +645,6 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (key, value) in settings)
             {
-
                 Settings[key] = value;
                 if (_settingControls.ContainsKey(key))
                 {
