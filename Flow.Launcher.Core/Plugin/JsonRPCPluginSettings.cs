@@ -10,7 +10,7 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRPCPluginSettings
     {
-        public required JsonRpcConfigurationModel Configuration { get; init; }
+        public required JsonRpcConfigurationModel? Configuration { get; init; }
 
         public required string SettingPath { get; init; }
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
