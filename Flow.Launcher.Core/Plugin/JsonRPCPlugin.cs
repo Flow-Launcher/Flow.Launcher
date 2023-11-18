@@ -314,8 +314,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task InitSettingAsync()
         {
-            if (!File.Exists(SettingConfigurationPath))
-                return;
+
 
             if (File.Exists(SettingPath))
             {
@@ -323,20 +322,23 @@ namespace Flow.Launcher.Core.Plugin
                 Settings = await JsonSerializer.DeserializeAsync<Dictionary<string, object>>(fileStream, options);
             }
 
-            var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
-            _settingsTemplate = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
-
-            Settings ??= new Dictionary<string, object>();
-
-            foreach (var (type, attribute) in _settingsTemplate.Body)
+            if (File.Exists(SettingConfigurationPath))
             {
-                if (type == "textBlock")
-                    continue;
-                if (!Settings.ContainsKey(attribute.Name))
+                var deserializer = new DeserializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+                _settingsTemplate = deserializer.Deserialize<JsonRpcConfigurationModel>(await File.ReadAllTextAsync(SettingConfigurationPath));
+
+
+                foreach (var (type, attribute) in _settingsTemplate.Body)
                 {
-                    Settings[attribute.Name] = attribute.DefaultValue;
+                    if (type == "textBlock")
+                        continue;
+                    if (!Settings.ContainsKey(attribute.Name))
+                    {
+                        Settings[attribute.Name] = attribute.DefaultValue;
+                    }
                 }
             }
+            Settings ??= new Dictionary<string, object>();
         }
 
         public virtual async Task InitAsync(PluginInitContext context)
