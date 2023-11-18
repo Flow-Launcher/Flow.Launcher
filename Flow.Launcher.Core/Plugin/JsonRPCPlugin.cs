@@ -668,6 +668,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
+            Save();
         }
     }
 
