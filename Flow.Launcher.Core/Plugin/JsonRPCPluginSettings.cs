@@ -63,10 +63,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (key, value) in settings)
             {
-                if (Settings.ContainsKey(key))
-                {
-                    Settings[key] = value;
-                }
+                Settings[key] = value;
 
                 if (SettingControls.TryGetValue(key, out var control))
                 {
