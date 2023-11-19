@@ -285,7 +285,8 @@ namespace Flow.Launcher.ViewModel
             }
             var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
-                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? new SpecialKeyState() : GlobalHotkey.CheckModifiers()
                 })
                 .ConfigureAwait(false);
 
