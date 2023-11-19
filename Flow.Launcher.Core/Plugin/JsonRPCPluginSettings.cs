@@ -83,8 +83,8 @@ namespace Flow.Launcher.Core.Plugin
                             break;
                     }
                 }
-                Save();
             }
+            Save();
         }
         
         public async Task SaveAsync()
