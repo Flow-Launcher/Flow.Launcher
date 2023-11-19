@@ -17,5 +17,11 @@
             get => Settings.WarnFromUnknownSource;
             set => Settings.WarnFromUnknownSource = value;
         }
+
+        public bool AutoRestartAfterChanging
+        { 
+            get => Settings.AutoRestartAfterChanging;
+            set => Settings.AutoRestartAfterChanging = value;
+        }
     }
 }
