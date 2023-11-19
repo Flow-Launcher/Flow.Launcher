@@ -6,9 +6,9 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Úspešne stiahnuté {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Chyba: Nepodarilo sa stiahnuť plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} od {1} {2}{3}Chcete odinštalovať tento plugin? Po odinštalovaní sa Flow automaticky reštartuje.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} od {1} {2}{2}Chcete odinštalovať tento plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} od {1} {2}{3}Chcete nainštalovať tento plugin? Po nainštalovaní sa Flow automaticky reštartuje.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} od {1} {2}{2}Chcete nainštalovať tento plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Inštalovať plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Inštaluje sa plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Stiahnuť a nainštalovať {0}</system:String>
@@ -18,24 +18,24 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Chyba: Plugin s rovnakou alebo vyššou verziou ako {0} už existuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Chyba inštalácie pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Nastala chyba počas inštalácie pluginu {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Chyba odinštalácie pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Nie je k dispozícii žiadna aktualizácia</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Všetky pluginy sú aktuálne</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} od {1} {2}{3}Chcete aktualizovať tento plugin? Po aktualizácii sa Flow automaticky reštartuje.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizácia pluginu</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizácia pre tento plugin je k dispozícii, chcete ju zobraziť?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stiahnutie manifestu pluginu zlyhalo</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť ku github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} bol úspešne aktualizovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin inštalujete z neznámeho zdroja a môže obsahovať potenciálne riziká!{0}{0}Uistite sa, že rozumiete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť v nastaveniach)</system:String>
     
-    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} už bol upravený. Prosím, reštartuje Flow pred ďalšími zmenami.</system:String>
    
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Správca pluginov</system:String>
@@ -54,5 +54,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Upozornenie na inštaláciu z neznámeho zdroja</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automaticky reštartovať Flow Launcher po inštalácií/odinštalácii/aktualizáciu pluginov</system:String>
 </ResourceDictionary>
