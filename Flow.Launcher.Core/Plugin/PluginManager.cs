@@ -210,7 +210,18 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                throw new FlowPluginException(metadata, e);
+                Result r = new()
+                {
+                    Title = $"{metadata.Name}: {e.GetType().Name}",
+                    SubTitle = "ERROR: There was an error loading this plugin!",
+                    IcoPath = "Images\\app_error.png",
+                    PluginDirectory = metadata.PluginDirectory,
+                    ActionKeywordAssigned = query.ActionKeyword,
+                    PluginID = metadata.ID,
+                    OriginQuery = query,
+                    Action = _ => { throw new FlowPluginException(metadata, e);}
+                };
+                results.Add(r);
             }
             return results;
         }
