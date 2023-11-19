@@ -29,7 +29,7 @@ namespace Flow.Launcher.Infrastructure
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
-            if (_settings.ShouldUseDoublePin)
+            if (_settings.ShouldUsePinyin)
             {
                 if (!_doublePinCache.ContainsKey(content))
                 {
@@ -57,7 +57,7 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                     {
-                        string dp = ToDoublePin(resultList[i].ToLower());
+                        string dp = _settings.ShouldUseDoublePin ? resultList[i] : ToDoublePin(resultList[i].ToLower());
                         map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
                         resultBuilder.Append(' ');
                         resultBuilder.Append(dp);
