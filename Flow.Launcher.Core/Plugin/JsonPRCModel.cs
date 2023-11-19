@@ -25,7 +25,7 @@ namespace Flow.Launcher.Core.Plugin
     public record JsonRPCResponseModel(int Id, JsonRPCErrorModel Error = default) : JsonRPCBase(Id, Error);
     public record JsonRPCQueryResponseModel(int Id,
         [property: JsonPropertyName("result")] List<JsonRPCResult> Result,
-        IReadOnlyDictionary<string, object> SettingsChanges = null,
+        IReadOnlyDictionary<string, object> SettingsChange = null,
         string DebugMessage = "",
         JsonRPCErrorModel Error = default) : JsonRPCResponseModel(Id, Error);
 
