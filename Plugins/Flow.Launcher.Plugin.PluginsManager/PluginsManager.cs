@@ -296,6 +296,23 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }
                     });
 
+            if (resultsForUpdate.Count() > 1)
+            {
+                var updateAllResult = new Result
+                {
+                    Title = Context.API.GetTranslation("plugin_pluginsmanager_update_all_title"),
+                    SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_all_subtitle"),
+                    IcoPath = icoPath,
+                    Action = e =>
+                    {
+                        // TODO: logic here
+                        return true;
+                    },
+                    ContextData = new UserPlugin()
+                };
+                results = results.Prepend(updateAllResult);
+            }
+
             return Search(results, search);
         }
 
