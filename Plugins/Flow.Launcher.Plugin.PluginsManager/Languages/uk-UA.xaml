@@ -6,7 +6,9 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Помилка: Не вдалося завантажити плагін</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} від {1} {2}{3}Бажаєте видалити цей плагін? Після видалення Flow автоматично перезапуститься.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} від {1} {2}{3}Бажаєте встановити цей плагін? Після встановлення Flow автоматично перезапуститься.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Завантажити та встановити {0}</system:String>
@@ -16,19 +18,25 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Помилка: Плагін, який має ідентичну або новішу версію з {0}, вже існує.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Помилка під час встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Виникла помилка при спробі встановити {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Оновлень не знайдено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Всі плагіни оновлено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} від {1} {2}{3}Бажаєте оновити цей плагін? Після оновлення Flow буде автоматично перезапущено.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Оновлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_exists">Цей плагін має оновлення, бажаєте його переглянути?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Цей плагін вже встановлено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Не вдалося завантажити маніфест плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Будь ласка, перевірте, чи можете ви підключитися до github.com. Ця помилка означає, що ви не можете встановлювати або оновлювати плагіни.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Встановлення з невідомого джерела</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Ви встановлюєте цей плагін з невідомого джерела, тому він може бути потенційно небезпечним!{0}{0}Переконайтеся, що ви розумієте, звідки цей плагін, і що він є безпечним.{0}{0}Бажаєте продовжити?{0}{0}(Ви можете вимкнути це попередження через налаштування)</system:String>
-
-    <!--  Controls  -->
-
+    
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+   
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Менеджер плагінів</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Керування встановленням, видаленням або оновленням плагінів Flow Launcher</system:String>
@@ -46,4 +54,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Попередження про встановлення з невідомого джерела</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
 </ResourceDictionary>
