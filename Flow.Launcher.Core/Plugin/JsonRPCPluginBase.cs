@@ -94,7 +94,7 @@ namespace Flow.Launcher.Core.Plugin
 
             results.AddRange(queryResponseModel.Result);
 
-            Settings?.UpdateSettings(queryResponseModel.SettingsChanges);
+            Settings?.UpdateSettings(queryResponseModel.SettingsChange);
 
             return results;
         }
