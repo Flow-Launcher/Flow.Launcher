@@ -57,7 +57,7 @@ namespace Flow.Launcher.Infrastructure
                 {
                     if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                     {
-                        string dp = _settings.ShouldUseDoublePin ? resultList[i] : ToDoublePin(resultList[i].ToLower());
+                        string dp = _settings.ShouldUseDoublePin ? ToDoublePin(resultList[i].ToLower()) : resultList[i];
                         map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
                         resultBuilder.Append(' ');
                         resultBuilder.Append(dp);
