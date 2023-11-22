@@ -321,34 +321,33 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                             MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-                            foreach (var plugin in resultsForUpdate)
+                            Parallel.ForEach(resultsForUpdate, plugin =>
                             {
-                                var downloadToFilePath = Path.Combine(Path.GetTempPath(),
-                                    $"{plugin.Name}-{plugin.NewVersion}.zip");
+                                var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
                                 _ = Task.Run(async delegate
+                                {
+                                    if (File.Exists(downloadToFilePath))
                                     {
-                                        if (File.Exists(downloadToFilePath))
-                                        {
-                                            File.Delete(downloadToFilePath);
-                                        }
+                                        File.Delete(downloadToFilePath);
+                                    }
 
-                                        await Http.DownloadAsync(plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
-                                            .ConfigureAwait(false);
+                                    await Http.DownloadAsync(plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
+                                        .ConfigureAwait(false);
 
-                                        PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath);
+                                    PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath);
 
-                                    }).ContinueWith(t =>
-                                    {
-                                        Log.Exception("PluginsManager", $"Update failed for {plugin.Name}",
-                                            t.Exception.InnerException);
-                                        Context.API.ShowMsg(
-                                            Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                            string.Format(
-                                                Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                                                plugin.Name));
-                                    }, TaskContinuationOptions.OnlyOnFaulted);
-                            }
+                                }).ContinueWith(t =>
+                                {
+                                    Log.Exception("PluginsManager", $"Update failed for {plugin.Name}",
+                                        t.Exception.InnerException);
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                                            plugin.Name));
+                                }, TaskContinuationOptions.OnlyOnFaulted);
+                            });
 
                             if (Settings.AutoRestartAfterChanging)
                             {
