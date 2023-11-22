@@ -308,25 +308,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Action = e =>
                     {
                         string message;
-                        //TODO: display all plugins to be updated in the message
-                        if (/*Settings.AutoRestartAfterChanging*/ false) // TODO: remove false
+                        if (Settings.AutoRestartAfterChanging)
                         {
-                            message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_subtitle"), "FlowLauncher will restart after updating all plugins.",
-                                                    Environment.NewLine, Environment.NewLine);
+                            message = "Would you like to update all plugins?\nFlowLauncher will restart after updating all plugins.\n";
                         }
                         else
                         {
-                            message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_subtitle"),
-                                                    Environment.NewLine);
+                            message = "Would you like to update all plugins?\nFlowLauncher will restart after updating all plugins.\n";
                         }
+
                         if (MessageBox.Show(message,
                             Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                             MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                         {
-                            Debug.Print("Looping through plugins to update");
                             foreach (var plugin in resultsForUpdate)
                             {
-                                Debug.Print($"Updating {plugin.Name}");
                                 var downloadToFilePath = Path.Combine(Path.GetTempPath(),
                                     $"{plugin.Name}-{plugin.NewVersion}.zip");
 
@@ -342,20 +338,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                         PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath);
 
-                                        //TODO: fix
-                                        // if (Settings.AutoRestartAfterChanging)
-                                        // {
-                                        //     Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                        //                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_restart"),
-                                        //                         x.Name));
-                                        //     Context.API.RestartApp();
-                                        // }
-                                        // else
-                                        // {
-                                        //     Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                        //                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_no_restart"),
-                                        //                         x.Name));
-                                        // }
                                     }).ContinueWith(t =>
                                     {
                                         Log.Exception("PluginsManager", $"Update failed for {plugin.Name}",
@@ -367,10 +349,24 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                                 plugin.Name));
                                     }, TaskContinuationOptions.OnlyOnFaulted);
                             }
-                            Debug.Print("Finished updating all plugins");
-                            return true; // User confirmed to update all plugins
+
+                            if (Settings.AutoRestartAfterChanging)
+                            {
+                                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_restart"),
+                                                    "all"));
+                                Context.API.RestartApp();
+                            }
+                            else
+                            {
+                                Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_no_restart"),
+                                                    "all"));
+                            }
+
+                            return true;
                         }
-                        return false; //user cancelled
+                        return false;
                     },
                     ContextData = new UserPlugin()
                 };

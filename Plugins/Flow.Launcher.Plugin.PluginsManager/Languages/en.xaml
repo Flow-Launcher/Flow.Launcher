@@ -30,7 +30,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">This plugin is already installed</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Plugin Manifest Download Failed</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Please check if you can connect to github.com. This error means you may not be able to install or update plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update All Plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
