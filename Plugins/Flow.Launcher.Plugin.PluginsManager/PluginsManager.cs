@@ -310,11 +310,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         string message;
                         if (Settings.AutoRestartAfterChanging)
                         {
-                            message = "Would you like to update all plugins?\nFlowLauncher will restart after updating all plugins.\n";
+                            message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt"),
+                                                    resultsForUpdate.Count(), Environment.NewLine);
                         }
                         else
                         {
-                            message = "Would you like to update all plugins?\nFlowLauncher will restart after updating all plugins.\n";
+                            message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt_no_restart"),
+                                                    resultsForUpdate.Count());
                         }
 
                         if (MessageBox.Show(message,
@@ -352,15 +354,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             if (Settings.AutoRestartAfterChanging)
                             {
                                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_restart"),
-                                                    "all"));
+                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_restart"),
+                                                    resultsForUpdate.Count()));
                                 Context.API.RestartApp();
                             }
                             else
                             {
                                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_no_restart"),
-                                                    "all"));
+                                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_no_restart"),
+                                                    resultsForUpdate.Count()));
                             }
 
                             return true;
