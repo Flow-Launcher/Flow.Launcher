@@ -11,7 +11,7 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRPCPluginSettings
     {
-        public required JsonRpcConfigurationModel Configuration { get; init; }
+        public required JsonRpcConfigurationModel? Configuration { get; init; }
 
         public required string SettingPath { get; init; }
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
@@ -37,6 +37,11 @@ namespace Flow.Launcher.Core.Plugin
             _storage = new JsonStorage<ConcurrentDictionary<string, object>>(SettingPath);
             Settings = await _storage.LoadAsync();
 
+            if (Settings != null)
+            {
+                return;
+            }
+
             foreach (var (type, attributes) in Configuration.Body) 
             {
                 if (attributes.Name == null)
@@ -59,10 +64,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (key, value) in settings)
             {
-                if (Settings.ContainsKey(key))
-                {
-                    Settings[key] = value;
-                }
+                Settings[key] = value;
 
                 if (SettingControls.TryGetValue(key, out var control))
                 {
@@ -83,6 +85,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
+            Save();
         }
         
         public async Task SaveAsync()
