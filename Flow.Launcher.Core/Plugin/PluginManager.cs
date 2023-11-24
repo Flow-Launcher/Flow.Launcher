@@ -219,7 +219,8 @@ namespace Flow.Launcher.Core.Plugin
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
                     OriginQuery = query,
-                    Action = _ => { throw new FlowPluginException(metadata, e);}
+                    Action = _ => { throw new FlowPluginException(metadata, e);},
+                    Score = -100
                 };
                 results.Add(r);
             }
