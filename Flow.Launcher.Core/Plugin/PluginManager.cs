@@ -212,8 +212,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Result r = new()
                 {
-                    Title = $"{metadata.Name}: {e.GetType().Name}",
-                    SubTitle = "ERROR: There was an error loading this plugin!",
+                    Title = $"{metadata.Name}: Failed to respond!",
+                    SubTitle = "Select this result for more info",
                     IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
