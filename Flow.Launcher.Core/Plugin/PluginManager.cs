@@ -214,7 +214,7 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     Title = $"{metadata.Name}: {e.GetType().Name}",
                     SubTitle = "ERROR: There was an error loading this plugin!",
-                    IcoPath = "Images\\app_error.png",
+                    IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
                     PluginDirectory = metadata.PluginDirectory,
                     ActionKeywordAssigned = query.ActionKeyword,
                     PluginID = metadata.ID,
