@@ -50,5 +50,12 @@ namespace Flow.Launcher.Plugin
                    (AltPressed ? ModifierKeys.Alt : ModifierKeys.None) |
                    (WinPressed ? ModifierKeys.Windows : ModifierKeys.None);
         }
+
+        public static readonly SpecialKeyState Default = new () {
+            CtrlPressed = false,
+            ShiftPressed = false,
+            AltPressed = false,
+            WinPressed = false
+        };
     }
 }
