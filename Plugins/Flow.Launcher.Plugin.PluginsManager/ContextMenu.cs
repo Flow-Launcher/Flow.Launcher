@@ -13,6 +13,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context = context;
         }
 
+        private readonly GlyphInfo sourcecodeGlyph = new("/Resources/#Segoe Fluent Icons","\uE943");
+        private readonly GlyphInfo issueGlyph = new("/Resources/#Segoe Fluent Icons", "\ued15");
+        private readonly GlyphInfo manifestGlyph = new("/Resources/#Segoe Fluent Icons", "\uea37");
+
         public List<Result> LoadContextMenus(Result selectedResult)
         {
             if(selectedResult.ContextData is not UserPlugin pluginManifestInfo) 
@@ -36,6 +40,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle"),
                     IcoPath = "Images\\sourcecode.png",
+                    Glyph = sourcecodeGlyph,
                     Action = _ =>
                     {
                         Context.API.OpenUrl(pluginManifestInfo.UrlSourceCode);
@@ -47,6 +52,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_newissue_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle"),
                     IcoPath = "Images\\request.png",
+                    Glyph = issueGlyph,
                     Action = _ =>
                     {
                         // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/Flow.Launcher.Plugin.Putty/tree/master
@@ -63,6 +69,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle"),
                     IcoPath = "Images\\manifestsite.png",
+                    Glyph = manifestGlyph,
                     Action = _ =>
                     {
                         Context.API.OpenUrl("https://github.com/Flow-Launcher/Flow.Launcher.PluginsManifest");
