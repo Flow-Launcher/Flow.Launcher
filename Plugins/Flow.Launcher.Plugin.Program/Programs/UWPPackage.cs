@@ -214,7 +214,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     catch (Exception e)
                     {
                         ProgramLogger.LogException($"|UWP|All|{p.InstalledLocation}|An unexpected error occurred and unable to convert Package to UWP for {p.Id.FullName}", e);
-                        return Array.Empty<Application>();
+                        return Array.Empty<UWPApp>();
                     }
 #endif
 #if DEBUG //make developer aware and implement handling
