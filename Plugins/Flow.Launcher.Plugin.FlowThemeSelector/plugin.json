@@ -1,0 +1,12 @@
+{
+    "ID": "4DFA743E1086414BAB0AA3071D561D75",
+    "ActionKeyword": "flowtheme",
+    "Name": "Flow Launcher Theme Selector",
+    "Description": "Quickly switch your Flow Launcher theme.",
+    "Author": "Odotocodot",
+    "Version": "1.0.0",
+    "Language": "csharp",
+    "Website": "https://github.com/Flow-Launcher/Flow.Launcher",
+    "IcoPath": "icon.png",
+    "ExecuteFileName": "Flow.Launcher.Plugin.FlowThemeSelector.dll"
+}
