@@ -76,6 +76,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
                 Action = c =>
                 {
                     // open folder
@@ -161,6 +165,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = 500,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
                 Action = _ =>
                 {
                     OpenFolder(path);
@@ -233,10 +241,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
-                ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
-                : Result.PreviewInfo.Default;
-
+            bool isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
 
             var result = new Result
@@ -244,7 +249,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
-                Preview = preview,
+                Preview = new Result.PreviewInfo
+                {
+                    IsMedia = isMedia,
+                    PreviewImagePath = isMedia ? filePath : null,
+                    FilePath = filePath,
+                },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,

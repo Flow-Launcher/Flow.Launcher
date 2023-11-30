@@ -103,6 +103,7 @@ Português
 Português (Brasil)
 Italiano
 Slovenský
+quicklook
 Droplex
 Preinstalled
 errormetadatafile

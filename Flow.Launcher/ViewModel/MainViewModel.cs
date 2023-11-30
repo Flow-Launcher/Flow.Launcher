@@ -303,6 +303,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        #endregion
+
+        #region BasicCommands
+
         [RelayCommand]
         private void OpenSetting()
         {
@@ -454,52 +458,6 @@ namespace Flow.Launcher.ViewModel
             Settings.MaxResultsToShow -= 1;
         }
 
-        [RelayCommand]
-        public void TogglePreview()
-        {
-            if (!PreviewVisible)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-        }
-
-        private void ShowPreview()
-        {
-            ResultAreaColumn = 1;
-            PreviewVisible = true;
-            Results.SelectedItem?.LoadPreviewImage();
-        }
-
-        private void HidePreview()
-        {
-            ResultAreaColumn = 3;
-            PreviewVisible = false;
-        }
-
-        public void ResetPreview()
-        {
-            if (Settings.AlwaysPreview == true)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-        }
-
-        private void UpdatePreview()
-        {
-            if (PreviewVisible)
-            {
-                Results.SelectedItem?.LoadPreviewImage();
-            }
-        }
-
         /// <summary>
         /// we need move cursor to end when we manually changed query
         /// but we don't want to move cursor to end when query is updated from TextBox
@@ -619,6 +577,127 @@ namespace Flow.Launcher.ViewModel
         public bool PreviewVisible { get; set; } = false;
 
         public int ResultAreaColumn { get; set; } = 1;
+
+        #endregion
+
+        #region Preview
+
+        // Not accurate
+        public bool ExternalPreviewOpen { get; set; } = false;
+
+        [RelayCommand]
+        private void TogglePreview()
+        {
+            if (PreviewVisible)
+            {
+                // To deal with always preview
+                HideInternalPreview();
+            }
+            else if(Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
+            {
+                _ = ToggleExternalPreviewAsync(path);
+            }
+            else
+            {
+                ShowInternalPreview();
+            }
+        }
+
+        private void ToggleInternalPreview()
+        {
+            if (!PreviewVisible)
+            {
+                ShowInternalPreview();
+            }
+            else
+            {
+                HideInternalPreview();
+            }
+        }
+
+        private async Task ToggleExternalPreviewAsync(string path)
+        {
+            bool success = await QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = !ExternalPreviewOpen;
+            }
+        }
+
+        private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            bool success = await QuickLookHelper.OpenQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = false;
+            }
+        }
+
+        private async Task CloseExternalPreviewAsync()
+        {
+            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
+            if (success)
+            {
+                ExternalPreviewOpen = false;
+            }
+        }
+
+        private async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            // Switches preview content
+            // When external is off, do nothing
+            _ = QuickLookHelper.SwitchQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
+        }
+
+        private void ShowInternalPreview()
+        {
+            ResultAreaColumn = 1;
+            PreviewVisible = true;
+            Results.SelectedItem?.LoadPreviewImage();
+        }
+
+        private void HideInternalPreview()
+        {
+            ResultAreaColumn = 3;
+            PreviewVisible = false;
+        }
+
+        public void ResetPreview()
+        {
+            if (Settings.AlwaysPreview == true && !PreviewVisible)
+            {
+                ShowInternalPreview();
+            }
+            else
+            {
+                HideInternalPreview();
+            }
+        }
+        
+        private void UpdatePreview()
+        {
+            if (PreviewVisible)
+            {
+                Results.SelectedItem?.LoadPreviewImage();
+            }
+            else if (Settings.UseExternalPreview)
+            {
+                if (CanExternalPreviewSelectedResult(out var path))
+                {
+                    _ = SwitchExternalPreviewAsync(path, false);
+                }
+                else
+                {
+                    _ = CloseExternalPreviewAsync();
+                }
+            }
+        }
+
+        private bool CanExternalPreviewSelectedResult(out string path)
+        {
+            path = Results.SelectedItem?.Result?.Preview.FilePath;
+            return !string.IsNullOrEmpty(path);
+        }
 
         #endregion
 
@@ -1025,6 +1104,9 @@ namespace Flow.Launcher.ViewModel
         {
             // Trick for no delay
             MainWindowOpacity = 0;
+
+            if (Settings.UseExternalPreview)
+                _ = CloseExternalPreviewAsync();
 
             if (!SelectedIsFromQueryResults())
             {
