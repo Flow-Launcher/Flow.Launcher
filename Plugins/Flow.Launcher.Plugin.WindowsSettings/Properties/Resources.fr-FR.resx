@@ -1800,73 +1800,73 @@
     <value>Modifier les options de démarrage de Windows To Go</value>
   </data>
   <data name="SeeWhichProcessesStartUpAutomaticallyWhenYouStartWindows" xml:space="preserve">
-    <value>See which processes start up automatically when you start Windows</value>
+    <value>Voir quels processus démarrent automatiquement lorsque vous démarrez Windows</value>
   </data>
   <data name="TellIfAnRSSFeedIsAvailableOnAWebsite" xml:space="preserve">
-    <value>Tell if an RSS feed is available on a website</value>
+    <value>Indiquer si un flux RSS est disponible sur un site web</value>
   </data>
   <data name="AddClocksForDifferentTimeZones" xml:space="preserve">
-    <value>Add clocks for different time zones</value>
+    <value>Ajouter des horloges pour différents fuseaux horaires</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Ajouter un appareil Bluetooth</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
-    <value>Customise the mouse buttons</value>
+    <value>Personnaliser les boutons de la souris</value>
   </data>
   <data name="SetTabletButtonsToPerformCertainTasks" xml:space="preserve">
-    <value>Set tablet buttons to perform certain tasks</value>
+    <value>Définir les boutons de tablette pour effectuer certaines tâches</value>
   </data>
   <data name="ViewInstalledFonts" xml:space="preserve">
-    <value>View installed fonts</value>
+    <value>Afficher les polices installées</value>
   </data>
   <data name="ChangeTheWayCurrencyIsDisplayed" xml:space="preserve">
-    <value>Change the way currency is displayed</value>
+    <value>Changer la façon dont la devise est affichée</value>
   </data>
   <data name="EditGroupPolicy" xml:space="preserve">
-    <value>Edit group policy</value>
+    <value>Modifier la politique de groupe</value>
   </data>
   <data name="ManageBrowserAddOns" xml:space="preserve">
-    <value>Manage browser add-ons</value>
+    <value>Gérer les modules complémentaires du navigateur</value>
   </data>
   <data name="CheckProcessorSpeed" xml:space="preserve">
-    <value>Check processor speed</value>
+    <value>Vérifier la vitesse du processeur</value>
   </data>
   <data name="CheckFirewallStatus" xml:space="preserve">
-    <value>Check firewall status</value>
+    <value>Vérifier le statut du pare-feu</value>
   </data>
   <data name="SendOrReceiveAFile" xml:space="preserve">
-    <value>Send or receive a file</value>
+    <value>Envoyer ou recevoir un fichier</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>Ajouter ou supprimer des comptes utilisateur</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
-    <value>Edit the system environment variables</value>
+    <value>Modifier les variables d'environnement système</value>
   </data>
   <data name="ManageBitlocker" xml:space="preserve">
-    <value>Manage BitLocker</value>
+    <value>Gérer BitLocker</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>Masquer automatiquement la barre des tâches</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>Modifier les paramètres de la carte son</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
-    <value>Make changes to accounts</value>
+    <value>Apporter des modifications aux comptes</value>
   </data>
   <data name="EditLocalUsersAndGroups" xml:space="preserve">
-    <value>Edit local users and groups</value>
+    <value>Modifier les utilisateurs et les groupes locaux</value>
   </data>
   <data name="ViewNetworkComputersAndDevices" xml:space="preserve">
-    <value>View network computers and devices</value>
+    <value>Afficher les ordinateurs et périphériques réseau</value>
   </data>
   <data name="InstallAProgramFromTheNetwork" xml:space="preserve">
-    <value>Install a program from the network</value>
+    <value>Installer un programme depuis le réseau</value>
   </data>
   <data name="ViewScannersAndCameras" xml:space="preserve">
-    <value>View scanners and cameras</value>
+    <value>Voir les scanners et caméras</value>
   </data>
   <data name="MicrosoftIMERegisterWordJapanese" xml:space="preserve">
     <value>Microsoft IME Register Word (Japanese)</value>
@@ -1953,7 +1953,7 @@
     <value>Add or remove programs</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
-    <value>Create a password reset disk</value>
+    <value>Créer un disque de réinitialisation de mot de passe</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
     <value>Configure advanced user profile properties</value>
@@ -1983,13 +1983,13 @@
     <value>How to install a program</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Change how your keyboard works</value>
+    <value>Modifier le fonctionnement de votre clavier</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
-    <value>Automatically adjust for daylight saving time</value>
+    <value>Ajustement automatique à l'heure d'été</value>
   </data>
   <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
-    <value>Change the order of Windows SideShow gadgets</value>
+    <value>Modifier l'ordre des gadgets Windows SideShow</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
     <value>Check keyboard status</value>
@@ -2464,10 +2464,10 @@
     <value>Set up a broadband connection</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>Calibrer l'écran pour le stylet ou la touche d'entrée</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>Gérer les certificats utilisateur</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
     <value>Schedule tasks</value>
@@ -2497,10 +2497,10 @@
     <value>View system resource usage in Task Manager</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
-    <value>Create an account</value>
+    <value>Créer un compte</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Get more features with a new edition of Windows</value>
+    <value>Obtenez plus de fonctionnalités avec une nouvelle édition de Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
     <value>Panneau de configuration</value>
@@ -2509,6 +2509,6 @@
     <value>TaskLink</value>
   </data>
   <data name="AreaUnknown" xml:space="preserve">
-    <value>Unknown</value>
+    <value>Inconnu</value>
   </data>
 </root>
