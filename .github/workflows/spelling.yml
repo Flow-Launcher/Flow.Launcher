@@ -73,7 +73,7 @@ jobs:
     steps:
     - name: check-spelling
       id: spelling
-      uses: check-spelling/check-spelling@v0.0.22
+      uses: check-spelling/check-spelling@prerelease
       with:
         suppress_push_for_open_pull_request: 1
         checkout: true
@@ -91,10 +91,9 @@ jobs:
         extra_dictionaries:
           cspell:software-terms/dict/softwareTerms.txt
           cspell:win32/src/win32.txt
-          cspell:php/src/php.txt
           cspell:filetypes/filetypes.txt
           cspell:csharp/csharp.txt
-          cspell:dotnet/src/dotnet.txt
+          cspell:dotnet/dict/dotnet.txt
           cspell:python/src/common/extra.txt
           cspell:python/src/python/python-lib.txt
           cspell:aws/aws.txt
@@ -130,7 +129,7 @@ jobs:
     if: (success() || failure()) && needs.spelling.outputs.followup && contains(github.event_name, 'pull_request')
     steps:
     - name: comment
-      uses: check-spelling/check-spelling@v0.0.22
+      uses: check-spelling/check-spelling@prerelease
       with:
         checkout: true
         spell_check_this: check-spelling/spell-check-this@main

@@ -103,3 +103,5 @@ errormetadatafile
 noresult
 pluginsmanager
 alreadyexists
+JsonRPC
+JsonRPCV2
