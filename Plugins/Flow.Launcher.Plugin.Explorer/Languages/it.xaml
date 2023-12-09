@@ -5,25 +5,25 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Effettua prima una selezione</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Si prega di selezionare un collegamento alla cartella</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Sei sicuro di voler eliminare {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">Sei sicuro di voler eliminare definitivamente questo file?</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Sei sicuro di voler eliminare definitivamente questo/a file/cartella?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminato con successo</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} eliminato correttamente</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">L'assegnazione della parola chiave globale potrebbe portare a troppi risultati durante la ricerca. Scegli una parola chiave specifica per l'azione</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">L'accesso rapido non può essere impostato sulla parola chiave globale quando abilitata. Si prega di scegliere una parola chiave specifica</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Il servizio richiesto per Windows Index Search non sembra essere in esecuzione</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Per risolvere il problema, avvia il servizio Ricerca Windows. Seleziona qui per rimuovere questo avviso</system:String>
     <system:String x:Key="plugin_explorer_alternative">Il messaggio di avviso è stato spento. In alternativa per la ricerca di file e cartelle, vuoi installare il plugin Everything?{0}{0} Seleziona 'Sì' per installare il plugin Everything, o 'No' per tornare</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternativa all'Esplora Risorse</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
-    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Errore durante la ricerca: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Impossibile aprire la cartella</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Impossibile aprire il file</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Cancella</system:String>
     <system:String x:Key="plugin_explorer_edit">Modifica</system:String>
     <system:String x:Key="plugin_explorer_add">Aggiungi</system:String>
-    <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
+    <system:String x:Key="plugin_explorer_generalsetting_header">Impostazione Generale</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizza Parola Chiave</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Collegamenti ad Accesso Rapido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
