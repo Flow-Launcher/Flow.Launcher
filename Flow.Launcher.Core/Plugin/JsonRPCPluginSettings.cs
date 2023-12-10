@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,16 +11,16 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRPCPluginSettings
     {
-        public required JsonRpcConfigurationModel Configuration { get; init; }
+        public required JsonRpcConfigurationModel? Configuration { get; init; }
 
         public required string SettingPath { get; init; }
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
         
         public IReadOnlyDictionary<string, object> Inner => Settings;
-        protected Dictionary<string, object> Settings { get; set; }
+        protected ConcurrentDictionary<string, object> Settings { get; set; }
         public required IPublicAPI API { get; init; }
         
-        private JsonStorage<Dictionary<string, object>> _storage;
+        private JsonStorage<ConcurrentDictionary<string, object>> _storage;
 
         // maybe move to resource?
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
@@ -33,8 +34,13 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task InitializeAsync()
         {
-            _storage = new JsonStorage<Dictionary<string, object>>(SettingPath);
+            _storage = new JsonStorage<ConcurrentDictionary<string, object>>(SettingPath);
             Settings = await _storage.LoadAsync();
+
+            if (Settings != null)
+            {
+                return;
+            }
 
             foreach (var (type, attributes) in Configuration.Body) 
             {
@@ -58,10 +64,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (key, value) in settings)
             {
-                if (Settings.ContainsKey(key))
-                {
-                    Settings[key] = value;
-                }
+                Settings[key] = value;
 
                 if (SettingControls.TryGetValue(key, out var control))
                 {
@@ -82,6 +85,7 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
+            Save();
         }
         
         public async Task SaveAsync()

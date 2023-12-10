@@ -52,12 +52,13 @@ namespace Flow.Launcher
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
+                Log.Info(
+                    "|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
-                ImageLoader.Initialize();
+                var imageLoadertask = ImageLoader.InitializeAsync();
 
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
@@ -78,6 +79,8 @@ namespace Flow.Launcher
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync(API);
+                await imageLoadertask;
+                
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -103,7 +106,8 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
+                Log.Info(
+                    "|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
 
@@ -122,7 +126,8 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
+                        e.Message);
                 }
             }
         }

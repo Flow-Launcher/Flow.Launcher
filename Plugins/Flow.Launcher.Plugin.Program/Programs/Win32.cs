@@ -16,14 +16,21 @@ using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
 using System.Windows.Input;
+using MemoryPack;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
-    [Serializable]
-    public class Win32 : IProgram, IEquatable<Win32>
+    [MemoryPackable]
+    public partial class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
-        public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); } // For path comparison
+
+        public string UniqueIdentifier
+        {
+            get => _uid;
+            set => _uid = value == null ? string.Empty : value.ToLowerInvariant();
+        } // For path comparison
+
         public string IcoPath { get; set; }
 
         /// <summary>
@@ -96,7 +103,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             bool useLocalizedName = !string.IsNullOrEmpty(LocalizedName) && !Name.Equals(LocalizedName);
             string resultName = useLocalizedName ? LocalizedName : Name;
 
-            if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || resultName.Equals(Description))
+            if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) ||
+                resultName.Equals(Description))
             {
                 title = resultName;
                 matchResult = StringMatcher.FuzzySearch(query, resultName);
@@ -113,6 +121,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         descriptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
                     }
+
                     matchResult = descriptionMatch;
                 }
                 else
@@ -129,10 +138,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     candidates.Add(ExecutableName);
                 }
+
                 if (useLocalizedName)
                 {
                     candidates.Add(Name);
                 }
+
                 matchResult = Match(query, candidates);
                 if (matchResult == null)
                 {
@@ -209,9 +220,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath, 
-                            WorkingDirectory = ParentDirectory, 
-                            UseShellExecute = true
+                            FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
                         };
 
                         Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
@@ -424,7 +433,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
+        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes,
+            bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -448,7 +458,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes,
+            string[] protocols)
         {
             // Disabled custom sources are not in DisabledProgramSources
             var paths = directories.AsParallel()
@@ -466,14 +477,15 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .Distinct();
 
             var startupPaths = GetStartupPaths();
-            
+
             var programs = ExceptDisabledSource(allPrograms)
                 .Where(x => !startupPaths.Any(startup => FilesFolders.PathContains(startup, x)))
                 .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
-        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols, List<string> commonParents)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols,
+            List<string> commonParents)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
             if (String.IsNullOrEmpty(pathEnv))
@@ -515,7 +527,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             toFilter = toFilter.Distinct().Where(p => suffixes.Contains(Extension(p)));
 
             var programs = ExceptDisabledSource(toFilter)
-                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid).ToList(); // ToList due to disposing issue
+                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid)
+                .ToList(); // ToList due to disposing issue
             return programs;
         }
 
@@ -616,7 +629,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .SelectMany(g =>
                 {
                     // is shortcut and in start menu
-                    var startMenu = g.Where(g => g.LnkResolvedPath != null && startMenuPaths.Any(x => FilesFolders.PathContains(x, g.FullPath))).ToList();
+                    var startMenu = g.Where(g =>
+                            g.LnkResolvedPath != null &&
+                            startMenuPaths.Any(x => FilesFolders.PathContains(x, g.FullPath)))
+                        .ToList();
                     if (startMenu.Any())
                         return startMenu.Take(1);
 
@@ -756,6 +772,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 while (reader.TryRead(out _))
                 {
                 }
+
                 await Task.Run(Main.IndexWin32Programs);
             }
         }
@@ -766,6 +783,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 throw new ArgumentException("Path Not Exist");
             }
+
             var watcher = new FileSystemWatcher(directory);
 
             watcher.Created += static (_, _) => indexQueue.Writer.TryWrite(default);
@@ -804,8 +822,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         parents.Remove(source);
                     }
                 }
+
                 result.AddRange(parents.Select(x => x.Location));
             }
+
             return result.DistinctBy(x => x.ToLowerInvariant()).ToList();
         }
     }
