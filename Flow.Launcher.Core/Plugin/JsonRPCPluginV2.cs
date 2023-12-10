@@ -91,7 +91,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private void SetupJsonRPC()
         {
-            var formatter = new JsonMessageFormatter();
+            var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
             var handler = new NewLineDelimitedMessageHandler(ClientPipe,
                 formatter);
 
@@ -100,10 +100,8 @@ namespace Flow.Launcher.Core.Plugin
             RPC.AddLocalRpcMethod("UpdateResults", new Action<string, JsonRPCQueryResponseModel>((rawQuery, response) =>
             {
                 var results = ParseResults(response);
-                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs { Query = new Query()
-                {
-                    RawQuery = rawQuery
-                }, Results = results });
+                ResultsUpdated?.Invoke(this,
+                    new ResultUpdatedEventArgs { Query = new Query() { RawQuery = rawQuery }, Results = results });
             }));
             RPC.SynchronizationContext = null;
             RPC.StartListening();
