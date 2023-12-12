@@ -212,7 +212,19 @@ namespace Flow.Launcher.Core.Plugin
             }
             catch (Exception e)
             {
-                throw new FlowPluginException(metadata, e);
+                Result r = new()
+                {
+                    Title = $"{metadata.Name}: Failed to respond!",
+                    SubTitle = "Select this result for more info",
+                    IcoPath = Flow.Launcher.Infrastructure.Constant.ErrorIcon,
+                    PluginDirectory = metadata.PluginDirectory,
+                    ActionKeywordAssigned = query.ActionKeyword,
+                    PluginID = metadata.ID,
+                    OriginQuery = query,
+                    Action = _ => { throw new FlowPluginException(metadata, e);},
+                    Score = -100
+                };
+                results.Add(r);
             }
             return results;
         }
