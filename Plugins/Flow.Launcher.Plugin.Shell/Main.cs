@@ -187,7 +187,7 @@ namespace Flow.Launcher.Plugin.Shell
             return history.ToList();
         }
 
-        private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false) //TODO: implement logic for CloseCMDAfterPress
+        private ProcessStartInfo PrepareProcessStartInfo(string command, bool runAsAdministrator = false)
         {
             command = command.Trim();
             command = Environment.ExpandEnvironmentVariables(command);
@@ -203,7 +203,7 @@ namespace Flow.Launcher.Plugin.Shell
                 case Shell.Cmd:
                 {
                     info.FileName = "cmd.exe";
-                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? "& pause" : "")}";
+                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}";
 
                     //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
                     //// Previous code using ArgumentList, commands needed to be separated correctly:                      
@@ -232,11 +232,7 @@ namespace Flow.Launcher.Plugin.Shell
                     else
                     {
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add(command);
-                        if (_settings.CloseShellAfterPress)
-                        {
-                            info.ArgumentList.Add("; pause");
-                        }
+                        info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
                     }
                     break;
                 }
@@ -249,11 +245,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.ArgumentList.Add("-NoExit");
                     }
                     info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add(command);
-                    if (_settings.CloseShellAfterPress)
-                        {
-                            info.ArgumentList.Add("; pause");
-                        }
+                    info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
 
                     break;
                 }
