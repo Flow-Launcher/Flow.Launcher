@@ -4,67 +4,65 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using MemoryPack;
 
 namespace Flow.Launcher.Infrastructure.Storage
 {
-#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete.
     /// <summary>
     /// Stroage object using binary data
     /// Normally, it has better performance, but not readable
     /// </summary>
+    /// <remarks>
+    /// It utilize MemoryPack, which means the object must be MemoryPackSerializable
+    /// https://github.com/Cysharp/MemoryPack
+    /// </remarks>
     public class BinaryStorage<T>
     {
+        const string DirectoryName = "Cache";
+
+        const string FileSuffix = ".cache";
+
         public BinaryStorage(string filename)
         {
-            const string directoryName = "Cache";
-            var directoryPath = Path.Combine(DataLocation.DataDirectory(), directoryName);
+            var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
             Helper.ValidateDirectory(directoryPath);
 
-            const string fileSuffix = ".cache";
-            FilePath = Path.Combine(directoryPath, $"{filename}{fileSuffix}");
+            FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
         }
 
         public string FilePath { get; }
 
-        public T TryLoad(T defaultData)
+        public async ValueTask<T> TryLoadAsync(T defaultData)
         {
             if (File.Exists(FilePath))
             {
                 if (new FileInfo(FilePath).Length == 0)
                 {
                     Log.Error($"|BinaryStorage.TryLoad|Zero length cache file <{FilePath}>");
-                    Save(defaultData);
+                    await SaveAsync(defaultData);
                     return defaultData;
                 }
 
-                using (var stream = new FileStream(FilePath, FileMode.Open))
-                {
-                    var d = Deserialize(stream, defaultData);
-                    return d;
-                }
+                await using var stream = new FileStream(FilePath, FileMode.Open);
+                var d = await DeserializeAsync(stream, defaultData);
+                return d;
             }
             else
             {
                 Log.Info("|BinaryStorage.TryLoad|Cache file not exist, load default data");
-                Save(defaultData);
+                await SaveAsync(defaultData);
                 return defaultData;
             }
         }
 
-        private T Deserialize(FileStream stream, T defaultData)
+        private async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
         {
-            //http://stackoverflow.com/questions/2120055/binaryformatter-deserialize-gives-serializationexception
-            AppDomain.CurrentDomain.AssemblyResolve += CurrentDomain_AssemblyResolve;
-            BinaryFormatter binaryFormatter = new BinaryFormatter
-            {
-                AssemblyFormat = FormatterAssemblyStyle.Simple
-            };
-
             try
             {
-                var t = ((T)binaryFormatter.Deserialize(stream)).NonNull();
+                var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
                 return t;
             }
             catch (System.Exception e)
@@ -72,47 +70,12 @@ namespace Flow.Launcher.Infrastructure.Storage
                 Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
                 return defaultData;
             }
-            finally
-            {
-                AppDomain.CurrentDomain.AssemblyResolve -= CurrentDomain_AssemblyResolve;
-            }
         }
 
-        private Assembly CurrentDomain_AssemblyResolve(object sender, ResolveEventArgs args)
+        public async ValueTask SaveAsync(T data)
         {
-            Assembly ayResult = null;
-            string sShortAssemblyName = args.Name.Split(',')[0];
-            Assembly[] ayAssemblies = AppDomain.CurrentDomain.GetAssemblies();
-            foreach (Assembly ayAssembly in ayAssemblies)
-            {
-                if (sShortAssemblyName == ayAssembly.FullName.Split(',')[0])
-                {
-                    ayResult = ayAssembly;
-                    break;
-                }
-            }
-            return ayResult;
-        }
-
-        public void Save(T data)
-        {
-            using (var stream = new FileStream(FilePath, FileMode.Create))
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter
-                {
-                    AssemblyFormat = FormatterAssemblyStyle.Simple
-                };
-
-                try
-                {
-                    binaryFormatter.Serialize(stream, data);
-                }
-                catch (SerializationException e)
-                {
-                    Log.Exception($"|BinaryStorage.Save|serialize error for file <{FilePath}>", e);
-                }
-            }
+            await using var stream = new FileStream(FilePath, FileMode.Create);
+            await MemoryPackSerializer.SerializeAsync(stream, data);
         }
     }
-#pragma warning restore SYSLIB0011
 }

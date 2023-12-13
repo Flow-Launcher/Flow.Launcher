@@ -11,15 +11,15 @@ namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRPCPluginSettings
     {
-        public required JsonRpcConfigurationModel Configuration { get; init; }
+        public required JsonRpcConfigurationModel? Configuration { get; init; }
 
         public required string SettingPath { get; init; }
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
-        
+
         public IReadOnlyDictionary<string, object> Inner => Settings;
         protected ConcurrentDictionary<string, object> Settings { get; set; }
         public required IPublicAPI API { get; init; }
-        
+
         private JsonStorage<ConcurrentDictionary<string, object>> _storage;
 
         // maybe move to resource?
@@ -37,13 +37,18 @@ namespace Flow.Launcher.Core.Plugin
             _storage = new JsonStorage<ConcurrentDictionary<string, object>>(SettingPath);
             Settings = await _storage.LoadAsync();
 
-            foreach (var (type, attributes) in Configuration.Body) 
+            if (Settings != null || Configuration == null)
+            {
+                return;
+            }
+
+            foreach (var (type, attributes) in Configuration.Body)
             {
                 if (attributes.Name == null)
                 {
                     continue;
                 }
-                
+
                 if (!Settings.ContainsKey(attributes.Name))
                 {
                     Settings[attributes.Name] = attributes.DefaultValue;
@@ -51,7 +56,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-       
+
         public void UpdateSettings(IReadOnlyDictionary<string, object> settings)
         {
             if (settings == null || settings.Count == 0)
@@ -59,10 +64,7 @@ namespace Flow.Launcher.Core.Plugin
 
             foreach (var (key, value) in settings)
             {
-                if (Settings.ContainsKey(key))
-                {
-                    Settings[key] = value;
-                }
+                Settings[key] = value;
 
                 if (SettingControls.TryGetValue(key, out var control))
                 {
@@ -78,33 +80,35 @@ namespace Flow.Launcher.Core.Plugin
                             comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
                             break;
                         case CheckBox checkBox:
-                            checkBox.Dispatcher.Invoke(() => checkBox.IsChecked = value is bool isChecked ? isChecked : bool.Parse(value as string ?? string.Empty));
+                            checkBox.Dispatcher.Invoke(() =>
+                                checkBox.IsChecked = value is bool isChecked
+                                    ? isChecked
+                                    : bool.Parse(value as string ?? string.Empty));
                             break;
                     }
                 }
             }
+
+            Save();
         }
-        
+
         public async Task SaveAsync()
         {
             await _storage.SaveAsync();
         }
-        
+
         public void Save()
         {
             _storage.Save();
         }
-        
+
         public Control CreateSettingPanel()
         {
-            if (Settings == null)
+            if (Settings == null || Settings.Count == 0)
                 return new();
 
             var settingWindow = new UserControl();
-            var mainPanel = new Grid
-            {
-                Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center
-            };
+            var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
 
             ColumnDefinition gridCol1 = new ColumnDefinition();
             ColumnDefinition gridCol2 = new ColumnDefinition();
@@ -239,10 +243,7 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
                         };
 
-                        var dockPanel = new DockPanel()
-                        {
-                            Margin = settingControlMargin
-                        };
+                        var dockPanel = new DockPanel() { Margin = settingControlMargin };
 
                         DockPanel.SetDock(Btn, Dock.Right);
                         dockPanel.Children.Add(Btn);
@@ -349,7 +350,10 @@ namespace Flow.Launcher.Core.Plugin
                     case "checkbox":
                         var checkBox = new CheckBox
                         {
-                            IsChecked = Settings[attribute.Name] is bool isChecked ? isChecked : bool.Parse(attribute.DefaultValue),
+                            IsChecked =
+                                Settings[attribute.Name] is bool isChecked
+                                    ? isChecked
+                                    : bool.Parse(attribute.DefaultValue),
                             Margin = settingCheckboxMargin,
                             HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
                             ToolTip = attribute.Description
@@ -372,14 +376,12 @@ namespace Flow.Launcher.Core.Plugin
 
                         break;
                     case "hyperlink":
-                        var hyperlink = new Hyperlink
-                        {
-                            ToolTip = attribute.Description, NavigateUri = attribute.url
-                        };
+                        var hyperlink = new Hyperlink { ToolTip = attribute.Description, NavigateUri = attribute.url };
 
                         var linkbtn = new System.Windows.Controls.Button
                         {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right, Margin = settingControlMargin
+                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                            Margin = settingControlMargin
                         };
 
                         linkbtn.Content = attribute.urlLabel;
@@ -405,12 +407,9 @@ namespace Flow.Launcher.Core.Plugin
                 mainPanel.Children.Add(panel);
                 mainPanel.Children.Add(contentControl);
                 rowCount++;
-
             }
 
             return settingWindow;
         }
-
-
     }
 }

@@ -15,24 +15,22 @@ using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable, IDisposable
+    public class Main : ISettingProvider, IAsyncPlugin, IPluginI18n, IContextMenu, ISavable, IAsyncReloadable,
+        IDisposable
     {
         internal static Win32[] _win32s { get; set; }
-        internal static UWP.Application[] _uwps { get; set; }
+        internal static UWPApp[] _uwps { get; set; }
         internal static Settings _settings { get; set; }
 
 
         internal static PluginInitContext Context { get; private set; }
 
         private static BinaryStorage<Win32[]> _win32Storage;
-        private static BinaryStorage<UWP.Application[]> _uwpStorage;
+        private static BinaryStorage<UWPApp[]> _uwpStorage;
 
         private static readonly List<Result> emptyResults = new();
 
-        private static readonly MemoryCacheOptions cacheOptions = new()
-        {
-            SizeLimit = 1560
-        };
+        private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
 
         static Main()
@@ -41,8 +39,8 @@ namespace Flow.Launcher.Plugin.Program
 
         public void Save()
         {
-            _win32Storage.Save(_win32s);
-            _uwpStorage.Save(_uwps);
+            _win32Storage.SaveAsync(_win32s);
+            _uwpStorage.SaveAsync(_uwps);
         }
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
@@ -76,12 +74,12 @@ namespace Flow.Launcher.Plugin.Program
 
             _settings = context.API.LoadSettingJsonStorage<Settings>();
 
-            Stopwatch.Normal("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", () =>
+            await Stopwatch.NormalAsync("|Flow.Launcher.Plugin.Program.Main|Preload programs cost", async () =>
             {
                 _win32Storage = new BinaryStorage<Win32[]>("Win32");
-                _win32s = _win32Storage.TryLoad(Array.Empty<Win32>());
-                _uwpStorage = new BinaryStorage<UWP.Application[]>("UWP");
-                _uwps = _uwpStorage.TryLoad(Array.Empty<UWP.Application>());
+                _win32s = await _win32Storage.TryLoadAsync(Array.Empty<Win32>());
+                _uwpStorage = new BinaryStorage<UWPApp[]>("UWP");
+                _uwps = await _uwpStorage.TryLoadAsync(Array.Empty<UWPApp>());
             });
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
@@ -104,7 +102,7 @@ namespace Flow.Launcher.Plugin.Program
             static void WatchProgramUpdate()
             {
                 Win32.WatchProgramUpdate(_settings);
-                _ = UWP.WatchPackageChange();
+                _ = UWPPackage.WatchPackageChange();
             }
         }
 
@@ -113,16 +111,16 @@ namespace Flow.Launcher.Plugin.Program
             var win32S = Win32.All(_settings);
             _win32s = win32S;
             ResetCache();
-            _win32Storage.Save(_win32s);
+            _win32Storage.SaveAsync(_win32s);
             _settings.LastIndexTime = DateTime.Now;
         }
 
         public static void IndexUwpPrograms()
         {
-            var applications = UWP.All(_settings);
+            var applications = UWPPackage.All(_settings);
             _uwps = applications;
             ResetCache();
-            _uwpStorage.Save(_uwps);
+            _uwpStorage.SaveAsync(_uwps);
             _settings.LastIndexTime = DateTime.Now;
         }
 
@@ -228,7 +226,8 @@ namespace Flow.Launcher.Plugin.Program
             catch (Exception)
             {
                 var title = Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_error");
-                var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"), info.FileName);
+                var message = string.Format(Context.API.GetTranslation("flowlauncher_plugin_program_run_failed"),
+                    info.FileName);
                 Context.API.ShowMsg(title, string.Format(message, info.FileName), string.Empty);
             }
         }
