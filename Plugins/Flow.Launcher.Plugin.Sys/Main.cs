@@ -148,7 +148,7 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
-                    Title = "Log Off",
+                    Title = "Log Off/Sign Out",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
