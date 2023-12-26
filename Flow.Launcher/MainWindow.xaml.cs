@@ -76,7 +76,7 @@ namespace Flow.Launcher
         {
             if (System.Windows.Clipboard.ContainsText())
             {
-                _viewModel.QueryText = System.Windows.Clipboard.GetText().Replace("\n", String.Empty).Replace("\r", String.Empty);
+                _viewModel.ChangeQueryText(System.Windows.Clipboard.GetText().Replace("\n", String.Empty).Replace("\r", String.Empty));
                 e.Handled = true;
             }
         }
