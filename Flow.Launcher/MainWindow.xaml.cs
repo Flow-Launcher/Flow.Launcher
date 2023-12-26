@@ -71,6 +71,15 @@ namespace Flow.Launcher
                 App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
             }
         }
+
+        private void OnPaste(object sender, ExecutedRoutedEventArgs e)
+        {
+            if (System.Windows.Clipboard.ContainsText())
+            {
+                _viewModel.QueryText = System.Windows.Clipboard.GetText().Replace("\n", String.Empty).Replace("\r", String.Empty);
+                e.Handled = true;
+            }
+        }
         
         private async void OnClosing(object sender, CancelEventArgs e)
         {
