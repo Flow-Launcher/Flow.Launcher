@@ -10,7 +10,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
