@@ -305,7 +305,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_update_all_title"),
                     SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_all_subtitle"),
                     IcoPath = icoPath,
-                    Action = e =>
+                    AsyncAction = async e =>
                     {
                         string message;
                         if (Settings.AutoRestartAfterChanging)
@@ -326,11 +326,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             return false;
                         }
 
-                        Parallel.ForEach(resultsForUpdate, plugin =>
+                        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
                         {
                             var downloadToFilePath = Path.Combine(Path.GetTempPath(), $"{plugin.Name}-{plugin.NewVersion}.zip");
 
-                            _ = Task.Run(async delegate
+                            try
                             {
                                 if (File.Exists(downloadToFilePath))
                                 {
@@ -341,18 +341,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     .ConfigureAwait(false);
 
                                 PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin, downloadToFilePath);
-
-                            }).ContinueWith(t =>
+                            }
+                            catch (Exception ex)
                             {
-                                Log.Exception("PluginsManager", $"Update failed for {plugin.Name}",
-                                    t.Exception.InnerException);
+                                Log.Exception("PluginsManager", $"Update failed for {plugin.Name}", ex.InnerException);
                                 Context.API.ShowMsg(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                                     string.Format(
                                         Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                                         plugin.Name));
-                            }, TaskContinuationOptions.OnlyOnFaulted);
-                        });
+                            }
+                        }));
 
                         if (Settings.AutoRestartAfterChanging)
                         {
