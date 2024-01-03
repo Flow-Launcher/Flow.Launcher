@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.Plugin
 
         protected abstract ProcessStartInfo StartInfo { get; set; }
 
-        public Process ClientProcess { get; set; }
+        protected Process ClientProcess { get; set; }
 
         public override async Task InitAsync(PluginInitContext context)
         {
@@ -32,6 +32,8 @@ namespace Flow.Launcher.Core.Plugin
             ArgumentNullException.ThrowIfNull(ClientProcess);
 
             SetupPipe(ClientProcess);
+
+            ErrorStream = ClientProcess.StandardError;
 
             await base.InitAsync(context);
         }
