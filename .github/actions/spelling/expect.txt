@@ -105,3 +105,4 @@ pluginsmanager
 alreadyexists
 JsonRPC
 JsonRPCV2
+Softpedia

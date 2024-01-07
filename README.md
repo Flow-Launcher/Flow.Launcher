@@ -222,28 +222,27 @@ And you can download <a href="https://github.com/Flow-Launcher/Prereleases/relea
 <a href="https://flowlauncher.com/docs/#/nodejs-develop-plugins"><img src="https://user-images.githubusercontent.com/6903107/147870069-9bde6fe6-d50c-4d85-8fde-fe5ae921ab8c.png" width="64"></a>
 </p>
 
-### SpotifyPremium
+### [SpotifyPremium](https://github.com/fow5040/Flow.Launcher.Plugin.SpotifyPremium)
 <img src="https://user-images.githubusercontent.com/6903107/144533469-da920295-8c36-46e8-89eb-a9cdd94b74ef.png" width="400">
 
-
-### Steam Search
+### [Steam Search](https://github.com/Garulf/Steam-Search)
 <img src="https://user-images.githubusercontent.com/6903107/144533523-afd79dca-a444-40e5-b2d9-6d3fe3aaece1.png" width="400">
 
 
-### Clipboard History
+### [Clipboard History](https://github.com/liberize/Flow.Launcher.Plugin.ClipboardHistory)
 <img src="https://user-images.githubusercontent.com/6903107/144533481-58e473fd-38d9-4604-861f-ad870770967d.png" width="400">
 
-### Home Assistant Commander
+### [Home Assistant Commander](https://github.com/Garulf/HA-Commander)
 <img src="https://user-images.githubusercontent.com/6903107/144533538-3caa2944-3037-4755-87b9-70fa918d2efa.png" width="400">
 
-### Colors
+### [Colors](https://github.com/Flow-Launcher/Flow.Launcher.Plugin.Color)
 
 <img src="https://user-images.githubusercontent.com/6903107/144533487-2caff162-a8f6-4577-af3f-d1b05d423ee4.png" width="400">
 
-### GitHub
+### [GitHub](https://github.com/JohnTheGr8/Flow.Plugin.Github)
 <img src="https://user-images.githubusercontent.com/6903107/144533497-8677f800-95c5-4758-8ca3-c96333ee1943.png" width="400">
 
-### Window Walker
+### [Window Walker](https://github.com/taooceros/Flow.Plugin.WindowWalker)
 <img src="https://user-images.githubusercontent.com/6903107/144533517-07bf011f-726c-4221-8657-0e442eca8a82.png" width="400">
 
 ......and <a href="https://flowlauncher.com/docs/#/plugins">more!</a>
