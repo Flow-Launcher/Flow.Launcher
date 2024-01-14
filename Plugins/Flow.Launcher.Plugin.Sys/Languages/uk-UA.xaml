@@ -24,8 +24,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Перевірити наявність оновлень Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Перегляньте документацію Flow Launcher для отримання додаткової допомоги та підказок щодо використання порад</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Відкрити каталог, де зберігаються налаштування Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Успішно</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Усі налаштування Flow Launcher збережено</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Перезавантажено всі відповідні дані плагіна</system:String>
