@@ -24,8 +24,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Flow Launcher 새 업데이트 확인</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Flow Launcher의 도움말 및 사용안내</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Flow Launcher의 설정이 저장된 위치 열기</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">성공</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">모든 Flow Launcher 설정을 저장했습니다</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">적용 가능한 모든 플러그인 데이터를 다시 로드했습니다</system:String>
