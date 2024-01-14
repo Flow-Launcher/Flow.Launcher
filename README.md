@@ -206,6 +206,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Prereleases/relea
 
 - Pause hotkey activation when you are playing games.
 - When in search window use Ctrl+F12 to toggle on/off.
+- Type `Toggle Game Mode`
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -307,6 +308,7 @@ And you can download <a href="https://github.com/Flow-Launcher/Prereleases/relea
 | Index Option           | Open Windows Search Index window                             |
 | Flow Launcher Tip      | Visit Flow Launcher's documentation for more help and how to use tips |
 | Flow Launcher UserData | Open the location where Flow Launcher's settings are stored  |
+| Toggle Game Mode       | Toggle Game Mode                                                            |
 
 ### 💁‍♂️ Tips
 
