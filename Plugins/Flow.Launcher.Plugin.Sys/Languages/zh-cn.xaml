@@ -24,8 +24,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">检查新的 Flow Launcher 更新</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">访问 Flow Launcher 的文档以获取更多帮助以及使用技巧</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">打开Flow Launcher 设置文件夹</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">成功</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">所有 Flow Launcher 设置已保存</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">重新加载了所有插件数据</system:String>
