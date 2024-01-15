@@ -246,13 +246,13 @@
     <system:String x:Key="fileManager_tips2">&quot;%f&quot; is an argument that represent the file path.  It is used to emphasize the file/folder name when opening a specific file location in 3rd party file manager. This argument is only available in the &quot;Arg for File&quot; item. If the file manager does not have that function, you can use &quot;%d&quot;.</system:String>
     <system:String x:Key="fileManager_name">Datei-Manager</system:String>
     <system:String x:Key="fileManager_profile_name">Profilname</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
+    <system:String x:Key="fileManager_path">Dateimanager-Pfad</system:String>
     <system:String x:Key="fileManager_directory_arg">Argumente für Ordner</system:String>
     <system:String x:Key="fileManager_file_arg">Argumente für Datei</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Standard-Webbrowser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
+    <system:String x:Key="defaultBrowser_tips">Die Standardeinstellung verwendet die Browser-Standardeinstellung des Betriebssystems. Falls angegeben, verwendet Flow diesen Browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser-Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browserpfad</system:String>
@@ -262,8 +262,8 @@
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Priorität ändern</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="priority_tips">Je höher die Zahl, desto höher wird das Ergebnis gewertet. Versuchen Sie es mit einer 5. Sollen die Ergebnisse tiefer sein als diejenigen anderer Plugins, verwenden Sie eine negative Zahl</system:String>
+    <system:String x:Key="invalidPriority">Bitte eine gültige Ganzzahl angeben für die Priorität!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Altes Aktionsschlüsselwort</system:String>
@@ -274,7 +274,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Neues Aktionsschlüsselwort darf nicht leer sein</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Aktionsschlüsselwort ist schon bei einem anderen Plugin in verwendung. Bitte stellen Sie ein anderes Aktionsschlüsselwort ein.</system:String>
     <system:String x:Key="success">Erfolgreich</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Erfolgreich abgeschlossen</system:String>
     <system:String x:Key="actionkeyword_tips">Benutzen Sie * wenn Sie ein Aktionsschlüsselwort definieren wollen.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -347,10 +347,10 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Tastenkombination</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Starte Flow-Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Fertig. Genießen Sie Flow Launcher. Die Tastenkombination nicht vergessen, um Flow Launcher zu starten :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
@@ -372,7 +372,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="RecommendShellDesc">Shell-Befehl</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows-Einstellungen</system:String>
-    <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronyms">nt</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Notizen</system:String>
 
 </ResourceDictionary>
