@@ -410,6 +410,18 @@ namespace Flow.Launcher.Plugin.Sys
                         context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
+                },
+                new Result
+                {
+                    Title = "Toggle Game Mode",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_toggle_game_mode"),
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
+                    Action = c =>
+                    {
+                        context.API.ToggleGameMode();
+                        return true;
+                    }
                 }
             });
 

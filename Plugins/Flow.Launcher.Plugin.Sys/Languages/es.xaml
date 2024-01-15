@@ -24,6 +24,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Busca actualizaciones de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Accede a la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abre la ubicación donde se almacena la configuración de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Correcto</system:String>
