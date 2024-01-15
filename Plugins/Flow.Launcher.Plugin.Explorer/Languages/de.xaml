@@ -2,12 +2,12 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Dialogues  -->
-    <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
+    <system:String x:Key="plugin_explorer_make_selection_warning">Zuerst eine Auswahl treffen</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Bitte wähle eine Ordnerverknüpfung</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Bist du sicher {0} zu löschen?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Sind Sie sicher, dass Sie diese Datei dauerhaft löschen möchten?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Löschen erfolgreich</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
     <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Die Zuweisung des globalen Aktions-Schlüsselwortes könnte zu viele Ergebnisse bei der Suche hervorrufen. Bitte wählen Sie ein spezielles Aktionswort</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Schnellzugriff kann nicht auf das globale Aktionswort gesetzt werden, wenn aktiviert. Bitte wählen Sie ein spezielles Aktionswort</system:String>
