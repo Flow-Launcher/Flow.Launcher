@@ -24,7 +24,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">Skontrolovať aktualizácie Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">V dokumentácii k aplikácii Flow Launcher nájdete ďalšiu pomoc a tipy na používanie</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Prepnúť herný režim</system:String>
 
         <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešné</system:String>
