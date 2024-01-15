@@ -274,5 +274,22 @@ namespace Flow.Launcher.Plugin
         /// Non-C# plugins should use this method
         /// </summary>
         public void OpenAppUri(string appUri);
+
+        /// <summary>
+        /// Toggles Game Mode. off -> on and backwards
+        /// </summary>
+        public void ToggleGameMode();
+
+        /// <summary>
+        /// Switches Game Mode to given value
+        /// </summary>
+        /// <param name="value">New Game Mode status</param>
+        public void SetGameMode(bool value);
+
+        /// <summary>
+        /// Representing Game Mode status
+        /// </summary>
+        /// <returns></returns>
+        public bool IsGameModeOn();
     }
 }
