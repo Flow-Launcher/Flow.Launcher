@@ -2474,27 +2474,81 @@
                                             </StackPanel>
                                         </Border>
 
-
                                         <Border
-                                            Margin="0"
-                                            BorderThickness="0"
+                                            Margin="0,12,0,12"
+                                            Padding="0"
+                                            CornerRadius="5"
                                             Style="{DynamicResource SettingGroupBox}">
-                                            <ItemsControl Style="{StaticResource SettingGrid}">
-                                                <StackPanel Style="{StaticResource TextPanel}">
-                                                    <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SoundEffect}" />
-                                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource SoundEffectTip}" />
-                                                </StackPanel>
-                                                <ui:ToggleSwitch
+                                            <StackPanel Orientation="Vertical">
+                                                <Border
+                                                    Margin="0"
+                                                    BorderThickness="0"
+                                                    Style="{DynamicResource SettingGroupBox}">
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SoundEffect}" />
+                                                            <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource SoundEffectTip}" />
+                                                        </StackPanel>
+                                                        <ui:ToggleSwitch
+                                                            x:Name="SoundEffect"
                                                             Grid.Row="0"
                                                             Grid.Column="2"
                                                             IsOn="{Binding UseSound, Mode=TwoWay}"
                                                             OffContent="{DynamicResource disable}"
                                                             OnContent="{DynamicResource enable}"
                                                             Style="{DynamicResource SideToggleSwitch}" />
-                                                <TextBlock Style="{StaticResource Glyph}">
+                                                        <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
-                                                </TextBlock>
-                                            </ItemsControl>
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                                <Separator
+                                                    Width="Auto"
+                                                    BorderThickness="1"
+                                                    Style="{StaticResource SettingSeparatorStyle}" />
+                                                <Border Margin="0" BorderThickness="0">
+                                                    <Border.Style>
+                                                        <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=SoundEffect, Path=IsOn}" Value="True">
+                                                                    <Setter Property="Visibility" Value="Visible" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+
+                                                    <ItemsControl Style="{StaticResource SettingGrid}">
+                                                        <StackPanel Style="{StaticResource TextPanel}">
+                                                            <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SoundEffectVolume}" />
+                                                            <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource SoundEffectVolumeTip}" />
+                                                        </StackPanel>
+                                                        <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                            <TextBlock
+                                                                Width="Auto"
+                                                                Margin="0,0,8,2"
+                                                                VerticalAlignment="Center"
+                                                                Foreground="{DynamicResource Color05B}"
+                                                                Text="{Binding ElementName=SoundEffectValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                                TextAlignment="Right" />
+                                                            <Slider
+                                                                Name="SoundEffectValue"
+                                                                Width="250"
+                                                                Margin="0,0,18,0"
+                                                                VerticalAlignment="Center"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="100"
+                                                                Minimum="0"
+                                                                TickFrequency="1"
+                                                                Value="{Binding SoundEffectVolume, Mode=TwoWay}" />
+                                                        </StackPanel>
+                                                        <TextBlock Style="{StaticResource Glyph}"> 
+                                                            &#xe994;
+                                                        </TextBlock>
+                                                    </ItemsControl>
+                                                </Border>
+                                            </StackPanel>
                                         </Border>
 
                                         <Border Margin="0,12,0,12" Style="{DynamicResource SettingGroupBox}">

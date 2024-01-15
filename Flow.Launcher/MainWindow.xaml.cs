@@ -23,8 +23,7 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
-using System.Media;
-using static Flow.Launcher.ViewModel.SettingWindowViewModel;
+using System.Windows.Media;
 
 namespace Flow.Launcher
 {
@@ -39,7 +38,7 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
         private bool _animating;
-        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+        MediaPlayer animationSound = new MediaPlayer();
 
         #endregion
 
@@ -113,6 +112,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
+                                    animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                                    animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
