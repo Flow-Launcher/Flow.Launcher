@@ -30,9 +30,9 @@
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Veuillez vérifier si vous pouvez vous connecter à github.com. Cette erreur signifie que vous ne serez pas en mesure d'installer ou de mettre à jour des plugins.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Mettre à jour tous les plugins</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Voulez-vous mettre à jour tous les plugins ?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Voulez-vous mettre à jour {0} plugins ?{1}Flow Launcher redémarrera après la mise à jour de tous les plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Voulez-vous mettre à jour {0} plugins ?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins mis à jour avec succès. Redémarrage de Flow, veuillez patienter...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} mis à jour avec succès. Redémarrage de Flow, veuillez patienter...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installation depuis une source inconnue</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Vous installez ce plugin à partir d'une source inconnue et il peut contenir des risques !{0}{0}Veuillez vous assurer que vous comprenez d'où provient ce plugin et qu'il est sûr.{0}{0}Voulez-vous continuer ?{0}{0}(Vous pouvez désactiver cet avertissement via les paramètres)</system:String>
