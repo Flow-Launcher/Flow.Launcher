@@ -28,11 +28,11 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stiahnutie manifestu pluginu zlyhalo</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť ku github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Aktualizovať všetky pluginy</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Chcete aktualizovať všetky pluginy?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Chcete aktualizovať pluginy ({0})?{1}Po aktualizácii všetkých pluginov sa Flow Launcher reštartuje.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Chcete aktualizovať pluginy ({0})?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">Pluginy úspešne aktualizované ({0}). Flow sa reštartuje, čakajte…</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} bol úspešne aktualizovaný. Reštartuje sa Flow, čakajte, prosím...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Inštalácia z neznámeho zdroja</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Tento plugin inštalujete z neznámeho zdroja a môže obsahovať potenciálne riziká!{0}{0}Uistite sa, že rozumiete, odkiaľ tento plugin pochádza, a že je bezpečný.{0}{0}Chcete pokračovať?{0}{0}(Toto upozornenie môžete vypnúť v nastaveniach)</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} bol úspešne nainštalovaný. Prosím, reštartuje Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} bol úspešne odinštalovaný. Prosím, reštartuje Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} bol úspešne aktualizovaný. Prosím, reštartuje Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">Pluginy úspešne aktualizované ({0}). Reštartuje Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} už bol upravený. Prosím, reštartuje Flow pred ďalšími zmenami.</system:String>
    
     <!--  Plugin Infos  -->
