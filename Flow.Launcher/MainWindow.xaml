@@ -221,6 +221,7 @@
                                 Visibility="Visible">
                                 <TextBox.CommandBindings>
                                     <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
+                                    <CommandBinding Command="ApplicationCommands.Paste" Executed="OnPaste" />
                                 </TextBox.CommandBindings>
                                 <TextBox.ContextMenu>
                                     <ContextMenu MinWidth="160">
