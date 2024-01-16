@@ -94,35 +94,36 @@ namespace Flow.Launcher.Plugin.Sys
                 return "Title Not Found";
             }
 
+            var translatedTitle = context.API.GetTranslation(pair.Value);
             var englishTitleMatch = StringMatcher.FuzzySearch(query.Search, pair.Key);
-            var translatedTitleMatch = StringMatcher.FuzzySearch(query.Search, pair.Value);
+            var translatedTitleMatch = StringMatcher.FuzzySearch(query.Search, translatedTitle);
 
-            return englishTitleMatch.Score >= translatedTitleMatch.Score ? pair.Key : pair.Value;
+            return englishTitleMatch.Score >= translatedTitleMatch.Score ? pair.Key : translatedTitle;
         }
 
         public void Init(PluginInitContext context)
         {
             this.context = context;
             KeywordTitleMappings = new Dictionary<string, string>{
-                {"Shutdown", context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer_cmd")},
-                {"Restart", context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer_cmd")},
-                {"Restart With Advanced Boot Options", context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced_cmd")},
-                {"Log Off/Sign Out", context.API.GetTranslation("flowlauncher_plugin_sys_log_off_cmd")},
-                {"Lock", context.API.GetTranslation("flowlauncher_plugin_sys_lock_cmd")},
-                {"Sleep", context.API.GetTranslation("flowlauncher_plugin_sys_sleep_cmd")},
-                {"Hibernate", context.API.GetTranslation("flowlauncher_plugin_sys_hibernate_cmd")},
-                {"Index Option", context.API.GetTranslation("flowlauncher_plugin_sys_indexoption_cmd")},
-                {"Empty Recycle Bin", context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin_cmd")},
-                {"Open Recycle Bin", context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin_cmd")},
-                {"Exit", context.API.GetTranslation("flowlauncher_plugin_sys_exit_cmd")},
-                {"Save Settings", context.API.GetTranslation("flowlauncher_plugin_sys_save_all_settings_cmd")},
-                {"Restart Flow Launcher", context.API.GetTranslation("flowlauncher_plugin_sys_restart_cmd")},
-                {"Settings", context.API.GetTranslation("flowlauncher_plugin_sys_setting_cmd")},
-                {"Reload Plugin Data", context.API.GetTranslation("flowlauncher_plugin_sys_reload_plugin_data_cmd")},
-                {"Check For Update", context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update_cmd")},
-                {"Open Log Location", context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location_cmd")},
-                {"Flow Launcher Tips", context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips_cmd")},
-                {"Flow Launcher UserData Folder", context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location_cmd")}
+                {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
+                {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
+                {"Restart With Advanced Boot Options", "flowlauncher_plugin_sys_restart_advanced_cmd"},
+                {"Log Off/Sign Out", "flowlauncher_plugin_sys_log_off_cmd"},
+                {"Lock", "flowlauncher_plugin_sys_lock_cmd"},
+                {"Sleep", "flowlauncher_plugin_sys_sleep_cmd"},
+                {"Hibernate", "flowlauncher_plugin_sys_hibernate_cmd"},
+                {"Index Option", "flowlauncher_plugin_sys_indexoption_cmd"},
+                {"Empty Recycle Bin", "flowlauncher_plugin_sys_emptyrecyclebin_cmd"},
+                {"Open Recycle Bin", "flowlauncher_plugin_sys_openrecyclebin_cmd"},
+                {"Exit", "flowlauncher_plugin_sys_exit_cmd"},
+                {"Save Settings", "flowlauncher_plugin_sys_save_all_settings_cmd"},
+                {"Restart Flow Launcher", "flowlauncher_plugin_sys_restart_cmd"},
+                {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
+                {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
+                {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
+                {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
+                {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
+                {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"}
             };
         }
 
