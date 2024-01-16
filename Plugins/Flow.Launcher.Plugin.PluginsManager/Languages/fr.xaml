@@ -28,8 +28,8 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Ce plugin est déjà installé</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Échec du téléchargement du Plugin Manifest</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Veuillez vérifier si vous pouvez vous connecter à github.com. Cette erreur signifie que vous ne serez pas en mesure d'installer ou de mettre à jour des plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Mettre à jour tous les plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Voulez-vous mettre à jour tous les plugins ?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} installé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} désinstallé avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins mis à jour avec succès. Veuillez redémarrer Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Le plugin {0} a déjà été modifié. Veuillez redémarrer Flow avant de faire d'autres modifications.</system:String>
    
     <!--  Plugin Infos  -->
