@@ -52,12 +52,12 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                 }
 
+                contextMenus.Add(CreateOpenContainingFolderResult(record));
+
                 if (record.Type == ResultType.File)
                 {
                     contextMenus.Add(CreateOpenWithMenu(record));
                 }
-
-                contextMenus.Add(CreateOpenContainingFolderResult(record));
 
                 if (record.WindowsIndexed)
                 {
@@ -450,7 +450,8 @@ namespace Flow.Launcher.Plugin.Explorer
                     Process.Start("rundll32.exe", $"{Path.Combine(Environment.SystemDirectory, "shell32.dll")},OpenAs_RunDLL {record.FullPath}");
                     return true;
                 },
-                IcoPath = Constants.ShowContextMenuImagePath
+                IcoPath = Constants.ShowContextMenuImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
             };
         }
 
