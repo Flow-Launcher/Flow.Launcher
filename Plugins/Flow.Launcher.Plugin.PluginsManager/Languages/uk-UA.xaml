@@ -28,6 +28,11 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Цей плагін вже встановлено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Не вдалося завантажити маніфест плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Будь ласка, перевірте, чи можете ви підключитися до github.com. Ця помилка означає, що ви не можете встановлювати або оновлювати плагіни.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Плагін {0} успішно оновлено. Перезапускаємо Flow, будь ласка, зачекайте...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Встановлення з невідомого джерела</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Ви встановлюєте цей плагін з невідомого джерела, тому він може бути потенційно небезпечним!{0}{0}Переконайтеся, що ви розумієте, звідки цей плагін, і що він є безпечним.{0}{0}Бажаєте продовжити?{0}{0}(Ви можете вимкнути це попередження через налаштування)</system:String>
@@ -35,6 +40,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Плагін {0} успішно встановлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Плагін {0} успішно видалено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Плагін {0} успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Плагін {0} вже було змінено. Будь ласка, перезапустіть Flow, перш ніж вносити будь-які подальші зміни.</system:String>
    
     <!--  Plugin Infos  -->
