@@ -1932,7 +1932,7 @@
     <value>Turn off unnecessary animations</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>Créer un point de restauration</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
     <value>Turn off automatic window arrangement</value>
@@ -1950,7 +1950,7 @@
     <value>Change cursor blink rate</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
-    <value>Add or remove programs</value>
+    <value>Ajouter ou supprimer des programmes</value>
   </data>
   <data name="CreateAPasswordResetDisk" xml:space="preserve">
     <value>Créer un disque de réinitialisation de mot de passe</value>
