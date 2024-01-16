@@ -123,7 +123,8 @@ namespace Flow.Launcher.Plugin.Sys
                 {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
                 {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
                 {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
-                {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"}
+                {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
+                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"}
             };
         }
 
