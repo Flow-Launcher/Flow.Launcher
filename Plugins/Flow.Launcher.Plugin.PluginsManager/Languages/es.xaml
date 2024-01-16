@@ -28,6 +28,11 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Complemento {0} actualizado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Instalando desde una fuente desconocida</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">¡Está instalando este complemento desde una fuente desconocida y puede contener riesgos potenciales!{0}{0}Por favor, asegúrese de saber de dónde procede este complemento y de que es seguro.{0}{0}¿Aún así desea continuar?{0}{0}(Puede desactivar esta advertencia en la configuración)</system:String>
@@ -35,6 +40,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Complemento {0} instalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Complemento {0} desinstalado correctamente. Por favor, reinicie Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Complemento {0} actualizado correctamente. Por favor, reinicie Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">El complemento {0} ya ha sido modificado. Por favor, reinicie Flow antes de realizar más cambios.</system:String>
    
     <!--  Plugin Infos  -->
