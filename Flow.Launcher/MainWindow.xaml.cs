@@ -49,7 +49,9 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            InitializePosition();                        
+            InitializePosition();
+
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
         }
 
         public MainWindow()
@@ -112,7 +114,7 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+                                    animationSound.Position = TimeSpan.Zero;
                                     animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
