@@ -451,7 +451,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     return true;
                 },
                 IcoPath = Constants.ShowContextMenuImagePath,
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue7ac"),
             };
         }
 
