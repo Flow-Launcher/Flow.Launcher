@@ -2498,7 +2498,7 @@
                                                             OnContent="{DynamicResource enable}"
                                                             Style="{DynamicResource SideToggleSwitch}" />
                                                         <TextBlock Style="{StaticResource Glyph}">
-                                                            &#xe994;
+                                                            &#xe7f5;
                                                         </TextBlock>
                                                     </ItemsControl>
                                                 </Border>
