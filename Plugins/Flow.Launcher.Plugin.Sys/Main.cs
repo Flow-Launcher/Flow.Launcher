@@ -84,21 +84,23 @@ namespace Flow.Launcher.Plugin.Sys
 
         private string GetDynamicTitle(Query query, Result result)
         {
-            var pair = KeywordTitleMappings
-                .Where(kvp => kvp.Key == result.Title && kvp.Key != kvp.Value)
-                .FirstOrDefault();
-
-            if (pair.Equals(default))
+            if (!KeywordTitleMappings.TryGetValue(result.Title, out var translationKey))
             {
                 Log.Error($"Dynamic Title not found for: {result.Title}");
                 return "Title Not Found";
             }
 
-            var translatedTitle = context.API.GetTranslation(pair.Value);
-            var englishTitleMatch = StringMatcher.FuzzySearch(query.Search, pair.Key);
+            var translatedTitle = context.API.GetTranslation(translationKey);
+
+            if (result.Title == translatedTitle)
+            {
+                return result.Title;
+            }
+
+            var englishTitleMatch = StringMatcher.FuzzySearch(query.Search, result.Title);
             var translatedTitleMatch = StringMatcher.FuzzySearch(query.Search, translatedTitle);
 
-            return englishTitleMatch.Score >= translatedTitleMatch.Score ? pair.Key : translatedTitle;
+            return englishTitleMatch.Score >= translatedTitleMatch.Score ? result.Title : translatedTitle;
         }
 
         public void Init(PluginInitContext context)
