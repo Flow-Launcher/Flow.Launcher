@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Open the location where Flow Launcher's settings are stored</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">成</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">All Flow Launcher settings saved</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Reloaded all applicable plugin data</system:String>
