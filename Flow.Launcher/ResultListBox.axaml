@@ -12,12 +12,12 @@
         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
         SelectionMode="AlwaysSelected"
-        AutoScrollToSelectedItem="True"
+        AutoScrollToSelectedItem="False"
         IsVisible="{Binding Visibility}"
         MaxHeight="{Binding MaxHeight}">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Button HorizontalAlignment="Stretch" Height="52">
+                <Button HorizontalAlignment="Stretch" Height="40">
                     <Button.Template>
                         <ControlTemplate>
                             <ContentPresenter Content="{TemplateBinding Button.Content}" />

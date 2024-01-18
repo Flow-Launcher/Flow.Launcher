@@ -29,15 +29,15 @@ namespace Flow.Launcher.ViewModel
 
         private async void LoadIconAsync()
         {
-            Image = await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
+            Image = null; // await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
         }
 
         public ImageSource Image
         {
             get
             {
-                if (_image == ImageLoader.MissingImage)
-                    LoadIconAsync();
+                // if (_image == ImageLoader.MissingImage)
+                //     LoadIconAsync();
 
                 return _image;
             }
@@ -69,7 +69,8 @@ namespace Flow.Launcher.ViewModel
                         ? new Control()
                         : settingProvider.CreateSettingPanel()
                 : null;
-        private ImageSource _image = ImageLoader.MissingImage;
+
+        private ImageSource _image = default;// ImageLoader.MissingImage;
 
         public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";

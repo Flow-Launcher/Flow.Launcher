@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Media;
+using Avalonia.Media.Imaging;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -12,9 +13,9 @@ namespace Flow.Launcher.Infrastructure.Image
     {
 
         public int usage;
-        public ImageSource imageSource;
+        public Bitmap imageSource;
 
-        public ImageUsage(int usage, ImageSource image)
+        public ImageUsage(int usage, Bitmap image)
         {
             this.usage = usage;
             imageSource = image;
@@ -36,7 +37,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        public ImageSource this[string path, bool isFullImage = false]
+        public Bitmap this[string path, bool isFullImage = false]
         {
             get
             {
@@ -86,7 +87,7 @@ namespace Flow.Launcher.Infrastructure.Image
             return key is not null && Data.ContainsKey((key, isFullImage)) && Data[(key, isFullImage)].imageSource != null;
         }
 
-        public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
+        public bool TryGetValue(string key, bool isFullImage, out Bitmap image)
         {
             if (key is not null)
             {

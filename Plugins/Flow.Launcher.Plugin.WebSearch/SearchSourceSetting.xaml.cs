@@ -42,7 +42,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
             _viewModel.SetupCustomImagesDirectory();
 
-            imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(_searchSource.IconPath);
+            // imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(_searchSource.IconPath);
         }
 
         private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -140,7 +140,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
                         MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
-                    imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
+                    // imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }
             }
         }

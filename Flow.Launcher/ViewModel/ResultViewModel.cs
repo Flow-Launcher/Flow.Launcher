@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Avalonia.Media.Imaging;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -146,10 +147,10 @@ namespace Flow.Launcher.ViewModel
         private volatile bool ImageLoaded;
         private volatile bool PreviewImageLoaded;
 
-        private ImageSource image = ImageLoader.LoadingImage;
-        private ImageSource previewImage = ImageLoader.LoadingImage;
+        private Bitmap image = default; //ImageLoader.LoadingImage;
+        private Bitmap previewImage = default; //ImageLoader.LoadingImage;
 
-        public ImageSource Image
+        public Bitmap Image
         {
             get
             {
@@ -164,7 +165,7 @@ namespace Flow.Launcher.ViewModel
             private set => image = value;
         }
 
-        public ImageSource PreviewImage
+        public Bitmap PreviewImage
         {
             get => previewImage;
             private set => previewImage = value;
@@ -177,15 +178,15 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
+        private async Task<Bitmap> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
             bool loadFullImage)
         {
             if (string.IsNullOrEmpty(imagePath) && icon != null)
             {
                 try
                 {
-                    var image = icon();
-                    return image;
+                    // var image = icon();
+                    return default; // image;
                 }
                 catch (Exception e)
                 {
@@ -195,14 +196,14 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+            return default; // await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         private async Task LoadImageAsync()
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, false, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, false, out var img))
             {
                 image = img;
             }
@@ -217,7 +218,7 @@ namespace Flow.Launcher.ViewModel
         {
             var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
             var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, true, out ImageSource img))
+            if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {
                 previewImage = img;
             }

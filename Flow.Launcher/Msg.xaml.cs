@@ -29,22 +29,24 @@ namespace Flow.Launcher
 
             // Create the fade out storyboard
             fadeOutStoryboard.Completed += fadeOutStoryboard_Completed;
-            DoubleAnimation fadeOutAnimation = new DoubleAnimation(dipWorkingArea.Y - Height, dipWorkingArea.Y, new Duration(TimeSpan.FromSeconds(5)))
-            {
-                AccelerationRatio = 0.2
-            };
+            DoubleAnimation fadeOutAnimation =
+                new DoubleAnimation(dipWorkingArea.Y - Height, dipWorkingArea.Y, new Duration(TimeSpan.FromSeconds(5)))
+                {
+                    AccelerationRatio = 0.2
+                };
             Storyboard.SetTarget(fadeOutAnimation, this);
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(TopProperty));
             fadeOutStoryboard.Children.Add(fadeOutAnimation);
 
             _ = LoadImageAsync();
-            
+
             imgClose.MouseUp += imgClose_MouseUp;
         }
 
         private async System.Threading.Tasks.Task LoadImageAsync()
         {
-            imgClose.Source = await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            imgClose.Source =
+                default; //await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -69,26 +71,26 @@ namespace Flow.Launcher
             {
                 tbSubTitle.Visibility = Visibility.Collapsed;
             }
-            
+
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                // imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
-            else 
+            else
             {
-                imgIco.Source = await ImageLoader.LoadAsync(iconPath);
+                // imgIco.Source = await ImageLoader.LoadAsync(iconPath);
             }
 
             Show();
 
             await Dispatcher.InvokeAsync(async () =>
-                                   {
-                                       if (!closing)
-                                       {
-                                           closing = true;
-                                           await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
-                                       }
-                                   });
+            {
+                if (!closing)
+                {
+                    closing = true;
+                    await Dispatcher.InvokeAsync(fadeOutStoryboard.Begin);
+                }
+            });
         }
     }
 }
