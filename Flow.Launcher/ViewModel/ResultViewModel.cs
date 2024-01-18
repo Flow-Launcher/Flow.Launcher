@@ -58,11 +58,15 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
+            
+            LoadImage();
         }
 
         private Settings Settings { get; }
 
         public bool ShowOpenResultHotkey => Settings.ShowOpenResultHotkey;
+
+        public Bitmap DefaultImage => ImageLoader.LoadingImage;
 
         public bool ShowDefaultPreview => Result.PreviewPanel != null;
 
@@ -144,32 +148,9 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
-        private volatile bool PreviewImageLoaded;
+        public Task<Bitmap> Image { get; set; }
 
-        private Bitmap image = default; //ImageLoader.LoadingImage;
-        private Bitmap previewImage = default; //ImageLoader.LoadingImage;
-
-        public Bitmap Image
-        {
-            get
-            {
-                if (!ImageLoaded)
-                {
-                    ImageLoaded = true;
-                    _ = LoadImageAsync();
-                }
-
-                return image;
-            }
-            private set => image = value;
-        }
-
-        public Bitmap PreviewImage
-        {
-            get => previewImage;
-            private set => previewImage = value;
-        }
+        public Task<Bitmap> PreviewImage { get; set; }
 
         /// <summary>
         /// Determines if to use the full width of the preview panel
@@ -199,47 +180,36 @@ namespace Flow.Launcher.ViewModel
             return default; // await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
-        private async Task LoadImageAsync()
+        private void LoadImage()
         {
             var imagePath = Result.IcoPath;
             var iconDelegate = Result.Icon;
             if (ImageLoader.TryGetValue(imagePath, false, out var img))
             {
-                image = img;
+                Image = Task.FromResult(img);
             }
             else
             {
                 // We need to modify the property not field here to trigger the OnPropertyChanged event
-                Image = await LoadImageInternalAsync(imagePath, iconDelegate, false).ConfigureAwait(false);
-            }
-        }
-
-        private async Task LoadPreviewImageAsync()
-        {
-            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
-            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, true, out var img))
-            {
-                previewImage = img;
-            }
-            else
-            {
-                // We need to modify the property not field here to trigger the OnPropertyChanged event
-                PreviewImage = await LoadImageInternalAsync(imagePath, iconDelegate, true).ConfigureAwait(false);
+                Image = LoadImageInternalAsync(imagePath, iconDelegate, false);
             }
         }
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview)
+            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
+            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
+            if (ImageLoader.TryGetValue(imagePath, true, out var img))
             {
-                if (!PreviewImageLoaded && ShowPreviewImage)
-                {
-                    PreviewImageLoaded = true;
-                    _ = LoadPreviewImageAsync();
-                }
+                PreviewImage = Task.FromResult(img);
+            }
+            else
+            {
+                // We need to modify the property not field here to trigger the OnPropertyChanged event
+                PreviewImage = LoadImageInternalAsync(imagePath, iconDelegate, true);
             }
         }
+
 
         public Result Result { get; }
 

@@ -83,7 +83,7 @@
                                         Margin="0,0,0,0"
                                         HorizontalAlignment="Center"
                                         IsHitTestVisible="False"
-                                        Source="{Binding Image, TargetNullValue={x:Null}}"
+                                        Source="{Binding Image^, FallbackValue={Binding DefaultImage}, TargetNullValue={x:Null}}"
                                         Stretch="Uniform"
                                         IsVisible="{Binding ShowIcon}">
                                     </Image>
