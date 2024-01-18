@@ -134,6 +134,7 @@ namespace Flow.Launcher.Core.Resource
 
         private void RemoveOldLanguageFiles()
         {
+            return;
             var dicts = Application.Current.Resources.MergedDictionaries;
             foreach (var r in _oldResources)
             {
@@ -143,6 +144,7 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadLanguage(Language language)
         {
+            return;
             var dicts = Application.Current.Resources.MergedDictionaries;
             var filename = $"{language.LanguageCode}{Extension}";
             var files = _languageDirectories
@@ -171,6 +173,7 @@ namespace Flow.Launcher.Core.Resource
 
         public string GetTranslation(string key)
         {
+            return "";
             var translation = Application.Current.TryFindResource(key);
             if (translation is string)
             {

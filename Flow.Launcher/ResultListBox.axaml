@@ -1,0 +1,191 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.ResultListBox"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converter="using:Flow.Launcher.Converters"
+    xmlns:vm="using:Flow.Launcher.ViewModel"
+    x:DataType="vm:ResultsViewModel">
+    <ListBox
+        HorizontalAlignment="Stretch"
+        Focusable="False"
+        ItemsSource="{Binding Results}"
+        SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
+        SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+        SelectionMode="AlwaysSelected"
+        AutoScrollToSelectedItem="True"
+        IsVisible="{Binding Visibility}"
+        MaxHeight="{Binding MaxHeight}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Button HorizontalAlignment="Stretch" Height="52">
+                    <Button.Template>
+                        <ControlTemplate>
+                            <ContentPresenter Content="{TemplateBinding Button.Content}" />
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Content>
+                        <Grid
+                            Margin="0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            Cursor="Hand"
+                            UseLayoutRounding="False">
+                            <Grid.Resources>
+                                <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
+                                <converter:OrdinalConverter x:Key="OrdinalConverter" />
+                                <converter:OpenResultHotkeyVisibilityConverter
+                                    x:Key="OpenResultHotkeyVisibilityConverter" />
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="9*" />
+                                <ColumnDefinition Width="Auto" MinWidth="8" />
+                            </Grid.ColumnDefinitions>
+                            <StackPanel
+                                x:Name="HotkeyArea"
+                                Grid.Column="2"
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding ShowOpenResultHotkey}">
+                                <TextBlock
+                                    x:Name="Hotkey"
+                                    Margin="12,0,12,0"
+                                    Padding="0,0,0,0"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center">
+                                    <TextBlock.Text>
+                                        <!-- <MultiBinding StringFormat="{}{0}+{1}"> -->
+                                        <!--     <Binding Path="OpenResultModifiers" /> -->
+                                        <!--     <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" -->
+                                        <!--              RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" /> -->
+                                        <!-- </MultiBinding> -->
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </StackPanel>
+
+                            <Grid Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <Border
+                                    x:Name="Bullet"
+                                    Grid.Column="0" />
+
+                                <Border
+                                    Grid.Column="1"
+                                    Margin="9,0,0,0"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <Image
+                                        x:Name="ImageIcon"
+                                        Margin="0,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        IsHitTestVisible="False"
+                                        Source="{Binding Image, TargetNullValue={x:Null}}"
+                                        Stretch="Uniform"
+                                        IsVisible="{Binding ShowIcon}">
+                                    </Image>
+                                </Border>
+                                <Border
+                                    Grid.Column="1"
+                                    Margin="9,0,0,0"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0">
+                                    <TextBlock
+                                        x:Name="GlyphIcon"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{Binding Glyph.FontFamily}"
+                                        Text="{Binding Glyph.Glyph}"
+                                        IsVisible="{Binding ShowGlyph}" />
+                                </Border>
+                            </Grid>
+
+                            <Grid
+                                Grid.Column="1"
+                                Margin="6,0,10,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <ProgressBar
+                                    x:Name="progressbarResult"
+                                    Grid.Row="0"
+                                    Foreground="{Binding Result.ProgressBarColor}"
+                                    Value="{Binding ResultProgress, Mode=OneWay}">
+                                </ProgressBar>
+                                <TextBlock
+                                    x:Name="Title"
+                                    Grid.Row="0"
+                                    VerticalAlignment="Center"
+                                    DockPanel.Dock="Left"
+                                    IsEnabled="False"
+                                    Text="{Binding Result.Title}"
+                                    TextTrimming="CharacterEllipsis"
+                                    ToolTip.Tip="{Binding ShowTitleToolTip}">
+                                    <!-- <vm:ResultsViewModel.FormattedText> -->
+                                    <!--     <MultiBinding Converter="{StaticResource HighlightTextConverter}"> -->
+                                    <!--         <Binding Path="Result.Title" /> -->
+                                    <!--         <Binding Path="Result.TitleHighlightData" /> -->
+                                    <!--     </MultiBinding> -->
+                                    <!-- </vm:ResultsViewModel.FormattedText> -->
+                                </TextBlock>
+                                <TextBlock
+                                    x:Name="SubTitle"
+                                    Grid.Row="1"
+                                    IsEnabled="False"
+                                    Text="{Binding Result.SubTitle}"
+                                    TextTrimming="CharacterEllipsis"
+                                    ToolTip.Tip="{Binding ShowSubTitleToolTip}" />
+                            </Grid>
+
+                        </Grid>
+                    </Button.Content>
+                </Button>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+        <!--  http://stackoverflow.com/questions/16819577/setting-background-color-or-wpf-4-0-listbox-windows-8/#16820062  -->
+        <!-- <ListBox.ItemContainerStyle> -->
+        <!--     <Style TargetType="{x:Type ListBoxItem}"> -->
+        <!--         <EventSetter Event="MouseEnter" Handler="OnMouseEnter" /> -->
+        <!--         <EventSetter Event="MouseMove" Handler="OnMouseMove" /> -->
+        <!--         <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" /> -->
+        <!--         <Setter Property="Margin" Value="0" /> -->
+        <!--         <Setter Property="Padding" Value="0" /> -->
+        <!--         <Setter Property="BorderThickness" Value="0" /> -->
+        <!--         <Setter Property="Template"> -->
+        <!--             <Setter.Value> -->
+        <!--                 <ControlTemplate TargetType="{x:Type ListBoxItem}"> -->
+        <!--                     <Border -->
+        <!--                         x:Name="Bd" -->
+        <!--                         Margin="{DynamicResource ItemMargin}" -->
+        <!--                         Background="{TemplateBinding Background}" -->
+        <!--                         BorderBrush="{TemplateBinding BorderBrush}" -->
+        <!--                         CornerRadius="{DynamicResource ItemRadius}" -->
+        <!--                         SnapsToDevicePixels="True"> -->
+        <!--                         <ContentPresenter -->
+        <!--                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" -->
+        <!--                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}" -->
+        <!--                             Content="{TemplateBinding Content}" -->
+        <!--                             ContentStringFormat="{TemplateBinding ContentStringFormat}" -->
+        <!--                             ContentTemplate="{TemplateBinding ContentTemplate}" -->
+        <!--                             SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" /> -->
+        <!--                     </Border> -->
+        <!--                     <ControlTemplate.Triggers> -->
+        <!--                         <Trigger Property="IsSelected" Value="True"> -->
+        <!--                             <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemSelectedBackgroundColor}" /> -->
+        <!--                             <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource ItemSelectedBackgroundColor}" /> -->
+        <!--                         </Trigger> -->
+        <!--                     </ControlTemplate.Triggers> -->
+        <!--                 </ControlTemplate> -->
+        <!--             </Setter.Value> -->
+        <!--         </Setter> -->
+        <!--     </Style> -->
+        <!-- </ListBox.ItemContainerStyle> -->
+    </ListBox>
+
+</UserControl>

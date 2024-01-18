@@ -8,7 +8,8 @@ using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
+using Avalonia;
+using Avalonia.Threading;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
@@ -119,8 +120,10 @@ namespace Flow.Launcher.Helper
         DWMWINDOWMAXIMIZEDCHANGE = 0x0321,
 
         #region Windows 7
+
         DWMSENDICONICTHUMBNAIL = 0x0323,
         DWMSENDICONICLIVEPREVIEWBITMAP = 0x0326,
+
         #endregion
 
         USER = 0x0400,
@@ -140,7 +143,8 @@ namespace Flow.Launcher.Helper
         public delegate IntPtr MessageHandler(WM uMsg, IntPtr wParam, IntPtr lParam, out bool handled);
 
         [DllImport("shell32.dll", EntryPoint = "CommandLineToArgvW", CharSet = CharSet.Unicode)]
-        private static extern IntPtr _CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string cmdLine, out int numArgs);
+        private static extern IntPtr _CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string cmdLine,
+            out int numArgs);
 
 
         [DllImport("kernel32.dll", EntryPoint = "LocalFree", SetLastError = true)]
@@ -159,6 +163,7 @@ namespace Flow.Launcher.Helper
                 {
                     throw new Win32Exception();
                 }
+
                 var result = new string[numArgs];
 
                 for (int i = 0; i < numArgs; i++)
@@ -171,19 +176,17 @@ namespace Flow.Launcher.Helper
             }
             finally
             {
-
                 IntPtr p = _LocalFree(argv);
                 // Otherwise LocalFree failed.
                 // Assert.AreEqual(IntPtr.Zero, p);
             }
         }
+    }
 
-    } 
-
-    public interface ISingleInstanceApp 
-    { 
-         void OnSecondAppStarted(); 
-    } 
+    public interface ISingleInstanceApp
+    {
+        void OnSecondAppStarted();
+    }
 
     /// <summary>
     /// This class checks to make sure that only one instance of 
@@ -196,9 +199,9 @@ namespace Flow.Launcher.Helper
     /// running as Administrator, can activate it with command line arguments.
     /// For most apps, this will not be much of an issue.
     /// </remarks>
-    public static class SingleInstance<TApplication>  
-                where   TApplication: Application ,  ISingleInstanceApp 
-                                    
+    public static class SingleInstance<TApplication>
+        where TApplication : Avalonia.Application, ISingleInstanceApp
+
     {
         #region Private Fields
 
@@ -230,7 +233,7 @@ namespace Flow.Launcher.Helper
         /// If not, activates the first instance.
         /// </summary>
         /// <returns>True if this is the first instance of the application.</returns>
-        public static bool InitializeAsFirstInstance( string uniqueName )
+        public static bool InitializeAsFirstInstance(string uniqueName)
         {
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = uniqueName + Environment.UserName;
@@ -268,7 +271,7 @@ namespace Flow.Launcher.Helper
         /// Gets command line args - for ClickOnce deployed applications, command line args may not be passed directly, they have to be retrieved.
         /// </summary>
         /// <returns>List of command line arg strings.</returns>
-        private static IList<string> GetCommandLineArgs( string uniqueApplicationName )
+        private static IList<string> GetCommandLineArgs(string uniqueApplicationName)
         {
             string[] args = null;
 
@@ -279,7 +282,6 @@ namespace Flow.Launcher.Helper
             }
             catch (NotSupportedException)
             {
-              
                 // The application was clickonce deployed
                 // Clickonce deployed apps cannot recieve traditional commandline arguments
                 // As a workaround commandline arguments can be written to a shared location before 
@@ -323,15 +325,17 @@ namespace Flow.Launcher.Helper
         {
             using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In))
             {
-                while(true)
+                while (true)
                 {
                     // Wait for connection to the pipe
                     await pipeServer.WaitForConnectionAsync();
                     if (Application.Current != null)
                     {
+                        
                         // Do an asynchronous call to ActivateFirstInstance function
-                        Application.Current.Dispatcher.Invoke(ActivateFirstInstance);
+                        Dispatcher.UIThread.Invoke(ActivateFirstInstance);
                     }
+
                     // Disconect client
                     pipeServer.Disconnect();
                 }
@@ -378,7 +382,7 @@ namespace Flow.Launcher.Helper
                 return;
             }
 
-            ((TApplication)Application.Current).OnSecondAppStarted();
+            ((TApplication)Application.Current)!.OnSecondAppStarted();
         }
 
         #endregion

@@ -27,6 +27,7 @@ namespace Flow.Launcher.ViewModel
             Results = new ResultCollection();
             BindingOperations.EnableCollectionSynchronization(Results, _collectionLock);
         }
+
         public ResultsViewModel(Settings settings) : this()
         {
             _settings = settings;
@@ -43,14 +44,14 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
+        public double MaxHeight => MaxResults * 52;
 
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
-        public Visibility Visibility { get; set; } = Visibility.Collapsed;
-        
+        public bool Visibility { get; set; } = true;
+
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
 
@@ -69,6 +70,7 @@ namespace Flow.Launcher.ViewModel
                     break;
                 }
             }
+
             return index;
         }
 
@@ -86,7 +88,6 @@ namespace Flow.Launcher.ViewModel
                 return -1;
             }
         }
-
 
         #endregion
 
@@ -144,6 +145,7 @@ namespace Flow.Launcher.ViewModel
 
             UpdateResults(newResults);
         }
+
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
@@ -169,12 +171,12 @@ namespace Flow.Launcher.ViewModel
 
             switch (Visibility)
             {
-                case Visibility.Collapsed when Results.Count > 0:
+                case false when Results.Count > 0:
                     SelectedIndex = 0;
-                    Visibility = Visibility.Visible;
+                    Visibility = true;
                     break;
-                case Visibility.Visible when Results.Count == 0:
-                    Visibility = Visibility.Collapsed;
+                case true when Results.Count == 0:
+                    Visibility = false;
                     break;
             }
         }
@@ -199,28 +201,30 @@ namespace Flow.Launcher.ViewModel
                 return Results;
 
             return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
-                          .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
-                          .OrderByDescending(rv => rv.Result.Score)
-                          .ToList();
+                .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
+                .OrderByDescending(rv => rv.Result.Score)
+                .ToList();
         }
+
         #endregion
 
         #region FormattedText Dependency Property
-        public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
-            "FormattedText",
-            typeof(Inline),
-            typeof(ResultsViewModel),
-            new PropertyMetadata(null, FormattedTextPropertyChanged));
 
-        public static void SetFormattedText(DependencyObject textBlock, IList<int> value)
-        {
-            textBlock.SetValue(FormattedTextProperty, value);
-        }
+        // public static readonly DependencyProperty FormattedTextProperty = DependencyProperty.RegisterAttached(
+        //     "FormattedText",
+        //     typeof(Inline),
+        //     typeof(ResultsViewModel),
+        //     new PropertyMetadata(null, FormattedTextPropertyChanged));
+        //
+        // public static void SetFormattedText(DependencyObject textBlock, IList<int> value)
+        // {
+        //     textBlock.SetValue(FormattedTextProperty, value);
+        // }
 
-        public static Inline GetFormattedText(DependencyObject textBlock)
-        {
-            return (Inline)textBlock.GetValue(FormattedTextProperty);
-        }
+        // public static Inline GetFormattedText(DependencyObject textBlock)
+        // {
+        //     return (Inline)textBlock.GetValue(FormattedTextProperty);
+        // }
 
         private static void FormattedTextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -234,6 +238,7 @@ namespace Flow.Launcher.ViewModel
 
             textBlock.Inlines.Add(inline);
         }
+
         #endregion
 
         public class ResultCollection : List<ResultViewModel>, INotifyCollectionChanged
@@ -262,6 +267,7 @@ namespace Flow.Launcher.ViewModel
                 // wpf use DirectX / double buffered already, so just reset all won't cause ui flickering
                 OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
             }
+
             private void AddAll(List<ResultViewModel> Items)
             {
                 for (int i = 0; i < Items.Count; i++)
@@ -270,9 +276,11 @@ namespace Flow.Launcher.ViewModel
                     if (_token.IsCancellationRequested)
                         return;
                     Add(item);
-                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
+                    OnCollectionChanged(
+                        new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
                 }
             }
+
             public void RemoveAll(int Capacity = 512)
             {
                 Clear();
@@ -307,6 +315,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         Capacity = newItems.Count;
                     }
+
                     editTime++;
                 }
             }

@@ -38,6 +38,8 @@ namespace Flow.Launcher.Core.Resource
             _themeDirectories.Add(UserDirectoryPath);
             MakeSureThemeDirectoriesExist();
 
+            return;
+            
             var dicts = Application.Current.Resources.MergedDictionaries;
             _oldResource = dicts.First(d =>
             {
@@ -72,6 +74,7 @@ namespace Flow.Launcher.Core.Resource
 
         public bool ChangeTheme(string theme)
         {
+            return false;
             const string defaultTheme = Constant.DefaultTheme;
 
             string path = GetThemePath(theme);
@@ -125,6 +128,8 @@ namespace Flow.Launcher.Core.Resource
 
         private void UpdateResourceDictionary(ResourceDictionary dictionaryToUpdate)
         {
+            return;
+            
             var dicts = Application.Current.Resources.MergedDictionaries;
 
             dicts.Remove(_oldResource);

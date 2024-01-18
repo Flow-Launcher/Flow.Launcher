@@ -1975,10 +1975,10 @@
                                                     </Border>
 
                                                     <ContentControl Grid.Row="2">
-                                                        <flowlauncher:ResultListBox
-                                                            DataContext="{Binding PreviewResults, Mode=OneTime}"
-                                                            IsHitTestVisible="False"
-                                                            Visibility="Visible" />
+                                                        <!-- <flowlauncher:ResultListBox -->
+                                                        <!--     DataContext="{Binding PreviewResults, Mode=OneTime}" -->
+                                                        <!--     IsHitTestVisible="False" -->
+                                                        <!--     IsVisible="True" /> -->
                                                     </ContentControl>
 
                                                 </Grid>

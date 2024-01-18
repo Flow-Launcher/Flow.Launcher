@@ -25,6 +25,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using Avalonia.Threading;
 
 namespace Flow.Launcher
 {
@@ -102,7 +103,7 @@ namespace Flow.Launcher
 
         public void OpenSettingDialog()
         {
-            Application.Current.Dispatcher.Invoke(() =>
+            Dispatcher.UIThread.Invoke(() =>
             {
                 SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
             });
@@ -147,9 +148,9 @@ namespace Flow.Launcher
             }
         }
 
-        public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
+        public void StartLoadingBar() => _mainVM.ProgressBarVisibility = true;
 
-        public void StopLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Collapsed;
+        public void StopLoadingBar() => _mainVM.ProgressBarVisibility = false;
 
         public string GetTranslation(string key) => InternationalizationManager.Instance.GetTranslation(key);
 

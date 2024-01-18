@@ -25,6 +25,7 @@ namespace Flow.Launcher.ViewModel
             {
                 return;
             }
+
             Result = result;
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -41,19 +42,14 @@ namespace Flow.Launcher.ViewModel
 
                     if (fonts.ContainsKey(fontFamilyPath))
                     {
-                        Glyph = glyph with
-                        {
-                            FontFamily = fonts[fontFamilyPath]
-                        };
+                        Glyph = glyph with { FontFamily = fonts[fontFamilyPath] };
                     }
                     else
                     {
                         fontCollection.AddFontFile(fontFamilyPath);
-                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
-                        Glyph = glyph with
-                        {
-                            FontFamily = fonts[fontFamilyPath]
-                        };
+                        fonts[fontFamilyPath] =
+                            $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        Glyph = glyph with { FontFamily = fonts[fontFamilyPath] };
                     }
                 }
                 else
@@ -61,42 +57,40 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
         }
 
         private Settings Settings { get; }
 
-        public Visibility ShowOpenResultHotkey =>
-            Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
+        public bool ShowOpenResultHotkey => Settings.ShowOpenResultHotkey;
 
-        public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
+        public bool ShowDefaultPreview => Result.PreviewPanel != null;
 
-        public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
+        public bool ShowCustomizedPreview => Result.PreviewPanel != null;
 
-        public Visibility ShowIcon
+        public bool ShowIcon
         {
             get
             {
                 // If both glyph and image icons are not available, it will then be the default icon
                 if (!ImgIconAvailable && !GlyphAvailable)
-                    return Visibility.Visible;
+                    return true;
 
                 // Although user can choose to use glyph icons, plugins may choose to supply only image icons.
                 // In this case we ignore the setting because otherwise icons will not display as intended
                 if (Settings.UseGlyphIcons && !GlyphAvailable && ImgIconAvailable)
-                    return Visibility.Visible;
+                    return true;
 
-                return !Settings.UseGlyphIcons && ImgIconAvailable ? Visibility.Visible : Visibility.Hidden;
+                return !Settings.UseGlyphIcons && ImgIconAvailable;
             }
         }
 
-        public Visibility ShowPreviewImage
+        public bool ShowPreviewImage
         {
             get
             {
                 if (PreviewImageAvailable)
                 {
-                    return Visibility.Visible;
+                    return true;
                 }
                 else
                 {
@@ -114,21 +108,21 @@ namespace Flow.Launcher.ViewModel
                 {
                     return IconXY / 2;
                 }
+
                 return IconXY;
             }
-
         }
 
-        public Visibility ShowGlyph
+        public bool ShowGlyph
         {
             get
             {
                 // Although user can choose to not use glyph icons, plugins may choose to supply only glyph icons.
                 // In this case we ignore the setting because otherwise icons will not display as intended
                 if (!Settings.UseGlyphIcons && !ImgIconAvailable && GlyphAvailable)
-                    return Visibility.Visible;
+                    return true;
 
-                return Settings.UseGlyphIcons && GlyphAvailable ? Visibility.Visible : Visibility.Collapsed;
+                return Settings.UseGlyphIcons && GlyphAvailable;
             }
         }
 
@@ -136,7 +130,8 @@ namespace Flow.Launcher.ViewModel
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
 
-        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) ||
+                                              Result.Preview.PreviewDelegate != null;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
@@ -182,7 +177,8 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon, bool loadFullImage)
+        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
+            bool loadFullImage)
         {
             if (string.IsNullOrEmpty(imagePath) && icon != null)
             {
@@ -234,9 +230,9 @@ namespace Flow.Launcher.ViewModel
 
         public void LoadPreviewImage()
         {
-            if (ShowDefaultPreview == Visibility.Visible)
+            if (ShowDefaultPreview)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
+                if (!PreviewImageLoaded && ShowPreviewImage)
                 {
                     PreviewImageLoaded = true;
                     _ = LoadPreviewImageAsync();
@@ -245,6 +241,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         public Result Result { get; }
+
         public int ResultProgress
         {
             get
