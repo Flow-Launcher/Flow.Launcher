@@ -5,7 +5,7 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Resources>
-        <FontFamily x:Key="IconFont">avares://Flow.Launcher/Resources/#Segoe Fluent Icons</FontFamily>
+        <FontFamily x:Key="SegoeFluentIcons">avares://Flow.Launcher/Resources/#Segoe Fluent Icons</FontFamily>
     </Application.Resources>
 
     <Application.Styles>

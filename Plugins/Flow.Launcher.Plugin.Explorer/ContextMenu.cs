@@ -86,7 +86,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
                         TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_titletooltip"),
                         IcoPath = Constants.QuickAccessImagePath,
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue718"),
+                        Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue718"),
                     });
                 }
                 else
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         SubTitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
                         TitleToolTip = Context.API.GetTranslation("plugin_explorer_contextmenu_remove_titletooltip"),
                         IcoPath = Constants.RemoveQuickAccessImagePath,
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uecc9")
+                        Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\uecc9")
                     });
                 }
 
@@ -134,7 +134,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         }
                     },
                     IcoPath = Constants.CopyImagePath,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue8c8")
                 });
 
                 contextMenus.Add(new Result
@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     },
                     IcoPath = icoPath,
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\uf12b")
                 });
 
 
@@ -202,7 +202,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             return true;
                         },
                         IcoPath = Constants.DeleteFileFolderImagePath,
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue74d")
+                        Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue74d")
                     });
 
                 if (record.Type is not ResultType.Volume)
@@ -211,7 +211,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         Title = Context.API.GetTranslation("plugin_explorer_show_contextmenu_title"),
                         IcoPath = Constants.ShowContextMenuImagePath,
-                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue700"),
+                        Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue700"),
                         Action = _ =>
                         {
                             if (record.Type is ResultType.Volume)
@@ -301,7 +301,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     return true;
                 },
                 IcoPath = Constants.FolderImagePath,
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue838")
+                Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue838")
             };
         }
 
@@ -334,7 +334,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue70f"),
+                Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue70f"),
                 IcoPath = Constants.FileImagePath
             };
         }
@@ -367,7 +367,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue756"),
+                Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue756"),
                 IcoPath = Constants.FolderImagePath
             };
         }

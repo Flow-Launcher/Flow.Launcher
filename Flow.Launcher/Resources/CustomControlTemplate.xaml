@@ -48,7 +48,7 @@
         <Setter Property="Margin" Value="24,0,16,0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
-        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+        <Setter Property="FontFamily" Value="{StaticResource SegoeFluentIcons}" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="TabMenu" TargetType="{x:Type TextBlock}">
@@ -60,7 +60,7 @@
         <Setter Property="Margin" Value="0,0,12,0" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+        <Setter Property="FontFamily" Value="{StaticResource SegoeFluentIcons}" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="SettingSeparatorStyle" TargetType="{x:Type Separator}">
@@ -2942,7 +2942,7 @@
                     Margin="0,1,12,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Stretch"
-                    TextBlock.FontFamily="/Resources/#Segoe Fluent Icons">
+                    TextBlock.FontFamily="{StaticResource SegoeFluentIcons}">
                     <ContentPresenter
                         x:Name="IconContent"
                         ContentSource="Icon"
@@ -3266,7 +3266,7 @@
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+        <Setter Property="FontFamily" Value="{StaticResource SegoeFluentIcons}" />
         <Setter Property="FontSize" Value="11" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

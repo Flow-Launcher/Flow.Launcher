@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Title = title,
                 AutoCompleteText = resultName,
                 SubTitle = subtitle,
-                IcoPath = @"C:\Users\hongt\Downloads\Vector-based_example.svg", // IcoPath,
+                IcoPath = IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
@@ -228,7 +228,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         return true;
                     },
                     IcoPath = "Images/user.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee"),
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe7ee"),
                 },
                 new Result
                 {
@@ -248,7 +248,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         return true;
                     },
                     IcoPath = "Images/cmd.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef"),
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe7ef"),
                 },
                 new Result
                 {
@@ -260,7 +260,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         return true;
                     },
                     IcoPath = "Images/folder.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe838"),
                 }
             };
             return contextMenus;

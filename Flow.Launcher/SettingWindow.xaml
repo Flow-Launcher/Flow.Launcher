@@ -1355,7 +1355,7 @@
                                                                         Margin="48,0,10,0"
                                                                         VerticalAlignment="Center"
                                                                         DockPanel.Dock="Left"
-                                                                        FontFamily="/Resources/#Segoe Fluent Icons"
+                                                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                                                         FontSize="20"
                                                                         Style="{StaticResource Glyph}">
                                                                         &#xe819;
@@ -3226,7 +3226,7 @@
                                             <Button
                                                 Margin="0,0,8,0"
                                                 Content="&#xec7a;"
-                                                FontFamily="/Resources/#Segoe Fluent Icons"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="20">
                                                 <ui:FlyoutService.Flyout>
                                                     <ui:MenuFlyout>

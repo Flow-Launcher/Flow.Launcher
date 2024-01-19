@@ -224,6 +224,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 else if (extension == ".svg")
                 {
                     var source = SvgSource.Load(path, null);
+                    // very annoying, but we need to create the instance on the UI Thread. It is not an expensive operation though
                     image = Dispatcher.UIThread.Invoke(() => new SvgImage() { Source = source });
                     type = ImageType.FullImageFile;
                 }

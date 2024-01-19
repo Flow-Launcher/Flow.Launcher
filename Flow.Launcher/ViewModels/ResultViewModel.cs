@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -9,10 +7,12 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Avalonia;
 using Avalonia.Fonts.Inter;
 using Avalonia.Media;
 using Avalonia.Media.Fonts;
 using Avalonia.Media.Imaging;
+using Avalonia.Styling;
 using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Flow.Launcher.ViewModel
@@ -21,7 +21,7 @@ namespace Flow.Launcher.ViewModel
     {
         private static PrivateFontCollection fontCollection = new();
         private static Dictionary<string, string> fonts = new();
-        
+
         public ResultViewModel(Result result, Settings settings)
         {
             Settings = settings;
@@ -63,7 +63,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            
+
             LoadImage();
         }
 
@@ -93,6 +93,21 @@ namespace Flow.Launcher.ViewModel
                     return true;
 
                 return !Settings.UseGlyphIcons && ImgIconAvailable;
+            }
+        }
+
+        public FontFamily GlyphFontFamily
+        {
+            get
+            {
+                if (Glyph is null) return FontFamily.DefaultFontFamilyName;
+
+                if (Application.Current!.TryGetResource(Glyph.FontFamily, ThemeVariant.Default, out var fontfamily))
+                {
+                    return fontfamily as FontFamily;
+                }
+
+                return FontFamily.DefaultFontFamilyName;
             }
         }
 

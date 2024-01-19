@@ -92,7 +92,7 @@
                                         x:Name="GlyphIcon"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        FontFamily="{StaticResource IconFont}"
+                                        FontFamily="{Binding GlyphFontFamily}"
                                         Text="{Binding Glyph.Glyph}"
                                         IsVisible="{Binding ShowGlyph}" />
                                 </Border>
