@@ -93,6 +93,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <AvaloniaResource Include="Resources\*.ttf"/>
+    <AvaloniaResource Include="Images\*.png"/>
   </ItemGroup>
 
   <ItemGroup>
@@ -128,6 +129,18 @@
     <Content Include="Resources\open.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage1.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage2.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage3.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage4.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage5.axaml" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

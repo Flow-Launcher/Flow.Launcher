@@ -2,7 +2,7 @@
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Flow.Launcher.ViewModel.WelcomePages
+namespace Flow.Launcher.ViewModels.WelcomePages
 {
     public class WelcomePage1ViewModel : PageViewModelBase
     {

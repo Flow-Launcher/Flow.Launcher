@@ -1,12 +1,12 @@
 ﻿using Avalonia.Controls;
 using PropertyChanged;
 
-namespace Flow.Launcher.WelcomePages
+namespace Flow.Launcher.Views.WelcomePages
 {
     [DoNotNotify]
-    public partial class WelcomePage1 : UserControl
+    public partial class WelcomePage1View : UserControl
     {
-        public WelcomePage1()
+        public WelcomePage1View()
         {
             InitializeComponent();
         }

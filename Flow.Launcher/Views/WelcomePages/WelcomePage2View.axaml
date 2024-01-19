@@ -1,11 +1,11 @@
 ﻿<UserControl
-    x:Class="Flow.Launcher.WelcomePages.WelcomePage2"
+    x:Class="Flow.Launcher.Views.WelcomePages.WelcomePage2View"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModel.WelcomePages"
     xmlns:launcher="clr-namespace:Flow.Launcher"
+    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModels.WelcomePages"
     x:DataType="welcomePages:WelcomePage2ViewModel"
     mc:Ignorable="d">
     <!-- <Page.Resources> -->

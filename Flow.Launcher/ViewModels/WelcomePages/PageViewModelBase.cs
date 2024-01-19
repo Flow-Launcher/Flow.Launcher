@@ -1,8 +1,8 @@
-﻿using Flow.Launcher.Plugin;
+﻿using ReactiveUI;
 
-namespace Flow.Launcher.ViewModel.WelcomePages
+namespace Flow.Launcher.ViewModels.WelcomePages
 {
-    public abstract class PageViewModelBase : BaseModel
+    public abstract class PageViewModelBase : ReactiveObject
     {
         /// <summary>
         /// Gets if the user can navigate to the next page

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Windows.Navigation;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Flow.Launcher.Infrastructure.UserSettings;
 using PropertyChanged;
 
-namespace Flow.Launcher.WelcomePages
+namespace Flow.Launcher.Views.WelcomePages
 {
     [DoNotNotify]
-    public partial class WelcomePage3 : UserControl
+    public partial class WelcomePage3View : UserControl
     {
-        public WelcomePage3()
+        public WelcomePage3View()
         {
             InitializeComponent();
         }

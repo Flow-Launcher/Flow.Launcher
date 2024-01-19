@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel.WelcomePages;
+using Flow.Launcher.ViewModels.WelcomePages;
 using ReactiveUI;
 
 namespace Flow.Launcher.ViewModel

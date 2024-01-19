@@ -4,12 +4,13 @@ using Avalonia.Media;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModels.WelcomePages;
 using PropertyChanged;
 
-namespace Flow.Launcher.WelcomePages
+namespace Flow.Launcher.Views.WelcomePages
 {
     [DoNotNotify]
-    public partial class WelcomePage2 : UserControl
+    public partial class WelcomePage2View : UserControl
     {
         private Settings Settings { get; set; }
 
@@ -17,11 +18,11 @@ namespace Flow.Launcher.WelcomePages
 
         private string tbMsgTextOriginal;
 
-        public WelcomePage2()
+        public WelcomePage2View()
         {
             InitializeComponent();
-            hotkeyControl.SetHotkeyAsync(Settings.Hotkey, false);
         }
+
 
         private void HotkeyControl_OnGotFocus(object sender, RoutedEventArgs args)
         {

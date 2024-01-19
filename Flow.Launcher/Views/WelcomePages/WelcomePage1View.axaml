@@ -1,10 +1,10 @@
 ﻿<UserControl
-    x:Class="Flow.Launcher.WelcomePages.WelcomePage1"
+    x:Class="Flow.Launcher.Views.WelcomePages.WelcomePage1View"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModel.WelcomePages"
+    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModels.WelcomePages"
     x:DataType="welcomePages:WelcomePage1ViewModel"
     mc:Ignorable="d">
     <!-- <Page.Resources> -->
@@ -121,7 +121,7 @@
                             Canvas.Left="140"
                             Width="60"
                             Height="60"
-                            Source="../../images/app.png" />
+                            Source="/Images/app.png" />
                         <TextBlock
                             Canvas.Left="205"
                             Margin="12,0,0,0"
@@ -143,7 +143,7 @@
                     Canvas.Bottom="0"
                     Width="60"
                     Height="60"
-                    Source="../../images/wizard.png" />
+                    Source="/Images/wizard.png" />
 
                 <StackPanel Width="550" Margin="24,20,24,20">
                     <StackPanel Margin="0,0,24,0">

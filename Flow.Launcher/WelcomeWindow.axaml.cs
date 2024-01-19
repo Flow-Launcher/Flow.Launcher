@@ -17,18 +17,7 @@ namespace Flow.Launcher
             DataContext = new ViewModel.WelcomeWindowViewModel(settings);
 
             InitializeComponent();
-            BackButton.IsEnabled = false;
             this.settings = settings;
         }
-
-        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
-        {
-            Effect = SlideNavigationTransitionEffect.FromRight
-        };
-
-        private NavigationTransitionInfo _backTransitionInfo = new SlideNavigationTransitionInfo()
-        {
-            Effect = SlideNavigationTransitionEffect.FromLeft
-        };
     }
 }
