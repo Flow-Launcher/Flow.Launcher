@@ -1,21 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Navigation;
-using Flow.Launcher.Infrastructure.UserSettings;
+﻿using System.Collections.Generic;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
 
-namespace Flow.Launcher.Resources.Pages
+namespace Flow.Launcher.ViewModel.WelcomePages
 {
-    public partial class WelcomePage1
+    public class WelcomePage1ViewModel : PageViewModelBase
     {
-        protected override void OnNavigatedTo(NavigationEventArgs e)
+        public override bool CanNavigateNext { get; protected set; } = true;
+        public override bool CanNavigatePrevious { get; protected set; } = false;
+        public override string PageTitle { get; }
+
+        public WelcomePage1ViewModel(Settings settings)
         {
-            if (e.ExtraData is Settings settings)
-                Settings = settings;
-            else
-                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
-            InitializeComponent();
+            PageTitle = _translater.GetTranslation("welcomePage1Title");
+            Settings = settings;
         }
+
         private Internationalization _translater => InternationalizationManager.Instance;
         public List<Language> Languages => _translater.LoadAvailableLanguages();
 
@@ -35,6 +35,5 @@ namespace Flow.Launcher.Resources.Pages
                     Settings.ShouldUsePinyin = true;
             }
         }
-
     }
 }

@@ -1,32 +1,31 @@
-﻿<ui:Page
-    x:Class="Flow.Launcher.Resources.Pages.WelcomePage3"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl
+    x:Class="Flow.Launcher.WelcomePages.WelcomePage3"
+    xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
-    Title="WelcomePage3"
+    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModel.WelcomePages"
+    x:DataType="welcomePages:WelcomePage1ViewModel"
     mc:Ignorable="d">
-    <Page.Resources>
-        <Style x:Key="KbdLine" TargetType="Border">
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Margin" Value="0,3,0,3" />
-            <Setter Property="Background" Value="{DynamicResource Color01B}" />
-        </Style>
-        <Style x:Key="Kbd" TargetType="Border">
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="12,4,12,4" />
-            <Setter Property="Background" Value="{DynamicResource Color00B}" />
-            <Setter Property="BorderBrush" Value="{DynamicResource Color18B}" />
-            <Setter Property="BorderThickness" Value="1,1,1,2" />
-        </Style>
-        <Style x:Key="KbdText" TargetType="TextBlock">
-            <Setter Property="TextAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-        </Style>
-    </Page.Resources>
+    <!-- <Page.Resources> -->
+    <!--     <Style x:Key="KbdLine" TargetType="Border"> -->
+    <!--         <Setter Property="CornerRadius" Value="8" /> -->
+    <!--         <Setter Property="Margin" Value="0,3,0,3" /> -->
+    <!--         <Setter Property="Background" Value="{DynamicResource Color01B}" /> -->
+    <!--     </Style> -->
+    <!--     <Style x:Key="Kbd" TargetType="Border"> -->
+    <!--         <Setter Property="CornerRadius" Value="4" /> -->
+    <!--         <Setter Property="Padding" Value="12,4,12,4" /> -->
+    <!--         <Setter Property="Background" Value="{DynamicResource Color00B}" /> -->
+    <!--         <Setter Property="BorderBrush" Value="{DynamicResource Color18B}" /> -->
+    <!--         <Setter Property="BorderThickness" Value="1,1,1,2" /> -->
+    <!--     </Style> -->
+    <!--     <Style x:Key="KbdText" TargetType="TextBlock"> -->
+    <!--         <Setter Property="TextAlignment" Value="Center" /> -->
+    <!--         <Setter Property="FontSize" Value="12" /> -->
+    <!--         <Setter Property="Foreground" Value="{DynamicResource Color05B}" /> -->
+    <!--     </Style> -->
+    <!-- </Page.Resources> -->
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
         <Grid>
             <Grid.RowDefinitions>
@@ -49,8 +48,7 @@
                         Width="300"
                         Height="100"
                         Margin="0,0,0,0"
-                        Source="../../images/page_img02.png"
-                        Style="{DynamicResource StyleImageFadeIn}" />
+                        Source="../../images/page_img02.png" />
                 </StackPanel>
             </Border>
 
@@ -66,19 +64,19 @@
                                 FontWeight="SemiBold"
                                 Text="{DynamicResource Welcome_Page3_Title}" />
                         </StackPanel>
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}">←</TextBlock>
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock>←</TextBlock>
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">,</TextBlock>
-                                    <Border Margin="5,0,0,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}">→</TextBlock>
+                                    <Border Margin="5,0,0,0">
+                                        <TextBlock>→</TextBlock>
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -90,19 +88,19 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}">↑</TextBlock>
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock>↑</TextBlock>
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">,</TextBlock>
-                                    <Border Margin="5,0,0,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}">↓</TextBlock>
+                                    <Border Margin="5,0,0,0">
+                                        <TextBlock>↓</TextBlock>
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -114,15 +112,15 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}">Enter</TextBlock>
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock>Enter</TextBlock>
                                     </Border>
 
                                 </StackPanel>
@@ -135,15 +133,15 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="ESC" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="ESC" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -155,15 +153,15 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Tab" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Tab" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -175,19 +173,19 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Shift" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Shift" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="ENTER" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="ENTER" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -199,19 +197,19 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Ctrl" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Ctrl" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="ENTER" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="ENTER" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -223,23 +221,23 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Ctrl" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Ctrl" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Shift" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="Shift" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="ENTER" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="ENTER" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -251,19 +249,19 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Ctrl" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Ctrl" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="H" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="H" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -275,19 +273,19 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="Ctrl" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="Ctrl" />
                                     </Border>
                                     <TextBlock VerticalAlignment="Center">+</TextBlock>
-                                    <Border Margin="5,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="I" />
+                                    <Border Margin="5,0,5,0">
+                                        <TextBlock Text="I" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -299,15 +297,15 @@
                             </StackPanel>
                         </Border>
 
-                        <Border Style="{DynamicResource KbdLine}">
+                        <Border>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel
                                     Width="210"
                                     Margin="20,5,4,5"
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
-                                    <Border Margin="0,0,5,0" Style="{DynamicResource Kbd}">
-                                        <TextBlock Style="{DynamicResource KbdText}" Text="F5" />
+                                    <Border Margin="0,0,5,0">
+                                        <TextBlock Text="F5" />
                                     </Border>
                                 </StackPanel>
                                 <StackPanel VerticalAlignment="Center">
@@ -324,4 +322,4 @@
 
         </Grid>
     </ScrollViewer>
-</ui:Page>
+</UserControl>

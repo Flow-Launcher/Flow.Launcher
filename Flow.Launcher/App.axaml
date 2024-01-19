@@ -4,7 +4,10 @@
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
-  
+    <Application.Resources>
+        <FontFamily x:Key="UIFont">avares://Flow.Launcher/Resources/#Segoe Fluent Icons</FontFamily>
+    </Application.Resources>
+
     <Application.Styles>
         <FluentTheme />
     </Application.Styles>

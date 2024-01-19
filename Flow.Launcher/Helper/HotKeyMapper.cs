@@ -5,6 +5,7 @@ using NHotkey;
 using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using System.Windows;
+using System.Windows.Input;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Helper
@@ -40,13 +41,15 @@ namespace Flow.Launcher.Helper
             string hotkeyStr = hotkey.ToString();
             try
             {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
+                HotkeyManager.Current.AddOrReplace(hotkeyStr, (Key)hotkey.CharKey, hotkey.ModifierKeys, action);
             }
             catch (Exception)
             {
-                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+                string errorMsg =
+                    string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"),
+                        hotkeyStr);
                 string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-                MessageBox.Show(errorMsg,errorMsgTitle);
+                MessageBox.Show(errorMsg, errorMsgTitle);
             }
         }
 
@@ -85,7 +88,8 @@ namespace Flow.Launcher.Helper
         {
             try
             {
-                HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", currentHotkey.CharKey, currentHotkey.ModifierKeys, (sender, e) => { });
+                HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", (Key)currentHotkey.CharKey,
+                    currentHotkey.ModifierKeys, (sender, e) => { });
 
                 return true;
             }

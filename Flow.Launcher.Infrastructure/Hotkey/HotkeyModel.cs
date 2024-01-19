@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Avalonia.Input;
+using Key = Avalonia.Input.Key;
+using KeyGesture = Avalonia.Input.KeyGesture;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -17,8 +20,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
         {
-            {Key.Space, "Space"},
-            {Key.Oem3, "~"}
+            { Key.Space, "Space" }, { Key.Oem3, "~" }
         };
 
         public ModifierKeys ModifierKeys
@@ -30,18 +32,22 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 {
                     modifierKeys |= ModifierKeys.Alt;
                 }
+
                 if (Shift)
                 {
                     modifierKeys |= ModifierKeys.Shift;
                 }
+
                 if (Win)
                 {
                     modifierKeys |= ModifierKeys.Windows;
                 }
+
                 if (Ctrl)
                 {
                     modifierKeys |= ModifierKeys.Control;
                 }
+
                 return modifierKeys;
             }
         }
@@ -66,31 +72,37 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             {
                 return;
             }
+
             List<string> keys = hotkeyString.Replace(" ", "").Split('+').ToList();
             if (keys.Contains("Alt"))
             {
                 Alt = true;
                 keys.Remove("Alt");
             }
+
             if (keys.Contains("Shift"))
             {
                 Shift = true;
                 keys.Remove("Shift");
             }
+
             if (keys.Contains("Win"))
             {
                 Win = true;
                 keys.Remove("Win");
             }
+
             if (keys.Contains("Ctrl"))
             {
                 Ctrl = true;
                 keys.Remove("Ctrl");
             }
+
             if (keys.Count == 1)
             {
                 string charKey = keys[0];
-                KeyValuePair<Key, string>? specialSymbolPair = specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
+                KeyValuePair<Key, string>? specialSymbolPair =
+                    specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
                 if (specialSymbolPair.Value.Value != null)
                 {
                     CharKey = specialSymbolPair.Value.Key;
@@ -103,7 +115,6 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                     }
                     catch (ArgumentException)
                     {
-
                     }
                 }
             }
@@ -116,14 +127,17 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             {
                 keys.Add("Ctrl");
             }
+
             if (Alt)
             {
                 keys.Add("Alt");
             }
+
             if (Shift)
             {
                 keys.Add("Shift");
             }
+
             if (Win)
             {
                 keys.Add("Win");
@@ -135,9 +149,10 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                     ? specialSymbolDictionary[CharKey]
                     : CharKey.ToString());
             }
+
             return string.Join(" + ", keys);
         }
-        
+
         /// <summary>
         /// Validate hotkey
         /// </summary>
@@ -162,13 +177,15 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                     {
                         try
                         {
-                            KeyGesture keyGesture = new KeyGesture(CharKey, ModifierKeys);
+                            KeyGesture keyGesture = new KeyGesture(CharKey, ToKeyModifiers(ModifierKeys));
                         }
-                        catch (System.Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+                        catch (System.Exception e) when
+                            (e is NotSupportedException || e is InvalidEnumArgumentException)
                         {
                             return false;
                         }
                     }
+
                     if (ModifierKeys == ModifierKeys.None)
                     {
                         return !IsPrintableCharacter(CharKey);
@@ -178,6 +195,58 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                         return true;
                     }
             }
+        }
+
+        public ModifierKeys ToModifierKeys(KeyModifiers keyModifiers)
+        {
+            ModifierKeys modifierKeys = ModifierKeys.None;
+            if (keyModifiers.HasFlag(KeyModifiers.Alt))
+            {
+                modifierKeys |= ModifierKeys.Alt;
+            }
+
+            if (keyModifiers.HasFlag(KeyModifiers.Shift))
+            {
+                modifierKeys |= ModifierKeys.Shift;
+            }
+
+            if (keyModifiers.HasFlag(KeyModifiers.Meta))
+            {
+                modifierKeys |= ModifierKeys.Windows;
+            }
+
+            if (keyModifiers.HasFlag(KeyModifiers.Control))
+            {
+                modifierKeys |= ModifierKeys.Control;
+            }
+
+            return modifierKeys;
+        }
+
+        public KeyModifiers ToKeyModifiers(ModifierKeys modifierKeys)
+        {
+            KeyModifiers keyModifiers = KeyModifiers.None;
+            if (modifierKeys.HasFlag(ModifierKeys.Alt))
+            {
+                keyModifiers |= KeyModifiers.Alt;
+            }
+
+            if (modifierKeys.HasFlag(ModifierKeys.Shift))
+            {
+                keyModifiers |= KeyModifiers.Shift;
+            }
+
+            if (modifierKeys.HasFlag(ModifierKeys.Windows))
+            {
+                keyModifiers |= KeyModifiers.Meta;
+            }
+
+            if (modifierKeys.HasFlag(ModifierKeys.Control))
+            {
+                keyModifiers |= KeyModifiers.Control;
+            }
+
+            return keyModifiers;
         }
 
         private static bool IsPrintableCharacter(Key key)

@@ -1,0 +1,125 @@
+﻿<Window
+    x:Class="Flow.Launcher.WelcomeWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:Flow.Launcher.ViewModel"
+    Name="FlowWelcomeWindow"
+    Title="Welcome"
+    Width="550"
+    Height="650"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d"
+    x:DataType="vm:WelcomeWindowViewModel">
+    <Window.DataTemplates>
+        <local:ViewLocator />
+    </Window.DataTemplates>
+    <!--#region TitleBar-->
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                    <Image
+                        Grid.Column="0"
+                        Width="16"
+                        Height="16"
+                        Margin="10,4,4,4" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="4,0,0,0"
+                        VerticalAlignment="Center"
+                        FontSize="12"
+                        Text="111" />
+
+                    <Button
+                        Grid.Column="4">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <!-- <Path.Style> -->
+                            <!--     <Style TargetType="Path"> -->
+                            <!--         <Style.Triggers> -->
+                            <!--             <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False"> -->
+                            <!--                 <Setter Property="Opacity" Value="0.5" /> -->
+                            <!--             </DataTrigger> -->
+                            <!--         </Style.Triggers> -->
+                            <!--     </Style> -->
+                            <!-- </Path.Style> -->
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+            <!--#endregion-->
+            <StackPanel Margin="0">
+                <TransitioningContentControl
+                    Content="{Binding CurrentPage}">
+                </TransitioningContentControl>
+            </StackPanel>
+        </StackPanel>
+        <Border
+            Grid.Row="1"
+            BorderThickness="0,1,0,0">
+            <Grid ColumnDefinitions="130,*,130">
+
+                <StackPanel
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    VerticalAlignment="Center">
+                    <TextBlock
+                        Name="PageNavigation"
+                        Margin="0,2,0,0"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{Binding PageDisplay, Mode=OneWay}"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <Button
+                    x:Name="SkipButton"
+                    Grid.Column="0"
+                    Width="100"
+                    Height="40"
+                    Margin="20,5,0,5"
+                    Content="Skip"
+                    DockPanel.Dock="Right"
+                    FontSize="14" />
+                <DockPanel
+                    Grid.Column="2"
+                    Margin="0,0,20,0"
+                    VerticalAlignment="Stretch">
+                    <Button
+                        x:Name="NextButton"
+                        Width="40"
+                        Height="40"
+                        Command="{Binding NavigateNextCommand}"
+                        Margin="8,5,0,5"
+                        Content="&#xe76c;"
+                        DockPanel.Dock="Right"
+                        FontFamily="{StaticResource UIFont}"
+                        FontSize="18" />
+                    <Button
+                        x:Name="BackButton"
+                        Width="40"
+                        Height="40"
+                        Command="{Binding NavigatePreviousCommand}"
+                        Content="&#xe76b;"
+                        DockPanel.Dock="Right"
+                        FontFamily="{StaticResource UIFont}"
+                        FontSize="18" />
+                    <StackPanel />
+                </DockPanel>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

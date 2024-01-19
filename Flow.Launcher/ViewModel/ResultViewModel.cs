@@ -58,7 +58,7 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-            
+
             LoadImage();
         }
 
@@ -177,7 +177,7 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            return default; // await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
+            return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
         private void LoadImage()

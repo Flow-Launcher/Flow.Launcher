@@ -45,6 +45,21 @@
   
   <ItemGroup>
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
+    <Page Update="Pages\WelcomePage1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage5.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   
   <ItemGroup>
@@ -77,6 +92,7 @@
     <Content Include="Resources\*.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <AvaloniaResource Include="Resources\*.ttf"/>
   </ItemGroup>
 
   <ItemGroup>

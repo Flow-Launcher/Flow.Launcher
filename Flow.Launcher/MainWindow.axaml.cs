@@ -336,7 +336,7 @@ namespace Flow.Launcher
 
         private void CheckFirstLaunch()
         {
-            if (_settings.FirstLaunch)
+            // if (_settings.FirstLaunch)
             {
                 _settings.FirstLaunch = false;
                 PluginManager.API.SaveAppAllSettings();
@@ -347,7 +347,7 @@ namespace Flow.Launcher
         private void OpenWelcomeWindow()
         {
             var WelcomeWindow = new WelcomeWindow(_settings);
-            WelcomeWindow.Show();
+            WelcomeWindow.ShowDialog(this);
         }
 
         private async void PositionReset()
@@ -539,11 +539,11 @@ namespace Flow.Launcher
         public void HideStartup()
         {
             UpdatePosition();
-            if (_settings.HideOnStartup)
-            {
-                _viewModel.Hide();
-            }
-            else
+            // if (_settings.HideOnStartup)
+            // {
+            //     _viewModel.Hide();
+            // }
+            // else
             {
                 _viewModel.Show();
             }

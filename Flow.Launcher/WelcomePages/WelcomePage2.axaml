@@ -1,38 +1,36 @@
-﻿<ui:Page
-    x:Class="Flow.Launcher.Resources.Pages.WelcomePage2"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl
+    x:Class="Flow.Launcher.WelcomePages.WelcomePage2"
+    xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
-    xmlns:local="clr-namespace:Flow.Launcher.Resources.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:ui="http://schemas.modernwpf.com/2019"
-    Title="WelcomePage2"
+    xmlns:welcomePages="clr-namespace:Flow.Launcher.ViewModel.WelcomePages"
+    xmlns:launcher="clr-namespace:Flow.Launcher"
+    x:DataType="welcomePages:WelcomePage2ViewModel"
     mc:Ignorable="d">
-    <Page.Resources>
-        <converters:BorderClipConverter x:Key="BorderClipConverter" />
-        <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
-            <Setter Property="Opacity" Value="0" />
-            <Style.Triggers>
-                <!--  Fades-in the image when it becomes visible  -->
-                <Trigger Property="IsVisible" Value="True">
-                    <Trigger.EnterActions>
-                        <BeginStoryboard>
-                            <BeginStoryboard.Storyboard>
-                                <Storyboard x:Name="FadeIn">
-                                    <DoubleAnimation
-                                        Storyboard.TargetProperty="Opacity"
-                                        To="1"
-                                        Duration="0:0:2" />
-                                </Storyboard>
-                            </BeginStoryboard.Storyboard>
-                        </BeginStoryboard>
-                    </Trigger.EnterActions>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-    </Page.Resources>
+    <!-- <Page.Resources> -->
+    <!--     <converters:BorderClipConverter x:Key="BorderClipConverter" /> -->
+    <!--     <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}"> -->
+    <!--         <Setter Property="Opacity" Value="0" /> -->
+    <!--         <Style.Triggers> -->
+    <!--             ~1~  Fades-in the image when it becomes visible  @1@ -->
+    <!--             <Trigger Property="IsVisible" Value="True"> -->
+    <!--                 <Trigger.EnterActions> -->
+    <!--                     <BeginStoryboard> -->
+    <!--                         <BeginStoryboard.Storyboard> -->
+    <!--                             <Storyboard x:Name="FadeIn"> -->
+    <!--                                 <DoubleAnimation -->
+    <!--                                     Storyboard.TargetProperty="Opacity" -->
+    <!--                                     To="1" -->
+    <!--                                     Duration="0:0:2" /> -->
+    <!--                             </Storyboard> -->
+    <!--                         </BeginStoryboard.Storyboard> -->
+    <!--                     </BeginStoryboard> -->
+    <!--                 </Trigger.EnterActions> -->
+    <!--             </Trigger> -->
+    <!--         </Style.Triggers> -->
+    <!--     </Style> -->
+    <!-- </Page.Resources> -->
     <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
@@ -52,15 +50,14 @@
 
                 <StackPanel
                     Grid.Row="1"
-                    Margin="0"
-                    Background="{Binding PreviewBackground}">
+                    Margin="0">
                     <StackPanel
                         Margin="0,80,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Orientation="Horizontal">
-                        <Border Width="450" Style="{DynamicResource WindowBorderStyle}">
-                            <Border Style="{DynamicResource WindowRadius}">
+                        <Border Width="450">
+                            <Border>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="54" />
@@ -70,16 +67,14 @@
                                     <Border Grid.Row="0">
                                         <TextBox
                                             IsReadOnly="True"
-                                            Style="{DynamicResource QueryBoxStyle}"
                                             Text="{DynamicResource hiThere}" />
 
                                     </Border>
-                                    <Canvas Style="{DynamicResource SearchIconPosition}">
+                                    <Canvas>
                                         <Path
                                             Margin="0"
                                             Data="{DynamicResource SearchIconImg}"
-                                            Stretch="Fill"
-                                            Style="{DynamicResource SearchIconStyle}" />
+                                            Stretch="Fill"/>
                                     </Canvas>
                                 </Grid>
                             </Border>
@@ -109,16 +104,15 @@
                         FontSize="14"
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncherHotkey}" />
-                    <flowlauncher:HotkeyControl
-                        x:Name="HotkeyControl"
+                    <launcher:HotkeyControl
+                        x:Name="hotkeyControl"
                         Width="300"
                         Height="35"
                         Margin="-206,10,0,0"
-                        GotFocus="HotkeyControl_OnGotFocus"
-                        LostFocus="HotkeyControl_OnLostFocus"/>
+                        LostFocus="HotkeyControl_OnLostFocus" />
                 </StackPanel>
 
             </StackPanel>
         </Grid>
     </ScrollViewer>
-</ui:Page>
+</UserControl>

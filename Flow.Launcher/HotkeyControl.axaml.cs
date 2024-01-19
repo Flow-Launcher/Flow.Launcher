@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Input;
-using System.Windows.Media;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
+using System.Windows.Input;
+using Avalonia.Controls;
+using Avalonia.Interactivity;
+using Avalonia.Threading;
+using PropertyChanged;
+using FocusManager = Avalonia.Input.FocusManager;
+using Key = Avalonia.Input.Key;
+using KeyEventArgs = Avalonia.Input.KeyEventArgs;
 
 namespace Flow.Launcher
 {
+    [DoNotNotify]
     public partial class HotkeyControl : UserControl
     {
         public HotkeyModel CurrentHotkey { get; private set; }
@@ -42,7 +47,7 @@ namespace Flow.Launcher
             e.Handled = true;
 
             //when alt is pressed, the real key should be e.SystemKey
-            Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+            Key key = e.Key;
 
             SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
@@ -58,7 +63,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            _ = Dispatcher.InvokeAsync(async () =>
+            _ = Dispatcher.UIThread.InvokeAsync(async () =>
             {
                 await Task.Delay(500, token);
                 if (!token.IsCancellationRequested)
@@ -69,7 +74,7 @@ namespace Flow.Launcher
         public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
             tbHotkey.Text = keyModel.ToString();
-            tbHotkey.Select(tbHotkey.Text.Length, 0);
+            // tbHotkey.Select(tbHotkey.Text.Length, 0);
 
             if (triggerValidate)
             {
@@ -87,7 +92,6 @@ namespace Flow.Launcher
                 {
                     CurrentHotkey = keyModel;
                     // To trigger LostFocus
-                    FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
                     Keyboard.ClearFocus();
                 }
             }
@@ -96,20 +100,21 @@ namespace Flow.Launcher
                 CurrentHotkey = keyModel;
             }
         }
-        
+
         public Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
         {
             return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
         }
 
-        private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) => hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+        private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
+            hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
         public new bool IsFocused => tbHotkey.IsFocused;
 
         private void tbHotkey_LostFocus(object sender, RoutedEventArgs e)
         {
             tbHotkey.Text = CurrentHotkey?.ToString() ?? "";
-            tbHotkey.Select(tbHotkey.Text.Length, 0);
+            // tbHotkey.Select(tbHotkey.Text.Length, 0);
         }
 
         private void tbHotkey_GotFocus(object sender, RoutedEventArgs e)
@@ -120,22 +125,23 @@ namespace Flow.Launcher
         private void ResetMessage()
         {
             tbMsg.Text = InternationalizationManager.Instance.GetTranslation("flowlauncherPressHotkey");
-            tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
+            // tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
         }
 
         private void SetMessage(bool hotkeyAvailable)
         {
             if (!hotkeyAvailable)
             {
-                tbMsg.Foreground = new SolidColorBrush(Colors.Red);
+                // tbMsg.Foreground = new SolidColorBrush(Colors.Red);
                 tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
             }
             else
             {
-                tbMsg.Foreground = new SolidColorBrush(Colors.Green);
+                // tbMsg.Foreground = new SolidColorBrush(Colors.Green);
                 tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
             }
-            tbMsg.Visibility = Visibility.Visible;
+
+            // tbMsg.Visibility = Visibility.Visible;
         }
     }
 }
