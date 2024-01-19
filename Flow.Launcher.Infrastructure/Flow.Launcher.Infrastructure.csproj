@@ -49,6 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.0.7" />
+    <PackageReference Include="Avalonia.Svg" Version="11.0.0.10" />
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
     <PackageReference Include="Fody" Version="6.5.5">
       <PrivateAssets>all</PrivateAssets>

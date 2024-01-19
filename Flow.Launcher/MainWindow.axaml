@@ -32,154 +32,122 @@
         <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter" />
         <converters:StringToKeyBindingConverter x:Key="StringToKeyBindingConverter" />
     </Window.Resources>
-    <!-- <Window.InputBindings> -->
-    <!--     <KeyBinding Key="Escape" Command="{Binding EscCommand}" /> -->
-    <!--     <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" /> -->
-    <!--     <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Tab" -->
-    <!--         Command="{Binding AutocompleteQueryCommand}" -->
-    <!--         Modifiers="Shift" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="I" -->
-    <!--         Command="{Binding OpenSettingCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="N" -->
-    <!--         Command="{Binding SelectNextItemCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="J" -->
-    <!--         Command="{Binding SelectNextItemCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D" -->
-    <!--         Command="{Binding SelectNextPageCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="P" -->
-    <!--         Command="{Binding SelectPrevItemCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="K" -->
-    <!--         Command="{Binding SelectPrevItemCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="U" -->
-    <!--         Command="{Binding SelectPrevPageCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Home" -->
-    <!--         Command="{Binding SelectFirstResultCommand}" -->
-    <!--         Modifiers="Alt" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="O" -->
-    <!--         Command="{Binding LoadContextMenuCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="R" -->
-    <!--         Command="{Binding ReQueryCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="H" -->
-    <!--         Command="{Binding LoadHistoryCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="OemCloseBrackets" -->
-    <!--         Command="{Binding IncreaseWidthCommand}" -->
-    <!--         Modifiers="Control" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="OemOpenBrackets" -->
-    <!--         Command="{Binding DecreaseWidthCommand}" -->
-    <!--         Modifiers="Control" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="OemPlus" -->
-    <!--         Command="{Binding IncreaseMaxResultCommand}" -->
-    <!--         Modifiers="Control" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="OemMinus" -->
-    <!--         Command="{Binding DecreaseMaxResultCommand}" -->
-    <!--         Modifiers="Control" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="H" -->
-    <!--         Command="{Binding LoadHistoryCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Enter" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         Modifiers="Ctrl+Shift" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Enter" -->
-    <!--         Command="{Binding LoadContextMenuCommand}" -->
-    <!--         Modifiers="Shift" /> -->
-    <!--     <KeyBinding Key="Enter" Command="{Binding OpenResultCommand}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Enter" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="Enter" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         Modifiers="Alt" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D1" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="0" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D2" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="1" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D3" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="2" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D4" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="3" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D5" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="4" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D6" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="5" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D7" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="6" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D8" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="7" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D9" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="8" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="D0" -->
-    <!--         Command="{Binding OpenResultCommand}" -->
-    <!--         CommandParameter="9" -->
-    <!--         Modifiers="{Binding OpenResultCommandModifiers}" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="F12" -->
-    <!--         Command="{Binding ToggleGameModeCommand}" -->
-    <!--         Modifiers="Ctrl" /> -->
-    <!--     <KeyBinding -->
-    <!--         Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}" -->
-    <!--         Command="{Binding TogglePreviewCommand}" -->
-    <!--         Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" /> -->
-    <!-- </Window.InputBindings> -->
+
+    <Window.KeyBindings>
+        <KeyBinding Gesture="Escape" Command="{Binding EscCommand}" />
+        <KeyBinding Gesture="F5" Command="{Binding ReloadPluginDataCommand}" />
+        <KeyBinding Gesture="Tab" Command="{Binding AutocompleteQueryCommand}" />
+        <KeyBinding
+            Gesture="Shift+Tab"
+            Command="{Binding AutocompleteQueryCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+I"
+            Command="{Binding OpenSettingCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+N"
+            Command="{Binding SelectNextItemCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+J"
+            Command="{Binding SelectNextItemCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+D"
+            Command="{Binding SelectNextPageCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+P"
+            Command="{Binding SelectPrevItemCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+K"
+            Command="{Binding SelectPrevItemCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+U"
+            Command="{Binding SelectPrevPageCommand}" />
+        <KeyBinding
+            Gesture="Alt+Home"
+            Command="{Binding SelectFirstResultCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+O"
+            Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+R"
+            Command="{Binding ReQueryCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+H"
+            Command="{Binding LoadHistoryCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+OemCloseBrackets"
+            Command="{Binding IncreaseWidthCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+OemOpenBrackets"
+            Command="{Binding DecreaseWidthCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+OemPlus"
+            Command="{Binding IncreaseMaxResultCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+OemMinus"
+            Command="{Binding DecreaseMaxResultCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+H"
+            Command="{Binding LoadHistoryCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+Shift+Enter"
+            Command="{Binding OpenResultCommand}" />
+        <KeyBinding
+            Gesture="Shift+Enter"
+            Command="{Binding LoadContextMenuCommand}" />
+        <KeyBinding Gesture="Enter" Command="{Binding OpenResultCommand}" />
+        <KeyBinding
+            Gesture="Ctrl+Enter"
+            Command="{Binding OpenResultCommand}" />
+        <KeyBinding
+            Gesture="Alt+Enter"
+            Command="{Binding OpenResultCommand}" />
+        <KeyBinding
+            Gesture="{Binding D1Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="0" />
+        <KeyBinding
+            Gesture="{Binding D2Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="1" />
+        <KeyBinding
+            Gesture="{Binding D3Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="2" />
+        <KeyBinding
+            Gesture="{Binding D4Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="3" />
+        <KeyBinding
+            Gesture="{Binding D5Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="4" />
+        <KeyBinding
+            Gesture="{Binding D6Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="5" />
+        <KeyBinding
+            Gesture="{Binding D7Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="6" />
+        <KeyBinding
+            Gesture="{Binding D8Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="7" />
+        <KeyBinding
+            Gesture="{Binding D9Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="8" />
+        <KeyBinding
+            Gesture="{Binding D0Gesture}"
+            Command="{Binding OpenResultCommand}"
+            CommandParameter="9" />
+        <KeyBinding
+            Gesture="Ctrl+F12"
+            Command="{Binding ToggleGameModeCommand}" />
+        <KeyBinding
+            Gesture="{Binding PreviewHotkey}"
+            Command="{Binding TogglePreviewCommand}" />
+    </Window.KeyBindings>
     <Grid>
         <Border PointerPressed="OnMouseDown">
             <StackPanel Orientation="Vertical">
@@ -208,7 +176,7 @@
                                     <ContextMenu MinWidth="160">
                                         <!-- <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}"> -->
                                         <!--     <MenuItem.Icon> -->
-                                        <!--         <ui:FontIcon Glyph="&#xe8c6;" /> -->
+                                        <!--         <TextBlock Text="&#xe8c6;" /> -->
                                         <!--     </MenuItem.Icon> -->
                                         <!-- </MenuItem> -->
                                         <!-- <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}"> -->
@@ -228,14 +196,14 @@
                                         <MenuItem Click="OnContextMenusForSettingsClick"
                                                   Header="{DynamicResource flowlauncher_settings}">
                                             <MenuItem.Icon>
-                                                <!-- <FontIcon Glyph="&#xe713;" /> -->
+                                                <TextBlock Text="&#xe713;" FontFamily="{StaticResource IconFont}" />
                                             </MenuItem.Icon>
                                         </MenuItem>
-                                        <!-- <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}"> -->
-                                        <!--     <MenuItem.Icon> -->
-                                        <!--         <ui:FontIcon Glyph="&#xe711;" /> -->
-                                        <!--     </MenuItem.Icon> -->
-                                        <!-- </MenuItem> -->
+                                        <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
+                                            <MenuItem.Icon>
+                                                <TextBlock Text="&#xe711;" FontFamily="{StaticResource IconFont}" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </TextBox.ContextMenu>
                             </TextBox>
@@ -335,28 +303,28 @@
                             <!-- </Border.Clip> -->
                             <flowlauncher:ResultListBox x:Name="ResultListBox" />
                         </Border>
-                        <!-- <Border DataContext="{Binding ContextMenu}"> -->
-                        <!--     <Border.Clip> -->
-                        <!--         ~1~ <MultiBinding Converter="{StaticResource BorderClipConverter}"> @1@ -->
-                        <!--         ~1~     <Binding Path="Width" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~     <Binding Path="Height" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~     <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~ </MultiBinding> @1@ -->
-                        <!--     </Border.Clip> -->
-                        <!--     <flowlauncher:ResultListBox -->
-                        <!--         x:Name="ContextMenu" /> -->
-                        <!-- </Border> -->
-                        <!-- <Border DataContext="{Binding History}"> -->
-                        <!--     <Border.Clip> -->
-                        <!--         ~1~ <MultiBinding Converter="{StaticResource BorderClipConverter}"> @1@ -->
-                        <!--         ~1~     <Binding Path="Width" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~     <Binding Path="Height" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~     <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" /> @1@ -->
-                        <!--         ~1~ </MultiBinding> @1@ -->
-                        <!--     </Border.Clip> -->
-                        <!--     <flowlauncher:ResultListBox -->
-                        <!--         x:Name="History" /> -->
-                        <!-- </Border> -->
+                        <Border DataContext="{Binding ContextMenu}">
+                            <Border.Clip>
+                                <!-- <MultiBinding Converter="{StaticResource BorderClipConverter}"> -->
+                                <!--     <Binding Path="Width" RelativeSource="{RelativeSource Self}" /> -->
+                                <!--     <Binding Path="Height" RelativeSource="{RelativeSource Self}" /> -->
+                                <!--     <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" /> -->
+                                <!-- </MultiBinding> -->
+                            </Border.Clip>
+                            <flowlauncher:ResultListBox
+                                x:Name="ContextMenu" />
+                        </Border>
+                        <Border DataContext="{Binding History}">
+                            <Border.Clip>
+                                <!-- <MultiBinding Converter="{StaticResource BorderClipConverter}"> -->
+                                <!--     <Binding Path="Width" RelativeSource="{RelativeSource Self}" /> -->
+                                <!--     <Binding Path="Height" RelativeSource="{RelativeSource Self}" /> -->
+                                <!--     <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" /> -->
+                                <!-- </MultiBinding> -->
+                            </Border.Clip>
+                            <flowlauncher:ResultListBox
+                                x:Name="History" />
+                        </Border>
                     </StackPanel>
                     <!-- <GridSplitter -->
                     <!--     Grid.Column="1" -->

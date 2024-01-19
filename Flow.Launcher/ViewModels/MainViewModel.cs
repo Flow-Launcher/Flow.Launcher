@@ -599,7 +599,17 @@ namespace Flow.Launcher.ViewModel
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
-
+        public string D1Gesture => $"{OpenResultCommandModifiers}+D1";
+        public string D2Gesture => $"{OpenResultCommandModifiers}+D2";
+        public string D3Gesture => $"{OpenResultCommandModifiers}+D3";
+        public string D4Gesture => $"{OpenResultCommandModifiers}+D4";
+        public string D5Gesture => $"{OpenResultCommandModifiers}+D5";
+        public string D6Gesture => $"{OpenResultCommandModifiers}+D6";
+        public string D7Gesture => $"{OpenResultCommandModifiers}+D7";
+        public string D8Gesture => $"{OpenResultCommandModifiers}+D8";
+        public string D9Gesture => $"{OpenResultCommandModifiers}+D9";
+        public string D0Gesture => $"{OpenResultCommandModifiers}+D0";
+        
         public string PreviewHotkey
         {
             get

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 #pragma warning restore IDE0005
 using System.Windows.Media;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -60,7 +61,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             return Directory.GetParent(fullPathToSelectedImage).ToString() == Main.DefaultImagesDirectory;
         }
 
-        internal async ValueTask<Bitmap> LoadPreviewIconAsync(string pathToPreviewIconImage)
+        internal async ValueTask<IImage> LoadPreviewIconAsync(string pathToPreviewIconImage)
         {
             return await ImageLoader.LoadAsync(pathToPreviewIconImage);
         }

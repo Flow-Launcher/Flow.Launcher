@@ -7,7 +7,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
+using Avalonia.Svg;
+using Avalonia.Threading;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using static Flow.Launcher.Infrastructure.Http.Http;
@@ -91,10 +94,10 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        private readonly record struct ImageResult(Bitmap image, ImageType imageType)
+        private readonly record struct ImageResult(IImage image, ImageType imageType)
         {
             public ImageType ImageType { get; } = imageType;
-            public Bitmap Image { get; } = image;
+            public IImage Image { get; } = image;
         }
 
         private enum ImageType
@@ -184,7 +187,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static async ValueTask<ImageResult> GetThumbnailResult(string path, bool loadFullImage = false)
         {
-            Bitmap image;
+            IImage image;
             ImageType type = ImageType.Error;
 
             if (Directory.Exists(path))
@@ -218,6 +221,12 @@ namespace Flow.Launcher.Infrastructure.Image
                         image = await ImageHelper.LoadFromFile(path, SmallIconSize);
                     }
                 }
+                else if (extension == ".svg")
+                {
+                    var source = SvgSource.Load(path, null);
+                    image = Dispatcher.UIThread.Invoke(() => new SvgImage() { Source = source });
+                    type = ImageType.FullImageFile;
+                }
                 else
                 {
                     type = ImageType.File;
@@ -249,12 +258,12 @@ namespace Flow.Launcher.Infrastructure.Image
             return ImageCache.ContainsKey(path, loadFullImage);
         }
 
-        public static bool TryGetValue(string path, bool loadFullImage, out Bitmap image)
+        public static bool TryGetValue(string path, bool loadFullImage, out IImage image)
         {
             return ImageCache.TryGetValue(path, loadFullImage, out image);
         }
 
-        public static async ValueTask<Bitmap> LoadAsync(string path, bool loadFullImage = false)
+        public static async ValueTask<IImage> LoadAsync(string path, bool loadFullImage = false)
         {
             var imageResult = await LoadInternalAsync(path, loadFullImage);
 

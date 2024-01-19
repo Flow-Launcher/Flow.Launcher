@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Avalonia.Media;
 using Avalonia.Media.Imaging;
 
 namespace Flow.Launcher.Infrastructure.Image
@@ -13,9 +14,9 @@ namespace Flow.Launcher.Infrastructure.Image
     public class ImageUsage
     {
         public int usage;
-        public Bitmap imageSource;
+        public IImage imageSource;
 
-        public ImageUsage(int usage, Bitmap image)
+        public ImageUsage(int usage, IImage image)
         {
             this.usage = usage;
             imageSource = image;
@@ -37,7 +38,7 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        public Bitmap this[string path, bool isFullImage = false]
+        public IImage this[string path, bool isFullImage = false]
         {
             get
             {
@@ -89,7 +90,7 @@ namespace Flow.Launcher.Infrastructure.Image
                    Data[(key, isFullImage)].imageSource != null;
         }
 
-        public bool TryGetValue(string key, bool isFullImage, out Bitmap image)
+        public bool TryGetValue(string key, bool isFullImage, out IImage image)
         {
             if (key is not null)
             {

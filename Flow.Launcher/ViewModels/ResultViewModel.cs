@@ -9,7 +9,11 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Avalonia.Fonts.Inter;
+using Avalonia.Media;
+using Avalonia.Media.Fonts;
 using Avalonia.Media.Imaging;
+using FontFamily = Avalonia.Media.FontFamily;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -17,7 +21,7 @@ namespace Flow.Launcher.ViewModel
     {
         private static PrivateFontCollection fontCollection = new();
         private static Dictionary<string, string> fonts = new();
-
+        
         public ResultViewModel(Result result, Settings settings)
         {
             Settings = settings;
@@ -59,14 +63,17 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
+            
             LoadImage();
         }
 
+
         private Settings Settings { get; }
+
 
         public bool ShowOpenResultHotkey => Settings.ShowOpenResultHotkey;
 
-        public Bitmap DefaultImage => ImageLoader.LoadingImage;
+        public IImage DefaultImage => ImageLoader.LoadingImage;
 
         public bool ShowDefaultPreview => Result.PreviewPanel != null;
 
@@ -148,9 +155,9 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        public Task<Bitmap> Image { get; set; }
+        public Task<IImage> Image { get; set; }
 
-        public Task<Bitmap> PreviewImage { get; set; }
+        public Task<IImage> PreviewImage { get; set; }
 
         /// <summary>
         /// Determines if to use the full width of the preview panel
@@ -159,7 +166,7 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async Task<Bitmap> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
+        private async Task<IImage> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
             bool loadFullImage)
         {
             if (string.IsNullOrEmpty(imagePath) && icon != null)

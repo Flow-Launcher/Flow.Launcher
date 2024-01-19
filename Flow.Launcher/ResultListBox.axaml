@@ -63,12 +63,7 @@
                                 </TextBlock>
                             </StackPanel>
 
-                            <Grid Grid.Column="0">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-
+                            <Grid Grid.Column="0" ColumnDefinitions="Auto,*">
                                 <Border
                                     x:Name="Bullet"
                                     Grid.Column="0" />
@@ -97,7 +92,7 @@
                                         x:Name="GlyphIcon"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        FontFamily="{Binding Glyph.FontFamily}"
+                                        FontFamily="{StaticResource IconFont}"
                                         Text="{Binding Glyph.Glyph}"
                                         IsVisible="{Binding ShowGlyph}" />
                                 </Border>

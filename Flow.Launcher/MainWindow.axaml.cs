@@ -347,7 +347,7 @@ namespace Flow.Launcher
         private void OpenWelcomeWindow()
         {
             var WelcomeWindow = new WelcomeWindow(_settings);
-            WelcomeWindow.ShowDialog(this);
+            WelcomeWindow.Show(this);
         }
 
         private async void PositionReset()

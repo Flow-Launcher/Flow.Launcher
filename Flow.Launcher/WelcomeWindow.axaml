@@ -105,7 +105,7 @@
                         Margin="8,5,0,5"
                         Content="&#xe76c;"
                         DockPanel.Dock="Right"
-                        FontFamily="{StaticResource UIFont}"
+                        FontFamily="{StaticResource IconFont}"
                         FontSize="18" />
                     <Button
                         x:Name="BackButton"
@@ -114,7 +114,7 @@
                         Command="{Binding NavigatePreviousCommand}"
                         Content="&#xe76b;"
                         DockPanel.Dock="Right"
-                        FontFamily="{StaticResource UIFont}"
+                        FontFamily="{StaticResource IconFont}"
                         FontSize="18" />
                     <StackPanel />
                 </DockPanel>

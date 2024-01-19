@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Title = title,
                 AutoCompleteText = resultName,
                 SubTitle = subtitle,
-                IcoPath = IcoPath,
+                IcoPath = @"C:\Users\hongt\Downloads\Vector-based_example.svg", // IcoPath,
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
