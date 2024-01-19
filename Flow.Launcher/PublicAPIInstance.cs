@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using Avalonia.Threading;
+using Microsoft.VisualStudio.Threading;
 
 namespace Flow.Launcher
 {
@@ -76,7 +77,11 @@ namespace Flow.Launcher
 
         public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
 
-        public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
+        public event VisibilityChangedEventHandler VisibilityChanged
+        {
+            add => _mainVM.VisibilityChanged += value;
+            remove => _mainVM.VisibilityChanged -= value;
+        }
 
         public void CheckForNewUpdate() => _settingsVM.UpdateApp();
 
@@ -85,7 +90,7 @@ namespace Flow.Launcher
             PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
-            ImageLoader.Save();
+            new JoinableTaskFactory(new JoinableTaskContext()).Run(ImageLoader.SaveAsync);
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -125,10 +130,7 @@ namespace Flow.Launcher
             var isFile = File.Exists(stringToCopy);
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
-                var paths = new StringCollection
-                {
-                    stringToCopy
-                };
+                var paths = new StringCollection { stringToCopy };
 
                 Clipboard.SetFileDropList(paths);
 
@@ -240,7 +242,9 @@ namespace Flow.Launcher
                     : explorerInfo.FileArgument
                         .Replace("%d", DirectoryPath)
                         .Replace("%f",
-                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
+                            Path.IsPathRooted(FileNameOrFilePath)
+                                ? FileNameOrFilePath
+                                : Path.Combine(DirectoryPath, FileNameOrFilePath)
                         )
             };
             explorer.Start();
@@ -256,20 +260,18 @@ namespace Flow.Launcher
 
                 if (browserInfo.OpenInTab)
                 {
-                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserTab(path, inPrivate ?? browserInfo.EnablePrivate,
+                        browserInfo.PrivateArg);
                 }
                 else
                 {
-                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate, browserInfo.PrivateArg);
+                    uri.AbsoluteUri.OpenInBrowserWindow(path, inPrivate ?? browserInfo.EnablePrivate,
+                        browserInfo.PrivateArg);
                 }
             }
             else
             {
-                Process.Start(new ProcessStartInfo()
-                {
-                    FileName = uri.AbsoluteUri,
-                    UseShellExecute = true
-                })?.Dispose();
+                Process.Start(new ProcessStartInfo() { FileName = uri.AbsoluteUri, UseShellExecute = true })?.Dispose();
 
                 return;
             }
@@ -295,7 +297,7 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public void ToggleGameMode() 
+        public void ToggleGameMode()
         {
             _mainVM.ToggleGameMode();
         }
@@ -313,8 +315,11 @@ namespace Flow.Launcher
 
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
-        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
-        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Add(callback);
+
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) =>
+            _globalKeyboardHandlers.Remove(callback);
 
         #endregion
 

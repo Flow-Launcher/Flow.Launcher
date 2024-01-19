@@ -59,13 +59,13 @@ namespace Flow.Launcher.Infrastructure.Image
             });
         }
 
-        public static async Task Save()
+        public static async Task SaveAsync()
         {
             await storageLock.WaitAsync();
 
             try
             {
-                _storage.SaveAsync(ImageCache.Data
+                await _storage.SaveAsync(ImageCache.Data
                     .ToDictionary(
                         x => x.Key,
                         x => x.Value.usage));
@@ -91,16 +91,10 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        private class ImageResult
+        private readonly record struct ImageResult(Bitmap image, ImageType imageType)
         {
-            public ImageResult(Bitmap image, ImageType imageType)
-            {
-                Image = image;
-                ImageType = imageType;
-            }
-
-            public ImageType ImageType { get; }
-            public Bitmap Image { get; }
+            public ImageType ImageType { get; } = imageType;
+            public Bitmap Image { get; } = image;
         }
 
         private enum ImageType
