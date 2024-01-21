@@ -203,7 +203,7 @@ namespace Flow.Launcher.Plugin.Shell
                 case Shell.Cmd:
                 {
                     info.FileName = "cmd.exe";
-                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}";
 
                     //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
                     //// Previous code using ArgumentList, commands needed to be separated correctly:                      
@@ -232,7 +232,7 @@ namespace Flow.Launcher.Plugin.Shell
                     else
                     {
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add(command);
+                        info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
                     }
                     break;
                 }
@@ -245,7 +245,7 @@ namespace Flow.Launcher.Plugin.Shell
                         info.ArgumentList.Add("-NoExit");
                     }
                     info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add(command);
+                    info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
 
                     break;
                 }

@@ -54,6 +54,11 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 contextMenus.Add(CreateOpenContainingFolderResult(record));
 
+                if (record.Type == ResultType.File)
+                {
+                    contextMenus.Add(CreateOpenWithMenu(record));
+                }
+
                 if (record.WindowsIndexed)
                 {
                     contextMenus.Add(CreateOpenWindowsIndexingOptions());
@@ -431,6 +436,22 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                 },
                 IcoPath = Constants.IndexingOptionsIconImagePath
+            };
+        }
+
+        private Result CreateOpenWithMenu(SearchResult record)
+        {
+            return new Result
+            {
+                Title = Context.API.GetTranslation("plugin_explorer_openwith"),
+                SubTitle = Context.API.GetTranslation("plugin_explorer_openwith_subtitle"),
+                Action = _ =>
+                {
+                    Process.Start("rundll32.exe", $"{Path.Combine(Environment.SystemDirectory, "shell32.dll")},OpenAs_RunDLL {record.FullPath}");
+                    return true;
+                },
+                IcoPath = Constants.ShowContextMenuImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue7ac"),
             };
         }
 
