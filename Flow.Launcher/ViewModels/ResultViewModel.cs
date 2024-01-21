@@ -239,10 +239,7 @@ namespace Flow.Launcher.ViewModel
         {
             get
             {
-                if (Result.ProgressBar == null)
-                    return 0;
-
-                return Result.ProgressBar.Value;
+                return Result.ProgressBar ?? 0;
             }
         }
 

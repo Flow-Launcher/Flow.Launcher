@@ -12,12 +12,12 @@
         SelectedIndex="{Binding SelectedIndex, Mode=TwoWay}"
         SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
         SelectionMode="AlwaysSelected"
-        AutoScrollToSelectedItem="False"
+        AutoScrollToSelectedItem="True"
         IsVisible="{Binding Visibility}"
         MaxHeight="{Binding MaxHeight}">
         <ListBox.ItemTemplate>
             <DataTemplate>
-                <Button HorizontalAlignment="Stretch" Height="40">
+                <Button HorizontalAlignment="Stretch" Height="40" x:DataType="vm:ResultViewModel">
                     <Button.Template>
                         <ControlTemplate>
                             <ContentPresenter Content="{TemplateBinding Button.Content}" />
@@ -78,7 +78,7 @@
                                         Margin="0,0,0,0"
                                         HorizontalAlignment="Center"
                                         IsHitTestVisible="False"
-                                        Source="{Binding Image^, FallbackValue={Binding DefaultImage}, TargetNullValue={x:Null}}"
+                                        Source="{Binding Image^, FallbackValue={Binding DefaultImage}}"
                                         Stretch="Uniform"
                                         IsVisible="{Binding ShowIcon}">
                                     </Image>
