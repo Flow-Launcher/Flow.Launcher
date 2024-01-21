@@ -86,7 +86,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             if (!KeywordTitleMappings.TryGetValue(result.Title, out var translationKey))
             {
-                Log.Error($"Dynamic Title not found for: {result.Title}");
+                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Dynamic Title not found for: {result.Title}");
                 return "Title Not Found";
             }
 
