@@ -100,8 +100,8 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstrániť aktuálnu položku z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_openwith">Otvoriť s</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Vyberte program, ktorým chcete otvoriť súbor</system:String>
 
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">Voľných {0} z {1}</system:String>
