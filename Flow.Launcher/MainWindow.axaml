@@ -196,12 +196,12 @@
                                         <MenuItem Click="OnContextMenusForSettingsClick"
                                                   Header="{DynamicResource flowlauncher_settings}">
                                             <MenuItem.Icon>
-                                                <TextBlock Text="&#xe713;" FontFamily="{StaticResource IconFont}" />
+                                                <TextBlock Text="&#xe713;" FontFamily="{StaticResource SegoeFluentIcons}" />
                                             </MenuItem.Icon>
                                         </MenuItem>
                                         <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
                                             <MenuItem.Icon>
-                                                <TextBlock Text="&#xe711;" FontFamily="{StaticResource IconFont}" />
+                                                <TextBlock Text="&#xe711;" FontFamily="{StaticResource SegoeFluentIcons}" />
                                             </MenuItem.Icon>
                                         </MenuItem>
                                     </ContextMenu>
@@ -229,7 +229,7 @@
                                 x:Name="PluginActivationIcon"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
-                                Source="{Binding PluginIconPath}"
+                                Source="{Binding PluginIcon}"
                                 Stretch="Uniform" />
                             <Canvas>
                                 <Path
