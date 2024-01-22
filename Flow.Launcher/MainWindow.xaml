@@ -192,10 +192,10 @@
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </ui:FluentWindow.InputBindings>
     <Grid>
-        <Border MouseDown="OnMouseDown">
-            <Border.Background>
-                <SolidColorBrush Opacity="0.4" Color="Black" />
-            </Border.Background>
+        <Grid MouseDown="OnMouseDown">
+            <Grid.Background>
+                <SolidColorBrush Opacity="0.8" Color="{DynamicResource ApplicationBackgroundColor}" />
+            </Grid.Background>
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
@@ -499,6 +499,6 @@
                     </Grid>
                 </Grid>
             </StackPanel>
-        </Border>
+        </Grid>
     </Grid>
 </ui:FluentWindow>

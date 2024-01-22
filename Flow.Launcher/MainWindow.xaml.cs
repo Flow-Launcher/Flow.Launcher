@@ -412,21 +412,6 @@ namespace Flow.Launcher
                 _ => _settings.CustomAnimationLength
             };
 
-            var WindowOpacity = new DoubleAnimation
-            {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
-            };
-
-            var WindowMotion = new DoubleAnimation
-            {
-                From = Top + 10,
-                To = Top,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
-            };
             var IconMotion = new DoubleAnimation
             {
                 From = 12,
@@ -467,16 +452,11 @@ namespace Flow.Launcher
             Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
-            Storyboard.SetTarget(WindowOpacity, this);
-            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
-            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
             Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
             Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
 
             clocksb.Children.Add(thicknessAnimation);
             clocksb.Children.Add(ClockOpacity);
-            windowsb.Children.Add(WindowOpacity);
-            windowsb.Children.Add(WindowMotion);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
 
