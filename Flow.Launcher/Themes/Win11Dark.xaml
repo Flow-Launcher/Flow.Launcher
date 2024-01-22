@@ -6,6 +6,8 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
+    <Color x:Key="ApplicationBackgroundColor">#FF202020</Color>
+    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="{StaticResource ApplicationBackgroundColor}" />
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"

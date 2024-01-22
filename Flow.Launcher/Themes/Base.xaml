@@ -567,24 +567,15 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
     </Style>
 
+
     <Style
         x:Key="DefaultFluentWindowStyle"
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="{x:Type ui:FluentWindow}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource ApplicationBackgroundColor}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource WindowForeground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Height" Value="600" />
-        <Setter Property="MinHeight" Value="32" />
         <Setter Property="Width" Value="1100" />
         <Setter Property="MinWidth" Value="460" />
         <Setter Property="Margin" Value="0" />
@@ -598,7 +589,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <AdornerDecorator>
-                        <ui:ClientAreaBorder>
+                        <ui:ClientAreaBorder
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter x:Name="ContentPresenter" />
                         </ui:ClientAreaBorder>
                     </AdornerDecorator>
