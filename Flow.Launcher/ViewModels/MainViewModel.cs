@@ -25,7 +25,9 @@ using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
 using System.ComponentModel;
+using Avalonia.Media;
 using Avalonia.Threading;
+using Flow.Launcher.Infrastructure.Image;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -104,15 +106,6 @@ namespace Flow.Launcher.ViewModel
             };
             _selectedResults = ResultsVM;
 
-            ResultsVM.PropertyChanged += (_, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(ResultsVM.SelectedItem):
-                        UpdatePreview();
-                        break;
-                }
-            };
 
             RegisterViewUpdate();
             RegisterResultsUpdatedEvent();
@@ -479,7 +472,6 @@ namespace Flow.Launcher.ViewModel
         {
             ResultAreaColumn = 1;
             PreviewVisible = true;
-            ResultsVM.SelectedItem?.LoadPreviewImage();
         }
 
         private void HidePreview()
@@ -500,13 +492,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void UpdatePreview()
-        {
-            if (PreviewVisible)
-            {
-                ResultsVM.SelectedItem?.LoadPreviewImage();
-            }
-        }
 
         /// <summary>
         /// we need move cursor to end when we manually changed query
@@ -596,7 +581,7 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowSize = value;
         }
 
-        public string PluginIconPath { get; set; } = null;
+        public Task<IImage> PluginIcon { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
         public string D1Gesture => $"{OpenResultCommandModifiers}+D1";
@@ -609,7 +594,7 @@ namespace Flow.Launcher.ViewModel
         public string D8Gesture => $"{OpenResultCommandModifiers}+D8";
         public string D9Gesture => $"{OpenResultCommandModifiers}+D9";
         public string D0Gesture => $"{OpenResultCommandModifiers}+D0";
-        
+
         public string PreviewHotkey
         {
             get
@@ -751,8 +736,7 @@ namespace Flow.Launcher.ViewModel
             if (query == null) // shortcut expanded
             {
                 ResultsVM.Clear();
-                ResultsVM.Visibility = false;
-                PluginIconPath = null;
+                PluginIcon = null;
                 SearchIconVisibility = true;
                 return;
             }
@@ -785,12 +769,12 @@ namespace Flow.Launcher.ViewModel
 
             if (plugins.Count == 1)
             {
-                PluginIconPath = plugins.Single().Metadata.IcoPath;
+                PluginIcon = ImageLoader.LoadAsync(plugins.Single().Metadata.IcoPath, false).AsTask();
                 SearchIconVisibility = false;
             }
             else
             {
-                PluginIconPath = null;
+                PluginIcon = null;
                 SearchIconVisibility = true;
             }
 

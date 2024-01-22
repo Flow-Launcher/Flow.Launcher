@@ -62,9 +62,6 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
-
-            LoadImage();
         }
 
 
@@ -170,9 +167,9 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        public Task<IImage> Image { get; set; }
+        public Task<IImage> Image => LoadImageInternalAsync(Result.IcoPath, Result.Icon, false);
 
-        public Task<IImage> PreviewImage { get; set; }
+        public Task<IImage> PreviewImage => LoadImageInternalAsync(Result.IcoPath, Result.Icon, false);
 
         /// <summary>
         /// Determines if to use the full width of the preview panel
@@ -202,35 +199,6 @@ namespace Flow.Launcher.ViewModel
             return await ImageLoader.LoadAsync(imagePath, loadFullImage).ConfigureAwait(false);
         }
 
-        private void LoadImage()
-        {
-            var imagePath = Result.IcoPath;
-            var iconDelegate = Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, false, out var img))
-            {
-                Image = Task.FromResult(img);
-            }
-            else
-            {
-                // We need to modify the property not field here to trigger the OnPropertyChanged event
-                Image = LoadImageInternalAsync(imagePath, iconDelegate, false);
-            }
-        }
-
-        public void LoadPreviewImage()
-        {
-            var imagePath = Result.Preview.PreviewImagePath ?? Result.IcoPath;
-            var iconDelegate = Result.Preview.PreviewDelegate ?? Result.Icon;
-            if (ImageLoader.TryGetValue(imagePath, true, out var img))
-            {
-                PreviewImage = Task.FromResult(img);
-            }
-            else
-            {
-                // We need to modify the property not field here to trigger the OnPropertyChanged event
-                PreviewImage = LoadImageInternalAsync(imagePath, iconDelegate, true);
-            }
-        }
 
 
         public Result Result { get; }
