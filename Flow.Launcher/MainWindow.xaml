@@ -31,7 +31,7 @@
     ShowInTaskbar="False"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-    WindowBackdropType="Mica"
+    WindowBackdropType="Acrylic"
     WindowStartupLocation="Manual"
     mc:Ignorable="d">
     <ui:FluentWindow.Resources>
