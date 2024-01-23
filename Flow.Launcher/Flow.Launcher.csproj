@@ -97,6 +97,7 @@
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.8.2" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.8" />
+    <PackageReference Include="WPF-UI" Version="3.0.0-preview.7" />
   </ItemGroup>
 
   <ItemGroup>
