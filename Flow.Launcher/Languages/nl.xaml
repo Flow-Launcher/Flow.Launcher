@@ -92,7 +92,7 @@
     <system:String x:Key="enable">Aan</system:String>
     <system:String x:Key="disable">Disable</system:String>
     <system:String x:Key="actionKeywordsTitle">Actie sneltoets instelling</system:String>
-    <system:String x:Key="actionKeywords">Action terfwoorden</system:String>
+    <system:String x:Key="actionKeywords">Actie sneltoets</system:String>
     <system:String x:Key="currentActionKeywords">Huidige actie sneltoets</system:String>
     <system:String x:Key="newActionKeyword">Nieuw actie sneltoets</system:String>
     <system:String x:Key="actionKeywordsTooltip">Wijzig actie-sneltoets</system:String>

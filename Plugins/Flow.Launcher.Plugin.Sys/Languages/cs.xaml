@@ -26,7 +26,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otevře místo, kde jsou uložena nastavení Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspěšné</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Uložení všech nastavení Flow Launcheru</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Aktualizace všech dat pluginů</system:String>
