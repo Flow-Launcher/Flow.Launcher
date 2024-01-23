@@ -217,7 +217,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
                         }
                     },
                     IcoPath = "Images\\copylink.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue8c8")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\ue8c8")
                 }
             };
         }

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows;
+using Bitmap = Avalonia.Media.Imaging.Bitmap;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
@@ -41,8 +44,8 @@ namespace Flow.Launcher.Infrastructure.Image
         internal interface IShellItem
         {
             void BindToHandler(IntPtr pbc,
-                [MarshalAs(UnmanagedType.LPStruct)]Guid bhid,
-                [MarshalAs(UnmanagedType.LPStruct)]Guid riid,
+                [MarshalAs(UnmanagedType.LPStruct)] Guid bhid,
+                [MarshalAs(UnmanagedType.LPStruct)] Guid riid,
                 out IntPtr ppv);
 
             void GetParent(out IShellItem ppsi);
@@ -88,9 +91,9 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             [PreserveSig]
             HResult GetImage(
-            [In, MarshalAs(UnmanagedType.Struct)] NativeSize size,
-            [In] ThumbnailOptions flags,
-            [Out] out IntPtr phbm);
+                [In, MarshalAs(UnmanagedType.Struct)] NativeSize size,
+                [In] ThumbnailOptions flags,
+                [Out] out IntPtr phbm);
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -104,21 +107,34 @@ namespace Flow.Launcher.Infrastructure.Image
         };
 
 
-        public static BitmapSource GetThumbnail(string fileName, int width, int height, ThumbnailOptions options)
+        public static Bitmap GetThumbnail(string fileName, int width, int height, ThumbnailOptions options)
         {
-            IntPtr hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
-
             try
             {
-                return Imaging.CreateBitmapSourceFromHBitmap(hBitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                var icon = Icon.ExtractAssociatedIcon(fileName);
+                if (icon == null)
+                {
+                    return null;
+                }
+
+                var bitmapTmp = icon.ToBitmap();
+                var bitmapdata = bitmapTmp.LockBits(new Rectangle(0, 0, bitmapTmp.Width, bitmapTmp.Height),
+                    ImageLockMode.ReadWrite, PixelFormat.Format32bppArgb);
+                var bitmap1 = new Bitmap(Avalonia.Platform.PixelFormat.Bgra8888, Avalonia.Platform.AlphaFormat.Unpremul,
+                    bitmapdata.Scan0,
+                    new Avalonia.PixelSize(bitmapdata.Width, bitmapdata.Height),
+                    new Avalonia.Vector(96, 96),
+                    bitmapdata.Stride);
+                bitmapTmp.UnlockBits(bitmapdata);
+                bitmapTmp.Dispose();
+                return bitmap1;
             }
-            finally
+            catch (System.Exception e)
             {
-                // delete HBitmap to avoid memory leaks
-                DeleteObject(hBitmap);
+                return null;
             }
         }
-        
+
         private static IntPtr GetHBitmap(string fileName, int width, int height, ThumbnailOptions options)
         {
             IShellItem nativeShellItem;
@@ -128,11 +144,7 @@ namespace Flow.Launcher.Infrastructure.Image
             if (retCode != 0)
                 throw Marshal.GetExceptionForHR(retCode);
 
-            NativeSize nativeSize = new NativeSize
-            {
-                Width = width,
-                Height = height
-            };
+            NativeSize nativeSize = new NativeSize { Width = width, Height = height };
 
             IntPtr hBitmap;
             HResult hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, options, out hBitmap);
@@ -140,14 +152,16 @@ namespace Flow.Launcher.Infrastructure.Image
             // if extracting image thumbnail and failed, extract shell icon
             if (options == ThumbnailOptions.ThumbnailOnly && hr == HResult.ExtractionFailed)
             {
-                hr = ((IShellItemImageFactory) nativeShellItem).GetImage(nativeSize, ThumbnailOptions.IconOnly, out hBitmap);
+                hr = ((IShellItemImageFactory)nativeShellItem).GetImage(nativeSize, ThumbnailOptions.IconOnly,
+                    out hBitmap);
             }
 
             Marshal.ReleaseComObject(nativeShellItem);
 
             if (hr == HResult.Ok) return hBitmap;
 
-            throw new COMException($"Error while extracting thumbnail for {fileName}", Marshal.GetExceptionForHR((int)hr));
+            throw new COMException($"Error while extracting thumbnail for {fileName}",
+                Marshal.GetExceptionForHR((int)hr));
         }
     }
 }

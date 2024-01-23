@@ -1,0 +1,49 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.HotkeyControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:launcher="clr-namespace:Flow.Launcher"
+    Height="24"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d"
+    x:DataType="launcher:HotkeyControl">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+        </Grid.ColumnDefinitions>
+        <Popup
+            x:Name="popup"
+            Placement="Top"
+            PlacementTarget="{Binding ElementName=tbHotkey}"
+            VerticalOffset="-5">
+            <Border
+                Width="140"
+                Height="30"
+                Background="{DynamicResource Color01B}"
+                BorderBrush="{DynamicResource Color21B}"
+                BorderThickness="1"
+                CornerRadius="4">
+                <TextBlock
+                    x:Name="tbMsg"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="13"
+                    FontWeight="SemiBold"
+                    Foreground="{DynamicResource Color05B}"
+                    Text="{DynamicResource flowlauncherPressHotkey}"/>
+            </Border>
+        </Popup>
+
+        <TextBox
+            x:Name="tbHotkey"
+            Margin="0,0,18,0"
+            VerticalContentAlignment="Center"
+            LostFocus="tbHotkey_LostFocus"
+            KeyDown="TbHotkey_OnPreviewKeyDown"
+            TabIndex="100" />
+    </Grid>
+</UserControl>

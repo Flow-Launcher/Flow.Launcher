@@ -13,13 +13,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             Context = context;
         }
 
-        private readonly GlyphInfo sourcecodeGlyph = new("/Resources/#Segoe Fluent Icons","\uE943");
-        private readonly GlyphInfo issueGlyph = new("/Resources/#Segoe Fluent Icons", "\ued15");
-        private readonly GlyphInfo manifestGlyph = new("/Resources/#Segoe Fluent Icons", "\uea37");
+        private readonly GlyphInfo sourcecodeGlyph = new("SegoeFluentIcons", "\uE943");
+        private readonly GlyphInfo issueGlyph = new("SegoeFluentIcons", "\ued15");
+        private readonly GlyphInfo manifestGlyph = new("SegoeFluentIcons", "\uea37");
 
         public List<Result> LoadContextMenus(Result selectedResult)
         {
-            if(selectedResult.ContextData is not UserPlugin pluginManifestInfo) 
+            if (selectedResult.ContextData is not UserPlugin pluginManifestInfo)
                 return new List<Result>();
 
             return new List<Result>
@@ -27,9 +27,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 new Result
                 {
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_title"),
-                    SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle"),
+                    SubTitle =
+                        Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle"),
                     IcoPath = selectedResult.IcoPath,
-                    Action = _ => 
+                    Action = _ =>
                     {
                         Context.API.OpenUrl(pluginManifestInfo.Website);
                         return true;
@@ -38,7 +39,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 new Result
                 {
                     Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title"),
-                    SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle"),
+                    SubTitle =
+                        Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle"),
                     IcoPath = "Images\\sourcecode.png",
                     Glyph = sourcecodeGlyph,
                     Action = _ =>
@@ -56,9 +58,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Action = _ =>
                     {
                         // standard UrlSourceCode format in PluginsManifest's plugins.json file: https://github.com/jjw24/Flow.Launcher.Plugin.Putty/tree/master
-                        var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com") 
-                                        ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues"
-                                        : pluginManifestInfo.UrlSourceCode;
+                        var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com")
+                            ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues"
+                            : pluginManifestInfo.UrlSourceCode;
 
                         Context.API.OpenUrl(link);
                         return true;
@@ -66,8 +68,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 },
                 new Result
                 {
-                    Title = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title"),
-                    SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle"),
+                    Title =
+                        Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title"),
+                    SubTitle =
+                        Context.API.GetTranslation("plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle"),
                     IcoPath = "Images\\manifestsite.png",
                     Glyph = manifestGlyph,
                     Action = _ =>

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <ProjectGuid>{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}</ProjectGuid>
     <UseWPF>true</UseWPF>
     <OutputType>Library</OutputType>
@@ -66,7 +66,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2023.3.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>

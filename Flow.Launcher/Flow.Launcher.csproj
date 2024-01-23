@@ -2,8 +2,9 @@
   
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
@@ -12,6 +13,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -23,7 +25,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>true</UseVSHostingProcess>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
@@ -43,11 +44,22 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Page Include="App.xaml" />
-  </ItemGroup>
-  
-  <ItemGroup>
     <Page Remove="Themes\ThemeBuilder\Template.xaml" />
+    <Page Update="Pages\WelcomePage1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage2.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage3.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage4.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Pages\WelcomePage5.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   
   <ItemGroup>
@@ -77,13 +89,22 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\Segoe Fluent Icons.ttf">
+    <Content Include="Resources\*.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <AvaloniaResource Include="Resources\*.ttf"/>
+    <AvaloniaResource Include="Images\*.png"/>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.0.7" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.7" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.7" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="11.0.7" />
+    <PackageReference Include="Avalonia.Svg" Version="11.0.0.10" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.7" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.7"/>
     <PackageReference Include="Fody" Version="6.5.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -109,6 +130,18 @@
     <Content Include="Resources\open.wav">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage1.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage2.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage3.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage4.axaml" />
+    <AdditionalFiles Include="Views\WelcomePages\WelcomePage5.axaml" />
   </ItemGroup>
 
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

@@ -9,7 +9,7 @@
     "Command": "ms-settings:workplace",
     "IconGlyph": {
       "Glyph": "\ue821",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -43,7 +43,7 @@
     "Command": "ms-settings:signinoptions",
     "IconGlyph": {
       "Glyph": "\ue8d7",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -59,7 +59,7 @@
     "Command": "ms-settings:sync",
     "IconGlyph": {
       "Glyph": "\ue895",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -81,7 +81,7 @@
     "Command": "ms-settings:yourinfo",
     "IconGlyph": {
       "Glyph": "\ue779",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -91,7 +91,7 @@
     "Command": "ms-settings:appsfeatures",
     "IconGlyph": {
       "Glyph": "\ue71d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -107,7 +107,7 @@
     "Command": "ms-settings:appsforwebsites",
     "IconGlyph": {
       "Glyph": "\ue78b",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -117,7 +117,7 @@
     "Command": "ms-settings:defaultapps",
     "IconGlyph": {
       "Glyph": "\ue7ac",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -127,7 +127,7 @@
     "Command": "ms-settings:optionalfeatures",
     "IconGlyph": {
       "Glyph": "\ue71d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -137,7 +137,7 @@
     "Command": "ms-settings:maps",
     "IconGlyph": {
       "Glyph": "\ue826",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -153,7 +153,7 @@
     "Command": "ms-settings:startupapps",
     "IconGlyph": {
       "Glyph": "\ue7b5",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -163,7 +163,7 @@
     "Command": "ms-settings:videoplayback",
     "IconGlyph": {
       "Glyph": "\ue714",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -185,7 +185,7 @@
     "Command": "ms-settings:cortana-permissions",
     "IconGlyph": {
       "Glyph": "\ue7ef",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -195,7 +195,7 @@
     "Command": "ms-settings:cortana-windowssearch",
     "IconGlyph": {
       "Glyph": "\ue713",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -226,7 +226,7 @@
     "Command": "ms-settings:autoplay",
     "IconGlyph": {
       "Glyph": "\uec57",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -236,7 +236,7 @@
     "Command": "ms-settings:bluetooth",
     "IconGlyph": {
       "Glyph": "\ue772",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -267,7 +267,7 @@
     "Command": "ms-settings:pen",
     "IconGlyph": {
       "Glyph": "\uedc6",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -277,7 +277,7 @@
     "Command": "ms-settings:printers",
     "IconGlyph": {
       "Glyph": "\ue749",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -294,7 +294,7 @@
     "Command": "ms-settings:typing",
     "IconGlyph": {
       "Glyph": "\ue765",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -304,7 +304,7 @@
     "Command": "ms-settings:usb",
     "IconGlyph": {
       "Glyph": "\ue88e",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -341,7 +341,7 @@
     "Command": "ms-settings:easeofaccess-closedcaptioning",
     "IconGlyph": {
       "Glyph": "\ue7f0",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -389,7 +389,7 @@
     "Command": "ms-settings:easeofaccess-eyecontrol",
     "IconGlyph": {
       "Glyph": "\uf19d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -401,7 +401,7 @@
     "Command": "ms-settings:fonts",
     "IconGlyph": {
       "Glyph": "\ue8d2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -411,7 +411,7 @@
     "Command": "ms-settings:easeofaccess-highcontrast",
     "IconGlyph": {
       "Glyph": "\ue706",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -430,7 +430,7 @@
     "Command": "ms-settings:easeofaccess-keyboard",
     "IconGlyph": {
       "Glyph": "\ued4d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -443,7 +443,7 @@
     "Command": "ms-settings:easeofaccess-magnifier",
     "IconGlyph": {
       "Glyph": "\uf19d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -500,7 +500,7 @@
     "Command": "ms-settings:gaming-gamebar",
     "IconGlyph": {
       "Glyph": "\ue713",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -510,7 +510,7 @@
     "Command": "ms-settings:gaming-gamedvr",
     "IconGlyph": {
       "Glyph": "\ue713",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -520,7 +520,7 @@
     "Command": "ms-settings:gaming-gamemode",
     "IconGlyph": {
       "Glyph": "\uec4a",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -547,7 +547,7 @@
     "Command": "ms-settings:gaming-xboxnetworking",
     "IconGlyph": {
       "Glyph": "\ue713",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -621,7 +621,7 @@
     "Command": "ms-settings:datausage",
     "IconGlyph": {
       "Glyph": "\uec27",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -631,7 +631,7 @@
     "Command": "ms-settings:network-dialup",
     "IconGlyph": {
       "Glyph": "\ue83c",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -656,7 +656,7 @@
     "Command": "ms-settings:network-ethernet",
     "IconGlyph": {
       "Glyph": "\ue839",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -692,7 +692,7 @@
     "Command": "ms-settings:network-proxy",
     "IconGlyph": {
       "Glyph": "\ue774",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -702,7 +702,7 @@
     "Command": "ms-settings:network-status",
     "IconGlyph": {
       "Glyph": "\uec27",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -726,7 +726,7 @@
     "Command": "ms-settings:network-vpn",
     "IconGlyph": {
       "Glyph": "\ue705",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -763,7 +763,7 @@
     "Command": "ms-settings:personalization-background",
     "IconGlyph": {
       "Glyph": "\ueb9f",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -776,7 +776,7 @@
     "Command": "ms-settings:personalization-start-places",
     "IconGlyph": {
       "Glyph": "\ueca5",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -795,7 +795,7 @@
     "Command": "ms-settings:colors",
     "IconGlyph": {
       "Glyph": "\ue790",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -843,7 +843,7 @@
     "Command": "ms-settings:taskbar",
     "IconGlyph": {
       "Glyph": "\ue90e",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -853,7 +853,7 @@
     "Command": "ms-settings:themes",
     "IconGlyph": {
       "Glyph": "\ue771",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -885,7 +885,7 @@
     "Command": "ms-settings:privacy-accountinfo",
     "IconGlyph": {
       "Glyph": "\ue779",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -895,7 +895,7 @@
     "Command": "ms-settings:privacy-activityhistory",
     "IconGlyph": {
       "Glyph": "\ue7c4",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -907,7 +907,7 @@
     "Command": "ms-settings:privacy-advertisingid",
     "IconGlyph": {
       "Glyph": "\ue72e",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -917,7 +917,7 @@
     "Command": "ms-settings:privacy-appdiagnostics",
     "IconGlyph": {
       "Glyph": "\ue9d2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -927,7 +927,7 @@
     "Command": "ms-settings:privacy-automaticfiledownloads",
     "IconGlyph": {
       "Glyph": "\ue753",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -937,7 +937,7 @@
     "Command": "ms-settings:privacy-backgroundapps",
     "IconGlyph": {
       "Glyph": "\ue9d9",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -953,7 +953,7 @@
     "Command": "ms-settings:privacy-callhistory",
     "IconGlyph": {
       "Glyph": "\uf738",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -963,7 +963,7 @@
     "Command": "ms-settings:privacy-webcam",
     "IconGlyph": {
       "Glyph": "\uf439",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -973,7 +973,7 @@
     "Command": "ms-settings:privacy-contacts",
     "IconGlyph": {
       "Glyph": "\ue716",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -983,7 +983,7 @@
     "Command": "ms-settings:privacy-documents",
     "IconGlyph": {
       "Glyph": "\ue7c3",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1012,7 +1012,7 @@
     "Command": "ms-settings:privacy-broadfilesystemaccess",
     "IconGlyph": {
       "Glyph": "\ue7c3",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1022,7 +1022,7 @@
     "Command": "ms-settings:privacy or privacy-general",
     "IconGlyph": {
       "Glyph": "\uec20",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1035,7 +1035,7 @@
     "Command": "ms-settings:privacy-speechtyping",
     "IconGlyph": {
       "Glyph": "\ueadf",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1045,7 +1045,7 @@
     "Command": "ms-settings:privacy-location",
     "IconGlyph": {
       "Glyph": "\ue707",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1055,7 +1055,7 @@
     "Command": "ms-settings:privacy-messaging",
     "IconGlyph": {
       "Glyph": "\uebdb",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1065,7 +1065,7 @@
     "Command": "ms-settings:privacy-microphone",
     "IconGlyph": {
       "Glyph": "\ue720",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1090,7 +1090,7 @@
     "Command": "ms-settings:privacy-customdevices",
     "IconGlyph": {
       "Glyph": "\ue772",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1100,7 +1100,7 @@
     "Command": "ms-settings:privacy-phonecalls",
     "IconGlyph": {
       "Glyph": "\ue77e",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1116,7 +1116,7 @@
     "Command": "ms-settings:privacy-radios",
     "IconGlyph": {
       "Glyph": "\uec05",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1138,7 +1138,7 @@
     "Command": "ms-settings:privacy-videos",
     "IconGlyph": {
       "Glyph": "\ue8b2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1148,7 +1148,7 @@
     "Command": "ms-settings:privacy-voiceactivation",
     "IconGlyph": {
       "Glyph": "\uf12e",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1185,7 +1185,7 @@
     "Command": "ms-settings:surfacehub-welcome",
     "IconGlyph": {
       "Glyph": "\uee3f",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1203,7 +1203,7 @@
     "Command": "ms-settings:about",
     "IconGlyph": {
       "Glyph": "\ue946",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1214,7 +1214,7 @@
     "Command": "ms-settings:display-advanced",
     "IconGlyph": {
       "Glyph": "\ue7f4",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1256,7 +1256,7 @@
     "Command": "ms-settings:clipboard",
     "IconGlyph": {
       "Glyph": "\ue77f",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1278,7 +1278,7 @@
     "Command": "ms-settings:savelocations",
     "IconGlyph": {
       "Glyph": "\ueda2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1288,7 +1288,7 @@
     "Command": "ms-settings:screenrotation",
     "IconGlyph": {
       "Glyph": "\ue7f4",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1344,7 +1344,7 @@
     "Command": "ms-settings:messaging",
     "IconGlyph": {
       "Glyph": "\uebdb",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1360,7 +1360,7 @@
     "Command": "ms-settings:multitasking",
     "IconGlyph": {
       "Glyph": "\ue7c4",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1382,7 +1382,7 @@
     "Command": "ms-settings:project",
     "IconGlyph": {
       "Glyph": "\uebc6",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1395,7 +1395,7 @@
     "Command": "ms-settings:crossdevice",
     "IconGlyph": {
       "Glyph": "\uf22c",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1405,7 +1405,7 @@
     "Command": "ms-settings:tabletmode",
     "IconGlyph": {
       "Glyph": "\uebfc",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1435,7 +1435,7 @@
     "Command": "ms-settings:powersleep",
     "IconGlyph": {
       "Glyph": "\uf83d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1445,7 +1445,7 @@
     "Command": "ms-settings:sound",
     "IconGlyph": {
       "Glyph": "\ue995",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1455,7 +1455,7 @@
     "Command": "ms-settings:storagesense",
     "IconGlyph": {
       "Glyph": "\ueda2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1471,7 +1471,7 @@
     "Command": "ms-settings:dateandtime",
     "IconGlyph": {
       "Glyph": "\uec92",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1494,7 +1494,7 @@
     "Command": "ms-settings:regionformatting",
     "IconGlyph": {
       "Glyph": "\uf49a",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1504,7 +1504,7 @@
     "Command": "ms-settings:keyboard",
     "IconGlyph": {
       "Glyph": "\ued4d",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1585,7 +1585,7 @@
     "Command": "ms-settings:activation",
     "IconGlyph": {
       "Glyph": "\ue930",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1601,7 +1601,7 @@
     "Command": "ms-settings:delivery-optimization",
     "IconGlyph": {
       "Glyph": "\uf785",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1611,7 +1611,7 @@
     "Command": "ms-settings:findmydevice",
     "IconGlyph": {
       "Glyph": "\ue707",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1633,7 +1633,7 @@
     "Command": "ms-settings:troubleshoot",
     "IconGlyph": {
       "Glyph": "\ue90f",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1665,7 +1665,7 @@
     "Command": "ms-settings:windowsupdate",
     "IconGlyph": {
       "Glyph": "\ue895",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1715,7 +1715,7 @@
     "Command": "ms-settings:provisioning",
     "IconGlyph": {
       "Glyph": "\ue821",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1768,7 +1768,7 @@
     "Command": "control /name Microsoft.AutoPlay",
     "IconGlyph": {
       "Glyph": "\uec57",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1829,7 +1829,7 @@
     "Command": "control /name Microsoft.DateAndTime",
     "IconGlyph": {
       "Glyph": "\uec92",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -1875,7 +1875,7 @@
     "Command": "control /name Microsoft.Fonts",
     "IconGlyph": {
       "Glyph": "\ue8d2",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {
@@ -2101,7 +2101,7 @@
     "Command": "control /name Microsoft.Sound",
     "IconGlyph": {
       "Glyph": "\ue995",
-      "FontFamily": "/Resources/#Segoe Fluent Icons"
+      "FontFamily": "SegoeFluentIcons"
     }
   },
   {

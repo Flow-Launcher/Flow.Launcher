@@ -403,7 +403,7 @@ namespace Flow.Launcher.Plugin.Shell
                         return true;
                     },
                     IcoPath = "Images/user.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ee")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe7ee")
                 },
                 new()
                 {
@@ -414,7 +414,7 @@ namespace Flow.Launcher.Plugin.Shell
                         return true;
                     },
                     IcoPath = "Images/admin.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe7ef")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe7ef")
                 },
                 new()
                 {
@@ -425,7 +425,7 @@ namespace Flow.Launcher.Plugin.Shell
                         return true;
                     },
                     IcoPath = "Images/copy.png",
-                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8c8")
+                    Glyph = new GlyphInfo(FontFamily: "SegoeFluentIcons", Glyph: "\xe8c8")
                 }
             };
 
