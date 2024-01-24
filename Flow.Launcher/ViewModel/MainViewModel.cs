@@ -1052,6 +1052,8 @@ namespace Flow.Launcher.ViewModel
         {
             // Trick for no delay
             MainWindowOpacity = 0;
+            lastContextMenuResult = new Result();
+            lastContextMenuResults = new List<Result>();
 
             if (!SelectedIsFromQueryResults())
             {
