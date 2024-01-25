@@ -261,7 +261,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     },
                     IcoPath = "Images/folder.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
-                }
+                },
+                new Result
+                {
+                    Title = api.GetTranslation("flowlauncher_plugin_program_open_target_folder"),
+                    Action = _ =>
+                    {
+                        Main.Context.API.OpenDirectory(Path.GetDirectoryName(ExecutablePath), ExecutablePath);
+
+                        return true;
+                    },
+                    IcoPath = "Images/folder.png",
+                    Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8de"),
+                },
             };
             return contextMenus;
         }
