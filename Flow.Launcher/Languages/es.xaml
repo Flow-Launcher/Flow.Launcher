@@ -188,7 +188,7 @@
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro de que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
@@ -237,7 +237,7 @@
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
-    <system:String x:Key="clearlogfolderMessage">¿Está seguro que desea eliminar todos los registros?</system:String>
+    <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
