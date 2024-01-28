@@ -4,7 +4,7 @@
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro que desea eliminar {0}?</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro de que desea eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro que desea eliminar permanentemente este archivo?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Está seguro de que desea eliminar permanentemente este/esta archivo/carpeta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminación correcta</system:String>
