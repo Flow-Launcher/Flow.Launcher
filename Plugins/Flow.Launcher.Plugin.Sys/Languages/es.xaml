@@ -8,7 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reiniciar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Reiniciar con opciones de arranque avanzadas</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Cerrar sesión/Desconectar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Cerrar sesión/Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Bloquear</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Suspender</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernar</system:String>
@@ -30,7 +30,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Apaga el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reinicia el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reinicia el equipo con opciones avanzadas de arranque para el modo seguro y de depuración, entre otras opciones</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off">Cierra la sesión</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off">Cerrar sesión</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock">Bloquea el equipo</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit">Cierra Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart">Reinicia Flow Launcher</system:String>
