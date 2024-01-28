@@ -5,25 +5,25 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descripción</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Apagar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reiniciar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Reiniciar con opciones de arranque avanzadas</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Cerrar sesión/Desconectar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Bloquear</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Suspender</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Opciones de indexación</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Vaciar papelera de reciclaje</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Abrir papelera de reciclaje</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Salir</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Restart Flow Launcher&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Guardar configuración</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reiniciar Flow Launcher&quot;</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Configuración</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Recargar datos del complemento</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Buscar actualizaciones</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Abrir ubicación de registro</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consejos Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Carpeta UserData de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Cambiar a Modo Juego</system:String>
 
     <!--  Command Descriptions  -->
@@ -52,10 +52,10 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Correcto</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Toda la configuración de Flow Launcher ha sido guardada</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Se recargaron todos los datos del complemento</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">¿Está seguro que desea apagar el equipo?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">¿Está seguro que desea reiniciar el equipo?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">¿Está seguro que desea reiniciar el equipo con opciones de arranque avanzadas?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">¿Está seguro que desea cerrar la sesión?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">¿Está seguro de que desea apagar el equipo?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">¿Está seguro de que desea reiniciar el equipo?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">¿Está seguro de que desea reiniciar el equipo con opciones de arranque avanzadas?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">¿Está seguro de que desea cerrar la sesión?</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos del sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Proporciona comandos relacionados con el sistema. Por ejemplo, apagar, bloquear, configurar, etc.</system:String>
