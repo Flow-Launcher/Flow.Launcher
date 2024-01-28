@@ -5,6 +5,28 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">Commande</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Description</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Quitter</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Restart Flow Launcher&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Paramètres</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Recharger les Données des Plugins</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Basculer le mode de jeu</system:String>
+
+    <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Éteindre l'ordinateur</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Redémarrer l'ordinateur</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Redémarrer l'ordinateur avec les options de démarrage avancées</system:String>
