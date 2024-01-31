@@ -1929,16 +1929,16 @@
     <value>Change what closing the lid does</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>Désactiver les animations non nécessaires</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
     <value>Créer un point de restauration</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
-    <value>Turn off automatic window arrangement</value>
+    <value>Désactiver l'agencement automatique des fenêtres</value>
   </data>
   <data name="TroubleshootingHistory" xml:space="preserve">
-    <value>Troubleshooting History</value>
+    <value>Historique de dépannage</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
     <value>Diagnose your computer's memory problems</value>
