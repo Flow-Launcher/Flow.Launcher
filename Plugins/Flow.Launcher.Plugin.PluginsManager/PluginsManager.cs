@@ -14,6 +14,8 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.IO.Compression;
+using Newtonsoft.Json;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -137,6 +139,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
+
+            if (File.Exists(plugin.UrlDownload))
+            {
+                Install(plugin, plugin.UrlDownload);
+                return;
+            }
 
             // at minimum should provide a name, but handle plugin that is not downloaded from plugins manifest and is a url download
             var downloadFilename = string.IsNullOrEmpty(plugin.Version)
@@ -470,6 +478,54 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new List<Result> { result };
         }
 
+        internal List<Result> InstallFromLocal(string path)
+        {
+            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            {
+                return new List<Result>();
+            }
+
+            var plugin = null as UserPlugin;
+
+            using (ZipArchive archive = ZipFile.OpenRead(path))
+            {
+                var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json").ToString();
+                ZipArchiveEntry pluginJsonEntry = archive.GetEntry(pluginJsonPath);
+
+                if (pluginJsonEntry != null)
+                {
+                    using (StreamReader reader = new StreamReader(pluginJsonEntry.Open()))
+                    {
+                        string pluginJsonContent = reader.ReadToEnd();
+                        plugin = JsonConvert.DeserializeObject<UserPlugin>(pluginJsonContent);
+                        plugin.IcoPath = Path.Combine(path, pluginJsonEntry.FullName.Split('/')[0], plugin.IcoPath);
+                    }
+                }
+            }
+
+            if (plugin == null)
+            {
+                return new List<Result>();
+            }
+
+            plugin.UrlDownload = path;
+
+            var result = new Result
+            {
+                Title = plugin.Name,
+                SubTitle = plugin.UrlDownload,
+                IcoPath = plugin.IcoPath,
+                Action = e =>
+                {
+                    Application.Current.MainWindow.Hide();
+                    _ = InstallOrUpdateAsync(plugin);
+
+                    return ShouldHideWindow;
+                }
+            };
+            return new List<Result> { result };
+        }
+
         private bool InstallSourceKnown(string url)
         {
             var author = url.Split('/')[3];
@@ -488,6 +544,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)
                 return InstallFromWeb(search);
+
+            if (File.Exists(search) && search.Split('.').Last() == zip)
+                return InstallFromLocal(search);
 
             var results =
                 PluginsManifest
