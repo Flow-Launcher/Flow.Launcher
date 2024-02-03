@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-Dedicated to making your workflow flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
+Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
