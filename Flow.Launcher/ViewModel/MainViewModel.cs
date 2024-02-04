@@ -662,19 +662,7 @@ namespace Flow.Launcher.ViewModel
                 if (selected == lastContextMenuResult)
                 {
                     // Use copy to keep the original results unchanged
-                    results = lastContextMenuResults.ConvertAll(result => new Result
-                    {
-                        Title = result.Title,
-                        SubTitle = result.SubTitle,
-                        IcoPath = result.IcoPath,
-                        PluginDirectory = result.PluginDirectory,
-                        Action = result.Action,
-                        ContextData = result.ContextData,
-                        Glyph = result.Glyph,
-                        OriginQuery = result.OriginQuery,
-                        Score = result.Score,
-                        AsyncAction = result.AsyncAction,
-                    });
+                    results = lastContextMenuResults.ToList();
                 }
                 else
                 {
@@ -689,7 +677,7 @@ namespace Flow.Launcher.ViewModel
 
                 if (!string.IsNullOrEmpty(query))
                 {
-                    var filtered = results.Where
+                    var filtered = results.Select(x => x.Clone()).Where
                     (
                         r =>
                         {
