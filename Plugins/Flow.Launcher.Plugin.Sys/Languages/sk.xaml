@@ -5,6 +5,28 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">Príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Popis</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Vypnúť</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reštartovať</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Reštartovať s rozšírenými možnosťami spustenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Odhlásiť sa</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Zamknúť</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Uspať</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernovať</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Možnosti indexovania</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Vyprázdniť kôš</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Otvoriť kôš</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Ukončiť</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Uložiť nastavenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reštartovať Flow Launcher&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Nastavenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Znova načítať údaje pluginov</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Skontrolovať aktualizácie</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Otvoriť umiestnenie denníka</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Tipy pre Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Používateľský priečinok Flow Launchera</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Prepnúť herný režim</system:String>
+
+    <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnúť počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">Reštartovať počítač</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">Reštartovať počítač s rozšírenými možnosťami spúšťania pre núdzový režim a režim ladenia, ako aj s ďalšími možnosťami</system:String>
