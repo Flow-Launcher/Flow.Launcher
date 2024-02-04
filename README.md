@@ -342,6 +342,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <p align="center">
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
+  <a href="https://github.com/Yuba4"><img src="https://avatars.githubusercontent.com/u/46278200?v=4" width="10%" /></a>
   <a href="https://github.com/patrickdobler"><img src="https://avatars.githubusercontent.com/u/16536946?v=4" width="10%" /></a>
   <a href="https://github.com/benflap"><img src="https://avatars.githubusercontent.com/u/62034481?v=4" width="10%" /></a>
 </p>
