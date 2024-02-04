@@ -100,7 +100,9 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中移除当前结果</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
-    
+    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">在默认文件管理器中打开</system:String>

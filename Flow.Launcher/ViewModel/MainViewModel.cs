@@ -34,6 +34,8 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
+        private Result lastContextMenuResult = new Result();
+        private List<Result> lastContextMenuResults = new List<Result>();
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -285,7 +287,8 @@ namespace Flow.Launcher.ViewModel
             }
             var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
-                    SpecialKeyState = GlobalHotkey.CheckModifiers()
+                    // not null means pressing modifier key + number, should ignore the modifier key
+                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
                 })
                 .ConfigureAwait(false);
 
@@ -649,9 +652,34 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                var results = PluginManager.GetContextMenusForPlugin(selected);
-                results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected.PluginID));
+                List<Result> results;
+                if (selected == lastContextMenuResult)
+                {
+                    // Use copy to keep the original results unchanged
+                    results = lastContextMenuResults.ConvertAll(result => new Result
+                    {
+                        Title = result.Title,
+                        SubTitle = result.SubTitle,
+                        IcoPath = result.IcoPath,
+                        PluginDirectory = result.PluginDirectory,
+                        Action = result.Action,
+                        ContextData = result.ContextData,
+                        Glyph = result.Glyph,
+                        OriginQuery = result.OriginQuery,
+                        Score = result.Score,
+                        AsyncAction = result.AsyncAction,
+                    });
+                }
+                else
+                {
+                    results = PluginManager.GetContextMenusForPlugin(selected);
+                    lastContextMenuResults = results;
+                    lastContextMenuResult = selected;
+                    results.Add(ContextMenuTopMost(selected));
+                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                }
+                
+
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1024,6 +1052,8 @@ namespace Flow.Launcher.ViewModel
         {
             // Trick for no delay
             MainWindowOpacity = 0;
+            lastContextMenuResult = new Result();
+            lastContextMenuResults = new List<Result>();
 
             if (!SelectedIsFromQueryResults())
             {

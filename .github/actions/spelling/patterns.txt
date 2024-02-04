@@ -118,3 +118,6 @@
 
 # UWP
 [Uu][Ww][Pp]
+
+# version suffix <word>v#
+(?:(?<=[A-Z]{2})V|(?<=[a-z]{2}|[A-Z]{2})v)\d+(?:\b|(?=[a-zA-Z_]))

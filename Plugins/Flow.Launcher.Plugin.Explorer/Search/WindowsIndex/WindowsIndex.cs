@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
     {
 
         // Reserved keywords in oleDB
-        private static Regex _reservedPatternMatcher = new(@"^[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+$", RegexOptions.Compiled);
+        private static Regex _reservedPatternMatcher = new(@"[`\@\＠\#\＃\＊\^,\&\＆\/\\\$\%_;\[\]]+", RegexOptions.Compiled);
 
         private static async IAsyncEnumerable<SearchResult> ExecuteWindowsIndexSearchAsync(string indexQueryString, string connectionString, [EnumeratorCancellation] CancellationToken token)
         {

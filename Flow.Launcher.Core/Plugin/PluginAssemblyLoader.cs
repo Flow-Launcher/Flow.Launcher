@@ -34,6 +34,17 @@ namespace Flow.Launcher.Core.Plugin
 
             return existAssembly ?? (assemblyPath == null ? null : LoadFromAssemblyPath(assemblyPath));
         }
+        
+        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+        {
+            var path = dependencyResolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            if (!string.IsNullOrEmpty(path))
+            {
+                return LoadUnmanagedDllFromPath(path);
+            }
+
+            return IntPtr.Zero;
+        }
 
         internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, Type type)
         {

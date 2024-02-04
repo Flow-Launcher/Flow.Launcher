@@ -6,7 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Pesquisar favoritos do seu navegador</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados de Favorito</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dados de Favoritos</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Abrir favoritos em:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Nova janela</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Nova aba</system:String>
@@ -21,8 +21,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Navegar</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Outros</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Motor do Navegador</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Se você não estiver usando o Chrome, Firefox ou Edge, ou se estiver usando suas versões portáteis, você precisa adicionar o diretório de dados dos favoritos e selecionar a ferramenta de busca correta para fazer este plugin funcionar.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Por exemplo: O motor do Brave é o Chromium; e seu diretório padrão de favoritos é &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Para o motor do Firefox, o diretório de favoritos é a pasta do usuário que contém o arquivo &quot;places.sqlite&quot;.</system:String>
 </ResourceDictionary>

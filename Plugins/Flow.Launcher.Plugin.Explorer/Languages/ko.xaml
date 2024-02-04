@@ -100,7 +100,9 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">이 항목을 빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">우클릭 메뉴 보기</system:String>
-    
+    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>

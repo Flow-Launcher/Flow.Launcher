@@ -2,7 +2,7 @@ name: Publish Default Plugins
 
 on:
   push:
-    branches: ['master']
+    branches: ['dev']
     paths: ['Plugins/**']
   workflow_dispatch:
 
@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 7.0.x
 
@@ -46,6 +46,7 @@ jobs:
               - 'Plugins/Flow.Launcher.Plugin.WebSearch/plugin.json'
             windowssettings:
               - 'Plugins/Flow.Launcher.Plugin.WindowsSettings/plugin.json'
+          base: 'master'
 
       - name: Get BrowserBookmark Version
         if: steps.changes.outputs.browserbookmark == 'true'

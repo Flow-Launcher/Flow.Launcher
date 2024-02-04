@@ -7,6 +7,8 @@ namespace Flow.Launcher.Plugin.Shell
         public Shell Shell { get; set; } = Shell.Cmd;
         
         public bool ReplaceWinR { get; set; } = false;
+
+        public bool CloseShellAfterPress { get; set; } = false;
         
         public bool LeaveShellOpen { get; set; }
 

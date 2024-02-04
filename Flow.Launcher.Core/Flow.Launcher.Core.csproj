@@ -54,9 +54,10 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
-    <PackageReference Include="FSharp.Core" Version="7.0.400" />
+    <PackageReference Include="FSharp.Core" Version="7.0.401" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
+    <PackageReference Include="StreamJsonRpc" Version="2.17.8" />
   </ItemGroup>
   
   <ItemGroup>
