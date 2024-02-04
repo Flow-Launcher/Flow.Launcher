@@ -259,6 +259,12 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
                 {
+                    var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
+                    // check if result.actionkeywordassigned is empty
+                    if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
+                    {
+                        autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
+                    }
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
 
