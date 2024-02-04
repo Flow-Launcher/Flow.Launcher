@@ -661,8 +661,7 @@ namespace Flow.Launcher.ViewModel
                 List<Result> results;
                 if (selected == lastContextMenuResult)
                 {
-                    // Use copy to keep the original results unchanged
-                    results = lastContextMenuResults.ToList();
+                    results = lastContextMenuResults;
                 }
                 else
                 {
