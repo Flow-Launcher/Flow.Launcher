@@ -76,7 +76,8 @@ namespace Flow.Launcher
         {
             if (System.Windows.Clipboard.ContainsText())
             {
-                _viewModel.ChangeQueryText(System.Windows.Clipboard.GetText().Replace("\n", String.Empty).Replace("\r", String.Empty));
+                var clipboardText = System.Windows.Clipboard.GetText().Replace("\r\n", " ");
+                QueryTextBox.SelectedText = clipboardText;
                 e.Handled = true;
             }
         }
