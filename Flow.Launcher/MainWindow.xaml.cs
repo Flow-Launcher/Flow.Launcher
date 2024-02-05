@@ -25,6 +25,7 @@ using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
+using DataObject = System.Windows.DataObject;
 
 namespace Flow.Launcher
 {
@@ -50,7 +51,8 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            InitializePosition();                        
+            InitializePosition();
+            DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
         public MainWindow()
@@ -72,12 +74,16 @@ namespace Flow.Launcher
             }
         }
 
-        private void OnPaste(object sender, ExecutedRoutedEventArgs e)
+        private void OnPaste(object sender, DataObjectPastingEventArgs e)
         {
-            if (System.Windows.Clipboard.ContainsText())
+            var isText = e.SourceDataObject.GetDataPresent(System.Windows.DataFormats.UnicodeText, true);
+            if (isText)
             {
-                _viewModel.ChangeQueryText(System.Windows.Clipboard.GetText().Replace("\n", String.Empty).Replace("\r", String.Empty));
-                e.Handled = true;
+                var text = e.SourceDataObject.GetData(System.Windows.DataFormats.UnicodeText) as string;
+                text = text.Replace(Environment.NewLine, " ");
+                DataObject data = new DataObject();
+                data.SetData(System.Windows.DataFormats.UnicodeText, text);
+                e.DataObject = data;
             }
         }
         
