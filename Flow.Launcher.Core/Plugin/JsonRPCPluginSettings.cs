@@ -37,7 +37,7 @@ namespace Flow.Launcher.Core.Plugin
             _storage = new JsonStorage<ConcurrentDictionary<string, object>>(SettingPath);
             Settings = await _storage.LoadAsync();
 
-            if (Settings != null || Configuration == null)
+            if (Configuration == null)
             {
                 return;
             }
