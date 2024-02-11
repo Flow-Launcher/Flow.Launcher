@@ -197,7 +197,8 @@ namespace Flow.Launcher.Plugin.WebSearch
         public SuggestionSource[] Suggestions { get; set; } = {
             new Google(),
             new Baidu(),
-            new Bing()
+            new Bing(),
+            new DuckDuckGo()
         };
 
         [JsonIgnore]
