@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,6 +17,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
         private string latestEtag = "";
 
         private List<UserPlugin> plugins = new();
+
+        private static JsonSerializerOptions PluginStoreItemSerializationOption = new JsonSerializerOptions()
+        {
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
+        };
 
         /// <summary>
         /// Fetch and deserialize the contents of a plugins.json file found at <see cref="ManifestFileUrl"/>.
@@ -32,12 +39,15 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
             request.Headers.Add("If-None-Match", latestEtag);
 
-            using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token).ConfigureAwait(false);
+            using var response = await Http.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token)
+                .ConfigureAwait(false);
 
             if (response.StatusCode == HttpStatusCode.OK)
             {
-                this.plugins = await response.Content.ReadFromJsonAsync<List<UserPlugin>>(cancellationToken: token).ConfigureAwait(false);
-                this.latestEtag = response.Headers.ETag.Tag;
+                this.plugins = await response.Content
+                    .ReadFromJsonAsync<List<UserPlugin>>(PluginStoreItemSerializationOption, cancellationToken: token)
+                    .ConfigureAwait(false);
+                this.latestEtag = response.Headers.ETag?.Tag;
 
                 Log.Info(nameof(CommunityPluginSource), $"Loaded {this.plugins.Count} plugins from {ManifestFileUrl}");
                 return this.plugins;
@@ -49,7 +59,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             }
             else
             {
-                Log.Warn(nameof(CommunityPluginSource), $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
+                Log.Warn(nameof(CommunityPluginSource),
+                    $"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
                 throw new Exception($"Failed to load resource {ManifestFileUrl} with response {response.StatusCode}");
             }
         }
