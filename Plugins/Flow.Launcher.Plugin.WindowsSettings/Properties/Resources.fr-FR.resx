@@ -2350,7 +2350,7 @@
     <value>Change mouse settings</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
-    <value>Manage Storage Spaces</value>
+    <value>Gérer les espaces de stockage</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
     <value>Show or hide file extensions</value>
