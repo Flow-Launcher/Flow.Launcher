@@ -40,7 +40,7 @@
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamiętaj Ostatnią Pozycję</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitoruj kursorem myszy</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor z Dostosowanym Oknem</system:String>
-    <system:String x:Key="SearchWindowScreenPrimary">Monitor Główny</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Monitor główny</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Monitor Niestandardowy </system:String>
     <system:String x:Key="SearchWindowAlign">Pozycja Okna Wyszukiwania na Monitorze</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Wyśrodkowane</system:String>
@@ -149,29 +149,29 @@
     <system:String x:Key="ThemeFolder">Folder Motywu</system:String>
     <system:String x:Key="OpenThemeFolder">Otwórz folder motywu</system:String>
     <system:String x:Key="ColorScheme">Schemat kolorów</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
-    <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
-    <system:String x:Key="Animation">Animation</system:String>
-    <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
-    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
-    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
-    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
-    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
-    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
-    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="ColorSchemeSystem">Domyślne ustawienie systemowe</system:String>
+    <system:String x:Key="ColorSchemeLight">Jasny</system:String>
+    <system:String x:Key="ColorSchemeDark">Ciemny</system:String>
+    <system:String x:Key="SoundEffect">Efekty dźwiękowe</system:String>
+    <system:String x:Key="SoundEffectTip">Odtwarzaj krótki dźwięk po otwarciu okna wyszukiwania</system:String>
+    <system:String x:Key="Animation">Animacja</system:String>
+    <system:String x:Key="AnimationTip">Użyj animacji w interfejsie użytkownika</system:String>
+    <system:String x:Key="AnimationSpeed">Szybkość animacji</system:String>
+    <system:String x:Key="AnimationSpeedTip">Szybkość animacji interfejsu użytkownika</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Wolna</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Średnia</system:String>
+    <system:String x:Key="AnimationSpeedFast">Szybka</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Niestandardowa</system:String>
+    <system:String x:Key="Clock">Zegar</system:String>
+    <system:String x:Key="Date">Data</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
     <system:String x:Key="hotkeys">Skrót klawiszowy</system:String>
     <system:String x:Key="flowlauncherHotkey">Skrót klawiszowy Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Wprowadź skrót, aby pokazać/ukryć Flow Launcher.</system:String>
+    <system:String x:Key="previewHotkey">Podgląd skrótu</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Wprowadź skrót, aby pokazać/ukryć podgląd w oknie wyszukiwania.</system:String>
     <system:String x:Key="openResultModifiers">Modyfikatory klawiszów otwierających wyniki</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Pokaż skrót klawiszowy</system:String>
@@ -252,18 +252,18 @@
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Domyślna przeglądarka</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_tips">Ustawienie domyślne jest zgodne z domyślnym ustawieniem przeglądarki systemu operacyjnego. Jeśli określono to oddzielnie, flow korzysta z tej przeglądarki.</system:String>
+    <system:String x:Key="defaultBrowser_name">Przeglądarka</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nazwa przeglądarki</system:String>
+    <system:String x:Key="defaultBrowser_path">Ścieżka przeglądarki</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nowe okno</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nowa zakładka</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Tryb prywatny</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Zmień priorytet</system:String>
+    <system:String x:Key="priority_tips">Im większa liczba, tym wyższa pozycja w rankingu. Spróbuj ustawić go jako 5. Jeśli chcesz, aby wyniki były niższe niż w przypadku jakiejkolwiek innej wtyczki, podaj liczbę ujemną</system:String>
+    <system:String x:Key="invalidPriority">Podaj prawidłową liczbę całkowitą dla priorytetu!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Stary wyzwalacz</system:String>
@@ -274,26 +274,26 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nowy wyzwalacz nie może być pusty</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Ten wyzwalacz został już przypisany do innej wtyczki, musisz podać inny wyzwalacz.</system:String>
     <system:String x:Key="success">Sukces</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Zakończono pomyślnie</system:String>
     <system:String x:Key="actionkeyword_tips">Użyj * jeżeli nie chcesz podawać wyzwalacza</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Skrót klawiszowy niestandardowych zapyta</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Naciśnij niestandardowy klawisz skrótu, aby otworzyć Flow Launcher i automatycznie wprowadzić określone zapytanie.</system:String>
     <system:String x:Key="preview">Podgląd</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Skrót klawiszowy jest niedostępny, musisz podać inny skrót klawiszowy</system:String>
     <system:String x:Key="invalidPluginHotkey">Niepoprawny skrót klawiszowy</system:String>
     <system:String x:Key="update">Aktualizuj</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutTitle">Niestandardowy skrót zapytania</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Wprowadź skrót, który automatycznie rozszerzy się do określonego zapytania.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Skrót jest rozwijany, gdy dokładnie pasuje do zapytania. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do dowolnej pozycji w zapytaniu. Wbudowane skróty pasują do każdej pozycji w zapytaniu.
     </system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="duplicateShortcut">Skrót już istnieje, wprowadź nowy skrót lub edytuj istniejący.</system:String>
+    <system:String x:Key="emptyShortcut">Skrót i/lub jego rozwinięcie jest puste.</system:String>
 
     <!--  Hotkey Control  -->
     <system:String x:Key="hotkeyUnavailable">Niepoprawny skrót klawiszowy</system:String>
@@ -315,51 +315,51 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">W programie Flow Launcher wystąpił błąd</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">Proszę czekać...</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Sprawdzanie nowej aktualizacji</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Masz już najnowszą wersję Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">Znaleziono aktualizację</system:String>
+    <system:String x:Key="update_flowlauncher_updating">Aktualizacja...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        Flow Launcher nie był w stanie przenieść danych profilu użytkownika do nowej wersji aktualizacji.
+        Ręcznie przenieś folder danych profilu z {0} do {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">Nowa aktualizacja</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Nowa wersja Flow Launcher {0} jest dostępna</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Wystąpił błąd podczas instalowania aktualizacji programu</system:String>
     <system:String x:Key="update_flowlauncher_update">Aktualizuj</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Anuluj</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Aktualizacja nie powiodła się</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">Sprawdź połączenie i spróbuj zaktualizować ustawienia proxy do github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Aby dokończyć proces aktualizacji Flow Launcher musi zostać zresetowany</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Następujące pliki zostaną zaktualizowane</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Aktualizuj pliki</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Opis aktualizacji</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Skip">Pomiń</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Witamy w Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Witaj, po raz pierwszy uruchamiasz Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Przed rozpoczęciem ten kreator pomoże skonfigurować Flow Launcher. Jeśli chcesz, możesz to pominąć. Proszę wybierz język</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Wyszukiwanie i uruchamianie wszystkich plików i aplikacji na PC</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Przeszukuj wszystko, od aplikacji, plików, zakładek, YouTube, X i nie tylko. Wszystko to z komfortowej klawiatury, bez konieczności dotykania myszy.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher uruchamia się za pomocą poniższego skrótu klawiszowego, śmiało i wypróbuj go teraz. Aby to zmienić, kliknij dane wejściowe i naciśnij żądany klawisz skrótu na klawiaturze.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Skróty klawiszowe</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Słowo kluczowe akcji i polecenia</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Przeszukuj sieć, uruchamiaj aplikacje lub uruchamiaj różne funkcje za pomocą wtyczek Flow Launcher. Niektóre funkcje zaczynają się od słowa kluczowego akcji, a w razie potrzeby można ich używać bez słów kluczowych akcji. Wypróbuj poniższe zapytania w Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Uruchom Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Zakończono. Ciesz się Flow Launcher. Nie zapomnij o klawiszu skrótu, aby rozpocząć :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Powrót / Menu kontekstowe</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Nawigacja pozycji</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Otwórz menu kontekstowe</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Otwórz folder zawierający</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Uruchom jako administrator / Otwórz folder w domyślnym menedżerze plików</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Historia zapytań</system:String>
     <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
     <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
