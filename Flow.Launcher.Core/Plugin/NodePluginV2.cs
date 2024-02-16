@@ -10,21 +10,13 @@ namespace Flow.Launcher.Core.Plugin
     /// <summary>
     /// Execution of JavaScript & TypeScript plugins
     /// </summary>
-    internal class NodePluginV2 : ProcessStreamPluginV2
+    internal sealed class NodePluginV2 : ProcessStreamPluginV2
     {
         public NodePluginV2(string filename)
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = filename,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
+            StartInfo = new ProcessStartInfo { FileName = filename, };
         }
 
-        public override string SupportedLanguage { get; set; }
         protected override ProcessStartInfo StartInfo { get; set; }
 
         public override async Task InitAsync(PluginInitContext context)

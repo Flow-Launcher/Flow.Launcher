@@ -15,8 +15,6 @@ namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
     {
-        public abstract string SupportedLanguage { get; set; }
-
         public const string JsonRpc = "JsonRPC";
 
         protected abstract IDuplexPipe ClientPipe { get; set; }
