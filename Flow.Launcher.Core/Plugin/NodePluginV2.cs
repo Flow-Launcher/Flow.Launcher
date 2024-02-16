@@ -22,8 +22,6 @@ namespace Flow.Launcher.Core.Plugin
         public override async Task InitAsync(PluginInitContext context)
         {
             StartInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
-            StartInfo.ArgumentList.Add(string.Empty);
-            StartInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
             await base.InitAsync(context);
         }
     }
