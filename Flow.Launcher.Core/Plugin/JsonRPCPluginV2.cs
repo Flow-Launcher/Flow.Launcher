@@ -49,7 +49,7 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
-                    new[] { query },
+                    new object[] { query, Settings.Inner },
                     token);
 
                 var results = ParseResults(res);
