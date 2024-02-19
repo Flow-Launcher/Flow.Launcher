@@ -86,12 +86,26 @@ namespace Flow.Launcher.Core.Plugin
 
         public event ResultUpdatedEventHandler ResultsUpdated;
 
+        protected enum MessageHandlerType
+        {
+            HeaderDelimited,
+            LengthHeaderDelimited,
+            NewLineDelimited
+        }
+
+        protected abstract MessageHandlerType MessageHandler { get; }
+
 
         private void SetupJsonRPC()
         {
             var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
-            var handler = new NewLineDelimitedMessageHandler(ClientPipe,
-                formatter);
+            IJsonRpcMessageHandler handler = MessageHandler switch
+            {
+                MessageHandlerType.HeaderDelimited => new HeaderDelimitedMessageHandler(ClientPipe, formatter),
+                MessageHandlerType.LengthHeaderDelimited => new LengthHeaderMessageHandler(ClientPipe, formatter),
+                MessageHandlerType.NewLineDelimited => new NewLineDelimitedMessageHandler(ClientPipe, formatter),
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
             RPC = new JsonRpc(handler, new JsonRPCPublicAPI(Context.API));
 

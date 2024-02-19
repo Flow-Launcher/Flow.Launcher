@@ -24,5 +24,7 @@ namespace Flow.Launcher.Core.Plugin
             StartInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
             await base.InitAsync(context);
         }
+
+        protected override MessageHandlerType MessageHandler { get; } = MessageHandlerType.HeaderDelimited;
     }
 }

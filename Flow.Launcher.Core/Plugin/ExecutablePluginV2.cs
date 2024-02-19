@@ -14,5 +14,7 @@ namespace Flow.Launcher.Core.Plugin
         {
             StartInfo = new ProcessStartInfo { FileName = filename };
         }
+
+        protected override MessageHandlerType MessageHandler { get; } = MessageHandlerType.NewLineDelimited;
     }
 }
