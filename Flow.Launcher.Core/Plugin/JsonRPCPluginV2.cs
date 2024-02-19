@@ -39,9 +39,23 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
+
         public override List<Result> LoadContextMenus(Result selectedResult)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
+                    new object[] { selectedResult.ContextData }));
+
+                var results = ParseResults(res);
+
+                return results;
+            }
+            catch
+            {
+                return new List<Result>();
+            }
         }
 
         public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
