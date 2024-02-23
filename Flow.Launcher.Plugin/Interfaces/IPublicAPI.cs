@@ -291,5 +291,11 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <returns></returns>
         public bool IsGameModeOn();
+
+        /// <summary>
+        /// Reload Query
+        /// </summary>
+        /// <returns></returns>
+        public void ReQuery();
     }
 }
