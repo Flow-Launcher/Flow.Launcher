@@ -208,7 +208,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void ReQuery()
+        public void ReQuery()
         {
             if (SelectedIsFromQueryResults())
             {
