@@ -12,6 +12,9 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
+            // values[0] is TextBox: The textbox displaying the autocomplete suggestion 
+            // values[1] is ResultViewModel: Currently selected item in the list
+            // values[2] is string: Query text
             if (
                 values.Length != 3 ||
                 values[0] is not TextBox queryTextBox ||
@@ -26,7 +29,6 @@ namespace Flow.Launcher.Converters
 
             try
             {
-
                 var selectedResult = selectedItem.Result;
                 var selectedResultActionKeyword = string.IsNullOrEmpty(selectedResult.ActionKeywordAssigned) ? "" : selectedResult.ActionKeywordAssigned + " ";
                 var selectedResultPossibleSuggestion = selectedResultActionKeyword + selectedResult.Title;

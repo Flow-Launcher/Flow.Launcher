@@ -8,10 +8,10 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (values is not [double size, bool half])
+            if (values is not [double size, bool isIconCircular])
                 throw new ArgumentException("IconRadiusConverter must have 2 parameters: [double, bool]");
 
-            return half ? size / 2 : size;
+            return isIconCircular ? size / 2 : size;
         }
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {

@@ -8,13 +8,13 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            return value switch
+            return (value, parameter) switch
             {
-                true when parameter is not null => Visibility.Collapsed,
-                _ when parameter is not null => Visibility.Visible,
-                
-                true => Visibility.Visible,
-                _ => Visibility.Collapsed
+                (true, not null) => Visibility.Collapsed,
+                (_, not null) => Visibility.Visible,
+
+                (true, null) => Visibility.Visible,
+                (_, null) => Visibility.Collapsed
             };
         }
 
@@ -26,13 +26,13 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            return value switch
+            return (value, parameter) switch
             {
-                true when parameter is not null => 0,
-                _ when parameter is not null => 5,
-                
-                true => 5,
-                _ => 0,
+                (true, not null) => 0,
+                (_, not null) => 5,
+
+                (true, null) => 5,
+                (_, null) => 0
             };
         }
 
