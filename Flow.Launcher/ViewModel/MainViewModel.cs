@@ -176,7 +176,8 @@ namespace Flow.Launcher.ViewModel
                     var token = e.Token == default ? _updateToken : e.Token;
 
                     PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, token)))
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query,
+                            token)))
                     {
                         Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                     }
@@ -190,7 +191,8 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"),
+                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
         }
 
         [RelayCommand]
@@ -265,6 +267,7 @@ namespace Flow.Launcher.ViewModel
                     {
                         autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
                     }
+
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
 
@@ -286,11 +289,13 @@ namespace Flow.Launcher.ViewModel
             {
                 results.SelectedIndex = int.Parse(index);
             }
+
             var result = results.SelectedItem?.Result;
             if (result == null)
             {
                 return;
             }
+
             var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
                     // not null means pressing modifier key + number, should ignore the modifier key
@@ -403,6 +408,7 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
+
         public string QueryText
         {
             get => _queryText;
@@ -426,6 +432,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowSize += 100;
                 Settings.WindowLeft -= 50;
             }
+
             OnPropertyChanged();
         }
 
@@ -441,6 +448,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowLeft += 50;
                 Settings.WindowSize -= 100;
             }
+
             OnPropertyChanged();
         }
 
@@ -520,18 +528,17 @@ namespace Flow.Launcher.ViewModel
             {
                 if (QueryText != queryText)
                 {
-
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
-
                 }
                 else if (isReQuery)
                 {
                     Query(isReQuery: true);
                 }
+
                 QueryTextCursorMovedToEnd = true;
             });
         }
@@ -601,8 +608,8 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string PreviewHotkey 
-        { 
+        public string PreviewHotkey
+        {
             get
             {
                 // TODO try to patch issue #1755
@@ -616,6 +623,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     Settings.PreviewHotkey = "F1";
                 }
+
                 return Settings.PreviewHotkey;
             }
         }
@@ -684,7 +692,6 @@ namespace Flow.Launcher.ViewModel
                     results.Add(ContextMenuTopMost(selected));
                     results.Add(ContextMenuPluginInfo(selected.PluginID));
                 }
-                
 
 
                 if (!string.IsNullOrEmpty(query))
@@ -703,7 +710,6 @@ namespace Flow.Launcher.ViewModel
 
                             r.Score = match.Score;
                             return true;
-
                         }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
@@ -730,10 +736,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query
-                    {
-                        RawQuery = h.Query
-                    },
+                    OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
                         SelectedResults = Results;
@@ -870,20 +873,23 @@ namespace Flow.Launcher.ViewModel
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
+                IReadOnlyList<Result> results =
+                    await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
 
                 currentCancellationToken.ThrowIfCancellationRequested();
 
                 results ??= _emptyResult;
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query,
+                        currentCancellationToken)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+            IEnumerable<BuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
@@ -893,7 +899,7 @@ namespace Flow.Launcher.ViewModel
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
-            foreach (var shortcut in customShortcuts)
+            foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
             {
                 if (queryBuilder.Equals(shortcut.Key))
                 {
@@ -920,7 +926,9 @@ namespace Flow.Launcher.ViewModel
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}", e);
+                        Log.Exception(
+                            $"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}",
+                            e);
                     }
                 }
             });
@@ -1065,6 +1073,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults = Results;
             }
+
             switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
