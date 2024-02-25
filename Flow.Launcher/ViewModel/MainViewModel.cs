@@ -33,6 +33,7 @@ namespace Flow.Launcher.ViewModel
         #region Private Fields
 
         private bool _isQueryRunning;
+        private bool _reselect = true;
         private Query _lastQuery;
         private Result lastContextMenuResult = new Result();
         private List<Result> lastContextMenuResults = new List<Result>();
@@ -212,6 +213,15 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
+                QueryResults(isReQuery: true);
+            }
+        }
+
+        public void ReQuery(bool reselect)
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                _reselect = reselect;
                 QueryResults(isReQuery: true);
             }
         }
@@ -1151,7 +1161,8 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            Results.AddResults(resultsForUpdates, token);
+            Results.AddResults(resultsForUpdates, token, _reselect);
+            _reselect = true;
         }
 
         #endregion
