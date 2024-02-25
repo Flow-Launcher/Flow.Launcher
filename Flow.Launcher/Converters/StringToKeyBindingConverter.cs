@@ -9,19 +9,17 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var mode = parameter as string;
-            var hotkeyStr = value as string;
+            if (parameter is not string mode || value is not string hotkeyStr)
+                return null;
+            
             var converter = new KeyGestureConverter();
             var key = (KeyGesture)converter.ConvertFromString(hotkeyStr);
-            if (mode == "key")
+            return mode switch
             {
-                return key.Key;
-            }
-            else if (mode == "modifiers")
-            {
-                return key.Modifiers;
-            }
-            return null;
+                "key" => key?.Key,
+                "modifiers" => key?.Modifiers,
+                _ => null
+            };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
