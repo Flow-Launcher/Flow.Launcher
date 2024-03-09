@@ -30,7 +30,7 @@ namespace Flow.Launcher
         private SettingWindowViewModel _settingsVM;
         private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
         private readonly Portable _portable = new Portable();
-        private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
+        private readonly DoublePinAlphabet _alphabet = new DoublePinAlphabet();
         private StringMatcher _stringMatcher;
 
         [STAThread]
