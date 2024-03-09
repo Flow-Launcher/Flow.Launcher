@@ -184,6 +184,31 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
+        /// Clones the current result
+        /// </summary>
+        public Result Clone()
+        {
+            return new Result
+            {
+                Title = Title,
+                SubTitle = SubTitle,
+                ActionKeywordAssigned = ActionKeywordAssigned,
+                CopyText = CopyText,
+                AutoCompleteText = AutoCompleteText,
+                IcoPath = IcoPath,
+                RoundedIcon = RoundedIcon,
+                Icon = Icon,
+                Glyph = Glyph,
+                Action = Action,
+                AsyncAction = AsyncAction,
+                Score = Score,
+                TitleHighlightData = TitleHighlightData,
+                OriginQuery = OriginQuery,
+                PluginDirectory = PluginDirectory
+            };
+        }
+
+        /// <summary>
         /// Additional data associated with this result
         /// </summary>
         /// <example>
