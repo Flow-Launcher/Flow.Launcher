@@ -65,7 +65,7 @@ jobs:
 
       - name: Publish BrowserBookmark
         if: steps.changes.outputs.browserbookmark == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.BrowserBookmark"
           files: "Flow.Launcher.Plugin.BrowserBookmark.zip"
@@ -92,7 +92,7 @@ jobs:
 
       - name: Publish Calculator
         if: steps.changes.outputs.calculator == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Calculator"
           files: "Flow.Launcher.Plugin.Calculator.zip"
@@ -119,7 +119,7 @@ jobs:
 
       - name: Publish Explorer
         if: steps.changes.outputs.explorer == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Explorer"
           files: "Flow.Launcher.Plugin.Explorer.zip"
@@ -146,7 +146,7 @@ jobs:
 
       - name: Publish PluginIndicator
         if: steps.changes.outputs.pluginindicator == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginIndicator"
           files: "Flow.Launcher.Plugin.PluginIndicator.zip"
@@ -173,7 +173,7 @@ jobs:
 
       - name: Publish PluginsManager
         if: steps.changes.outputs.pluginsmanager == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.PluginsManager"
           files: "Flow.Launcher.Plugin.PluginsManager.zip"
@@ -200,7 +200,7 @@ jobs:
 
       - name: Publish ProcessKiller
         if: steps.changes.outputs.processkiller == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.ProcessKiller"
           files: "Flow.Launcher.Plugin.ProcessKiller.zip"
@@ -227,7 +227,7 @@ jobs:
 
       - name: Publish Program
         if: steps.changes.outputs.program == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Program"
           files: "Flow.Launcher.Plugin.Program.zip"
@@ -254,7 +254,7 @@ jobs:
 
       - name: Publish Shell
         if: steps.changes.outputs.shell == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Shell"
           files: "Flow.Launcher.Plugin.Shell.zip"
@@ -281,7 +281,7 @@ jobs:
 
       - name: Publish Sys
         if: steps.changes.outputs.sys == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Sys"
           files: "Flow.Launcher.Plugin.Sys.zip"
@@ -308,7 +308,7 @@ jobs:
 
       - name: Publish Url
         if: steps.changes.outputs.url == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.Url"
           files: "Flow.Launcher.Plugin.Url.zip"
@@ -335,7 +335,7 @@ jobs:
 
       - name: Publish WebSearch
         if: steps.changes.outputs.websearch == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.WebSearch"
           files: "Flow.Launcher.Plugin.WebSearch.zip"
@@ -362,7 +362,7 @@ jobs:
 
       - name: Publish WindowsSettings
         if: steps.changes.outputs.windowssettings == 'true'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           repository: "Flow-Launcher/Flow.Launcher.Plugin.WindowsSettings"
           files: "Flow.Launcher.Plugin.WindowsSettings.zip"
