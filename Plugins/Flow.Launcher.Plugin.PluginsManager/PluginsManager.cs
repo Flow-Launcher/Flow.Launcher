@@ -7,6 +7,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -59,7 +60,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.InstallCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.InstallCommand} ");
+                        Context.API.ChangeQuery(
+                            $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.InstallCommand} ");
                         return false;
                     }
                 },
@@ -70,7 +72,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UninstallCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UninstallCommand} ");
+                        Context.API.ChangeQuery(
+                            $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UninstallCommand} ");
                         return false;
                     }
                 },
@@ -81,7 +84,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     AutoCompleteText = $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UpdateCommand} ",
                     Action = _ =>
                     {
-                        Context.API.ChangeQuery($"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UpdateCommand} ");
+                        Context.API.ChangeQuery(
+                            $"{Context.CurrentPluginMetadata.ActionKeyword} {Settings.UpdateCommand} ");
                         return false;
                     }
                 }
@@ -120,14 +124,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (Settings.AutoRestartAfterChanging)
             {
                 message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt"),
-                                        plugin.Name, plugin.Author,
-                                        Environment.NewLine, Environment.NewLine);
+                    plugin.Name, plugin.Author,
+                    Environment.NewLine, Environment.NewLine);
             }
             else
             {
                 message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_prompt_no_restart"),
-                                        plugin.Name, plugin.Author,
-                                        Environment.NewLine);
+                    plugin.Name, plugin.Author,
+                    Environment.NewLine);
             }
 
             if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
@@ -154,44 +158,47 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             catch (HttpRequestException e)
             {
-                Context.API.ShowMsgError(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
-                                         Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
+                Context.API.ShowMsgError(
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
+                    Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 return;
             }
             catch (Exception e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                                         plugin.Name));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                        plugin.Name));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 return;
             }
-            
+
             if (Settings.AutoRestartAfterChanging)
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
-                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"),
-                                    plugin.Name));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_restart"),
+                        plugin.Name));
                 Context.API.RestartApp();
             }
             else
             {
                 Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_installing_plugin"),
-                                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
-                                    plugin.Name));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
+                        plugin.Name));
             }
         }
 
-        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
+        internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,
+            bool usePrimaryUrlOnly = false)
         {
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
-            var resultsForUpdate =
+            var resultsForUpdate = (
                 from existingPlugin in Context.API.GetAllPlugins()
                 join pluginFromManifest in PluginsManifest.UserPlugins
                     on existingPlugin.Metadata.ID equals pluginFromManifest.ID
-                where existingPlugin.Metadata.Version.CompareTo(pluginFromManifest.Version) <
+                where String.Compare(existingPlugin.Metadata.Version, pluginFromManifest.Version,
+                          StringComparison.InvariantCulture) <
                       0 // if current version precedes manifest version
                       && !PluginManager.PluginModified(existingPlugin.Metadata.ID)
                 select
@@ -204,7 +211,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         existingPlugin.Metadata.IcoPath,
                         PluginExistingMetadata = existingPlugin.Metadata,
                         PluginNewUserPlugin = pluginFromManifest
-                    };
+                    }).ToList();
 
             if (!resultsForUpdate.Any())
                 return new List<Result>
@@ -226,75 +233,168 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         IcoPath = x.IcoPath,
                         Action = e =>
                         {
-
                             string message;
                             if (Settings.AutoRestartAfterChanging)
                             {
-                                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
-                                                        x.Name, x.Author,
-                                                        Environment.NewLine, Environment.NewLine);
+                                message = string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
+                                    x.Name, x.Author,
+                                    Environment.NewLine, Environment.NewLine);
                             }
                             else
                             {
-                                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_prompt_no_restart"),
-                                                        x.Name, x.Author,
-                                                        Environment.NewLine);
+                                message = string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt_no_restart"),
+                                    x.Name, x.Author,
+                                    Environment.NewLine);
                             }
 
                             if (MessageBox.Show(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                    MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                             {
-                                var downloadToFilePath = Path.Combine(Path.GetTempPath(),
-                                    $"{x.Name}-{x.NewVersion}.zip");
-
-                                _ = Task.Run(async delegate
-                                {
-                                    if (File.Exists(downloadToFilePath))
-                                    {
-                                        File.Delete(downloadToFilePath);
-                                    }
-
-                                    await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
-                                        .ConfigureAwait(false);
-
-                                    PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin, downloadToFilePath);
-
-                                    if (Settings.AutoRestartAfterChanging)
-                                    {
-                                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                            string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_restart"),
-                                                            x.Name));
-                                        Context.API.RestartApp();
-                                    }
-                                    else
-                                    {
-                                        Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                                            string.Format(Context.API.GetTranslation("plugin_pluginsmanager_update_success_no_restart"),
-                                                            x.Name));
-                                    }
-                                }).ContinueWith(t =>
-                                {
-                                    Log.Exception("PluginsManager", $"Update failed for {x.Name}",
-                                        t.Exception.InnerException);
-                                    Context.API.ShowMsg(
-                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                        string.Format(
-                                            Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                                            x.Name));
-                                }, TaskContinuationOptions.OnlyOnFaulted);
-
-                                return true;
+                                return false;
                             }
 
-                            return false;
+                            var downloadToFilePath = Path.Combine(Path.GetTempPath(),
+                                $"{x.Name}-{x.NewVersion}.zip");
+
+                            _ = Task.Run(async delegate
+                            {
+                                if (File.Exists(downloadToFilePath))
+                                {
+                                    File.Delete(downloadToFilePath);
+                                }
+
+                                await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
+                                    .ConfigureAwait(false);
+
+                                PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin,
+                                    downloadToFilePath);
+
+                                if (Settings.AutoRestartAfterChanging)
+                                {
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation(
+                                                "plugin_pluginsmanager_update_success_restart"),
+                                            x.Name));
+                                    Context.API.RestartApp();
+                                }
+                                else
+                                {
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation(
+                                                "plugin_pluginsmanager_update_success_no_restart"),
+                                            x.Name));
+                                }
+                            }).ContinueWith(t =>
+                            {
+                                Log.Exception("PluginsManager", $"Update failed for {x.Name}",
+                                    t.Exception.InnerException);
+                                Context.API.ShowMsg(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                    string.Format(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                                        x.Name));
+                            }, TaskContinuationOptions.OnlyOnFaulted);
+
+                            return true;
+
                         },
                         ContextData =
                             new UserPlugin
                             {
-                                Website = x.PluginNewUserPlugin.Website, UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
+                                Website = x.PluginNewUserPlugin.Website,
+                                UrlSourceCode = x.PluginNewUserPlugin.UrlSourceCode
                             }
                     });
+
+            // Update all result
+            if (resultsForUpdate.Count() > 1)
+            {
+                var updateAllResult = new Result
+                {
+                    Title = Context.API.GetTranslation("plugin_pluginsmanager_update_all_title"),
+                    SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_all_subtitle"),
+                    IcoPath = icoPath,
+                    AsyncAction = async e =>
+                    {
+                        string message;
+                        if (Settings.AutoRestartAfterChanging)
+                        {
+                            message = string.Format(
+                                Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt"),
+                                resultsForUpdate.Count(), Environment.NewLine);
+                        }
+                        else
+                        {
+                            message = string.Format(
+                                Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt_no_restart"),
+                                resultsForUpdate.Count());
+                        }
+
+                        if (MessageBox.Show(message,
+                                Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                MessageBoxButton.YesNo) == MessageBoxResult.No)
+                        {
+                            return false;
+                        }
+
+                        await Task.WhenAll(resultsForUpdate.Select(async plugin =>
+                        {
+                            var downloadToFilePath = Path.Combine(Path.GetTempPath(),
+                                $"{plugin.Name}-{plugin.NewVersion}.zip");
+
+                            try
+                            {
+                                if (File.Exists(downloadToFilePath))
+                                {
+                                    File.Delete(downloadToFilePath);
+                                }
+
+                                await Http.DownloadAsync(plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
+                                    .ConfigureAwait(false);
+
+                                PluginManager.UpdatePlugin(plugin.PluginExistingMetadata, plugin.PluginNewUserPlugin,
+                                    downloadToFilePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.Exception("PluginsManager", $"Update failed for {plugin.Name}", ex.InnerException);
+                                Context.API.ShowMsg(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                                    string.Format(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                                        plugin.Name));
+                            }
+                        }));
+
+                        if (Settings.AutoRestartAfterChanging)
+                        {
+                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_restart"),
+                                    resultsForUpdate.Count()));
+                            Context.API.RestartApp();
+                        }
+                        else
+                        {
+                            Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
+                                string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_no_restart"),
+                                    resultsForUpdate.Count()));
+                        }
+
+                        return true;
+                    },
+                    ContextData = new UserPlugin()
+                };
+                results = results.Prepend(updateAllResult);
+            }
 
             return Search(results, search);
         }
@@ -351,9 +451,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (Settings.WarnFromUnknownSource)
                     {
                         if (!InstallSourceKnown(plugin.UrlDownload)
-                            && MessageBox.Show(string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
+                            && MessageBox.Show(string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
                                     Environment.NewLine),
-                                Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning_title"),
+                                Context.API.GetTranslation(
+                                    "plugin_pluginsmanager_install_unknown_source_warning_title"),
                                 MessageBoxButton.YesNo) == MessageBoxResult.No)
                             return false;
                     }
@@ -365,10 +467,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 }
             };
 
-            return new List<Result>
-            {
-                result
-            };
+            return new List<Result> { result };
         }
 
         private bool InstallSourceKnown(string url)
@@ -377,10 +476,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var acceptedSource = "https://github.com";
             var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
-            return url.StartsWith(acceptedSource) && Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(constructedUrlPart));
+            return url.StartsWith(acceptedSource) &&
+                   Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(constructedUrlPart));
         }
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token, bool usePrimaryUrlOnly = false)
+        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token,
+            bool usePrimaryUrlOnly = false)
         {
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
@@ -419,7 +520,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
         private void Install(UserPlugin plugin, string downloadedFilePath)
         {
             if (!File.Exists(downloadedFilePath))
-                throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}", downloadedFilePath);
+                throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}",
+                    downloadedFilePath);
             try
             {
                 PluginManager.InstallPlugin(plugin, downloadedFilePath);
@@ -428,18 +530,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (FileNotFoundException e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                         Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
+                    Context.API.GetTranslation("plugin_pluginsmanager_install_errormetadatafile"));
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
             }
             catch (InvalidOperationException e)
             {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"), plugin.Name));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_duplicate"),
+                        plugin.Name));
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
             }
-            catch (ArgumentException e) {
+            catch (ArgumentException e)
+            {
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                                         string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"), plugin.Name));
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"),
+                        plugin.Name));
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
             }
         }
@@ -459,15 +564,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             string message;
                             if (Settings.AutoRestartAfterChanging)
                             {
-                                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
-                                                        x.Metadata.Name, x.Metadata.Author,
-                                                        Environment.NewLine, Environment.NewLine);
+                                message = string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt"),
+                                    x.Metadata.Name, x.Metadata.Author,
+                                    Environment.NewLine, Environment.NewLine);
                             }
                             else
                             {
-                                message = string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt_no_restart"),
-                                                        x.Metadata.Name, x.Metadata.Author,
-                                                        Environment.NewLine);
+                                message = string.Format(
+                                    Context.API.GetTranslation("plugin_pluginsmanager_uninstall_prompt_no_restart"),
+                                    x.Metadata.Name, x.Metadata.Author,
+                                    Environment.NewLine);
                             }
 
                             if (MessageBox.Show(message,
@@ -482,9 +589,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 }
                                 else
                                 {
-                                    Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
-                                                        string.Format(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_success_no_restart"),
-                                                        x.Metadata.Name));
+                                    Context.API.ShowMsg(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
+                                        string.Format(
+                                            Context.API.GetTranslation(
+                                                "plugin_pluginsmanager_uninstall_success_no_restart"),
+                                            x.Metadata.Name));
                                 }
 
                                 return true;
@@ -501,13 +611,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             try
             {
-                PluginManager.UninstallPlugin(plugin, removeSettings:true);
+                PluginManager.UninstallPlugin(plugin, removeSettings: true);
             }
             catch (ArgumentException e)
             {
                 Log.Exception("Flow.Launcher.Plugin.PluginsManager", e.Message, e);
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_uninstall_error_title"),
-                                         Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"));
+                    Context.API.GetTranslation("plugin_pluginsmanager_plugin_modified_error"));
             }
         }
     }

@@ -23,7 +23,9 @@ using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
-using System.Windows.Media;
+using System.Media;
+using static Flow.Launcher.ViewModel.SettingWindowViewModel;
+using DataObject = System.Windows.DataObject;
 
 namespace Flow.Launcher
 {
@@ -52,6 +54,8 @@ namespace Flow.Launcher
             InitializePosition();
 
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+
+            DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
         public MainWindow()
@@ -70,6 +74,19 @@ namespace Flow.Launcher
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
                 App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
+            }
+        }
+
+        private void OnPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            var isText = e.SourceDataObject.GetDataPresent(System.Windows.DataFormats.UnicodeText, true);
+            if (isText)
+            {
+                var text = e.SourceDataObject.GetData(System.Windows.DataFormats.UnicodeText) as string;
+                text = text.Replace(Environment.NewLine, " ");
+                DataObject data = new DataObject();
+                data.SetData(System.Windows.DataFormats.UnicodeText, text);
+                e.DataObject = data;
             }
         }
         

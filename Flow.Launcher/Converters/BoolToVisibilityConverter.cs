@@ -8,28 +8,14 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter != null)
+            return (value, parameter) switch
             {
-                if (value is true)
-                {
-                    return Visibility.Collapsed;
-                }
+                (true, not null) => Visibility.Collapsed,
+                (_, not null) => Visibility.Visible,
 
-                else
-                {
-                    return Visibility.Visible;
-                }
-            }
-            else { 
-                if (value is true)
-                {
-                    return Visibility.Visible;
-                }
-
-                else { 
-                    return Visibility.Collapsed;
-                }
-            }
+                (true, null) => Visibility.Visible,
+                (_, null) => Visibility.Collapsed
+            };
         }
 
         public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
@@ -40,30 +26,14 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            if (parameter != null)
+            return (value, parameter) switch
             {
-                if (value is true)
-                {
-                    return 0;
-                }
+                (true, not null) => 0,
+                (_, not null) => 5,
 
-                else
-                {
-                    return 5;
-                }
-            }
-            else
-            {
-                if (value is true)
-                {
-                    return 5;
-                }
-
-                else
-                {
-                    return 0;
-                }
-            }
+                (true, null) => 5,
+                (_, null) => 0
+            };
         }
 
         public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
