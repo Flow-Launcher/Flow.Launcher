@@ -26,6 +26,7 @@ using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
+using System.Windows.Media;
 
 namespace Flow.Launcher
 {
