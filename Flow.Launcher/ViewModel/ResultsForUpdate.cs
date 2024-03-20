@@ -12,7 +12,5 @@ namespace Flow.Launcher.ViewModel
         bool ReSelectFirstResult = true)
     {
         public string ID { get; } = Metadata.ID;
-
-        public bool ReSelectFirstResult { get; set; }
     }
 }
