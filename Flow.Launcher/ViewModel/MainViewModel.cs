@@ -33,7 +33,6 @@ namespace Flow.Launcher.ViewModel
         #region Private Fields
 
         private bool _isQueryRunning;
-        private bool _reselect = true;
         private Query _lastQuery;
         private Result lastContextMenuResult = new Result();
         private List<Result> lastContextMenuResults = new List<Result>();
@@ -1173,7 +1172,6 @@ namespace Flow.Launcher.ViewModel
             bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
 
             Results.AddResults(resultsForUpdates, token, reSelect);
-            _reselect = true;
         }
 
         #endregion
