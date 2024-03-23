@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Velopack;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -36,6 +37,8 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
+            VelopackApp.Build().Run();
+            
             if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
             {
                 using (var application = new App())
