@@ -41,9 +41,9 @@ after_test:
   - ps: .\Scripts\post_build.ps1 -channel $env:channel
 
 artifacts:
-- path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
+- path: 'Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
-- path: 'Output\Packages\Flow-Launcher-*.exe'
+- path: 'Release\Flow-Launcher-*.exe'
   name: Squirrel Installer
 - path: Release\Flow-Launcher-Portable.zip
   name: Portable Version
