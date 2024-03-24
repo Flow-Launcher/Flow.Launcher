@@ -11,6 +11,8 @@ init:
       } else {
         $env:channel = "win-x64-stable"
       }
+      dotnet tool update -g vpk
+
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
