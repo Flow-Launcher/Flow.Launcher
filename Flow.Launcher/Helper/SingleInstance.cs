@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.IO.Pipes;
+using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using Velopack;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
 // modified to allow single instace restart
@@ -226,7 +229,6 @@ namespace Flow.Launcher.Helper
         public static void Restart()
         {
             singleInstanceMutex?.ReleaseMutex();
-
             StopRemoteServiceTokenSource?.Cancel();
 
             while (RemoteServiceRunning)
@@ -235,16 +237,23 @@ namespace Flow.Launcher.Helper
                 Thread.Sleep(10);
             }
 
-            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            var info = new ProcessStartInfo
+            {
+                Arguments = "/C choice /C Y /N /D Y /T 1 & START \"\" \"" + Environment.ProcessPath + "\"",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                FileName = "cmd.exe"
+            };
+            Process.Start(info);
             Application.Current.Shutdown();
         }
 
         // this is always going to run only once
         private static CancellationTokenSource StopRemoteServiceTokenSource { get; set; }
 
-        private static volatile bool RemoteServiceRunning = false;
+        private static volatile bool RemoteServiceRunning = true;
 
-        
+
         /// <summary>
         /// Checks if the instance of the application attempting to start is the first instance. 
         /// If not, activates the first instance.
@@ -252,6 +261,8 @@ namespace Flow.Launcher.Helper
         /// <returns>True if this is the first instance of the application.</returns>
         public static bool InitializeAsFirstInstance(string uniqueName)
         {
+            StopRemoteServiceTokenSource = new CancellationTokenSource();
+
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = uniqueName + Environment.UserName;
 
@@ -261,12 +272,12 @@ namespace Flow.Launcher.Helper
             singleInstanceMutex = new Mutex(true, applicationIdentifier, out var firstInstance);
             if (firstInstance)
             {
-                _ = StartRemoteServiceAsync(channelName, StopRemoteServiceTokenSource.Token);
+                _ = Task.Run(() => StartRemoteServiceAsync(channelName, StopRemoteServiceTokenSource.Token));
                 return true;
             }
             else
             {
-                _ = SignalFirstInstanceAsync(channelName);
+                _ = Task.Run(() => SignalFirstInstanceAsync(channelName));
                 return false;
             }
         }
@@ -336,27 +347,32 @@ namespace Flow.Launcher.Helper
         /// <param name="token">Cancellation token</param>
         private static async Task StartRemoteServiceAsync(string channelName, CancellationToken token = default)
         {
-            await using NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In);
-            while (true)
+            try
             {
-                if (token.IsCancellationRequested)
+                await using NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In);
+                while (true)
                 {
-                    break;
-                }
+                    if (token.IsCancellationRequested)
+                    {
+                        break;
+                    }
 
-                // Wait for connection to the pipe
-                await pipeServer.WaitForConnectionAsync(token);
-                if (Application.Current != null)
-                {
-                    // Do an asynchronous call to ActivateFirstInstance function
-                    Application.Current.Dispatcher.Invoke(ActivateFirstInstance);
-                }
+                    // Wait for connection to the pipe
+                    await pipeServer.WaitForConnectionAsync(token);
+                    if (Application.Current != null)
+                    {
+                        // Do an asynchronous call to ActivateFirstInstance function
+                        Application.Current.Dispatcher.Invoke(ActivateFirstInstance);
+                    }
 
-                // Disconnect client
-                pipeServer.Disconnect();
+                    // Disconnect client
+                    pipeServer.Disconnect();
+                }
             }
-
-            RemoteServiceRunning = true;
+            finally
+            {
+                RemoteServiceRunning = false;
+            }
         }
 
         /// <summary>
@@ -366,7 +382,8 @@ namespace Flow.Launcher.Helper
         private static async Task SignalFirstInstanceAsync(string channelName)
         {
             // Create a client pipe connected to server
-            await using NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out);
+            await using NamedPipeClientStream pipeClient =
+                new NamedPipeClientStream(".", channelName, PipeDirection.Out);
             // Connect to the available pipe
             await pipeClient.ConnectAsync(0);
         }

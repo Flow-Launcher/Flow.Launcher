@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
@@ -7,7 +8,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using JetBrains.Annotations;
-using Squirrel;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
@@ -17,8 +17,11 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
+using System.Windows.Shapes;
 using Velopack;
+using Velopack.Locators;
 using Velopack.Sources;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.Core
 {
@@ -54,7 +57,7 @@ namespace Flow.Launcher.Core
                             api.GetTranslation("update_flowlauncher_check_connection"));
                     return;
                 }
-                
+
                 var newReleaseVersion = Version.Parse(newUpdateInfo.TargetFullRelease.Version.ToString());
                 var currentVersion = Version.Parse(Constant.Version);
 
@@ -73,22 +76,17 @@ namespace Flow.Launcher.Core
 
                 await updateManager.DownloadUpdatesAsync(newUpdateInfo).ConfigureAwait(false);
 
-                await updateManager.ApplyReleases(newUpdateInfo).ConfigureAwait(false);
-
                 if (DataLocation.PortableDataLocationInUse())
                 {
-                    var targetDestination = updateManager.RootAppDirectory +
-                                            $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
+                    var targetDestination = Path.Combine(VelopackLocator.GetDefault(null).RootAppDir!,
+                        DataLocation.PortableFolderName);
+
+                    DataLocation.PortableDataPath.CopyAll(targetDestination);
+                    if (!DataLocation.PortableDataPath.VerifyBothFolderFilesEqual(targetDestination))
                         MessageBox.Show(string.Format(
                             api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
-                }
-                else
-                {
-                    await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
                 var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
@@ -98,7 +96,11 @@ namespace Flow.Launcher.Core
                 if (MessageBox.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"),
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    UpdateManager.RestartApp(Constant.ApplicationFileName);
+                    updateManager.ApplyUpdatesAndRestart(newUpdateInfo);
+                }
+                else
+                {
+                    updateManager.WaitExitThenApplyUpdates(newUpdateInfo);
                 }
             }
             catch (Exception e)
@@ -121,14 +123,19 @@ namespace Flow.Launcher.Core
             }
         }
 
-        [UsedImplicitly]
-        private class GithubRelease
+        public static void RecoverPortableData()
         {
-            [JsonPropertyName("prerelease")] public bool Prerelease { get; [UsedImplicitly] set; }
+            var locator = VelopackLocator.GetDefault(null);
 
-            [JsonPropertyName("published_at")] public DateTime PublishedAt { get; [UsedImplicitly] set; }
+            var portableDataLocation = Path.Combine(VelopackLocator.GetDefault(null).RootAppDir!,
+                DataLocation.PortableFolderName);
 
-            [JsonPropertyName("html_url")] public string HtmlUrl { get; [UsedImplicitly] set; }
+            if (Path.Exists(portableDataLocation))
+            {
+                portableDataLocation.CopyAll(Path.Combine(locator.AppContentDir!, DataLocation.PortableFolderName));
+            }
+
+            Directory.Delete(portableDataLocation);
         }
 
         public string NewVersionTips(string version)

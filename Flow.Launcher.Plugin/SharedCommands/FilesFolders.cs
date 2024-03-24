@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 #pragma warning disable IDE0005
 using System.Windows;
+
 #pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
@@ -13,6 +14,18 @@ namespace Flow.Launcher.Plugin.SharedCommands
     public static class FilesFolders
     {
         private const string FileExplorerProgramName = "explorer";
+
+        public static bool IsSubPathOf(this string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(
+                basePath.Replace('\\', '/'),
+                subPath.Replace('\\', '/'));
+            return rel != "."
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !Path.IsPathRooted(rel);
+        }
+
 
         /// <summary>
         /// Copies the folder and all of its files and folders 
@@ -65,7 +78,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 RemoveFolderIfExists(targetPath);
 #endif
             }
-
         }
 
         /// <summary>
@@ -82,10 +94,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 var fromDir = new DirectoryInfo(fromPath);
                 var toDir = new DirectoryInfo(toPath);
 
-                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length != toDir.GetFiles("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetFiles("*", SearchOption.AllDirectories).Length)
                     return false;
 
-                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length != toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
                     return false;
 
                 return true;
@@ -99,7 +113,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 return false;
 #endif
             }
-
         }
 
         /// <summary>
@@ -151,9 +164,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             var psi = new ProcessStartInfo
             {
-                FileName = FileExplorerProgramName,
-                UseShellExecute = true,
-                Arguments = '"' + fileOrFolderPath + '"'
+                FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"'
             };
             try
             {
@@ -279,7 +290,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                    && !rel.StartsWith(@"..\")
                    && !Path.IsPathRooted(rel);
         }
-        
+
         /// <summary>
         /// Returns path ended with "\"
         /// </summary>

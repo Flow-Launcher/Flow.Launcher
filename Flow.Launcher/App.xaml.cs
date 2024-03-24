@@ -37,7 +37,11 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
-            VelopackApp.Build().Run();
+            VelopackApp.Build()
+                .WithAfterUpdateFastCallback(x =>
+                {
+                    Updater.RecoverPortableData();
+                }).Run();
             
             if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
             {
