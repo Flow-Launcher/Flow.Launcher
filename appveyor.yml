@@ -41,15 +41,15 @@ after_test:
   - ps: .\Scripts\post_build.ps1 -channel $env:channel
 
 artifacts:
-- path: 'Release\Flow.Launcher.Plugin.*.nupkg'
+- path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
-- path: 'Release\Flow-Launcher-*.exe'
+- path: 'Releases\Flow-Launcher-*.exe'
   name: Squirrel Installer
 - path: Release\Flow-Launcher-Portable.zip
   name: Portable Version
-- path: 'Release\FlowLauncher-*-full.nupkg'
+- path: 'Releases\FlowLauncher-*-full.nupkg'
   name: Squirrel nupkg
-- path: 'Release\RELEASES*'
+- path: 'Releases\RELEASES*'
   name: Velopack RELEASES
 
 deploy:
