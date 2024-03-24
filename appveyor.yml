@@ -7,9 +7,9 @@ init:
       if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
       {
         $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
-        $env:channel = "prerelease"
+        $env:channel = "win-x64-prerelease"
       } else {
-        $env:channel = "stable"
+        $env:channel = "win-x64-stable"
       }
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
@@ -36,7 +36,7 @@ build:
 test_script:
   - dotnet test --no-build -c Release
 after_test:
-  - ps: .\Scripts\post_build.ps1
+  - ps: .\Scripts\post_build.ps1 -channel $env:channel
 
 artifacts:
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'

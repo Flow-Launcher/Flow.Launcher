@@ -1,9 +1,11 @@
 param(
     [string]$config = "Release",
     [string]$solution = (Join-Path $PSScriptRoot ".." -Resolve),
-    [string]$channel = "prerelease"
+    [string]$channel = "win-x64-prerelease"
 )
 Write-Host "Config: $config"
+Write-Host "Solution: $solution"
+Write-Host "Channel: $channel"
 
 function Build-Version
 {
