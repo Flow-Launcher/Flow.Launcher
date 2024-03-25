@@ -371,6 +371,17 @@ namespace Flow.Launcher.ViewModel
         {
             GameModeStatus = !GameModeStatus;
         }
+        
+        [RelayCommand]
+        public void CopyAlternative()
+        {
+            var result = Results.SelectedItem?.Result?.CopyText;
+
+            if (result != null)
+            {
+                App.API.CopyToClipboard(result, directCopy: false);
+            }
+        }
 
         #endregion
 
