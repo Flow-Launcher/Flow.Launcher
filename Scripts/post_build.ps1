@@ -99,7 +99,7 @@ function Publish-Self-Contained($p)
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish --no-build -c Release $csproj /p:PublishProfile=$profile
+    dotnet publish -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Main
