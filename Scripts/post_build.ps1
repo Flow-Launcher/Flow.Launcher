@@ -44,12 +44,6 @@ function Build-Path
     return $p
 }
 
-function Copy-Resources($path)
-{
-    # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
-}
-
 
 function Delete-Unused($path, $config)
 {
@@ -106,7 +100,6 @@ function Main
 {
     $p = Build-Path
     $v = Build-Version
-    Copy-Resources $p
 
     if ($config -eq "Release")
     {
