@@ -49,11 +49,39 @@ function Delete-Unused($path, $config)
 {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
+
+    $hashset = @{ }
+
     foreach ($i in $included)
     {
-        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" }
-        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
-        $deleteList | Remove-Item
+        $item = if ($i.VersionInfo.FileVersion -eq $null)
+        {
+            [ValueTuple]::Create($i.Name, "")
+        }
+        else
+        {
+            [ValueTuple]::Create($i.Name, $i.VersionInfo.FileVersion)
+        }
+
+        $key = $hashset.Add($item, $true)
+    }
+
+    $deleteList = Get-ChildItem $target\Plugins -Filter *.dll -Recurse | Where {
+        $item = if ($_.VersionInfo.FileVersion -eq $null)
+        {
+            [ValueTuple]::Create($_.Name, "")
+        }
+        else
+        {
+            [ValueTuple]::Create($_.Name, $_.VersionInfo.FileVersion)
+        }
+        $hashset.ContainsKey($item)
+    }
+
+    foreach ($i in $deleteList)
+    {
+        Write-Host "Deleting duplicated $i.Name with version $i.VersionInfo.FileVersion at location $i.Directory.FullName"
+        Remove-Item $i
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
