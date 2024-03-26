@@ -111,6 +111,13 @@ function Pack-Velopack-Installer($path, $version, $output)
         $repoUrl = "https://github.com/Flow-Launcher/Flow.Launcher"
     }
 
+    Set-Alias vpk "~/.dotnet/tools/vpk.exe"
+    
+    if (!(Get-Command vpk -ErrorAction SilentlyContinue))
+    {
+        dotnet tool install --global vpk
+    }
+    
     vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel
 }
 
