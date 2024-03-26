@@ -30,12 +30,21 @@ jobs:
           version: '1.17.2'
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
+        name: Restore Nuget Cache
         with:
           path: |
             ~/.nuget/packages
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+            ${{ runner.os }}-nuget
+      - uses: actions/cache@v4
+        name: Restore dotnet tool Cache
+        with:
+          path: |
+            ~/.dotnet/tools
+          key: ${{ runner.os }}-dotnet-tools-${{ hashFiles('~/.dotnet/tools/**') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-tools
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
