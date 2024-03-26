@@ -49,10 +49,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 7.0.x
-      - name: Install vpk
+#      - name: Install vpk
         # Install vpk tool (dotnet tool install will not reinstall if already installed)
         # We will update the cli by removing cache
-        run: dotnet tool install -g vpk
+#        run: dotnet tool install -g vpk
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
