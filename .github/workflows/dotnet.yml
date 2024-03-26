@@ -27,22 +27,15 @@ jobs:
       - name: Set version in all AssemblyInfo.cs files
         uses: secondbounce/assemblyinfo-update@v2
         with:
-          version: '1.9.5'
-      - if: ${{ runner.os == 'Windows' }}
-        name: Use GNU tar
-        shell: cmd
-        run: |
-          echo "Adding GNU tar to PATH"
-          echo C:\Program Files\Git\usr\bin>>"%GITHUB_PATH%"
+          version: '1.17.2'
       - uses: actions/checkout@v4
       - uses: actions/cache@v4
         with:
           path: |
             ~/.nuget/packages
-            !~/.nuget/packages/microsoft.netcore.app.*
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
-            ${{ runner.os }}-nuget-
+            ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -77,7 +70,7 @@ jobs:
         with:
           name: Portable Version
           path: |
-            Releases\FlowLauncher-Portable.zip
+            Releases\FlowLauncher-*-Portable.zip
           compression-level: 0
       - name: Upload Full Nupkg
         uses: actions/upload-artifact@v4
@@ -92,6 +85,6 @@ jobs:
         with:
           name: RELEASES
           path: |
-            Releases\RELEASES
+            Releases\RELEASES*
           compression-level: 0
       
