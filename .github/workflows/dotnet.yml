@@ -66,21 +66,21 @@ jobs:
             Output\Release\Flow.Launcher.Plugin.*.nupkg
           compression-level: 0
       - name: Upload Setup
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Flow Installer
           path: |
             Releases\FlowLauncher-*.exe
           compression-level: 0
       - name: Upload Portable Version
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Portable Version
           path: |
             Releases\FlowLauncher-Portable.zip
           compression-level: 0
       - name: Upload Full Nupkg
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Full nupkg
           path: |
@@ -88,7 +88,7 @@ jobs:
           
           compression-level: 0
       - name: Upload Release Information
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: RELEASES
           path: |
