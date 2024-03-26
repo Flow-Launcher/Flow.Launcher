@@ -25,10 +25,13 @@ jobs:
           sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
           net start WSearch
       - uses: actions/checkout@v4
-      - name: Set version in all AssemblyInfo.cs files
-        uses: secondbounce/assemblyinfo-update@v2
+      - name: Set MyProject.csproj version
+        id: update
+        uses: vers-one/dotnet-project-version-updater@v1.5
         with:
-          version: '1.17.2'
+          file: |
+            "Flow.Launcher/**/*.csproj", "Flow.Launcher/**/*.nuspec", "Flow.Launcher/**/AssemblyInfo.cs"
+          version: "1.17.2"
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:

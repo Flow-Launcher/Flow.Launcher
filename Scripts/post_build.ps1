@@ -80,7 +80,7 @@ function Delete-Unused($path, $config)
 
     foreach ($i in $deleteList)
     {
-        Write-Host "Deleting duplicated $i.Name with version $i.VersionInfo.FileVersion at location $i.Directory.FullName"
+        write Deleting duplicated $i.Name with version $i.VersionInfo.FileVersion at location $i.Directory.FullName
         Remove-Item $i
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse
