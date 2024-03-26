@@ -50,37 +50,18 @@ function Copy-Resources($path)
     Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
 }
 
+
 function Delete-Unused($path, $config)
 {
     $target = "$path\Output\$config"
-    $included = @{ }
-    Get-ChildItem $target -Filter "*.dll" | Get-FileHash | ForEach-Object {
-        $hash = $_.hash
-        $filename = $_.Path | Split-Path -Leaf
-        $included.Add([tuple]::Create($filename, $hash), $true)
+    $included = Get-ChildItem $target -Filter "*.dll"
+    foreach ($i in $included)
+    {
+        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" }
+        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+        $deleteList | Remove-Item
     }
-
-    $deleteList = Get-ChildItem $target\Plugins -Filter "*.dll" -Recurse |
-            Select-Object Name, VersionInfo, Directory, @{ name = "hash"; expression = { (Get-FileHash $_.FullName) } } |
-            Where-Object {
-                $included.Contains([tuple]::Create($_.Name, $_.hash))
-            }
-
-    $deleteList | ForEach-Object {
-        Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName
-    }
-    $deleteList | Remove-Item -Path { $_.FullName }
-
     Remove-Item -Path $target -Include "*.xml" -Recurse
-}
-
-function Remove-CreateDumpExe($path, $config)
-{
-    $target = "$path\Output\$config"
-
-    $depjson = Get-Content $target\Flow.Launcher.deps.json -raw
-    $depjson -replace '(?s)(.createdump.exe": {.*?}.*?\n)\s*', "" | Out-File $target\Flow.Launcher.deps.json -Encoding UTF8
-    Remove-Item -Path $target -Include "*createdump.exe" -Recurse
 }
 
 
@@ -90,7 +71,7 @@ function Validate-Directory($output)
 }
 
 
-function Pack-Squirrel-Installer($path, $version, $output)
+function Pack-Velopack-Installer($path, $version, $output)
 {
     # msbuild based installer generation is not working in appveyor, not sure why
     Write-Host "Begin pack squirrel installer"
@@ -102,32 +83,23 @@ function Pack-Squirrel-Installer($path, $version, $output)
     Write-Host "Input path:  $input"
 
     $repoUrl = "https://github.com/Flow-Launcher/Prereleases"
-    
+
     if ($channel -eq "stable")
     {
         $repoUrl = "https://github.com/Flow-Launcher/Flow.Launcher"
     }
-    
+
     vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel
 }
 
 function Publish-Self-Contained($p)
 {
-
     $csproj = Join-Path "$p" "Flow.Launcher/Flow.Launcher.csproj" -Resolve
     $profile = Join-Path "$p" "Flow.Launcher/Properties/PublishProfiles/Net7.0-SelfContained.pubxml" -Resolve
 
     # we call dotnet publish on the main project. 
     # The other projects should have been built in Release at this point.
-    dotnet publish -c Release $csproj /p:PublishProfile=$profile
-}
-
-function Publish-Portable($outputLocation, $version)
-{
-
-    & $outputLocation\Flow-Launcher-Setup.exe --silent | Out-Null
-    mkdir "$env:LocalAppData\FlowLauncher\app-$version\UserData"
-    Compress-Archive -Path $env:LocalAppData\FlowLauncher -DestinationPath $outputLocation\Flow-Launcher-Portable.zip
+    dotnet publish --no-build -c Release $csproj /p:PublishProfile=$profile
 }
 
 function Main
@@ -145,9 +117,7 @@ function Main
 
         $o = "$p\Output\Packages"
         Validate-Directory $o
-        Pack-Squirrel-Installer $p $v $o
-
-        #        Publish-Portable $o $v
+        Pack-Velopack-Installer $p $v $o
     }
 }
 
