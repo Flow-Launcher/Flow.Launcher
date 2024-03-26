@@ -24,11 +24,11 @@ jobs:
         run: |
           sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
           net start WSearch
+      - uses: actions/checkout@v4
       - name: Set version in all AssemblyInfo.cs files
         uses: secondbounce/assemblyinfo-update@v2
         with:
           version: '1.17.2'
-      - uses: actions/checkout@v4
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:
