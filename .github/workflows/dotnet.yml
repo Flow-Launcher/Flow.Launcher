@@ -26,7 +26,7 @@ jobs:
         uses: vers-one/dotnet-project-version-updater@v1.5
         with:
           file: |
-            "Flow.Launcher/**/*.csproj", "Flow.Launcher/**/*.nuspec", "Flow.Launcher/**/AssemblyInfo.cs"
+            "**/SolutionAssemblyInfo.cs"
           version: "1.17.2"
       - uses: actions/cache@v4
         name: Restore Nuget Cache
