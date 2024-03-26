@@ -39,7 +39,7 @@ jobs:
           path: |
             ~/.nuget/packages
             !~/.nuget/packages/microsoft.netcore.app.*
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/csproj') }}
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
       - uses: actions/checkout@v4
