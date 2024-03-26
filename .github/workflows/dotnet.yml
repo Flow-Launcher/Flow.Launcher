@@ -47,6 +47,8 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 7.0.x
+    - name: Install vpk
+      run: dotnet tool update -g vpk
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
