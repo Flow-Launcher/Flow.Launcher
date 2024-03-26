@@ -103,7 +103,6 @@ function Main
 
     if ($config -eq "Release")
     {
-
         Delete-Unused $p $config
 
         Publish-Self-Contained $p
