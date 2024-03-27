@@ -899,6 +899,7 @@ namespace Flow.Launcher.ViewModel
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
+            // Sorting order is important here, the reason is for matching longest shortcut by default
             foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
             {
                 if (queryBuilder.Equals(shortcut.Key))
