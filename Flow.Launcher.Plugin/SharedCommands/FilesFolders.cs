@@ -15,6 +15,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
     {
         private const string FileExplorerProgramName = "explorer";
 
+        /// <summary>
+        /// Checks if <paramref name="subPath"/> is a subpath of <paramref name="basePath"/>
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
         public static bool IsSubPathOf(this string subPath, string basePath)
         {
             var rel = Path.GetRelativePath(

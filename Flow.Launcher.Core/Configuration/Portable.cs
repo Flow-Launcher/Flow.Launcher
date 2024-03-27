@@ -95,11 +95,8 @@ namespace Flow.Launcher.Core.Configuration
             }
 
             // Specify here so this method does not rely on other environment variables to initialise
-            var portableDataDir =
-                Path.Combine(Directory.GetParent(Assembly.GetExecutingAssembly().Location.NonNull()).ToString(),
-                    "UserData");
-            var roamingDataDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-                "FlowLauncher");
+            var portableDataDir = DataLocation.PortableDataPath;
+            var roamingDataDir = DataLocation.RoamingDataPath;
 
 
             // Get full path to the .dead files for each case
