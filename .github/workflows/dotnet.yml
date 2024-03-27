@@ -20,6 +20,7 @@ jobs:
     runs-on: windows-latest
     env:
       FlowVersion: 1.17.2
+      NUGET_CERT_REVOCATION_MODE: offline
     steps:
       - uses: actions/checkout@v4
       - name: Generate build number
