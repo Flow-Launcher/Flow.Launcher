@@ -27,7 +27,7 @@ jobs:
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
-          version: "1.17.2"
+          version: 1.17.2.${{ github.run_id }}
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:
