@@ -18,7 +18,8 @@ jobs:
   build:
 
     runs-on: windows-latest
-
+    env:
+      FlowVersion: 1.17.2
     steps:
       - uses: actions/checkout@v4
       - name: Generate build number
@@ -32,7 +33,7 @@ jobs:
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
-          version: 1.17.2-build.${{ steps.buildnumber.outputs.build_number }}
+          version: $FlowVersion-build.${{ steps.buildnumber.outputs.build_number }}
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:
@@ -69,7 +70,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal -c Release
       - name: Perform post_build tasks
         shell: pwsh
-        run: .\Scripts\post_build.ps1
+        run: .\Scripts\post_build.ps1 -flowversion "$FlowVersion-build.${{ steps.buildnumber.outputs.build_number }}"
       - name: Upload Plugin Nupkg
         uses: actions/upload-artifact@v4
         with:

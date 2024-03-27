@@ -1,7 +1,8 @@
 param(
     [string]$config = "Release",
     [string]$solution = (Join-Path $PSScriptRoot ".." -Resolve),
-    [string]$channel = "win-x64-prerelease"
+    [string]$channel = "win-x64-prerelease",
+    [string]$flowVersion = ""
 )
 Write-Host "Config: $config"
 Write-Host "Solution: $solution"
@@ -9,7 +10,7 @@ Write-Host "Channel: $channel"
 
 function Build-Version
 {
-    if ( [string]::IsNullOrEmpty($env:flowVersion))
+    if ( [string]::IsNullOrEmpty($flowVersion))
     {
         $targetPath = Join-Path $solution "Output/Release/Flow.Launcher.dll" -Resolve
         $v = (Get-Command ${targetPath}).FileVersionInfo.FileVersion
