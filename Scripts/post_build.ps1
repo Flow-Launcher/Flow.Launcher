@@ -6,6 +6,7 @@ param(
 )
 Write-Host "Config: $config"
 Write-Host "Solution: $solution"
+Write-Host "Flow Version: $flowVersion"
 Write-Host "Channel: $channel"
 
 function Build-Version
@@ -17,7 +18,7 @@ function Build-Version
     }
     else
     {
-        $v = $env:flowVersion
+        $v = $flowVersion
     }
 
     Write-Host "Build Version: $v"
