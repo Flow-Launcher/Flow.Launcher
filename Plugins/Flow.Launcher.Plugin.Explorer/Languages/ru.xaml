@@ -3,13 +3,13 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Сначала отметьте что-нибудь</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Пожалуйста, выберите ссылку на папку</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Вы уверены, что хотите удалить {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Вы действительно хотите безвозвратно удалить этот файл?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Вы действительно хотите безвозвратно удалить этот файл/папку?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Удаление завершено</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Успешно удалено {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Назначение ключевого слова глобальных действий может привести к слишком большому количеству результатов поиска. Пожалуйста, выберите конкретное ключевое слово действий</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
