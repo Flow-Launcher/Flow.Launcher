@@ -33,7 +33,7 @@ jobs:
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
-          version: ${env:FlowVersion}-build.${{ steps.buildnumber.outputs.build_number }}
+          version: $FlowVersion.$BUILD_NUMBER
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:
