@@ -32,7 +32,7 @@ jobs:
         with:
           file: |
             "**/SolutionAssemblyInfo.cs"
-          version: 1.17.2.${{ steps.buildnumber.outputs.build_number }}
+          version: 1.17.2-build.${{ steps.buildnumber.outputs.build_number }}
       - uses: actions/cache@v4
         name: Restore Nuget Cache
         with:
