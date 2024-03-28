@@ -384,6 +384,17 @@ namespace Flow.Launcher.ViewModel
         {
             GameModeStatus = !GameModeStatus;
         }
+        
+        [RelayCommand]
+        public void CopyAlternative()
+        {
+            var result = Results.SelectedItem?.Result?.CopyText;
+
+            if (result != null)
+            {
+                App.API.CopyToClipboard(result, directCopy: false);
+            }
+        }
 
         #endregion
 
@@ -907,7 +918,8 @@ namespace Flow.Launcher.ViewModel
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
-            foreach (var shortcut in customShortcuts)
+            // Sorting order is important here, the reason is for matching longest shortcut by default
+            foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
             {
                 if (queryBuilder.Equals(shortcut.Key))
                 {

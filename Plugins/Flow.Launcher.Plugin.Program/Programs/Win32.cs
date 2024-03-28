@@ -196,7 +196,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         FileName = FullPath,
                         WorkingDirectory = ParentDirectory,
                         UseShellExecute = true,
-                        Verb = runAsAdmin ? "runas" : ""
+                        Verb = runAsAdmin ? "runas" : "",
                     };
 
                     _ = Task.Run(() => Main.StartProcess(Process.Start, info));
