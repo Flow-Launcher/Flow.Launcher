@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -136,6 +136,8 @@ namespace Flow.Launcher
                 return;
 
             isDragging = false;
+
+            App.API.HideMainWindow();
 
             var data = new DataObject(DataFormats.FileDrop, new[]
             {

@@ -187,6 +187,10 @@
             Command="{Binding ToggleGameModeCommand}"
             Modifiers="Ctrl" />
         <KeyBinding
+            Key="C"
+            Modifiers="Ctrl+Shift"
+            Command="{Binding CopyAlternativeCommand}" />
+        <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />

@@ -33,20 +33,32 @@ namespace Flow.Launcher.Plugin.BrowserBookmark
 
         protected List<Bookmark> LoadBookmarksFromFile(string path, string source)
         {
-            if (!File.Exists(path))
-                return new List<Bookmark>();
-
             var bookmarks = new List<Bookmark>();
+
+            if (!File.Exists(path))
+                return bookmarks;
+
             using var jsonDocument = JsonDocument.Parse(File.ReadAllText(path));
             if (!jsonDocument.RootElement.TryGetProperty("roots", out var rootElement))
-                return new List<Bookmark>();
+                return bookmarks;
+            EnumerateRoot(rootElement, bookmarks, source);
+            return bookmarks;
+        }
+
+        private void EnumerateRoot(JsonElement rootElement, ICollection<Bookmark> bookmarks, string source)
+        {
             foreach (var folder in rootElement.EnumerateObject())
             {
-                if (folder.Value.ValueKind == JsonValueKind.Object)
+                if (folder.Value.ValueKind != JsonValueKind.Object)
+                    continue;
+
+                // Fix for Opera. It stores bookmarks slightly different than chrome. See PR and bug report for this change for details.
+                // If various exceptions start to build up here consider splitting this Loader into multiple separate ones.
+                if (folder.Name == "custom_root") 
+                    EnumerateRoot(folder.Value, bookmarks, source);
+                else
                     EnumerateFolderBookmark(folder.Value, bookmarks, source);
             }
-
-            return bookmarks;
         }
 
         private void EnumerateFolderBookmark(JsonElement folderElement, ICollection<Bookmark> bookmarks,

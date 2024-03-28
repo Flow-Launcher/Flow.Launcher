@@ -171,7 +171,7 @@
     <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
     <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skytie náhľadu vo vyhľadávacom okne.</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skrytie náhľadu vo vyhľadávacom okne.</system:String>
     <system:String x:Key="openResultModifiers">Modifikačný kláves na otvorenie výsledkov</system:String>
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>

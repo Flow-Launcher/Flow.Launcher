@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Media;
+using FastCache;
+using FastCache.Services;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
-    [Serializable]
     public class ImageUsage
     {
-
         public int usage;
         public ImageSource imageSource;
 
@@ -23,16 +23,13 @@ namespace Flow.Launcher.Infrastructure.Image
 
     public class ImageCache
     {
-        private const int MaxCached = 50;
-        public ConcurrentDictionary<(string, bool), ImageUsage> Data { get; } = new();
-        private const int permissibleFactor = 2;
-        private SemaphoreSlim semaphore = new(1, 1);
+        private const int MaxCached = 150;
 
         public void Initialize(Dictionary<(string, bool), int> usage)
         {
             foreach (var key in usage.Keys)
             {
-                Data[key] = new ImageUsage(usage[key], null);
+                Cached<ImageUsage>.Save(key, new ImageUsage(usage[key], null), TimeSpan.MaxValue, MaxCached);
             }
         }
 
@@ -40,70 +37,48 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             get
             {
-                if (!Data.TryGetValue((path, isFullImage), out var value))
+                if (!Cached<ImageUsage>.TryGet((path, isFullImage), out var value))
                 {
                     return null;
                 }
-                value.usage++;
-                return value.imageSource;
 
+                value.Value.usage++;
+                return value.Value.imageSource;
             }
             set
             {
-                Data.AddOrUpdate(
-                    (path, isFullImage),
-                    new ImageUsage(0, value),
-                    (k, v) =>
-                    {
-                        v.imageSource = value;
-                        v.usage++;
-                        return v;
-                    }
-                );
-
-                SliceExtra();
-
-                async void SliceExtra()
+                if (Cached<ImageUsage>.TryGet((path, isFullImage), out var cached))
                 {
-                    // To prevent the dictionary from drastically increasing in size by caching images, the dictionary size is not allowed to grow more than the permissibleFactor * maxCached size
-                    // This is done so that we don't constantly perform this resizing operation and also maintain the image cache size at the same time
-                    if (Data.Count > permissibleFactor * MaxCached)
-                    {
-                        await semaphore.WaitAsync().ConfigureAwait(false);
-                        // To delete the images from the data dictionary based on the resizing of the Usage Dictionary
-                        // Double Check to avoid concurrent remove
-                        if (Data.Count > permissibleFactor * MaxCached)
-                            foreach (var key in Data.OrderBy(x => x.Value.usage).Take(Data.Count - MaxCached).Select(x => x.Key))
-                                Data.TryRemove(key, out _);
-                        semaphore.Release();
-                    }
+                    cached.Value.imageSource = value;
+                    cached.Value.usage++;
                 }
+
+                Cached<ImageUsage>.Save((path, isFullImage), new ImageUsage(0, value), TimeSpan.MaxValue,
+                    MaxCached);
             }
         }
 
         public bool ContainsKey(string key, bool isFullImage)
         {
-            return key is not null && Data.ContainsKey((key, isFullImage)) && Data[(key, isFullImage)].imageSource != null;
+            return Cached<ImageUsage>.TryGet((key, isFullImage), out _);
         }
 
         public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
         {
-            if (key is not null)
+            if (Cached<ImageUsage>.TryGet((key, isFullImage), out var value))
             {
-                bool hasKey = Data.TryGetValue((key, isFullImage), out var imageUsage);
-                image = hasKey ? imageUsage.imageSource : null;
-                return hasKey;
+                image = value.Value.imageSource;
+                value.Value.usage++;
+                return image != null;
             }
-            else
-            {
-                image = null;
-                return false;
-            }
+
+            image = null;
+            return false;
         }
 
         public int CacheSize()
         {
-            return Data.Count;
+            return CacheManager.TotalCount<(string, bool), ImageUsage>();
         }
 
         /// <summary>
@@ -111,7 +86,14 @@ namespace Flow.Launcher.Infrastructure.Image
         /// </summary>
         public int UniqueImagesInCache()
         {
-            return Data.Values.Select(x => x.imageSource).Distinct().Count();
+            return CacheManager.EnumerateEntries<(string, bool), ImageUsage>().Select(x => x.Value.imageSource)
+                .Distinct()
+                .Count();
+        }
+
+        public IEnumerable<Cached<(string, bool), ImageUsage>> EnumerateEntries()
+        {
+            return CacheManager.EnumerateEntries<(string, bool), ImageUsage>();
         }
     }
 }

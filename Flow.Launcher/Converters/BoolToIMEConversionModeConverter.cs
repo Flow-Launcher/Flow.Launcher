@@ -9,18 +9,11 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool v)
+            return value switch
             {
-                if (v)
-                {
-                    return ImeConversionModeValues.Alphanumeric;
-                }
-                else
-                {
-                    return ImeConversionModeValues.DoNotCare;
-                }
-            }
-            return ImeConversionModeValues.DoNotCare;
+                true => ImeConversionModeValues.Alphanumeric,
+                _ => ImeConversionModeValues.DoNotCare
+            };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -33,18 +26,11 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool v)
+            return value switch
             {
-                if (v)
-                {
-                    return InputMethodState.Off;
-                }
-                else
-                {
-                    return InputMethodState.DoNotCare;
-                }
-            }
-            return InputMethodState.DoNotCare;
+                true => InputMethodState.Off,
+                _ => InputMethodState.DoNotCare
+            };
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

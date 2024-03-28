@@ -1,4 +1,6 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO.Pipelines;
@@ -6,6 +8,7 @@ using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Meziantou.Framework.Win32;
+using Microsoft.VisualBasic.ApplicationServices;
 using Nerdbank.Streams;
 
 namespace Flow.Launcher.Core.Plugin
@@ -18,18 +21,18 @@ namespace Flow.Launcher.Core.Plugin
         {
             _jobObject.SetLimits(new JobObjectLimits()
             {
-                Flags = JobObjectLimitFlags.KillOnJobClose | JobObjectLimitFlags.DieOnUnhandledException
+                Flags = JobObjectLimitFlags.KillOnJobClose | JobObjectLimitFlags.DieOnUnhandledException |
+                        JobObjectLimitFlags.SilentBreakawayOk
             });
-            
+
             _jobObject.AssignProcess(Process.GetCurrentProcess());
         }
 
-        public override string SupportedLanguage { get; set; }
-        protected sealed override IDuplexPipe ClientPipe { get; set; }
+        protected sealed override IDuplexPipe ClientPipe { get; set; } = null!;
 
         protected abstract ProcessStartInfo StartInfo { get; set; }
 
-        protected Process ClientProcess { get; set; }
+        protected Process ClientProcess { get; set; } = null!;
 
         public override async Task InitAsync(PluginInitContext context)
         {
@@ -37,12 +40,18 @@ namespace Flow.Launcher.Core.Plugin
             StartInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;
             StartInfo.EnvironmentVariables["FLOW_APPLICATION_DIRECTORY"] = Constant.ApplicationDirectory;
 
-            StartInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
+            StartInfo.RedirectStandardError = true;
+            StartInfo.RedirectStandardInput = true;
+            StartInfo.RedirectStandardOutput = true;
+            StartInfo.CreateNoWindow = true;
+            StartInfo.UseShellExecute = false;
             StartInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
 
-            ClientProcess = Process.Start(StartInfo);
-            ArgumentNullException.ThrowIfNull(ClientProcess);
-            
+            var process = Process.Start(StartInfo);
+            ArgumentNullException.ThrowIfNull(process);
+            ClientProcess = process;
+            _jobObject.AssignProcess(ClientProcess);
+
             SetupPipe(ClientProcess);
 
             ErrorStream = ClientProcess.StandardError;

@@ -12,15 +12,9 @@ namespace Flow.Launcher.Core.Plugin
 
         public ExecutablePluginV2(string filename)
         {
-            StartInfo = new ProcessStartInfo
-            {
-                FileName = filename,
-                UseShellExecute = false,
-                CreateNoWindow = true,
-                RedirectStandardOutput = true,
-                RedirectStandardError = true
-            };
+            StartInfo = new ProcessStartInfo { FileName = filename };
         }
 
+        protected override MessageHandlerType MessageHandler { get; } = MessageHandlerType.NewLineDelimited;
     }
 }

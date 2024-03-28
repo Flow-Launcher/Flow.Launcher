@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -12,30 +11,27 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object[] value, Type targetType, object parameter, CultureInfo cultureInfo)
         {
-            var text = value[0] as string;
-            var highlightData = value[1] as List<int>;
-
-            var textBlock = new Span();
-
-            if (highlightData == null || !highlightData.Any())
-            {
+            if (value.Length < 2)
+                return new Run(string.Empty);
+            
+            if (value[0] is not string text)
+                return new Run(string.Empty);
+            
+            if (value[1] is not List<int> { Count: > 0 } highlightData)
                 // No highlight data, just return the text
                 return new Run(text);
-            }
+            
+            var highlightStyle = (Style)Application.Current.FindResource("HighlightStyle");
+            var textBlock = new Span();
 
             for (var i = 0; i < text.Length; i++)
             {
                 var currentCharacter = text.Substring(i, 1);
-                if (this.ShouldHighlight(highlightData, i))
+                var run = new Run(currentCharacter)
                 {
-
-                    textBlock.Inlines.Add(new Run(currentCharacter) { Style = (Style)Application.Current.FindResource("HighlightStyle") });
-
-                }
-                else
-                {
-                    textBlock.Inlines.Add(new Run(currentCharacter));
-                }
+                    Style = ShouldHighlight(highlightData, i) ? highlightStyle : null
+                };
+                textBlock.Inlines.Add(run);
             }
             return textBlock;
         }

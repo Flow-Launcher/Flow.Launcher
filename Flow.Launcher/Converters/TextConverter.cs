@@ -10,23 +10,22 @@ namespace Flow.Launcher.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var ID = value.ToString();
-            switch(ID)
+            var id = value?.ToString();
+            var translationKey = id switch
             {
-                case PluginStoreItemViewModel.NewRelease:
-                    return InternationalizationManager.Instance.GetTranslation("pluginStore_NewRelease");
-                case PluginStoreItemViewModel.RecentlyUpdated:
-                    return InternationalizationManager.Instance.GetTranslation("pluginStore_RecentlyUpdated");
-                case PluginStoreItemViewModel.None:
-                    return InternationalizationManager.Instance.GetTranslation("pluginStore_None");
-                case PluginStoreItemViewModel.Installed:
-                    return InternationalizationManager.Instance.GetTranslation("pluginStore_Installed");
-                default:
-                    return ID;
-            }
+                PluginStoreItemViewModel.NewRelease => "pluginStore_NewRelease",
+                PluginStoreItemViewModel.RecentlyUpdated => "pluginStore_RecentlyUpdated",
+                PluginStoreItemViewModel.None => "pluginStore_None",
+                PluginStoreItemViewModel.Installed => "pluginStore_Installed",
+                _ => null
+            };
             
+            if (translationKey is null)
+                return id;
+            
+            return InternationalizationManager.Instance.GetTranslation(translationKey);
         }
 
-        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new InvalidOperationException();
     }
 }

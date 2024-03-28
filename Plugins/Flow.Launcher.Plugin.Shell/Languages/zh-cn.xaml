@@ -3,7 +3,7 @@
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">替换 Win+R</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Close Command Prompt after pressing any key</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">按下任意键以关闭此窗口...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">执行后不关闭命令窗口</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">始终以管理员身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">以其他用户身份运行</system:String>
