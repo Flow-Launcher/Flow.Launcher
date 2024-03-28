@@ -4,6 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Version>1.0.0</Version>
     <UseWindowsForms>true</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
@@ -96,6 +97,7 @@
     <PackageReference Include="NHotkey.Wpf" Version="2.1.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SharpVectors" Version="1.8.2" />
+    <PackageReference Include="Velopack" Version="0.0.359" />
     <PackageReference Include="VirtualizingWrapPanel" Version="1.5.8" />
   </ItemGroup>
 

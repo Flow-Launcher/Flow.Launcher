@@ -10,23 +10,23 @@ namespace Flow.Launcher.Test
         public void URLMatchTest()
         {
             var plugin = new Main();
-            Assert.IsTrue(plugin.IsURL("http://www.google.com"));
-            Assert.IsTrue(plugin.IsURL("https://www.google.com"));
-            Assert.IsTrue(plugin.IsURL("http://google.com"));
-            Assert.IsTrue(plugin.IsURL("www.google.com"));
-            Assert.IsTrue(plugin.IsURL("google.com"));
-            Assert.IsTrue(plugin.IsURL("http://localhost"));
-            Assert.IsTrue(plugin.IsURL("https://localhost"));
-            Assert.IsTrue(plugin.IsURL("http://localhost:80"));
-            Assert.IsTrue(plugin.IsURL("https://localhost:80"));
-            Assert.IsTrue(plugin.IsURL("http://110.10.10.10"));
-            Assert.IsTrue(plugin.IsURL("110.10.10.10"));
-            Assert.IsTrue(plugin.IsURL("ftp://110.10.10.10"));
+            Assert.That(plugin.IsURL("http://www.google.com"), Is.True);
+            Assert.That(plugin.IsURL("https://www.google.com"), Is.True);
+            Assert.That(plugin.IsURL("http://google.com"), Is.True);
+            Assert.That(plugin.IsURL("www.google.com"), Is.True);
+            Assert.That(plugin.IsURL("google.com"), Is.True);
+            Assert.That(plugin.IsURL("http://localhost"), Is.True);
+            Assert.That(plugin.IsURL("https://localhost"), Is.True);
+            Assert.That(plugin.IsURL("http://localhost:80"), Is.True);
+            Assert.That(plugin.IsURL("https://localhost:80"), Is.True);
+            Assert.That(plugin.IsURL("http://110.10.10.10"), Is.True);
+            Assert.That(plugin.IsURL("110.10.10.10"), Is.True);
+            Assert.That(plugin.IsURL("ftp://110.10.10.10"), Is.True);
 
 
-            Assert.IsFalse(plugin.IsURL("wwww"));
-            Assert.IsFalse(plugin.IsURL("wwww.c"));
-            Assert.IsFalse(plugin.IsURL("wwww.c"));
+            Assert.That(plugin.IsURL("wwww"), Is.False);
+            Assert.That(plugin.IsURL("wwww.c"), Is.False);
+            Assert.That(plugin.IsURL("wwww.c"), Is.False);
         }
     }
 }

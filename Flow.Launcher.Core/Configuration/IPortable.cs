@@ -5,12 +5,6 @@ namespace Flow.Launcher.Core.Configuration
     {
         void EnablePortableMode();
         void DisablePortableMode();
-        void RemoveShortcuts();
-        void RemoveUninstallerEntry();
-        void CreateShortcuts();
-        void CreateUninstallerEntry();
-        void MoveUserDataFolder(string fromLocation, string toLocation);
-        void VerifyUserDataAfterMove(string fromLocation, string toLocation);
         bool CanUpdatePortability();
     }
 }
