@@ -63,6 +63,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.PreviewHotkey):
                         OnPropertyChanged(nameof(AlwaysPreviewToolTip));
                         break;
+                    case nameof(Settings.SoundVolume):
+                        OnPropertyChanged(nameof(SoundEffectVolume));
+                        break;
                 }
             };
 
@@ -629,6 +632,12 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.UseSound;
             set => Settings.UseSound = value;
+        }
+
+        public double SoundEffectVolume
+        {
+            get => Settings.SoundVolume;
+            set => Settings.SoundVolume = value;
         }
 
         public bool UseClock
