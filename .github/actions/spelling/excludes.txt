@@ -71,5 +71,4 @@ ignore$
 \.csproj$
 \.DotSettings$
 \.targets$
-\FuzzyMatcherTest.cs$
-\ExplorerTest.cs
+.*Test.cs$
