@@ -305,13 +305,13 @@ namespace Flow.Launcher.Helper
 
             try
             {
-                // The application was not clickonce deployed, get args from standard API's
+                // The application was not ClickOnce deployed, get args from standard API's
                 args = Environment.GetCommandLineArgs();
             }
             catch (NotSupportedException)
             {
-                // The application was clickonce deployed
-                // Clickonce deployed apps cannot receive traditional command line arguments
+                // The application was ClickOnce deployed
+                // ClickOnce deployed apps cannot receive traditional command line arguments
                 // As a workaround command line arguments can be written to a shared location before 
                 // the app is launched and the app can obtain its command line arguments from the 
                 // shared location               

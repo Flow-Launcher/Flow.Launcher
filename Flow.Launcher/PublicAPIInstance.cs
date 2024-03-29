@@ -40,7 +40,7 @@ namespace Flow.Launcher
             _settingsVM = settingsVM;
             _mainVM = mainVM;
             _alphabet = alphabet;
-            GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
+            GlobalHotkey.hookedKeyboardCallback = KListenerHookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
 
@@ -315,7 +315,7 @@ namespace Flow.Launcher
 
         #region Private Methods
 
-        private bool KListener_hookedKeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
+        private bool KListenerHookedKeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
         {
             var continueHook = true;
             foreach (var x in _globalKeyboardHandlers)

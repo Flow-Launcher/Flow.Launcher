@@ -20,3 +20,4 @@ uninstaller
 vkcode
 winget
 workaround
+nupkg
