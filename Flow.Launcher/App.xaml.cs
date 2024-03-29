@@ -65,7 +65,7 @@ namespace Flow.Launcher
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
-                var imageLoadertask = ImageLoader.InitializeAsync();
+                var imageLoaderTask = ImageLoader.InitializeAsync();
 
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
@@ -86,7 +86,7 @@ namespace Flow.Launcher
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync(API);
-                await imageLoadertask;
+                await imageLoaderTask;
                 
                 var window = new MainWindow(_settings, _mainVM);
 

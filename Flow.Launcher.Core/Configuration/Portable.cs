@@ -66,9 +66,9 @@ namespace Flow.Launcher.Core.Configuration
         }
 
 
-        internal void IndicateDeletion(string filePathTodelete)
+        internal void IndicateDeletion(string filePathToDelete)
         {
-            var deleteFilePath = Path.Combine(filePathTodelete, DataLocation.DeletionIndicatorFile);
+            var deleteFilePath = Path.Combine(filePathToDelete, DataLocation.DeletionIndicatorFile);
             using (var _ = File.CreateText(deleteFilePath))
             {
             }
@@ -80,7 +80,7 @@ namespace Flow.Launcher.Core.Configuration
         ///</summary>
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
-            // check whether the package locate in %localappdata%
+            // check whether the package locate in %LocalAppData%
             // if not create the portable data folder
             // Don't create the folder if the version is 1.0.0 (Dev) to allow potential debugging with data in the project folder
             // It is still possible to create the UserData folder for dev version manually but we want to keep the current behavior

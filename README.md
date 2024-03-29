@@ -198,7 +198,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 - Fully portable.
 - Type `flow user data` to open your saved user settings folder. They are located at:
   - If using roaming: `%APPDATA%\FlowLauncher`
-  - If using portable, by default: `%localappdata%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData`
+  - If using portable, by default: `%LocalAppData%\FlowLauncher\app-<VersionOfYourFlowLauncher>\UserData`
   - Type `open log location` to open your logs folder, they are saved along with your user settings folder.
 
 ### 🎮 Game Mode

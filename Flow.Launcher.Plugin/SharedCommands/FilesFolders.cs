@@ -35,7 +35,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         /// <summary>
         /// Copies the folder and all of its files and folders 
-        /// including subfolders to the target location
+        /// including subFolders to the target location
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
@@ -64,15 +64,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 FileInfo[] files = dir.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    string temppath = Path.Combine(targetPath, file.Name);
-                    file.CopyTo(temppath, false);
+                    string tempPath = Path.Combine(targetPath, file.Name);
+                    file.CopyTo(tempPath, false);
                 }
 
                 // Recursively copy subdirectories by calling itself on each subdirectory until there are no more to copy
-                foreach (DirectoryInfo subdir in dirs)
+                foreach (DirectoryInfo subDir in dirs)
                 {
-                    string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    string temppath = Path.Combine(targetPath, subDir.Name);
+                    CopyAll(subDir.FullName, temppath);
                 }
             }
             catch (Exception)

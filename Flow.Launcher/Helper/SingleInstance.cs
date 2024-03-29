@@ -14,7 +14,7 @@ using System.Windows;
 using Velopack;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
-// modified to allow single instace restart
+// modified to allow single instance restart
 namespace Flow.Launcher.Helper
 {
     internal enum WM
@@ -311,9 +311,9 @@ namespace Flow.Launcher.Helper
             catch (NotSupportedException)
             {
                 // The application was clickonce deployed
-                // Clickonce deployed apps cannot recieve traditional commandline arguments
-                // As a workaround commandline arguments can be written to a shared location before 
-                // the app is launched and the app can obtain its commandline arguments from the 
+                // Clickonce deployed apps cannot recieve traditional command line arguments
+                // As a workaround command line arguments can be written to a shared location before 
+                // the app is launched and the app can obtain its command line arguments from the 
                 // shared location               
                 string appFolderPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), uniqueApplicationName);

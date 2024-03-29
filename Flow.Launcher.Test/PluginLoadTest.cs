@@ -65,7 +65,7 @@ namespace Flow.Launcher.Test
         }
 
         [Test]
-        public void GivenDuplicatePluginMetadatasWithNoUniquePluginWhenLoadedThenShouldReturnEmptyList()
+        public void GivenDuplicatePluginMetaDataWithNoUniquePluginWhenLoadedThenShouldReturnEmptyList()
         {
             // Given
             var duplicateList = new List<PluginMetadata>

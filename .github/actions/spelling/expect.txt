@@ -106,3 +106,5 @@ alreadyexists
 JsonRPC
 JsonRPCV2
 Softpedia
+ime
+LPWStr
