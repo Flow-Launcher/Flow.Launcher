@@ -100,7 +100,7 @@ namespace Flow.Launcher.Core.Configuration
             var portableDataDeleteFilePath = Path.Combine(portableDataDir, DataLocation.DeletionIndicatorFile);
             var roamingDataDeleteFilePath = Path.Combine(roamingDataDir, DataLocation.DeletionIndicatorFile);
 
-            // If the data folder in %appdata% is marked for deletion,
+            // If the data folder in %AppData% is marked for deletion,
             // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {

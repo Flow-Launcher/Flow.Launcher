@@ -315,12 +315,12 @@ namespace Flow.Launcher
 
         #region Private Methods
 
-        private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
+        private bool KListener_hookedKeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
         {
             var continueHook = true;
             foreach (var x in _globalKeyboardHandlers)
             {
-                continueHook &= x((int)keyevent, vkcode, state);
+                continueHook &= x((int)keyEvent, vkCode, state);
             }
 
             return continueHook;

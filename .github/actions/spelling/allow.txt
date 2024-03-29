@@ -7,3 +7,16 @@ nunit
 velopack
 vpk
 vsc
+appveyor
+appwrite
+IME
+hotkey
+prioritise
+runas
+softpedia
+sourcelink
+TRAYMOUSEMESSAGE
+uninstaller
+vkcode
+winget
+workaround

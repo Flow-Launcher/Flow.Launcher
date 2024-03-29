@@ -184,8 +184,8 @@ namespace Flow.Launcher
 
         public void Dispose()
         {
-            // if sessionending is called, exit proverbially be called when log off / shutdown
-            // but if sessionending is not called, exit won't be called when log off / shutdown
+            // if session-ending is called, exit proverbially be called when log off / shutdown
+            // but if session-ending is not called, exit won't be called when log off / shutdown
             if (!_disposed)
             {
                 API.SaveAppAllSettings();

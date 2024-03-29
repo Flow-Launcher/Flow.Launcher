@@ -71,8 +71,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 // Recursively copy subdirectories by calling itself on each subdirectory until there are no more to copy
                 foreach (DirectoryInfo subDir in dirs)
                 {
-                    string temppath = Path.Combine(targetPath, subDir.Name);
-                    CopyAll(subDir.FullName, temppath);
+                    string tempPath = Path.Combine(targetPath, subDir.Name);
+                    CopyAll(subDir.FullName, tempPath);
                 }
             }
             catch (Exception)
