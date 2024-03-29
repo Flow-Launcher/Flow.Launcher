@@ -1926,10 +1926,10 @@
     <value>微软拼音 SimpleFast 选项</value>
   </data>
   <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
-    <value>Change what closing the lid does</value>
+    <value>更改盖上盖子时的操作</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>关闭不必要的动画效果</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
     <value>创建还原点</value>
