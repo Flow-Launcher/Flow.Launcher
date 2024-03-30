@@ -39,14 +39,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string FullPath { get; set; }
 
         /// <summary>
-        /// Path of the executable for .lnk, or the URL for .url. Arguments are included if any.
+        /// Path of the executable for .lnk, or the URL for .url
         /// </summary>
         public string LnkResolvedPath { get; set; }
 
         /// <summary>
-        /// Path of the actual executable file. Args are included.
+        /// Path of the actual executable file
         /// </summary>
         public string ExecutablePath => LnkResolvedPath ?? FullPath;
+
+        /// <summary>
+        /// Arguments for the executable.
+        /// </summary>
+        public string Args { get; set; }
 
         public string ParentDirectory { get; set; }
 
@@ -339,7 +344,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     var args = _helper.arguments;
                     if (!string.IsNullOrEmpty(args))
                     {
-                        program.LnkResolvedPath += " " + args;
+                        program.Args = args;
                     }
 
                     var description = _helper.description;
@@ -636,7 +641,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
             var startMenuPaths = GetStartMenuPaths();
-            return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
+            return programs.GroupBy(p => (p.ExecutablePath + p.Args).ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
