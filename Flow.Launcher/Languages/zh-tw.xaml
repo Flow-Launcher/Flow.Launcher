@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">暗色系</system:String>
     <system:String x:Key="SoundEffect">音效</system:String>
     <system:String x:Key="SoundEffectTip">搜尋窗口打開時播放音效</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
