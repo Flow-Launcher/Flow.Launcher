@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Тёмная</system:String>
     <system:String x:Key="SoundEffect">Звуковой эффект</system:String>
     <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">Анимация</system:String>
     <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
     <system:String x:Key="AnimationSpeed">Скорость анимации</system:String>
