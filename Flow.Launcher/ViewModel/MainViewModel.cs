@@ -210,11 +210,19 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void ReQuery()
+        public void ReQuery()
         {
             if (SelectedIsFromQueryResults())
             {
                 QueryResults(isReQuery: true);
+            }
+        }
+
+        public void ReQuery(bool reselect)
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                QueryResults(isReQuery: true, reSelect: reselect);
             }
         }
 
@@ -775,7 +783,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool isReQuery = false)
+        private async void QueryResults(bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
@@ -850,7 +858,7 @@ namespace Flow.Launcher.ViewModel
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTask(plugin),
+                false => QueryTask(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
 
@@ -878,7 +886,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTask(PluginPair plugin)
+            async Task QueryTask(PluginPair plugin, bool reSelect = true)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
@@ -892,7 +900,7 @@ namespace Flow.Launcher.ViewModel
                 results ??= _emptyResult;
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query,
-                        currentCancellationToken)))
+                        currentCancellationToken, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
@@ -1133,7 +1141,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return;
@@ -1172,7 +1180,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            Results.AddResults(resultsForUpdates, token);
+            // it should be the same for all results
+            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+            Results.AddResults(resultsForUpdates, token, reSelect);
         }
 
         #endregion
