@@ -15,8 +15,6 @@ namespace Flow.Launcher.Core.Plugin
 {
     internal abstract class JsonRPCPluginV2 : JsonRPCPluginBase, IAsyncDisposable, IAsyncReloadable, IResultUpdated
     {
-        public abstract string SupportedLanguage { get; set; }
-
         public const string JsonRpc = "JsonRPC";
 
         protected abstract IDuplexPipe ClientPipe { get; set; }
@@ -41,9 +39,23 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
+        private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
+
         public override List<Result> LoadContextMenus(Result selectedResult)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
+                    new object[] { selectedResult.ContextData }));
+
+                var results = ParseResults(res);
+
+                return results;
+            }
+            catch
+            {
+                return new List<Result>();
+            }
         }
 
         public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
@@ -51,7 +63,7 @@ namespace Flow.Launcher.Core.Plugin
             try
             {
                 var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
-                    new[] { query },
+                    new object[] { query, Settings.Inner },
                     token);
 
                 var results = ParseResults(res);
@@ -88,22 +100,34 @@ namespace Flow.Launcher.Core.Plugin
 
         public event ResultUpdatedEventHandler ResultsUpdated;
 
+        protected enum MessageHandlerType
+        {
+            HeaderDelimited,
+            LengthHeaderDelimited,
+            NewLineDelimited
+        }
+
+        protected abstract MessageHandlerType MessageHandler { get; }
+
 
         private void SetupJsonRPC()
         {
-            var formatter = new JsonMessageFormatter();
-            var handler = new NewLineDelimitedMessageHandler(ClientPipe,
-                formatter);
+            var formatter = new SystemTextJsonFormatter { JsonSerializerOptions = RequestSerializeOption };
+            IJsonRpcMessageHandler handler = MessageHandler switch
+            {
+                MessageHandlerType.HeaderDelimited => new HeaderDelimitedMessageHandler(ClientPipe, formatter),
+                MessageHandlerType.LengthHeaderDelimited => new LengthHeaderMessageHandler(ClientPipe, formatter),
+                MessageHandlerType.NewLineDelimited => new NewLineDelimitedMessageHandler(ClientPipe, formatter),
+                _ => throw new ArgumentOutOfRangeException()
+            };
 
             RPC = new JsonRpc(handler, new JsonRPCPublicAPI(Context.API));
 
             RPC.AddLocalRpcMethod("UpdateResults", new Action<string, JsonRPCQueryResponseModel>((rawQuery, response) =>
             {
                 var results = ParseResults(response);
-                ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs { Query = new Query()
-                {
-                    RawQuery = rawQuery
-                }, Results = results });
+                ResultsUpdated?.Invoke(this,
+                    new ResultUpdatedEventArgs { Query = new Query() { RawQuery = rawQuery }, Results = results });
             }));
             RPC.SynchronizationContext = null;
             RPC.StartListening();

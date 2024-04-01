@@ -19,8 +19,9 @@ namespace Flow.Launcher.Plugin.Caculator
                         @"sin|cos|tan|arcsin|arccos|arctan|" +
                         @"eigval|eigvec|eig|sum|polar|plot|round|sort|real|zeta|" +
                         @"bin2dec|hex2dec|oct2dec|" +
-                        @"==|~=|&&|\|\||" +
-                        @"[ei]|[0-9]|[\+\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
+                        @"factorial|sign|isprime|isinfty|" +
+                        @"==|~=|&&|\|\||(?:\<|\>)=?|" +
+                        @"[ei]|[0-9]|[\+\%\-\*\/\^\., ""]|[\(\)\|\!\[\]]" +
                         @")+$", RegexOptions.Compiled);
         private static readonly Regex RegBrackets = new Regex(@"[\(\)\[\]]", RegexOptions.Compiled);
         private static Engine MagesEngine;

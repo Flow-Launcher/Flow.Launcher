@@ -25,6 +25,8 @@ using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
+using DataObject = System.Windows.DataObject;
+using System.Windows.Media;
 
 namespace Flow.Launcher
 {
@@ -39,7 +41,7 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
         private bool _animating;
-        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+        MediaPlayer animationSound = new MediaPlayer();
 
         #endregion
 
@@ -50,7 +52,11 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            InitializePosition();                        
+            InitializePosition();
+
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+
+            DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
         public MainWindow()
@@ -69,6 +75,19 @@ namespace Flow.Launcher
             else if (!string.IsNullOrEmpty(QueryTextBox.Text))
             {
                 App.API.CopyToClipboard(QueryTextBox.SelectedText, showDefaultNotification: false);
+            }
+        }
+
+        private void OnPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            var isText = e.SourceDataObject.GetDataPresent(System.Windows.DataFormats.UnicodeText, true);
+            if (isText)
+            {
+                var text = e.SourceDataObject.GetData(System.Windows.DataFormats.UnicodeText) as string;
+                text = text.Replace(Environment.NewLine, " ");
+                DataObject data = new DataObject();
+                data.SetData(System.Windows.DataFormats.UnicodeText, text);
+                e.DataObject = data;
             }
         }
         
@@ -113,6 +132,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();

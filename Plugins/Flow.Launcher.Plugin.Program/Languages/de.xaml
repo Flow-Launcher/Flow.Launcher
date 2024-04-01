@@ -9,12 +9,12 @@
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Aktivieren</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Aktiviert</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">Deaktivieren</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Aktiviert</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Speicherort</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_all_programs">Alle Programme</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes">File Type</system:String>
     <system:String x:Key="flowlauncher_plugin_program_reindex">erneut Indexieren</system:String>
     <system:String x:Key="flowlauncher_plugin_program_indexing">Indexieren</system:String>
@@ -28,7 +28,7 @@
     <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Hide app path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">App-Pfad verstecken</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
@@ -69,16 +69,16 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Als Administrator ausführen</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Enthaltenden Ordner öffnen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programm</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Suche Programme mit Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Ungültiger Pfad</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_args">Argumente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 

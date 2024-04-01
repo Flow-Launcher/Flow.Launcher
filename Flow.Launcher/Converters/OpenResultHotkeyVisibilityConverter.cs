@@ -22,6 +22,6 @@ namespace Flow.Launcher.Converters
             return number <= MaxVisibleHotkeys ? Visibility.Visible : Visibility.Collapsed;
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new System.InvalidOperationException();
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => throw new InvalidOperationException();
     }
 }

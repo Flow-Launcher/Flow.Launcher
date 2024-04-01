@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
@@ -19,6 +21,7 @@ namespace Flow.Launcher.Plugin.Sys
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
         private PluginInitContext context;
+        private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
 
         #region DllImport
 
@@ -59,6 +62,8 @@ namespace Flow.Launcher.Plugin.Sys
             var results = new List<Result>();
             foreach (var c in commands)
             {
+                c.Title = GetDynamicTitle(query, c);
+
                 var titleMatch = StringMatcher.FuzzySearch(query.Search, c.Title);
                 var subTitleMatch = StringMatcher.FuzzySearch(query.Search, c.SubTitle);
 
@@ -77,9 +82,52 @@ namespace Flow.Launcher.Plugin.Sys
             return results;
         }
 
+        private string GetDynamicTitle(Query query, Result result)
+        {
+            if (!KeywordTitleMappings.TryGetValue(result.Title, out var translationKey))
+            {
+                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Dynamic Title not found for: {result.Title}");
+                return "Title Not Found";
+            }
+
+            var translatedTitle = context.API.GetTranslation(translationKey);
+
+            if (result.Title == translatedTitle)
+            {
+                return result.Title;
+            }
+
+            var englishTitleMatch = StringMatcher.FuzzySearch(query.Search, result.Title);
+            var translatedTitleMatch = StringMatcher.FuzzySearch(query.Search, translatedTitle);
+
+            return englishTitleMatch.Score >= translatedTitleMatch.Score ? result.Title : translatedTitle;
+        }
+
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            KeywordTitleMappings = new Dictionary<string, string>{
+                {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
+                {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
+                {"Restart With Advanced Boot Options", "flowlauncher_plugin_sys_restart_advanced_cmd"},
+                {"Log Off/Sign Out", "flowlauncher_plugin_sys_log_off_cmd"},
+                {"Lock", "flowlauncher_plugin_sys_lock_cmd"},
+                {"Sleep", "flowlauncher_plugin_sys_sleep_cmd"},
+                {"Hibernate", "flowlauncher_plugin_sys_hibernate_cmd"},
+                {"Index Option", "flowlauncher_plugin_sys_indexoption_cmd"},
+                {"Empty Recycle Bin", "flowlauncher_plugin_sys_emptyrecyclebin_cmd"},
+                {"Open Recycle Bin", "flowlauncher_plugin_sys_openrecyclebin_cmd"},
+                {"Exit", "flowlauncher_plugin_sys_exit_cmd"},
+                {"Save Settings", "flowlauncher_plugin_sys_save_all_settings_cmd"},
+                {"Restart Flow Launcher", "flowlauncher_plugin_sys_restart_cmd"},
+                {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
+                {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
+                {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
+                {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
+                {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
+                {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
+                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"}
+            };
         }
 
         private List<Result> Commands()
@@ -139,7 +187,7 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        
+
                         if (result == MessageBoxResult.Yes)
                             Process.Start("shutdown", "/r /o /t 0");
 
@@ -148,7 +196,7 @@ namespace Flow.Launcher.Plugin.Sys
                 },
                 new Result
                 {
-                    Title = "Log Off",
+                    Title = "Log Off/Sign Out",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
@@ -158,7 +206,7 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
-                        
+
                         if (result == MessageBoxResult.Yes)
                             ExitWindowsEx(EWX_LOGOFF, 0);
 
@@ -198,7 +246,7 @@ namespace Flow.Launcher.Plugin.Sys
                         info.UseShellExecute = true;
 
                         ShellCommand.Execute(info);
-                        
+
                         return true;
                     }
                 },
@@ -317,7 +365,7 @@ namespace Flow.Launcher.Plugin.Sys
                                 context.API.GetTranslation(
                                     "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
                             System.Threading.Tasks.TaskScheduler.Current);
-                        
+
                         return true;
                     }
                 },
@@ -364,6 +412,18 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         context.API.OpenDirectory(DataLocation.DataDirectory());
+                        return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Toggle Game Mode",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_toggle_game_mode"),
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
+                    Action = c =>
+                    {
+                        context.API.ToggleGameMode();
                         return true;
                     }
                 }
