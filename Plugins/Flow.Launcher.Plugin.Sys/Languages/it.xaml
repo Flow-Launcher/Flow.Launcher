@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Esci</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Restart Flow Launcher&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Riavvia Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Impostazioni</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Ricarica i dati del plugin</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
