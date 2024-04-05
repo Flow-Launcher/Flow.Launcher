@@ -693,7 +693,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border 
+                            <Border
                                 Margin="0,30,0,0"
                                 Padding="0"
                                 Style="{DynamicResource SettingGroupBox}">
@@ -720,7 +720,7 @@
                                                 <ComboBox
                                                     x:Name="SelectScreen"
                                                     MinWidth="160"
-                                                    Margin="0,0,18,0" 
+                                                    Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     ItemsSource="{Binding ScreenNumbers}"
@@ -738,14 +738,12 @@
                                                 </ComboBox>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
 
-                                    <Separator
-                                        Width="Auto"
-                                        BorderThickness="1">
+                                    <Separator Width="Auto" BorderThickness="1">
                                         <Separator.Style>
                                             <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -758,9 +756,7 @@
                                         </Separator.Style>
                                     </Separator>
 
-                                    <Border
-                                        Margin="0"
-                                        BorderThickness="0">
+                                    <Border Margin="0" BorderThickness="0">
                                         <Border.Style>
                                             <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -786,8 +782,7 @@
                                                     FontSize="14"
                                                     ItemsSource="{Binding SearchWindowAligns}"
                                                     SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                    SelectedValuePath="Value">
-                                                </ComboBox>
+                                                    SelectedValuePath="Value" />
                                                 <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                     <StackPanel.Style>
                                                         <Style TargetType="StackPanel">
@@ -817,7 +812,7 @@
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
@@ -1891,7 +1886,7 @@
                             <Grid Margin="0,0,0,0">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="0" />
-                                    <RowDefinition Height="350" />
+                                    <RowDefinition Height="Auto" />
                                     <RowDefinition />
                                     <RowDefinition />
                                     <RowDefinition Height="*" />
@@ -1909,8 +1904,18 @@
                                     Grid.Row="1"
                                     Margin="0"
                                     Background="{Binding PreviewBackground}">
+                                    <StackPanel.Style>
+                                        <Style TargetType="{x:Type StackPanel}">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=ThemeModeComboBox, Path=SelectedIndex}" Value="1">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </StackPanel.Style>
                                     <StackPanel
-                                        Margin="0,30,0,0"
+                                        Margin="0,30,0,30"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
@@ -1989,6 +1994,45 @@
 
                                 <StackPanel Grid.Row="2" VerticalAlignment="Top">
                                     <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ThemeModeTitle}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource ThemeModeTip}" />
+                                            </StackPanel>
+                                            <ComboBox
+                                                x:Name="ThemeModeComboBox"
+                                                Grid.Column="2"
+                                                MinWidth="180"
+                                                Margin="0,0,18,0"
+                                                DisplayMemberPath="Display"
+                                                FontSize="14"
+                                                ItemsSource="{Binding ThemeModes}"
+                                                SelectedValue="{Binding Settings.ThemeMode}"
+                                                SelectedValuePath="Value" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe7fa;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Border Margin="0,12,0,0">
+                                        <Border.Style>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="Background" Value="{DynamicResource Color00B}" />
+                                                <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+                                                <Setter Property="BorderThickness" Value="1" />
+                                                <Setter Property="CornerRadius" Value="5" />
+                                                <Setter Property="Margin" Value="0,5,0,0" />
+                                                <Setter Property="Padding" Value="0,15,0,15" />
+                                                <Setter Property="SnapsToDevicePixels" Value="True" />
+                                                <Setter Property="Visibility" Value="Visible" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding ElementName=ThemeModeComboBox, Path=SelectedIndex}" Value="0">
+                                                        <Setter Property="Visibility" Value="Collapsed" />
+                                                    </DataTrigger>
+
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource queryWindowShadowEffect}" />
@@ -2446,8 +2490,7 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding AnimationSpeeds}"
                                                                 SelectedValue="{Binding Settings.AnimationSpeed}"
-                                                                SelectedValuePath="Value">
-                                                            </ComboBox>
+                                                                SelectedValuePath="Value" />
                                                             <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                                 <StackPanel.Style>
                                                                     <Style TargetType="StackPanel">
@@ -2543,7 +2586,7 @@
                                                                 TickFrequency="1"
                                                                 Value="{Binding SoundEffectVolume, Mode=TwoWay}" />
                                                         </StackPanel>
-                                                        <TextBlock Style="{StaticResource Glyph}"> 
+                                                        <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
                                                     </ItemsControl>

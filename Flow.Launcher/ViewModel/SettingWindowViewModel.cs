@@ -448,6 +448,34 @@ namespace Flow.Launcher.ViewModel
             public ColorSchemes Value { get; set; }
         }
 
+
+        public class ThemeMode
+        {
+            public string Display { get; set; }
+            public ThemeModes Value { get; set; }
+        }
+
+        public List<ThemeMode> ThemeModes
+        {
+            get
+            {
+                List<ThemeMode> modes = new List<ThemeMode>();
+                var enums = (ThemeModes[])Enum.GetValues(typeof(ThemeModes));
+                foreach (var e in enums)
+                {
+                    var key = $"ThemeMode{e}";
+                    var display = _translater.GetTranslation(key);
+                    var m = new ThemeMode
+                    {
+                        Display = display,
+                        Value = e,
+                    };
+                    modes.Add(m);
+                }
+                return modes;
+            }
+        }
+
         public List<ColorScheme> ColorSchemes
         {
             get

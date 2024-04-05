@@ -534,5 +534,6 @@ namespace Flow.Launcher
         {
             Keyboard.Focus(pluginFilterTxb);
         }
+
     }
 }

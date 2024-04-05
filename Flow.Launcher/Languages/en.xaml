@@ -168,6 +168,10 @@
     <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">Clock</system:String>
     <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="ThemeModeTitle">Theme Mode (Beta)</system:String>
+    <system:String x:Key="ThemeModeTip">Select the window rendering method. Modern mode is available in Windows 10 and later versions. There are differences in some features.</system:String>
+    <system:String x:Key="ThemeModeModern">Modern</system:String>
+    <system:String x:Key="ThemeModeLegacy">Legacy</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
