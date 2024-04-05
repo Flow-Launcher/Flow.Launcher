@@ -1062,7 +1062,7 @@ namespace Flow.Launcher.ViewModel
             {
                 MainWindowVisibility = Visibility.Visible;
 
-                MainWindowOpacity = 1;
+                //MainWindowOpacity = 1;
 
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
@@ -1072,7 +1072,7 @@ namespace Flow.Launcher.ViewModel
         public async void Hide()
         {
             // Trick for no delay
-            MainWindowOpacity = 0;
+            //MainWindowOpacity = 0;
             lastContextMenuResult = new Result();
             lastContextMenuResults = new List<Result>();
 

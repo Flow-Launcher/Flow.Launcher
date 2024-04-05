@@ -15,6 +15,8 @@
     MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+    uix:ExtendsContentIntoTitleBar="True"
+    uix:SizeToContent="Height"
     AllowDrop="True"
     Background="Transparent"
     Closing="OnClosing"
@@ -25,16 +27,14 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
+    ResizeMode="CanResize"
     ShowInTaskbar="False"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+    WindowBackdropType="Acrylic"
     WindowStartupLocation="Manual"
     WindowStyle="SingleBorderWindow"
-    mc:Ignorable="d"
-    uix:ExtendsContentIntoTitleBar="True"
-    uix:SizeToContent="Height"
-    ResizeMode="CanResize"
-    WindowBackdropType="Acrylic">
+    mc:Ignorable="d">
     <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -197,7 +197,11 @@
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </uix:FluentWindow.InputBindings>
     <Grid>
-        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
+        <!--        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">-->
+        <Border MouseDown="OnMouseDown">
+            <Border.Background>
+                <SolidColorBrush Opacity="0.6" Color="Black" />
+            </Border.Background>
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
