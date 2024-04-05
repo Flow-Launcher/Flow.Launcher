@@ -1,4 +1,4 @@
-<Window
+<uix:FluentWindow
     x:Class="Flow.Launcher.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:uix="http://schemas.lepo.co/wpfui/2022/xaml"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
@@ -15,7 +16,6 @@
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
-    AllowsTransparency="True"
     Background="Transparent"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
@@ -25,16 +25,17 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
-    ResizeMode="NoResize"
     ShowInTaskbar="False"
-    SizeToContent="Height"
-    Style="{DynamicResource WindowStyle}"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="None"
-    mc:Ignorable="d">
-    <Window.Resources>
+    WindowStyle="SingleBorderWindow"
+    mc:Ignorable="d"
+    uix:ExtendsContentIntoTitleBar="True"
+    uix:SizeToContent="Height"
+    ResizeMode="CanResize"
+    WindowBackdropType="Acrylic">
+    <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
@@ -42,8 +43,8 @@
         <converters:BoolToIMEConversionModeConverter x:Key="BoolToIMEConversionModeConverter" />
         <converters:BoolToIMEStateConverter x:Key="BoolToIMEStateConverter" />
         <converters:StringToKeyBindingConverter x:Key="StringToKeyBindingConverter" />
-    </Window.Resources>
-    <Window.InputBindings>
+    </uix:FluentWindow.Resources>
+    <uix:FluentWindow.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
         <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
@@ -188,13 +189,13 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="C"
-            Modifiers="Ctrl+Shift"
-            Command="{Binding CopyAlternativeCommand}" />
+            Command="{Binding CopyAlternativeCommand}"
+            Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
-    </Window.InputBindings>
+    </uix:FluentWindow.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
@@ -501,4 +502,4 @@
             </StackPanel>
         </Border>
     </Grid>
-</Window>
+</uix:FluentWindow>
