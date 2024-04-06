@@ -30,6 +30,7 @@ using System.Windows.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Threading;
+using Wpf.Ui.Appearance;
 
 namespace Flow.Launcher
 {
@@ -114,6 +115,7 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+
             // Remove OS minimizing/maximizing animation
             IntPtr WinHandle = new WindowInteropHelper(this).Handle;
             int BOOL_TRUE = 1;

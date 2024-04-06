@@ -198,9 +198,10 @@
     </uix:FluentWindow.InputBindings>
     <Grid>
         <!--        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">-->
+        <!--<Border Background="{DynamicResource ControlOnImageFillColorDefaultBrush}" MouseDown="OnMouseDown">-->
         <Border MouseDown="OnMouseDown">
             <Border.Background>
-                <SolidColorBrush Opacity="0.6" Color="Black" />
+                <SolidColorBrush Opacity="0.4" Color="Red" />
             </Border.Background>
             <StackPanel Orientation="Vertical">
                 <Grid>

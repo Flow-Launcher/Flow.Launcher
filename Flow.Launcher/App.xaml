@@ -10,7 +10,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--  WPF UI  -->
-                <uix:ThemesDictionary Theme="Dark" />
+                <uix:ThemesDictionary Theme="Light" />
                 <uix:ControlsDictionary />
                 <!--  ModernWPF UI  -->
                 <ui:ThemeResources>
