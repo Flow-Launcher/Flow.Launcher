@@ -183,6 +183,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
+                TitleToolTip = $"{title}\n{ExecutablePath}",
                 Action = c =>
                 {
                     // Ctrl + Enter to open containing folder
