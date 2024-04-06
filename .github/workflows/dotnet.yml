@@ -1,0 +1,107 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+      - master
+  pull_request:
+    branches:
+      - dev
+      - master
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+    env:
+      FlowVersion: 1.17.2
+      NUGET_CERT_REVOCATION_MODE: offline
+      BUILD_NUMBER: ${{ github.run_number }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Flow.Launcher.csproj version
+        id: update
+        uses: vers-one/dotnet-project-version-updater@v1.5
+        with:
+          file: |
+            "**/SolutionAssemblyInfo.cs"
+          version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
+      - uses: actions/cache@v4
+        name: Restore Nuget Cache
+        with:
+          path: |
+            ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget
+      - uses: actions/cache@v4
+        name: Restore dotnet tool Cache
+        with:
+          path: |
+            ~/.dotnet/tools
+          key: ${{ runner.os }}-dotnet-tools-${{ hashFiles('~/.dotnet/tools/**') }}
+          restore-keys: |
+            ${{ runner.os }}-dotnet-tools
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 7.0.x
+#      - name: Install vpk
+        # Install vpk tool (dotnet tool install will not reinstall if already installed)
+        # We will update the cli by removing cache
+#        run: dotnet tool install -g vpk
+      - name: Restore dependencies
+        run: dotnet restore
+      - name: Build
+        run: dotnet build --no-restore -c Release
+      - name: Initialize Service
+        run: |
+          sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
+          net start WSearch
+      - name: Test
+        run: dotnet test --no-build --verbosity normal -c Release
+      - name: Perform post_build tasks
+        shell: pwsh
+        run: .\Scripts\post_build.ps1 -flowversion "${env:FlowVersion}-build.${env:BUILD_NUMBER}"
+      - name: Upload Plugin Nupkg
+        uses: actions/upload-artifact@v4
+        with:
+          name: Plugin nupkg
+          path: |
+            Output\Release\Flow.Launcher.Plugin.*.nupkg
+          compression-level: 0
+      - name: Upload Setup
+        uses: actions/upload-artifact@v4
+        with:
+          name: Flow Installer
+          path: |
+            Releases\FlowLauncher-*.exe
+          compression-level: 0
+      - name: Upload Portable Version
+        uses: actions/upload-artifact@v4
+        with:
+          name: Portable Version
+          path: |
+            Releases\FlowLauncher-*-Portable.zip
+          compression-level: 0
+#      - name: Upload Full Nupkg
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: Full nupkg
+#          path: |
+#            Releases\FlowLauncher-*-full.nupkg
+#          
+#          compression-level: 0
+#      - name: Upload Release Information
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: RELEASES
+#          path: |
+#            Releases\RELEASES*
+#          compression-level: 0
+#      

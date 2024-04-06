@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.IO.Pipes;
+using System.Reflection;
 using System.Security;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Avalonia;
-using Avalonia.Threading;
+using System.Windows;
+using Velopack;
 
 // http://blogs.microsoft.co.il/arik/2010/05/28/wpf-single-instance-application/
-// modified to allow single instace restart
+// modified to allow single instance restart
 namespace Flow.Launcher.Helper
 {
     internal enum WM
@@ -200,7 +202,7 @@ namespace Flow.Launcher.Helper
     /// For most apps, this will not be much of an issue.
     /// </remarks>
     public static class SingleInstance<TApplication>
-        where TApplication : Avalonia.Application, ISingleInstanceApp
+        where TApplication : Application, ISingleInstanceApp
 
     {
         #region Private Fields
@@ -218,15 +220,39 @@ namespace Flow.Launcher.Helper
         /// <summary>
         /// Application mutex.
         /// </summary>
-        internal static Mutex singleInstanceMutex;
-
-        #endregion
-
-        #region Public Properties
+        private static Mutex singleInstanceMutex;
 
         #endregion
 
         #region Public Methods
+
+        public static void Restart()
+        {
+            singleInstanceMutex?.ReleaseMutex();
+            StopRemoteServiceTokenSource?.Cancel();
+
+            while (RemoteServiceRunning)
+            {
+                // busy wait
+                Thread.Sleep(10);
+            }
+
+            var info = new ProcessStartInfo
+            {
+                Arguments = "/C choice /C Y /N /D Y /T 1 & START \"\" \"" + Environment.ProcessPath + "\"",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                FileName = "cmd.exe"
+            };
+            Process.Start(info);
+            Application.Current.Shutdown();
+        }
+
+        // this is always going to run only once
+        private static CancellationTokenSource StopRemoteServiceTokenSource { get; set; }
+
+        private static volatile bool RemoteServiceRunning = true;
+
 
         /// <summary>
         /// Checks if the instance of the application attempting to start is the first instance. 
@@ -235,22 +261,23 @@ namespace Flow.Launcher.Helper
         /// <returns>True if this is the first instance of the application.</returns>
         public static bool InitializeAsFirstInstance(string uniqueName)
         {
+            StopRemoteServiceTokenSource = new CancellationTokenSource();
+
             // Build unique application Id and the IPC channel name.
             string applicationIdentifier = uniqueName + Environment.UserName;
 
             string channelName = String.Concat(applicationIdentifier, Delimiter, ChannelNameSuffix);
 
             // Create mutex based on unique application Id to check if this is the first instance of the application. 
-            bool firstInstance;
-            singleInstanceMutex = new Mutex(true, applicationIdentifier, out firstInstance);
+            singleInstanceMutex = new Mutex(true, applicationIdentifier, out var firstInstance);
             if (firstInstance)
             {
-                _ = CreateRemoteService(channelName);
+                _ = Task.Run(() => StartRemoteServiceAsync(channelName, StopRemoteServiceTokenSource.Token));
                 return true;
             }
             else
             {
-                _ = SignalFirstInstance(channelName);
+                _ = Task.Run(() => SignalFirstInstanceAsync(channelName));
                 return false;
             }
         }
@@ -261,6 +288,7 @@ namespace Flow.Launcher.Helper
         public static void Cleanup()
         {
             singleInstanceMutex?.ReleaseMutex();
+            StopRemoteServiceTokenSource?.Cancel();
         }
 
         #endregion
@@ -277,15 +305,15 @@ namespace Flow.Launcher.Helper
 
             try
             {
-                // The application was not clickonce deployed, get args from standard API's
+                // The application was not ClickOnce deployed, get args from standard API's
                 args = Environment.GetCommandLineArgs();
             }
             catch (NotSupportedException)
             {
-                // The application was clickonce deployed
-                // Clickonce deployed apps cannot recieve traditional commandline arguments
-                // As a workaround commandline arguments can be written to a shared location before 
-                // the app is launched and the app can obtain its commandline arguments from the 
+                // The application was ClickOnce deployed
+                // ClickOnce deployed apps cannot receive traditional command line arguments
+                // As a workaround command line arguments can be written to a shared location before 
+                // the app is launched and the app can obtain its command line arguments from the 
                 // shared location               
                 string appFolderPath = Path.Combine(
                     Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), uniqueApplicationName);
@@ -295,10 +323,8 @@ namespace Flow.Launcher.Helper
                 {
                     try
                     {
-                        using (TextReader reader = new StreamReader(cmdLinePath, Encoding.Unicode))
-                        {
-                            args = NativeMethods.CommandLineToArgvW(reader.ReadToEnd());
-                        }
+                        using TextReader reader = new StreamReader(cmdLinePath, Encoding.Unicode);
+                        args = NativeMethods.CommandLineToArgvW(reader.ReadToEnd());
 
                         File.Delete(cmdLinePath);
                     }
@@ -308,10 +334,7 @@ namespace Flow.Launcher.Helper
                 }
             }
 
-            if (args == null)
-            {
-                args = new string[] { };
-            }
+            args ??= Array.Empty<string>();
 
             return new List<string>(args);
         }
@@ -321,24 +344,34 @@ namespace Flow.Launcher.Helper
         /// Once receives signal from client, will activate first instance.
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        private static async Task CreateRemoteService(string channelName)
+        /// <param name="token">Cancellation token</param>
+        private static async Task StartRemoteServiceAsync(string channelName, CancellationToken token = default)
         {
-            using (NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In))
+            try
             {
+                await using NamedPipeServerStream pipeServer = new NamedPipeServerStream(channelName, PipeDirection.In);
                 while (true)
                 {
-                    // Wait for connection to the pipe
-                    await pipeServer.WaitForConnectionAsync();
-                    if (Application.Current != null)
+                    if (token.IsCancellationRequested)
                     {
-                        
-                        // Do an asynchronous call to ActivateFirstInstance function
-                        Dispatcher.UIThread.Invoke(ActivateFirstInstance);
+                        break;
                     }
 
-                    // Disconect client
+                    // Wait for connection to the pipe
+                    await pipeServer.WaitForConnectionAsync(token);
+                    if (Application.Current != null)
+                    {
+                        // Do an asynchronous call to ActivateFirstInstance function
+                        Application.Current.Dispatcher.Invoke(ActivateFirstInstance);
+                    }
+
+                    // Disconnect client
                     pipeServer.Disconnect();
                 }
+            }
+            finally
+            {
+                RemoteServiceRunning = false;
             }
         }
 
@@ -346,17 +379,13 @@ namespace Flow.Launcher.Helper
         /// Creates a client pipe and sends a signal to server to launch first instance
         /// </summary>
         /// <param name="channelName">Application's IPC channel name.</param>
-        /// <param name="args">
-        /// Command line arguments for the second instance, passed to the first instance to take appropriate action.
-        /// </param>
-        private static async Task SignalFirstInstance(string channelName)
+        private static async Task SignalFirstInstanceAsync(string channelName)
         {
             // Create a client pipe connected to server
-            using (NamedPipeClientStream pipeClient = new NamedPipeClientStream(".", channelName, PipeDirection.Out))
-            {
-                // Connect to the available pipe
-                await pipeClient.ConnectAsync(0);
-            }
+            await using NamedPipeClientStream pipeClient =
+                new NamedPipeClientStream(".", channelName, PipeDirection.Out);
+            // Connect to the available pipe
+            await pipeClient.ConnectAsync(0);
         }
 
         /// <summary>
@@ -382,7 +411,7 @@ namespace Flow.Launcher.Helper
                 return;
             }
 
-            ((TApplication)Application.Current)!.OnSecondAppStarted();
+            ((TApplication)Application.Current).OnSecondAppStarted();
         }
 
         #endregion

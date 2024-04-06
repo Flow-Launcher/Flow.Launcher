@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
-using Squirrel;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -43,7 +42,7 @@ namespace Flow.Launcher
             _settingsVM = settingsVM;
             _mainVM = mainVM;
             _alphabet = alphabet;
-            GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
+            GlobalHotkey.hookedKeyboardCallback = KListenerHookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
 
@@ -64,11 +63,8 @@ namespace Flow.Launcher
             // UpdateManager.RestartApp() will call Environment.Exit(0)
             // which will cause ungraceful exit
             SaveAppAllSettings();
-
-            // Restart requires Squirrel's Update.exe to be present in the parent folder, 
-            // it is only published from the project's release pipeline. When debugging without it,
-            // the project may not restart or just terminates. This is expected.
-            UpdateManager.RestartApp(Constant.ApplicationFileName);
+            
+            SingleInstance<App>.Restart();
         }
 
         public void ShowMainWindow() => _mainVM.Show();
@@ -325,12 +321,12 @@ namespace Flow.Launcher
 
         #region Private Methods
 
-        private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
+        private bool KListenerHookedKeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state)
         {
             var continueHook = true;
             foreach (var x in _globalKeyboardHandlers)
             {
-                continueHook &= x((int)keyevent, vkcode, state);
+                continueHook &= x((int)keyEvent, vkCode, state);
             }
 
             return continueHook;

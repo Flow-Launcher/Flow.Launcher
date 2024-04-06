@@ -30,6 +30,7 @@ using MouseButton = System.Windows.Input.MouseButton;
 using RoutedEventArgs = Avalonia.Interactivity.RoutedEventArgs;
 using Thickness = System.Windows.Thickness;
 using Window = Avalonia.Controls.Window;
+using DataObject = System.Windows.DataObject;
 
 namespace Flow.Launcher
 {
@@ -56,7 +57,7 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            // InitializePosition();
+            // InitializePosition();DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
         public MainWindow()
@@ -88,6 +89,19 @@ namespace Flow.Launcher
         //     }
         // }
 
+        private void OnPaste(object sender, DataObjectPastingEventArgs e)
+        {
+            var isText = e.SourceDataObject.GetDataPresent(System.Windows.DataFormats.UnicodeText, true);
+            if (isText)
+            {
+                var text = e.SourceDataObject.GetData(System.Windows.DataFormats.UnicodeText) as string;
+                text = text.Replace(Environment.NewLine, " ");
+                DataObject data = new DataObject();
+                data.SetData(System.Windows.DataFormats.UnicodeText, text);
+                e.DataObject = data;
+            }
+        }
+        
         public async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;

@@ -4,7 +4,7 @@
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro que desea eliminar {0}?</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro de que desea eliminar {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro que desea eliminar permanentemente este archivo?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Está seguro de que desea eliminar permanentemente este/esta archivo/carpeta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminación correcta</system:String>
@@ -100,7 +100,9 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Eliminar del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Elimina elemento actual del acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostrar menú contextual de Windows</system:String>
-    
+    <system:String x:Key="plugin_explorer_openwith">Abrir con</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Seleccione un programa para abrir con</system:String>
+
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Abrir en administrador de archivos predeterminado</system:String>

@@ -106,3 +106,12 @@ alreadyexists
 JsonRPC
 JsonRPCV2
 Softpedia
+img
+ime
+LPWStr
+flowlauncher
+hotkeys
+LPW
+productversion
+requery
+Wnd

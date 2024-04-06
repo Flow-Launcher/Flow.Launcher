@@ -37,6 +37,8 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
+        private Result lastContextMenuResult = new Result();
+        private List<Result> lastContextMenuResults = new List<Result>();
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -253,6 +255,13 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
                 {
+                    var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
+                    // check if result.actionkeywordassigned is empty
+                    if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
+                    {
+                        autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
+                    }
+
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
 
@@ -360,6 +369,17 @@ namespace Flow.Launcher.ViewModel
         public void ToggleGameMode()
         {
             GameModeStatus = !GameModeStatus;
+        }
+        
+        [RelayCommand]
+        public void CopyAlternative()
+        {
+            var result = Results.SelectedItem?.Result?.CopyText;
+
+            if (result != null)
+            {
+                App.API.CopyToClipboard(result, directCopy: false);
+            }
         }
 
         #endregion
@@ -653,9 +673,33 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                var results = PluginManager.GetContextMenusForPlugin(selected);
-                results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected.PluginID));
+                List<Result> results;
+                if (selected == lastContextMenuResult)
+                {
+                    // Use copy to keep the original results unchanged
+                    results = lastContextMenuResults.ConvertAll(result => new Result
+                    {
+                        Title = result.Title,
+                        SubTitle = result.SubTitle,
+                        IcoPath = result.IcoPath,
+                        PluginDirectory = result.PluginDirectory,
+                        Action = result.Action,
+                        ContextData = result.ContextData,
+                        Glyph = result.Glyph,
+                        OriginQuery = result.OriginQuery,
+                        Score = result.Score,
+                        AsyncAction = result.AsyncAction,
+                    });
+                }
+                else
+                {
+                    results = PluginManager.GetContextMenusForPlugin(selected);
+                    lastContextMenuResults = results;
+                    lastContextMenuResult = selected;
+                    results.Add(ContextMenuTopMost(selected));
+                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                }
+
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -861,7 +905,8 @@ namespace Flow.Launcher.ViewModel
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
-            foreach (var shortcut in customShortcuts)
+            // Sorting order is important here, the reason is for matching longest shortcut by default
+            foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
             {
                 if (queryBuilder.Equals(shortcut.Key))
                 {
@@ -1028,6 +1073,8 @@ namespace Flow.Launcher.ViewModel
         {
             // Trick for no delay
             MainWindowOpacity = 0;
+            lastContextMenuResult = new Result();
+            lastContextMenuResults = new List<Result>();
 
             if (!SelectedIsFromQueryResults())
             {

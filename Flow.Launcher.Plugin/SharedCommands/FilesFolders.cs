@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 #pragma warning disable IDE0005
 using System.Windows;
+
 #pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
@@ -15,8 +16,26 @@ namespace Flow.Launcher.Plugin.SharedCommands
         private const string FileExplorerProgramName = "explorer";
 
         /// <summary>
+        /// Checks if <paramref name="subPath"/> is a subpath of <paramref name="basePath"/>
+        /// </summary>
+        /// <param name="subPath"></param>
+        /// <param name="basePath"></param>
+        /// <returns></returns>
+        public static bool IsSubPathOf(this string subPath, string basePath)
+        {
+            var rel = Path.GetRelativePath(
+                basePath.Replace('\\', '/'),
+                subPath.Replace('\\', '/'));
+            return rel != "."
+                   && rel != ".."
+                   && !rel.StartsWith("../")
+                   && !Path.IsPathRooted(rel);
+        }
+
+
+        /// <summary>
         /// Copies the folder and all of its files and folders 
-        /// including subfolders to the target location
+        /// including subFolders to the target location
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
@@ -45,15 +64,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 FileInfo[] files = dir.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    string temppath = Path.Combine(targetPath, file.Name);
-                    file.CopyTo(temppath, false);
+                    string tempPath = Path.Combine(targetPath, file.Name);
+                    file.CopyTo(tempPath, false);
                 }
 
                 // Recursively copy subdirectories by calling itself on each subdirectory until there are no more to copy
-                foreach (DirectoryInfo subdir in dirs)
+                foreach (DirectoryInfo subDir in dirs)
                 {
-                    string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    string tempPath = Path.Combine(targetPath, subDir.Name);
+                    CopyAll(subDir.FullName, tempPath);
                 }
             }
             catch (Exception)
@@ -65,7 +84,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 RemoveFolderIfExists(targetPath);
 #endif
             }
-
         }
 
         /// <summary>
@@ -82,10 +100,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 var fromDir = new DirectoryInfo(fromPath);
                 var toDir = new DirectoryInfo(toPath);
 
-                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length != toDir.GetFiles("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetFiles("*", SearchOption.AllDirectories).Length)
                     return false;
 
-                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length != toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
                     return false;
 
                 return true;
@@ -99,7 +119,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 return false;
 #endif
             }
-
         }
 
         /// <summary>
@@ -151,9 +170,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             var psi = new ProcessStartInfo
             {
-                FileName = FileExplorerProgramName,
-                UseShellExecute = true,
-                Arguments = '"' + fileOrFolderPath + '"'
+                FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"'
             };
             try
             {
@@ -279,7 +296,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                    && !rel.StartsWith(@"..\")
                    && !Path.IsPathRooted(rel);
         }
-        
+
         /// <summary>
         /// Returns path ended with "\"
         /// </summary>

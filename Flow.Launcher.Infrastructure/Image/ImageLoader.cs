@@ -52,7 +52,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
                 {
-                    foreach (var ((path, isFullImage), _) in ImageCache.Data)
+                    foreach (var ((path, isFullImage), _) in usage)
                     {
                         await LoadAsync(path, isFullImage);
                     }
@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             try
             {
-                await _storage.SaveAsync(ImageCache.Data
+                await _storage.SaveAsync(ImageCache.EnumerateEntries()
                     .ToDictionary(
                         x => x.Key,
                         x => x.Value.usage));
@@ -122,9 +122,12 @@ namespace Flow.Launcher.Infrastructure.Image
                     return new ImageResult(MissingImage, ImageType.Error);
                 }
 
-                if (ImageCache.ContainsKey(path, loadFullImage))
+                // extra scope for use of same variable name
                 {
-                    return new ImageResult(ImageCache[path, loadFullImage], ImageType.Cache);
+                    if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
+                    {
+                        return new ImageResult(imageSource, ImageType.Cache);
+                    }
                 }
 
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)

@@ -1,4 +1,4 @@
-version: '1.16.2.{build}'
+version: '1.17.2.{build}'
 
 init:
 - ps: |
@@ -7,12 +7,20 @@ init:
       if ($env:APPVEYOR_REPO_BRANCH -eq "dev")
       {
         $env:prereleaseTag = "{0}.{1}.{2}.{3}" -f $version.Major, $version.Minor, $version.Build, $version.Revision
+        $env:channel = "win-x64-prerelease"
+      } else {
+        $env:channel = "win-x64-stable"
       }
+      dotnet tool update -g vpk
+      $env:APPVEYOR_CACHE_ENTRY_ZIP_ARGS = "-t7z -m0=lzma -mx=9"
+
 - sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
 - net start WSearch
 
-cache:
-  - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
+#cache:
+#  - '%USERPROFILE%\.nuget\packages -> **.sln, **.csproj'  # preserve nuget folder (packages) unless the solution or projects change
+
+skip_branch_with_pr: true
 
 
 assembly_info:
@@ -33,19 +41,19 @@ build:
 test_script:
   - dotnet test --no-build -c Release
 after_test:
-  - ps: .\Scripts\post_build.ps1
+  - ps: .\Scripts\post_build.ps1 -channel $env:channel
 
 artifacts:
 - path: 'Output\Release\Flow.Launcher.Plugin.*.nupkg'
   name: Plugin nupkg
-- path: 'Output\Packages\Flow-Launcher-*.exe'
+- path: 'Releases\FlowLauncher-*.exe'
   name: Squirrel Installer
-- path: Output\Packages\Flow-Launcher-Portable.zip
+- path: 'Release\FlowLauncher-*-Portable.zip'
   name: Portable Version
-- path: 'Output\Packages\FlowLauncher-*-full.nupkg'
+- path: 'Releases\FlowLauncher-*-full.nupkg'
   name: Squirrel nupkg
-- path: 'Output\Packages\RELEASES'
-  name: Squirrel RELEASES
+- path: 'Releases\RELEASES*'
+  name: Velopack RELEASES
 
 deploy:
   - provider: NuGet
