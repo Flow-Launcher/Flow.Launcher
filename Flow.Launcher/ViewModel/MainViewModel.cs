@@ -623,6 +623,12 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowSize = value;
         }
 
+        public WindowStyle MainWindowStyle
+        {
+            get => Settings.WindowStyle;
+            set => Settings.WindowStyle = value;
+        }
+
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;

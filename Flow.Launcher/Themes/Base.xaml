@@ -557,20 +557,12 @@
         x:Key="DefaultFluentWindowStyle"
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="{x:Type uix:FluentWindow}">
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource ApplicationBackgroundColor}" />
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Foreground">
-            <Setter.Value>
-                <SolidColorBrush Color="{DynamicResource TextFillColorPrimary}" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource WindowForeground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Height" Value="600" />
-        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="MinHeight" Value="60" />
         <Setter Property="Width" Value="1100" />
         <Setter Property="MinWidth" Value="460" />
         <Setter Property="Margin" Value="0" />
@@ -584,7 +576,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Window}">
                     <AdornerDecorator>
-                        <uix:ClientAreaBorder>
+                        <uix:ClientAreaBorder
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter x:Name="ContentPresenter" />
                         </uix:ClientAreaBorder>
                     </AdornerDecorator>
@@ -595,6 +590,9 @@
 
     <Style BasedOn="{StaticResource DefaultFluentWindowStyle}" TargetType="{x:Type uix:FluentWindow}" />
 
+    <SolidColorBrush x:Key="WindowBackground" Color="red" />
+    <Color x:Key="ApplicationBackgroundColor">red</Color>
+    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="red" />
     <!--  Style for old version themes  -->
     <Style
         x:Key="PreviewItemTitleStyle"

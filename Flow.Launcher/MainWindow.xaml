@@ -33,7 +33,7 @@
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowBackdropType="Acrylic"
     WindowStartupLocation="Manual"
-    WindowStyle="SingleBorderWindow"
+    WindowStyle="{Binding MainWindowStyle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     mc:Ignorable="d">
     <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
@@ -199,10 +199,7 @@
     <Grid>
         <!--        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">-->
         <!--<Border Background="{DynamicResource ControlOnImageFillColorDefaultBrush}" MouseDown="OnMouseDown">-->
-        <Border MouseDown="OnMouseDown">
-            <Border.Background>
-                <SolidColorBrush Opacity="0.4" Color="Red" />
-            </Border.Background>
+        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
