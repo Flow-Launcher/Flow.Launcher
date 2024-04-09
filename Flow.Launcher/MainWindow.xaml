@@ -197,11 +197,8 @@
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </uix:FluentWindow.InputBindings>
     <Grid MouseDown="OnMouseDown">
-        <!--        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">-->
-        <!--<Border Background="{DynamicResource ControlOnImageFillColorDefaultBrush}" MouseDown="OnMouseDown">-->
-
         <Grid.Background>
-            <SolidColorBrush Opacity="0.8" />
+            <SolidColorBrush Opacity="0.8" Color="{DynamicResource ApplicationBackgroundColor}" />
         </Grid.Background>
 
         <StackPanel Orientation="Vertical">

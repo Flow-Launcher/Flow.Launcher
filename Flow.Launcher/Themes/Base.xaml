@@ -589,10 +589,6 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultFluentWindowStyle}" TargetType="{x:Type uix:FluentWindow}" />
-
-    <SolidColorBrush x:Key="WindowBackground" Color="red" />
-    <Color x:Key="ApplicationBackgroundColor">red</Color>
-    <SolidColorBrush x:Key="ApplicationBackgroundBrush" Color="red" />
     <!--  Style for old version themes  -->
     <Style
         x:Key="PreviewItemTitleStyle"
