@@ -2050,6 +2050,38 @@
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
+
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Search Bar Size" />
+                                            </StackPanel>
+                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Width="Auto"
+                                                    Margin="0,0,8,2"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{DynamicResource Color05B}"
+                                                    Text="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                    TextAlignment="Right" />
+                                                <Slider
+                                                    Name="WindowHeightValue"
+                                                    Width="250"
+                                                    Margin="0,0,18,0"
+                                                    VerticalAlignment="Center"
+                                                    IsMoveToPointEnabled="True"
+                                                    IsSnapToTickEnabled="True"
+                                                    Maximum="80"
+                                                    Minimum="20"
+                                                    TickFrequency="2"
+                                                    Value="{Binding WindowHeightSize, Mode=TwoWay}" />
+                                            </StackPanel>
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe740;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+
                                     <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">

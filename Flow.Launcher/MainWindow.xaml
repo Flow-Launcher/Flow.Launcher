@@ -12,7 +12,7 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    Width="{Binding MainWindowWidth, Mode=OneWay}"
+    Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     uix:ExtendsContentIntoTitleBar="True"
     uix:SizeToContent="Height"
@@ -204,7 +204,7 @@
     </uix:FluentWindow.InputBindings>
     <Grid MouseDown="OnMouseDown">
         <Grid.Background>
-            <SolidColorBrush Opacity="0.8" Color="{DynamicResource ApplicationBackgroundColor}" />
+            <SolidColorBrush Opacity="0.8" Color="{DynamicResource SystemChromeMediumLowColor}" />
         </Grid.Background>
         <StackPanel Orientation="Vertical">
             <Grid>
@@ -212,6 +212,7 @@
                     <Grid>
                         <TextBox
                             x:Name="QueryTextSuggestionBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="False"
                             Style="{DynamicResource QuerySuggestionBoxStyle}">
                             <TextBox.Text>
@@ -224,6 +225,7 @@
                         </TextBox>
                         <TextBox
                             x:Name="QueryTextBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             AllowDrop="True"
                             InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"

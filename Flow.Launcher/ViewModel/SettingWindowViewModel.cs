@@ -47,6 +47,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(WindowWidthSize));
                         break;
+                    case nameof(Settings.WindowHeightSize):
+                        OnPropertyChanged(nameof(WindowHeightSize));
+                        break;
                     case nameof(Settings.UseDate):
                     case nameof(Settings.DateFormat):
                         OnPropertyChanged(nameof(DateText));
@@ -615,6 +618,12 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.WindowSize;
             set => Settings.WindowSize = value;
+        }
+
+        public double WindowHeightSize
+        {
+            get => Settings.WindowHeightSize;
+            set => Settings.WindowHeightSize = value;
         }
 
         public bool UseGlyphIcons

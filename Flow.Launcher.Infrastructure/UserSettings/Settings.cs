@@ -20,6 +20,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ThemeMode { get; set; } = "Modern";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
+        public double WindowHeightSize { get; set; } = 24;
         public WindowStyle WindowStyle { get; set; } = WindowStyle.None;
         public string PreviewHotkey { get; set; } = $"F1";
 

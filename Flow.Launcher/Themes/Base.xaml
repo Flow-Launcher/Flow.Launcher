@@ -32,7 +32,6 @@
         <Setter Property="Margin" Value="16,7,0,7" />
         <Setter Property="Padding" Value="0,4,68,0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
         <Setter Property="CaretBrush" Value="#E3E0E3" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -562,7 +561,7 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Height" Value="600" />
-        <Setter Property="MinHeight" Value="60" />
+        <Setter Property="MinHeight" Value="10" />
         <Setter Property="Width" Value="1100" />
         <Setter Property="MinWidth" Value="460" />
         <Setter Property="Margin" Value="0" />

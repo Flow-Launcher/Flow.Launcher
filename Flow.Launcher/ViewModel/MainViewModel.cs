@@ -71,6 +71,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
                         break;
+                    case nameof(Settings.WindowHeightSize):
+                        OnPropertyChanged(nameof(MainWindowHeight));
+                        break;
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
                         break;
@@ -621,6 +624,12 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.WindowSize;
             set => Settings.WindowSize = value;
+        }
+
+        public double MainWindowHeight
+        {
+            get => Settings.WindowHeightSize;
+            set => Settings.WindowHeightSize = value;
         }
 
         public WindowStyle MainWindowStyle

@@ -17,19 +17,18 @@
         x:Key="QueryBoxStyle"
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0,0,50,0" />
         <Setter Property="Foreground" Value="{m:DynamicColor SystemControlPageTextBaseHighBrush}" />
         <Setter Property="FontSize" Value="18" />
-        <Setter Property="Height" Value="38" />
+
     </Style>
 
     <Style
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Padding" Value="0,4,50,0" />
+        <Setter Property="Padding" Value="0,0,50,0" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Height" Value="38" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="Foreground" Value="{m:DynamicColor SystemControlHighlightBaseMediumLowBrush}" />
     </Style>
@@ -69,7 +68,7 @@
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="{m:DynamicColor SystemControlBackgroundChromeMediumBrush}" />
+        <Setter Property="Fill" Value="{m:DynamicColor PopupButtonAreaBorderColor}" />
         <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="0,0,0,8" />
     </Style>
