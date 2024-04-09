@@ -12,8 +12,7 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
-    MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
+    Width="{Binding MainWindowWidth, Mode=OneWay}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     uix:ExtendsContentIntoTitleBar="True"
     uix:SizeToContent="Height"
@@ -29,12 +28,16 @@
     PreviewKeyDown="OnKeyDown"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
+    SizeChanged="OnSizeChanged"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowBackdropType="Acrylic"
     WindowStartupLocation="Manual"
     WindowStyle="{Binding MainWindowStyle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="2,0" />
+    </WindowChrome.WindowChrome>
     <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />

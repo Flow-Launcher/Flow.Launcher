@@ -731,5 +731,10 @@ namespace Flow.Launcher
                 be.UpdateSource();
             }
         }
+
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _settings.WindowSize = Width;
+        }
     }
 }
