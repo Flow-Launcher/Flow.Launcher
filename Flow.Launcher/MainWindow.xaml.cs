@@ -735,6 +735,7 @@ namespace Flow.Launcher
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             _settings.WindowSize = Width;
+            FlowMainWindow.SizeToContent = SizeToContent.Height;
         }
     }
 }

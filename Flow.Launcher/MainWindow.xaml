@@ -36,7 +36,10 @@
     WindowStyle="{Binding MainWindowStyle, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="2,0" />
+        <WindowChrome
+            CaptionHeight="0"
+            GlassFrameThickness="0"
+            ResizeBorderThickness="2,0" />
     </WindowChrome.WindowChrome>
     <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
