@@ -40,6 +40,7 @@
         TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="BorderBrush" Value="{m:DynamicColor SystemControlBackgroundChromeMediumBrush}" />
+        <Setter Property="Background" Value="{m:DynamicColor SystemControlBackgroundChromeMediumLowBrush}" />
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="UseLayoutRounding" Value="True" />
     </Style>
@@ -73,9 +74,7 @@
         <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="0,0,0,8" />
     </Style>
-    <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
-    </Style>
+    <Style x:Key="HighlightStyle" />
     <Style
         x:Key="ItemTitleSelectedStyle"
         BasedOn="{StaticResource BaseItemTitleSelectedStyle}"
@@ -88,7 +87,7 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#ffffff" />
     </Style>
-    <SolidColorBrush x:Key="ItemSelectedBackgroundColor" Color="{m:DynamicColor ItemSelectedBackgroundColorBrush}" />
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor" Color="{m:DynamicColor SubtleFillColorTertiary}" />
 
     <!--  button style in the middle of the scrollbar  -->
     <Style
@@ -144,7 +143,7 @@
         <Setter Property="Height" Value="25" />
         <Setter Property="FontSize" Value="25" />
     </Style>
-    <CornerRadius x:Key="ItemRadius">4</CornerRadius>
+    <CornerRadius x:Key="ItemRadius">8</CornerRadius>
     <Thickness x:Key="ItemMargin">10 0 10 0</Thickness>
     <Thickness x:Key="ResultMargin">0 0 0 10</Thickness>
     <Style

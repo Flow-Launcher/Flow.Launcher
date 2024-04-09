@@ -39,7 +39,7 @@
         <WindowChrome
             CaptionHeight="0"
             GlassFrameThickness="0"
-            ResizeBorderThickness="2,0" />
+            ResizeBorderThickness="4,0" />
     </WindowChrome.WindowChrome>
     <uix:FluentWindow.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
@@ -206,7 +206,6 @@
         <Grid.Background>
             <SolidColorBrush Opacity="0.8" Color="{DynamicResource ApplicationBackgroundColor}" />
         </Grid.Background>
-
         <StackPanel Orientation="Vertical">
             <Grid>
                 <Border Style="{DynamicResource QueryBoxBgStyle}">

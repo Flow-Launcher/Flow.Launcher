@@ -557,7 +557,7 @@
         x:Key="DefaultFluentWindowStyle"
         BasedOn="{StaticResource {x:Type Window}}"
         TargetType="{x:Type uix:FluentWindow}">
-        <Setter Property="Background" Value="{DynamicResource WindowBackground}" />
+        <Setter Property="Background" Value="{DynamicResource ApplicationBackgroundColor}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowForeground}" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
@@ -589,6 +589,7 @@
     </Style>
 
     <Style BasedOn="{StaticResource DefaultFluentWindowStyle}" TargetType="{x:Type uix:FluentWindow}" />
+    <Color x:Key="ApplicationBackgroundColor">#FF202020</Color>
     <!--  Style for old version themes  -->
     <Style
         x:Key="PreviewItemTitleStyle"

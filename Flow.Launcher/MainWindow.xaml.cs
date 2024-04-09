@@ -31,6 +31,12 @@ using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Threading;
 using Wpf.Ui.Appearance;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Window = System.Windows.Window;
+using Windows.UI.Composition;
+using Wpf.Ui.Controls;
+using MenuItem = System.Windows.Controls.MenuItem;
+using FontIcon = ModernWpf.Controls.FontIcon;
 
 namespace Flow.Launcher
 {
@@ -736,6 +742,13 @@ namespace Flow.Launcher
         {
             _settings.WindowSize = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
+            IntPtr WinHandle = new WindowInteropHelper(this).Handle;
+            /*
+            var backgroundBrush = FlowMainWindow.Resources["ApplicationBackgroundBrush"];
+            backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
+            HwndSource.FromHwnd(WinHandle).CompositionTarget.BackgroundColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
+            WindowBackdrop.RemoveBackdrop(FlowMainWindow);
+            FlowMainWindow.Resources["ApplicationBackgroundColor"] = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);*/
         }
     }
 }
