@@ -39,6 +39,7 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(_settings.ItemHeightSize):
                         OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(MaxHeight));
                         break;
                 }
             };
