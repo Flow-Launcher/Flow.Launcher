@@ -32,9 +32,14 @@ namespace Flow.Launcher.ViewModel
             _settings = settings;
             _settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(_settings.MaxResultsToShow))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(MaxHeight));
+                    case nameof(_settings.MaxResultsToShow):
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
+                    case nameof(_settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        break;
                 }
             };
         }
@@ -43,8 +48,12 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
-
+        public double MaxHeight => MaxResults * _settings.ItemHeightSize!;
+        public double ItemHeightSize
+        {
+            get => _settings.ItemHeightSize;
+            set => _settings.ItemHeightSize = value;
+        }
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }

@@ -77,6 +77,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.QueryBoxFontSize):
                         OnPropertyChanged(nameof(QueryBoxFontSize));
                         break;
+                    case nameof(Settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        break;
                     case nameof(Settings.ResultItemFontSize):
                         OnPropertyChanged(nameof(ResultItemFontSize));
                         break;
@@ -647,6 +650,11 @@ namespace Flow.Launcher.ViewModel
             set => Settings.QueryBoxFontSize = value;
         }
 
+        public double ItemHeightSize
+        {
+            get => Settings.ItemHeightSize;
+            set => Settings.ItemHeightSize = value;
+        }
 
         public double ResultItemFontSize
         {

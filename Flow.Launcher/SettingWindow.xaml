@@ -1877,101 +1877,6 @@
                         </Grid>
                     </TabItem.Header>
                     <DockPanel>
-                        <DockPanel Margin="0" DockPanel.Dock="Top">
-                            <DockPanel.Style>
-                                <Style TargetType="{x:Type DockPanel}">
-                                    <Setter Property="Visibility" Value="Visible" />
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding ElementName=ThemeModeComboBox, Path=SelectedIndex}" Value="1">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </DockPanel.Style>
-                            <Border
-                                Margin="7,12,25,0"
-                                Background="{Binding PreviewBackground}"
-                                CornerRadius="6">
-                                <StackPanel
-                                    Margin="0,30,0,30"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Orientation="Horizontal">
-                                    <Border
-                                        Width="400"
-                                        Margin="0"
-                                        SnapsToDevicePixels="True"
-                                        Style="{DynamicResource WindowBorderStyle}"
-                                        UseLayoutRounding="True">
-                                        <Border Style="{DynamicResource WindowRadius}">
-                                            <Border.Clip>
-                                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                                </MultiBinding>
-                                            </Border.Clip>
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto" />
-                                                    <RowDefinition />
-                                                    <RowDefinition />
-                                                </Grid.RowDefinitions>
-                                                <Border Grid.Row="0">
-                                                    <TextBox
-                                                        x:Name="QueryTextBox"
-                                                        Height="{Binding WindowHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        FontSize="{Binding queryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                        IsHitTestVisible="False"
-                                                        IsReadOnly="True"
-                                                        Style="{DynamicResource QueryBoxStyle}"
-                                                        Text="{DynamicResource hiThere}" />
-                                                </Border>
-                                                <StackPanel
-                                                    x:Name="ClockPanel"
-                                                    IsHitTestVisible="False"
-                                                    Style="{DynamicResource ClockPanel}"
-                                                    Visibility="Visible">
-                                                    <TextBlock
-                                                        x:Name="ClockBox"
-                                                        Style="{DynamicResource ClockBox}"
-                                                        Text="{Binding ClockText}"
-                                                        Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                    <TextBlock
-                                                        x:Name="DateBox"
-                                                        Style="{DynamicResource DateBox}"
-                                                        Text="{Binding DateText}"
-                                                        Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                </StackPanel>
-                                                <Canvas Style="{DynamicResource SearchIconPosition}">
-                                                    <Path
-                                                        Margin="0"
-                                                        Data="{DynamicResource SearchIconImg}"
-                                                        Stretch="Fill"
-                                                        Style="{DynamicResource SearchIconStyle}" />
-                                                </Canvas>
-
-                                                <Border Grid.Row="1" Margin="0,0,0,0">
-                                                    <Rectangle
-                                                        Width="Auto"
-                                                        HorizontalAlignment="Stretch"
-                                                        Style="{DynamicResource SeparatorStyle}"
-                                                        Visibility="Visible" />
-                                                </Border>
-
-                                                <ContentControl Grid.Row="2">
-                                                    <flowlauncher:ResultListBox
-                                                        DataContext="{Binding PreviewResults, Mode=OneTime}"
-                                                        IsHitTestVisible="False"
-                                                        Visibility="Visible" />
-                                                </ContentControl>
-
-                                            </Grid>
-                                        </Border>
-                                    </Border>
-                                </StackPanel>
-                            </Border>
-                        </DockPanel>
                         <ScrollViewer
                             Margin="0,0,0,0"
                             Padding="6,0,24,0"
@@ -1995,7 +1900,302 @@
                                         TextAlignment="left" />
                                 </Border>
 
+                                <Grid Grid.Row="1">
+                                    <Border Background="{Binding PreviewBackground}" CornerRadius="6">
+                                        <DockPanel LastChildFill="True">
+                                            <StackPanel
+                                                Width="Auto"
+                                                Background="Transparent"
+                                                DockPanel.Dock="Right"
+                                                Orientation="Horizontal">
+                                                <ToggleButton
+                                                    x:Name="Editor"
+                                                    Margin="8"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top"
+                                                    Content="Edit"
+                                                    ToolTip="Show details" />
 
+
+                                                <!--  Theme Size Editor  -->
+                                                <Border
+                                                    Padding="0,0,0,0"
+                                                    Background="{DynamicResource Color00B}"
+                                                    BorderBrush="{DynamicResource Color03B}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="0 5 5 0">
+                                                    <Border.Style>
+                                                        <Style TargetType="{x:Type Border}">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="False">
+                                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Border.Style>
+                                                    <ScrollViewer
+                                                        Height="400"
+                                                        ScrollViewer.CanContentScroll="True"
+                                                        VirtualizingStackPanel.IsVirtualizing="True"
+                                                        VirtualizingStackPanel.ScrollUnit="Pixel">
+                                                        <StackPanel>
+                                                            <Slider
+                                                                Name="WindowHeightValue"
+                                                                Width="140"
+                                                                Margin="8"
+                                                                VerticalAlignment="Center"
+                                                                ui:ControlHelper.Header="Search Bar Height"
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="60"
+                                                                Minimum="20"
+                                                                TickFrequency="2"
+                                                                Value="{Binding WindowHeightSize, Mode=TwoWay}" />
+                                                            <Separator
+                                                                Width="Auto"
+                                                                BorderThickness="1"
+                                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                                            <Slider
+                                                                Name="QueryBoxFontSize"
+                                                                Width="140"
+                                                                Margin="8,8,8,0"
+                                                                VerticalAlignment="Center"
+                                                                ui:ControlHelper.Header="Query Box Font"
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                                Minimum="10"
+                                                                TickFrequency="1"
+                                                                Value="{Binding queryBoxFontSize, Mode=TwoWay}" />
+                                                            <ComboBox
+                                                                Width="150"
+                                                                Margin="8,4,8,0"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                IsSynchronizedWithCurrentItem="False"
+                                                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                                                SelectedItem="{Binding SelectedQueryBoxFont}" />
+                                                            <ComboBox
+                                                                Width="150"
+                                                                Margin="8"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
+                                                                SelectedItem="{Binding SelectedQueryBoxFontFaces}">
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                                                            <ItemsControl.ItemTemplate>
+                                                                                <DataTemplate>
+                                                                                    <TextBlock Text="{Binding Value}" />
+                                                                                </DataTemplate>
+                                                                            </ItemsControl.ItemTemplate>
+                                                                        </ItemsControl>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                            <Separator
+                                                                Width="Auto"
+                                                                BorderThickness="1"
+                                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                                            <Slider
+                                                                Name="ItemHeightValue"
+                                                                Width="140"
+                                                                Margin="8,8,8,0"
+                                                                VerticalAlignment="Center"
+                                                                ui:ControlHelper.Header="Item Height"
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="100"
+                                                                Minimum="30"
+                                                                TickFrequency="2"
+                                                                Value="{Binding ItemHeightSize, Mode=TwoWay}" />
+                                                            <Separator
+                                                                Width="Auto"
+                                                                BorderThickness="1"
+                                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                                            <Slider
+                                                                Name="resultItemFontSize"
+                                                                Width="140"
+                                                                Margin="8,8,8,0"
+                                                                VerticalAlignment="Center"
+                                                                ui:ControlHelper.Header="Item Title Font"
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="80"
+                                                                Minimum="10"
+                                                                TickFrequency="1"
+                                                                Value="{Binding resultItemFontSize, Mode=TwoWay}" />
+                                                            <ComboBox
+                                                                Width="140"
+                                                                Margin="8,4,8,0"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                IsSynchronizedWithCurrentItem="False"
+                                                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                                                SelectedItem="{Binding SelectedResultFont}" />
+                                                            <ComboBox
+                                                                Width="140"
+                                                                Margin="8,4,8,8"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
+                                                                SelectedItem="{Binding SelectedResultFontFaces}">
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                                                            <ItemsControl.ItemTemplate>
+                                                                                <DataTemplate>
+                                                                                    <TextBlock Text="{Binding Value}" />
+                                                                                </DataTemplate>
+                                                                            </ItemsControl.ItemTemplate>
+                                                                        </ItemsControl>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                            <Separator
+                                                                Width="Auto"
+                                                                BorderThickness="1"
+                                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                                            <Slider
+                                                                Name="resultSubItemFontSize"
+                                                                Width="140"
+                                                                Margin="8,8,8,0"
+                                                                VerticalAlignment="Center"
+                                                                ui:ControlHelper.Header="Item Subtitle Font"
+                                                                AutoToolTipPlacement="TopLeft"
+                                                                IsMoveToPointEnabled="True"
+                                                                IsSnapToTickEnabled="True"
+                                                                Maximum="80"
+                                                                Minimum="6"
+                                                                TickFrequency="1"
+                                                                Value="{Binding resultSubItemFontSize, Mode=TwoWay}" />
+                                                            <ComboBox
+                                                                Width="140"
+                                                                Margin="8,4,8,0"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                IsSynchronizedWithCurrentItem="False"
+                                                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                                                SelectedItem="{Binding SelectedResultFont}" />
+                                                            <ComboBox
+                                                                Width="140"
+                                                                Margin="8,4,8,8"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Top"
+                                                                ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
+                                                                SelectedItem="{Binding SelectedResultFontFaces}">
+                                                                <ComboBox.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                                                            <ItemsControl.ItemTemplate>
+                                                                                <DataTemplate>
+                                                                                    <TextBlock Text="{Binding Value}" />
+                                                                                </DataTemplate>
+                                                                            </ItemsControl.ItemTemplate>
+                                                                        </ItemsControl>
+                                                                    </DataTemplate>
+                                                                </ComboBox.ItemTemplate>
+                                                            </ComboBox>
+                                                            <Separator
+                                                                Width="Auto"
+                                                                BorderThickness="1"
+                                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                                            <Button
+                                                                Width="140"
+                                                                Margin="8"
+                                                                HorizontalAlignment="Center">
+                                                                Reset
+                                                            </Button>
+
+                                                        </StackPanel>
+                                                    </ScrollViewer>
+                                                </Border>
+
+                                            </StackPanel>
+                                            <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left">
+                                                <Border
+                                                    Width="400"
+                                                    Margin="40,30,0,30"
+                                                    SnapsToDevicePixels="True"
+                                                    Style="{DynamicResource WindowBorderStyle}"
+                                                    UseLayoutRounding="True">
+                                                    <Border Style="{DynamicResource WindowRadius}">
+                                                        <Border.Clip>
+                                                            <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                                                <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                                                <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                                            </MultiBinding>
+                                                        </Border.Clip>
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="Auto" />
+                                                                <RowDefinition />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+                                                            <Border Grid.Row="0">
+                                                                <TextBox
+                                                                    x:Name="QueryTextBox"
+                                                                    Height="{Binding WindowHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                    FontSize="{Binding queryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                                    IsHitTestVisible="False"
+                                                                    IsReadOnly="True"
+                                                                    Style="{DynamicResource QueryBoxStyle}"
+                                                                    Text="{DynamicResource hiThere}" />
+
+                                                            </Border>
+                                                            <StackPanel
+                                                                x:Name="ClockPanel"
+                                                                IsHitTestVisible="False"
+                                                                Style="{DynamicResource ClockPanel}"
+                                                                Visibility="Visible">
+                                                                <TextBlock
+                                                                    x:Name="ClockBox"
+                                                                    Style="{DynamicResource ClockBox}"
+                                                                    Text="{Binding ClockText}"
+                                                                    Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                <TextBlock
+                                                                    x:Name="DateBox"
+                                                                    Style="{DynamicResource DateBox}"
+                                                                    Text="{Binding DateText}"
+                                                                    Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                            </StackPanel>
+                                                            <Canvas Style="{DynamicResource SearchIconPosition}">
+                                                                <Path
+                                                                    Margin="0"
+                                                                    Data="{DynamicResource SearchIconImg}"
+                                                                    Stretch="Fill"
+                                                                    Style="{DynamicResource SearchIconStyle}" />
+                                                            </Canvas>
+
+                                                            <Border Grid.Row="1" Margin="0,0,0,0">
+                                                                <Rectangle
+                                                                    Width="Auto"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    Style="{DynamicResource SeparatorStyle}"
+                                                                    Visibility="Visible" />
+                                                            </Border>
+
+                                                            <ContentControl Grid.Row="2">
+                                                                <flowlauncher:ResultListBox
+                                                                    DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                                    IsHitTestVisible="False"
+                                                                    Visibility="Visible" />
+                                                            </ContentControl>
+
+                                                        </Grid>
+                                                    </Border>
+                                                </Border>
+                                            </StackPanel>
+                                        </DockPanel>
+                                    </Border>
+                                </Grid>
 
                                 <StackPanel Grid.Row="2" VerticalAlignment="Top">
                                     <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
@@ -2055,70 +2255,6 @@
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
-
-                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
-                                        <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Search Bar Size" />
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="Auto"
-                                                    Margin="0,0,8,2"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{DynamicResource Color05B}"
-                                                    Text="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                                                    TextAlignment="Right" />
-                                                <Slider
-                                                    Name="WindowHeightValue"
-                                                    Width="250"
-                                                    Margin="0,0,18,0"
-                                                    VerticalAlignment="Center"
-                                                    IsMoveToPointEnabled="True"
-                                                    IsSnapToTickEnabled="True"
-                                                    Maximum="60"
-                                                    Minimum="20"
-                                                    TickFrequency="2"
-                                                    Value="{Binding WindowHeightSize, Mode=TwoWay}" />
-                                            </StackPanel>
-                                            <TextBlock Style="{StaticResource Glyph}">
-                                                &#xe740;
-                                            </TextBlock>
-                                        </ItemsControl>
-                                    </Border>
-
-                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
-                                        <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Item Height" />
-                                            </StackPanel>
-                                            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                                <TextBlock
-                                                    Width="Auto"
-                                                    Margin="0,0,8,2"
-                                                    VerticalAlignment="Center"
-                                                    Foreground="{DynamicResource Color05B}"
-                                                    Text="{Binding ElementName=ItemHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                                                    TextAlignment="Right" />
-                                                <Slider
-                                                    Name="ItemHeightValue"
-                                                    Width="250"
-                                                    Margin="0,0,18,0"
-                                                    VerticalAlignment="Center"
-                                                    IsMoveToPointEnabled="True"
-                                                    IsSnapToTickEnabled="True"
-                                                    Maximum="100"
-                                                    Minimum="30"
-                                                    TickFrequency="2"
-                                                    Value="{Binding ItemHeightSize, Mode=TwoWay}" />
-                                            </StackPanel>
-                                            <TextBlock Style="{StaticResource Glyph}">
-                                                &#xe740;
-                                            </TextBlock>
-                                        </ItemsControl>
-                                    </Border>
-
-
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="3">
@@ -2273,192 +2409,8 @@
                                                     </TextBlock>
                                                 </ItemsControl>
                                             </Border>
-                                            <Separator
-                                                Width="Auto"
-                                                BorderThickness="1"
-                                                Style="{StaticResource SettingSeparatorStyle}" />
-                                            <Border
-                                                Margin="0"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="{DynamicResource queryBoxFont}" />
-                                                    <StackPanel
-                                                        Grid.Column="2"
-                                                        Margin="0,0,20,0"
-                                                        Orientation="Horizontal">
-                                                        <Slider
-                                                            Name="QueryBoxFontSize"
-                                                            Width="100"
-                                                            Margin="0,0,0,0"
-                                                            VerticalAlignment="Center"
-                                                            AutoToolTipPlacement="TopLeft"
-                                                            IsMoveToPointEnabled="True"
-                                                            IsSnapToTickEnabled="True"
-                                                            Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                                                            Minimum="10"
-                                                            TickFrequency="1"
-                                                            Value="{Binding queryBoxFontSize, Mode=TwoWay}" />
-                                                        <ComboBox
-                                                            Width="180"
-                                                            Margin="10,0,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            IsSynchronizedWithCurrentItem="False"
-                                                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFont}" />
-                                                        <ComboBox
-                                                            Width="130"
-                                                            Margin="10,0,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
-                                                            SelectedItem="{Binding SelectedQueryBoxFontFaces}">
-                                                            <ComboBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
-                                                                        <ItemsControl.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <TextBlock Text="{Binding Value}" />
-                                                                            </DataTemplate>
-                                                                        </ItemsControl.ItemTemplate>
-                                                                    </ItemsControl>
-                                                                </DataTemplate>
-                                                            </ComboBox.ItemTemplate>
-                                                        </ComboBox>
-                                                    </StackPanel>
-                                                    <TextBlock Style="{StaticResource Glyph}">
-                                                        &#xe990;
-                                                    </TextBlock>
-                                                </ItemsControl>
-                                            </Border>
-                                            <Separator
-                                                Width="Auto"
-                                                BorderThickness="1"
-                                                Style="{StaticResource SettingSeparatorStyle}" />
-                                            <Border
-                                                Margin="0"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="{DynamicResource resultItemFont}" />
-                                                    <StackPanel
-                                                        Grid.Column="2"
-                                                        Margin="0,0,20,0"
-                                                        Orientation="Horizontal">
-                                                        <Slider
-                                                            Name="resultItemFontSize"
-                                                            Width="100"
-                                                            Margin="0,0,0,0"
-                                                            VerticalAlignment="Center"
-                                                            AutoToolTipPlacement="TopLeft"
-                                                            IsMoveToPointEnabled="True"
-                                                            IsSnapToTickEnabled="True"
-                                                            Maximum="80"
-                                                            Minimum="10"
-                                                            TickFrequency="1"
-                                                            Value="{Binding resultItemFontSize, Mode=TwoWay}" />
-                                                        <ComboBox
-                                                            Width="180"
-                                                            Margin="10,-2,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            IsSynchronizedWithCurrentItem="False"
-                                                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}" />
-                                                        <ComboBox
-                                                            Width="130"
-                                                            Margin="10,-2,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
-                                                            SelectedItem="{Binding SelectedResultFontFaces}">
-                                                            <ComboBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
-                                                                        <ItemsControl.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <TextBlock Text="{Binding Value}" />
-                                                                            </DataTemplate>
-                                                                        </ItemsControl.ItemTemplate>
-                                                                    </ItemsControl>
-                                                                </DataTemplate>
-                                                            </ComboBox.ItemTemplate>
-                                                        </ComboBox>
-                                                    </StackPanel>
-                                                    <TextBlock Style="{StaticResource Glyph}">
-                                                        &#xe8fd;
-                                                    </TextBlock>
-                                                </ItemsControl>
-                                            </Border>
-                                            <Border
-                                                Margin="0"
-                                                BorderThickness="0"
-                                                Style="{DynamicResource SettingGroupBox}">
-                                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                                    <TextBlock
-                                                        Grid.Column="1"
-                                                        VerticalAlignment="Center"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="{DynamicResource resultSubItemFont}" />
-                                                    <StackPanel
-                                                        Grid.Column="2"
-                                                        Margin="0,0,20,0"
-                                                        Orientation="Horizontal">
-                                                        <Slider
-                                                            Name="resultSubItemFontSize"
-                                                            Width="100"
-                                                            Margin="0,0,0,0"
-                                                            VerticalAlignment="Center"
-                                                            AutoToolTipPlacement="TopLeft"
-                                                            IsMoveToPointEnabled="True"
-                                                            IsSnapToTickEnabled="True"
-                                                            Maximum="80"
-                                                            Minimum="6"
-                                                            TickFrequency="1"
-                                                            Value="{Binding resultSubItemFontSize, Mode=TwoWay}" />
-                                                        <ComboBox
-                                                            Width="180"
-                                                            Margin="10,-2,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            IsSynchronizedWithCurrentItem="False"
-                                                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                                                            SelectedItem="{Binding SelectedResultFont}" />
-                                                        <ComboBox
-                                                            Width="130"
-                                                            Margin="10,-2,0,0"
-                                                            HorizontalAlignment="Left"
-                                                            VerticalAlignment="Top"
-                                                            ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
-                                                            SelectedItem="{Binding SelectedResultFontFaces}">
-                                                            <ComboBox.ItemTemplate>
-                                                                <DataTemplate>
-                                                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
-                                                                        <ItemsControl.ItemTemplate>
-                                                                            <DataTemplate>
-                                                                                <TextBlock Text="{Binding Value}" />
-                                                                            </DataTemplate>
-                                                                        </ItemsControl.ItemTemplate>
-                                                                    </ItemsControl>
-                                                                </DataTemplate>
-                                                            </ComboBox.ItemTemplate>
-                                                        </ComboBox>
-                                                    </StackPanel>
-                                                    <TextBlock Style="{StaticResource Glyph}">
-                                                        &#xe8fd;
-                                                    </TextBlock>
-                                                </ItemsControl>
-                                            </Border>
                                         </StackPanel>
+
                                     </Border>
 
                                     <StackPanel>
