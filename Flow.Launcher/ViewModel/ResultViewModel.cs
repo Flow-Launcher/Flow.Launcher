@@ -21,6 +21,19 @@ namespace Flow.Launcher.ViewModel
         {
             Settings = settings;
 
+            Settings.PropertyChanged += (_, args) =>
+            {
+                switch (args.PropertyName)
+                {
+                    case nameof(Settings.ResultItemFontSize):
+                        OnPropertyChanged(nameof(ResultItemFontSize));
+                        break;
+                    case nameof(Settings.ResultSubItemFontSize):
+                        OnPropertyChanged(nameof(ResultSubItemFontSize));
+                        break;
+                }
+            };
+
             if (result == null)
             {
                 return;
@@ -118,7 +131,17 @@ namespace Flow.Launcher.ViewModel
             }
 
         }
+        public double ResultItemFontSize
+        {
+            get => Settings.ResultItemFontSize;
+            set => Settings.ResultItemFontSize = value;
+        }
 
+        public double ResultSubItemFontSize
+        {
+            get => Settings.ResultSubItemFontSize;
+            set => Settings.ResultSubItemFontSize = value;
+        }
         public Visibility ShowGlyph
         {
             get

@@ -626,6 +626,23 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowHeightSize = value;
         }
 
+        public double queryBoxFontSize
+        {
+            get => Settings.QueryBoxFontSize;
+            set => Settings.QueryBoxFontSize = value;
+        }
+        public double resultItemFontSize
+        {
+            get => Settings.ResultItemFontSize;
+            set => Settings.ResultItemFontSize = value;
+        }
+
+        public double resultSubItemFontSize
+        {
+            get => Settings.ResultSubItemFontSize;
+            set => Settings.ResultSubItemFontSize = value;
+        }
+
         public bool UseGlyphIcons
         {
             get => Settings.UseGlyphIcons;
@@ -643,7 +660,6 @@ namespace Flow.Launcher.ViewModel
             public string Display { get; set; }
             public AnimationSpeeds Value { get; set; }
         }
-
         public List<AnimationSpeed> AnimationSpeeds
         {
             get

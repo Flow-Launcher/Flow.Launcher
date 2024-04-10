@@ -74,6 +74,15 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.WindowHeightSize):
                         OnPropertyChanged(nameof(MainWindowHeight));
                         break;
+                    case nameof(Settings.QueryBoxFontSize):
+                        OnPropertyChanged(nameof(QueryBoxFontSize));
+                        break;
+                    case nameof(Settings.ResultItemFontSize):
+                        OnPropertyChanged(nameof(ResultItemFontSize));
+                        break;
+                    case nameof(Settings.ResultSubItemFontSize):
+                        OnPropertyChanged(nameof(ResultSubItemFontSize));
+                        break;
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
                         break;
@@ -630,6 +639,25 @@ namespace Flow.Launcher.ViewModel
         {
             get => Settings.WindowHeightSize;
             set => Settings.WindowHeightSize = value;
+        }
+
+        public double QueryBoxFontSize
+        {
+            get => Settings.QueryBoxFontSize;
+            set => Settings.QueryBoxFontSize = value;
+        }
+
+
+        public double ResultItemFontSize
+        {
+            get => Settings.ResultItemFontSize;
+            set => Settings.ResultItemFontSize = value;
+        }
+
+        public double ResultSubItemFontSize
+        {
+            get => Settings.ResultSubItemFontSize;
+            set => Settings.ResultSubItemFontSize = value;
         }
 
         public WindowStyle MainWindowStyle

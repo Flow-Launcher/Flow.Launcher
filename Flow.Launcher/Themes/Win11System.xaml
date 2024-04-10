@@ -73,7 +73,7 @@
         <Setter Property="Margin" Value="0,0,0,8" />
     </Style>
     <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.FontWeight" Value="Bold" />
+        <Setter Property="Inline.FontWeight" Value="SemiBold" />
     </Style>
     <Style
         x:Key="ItemTitleSelectedStyle"

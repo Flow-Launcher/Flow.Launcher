@@ -20,7 +20,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ThemeMode { get; set; } = "Modern";
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
-        public double WindowHeightSize { get; set; } = 24;
         public WindowStyle WindowStyle { get; set; } = WindowStyle.None;
         public string PreviewHotkey { get; set; } = $"F1";
 
@@ -46,6 +45,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = false;
+
+        /* Appearance Settings. It should be separated from the setting later.*/
+        public double WindowHeightSize { get; set; } = 40;
+        public double QueryBoxFontSize { get; set; } = 18;
+        public double ResultItemFontSize { get; set; } = 16;
+        public double ResultSubItemFontSize { get; set; } = 13;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -54,6 +59,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
+
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;

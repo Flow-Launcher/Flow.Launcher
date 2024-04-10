@@ -2071,7 +2071,7 @@
                                                     VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
-                                                    Maximum="80"
+                                                    Maximum="60"
                                                     Minimum="20"
                                                     TickFrequency="2"
                                                     Value="{Binding WindowHeightSize, Mode=TwoWay}" />
@@ -2082,7 +2082,7 @@
                                         </ItemsControl>
                                     </Border>
 
-                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                    <!--<Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
                                                 <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
@@ -2112,7 +2112,7 @@
                                                 &#xe740;
                                             </TextBlock>
                                         </ItemsControl>
-                                    </Border>
+                                    </Border>-->
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="3">
@@ -2285,9 +2285,21 @@
                                                         Grid.Column="2"
                                                         Margin="0,0,20,0"
                                                         Orientation="Horizontal">
+                                                        <Slider
+                                                            Name="QueryBoxFontSize"
+                                                            Width="100"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            AutoToolTipPlacement="TopLeft"
+                                                            IsMoveToPointEnabled="True"
+                                                            IsSnapToTickEnabled="True"
+                                                            Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                            Minimum="10"
+                                                            TickFrequency="1"
+                                                            Value="{Binding queryBoxFontSize, Mode=TwoWay}" />
                                                         <ComboBox
                                                             Width="180"
-                                                            Margin="20,0,0,0"
+                                                            Margin="10,0,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             IsSynchronizedWithCurrentItem="False"
@@ -2336,9 +2348,80 @@
                                                         Grid.Column="2"
                                                         Margin="0,0,20,0"
                                                         Orientation="Horizontal">
+                                                        <Slider
+                                                            Name="resultItemFontSize"
+                                                            Width="100"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            AutoToolTipPlacement="TopLeft"
+                                                            IsMoveToPointEnabled="True"
+                                                            IsSnapToTickEnabled="True"
+                                                            Maximum="80"
+                                                            Minimum="10"
+                                                            TickFrequency="1"
+                                                            Value="{Binding resultItemFontSize, Mode=TwoWay}" />
                                                         <ComboBox
                                                             Width="180"
-                                                            Margin="20,-2,0,0"
+                                                            Margin="10,-2,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Top"
+                                                            IsSynchronizedWithCurrentItem="False"
+                                                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                                            SelectedItem="{Binding SelectedResultFont}" />
+                                                        <ComboBox
+                                                            Width="130"
+                                                            Margin="10,-2,0,0"
+                                                            HorizontalAlignment="Left"
+                                                            VerticalAlignment="Top"
+                                                            ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
+                                                            SelectedItem="{Binding SelectedResultFontFaces}">
+                                                            <ComboBox.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                                                        <ItemsControl.ItemTemplate>
+                                                                            <DataTemplate>
+                                                                                <TextBlock Text="{Binding Value}" />
+                                                                            </DataTemplate>
+                                                                        </ItemsControl.ItemTemplate>
+                                                                    </ItemsControl>
+                                                                </DataTemplate>
+                                                            </ComboBox.ItemTemplate>
+                                                        </ComboBox>
+                                                    </StackPanel>
+                                                    <TextBlock Style="{StaticResource Glyph}">
+                                                        &#xe8fd;
+                                                    </TextBlock>
+                                                </ItemsControl>
+                                            </Border>
+                                            <Border
+                                                Margin="0"
+                                                BorderThickness="0"
+                                                Style="{DynamicResource SettingGroupBox}">
+                                                <ItemsControl Style="{StaticResource SettingGrid}">
+                                                    <TextBlock
+                                                        Grid.Column="1"
+                                                        VerticalAlignment="Center"
+                                                        Style="{DynamicResource SettingTitleLabel}"
+                                                        Text="{DynamicResource resultSubItemFont}" />
+                                                    <StackPanel
+                                                        Grid.Column="2"
+                                                        Margin="0,0,20,0"
+                                                        Orientation="Horizontal">
+                                                        <Slider
+                                                            Name="resultSubItemFontSize"
+                                                            Width="100"
+                                                            Margin="0,0,0,0"
+                                                            VerticalAlignment="Center"
+                                                            AutoToolTipPlacement="TopLeft"
+                                                            IsMoveToPointEnabled="True"
+                                                            IsSnapToTickEnabled="True"
+                                                            Maximum="80"
+                                                            Minimum="10"
+                                                            TickFrequency="1"
+                                                            Value="{Binding resultSubItemFontSize, Mode=TwoWay}" />
+                                                        <ComboBox
+                                                            Width="180"
+                                                            Margin="10,-2,0,0"
                                                             HorizontalAlignment="Left"
                                                             VerticalAlignment="Top"
                                                             IsSynchronizedWithCurrentItem="False"

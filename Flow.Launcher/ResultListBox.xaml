@@ -175,6 +175,7 @@
                                 Grid.Row="0"
                                 VerticalAlignment="Center"
                                 DockPanel.Dock="Left"
+                                FontSize="{Binding ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
@@ -191,6 +192,7 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
+                                FontSize="{Binding ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
