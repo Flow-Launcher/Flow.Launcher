@@ -48,6 +48,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 40;
+        public double ItemHeightSize { get; set; } = 58;
         public double QueryBoxFontSize { get; set; } = 18;
         public double ResultItemFontSize { get; set; } = 16;
         public double ResultSubItemFontSize { get; set; } = 13;

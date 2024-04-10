@@ -25,6 +25,9 @@ namespace Flow.Launcher.ViewModel
             {
                 switch (args.PropertyName)
                 {
+                    case nameof(Settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        break;
                     case nameof(Settings.ResultItemFontSize):
                         OnPropertyChanged(nameof(ResultItemFontSize));
                         break;
@@ -131,6 +134,13 @@ namespace Flow.Launcher.ViewModel
             }
 
         }
+
+        public double ItemHeightSize
+        {
+            get => Settings.ItemHeightSize;
+            set => Settings.ItemHeightSize = value;
+        }
+
         public double ResultItemFontSize
         {
             get => Settings.ResultItemFontSize;

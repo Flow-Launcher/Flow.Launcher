@@ -1898,7 +1898,7 @@
                                     VerticalAlignment="Center"
                                     Orientation="Horizontal">
                                     <Border
-                                        Width="{Binding WindowWidthSize}"
+                                        Width="400"
                                         Margin="0"
                                         SnapsToDevicePixels="True"
                                         Style="{DynamicResource WindowBorderStyle}"
@@ -2087,11 +2087,10 @@
                                         </ItemsControl>
                                     </Border>
 
-                                    <!--<Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource windowWidthSize}" />
-                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource windowWidthSizeToolTip}" />
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Item Height" />
                                             </StackPanel>
                                             <StackPanel Grid.Column="2" Orientation="Horizontal">
                                                 <TextBlock
@@ -2099,25 +2098,27 @@
                                                     Margin="0,0,8,2"
                                                     VerticalAlignment="Center"
                                                     Foreground="{DynamicResource Color05B}"
-                                                    Text="{Binding ElementName=WindowWidthValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                                    Text="{Binding ElementName=ItemHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                                                     TextAlignment="Right" />
                                                 <Slider
-                                                    Name="WindowWidthValue"
+                                                    Name="ItemHeightValue"
                                                     Width="250"
                                                     Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     IsMoveToPointEnabled="True"
                                                     IsSnapToTickEnabled="True"
-                                                    Maximum="1920"
-                                                    Minimum="400"
-                                                    TickFrequency="10"
-                                                    Value="{Binding WindowWidthSize, Mode=TwoWay}" />
+                                                    Maximum="100"
+                                                    Minimum="30"
+                                                    TickFrequency="2"
+                                                    Value="{Binding ItemHeightSize, Mode=TwoWay}" />
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe740;
                                             </TextBlock>
                                         </ItemsControl>
-                                    </Border>-->
+                                    </Border>
+
+
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="3">
@@ -2421,7 +2422,7 @@
                                                             IsMoveToPointEnabled="True"
                                                             IsSnapToTickEnabled="True"
                                                             Maximum="80"
-                                                            Minimum="10"
+                                                            Minimum="6"
                                                             TickFrequency="1"
                                                             Value="{Binding resultSubItemFontSize, Mode=TwoWay}" />
                                                         <ComboBox

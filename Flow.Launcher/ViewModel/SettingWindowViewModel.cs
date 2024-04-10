@@ -626,6 +626,12 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowHeightSize = value;
         }
 
+        public double ItemHeightSize
+        {
+            get => Settings.ItemHeightSize;
+            set => Settings.ItemHeightSize = value;
+        }
+
         public double queryBoxFontSize
         {
             get => Settings.QueryBoxFontSize;
