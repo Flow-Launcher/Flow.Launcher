@@ -37,6 +37,7 @@ using Windows.UI.Composition;
 using Wpf.Ui.Controls;
 using MenuItem = System.Windows.Controls.MenuItem;
 using FontIcon = ModernWpf.Controls.FontIcon;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -71,8 +72,19 @@ namespace Flow.Launcher
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
+            this.Loaded += (obj, args) =>
+            {
+                var handle = new WindowInteropHelper(this).Handle;
+                var win = HwndSource.FromHwnd(handle);
+                win.AddHook(new HwndSourceHook(WndProc));
+            };
         }
 
+        DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = new TimeSpan(0, 0, 0, 0, 500),
+            IsEnabled = false
+        };
         public MainWindow()
         {
             InitializeComponent();
@@ -740,15 +752,59 @@ namespace Flow.Launcher
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            _settings.WindowSize = Width;
-            FlowMainWindow.SizeToContent = SizeToContent.Height;
-            IntPtr WinHandle = new WindowInteropHelper(this).Handle;
+            /*_settings.WindowSize = Width;*/
+            /*_settings.MaxResultsToShow = System.Convert.ToInt32(Height / _settings.ItemHeightSize);*/
+
+            /*FlowMainWindow.SizeToContent = SizeToContent.Height;*/
+            /*IntPtr WinHandle = new WindowInteropHelper(this).Handle;*/
             /*
             var backgroundBrush = FlowMainWindow.Resources["ApplicationBackgroundBrush"];
             backgroundBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x20, 0x20, 0x20));
             HwndSource.FromHwnd(WinHandle).CompositionTarget.BackgroundColor = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);
             WindowBackdrop.RemoveBackdrop(FlowMainWindow);
             FlowMainWindow.Resources["ApplicationBackgroundColor"] = Color.FromArgb(0xFF, 0x00, 0x00, 0x00);*/
+        }
+
+        private const int WM_ENTERSIZEMOVE = 0x0231;
+        private const int WM_EXITSIZEMOVE = 0x0232;
+        public event EventHandler ResizeBegin;
+        public event EventHandler ResizeEnd;
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_ENTERSIZEMOVE)
+            {
+                OnResizeBegin();
+                handled = true;
+            }
+            if (msg == WM_EXITSIZEMOVE)
+            {
+                OnResizeEnd();
+                handled = true;
+            }
+            return IntPtr.Zero;
+        }
+        private void OnResizeBegin()
+        {
+            Debug.WriteLine("------------------RESIZE BEGIN-----------------------");
+            //Any custom logic for resize begin
+        }
+        private void OnResizeEnd()
+        {
+            Debug.WriteLine("------------------END-----------------------");
+            Debug.WriteLine(System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14)) / _settings.ItemHeightSize));
+            Debug.WriteLine("----------------------------------------------------");
+            //_settings.MaxResultsToShow = System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14)) / _settings.ItemHeightSize);
+            if (System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14)) / _settings.ItemHeightSize) == 0)
+            {
+                _settings.MaxResultsToShow = 1;
+            }
+            else
+            {
+                _settings.MaxResultsToShow = System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14)) / _settings.ItemHeightSize);
+            }
+            _settings.WindowSize = Width;
+            FlowMainWindow.SizeToContent = SizeToContent.Height;
+            //Any custom logic for resize begin
         }
     }
 }
