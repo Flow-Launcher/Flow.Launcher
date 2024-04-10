@@ -775,18 +775,6 @@ namespace Flow.Launcher.ViewModel
                         Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
                         SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
                         IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png")
-                    },
-                    new Result
-                    {
-                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
-                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
-                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png")
-                    },
-                    new Result
-                    {
-                        Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
-                        SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
-                        IcoPath = Path.Combine(Constant.ProgramDirectory, @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png")
                     }
                 };
                 var vm = new ResultsViewModel(Settings);
