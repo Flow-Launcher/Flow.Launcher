@@ -293,10 +293,8 @@ public static class SingleInstance<TApplication>
             {
                 try
                 {
-                    using (TextReader reader = new StreamReader(cmdLinePath, Encoding.Unicode))
-                    {
-                        args = NativeMethods.CommandLineToArgvW(reader.ReadToEnd());
-                    }
+                    using TextReader reader = new StreamReader(cmdLinePath, Encoding.Unicode);
+                    args = NativeMethods.CommandLineToArgvW(reader.ReadToEnd());
 
                     File.Delete(cmdLinePath);
                 }
