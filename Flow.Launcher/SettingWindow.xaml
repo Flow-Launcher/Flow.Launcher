@@ -2649,6 +2649,7 @@
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
+                                                DefaultHotkey="Alt + Space"
                                                 Action="OnToggleHotkey"
                                                 Hotkey="{Binding Settings.Hotkey}" />
 
@@ -2673,6 +2674,7 @@
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
+                                                DefaultHotkey="F1"
                                                 Hotkey="{Binding Settings.PreviewHotkey}"
                                                 ValidateKeyGesture="True" />
                                             <TextBlock Style="{StaticResource Glyph}">

@@ -39,8 +39,7 @@
         </Popup>
 
         <ToggleButton
-            x:Name="HotkeyBtn"
-            Click="OnButtonClicked"
+            IsChecked="{Binding IsEditingHotkey, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}">
@@ -60,9 +59,9 @@
                             BorderThickness="1"
                             CornerRadius="5">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Reset" />
-                                <Button Content="Delete" />
-                                <Button Content="Stop Rec" />
+                                <Button Content="Reset" Click="OnResetToDefaultClicked" />
+                                <Button Content="Delete" Click="OnDeleteClicked" />
+                                <Button Content="Stop Rec" Click="OnStopRecordingClicked" />
                             </StackPanel>
                         </Border>
 

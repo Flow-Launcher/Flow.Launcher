@@ -36,7 +36,18 @@ namespace Flow.Launcher
             }
         }
 
+        public string DefaultHotkey { get; set; }
+
         public string[] KeysToDisplay => Hotkey.Split(" + ");
+
+        private bool _isEditingHotkey = false;
+        public bool IsEditingHotkey {
+            get => _isEditingHotkey;
+            set {
+                _isEditingHotkey = value;
+                OnPropertyChanged();
+            }
+        }
 
         #nullable enable
         public EventHandler<HotkeyEventArgs>? Action { get; set; }
@@ -202,9 +213,26 @@ namespace Flow.Launcher
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void OnButtonClicked(object sender, RoutedEventArgs e)
+        private void OnStopRecordingClicked(object sender, RoutedEventArgs e)
         {
-            // TODO
+            IsEditingHotkey = false;
+        }
+
+        private void OnResetToDefaultClicked(object sender, RoutedEventArgs e)
+        {
+            IsEditingHotkey = false;
+            if (!string.IsNullOrEmpty(Hotkey))
+                HotKeyMapper.RemoveHotkey(Hotkey);
+            Hotkey = DefaultHotkey;
+            HotKeyMapper.SetHotkey(new HotkeyModel(Hotkey), Action);
+        }
+
+        private void OnDeleteClicked(object sender, RoutedEventArgs e)
+        {
+            IsEditingHotkey = false;
+            if (!string.IsNullOrEmpty(Hotkey))
+                HotKeyMapper.RemoveHotkey(Hotkey);
+            Hotkey = "";
         }
     }
 }
