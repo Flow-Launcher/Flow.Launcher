@@ -9,6 +9,10 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using System.Threading;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.ViewModel;
+using System.Collections.Generic;
+using YamlDotNet.Core;
 
 namespace Flow.Launcher
 {
@@ -24,11 +28,43 @@ namespace Flow.Launcher
         /// </summary>
         public bool ValidateKeyGesture { get; set; } = false;
 
-        protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
+        public string? HotkeyTarget
+        {
+            get { return (string)GetValue(TitleValueProperty); }
+            set { SetValue(TitleValueProperty, value); }
+        }
 
+        List<string> hotkeys = new List<string>();
+
+        public static readonly DependencyProperty TitleValueProperty =
+          DependencyProperty.Register("HotkeyTarget", typeof(string), typeof(HotkeyControl), new PropertyMetadata(string.Empty));
+
+        protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
         public HotkeyControl()
         {
             InitializeComponent();
+
+            Loaded += OnLoaded;
+        }
+
+
+        public string[] SplitKey2
+        {
+            get { return GetValue(TitleValueProperty).ToString().Split('+'); }
+        }
+        //public string[] SplitKey { get; set;}
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            string removeBlank = HotkeyTarget.Replace(" ", "");
+            string[] splitKeys = removeBlank.Split('+');
+            System.Diagnostics.Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~");
+            for (int i = 0; i < splitKeys.Length; i++)
+            {
+                System.Diagnostics.Debug.WriteLine($"Index {i}: <{splitKeys[i]}>");
+            }
+
+            HotkeyBtn.Content = HotkeyTarget;
         }
 
         private CancellationTokenSource hotkeyUpdateSource;

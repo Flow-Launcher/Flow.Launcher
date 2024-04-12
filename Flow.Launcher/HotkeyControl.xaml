@@ -5,14 +5,71 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Height="24"
-    d:DesignHeight="300"
-    d:DesignWidth="300"
+    x:Name="CustomHotkeyControl"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-        </Grid.ColumnDefinitions>
+        <Button x:Name="HotkeyBtn" Content="{Binding Path=HotkeyTarget, ElementName=CustomHotkeyControl}">
+            <Button.Style>
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{DynamicResource ButtonInsideBorder}"
+                                    BorderThickness="1"
+                                    CornerRadius="5">
+                                    <ItemsControl x:Name="BtnList" ItemsSource="{Binding items}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border
+                                                    Margin="6"
+                                                    Padding="10,5,10,5"
+                                                    Background="{DynamicResource SystemAccentColorLight2Brush}"
+                                                    BorderThickness="1"
+                                                    CornerRadius="5">
+                                                    <ContentPresenter
+                                                        x:Name="ContentPresenter"
+                                                        Focusable="False"
+                                                        RecognizesAccessKey="True"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                        <ItemsControl.ItemContainerStyle>
+                                            <Style TargetType="ContentPresenter" />
+                                        </ItemsControl.ItemContainerStyle>
+                                    </ItemsControl>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FontSize" Value="13" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Background" Value="{DynamicResource Color12B}" />
+                    <Setter Property="Foreground" Value="{DynamicResource Color01B}" />
+                    <Setter Property="BorderBrush" Value="{DynamicResource ButtonOutBorder}" />
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource CustomContextHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter Property="BorderThickness" Value="{DynamicResource PressedCustomButtonOutBorderThickness}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource ButtonInsideMouseOverBorder}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </Button.Style>
+        </Button>
+
+
         <Popup
             x:Name="popup"
             AllowDrop="True"
@@ -51,6 +108,7 @@
             GotFocus="tbHotkey_GotFocus"
             LostFocus="tbHotkey_LostFocus"
             PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
-            TabIndex="100" />
+            TabIndex="100"
+            Visibility="Collapsed" />
     </Grid>
 </UserControl>

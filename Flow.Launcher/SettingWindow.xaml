@@ -693,7 +693,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border 
+                            <Border
                                 Margin="0,30,0,0"
                                 Padding="0"
                                 Style="{DynamicResource SettingGroupBox}">
@@ -720,7 +720,7 @@
                                                 <ComboBox
                                                     x:Name="SelectScreen"
                                                     MinWidth="160"
-                                                    Margin="0,0,18,0" 
+                                                    Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     ItemsSource="{Binding ScreenNumbers}"
@@ -738,14 +738,12 @@
                                                 </ComboBox>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
 
-                                    <Separator
-                                        Width="Auto"
-                                        BorderThickness="1">
+                                    <Separator Width="Auto" BorderThickness="1">
                                         <Separator.Style>
                                             <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -758,9 +756,7 @@
                                         </Separator.Style>
                                     </Separator>
 
-                                    <Border
-                                        Margin="0"
-                                        BorderThickness="0">
+                                    <Border Margin="0" BorderThickness="0">
                                         <Border.Style>
                                             <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -786,8 +782,7 @@
                                                     FontSize="14"
                                                     ItemsSource="{Binding SearchWindowAligns}"
                                                     SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                    SelectedValuePath="Value">
-                                                </ComboBox>
+                                                    SelectedValuePath="Value" />
                                                 <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                     <StackPanel.Style>
                                                         <Style TargetType="StackPanel">
@@ -817,7 +812,7 @@
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
@@ -2446,8 +2441,7 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding AnimationSpeeds}"
                                                                 SelectedValue="{Binding Settings.AnimationSpeed}"
-                                                                SelectedValuePath="Value">
-                                                            </ComboBox>
+                                                                SelectedValuePath="Value" />
                                                             <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                                 <StackPanel.Style>
                                                                     <Style TargetType="StackPanel">
@@ -2543,7 +2537,7 @@
                                                                 TickFrequency="1"
                                                                 Value="{Binding SoundEffectVolume, Mode=TwoWay}" />
                                                         </StackPanel>
-                                                        <TextBlock Style="{StaticResource Glyph}"> 
+                                                        <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
                                                     </ItemsControl>
@@ -2652,15 +2646,13 @@
                                                 x:Name="HotkeyControl"
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Width="300"
-                                                Height="35"
-                                                Margin="0,0,0,0"
+                                                Margin="0,0,14,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
                                                 GotFocus="OnHotkeyControlFocused"
+                                                HotkeyTarget="{Binding Settings.Hotkey}"
                                                 Loaded="OnHotkeyControlLoaded"
                                                 LostFocus="OnHotkeyControlFocusLost" />
-
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
                                             </TextBlock>
@@ -2679,9 +2671,7 @@
                                                 x:Name="PreviewHotkeyControl"
                                                 Grid.Row="0"
                                                 Grid.Column="2"
-                                                Width="300"
-                                                Height="35"
-                                                Margin="0,0,0,0"
+                                                Margin="0,0,14,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
                                                 Loaded="OnPreviewHotkeyControlLoaded"
