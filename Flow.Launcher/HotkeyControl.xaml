@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     d:DesignWidth="300"
     mc:Ignorable="d"
@@ -59,15 +60,31 @@
                         <Border
                             x:Name="MenuBorder"
                             Grid.Column="0"
+                            Margin="0,0,5,0"
                             Padding="5,0,5,0"
                             Background="{DynamicResource Color12B}"
                             BorderBrush="{DynamicResource ButtonInsideBorder}"
                             BorderThickness="1"
                             CornerRadius="5">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Reset" Command="{Binding ResetToDefaultCommand}" />
-                                <Button Content="Delete" Command="{Binding DeleteCommand}" />
-                                <Button Content="Stop Rec" Command="{Binding StopRecordingCommand}" />
+                                <Button Margin="2" Command="{Binding ResetToDefaultCommand}">
+                                    <Button.Content>
+                                        <ui:FontIcon FontSize="13" Glyph="&#xe72c;" />
+                                    </Button.Content>
+                                </Button>
+                                <Button Margin="2" Command="{Binding DeleteCommand}">
+                                    <Button.Content>
+                                        <ui:FontIcon FontSize="13" Glyph="&#xe74d;" />
+                                    </Button.Content>
+                                </Button>
+                                <Button
+                                    Margin="2"
+                                    CacheMode="{Binding StopRecordingCommand}"
+                                    Foreground="red">
+                                    <Button.Content>
+                                        <ui:FontIcon FontSize="13" Glyph="&#xe7c8;" />
+                                    </Button.Content>
+                                </Button>
                             </StackPanel>
                         </Border>
 
@@ -84,14 +101,11 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="Background"
-                                    Value="{DynamicResource CustomContextHover}" />
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="Background"
-                                    Value="{DynamicResource ButtonMousePressed}" />
-                            <Setter TargetName="ButtonBorder" Property="BorderBrush"
-                                    Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="MenuBorder" Property="Visibility" Value="Visible" />
