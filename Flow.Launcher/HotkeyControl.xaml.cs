@@ -10,7 +10,6 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
-using System.Threading;
 using NHotkey;
 
 namespace Flow.Launcher
@@ -38,7 +37,20 @@ namespace Flow.Launcher
 
         public string DefaultHotkey { get; set; }
 
-        public string[] KeysToDisplay => Hotkey.Split(" + ");
+        private const string EmptyKeyValue = "<empty>";
+        private const string KeySeparator = " + ";
+
+        private string[] _keysToDisplay = { EmptyKeyValue };
+
+        public string[] KeysToDisplay
+        {
+            get => _keysToDisplay;
+            set
+            {
+                _keysToDisplay = value;
+                OnPropertyChanged();
+            }
+        }
 
         #nullable enable
         public EventHandler<HotkeyEventArgs>? Action { get; set; }
@@ -65,6 +77,10 @@ namespace Flow.Launcher
         {
             if (HotkeyBtn.IsChecked == true)
             {
+                if (!string.IsNullOrEmpty(Hotkey))
+                {
+                    HotKeyMapper.RemoveHotkey(Hotkey);
+                }
                 /* 1. Key Recording Start */
                 /* 2. Key Display area clear
                  * 3. Key Display when typing*/
@@ -73,11 +89,13 @@ namespace Flow.Launcher
 
         private void OnStopRecordingClicked(object sender, RoutedEventArgs e)
         {
-            /* If Stop Button Pressed*/
-            /* 1. Save the REC Keys to settings
-             * 2. Reload Keys Display from settings
-             * * 3. Hide MenuBorder
-             * 4. Change ToggleBtn isChcked to false */
+            HotkeyBtn.IsChecked = false;
+
+            if (KeysToDisplay.Length == 0 || (KeysToDisplay.Length == 1 && KeysToDisplay[0] == EmptyKeyValue))
+            {
+                return;
+            }
+            _ = SetHotkeyAsync(string.Join(KeySeparator, KeysToDisplay));
         }
 
         private void OnResetToDefaultClicked(object sender, RoutedEventArgs e)
@@ -86,7 +104,8 @@ namespace Flow.Launcher
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = DefaultHotkey;
-            HotKeyMapper.SetHotkey(new HotkeyModel(Hotkey), Action);
+            KeysToDisplay = Hotkey.Split(KeySeparator);
+            _ = SetHotkeyAsync(Hotkey);
         }
 
         private void OnDeleteClicked(object sender, RoutedEventArgs e)
@@ -95,6 +114,7 @@ namespace Flow.Launcher
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = "";
+            KeysToDisplay = new []{ EmptyKeyValue };
         }
 
         /*------------------ New Logic Structure Part------------------------*/
@@ -112,6 +132,11 @@ namespace Flow.Launcher
         private void HotkeyControl_Loaded(object sender, RoutedEventArgs e)
         {
             _ = SetHotkeyAsync(Hotkey, false);
+            KeysToDisplay = Hotkey switch
+            {
+                null or "" => new[] { EmptyKeyValue },
+                _ => Hotkey.Split(KeySeparator)
+            };
 
             if (Action is not null)
             {
@@ -120,14 +145,10 @@ namespace Flow.Launcher
             }
         }
 
-        private CancellationTokenSource hotkeyUpdateSource;
-
-        private void TbHotkey_OnPreviewKeyDown(object sender, KeyEventArgs e)
+        private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
-            hotkeyUpdateSource?.Cancel();
-            hotkeyUpdateSource?.Dispose();
-            hotkeyUpdateSource = new();
-            var token = hotkeyUpdateSource.Token;
+            if (HotkeyBtn.IsChecked != true)
+                return;
             e.Handled = true;
 
             //when alt is pressed, the real key should be e.SystemKey
@@ -147,12 +168,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            _ = Dispatcher.InvokeAsync(async () =>
-            {
-                await Task.Delay(500, token);
-                if (!token.IsCancellationRequested)
-                    await SetHotkeyAsync(hotkeyModel);
-            });
+            KeysToDisplay = hotkeyModel.ToString().Split(KeySeparator);
         }
 
         public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
@@ -167,15 +183,11 @@ namespace Flow.Launcher
                 SetMessage(hotkeyAvailable);
                 OnHotkeyChanged();
 
-                var token = hotkeyUpdateSource.Token;
-                await Task.Delay(500, token);
-                if (token.IsCancellationRequested)
-                    return;
-
                 if (CurrentHotkeyAvailable)
                 {
                     CurrentHotkey = keyModel;
                     Hotkey = keyModel.ToString();
+                    KeysToDisplay = Hotkey.Split(KeySeparator);
                     // To trigger LostFocus
                     FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
                     Keyboard.ClearFocus();
@@ -231,7 +243,6 @@ namespace Flow.Launcher
 
         public void Dispose()
         {
-            hotkeyUpdateSource?.Dispose();
             Loaded -= HotkeyControl_Loaded;
             GotFocus -= HotkeyControl_GotFocus;
             LostFocus -= HotkeyControl_LostFocus;

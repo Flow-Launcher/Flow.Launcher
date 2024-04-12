@@ -43,7 +43,9 @@
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}"
-            Click="OnStartRecordingClicked">
+            Click="OnStartRecordingClicked"
+            PreviewKeyDown="OnPreviewKeyDown"
+            KeyboardNavigation.TabNavigation="Continue">
             <ToggleButton.Template>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
@@ -79,11 +81,14 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
+                            <Setter TargetName="ButtonBorder" Property="Background"
+                                    Value="{DynamicResource CustomContextHover}" />
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
-                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                            <Setter TargetName="ButtonBorder" Property="Background"
+                                    Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush"
+                                    Value="{DynamicResource ButtonMousePressedInsideBorder}" />
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="MenuBorder" Property="Visibility" Value="Visible" />
