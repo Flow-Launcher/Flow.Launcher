@@ -7,9 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance vm:HotkeyControlViewModel}"
     d:DesignWidth="300"
-    mc:Ignorable="d"
-    d:DataContext="{d:DesignInstance vm:HotkeyControlViewModel}">
+    mc:Ignorable="d">
     <Grid>
         <Popup
             x:Name="popup"
@@ -41,17 +41,19 @@
             </Border>
         </Popup>
 
-        <ToggleButton
+        <RadioButton
             x:Name="HotkeyBtn"
+            Command="{Binding StartRecordingCommand}"
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}"
-            Command="{Binding StartRecordingCommand}"
-            PreviewKeyDown="OnPreviewKeyDown"
+            GroupName="HotkeyReg"
+            IsChecked="{Binding Recording}"
             KeyboardNavigation.TabNavigation="Continue"
-            IsChecked="{Binding Recording}">
-            <ToggleButton.Template>
-                <ControlTemplate TargetType="ToggleButton">
+            PreviewKeyDown="OnPreviewKeyDown"
+            Style="{StaticResource {x:Type ToggleButton}}">
+            <RadioButton.Template>
+                <ControlTemplate TargetType="RadioButton">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
@@ -115,10 +117,9 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-            </ToggleButton.Template>
+            </RadioButton.Template>
             <ToggleButton.Content>
-                <ItemsControl
-                    ItemsSource="{Binding Path=KeysToDisplay}">
+                <ItemsControl ItemsSource="{Binding Path=KeysToDisplay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -138,6 +139,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </ToggleButton.Content>
-        </ToggleButton>
+        </RadioButton>
     </Grid>
 </UserControl>
