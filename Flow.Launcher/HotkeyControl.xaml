@@ -38,13 +38,13 @@
             </Border>
         </Popup>
 
-        <Button
+        <ToggleButton
             Click="OnButtonClicked"
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}">
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
+            <ToggleButton.Template>
+                <ControlTemplate TargetType="ToggleButton">
                     <Border
                         x:Name="ButtonBorder"
                         Padding="5,0,5,0"
@@ -64,8 +64,8 @@
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
-            </Button.Template>
-            <Button.Content>
+            </ToggleButton.Template>
+            <ToggleButton.Content>
                 <ItemsControl ItemsSource="{Binding Path=KeysToDisplay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -85,7 +85,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-            </Button.Content>
-        </Button>
+            </ToggleButton.Content>
+        </ToggleButton>
     </Grid>
 </UserControl>
