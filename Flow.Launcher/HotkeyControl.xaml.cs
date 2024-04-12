@@ -10,140 +10,41 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.ViewModel;
 using NHotkey;
 
 namespace Flow.Launcher
 {
-    public partial class HotkeyControl : UserControl, IDisposable, INotifyPropertyChanged
+    public partial class HotkeyControl : UserControl, INotifyPropertyChanged
     {
-        public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
-            nameof(Hotkey),
-            typeof(string),
-            typeof(HotkeyControl),
-            new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault)
-        );
-        public HotkeyModel CurrentHotkey { get; private set; }
-        public bool CurrentHotkeyAvailable { get; private set; }
-
-        public string Hotkey
-        {
-            get => (string)GetValue(HotkeyProperty);
-            set
-            {
-                SetValue(HotkeyProperty, value);
-                OnPropertyChanged(nameof(KeysToDisplay));
-            }
-        }
-
-        public string DefaultHotkey { get; set; }
-
-        private const string EmptyKeyValue = "<empty>";
-        private const string KeySeparator = " + ";
-
-        private string[] _keysToDisplay = { EmptyKeyValue };
-
-        public string[] KeysToDisplay
-        {
-            get => _keysToDisplay;
-            set
-            {
-                _keysToDisplay = value;
-                OnPropertyChanged();
-            }
-        }
-
-        #nullable enable
-        public EventHandler<HotkeyEventArgs>? Action { get; set; }
-        #nullable restore
-
-        public event EventHandler HotkeyChanged;
-
-        /// <summary>
-        /// Designed for Preview Hotkey and KeyGesture.
-        /// </summary>
-        public bool ValidateKeyGesture { get; set; } = false;
-
-        protected virtual void OnHotkeyChanged() => HotkeyChanged?.Invoke(this, EventArgs.Empty);
+        // /// <summary>
+        // /// Designed for Preview Hotkey and KeyGesture.
+        // /// </summary>
+        // public static readonly DependencyProperty ValidateKeyGestureProperty = DependencyProperty.Register(
+        //     nameof(ValidateKeyGesture), typeof(bool), typeof(HotkeyControlViewModel),
+        //     new PropertyMetadata(default(bool)));
+        //
+        // public bool ValidateKeyGesture
+        // {
+        //     get { return (bool)GetValue(ValidateKeyGestureProperty); }
+        //     set { SetValue(ValidateKeyGestureProperty, value); }
+        // }
+        //
+        // public static readonly DependencyProperty DefaultHotkeyProperty = DependencyProperty.Register(
+        //     nameof(DefaultHotkey), typeof(string), typeof(HotkeyControl), new PropertyMetadata(default(string)));
+        //
+        // public string DefaultHotkey
+        // {
+        //     get { return (string)GetValue(DefaultHotkeyProperty); }
+        //     set { SetValue(DefaultHotkeyProperty, value); }
+        // }
 
         public HotkeyControl()
         {
             InitializeComponent();
-            Loaded += HotkeyControl_Loaded;
-        }
-
-        /*------------------ New Logic Structure Part  ------------------------*/
-
-        private void OnStartRecordingClicked(object sender, RoutedEventArgs e)
-        {
-            if (HotkeyBtn.IsChecked == true)
-            {
-                if (!string.IsNullOrEmpty(Hotkey))
-                {
-                    HotKeyMapper.RemoveHotkey(Hotkey);
-                }
-                /* 1. Key Recording Start */
-                /* 2. Key Display area clear
-                 * 3. Key Display when typing*/
-            }
-        }
-
-        private void OnStopRecordingClicked(object sender, RoutedEventArgs e)
-        {
-            HotkeyBtn.IsChecked = false;
-
-            if (KeysToDisplay.Length == 0 || (KeysToDisplay.Length == 1 && KeysToDisplay[0] == EmptyKeyValue))
-            {
-                return;
-            }
-            _ = SetHotkeyAsync(string.Join(KeySeparator, KeysToDisplay));
-        }
-
-        private void OnResetToDefaultClicked(object sender, RoutedEventArgs e)
-        {
-            HotkeyBtn.IsChecked = false;
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            Hotkey = DefaultHotkey;
-            KeysToDisplay = Hotkey.Split(KeySeparator);
-            _ = SetHotkeyAsync(Hotkey);
-        }
-
-        private void OnDeleteClicked(object sender, RoutedEventArgs e)
-        {
-            HotkeyBtn.IsChecked = false;
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            Hotkey = "";
-            KeysToDisplay = new []{ EmptyKeyValue };
         }
 
         /*------------------ New Logic Structure Part------------------------*/
-
-        private void HotkeyControl_LostFocus(object o, RoutedEventArgs routedEventArgs)
-        {
-            HotKeyMapper.SetHotkey(CurrentHotkey, Action);
-        }
-
-        private void HotkeyControl_GotFocus(object o, RoutedEventArgs routedEventArgs)
-        {
-            HotKeyMapper.RemoveHotkey(Hotkey);
-        }
-
-        private void HotkeyControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            _ = SetHotkeyAsync(Hotkey, false);
-            KeysToDisplay = Hotkey switch
-            {
-                null or "" => new[] { EmptyKeyValue },
-                _ => Hotkey.Split(KeySeparator)
-            };
-
-            if (Action is not null)
-            {
-                GotFocus += HotkeyControl_GotFocus;
-                LostFocus += HotkeyControl_LostFocus;
-            }
-        }
 
         private void OnPreviewKeyDown(object sender, KeyEventArgs e)
         {
@@ -163,49 +64,9 @@ namespace Flow.Launcher
                 specialKeyState.CtrlPressed,
                 key);
 
-            if (hotkeyModel.Equals(CurrentHotkey))
-            {
-                return;
-            }
-
-            KeysToDisplay = hotkeyModel.ToString().Split(KeySeparator);
+            ((HotkeyControlViewModel)this.DataContext).KeyDown(hotkeyModel);
         }
 
-        public async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
-        {
-            // tbHotkey.Text = keyModel.ToString();
-            // tbHotkey.Select(tbHotkey.Text.Length, 0);
-
-            if (triggerValidate)
-            {
-                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
-                CurrentHotkeyAvailable = hotkeyAvailable;
-                SetMessage(hotkeyAvailable);
-                OnHotkeyChanged();
-
-                if (CurrentHotkeyAvailable)
-                {
-                    CurrentHotkey = keyModel;
-                    Hotkey = keyModel.ToString();
-                    KeysToDisplay = Hotkey.Split(KeySeparator);
-                    // To trigger LostFocus
-                    FocusManager.SetFocusedElement(FocusManager.GetFocusScope(this), null);
-                    Keyboard.ClearFocus();
-                }
-            }
-            else
-            {
-                CurrentHotkey = keyModel;
-                Hotkey = keyModel.ToString();
-            }
-        }
-
-        public Task SetHotkeyAsync(string keyStr, bool triggerValidate = true)
-        {
-            return SetHotkeyAsync(new HotkeyModel(keyStr), triggerValidate);
-        }
-
-        private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) => hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
         // public new bool IsFocused => tbHotkey.IsFocused;
 
@@ -224,28 +85,6 @@ namespace Flow.Launcher
         {
             tbMsg.Text = InternationalizationManager.Instance.GetTranslation("flowlauncherPressHotkey");
             tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
-        }
-
-        private void SetMessage(bool hotkeyAvailable)
-        {
-            if (!hotkeyAvailable)
-            {
-                tbMsg.Foreground = new SolidColorBrush(Colors.Red);
-                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
-            }
-            else
-            {
-                tbMsg.Foreground = new SolidColorBrush(Colors.Green);
-                tbMsg.Text = InternationalizationManager.Instance.GetTranslation("success");
-            }
-            tbMsg.Visibility = Visibility.Visible;
-        }
-
-        public void Dispose()
-        {
-            Loaded -= HotkeyControl_Loaded;
-            GotFocus -= HotkeyControl_GotFocus;
-            LostFocus -= HotkeyControl_LostFocus;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

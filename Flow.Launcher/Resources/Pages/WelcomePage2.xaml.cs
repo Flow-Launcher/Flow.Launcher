@@ -5,6 +5,7 @@ using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -16,6 +17,11 @@ namespace Flow.Launcher.Resources.Pages
 
         private string tbMsgTextOriginal;
 
+        public HotkeyControlViewModel HotkeyControlViewModel { get; set; }= new HotkeyControlViewModel()
+        {
+            ValidateKeyGesture = true
+        };
+        
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.ExtraData is Settings settings)
@@ -24,10 +30,11 @@ namespace Flow.Launcher.Resources.Pages
                 throw new ArgumentException("Unexpected Parameter setting.");
             
             InitializeComponent();
+            
             tbMsgTextOriginal = HotkeyControl.tbMsg.Text;
             tbMsgForegroundColorOriginal = HotkeyControl.tbMsg.Foreground;
 
-            HotkeyControl.SetHotkeyAsync(Settings.Hotkey, false);
+            _ = HotkeyControlViewModel.SetHotkeyAsync(Settings.Hotkey, false);
         }
         private void HotkeyControl_OnGotFocus(object sender, RoutedEventArgs args)
         {
@@ -35,10 +42,10 @@ namespace Flow.Launcher.Resources.Pages
         }
         private void HotkeyControl_OnLostFocus(object sender, RoutedEventArgs args)
         {
-            if (HotkeyControl.CurrentHotkeyAvailable)
+            if (HotkeyControlViewModel.CurrentHotkeyAvailable)
             {
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
-                Settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+                HotKeyMapper.SetHotkey(HotkeyControlViewModel.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
+                Settings.Hotkey = HotkeyControlViewModel.CurrentHotkey.ToString();
             }
             else
             {

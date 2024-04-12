@@ -9,7 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage2"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}">
     <Page.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
@@ -111,6 +112,7 @@
                         Text="{DynamicResource flowlauncherHotkey}" />
                     <flowlauncher:HotkeyControl
                         x:Name="HotkeyControl"
+                        DataContext="{Binding Path=HotkeyControlViewModel}"
                         Width="300"
                         Height="35"
                         Margin="-206,10,0,0"

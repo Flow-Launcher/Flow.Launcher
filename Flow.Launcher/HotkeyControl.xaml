@@ -5,8 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     d:DesignWidth="300"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance vm:HotkeyControlViewModel}">
     <Grid>
         <Popup
             x:Name="popup"
@@ -43,9 +45,10 @@
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}"
-            Click="OnStartRecordingClicked"
+            Command="{Binding StartRecordingCommand}"
             PreviewKeyDown="OnPreviewKeyDown"
-            KeyboardNavigation.TabNavigation="Continue">
+            KeyboardNavigation.TabNavigation="Continue"
+            IsChecked="{Binding Recording}">
             <ToggleButton.Template>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
@@ -62,9 +65,9 @@
                             BorderThickness="1"
                             CornerRadius="5">
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Reset" Click="OnResetToDefaultClicked" />
-                                <Button Content="Delete" Click="OnDeleteClicked" />
-                                <Button Content="Stop Rec" Click="OnStopRecordingClicked" />
+                                <Button Content="Reset" Command="{Binding ResetToDefaultCommand}" />
+                                <Button Content="Delete" Command="{Binding DeleteCommand}" />
+                                <Button Content="Stop Rec" Command="{Binding StopRecordingCommand}" />
                             </StackPanel>
                         </Border>
 
@@ -100,7 +103,8 @@
                 </ControlTemplate>
             </ToggleButton.Template>
             <ToggleButton.Content>
-                <ItemsControl ItemsSource="{Binding Path=KeysToDisplay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                <ItemsControl
+                    ItemsSource="{Binding Path=KeysToDisplay}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />

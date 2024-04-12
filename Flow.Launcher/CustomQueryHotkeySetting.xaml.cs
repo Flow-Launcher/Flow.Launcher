@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
@@ -32,7 +33,7 @@ namespace Flow.Launcher
         {
             if (!update)
             {
-                if (!ctlHotkey.CurrentHotkeyAvailable)
+                if (!HotkeyControlViewModel.CurrentHotkeyAvailable)
                 {
                     MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
                     return;
@@ -45,8 +46,7 @@ namespace Flow.Launcher
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
-                    Hotkey = ctlHotkey.CurrentHotkey.ToString(),
-                    ActionKeyword = tbAction.Text
+                    Hotkey = HotkeyControlViewModel.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
                 };
                 _settings.CustomPluginHotkeys.Add(pluginHotkey);
 
@@ -54,14 +54,16 @@ namespace Flow.Launcher
             }
             else
             {
-                if (updateCustomHotkey.Hotkey != ctlHotkey.CurrentHotkey.ToString() && !ctlHotkey.CurrentHotkeyAvailable)
+                if (updateCustomHotkey.Hotkey != HotkeyControlViewModel.CurrentHotkey.ToString() &&
+                    !HotkeyControlViewModel.CurrentHotkeyAvailable)
                 {
                     MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
                     return;
                 }
+
                 var oldHotkey = updateCustomHotkey.Hotkey;
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = ctlHotkey.CurrentHotkey.ToString();
+                updateCustomHotkey.Hotkey = HotkeyControlViewModel.CurrentHotkey.ToString();
                 //remove origin hotkey
                 HotKeyMapper.RemoveHotkey(oldHotkey);
                 HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
@@ -70,9 +72,12 @@ namespace Flow.Launcher
             Close();
         }
 
+        public HotkeyControlViewModel HotkeyControlViewModel { get; set; } = new HotkeyControlViewModel();
+
         public void UpdateItem(CustomPluginHotkey item)
         {
-            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o => o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
+            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o =>
+                o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
@@ -81,7 +86,7 @@ namespace Flow.Launcher
             }
 
             tbAction.Text = updateCustomHotkey.ActionKeyword;
-            _ = ctlHotkey.SetHotkeyAsync(updateCustomHotkey.Hotkey, false);
+            _ = HotkeyControlViewModel.SetHotkeyAsync(updateCustomHotkey.Hotkey, false);
             update = true;
             lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
         }

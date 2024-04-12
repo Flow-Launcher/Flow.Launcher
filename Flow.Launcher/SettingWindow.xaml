@@ -2643,15 +2643,12 @@
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource flowlauncherHotkeyToolTip}" />
                                             </StackPanel>
                                             <flowlauncher:HotkeyControl
-                                                x:Name="HotkeyControl"
                                                 Grid.Row="0"
                                                 Grid.Column="2"
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
-                                                DefaultHotkey="Alt + Space"
-                                                Action="OnToggleHotkey"
-                                                Hotkey="{Binding Settings.Hotkey}" />
+                                                DataContext="{Binding ToggleHotkeyViewModel}"/>
 
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
@@ -2673,10 +2670,7 @@
                                                 Grid.Column="2"
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
-                                                HorizontalContentAlignment="Right"
-                                                DefaultHotkey="F1"
-                                                Hotkey="{Binding Settings.PreviewHotkey}"
-                                                ValidateKeyGesture="True" />
+                                                HorizontalContentAlignment="Right" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe8a1;
                                             </TextBlock>
