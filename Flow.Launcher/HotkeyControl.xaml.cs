@@ -57,6 +57,29 @@ namespace Flow.Launcher
             Loaded += HotkeyControl_Loaded;
         }
 
+        /*------------------ New Logic Structure Part  ------------------------*/
+
+        private void ToggleOn()
+        {
+            if (HotkeyBtn.IsChecked == true)
+            {
+                /* 1. Key Recording Start */
+                /* 2. Key Display area clear
+                 * 3. Key Display when typing*/
+            }
+        }
+
+        private void StopRecPressed()
+        {
+            /* If Stop Button Pressed*/
+            /* 1. Save the REC Keys to settings
+             * 2. Reload Keys Display from settings
+             * * 3. Hide MenuBorder
+             * 4. Change ToggleBtn isChcked to false */
+        }
+
+        /*------------------ New Logic Structure Part------------------------*/
+
         private void HotkeyControl_LostFocus(object o, RoutedEventArgs routedEventArgs)
         {
             HotKeyMapper.SetHotkey(CurrentHotkey, Action);
