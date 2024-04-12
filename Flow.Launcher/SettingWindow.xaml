@@ -693,7 +693,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border 
+                            <Border
                                 Margin="0,30,0,0"
                                 Padding="0"
                                 Style="{DynamicResource SettingGroupBox}">
@@ -720,7 +720,7 @@
                                                 <ComboBox
                                                     x:Name="SelectScreen"
                                                     MinWidth="160"
-                                                    Margin="0,0,18,0" 
+                                                    Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     ItemsSource="{Binding ScreenNumbers}"
@@ -2543,7 +2543,7 @@
                                                                 TickFrequency="1"
                                                                 Value="{Binding SoundEffectVolume, Mode=TwoWay}" />
                                                         </StackPanel>
-                                                        <TextBlock Style="{StaticResource Glyph}"> 
+                                                        <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
                                                     </ItemsControl>
@@ -2657,9 +2657,8 @@
                                                 Margin="0,0,0,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
-                                                GotFocus="OnHotkeyControlFocused"
-                                                Loaded="OnHotkeyControlLoaded"
-                                                LostFocus="OnHotkeyControlFocusLost" />
+                                                Hotkey="{Binding Settings.Hotkey}"
+                                                Action="OnToggleHotkey" />
 
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
@@ -2684,8 +2683,7 @@
                                                 Margin="0,0,0,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
-                                                Loaded="OnPreviewHotkeyControlLoaded"
-                                                LostFocus="OnPreviewHotkeyControlFocusLost"
+                                                Hotkey="{Binding Settings.PreviewHotkey}"
                                                 ValidateKeyGesture="True" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe8a1;

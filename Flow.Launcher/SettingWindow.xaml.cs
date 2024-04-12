@@ -17,6 +17,7 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using NHotkey;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
@@ -110,41 +111,9 @@ namespace Flow.Launcher
 
         #region Hotkey
 
-        private void OnHotkeyControlLoaded(object sender, RoutedEventArgs e)
+        private void OnToggleHotkey(object sender, HotkeyEventArgs e)
         {
-            _ = HotkeyControl.SetHotkeyAsync(viewModel.Settings.Hotkey, false);
-        }
-
-        private void OnHotkeyControlFocused(object sender, RoutedEventArgs e)
-        {
-            HotKeyMapper.RemoveHotkey(settings.Hotkey);
-        }
-
-        private void OnHotkeyControlFocusLost(object sender, RoutedEventArgs e)
-        {
-            if (HotkeyControl.CurrentHotkeyAvailable)
-            {
-                HotKeyMapper.SetHotkey(HotkeyControl.CurrentHotkey, HotKeyMapper.OnToggleHotkey);
-                HotKeyMapper.RemoveHotkey(settings.Hotkey);
-                settings.Hotkey = HotkeyControl.CurrentHotkey.ToString();
-            }
-            else
-            {
-                HotKeyMapper.SetHotkey(new HotkeyModel(settings.Hotkey), HotKeyMapper.OnToggleHotkey);
-            }
-        }
-
-        private void OnPreviewHotkeyControlLoaded(object sender, RoutedEventArgs e)
-        {
-            _ = PreviewHotkeyControl.SetHotkeyAsync(settings.PreviewHotkey, false);
-        }
-
-        private void OnPreviewHotkeyControlFocusLost(object sender, RoutedEventArgs e)
-        {
-            if (PreviewHotkeyControl.CurrentHotkeyAvailable)
-            {
-                settings.PreviewHotkey = PreviewHotkeyControl.CurrentHotkey.ToString();
-            }
+            HotKeyMapper.OnToggleHotkey(sender, e);
         }
 
         private void OnDeleteCustomHotkeyClick(object sender, RoutedEventArgs e)

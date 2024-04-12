@@ -5,14 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:input="clr-namespace:System.Windows.Input;assembly=PresentationCore"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Height="24"
-    d:DesignHeight="300"
+    d:DesignHeight="45"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
-        </Grid.ColumnDefinitions>
         <Popup
             x:Name="popup"
             AllowDrop="True"
@@ -43,14 +39,50 @@
             </Border>
         </Popup>
 
-        <TextBox
-            x:Name="tbHotkey"
-            Margin="0,0,18,0"
-            VerticalContentAlignment="Center"
-            input:InputMethod.IsInputMethodEnabled="False"
-            GotFocus="tbHotkey_GotFocus"
-            LostFocus="tbHotkey_LostFocus"
-            PreviewKeyDown="TbHotkey_OnPreviewKeyDown"
-            TabIndex="100" />
+        <Button FontSize="13" FontWeight="Bold" Foreground="{DynamicResource Color01B}" Click="OnButtonClicked">
+            <Button.Template>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        x:Name="ButtonBorder"
+                        Background="{DynamicResource Color12B}"
+                        BorderBrush="{DynamicResource ButtonInsideBorder}"
+                        BorderThickness="1"
+                        CornerRadius="5">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Button.Template>
+            <Button.Content>
+                <ItemsControl ItemsSource="{Binding Path=KeysToDisplay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Margin="6"
+                                Padding="10,5,10,5"
+                                Background="{DynamicResource SystemAccentColorLight2Brush}"
+                                BorderThickness="1"
+                                CornerRadius="5"
+                                Height="30">
+                                <TextBlock Text="{Binding}" />
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Button.Content>
+        </Button>
     </Grid>
 </UserControl>
