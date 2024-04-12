@@ -40,15 +40,6 @@ namespace Flow.Launcher
 
         public string[] KeysToDisplay => Hotkey.Split(" + ");
 
-        private bool _isEditingHotkey = false;
-        public bool IsEditingHotkey {
-            get => _isEditingHotkey;
-            set {
-                _isEditingHotkey = value;
-                OnPropertyChanged();
-            }
-        }
-
         #nullable enable
         public EventHandler<HotkeyEventArgs>? Action { get; set; }
         #nullable restore
@@ -70,7 +61,7 @@ namespace Flow.Launcher
 
         /*------------------ New Logic Structure Part  ------------------------*/
 
-        private void ToggleOn()
+        private void OnStartRecordingClicked(object sender, RoutedEventArgs e)
         {
             if (HotkeyBtn.IsChecked == true)
             {
@@ -80,13 +71,30 @@ namespace Flow.Launcher
             }
         }
 
-        private void StopRecPressed()
+        private void OnStopRecordingClicked(object sender, RoutedEventArgs e)
         {
             /* If Stop Button Pressed*/
             /* 1. Save the REC Keys to settings
              * 2. Reload Keys Display from settings
              * * 3. Hide MenuBorder
              * 4. Change ToggleBtn isChcked to false */
+        }
+
+        private void OnResetToDefaultClicked(object sender, RoutedEventArgs e)
+        {
+            HotkeyBtn.IsChecked = false;
+            if (!string.IsNullOrEmpty(Hotkey))
+                HotKeyMapper.RemoveHotkey(Hotkey);
+            Hotkey = DefaultHotkey;
+            HotKeyMapper.SetHotkey(new HotkeyModel(Hotkey), Action);
+        }
+
+        private void OnDeleteClicked(object sender, RoutedEventArgs e)
+        {
+            HotkeyBtn.IsChecked = false;
+            if (!string.IsNullOrEmpty(Hotkey))
+                HotKeyMapper.RemoveHotkey(Hotkey);
+            Hotkey = "";
         }
 
         /*------------------ New Logic Structure Part------------------------*/
@@ -234,28 +242,6 @@ namespace Flow.Launcher
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void OnStopRecordingClicked(object sender, RoutedEventArgs e)
-        {
-            IsEditingHotkey = false;
-        }
-
-        private void OnResetToDefaultClicked(object sender, RoutedEventArgs e)
-        {
-            IsEditingHotkey = false;
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            Hotkey = DefaultHotkey;
-            HotKeyMapper.SetHotkey(new HotkeyModel(Hotkey), Action);
-        }
-
-        private void OnDeleteClicked(object sender, RoutedEventArgs e)
-        {
-            IsEditingHotkey = false;
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            Hotkey = "";
         }
     }
 }

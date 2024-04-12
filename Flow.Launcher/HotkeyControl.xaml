@@ -39,10 +39,11 @@
         </Popup>
 
         <ToggleButton
-            IsChecked="{Binding IsEditingHotkey, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+            x:Name="HotkeyBtn"
             FontSize="13"
             FontWeight="Bold"
-            Foreground="{DynamicResource Color01B}">
+            Foreground="{DynamicResource Color01B}"
+            Click="OnStartRecordingClicked">
             <ToggleButton.Template>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid>
