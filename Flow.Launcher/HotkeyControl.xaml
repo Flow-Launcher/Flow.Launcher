@@ -39,21 +39,44 @@
         </Popup>
 
         <ToggleButton
+            x:Name="HotkeyBtn"
             Click="OnButtonClicked"
             FontSize="13"
             FontWeight="Bold"
             Foreground="{DynamicResource Color01B}">
             <ToggleButton.Template>
                 <ControlTemplate TargetType="ToggleButton">
-                    <Border
-                        x:Name="ButtonBorder"
-                        Padding="5,0,5,0"
-                        Background="{DynamicResource Color12B}"
-                        BorderBrush="{DynamicResource ButtonInsideBorder}"
-                        BorderThickness="1"
-                        CornerRadius="5">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            x:Name="MenuBorder"
+                            Grid.Column="0"
+                            Padding="5,0,5,0"
+                            Background="{DynamicResource Color12B}"
+                            BorderBrush="{DynamicResource ButtonInsideBorder}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Reset" />
+                                <Button Content="Delete" />
+                                <Button Content="Stop Rec" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border
+                            x:Name="ButtonBorder"
+                            Grid.Column="1"
+                            Padding="5,0,5,0"
+                            Background="{DynamicResource Color12B}"
+                            BorderBrush="{DynamicResource ButtonInsideBorder}"
+                            BorderThickness="1"
+                            CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
@@ -61,6 +84,12 @@
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
                             <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="MenuBorder" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="False">
+                            <Setter TargetName="MenuBorder" Property="Visibility" Value="Collapsed" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
