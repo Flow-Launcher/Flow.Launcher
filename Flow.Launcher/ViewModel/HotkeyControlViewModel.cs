@@ -116,6 +116,8 @@ namespace Flow.Launcher.ViewModel
                 SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
                 return;
             }
+            
+            Hotkey = CurrentHotkey.ToString();
 
             await SetHotkeyAsync(CurrentHotkey, true);
         }
@@ -146,20 +148,17 @@ namespace Flow.Launcher.ViewModel
             if (triggerValidate)
             {
                 bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
-                CurrentHotkeyAvailable = hotkeyAvailable;
                 SetMessage(hotkeyAvailable ? "success" : "hotkeyUnavailable", !hotkeyAvailable);
                 HotkeyDelegate?.Invoke(keyModel);
 
                 if (CurrentHotkeyAvailable)
                 {
-                    CurrentHotkey = keyModel;
                     Hotkey = keyModel.ToString();
                     SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
                 }
             }
             else
             {
-                CurrentHotkey = keyModel;
                 Hotkey = keyModel.ToString();
             }
         }
