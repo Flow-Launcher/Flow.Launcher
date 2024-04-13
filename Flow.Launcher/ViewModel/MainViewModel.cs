@@ -630,45 +630,24 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string PreviewHotkey
+        public string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
         {
-            get
+            try
             {
-                // TODO try to patch issue #1755
-                // Added in v1.14.0, remove after v1.16.0. 
-                try
-                {
-                    var converter = new KeyGestureConverter();
-                    var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
-                }
-                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
-                {
-                    Settings.PreviewHotkey = "F1";
-                }
-
-                return Settings.PreviewHotkey;
+                var converter = new KeyGestureConverter();
+                var key = (KeyGesture)converter.ConvertFromString(hotkey);
             }
-        }
-
-        public string AutoCompleteHotkey
-        {
-            get
+            catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
             {
-                // TODO try to patch issue #1755
-                // Added in v1.14.0, remove after v1.16.0. 
-                try
-                {
-                    var converter = new KeyGestureConverter();
-                    var key = (KeyGesture)converter.ConvertFromString(Settings.AutoCompleteHotkey);
-                }
-                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
-                {
-                    Settings.AutoCompleteHotkey = "F2";
-                }
-
-                return Settings.AutoCompleteHotkey;
+                return defaultHotkey;
             }
+
+            return hotkey;
         }
+        
+        public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
+
+        public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Tab");
 
 
         public string Image => Constant.QueryTextBoxIconImagePath;

@@ -34,9 +34,9 @@
                     VerticalAlignment="Center"
                     FontSize="13"
                     FontWeight="SemiBold"
-                    Foreground="{DynamicResource Color05B}"
-                    Text="{DynamicResource flowlauncherPressHotkey}"
-                    Visibility="Visible" />
+                    Foreground="{Binding MessageColor}"
+                    Text="{Binding Message}"
+                    Visibility="{Binding MessageVisibility}"/>
             </Border>
         </Popup>
         <Grid>

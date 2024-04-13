@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
@@ -32,12 +33,10 @@ namespace Flow.Launcher.ViewModel
 
         public string DefaultHotkey { get; init; }
 
-        private void SetMessage(bool hotkeyAvailable)
+        private void SetMessage(string messageKey, bool error)
         {
-            Message = hotkeyAvailable
-                ? InternationalizationManager.Instance.GetTranslation("success")
-                : InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
-            MessageColor = hotkeyAvailable ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
+            Message = InternationalizationManager.Instance.GetTranslation(messageKey);
+            MessageColor = error ? new SolidColorBrush(Colors.Green) : new SolidColorBrush(Colors.Red);
             MessageVisibility = true;
         }
 
@@ -47,6 +46,7 @@ namespace Flow.Launcher.ViewModel
             Action<HotkeyModel>? hotkeyDelegate = null)
         {
             Hotkey = hotkey;
+            CurrentHotkey = new HotkeyModel(hotkey);
             DefaultHotkey = defaultHotkey;
             ValidateKeyGesture = validateKeyGesture;
             HotkeyDelegate = hotkeyDelegate;
@@ -104,8 +104,16 @@ namespace Flow.Launcher.ViewModel
         {
             Recording = false;
 
-            if (string.IsNullOrEmpty(Hotkey))
+            try
             {
+                var converter = new KeyGestureConverter();
+                var key = (KeyGesture)converter.ConvertFromString(CurrentHotkey.ToString())!;
+            }
+            catch (Exception e) when (e is NotSupportedException or InvalidEnumArgumentException)
+            {
+                SetMessage("Hotkey Invalid", true);
+                CurrentHotkey = new HotkeyModel(Hotkey);
+                SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
                 return;
             }
 
@@ -120,8 +128,9 @@ namespace Flow.Launcher.ViewModel
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = DefaultHotkey;
+            CurrentHotkey = new HotkeyModel(Hotkey);
 
-            SetKeysToDisplay(KeysToDisplay, Hotkey.Split(KeySeparator));
+            SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
 
             await SetHotkeyAsync(Hotkey);
         }
@@ -138,14 +147,14 @@ namespace Flow.Launcher.ViewModel
             {
                 bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
                 CurrentHotkeyAvailable = hotkeyAvailable;
-                SetMessage(hotkeyAvailable);
+                SetMessage(hotkeyAvailable ? "success" : "hotkeyUnavailable", !hotkeyAvailable);
                 HotkeyDelegate?.Invoke(keyModel);
 
                 if (CurrentHotkeyAvailable)
                 {
                     CurrentHotkey = keyModel;
                     Hotkey = keyModel.ToString();
-                    SetKeysToDisplay(KeysToDisplay, Hotkey.Split(KeySeparator));
+                    SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
                 }
             }
             else
@@ -165,7 +174,7 @@ namespace Flow.Launcher.ViewModel
             SetKeysToDisplay(KeysToDisplay, new List<string>());
         }
 
-        private void SetKeysToDisplay(HotkeyModel hotkey)
+        private void SetKeysToDisplay(ICollection<string> container, HotkeyModel hotkey)
         {
             KeysToDisplay.Clear();
             if (hotkey.Alt)
@@ -222,7 +231,7 @@ namespace Flow.Launcher.ViewModel
         public void KeyDown(HotkeyModel hotkeyModel)
         {
             CurrentHotkey = hotkeyModel;
-            SetKeysToDisplay(KeysToDisplay, hotkeyModel.ToString().Split(KeySeparator));
+            SetKeysToDisplay(KeysToDisplay, CurrentHotkey);
         }
     }
 }
