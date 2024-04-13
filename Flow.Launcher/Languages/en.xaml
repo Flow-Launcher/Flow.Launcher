@@ -170,7 +170,6 @@
     <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="emptyHotkey">&lt;empty&gt;</system:String>
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="hotkeys">Hotkeys</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
@@ -191,6 +190,7 @@
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
     <system:String x:Key="add">Add</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>

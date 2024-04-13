@@ -66,7 +66,7 @@ namespace Flow.Launcher.ViewModel
         }
 
 
-        private string EmptyHotkeyKey = "emptyHotkey";
+        private string EmptyHotkeyKey = "none";
         public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation(EmptyHotkeyKey);
         private const string KeySeparator = " + ";
 
