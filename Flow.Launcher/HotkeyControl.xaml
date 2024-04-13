@@ -79,7 +79,7 @@
                     </Button>
                     <Button
                         Margin="2"
-                        CacheMode="{Binding StopRecordingCommand}"
+                        Command="{Binding StopRecordingCommand}"
                         Foreground="red">
                         <Button.Content>
                             <ui:FontIcon FontSize="13" Glyph="&#xe7c8;" />
@@ -145,19 +145,6 @@
                                 <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource CustomContextHover}" />
                             </MultiTrigger>
                         </ControlTemplate.Triggers>
-                        <!--<ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
-                            </Trigger>
-                            <Trigger Property="IsChecked" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
-                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource CustomContextHover}" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
-                                <Setter TargetName="ButtonBorder" Property="BorderBrush" Value="{DynamicResource ButtonMousePressedInsideBorder}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>-->
                     </ControlTemplate>
                 </RadioButton.Template>
                 <ToggleButton.Content>
