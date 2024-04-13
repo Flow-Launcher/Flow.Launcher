@@ -100,6 +100,7 @@
                 IsChecked="{Binding Recording}"
                 KeyboardNavigation.TabNavigation="Continue"
                 PreviewKeyDown="OnPreviewKeyDown"
+                LostFocus="HotkeyBtn_OnLostFocus"
                 Style="{StaticResource {x:Type ToggleButton}}">
                 <RadioButton.Template>
                     <ControlTemplate TargetType="RadioButton">

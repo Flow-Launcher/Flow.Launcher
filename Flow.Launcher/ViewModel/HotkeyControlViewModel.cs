@@ -222,6 +222,11 @@ namespace Flow.Launcher.ViewModel
                 container.Add(EmptyHotkey);
             }
         }
+        
+        public Task RegisterHotkey()
+        {
+            return SetHotkeyAsync(Hotkey, true);
+        }
 
         public Task SetHotkeyAsync(string? keyStr, bool triggerValidate = true)
         {

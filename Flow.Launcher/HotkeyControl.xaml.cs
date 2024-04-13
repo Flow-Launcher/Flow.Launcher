@@ -93,5 +93,10 @@ namespace Flow.Launcher
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private void HotkeyBtn_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            _ = ((HotkeyControlViewModel)DataContext).RegisterHotkey();
+        }
     }
 }
