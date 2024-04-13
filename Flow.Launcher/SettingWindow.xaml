@@ -2648,7 +2648,7 @@
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
-                                                DataContext="{Binding ToggleHotkeyViewModel}"/>
+                                                DataContext="{Binding ToggleHotkeyViewModel}" />
 
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
@@ -2665,13 +2665,13 @@
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource previewHotkeyToolTip}" />
                                             </StackPanel>
                                             <flowlauncher:HotkeyControl
-                                                DataContext="{Binding PreviewHotkeyViewModel}"
                                                 x:Name="PreviewHotkeyControl"
                                                 Grid.Row="0"
                                                 Grid.Column="2"
                                                 Margin="0,0,16,0"
                                                 HorizontalAlignment="Right"
-                                                HorizontalContentAlignment="Right" />
+                                                HorizontalContentAlignment="Right"
+                                                DataContext="{Binding PreviewHotkeyViewModel}" />
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xe8a1;
                                             </TextBlock>
@@ -2735,6 +2735,27 @@
                                         </Border>
                                     </StackPanel>
                                 </Border>
+
+                                <StackPanel Grid.Row="2">
+                                    <Border Margin="0,16,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Auto Complete Hotkey" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="Auto Complete Hotkey Subtitle" />
+                                            </StackPanel>
+                                            <flowlauncher:HotkeyControl
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="0,0,16,0"
+                                                HorizontalAlignment="Right"
+                                                HorizontalContentAlignment="Right"
+                                                DataContext="{Binding AutoCompleteHotkeyViewModel}" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xe765;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                </StackPanel>
 
                                 <TextBlock
                                     Grid.Row="4"

@@ -80,6 +80,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.PreviewHotkey):
                         OnPropertyChanged(nameof(PreviewHotkey));
                         break;
+                    case nameof(Settings.AutoCompleteHotkey):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey));
+                        break;
                 }
             };
 
@@ -646,6 +649,27 @@ namespace Flow.Launcher.ViewModel
                 return Settings.PreviewHotkey;
             }
         }
+
+        public string AutoCompleteHotkey
+        {
+            get
+            {
+                // TODO try to patch issue #1755
+                // Added in v1.14.0, remove after v1.16.0. 
+                try
+                {
+                    var converter = new KeyGestureConverter();
+                    var key = (KeyGesture)converter.ConvertFromString(Settings.AutoCompleteHotkey);
+                }
+                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+                {
+                    Settings.AutoCompleteHotkey = "F2";
+                }
+
+                return Settings.AutoCompleteHotkey;
+            }
+        }
+
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 

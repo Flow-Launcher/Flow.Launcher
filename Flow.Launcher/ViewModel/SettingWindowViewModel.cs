@@ -82,6 +82,12 @@ namespace Flow.Launcher.ViewModel
                 {
                     Settings.PreviewHotkey = hotkey.ToString();
                 });
+
+            AutoCompleteHotkeyViewModel =
+                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "F2", false, hotkey =>
+                {
+                    Settings.AutoCompleteHotkey = hotkey.ToString();
+                });
         }
 
         public Settings Settings { get; set; }
@@ -962,6 +968,7 @@ namespace Flow.Launcher.ViewModel
 
         public HotkeyControlViewModel ToggleHotkeyViewModel { get; set; }
         public HotkeyControlViewModel PreviewHotkeyViewModel { get; set; }
+        public HotkeyControlViewModel AutoCompleteHotkeyViewModel { get; set; }
 
         private static DirectoryInfo GetLogDir(string version = "")
         {

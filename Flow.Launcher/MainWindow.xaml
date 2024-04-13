@@ -46,7 +46,6 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
         <KeyBinding
             Key="Tab"
             Command="{Binding AutocompleteQueryCommand}"
@@ -188,12 +187,16 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="C"
-            Modifiers="Ctrl+Shift"
-            Command="{Binding CopyAlternativeCommand}" />
+            Command="{Binding CopyAlternativeCommand}"
+            Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding AutocompleteQueryCommand}"
+            Modifiers="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
