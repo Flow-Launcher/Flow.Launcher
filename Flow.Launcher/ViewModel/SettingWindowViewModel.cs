@@ -76,6 +76,12 @@ namespace Flow.Launcher.ViewModel
                     Settings.Hotkey = hotkey.ToString();
                     HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
                 });
+
+            PreviewHotkeyViewModel =
+                new HotkeyControlViewModel(Settings.PreviewHotkey, "F1", false, hotkey =>
+                {
+                    Settings.PreviewHotkey = hotkey.ToString();
+                });
         }
 
         public Settings Settings { get; set; }
@@ -955,6 +961,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         public HotkeyControlViewModel ToggleHotkeyViewModel { get; set; }
+        public HotkeyControlViewModel PreviewHotkeyViewModel { get; set; }
 
         private static DirectoryInfo GetLogDir(string version = "")
         {

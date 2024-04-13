@@ -50,22 +50,29 @@ namespace Flow.Launcher.ViewModel
             DefaultHotkey = defaultHotkey;
             ValidateKeyGesture = validateKeyGesture;
             HotkeyDelegate = hotkeyDelegate;
-            EmptyKeyValue = InternationalizationManager.Instance.GetTranslation("empty");
-            KeysToDisplay = new ObservableCollection<string> { EmptyKeyValue };
 
-            if (string.IsNullOrEmpty(Hotkey))
+            keysToDisplay = new(() =>
             {
-                Hotkey = DefaultHotkey;
-            }
+                var collection = new ObservableCollection<string>();
 
-            SetKeysToDisplay(Hotkey?.Split(KeySeparator));
+                if (string.IsNullOrEmpty(Hotkey))
+                {
+                    Hotkey = DefaultHotkey;
+                }
+
+                SetKeysToDisplay(collection, Hotkey?.Split(KeySeparator));
+                return collection;
+            });
         }
 
 
-        private string EmptyKeyValue = "<empty>";
+        private string EmptyHotkeyKey = "emptyHotkey";
+        public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation(EmptyHotkeyKey);
         private const string KeySeparator = " + ";
 
-        public ObservableCollection<string> KeysToDisplay { get; }
+        private Lazy<ObservableCollection<string>> keysToDisplay;
+
+        public ObservableCollection<string> KeysToDisplay => keysToDisplay.Value;
 
 
         public HotkeyModel CurrentHotkey { get; private set; }
@@ -97,7 +104,7 @@ namespace Flow.Launcher.ViewModel
         {
             Recording = false;
 
-            if (KeysToDisplay.Count == 0 || (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyKeyValue))
+            if (string.IsNullOrEmpty(Hotkey))
             {
                 return;
             }
@@ -114,18 +121,13 @@ namespace Flow.Launcher.ViewModel
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = DefaultHotkey;
 
-            KeysToDisplay.Clear();
-
-            foreach (var key in Hotkey.Split(KeySeparator))
-            {
-                KeysToDisplay.Add(key);
-            }
+            SetKeysToDisplay(KeysToDisplay, Hotkey.Split(KeySeparator));
 
             await SetHotkeyAsync(Hotkey);
         }
 
         public bool ValidateKeyGesture { get; set; }
-        public Action<HotkeyModel> HotkeyDelegate { get; set; }
+        public Action<HotkeyModel>? HotkeyDelegate { get; set; }
 
         private async Task SetHotkeyAsync(HotkeyModel keyModel, bool triggerValidate = true)
         {
@@ -143,7 +145,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     CurrentHotkey = keyModel;
                     Hotkey = keyModel.ToString();
-                    SetKeysToDisplay(Hotkey.Split(KeySeparator));
+                    SetKeysToDisplay(KeysToDisplay, Hotkey.Split(KeySeparator));
                 }
             }
             else
@@ -160,7 +162,7 @@ namespace Flow.Launcher.ViewModel
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = "";
-            SetKeysToDisplay(new List<string>());
+            SetKeysToDisplay(KeysToDisplay, new List<string>());
         }
 
         private void SetKeysToDisplay(HotkeyModel hotkey)
@@ -192,9 +194,9 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void SetKeysToDisplay(ICollection<string>? keys)
+        private void SetKeysToDisplay(ICollection<string> container, ICollection<string>? keys)
         {
-            KeysToDisplay.Clear();
+            container.Clear();
 
             if (keys == null)
             {
@@ -203,12 +205,12 @@ namespace Flow.Launcher.ViewModel
 
             foreach (var key in keys)
             {
-                KeysToDisplay.Add(key);
+                container.Add(key);
             }
 
             if (!keys.Any())
             {
-                KeysToDisplay.Add(EmptyKeyValue);
+                container.Add(EmptyHotkey);
             }
         }
 
@@ -220,7 +222,7 @@ namespace Flow.Launcher.ViewModel
         public void KeyDown(HotkeyModel hotkeyModel)
         {
             CurrentHotkey = hotkeyModel;
-            SetKeysToDisplay(hotkeyModel.ToString().Split(KeySeparator));
+            SetKeysToDisplay(KeysToDisplay, hotkeyModel.ToString().Split(KeySeparator));
         }
     }
 }

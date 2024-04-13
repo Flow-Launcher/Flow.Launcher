@@ -2665,6 +2665,7 @@
                                                 <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource previewHotkeyToolTip}" />
                                             </StackPanel>
                                             <flowlauncher:HotkeyControl
+                                                DataContext="{Binding PreviewHotkeyViewModel}"
                                                 x:Name="PreviewHotkeyControl"
                                                 Grid.Row="0"
                                                 Grid.Column="2"
