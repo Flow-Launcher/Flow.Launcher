@@ -50,6 +50,8 @@ namespace Flow.Launcher.ViewModel
             DefaultHotkey = defaultHotkey;
             ValidateKeyGesture = validateKeyGesture;
             HotkeyDelegate = hotkeyDelegate;
+            EmptyKeyValue = InternationalizationManager.Instance.GetTranslation("empty");
+            KeysToDisplay = new ObservableCollection<string> { EmptyKeyValue };
 
             if (string.IsNullOrEmpty(Hotkey))
             {
@@ -60,10 +62,10 @@ namespace Flow.Launcher.ViewModel
         }
 
 
-        private const string EmptyKeyValue = "<empty>";
+        private string EmptyKeyValue = "<empty>";
         private const string KeySeparator = " + ";
 
-        public ObservableCollection<string> KeysToDisplay { get; } = new() { EmptyKeyValue };
+        public ObservableCollection<string> KeysToDisplay { get; }
 
 
         public HotkeyModel CurrentHotkey { get; private set; }

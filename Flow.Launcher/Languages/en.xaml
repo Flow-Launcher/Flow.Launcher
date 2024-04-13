@@ -170,6 +170,7 @@
     <system:String x:Key="Date">Date</system:String>
 
     <!--  Setting Hotkey  -->
+    <system:String x:Key="emptyHotkey">&lt;empty&gt;</system:String>
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="hotkeys">Hotkeys</system:String>
     <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
