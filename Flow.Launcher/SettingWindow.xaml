@@ -2,6 +2,7 @@
     x:Class="Flow.Launcher.SettingWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
     xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -2635,6 +2636,12 @@
                                     Text="{DynamicResource hotkeys}"
                                     TextAlignment="left" />
 
+                                <cc:Card
+                                    Title="{DynamicResource flowlauncherHotkey}"
+                                    Icon="&#xeda7;"
+                                    Sub="{DynamicResource flowlauncherHotkeyToolTip}">
+                                    <flowlauncher:HotkeyControl DataContext="{Binding ToggleHotkeyViewModel}" />
+                                </cc:Card>
                                 <StackPanel Grid.Row="1">
                                     <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
@@ -2649,7 +2656,6 @@
                                                 HorizontalAlignment="Right"
                                                 HorizontalContentAlignment="Right"
                                                 DataContext="{Binding ToggleHotkeyViewModel}" />
-
                                             <TextBlock Style="{StaticResource Glyph}">
                                                 &#xeda7;
                                             </TextBlock>
