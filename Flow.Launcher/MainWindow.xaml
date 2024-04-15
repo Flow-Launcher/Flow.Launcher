@@ -75,6 +75,10 @@
             Command="{Binding SelectFirstResultCommand}"
             Modifiers="Alt" />
         <KeyBinding
+            Key="End"
+            Command="{Binding SelectLastResultCommand}"
+            Modifiers="Alt" />
+        <KeyBinding
             Key="O"
             Command="{Binding LoadContextMenuCommand}"
             Modifiers="Ctrl" />
@@ -102,10 +106,7 @@
             Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="H"
-            Command="{Binding LoadHistoryCommand}"
-            Modifiers="Ctrl" />
+
         <KeyBinding
             Key="Enter"
             Command="{Binding OpenResultCommand}"

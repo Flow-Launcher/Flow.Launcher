@@ -352,6 +352,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void SelectLastResult()
+        {
+            SelectedResults.SelectLastResult();
+        }
+
+
+        [RelayCommand]
         private void SelectPrevPage()
         {
             SelectedResults.SelectPrevPage();
