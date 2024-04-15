@@ -83,6 +83,12 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.AutoCompleteHotkey):
                         OnPropertyChanged(nameof(AutoCompleteHotkey));
                         break;
+                    case nameof(Settings.SelectNextItemHotkey):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey));
+                        break;
                 }
             };
 
@@ -647,7 +653,9 @@ namespace Flow.Launcher.ViewModel
         
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
 
-        public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Tab");
+        public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "");
+        public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
+        public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift + Tab");
 
 
         public string Image => Constant.QueryTextBoxIconImagePath;

@@ -20,7 +20,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
         public string PreviewHotkey { get; set; } = $"F1";
-        public string AutoCompleteHotkey { get; set; } = $"F2";
+        public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + P";
+        public string SelectNextItemHotkey { get; set; } = $"Tab";
+        public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
 
         public string Language
         {

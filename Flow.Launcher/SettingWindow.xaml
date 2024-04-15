@@ -2740,8 +2740,8 @@
                                     <Border Margin="0,16,0,0" Style="{DynamicResource SettingGroupBox}">
                                         <ItemsControl Style="{StaticResource SettingGrid}">
                                             <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="Auto Complete Hotkey" />
-                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="Auto Complete Hotkey Subtitle" />
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource autoCompleteHotkey}" />
+                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource autoCompleteHotkeyToolTip}" />
                                             </StackPanel>
                                             <flowlauncher:HotkeyControl
                                                 Grid.Row="0"
@@ -2751,7 +2751,43 @@
                                                 HorizontalContentAlignment="Right"
                                                 DataContext="{Binding AutoCompleteHotkeyViewModel}" />
                                             <TextBlock Style="{StaticResource Glyph}">
-                                                &#xe765;
+                                                &#xe893;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SelectNextItemHotkey}" />
+                                            </StackPanel>
+                                            <flowlauncher:HotkeyControl
+                                                x:Name="SelectNextItemHotkeyControl"
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="0,0,16,0"
+                                                HorizontalAlignment="Right"
+                                                HorizontalContentAlignment="Right"
+                                                DataContext="{Binding SelectNextItemHotkeyViewModel}" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xf0ae;
+                                            </TextBlock>
+                                        </ItemsControl>
+                                    </Border>
+                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
+                                        <ItemsControl Style="{StaticResource SettingGrid}">
+                                            <StackPanel Style="{StaticResource TextPanel}">
+                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SelectPrevItemHotkey}" />
+                                            </StackPanel>
+                                            <flowlauncher:HotkeyControl
+                                                x:Name="SelectPrevItemHotkeyControl"
+                                                Grid.Row="0"
+                                                Grid.Column="2"
+                                                Margin="0,0,16,0"
+                                                HorizontalAlignment="Right"
+                                                HorizontalContentAlignment="Right"
+                                                DataContext="{Binding SelectPrevItemHotkeyViewModel}" />
+                                            <TextBlock Style="{StaticResource Glyph}">
+                                                &#xf0ad;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>

@@ -84,9 +84,20 @@ namespace Flow.Launcher.ViewModel
                 });
 
             AutoCompleteHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "F2", false, hotkey =>
+                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "Ctrl+P", false, hotkey =>
                 {
                     Settings.AutoCompleteHotkey = hotkey.ToString();
+                });
+
+            SelectNextItemHotkeyViewModel =
+                new HotkeyControlViewModel(Settings.SelectNextItemHotkey, "Tab", false, hotkey =>
+                {
+                    Settings.SelectNextItemHotkey = hotkey.ToString();
+                });
+            SelectPrevItemHotkeyViewModel =
+                new HotkeyControlViewModel(Settings.SelectPrevItemHotkey, "Shift+Tab", false, hotkey =>
+                {
+                    Settings.SelectPrevItemHotkey = hotkey.ToString();
                 });
         }
 
@@ -969,6 +980,8 @@ namespace Flow.Launcher.ViewModel
         public HotkeyControlViewModel ToggleHotkeyViewModel { get; set; }
         public HotkeyControlViewModel PreviewHotkeyViewModel { get; set; }
         public HotkeyControlViewModel AutoCompleteHotkeyViewModel { get; set; }
+        public HotkeyControlViewModel SelectNextItemHotkeyViewModel { get; set; }
+        public HotkeyControlViewModel SelectPrevItemHotkeyViewModel { get; set; }
 
         private static DirectoryInfo GetLogDir(string version = "")
         {
