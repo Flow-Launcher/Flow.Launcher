@@ -84,7 +84,7 @@ namespace Flow.Launcher.ViewModel
                 });
 
             AutoCompleteHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "Ctrl+P", false, hotkey =>
+                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "Ctrl+Tab", false, hotkey =>
                 {
                     Settings.AutoCompleteHotkey = hotkey.ToString();
                 });
