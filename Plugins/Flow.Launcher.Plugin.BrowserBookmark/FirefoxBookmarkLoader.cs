@@ -14,9 +14,9 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     private const string QueryAllBookmarks = """
         SELECT moz_places.url, moz_bookmarks.title
         FROM moz_places
-         INNER JOIN moz_bookmarks ON (
-             moz_bookmarks.fk NOT NULL AND moz_bookmarks.title NOT NULL AND moz_bookmarks.fk = moz_places.id
-         )
+            INNER JOIN moz_bookmarks ON (
+                moz_bookmarks.fk NOT NULL AND moz_bookmarks.title NOT NULL AND moz_bookmarks.fk = moz_places.id
+            )
         ORDER BY moz_places.visit_count DESC
         """;
 
