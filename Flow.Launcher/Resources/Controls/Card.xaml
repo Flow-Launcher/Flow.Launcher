@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -19,7 +20,7 @@
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="CornerRadius" Value="5" />
                         <Setter Property="Margin" Value="0,5,0,0" />
-                        <Setter Property="Padding" Value="0,15,0,15" />
+                        <Setter Property="MinHeight" Value="68" />
                         <Setter Property="SnapsToDevicePixels" Value="True" />
                     </Style>
                 </Border.Style>
@@ -32,20 +33,22 @@
                         <ColumnDefinition Width="8*" />
                         <ColumnDefinition Width="Auto" MinWidth="30" />
                     </Grid.ColumnDefinitions>
-                    <ContentPresenter
+                    <ContentControl
                         Grid.Row="0"
                         Grid.Column="2"
                         Margin="0,0,16,0"
                         HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
                         Content="{TemplateBinding Content}" />
+
                     <StackPanel>
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
                                 <Setter Property="Grid.Column" Value="1" />
-                                <Setter Property="Margin" Value="0,0,0,0" />
                                 <Setter Property="Width" Value="Auto" />
                                 <Setter Property="VerticalAlignment" Value="Center" />
                                 <Setter Property="HorizontalAlignment" Value="Left" />
+
                             </Style>
                         </StackPanel.Style>
                         <TextBlock x:Name="ItemTitle" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:Card}}">
@@ -54,12 +57,18 @@
                                     <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
                                     <Setter Property="Margin" Value="0,0,0,0" />
                                     <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
                         <TextBlock x:Name="SubTitle" Text="{Binding Sub, RelativeSource={RelativeSource AncestorType=local:Card}}">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=SubTitle, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
                                     <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
                                     <Setter Property="FontSize" Value="12" />
                                     <Setter Property="Margin" Value="0,0,0,0" />
@@ -70,9 +79,14 @@
                         </TextBlock>
                     </StackPanel>
 
-                    <TextBlock Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=local:Card}}">
+                    <TextBlock x:Name="ItemIcon" Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=local:Card}}">
                         <TextBlock.Style>
                             <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ItemIcon, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Margin" Value="24,0,0,0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
                                 <Setter Property="Grid.Column" Value="0" />
                                 <Setter Property="Margin" Value="24,0,16,0" />
                                 <Setter Property="VerticalAlignment" Value="Center" />

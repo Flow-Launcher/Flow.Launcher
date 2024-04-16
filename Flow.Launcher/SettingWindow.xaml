@@ -2636,53 +2636,22 @@
                                     Text="{DynamicResource hotkeys}"
                                     TextAlignment="left" />
 
-                                <cc:Card
-                                    Title="{DynamicResource flowlauncherHotkey}"
-                                    Icon="&#xeda7;"
-                                    Sub="{DynamicResource flowlauncherHotkeyToolTip}">
-                                    <flowlauncher:HotkeyControl DataContext="{Binding ToggleHotkeyViewModel}" />
-                                </cc:Card>
                                 <StackPanel Grid.Row="1">
-                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
-                                        <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource flowlauncherHotkey}" />
-                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource flowlauncherHotkeyToolTip}" />
-                                            </StackPanel>
-                                            <flowlauncher:HotkeyControl
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                Margin="0,0,16,0"
-                                                HorizontalAlignment="Right"
-                                                HorizontalContentAlignment="Right"
-                                                DataContext="{Binding ToggleHotkeyViewModel}" />
-                                            <TextBlock Style="{StaticResource Glyph}">
-                                                &#xeda7;
-                                            </TextBlock>
-                                        </ItemsControl>
-                                    </Border>
+                                    <cc:Card
+                                        Title="{DynamicResource flowlauncherHotkey}"
+                                        Icon="&#xeda7;"
+                                        Sub="{DynamicResource flowlauncherHotkeyToolTip}">
+                                        <flowlauncher:HotkeyControl DataContext="{Binding ToggleHotkeyViewModel}" />
+                                    </cc:Card>
                                 </StackPanel>
 
                                 <StackPanel Grid.Row="2">
-                                    <Border Margin="0,8,0,0" Style="{DynamicResource SettingGroupBox}">
-                                        <ItemsControl Style="{StaticResource SettingGrid}">
-                                            <StackPanel Style="{StaticResource TextPanel}">
-                                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource previewHotkey}" />
-                                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource previewHotkeyToolTip}" />
-                                            </StackPanel>
-                                            <flowlauncher:HotkeyControl
-                                                x:Name="PreviewHotkeyControl"
-                                                Grid.Row="0"
-                                                Grid.Column="2"
-                                                Margin="0,0,16,0"
-                                                HorizontalAlignment="Right"
-                                                HorizontalContentAlignment="Right"
-                                                DataContext="{Binding PreviewHotkeyViewModel}" />
-                                            <TextBlock Style="{StaticResource Glyph}">
-                                                &#xe8a1;
-                                            </TextBlock>
-                                        </ItemsControl>
-                                    </Border>
+                                    <cc:Card
+                                        Title="{DynamicResource previewHotkey}"
+                                        Icon="&#xe8a1;;"
+                                        Sub="{DynamicResource previewHotkeyToolTip}">
+                                        <flowlauncher:HotkeyControl DataContext="{Binding PreviewHotkeyViewModel}" />
+                                    </cc:Card>
                                 </StackPanel>
 
                                 <Border
