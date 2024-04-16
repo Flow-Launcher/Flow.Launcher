@@ -12,7 +12,7 @@
     mc:Ignorable="d">
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <Border Margin="0,8,0,0">
+            <Border Margin="0,4,0,0">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Background" Value="{DynamicResource Color00B}" />

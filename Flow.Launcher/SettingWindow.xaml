@@ -2630,7 +2630,7 @@
                             <StackPanel Margin="5,18,18,10">
                                 <TextBlock
                                     Grid.Row="0"
-                                    Margin="0,5,0,2"
+                                    Margin="0,5,0,6"
                                     FontSize="30"
                                     Style="{StaticResource PageTitle}"
                                     Text="{DynamicResource hotkeys}"
