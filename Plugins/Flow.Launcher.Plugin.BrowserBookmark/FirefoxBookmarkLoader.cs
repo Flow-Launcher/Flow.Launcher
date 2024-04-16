@@ -113,10 +113,10 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 
             var defaultProfileFolderName = defaultProfileFolderNameRaw.Split('=').Last();
 
-            var indexOfDefaultProfileAtttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
+            var indexOfDefaultProfileAttributePath = lines.IndexOf("Path=" + defaultProfileFolderName);
 
             // Seen in the example above, the IsRelative attribute is always above the Path attribute
-            var relativeAttribute = lines[indexOfDefaultProfileAtttributePath - 1];
+            var relativeAttribute = lines[indexOfDefaultProfileAttributePath - 1];
 
             return relativeAttribute == "0" // See above, the profile is located in a custom location, path is not relative, so IsRelative=0
                 ? defaultProfileFolderName + @"\places.sqlite"
