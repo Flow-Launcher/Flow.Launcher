@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,19 +7,17 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UserControl = System.Windows.Controls.UserControl;
 
 namespace Flow.Launcher.Resources.Controls
 {
-    public partial class Card : UserControl
+    public partial class ExCard : UserControl
     {
-        public Card()
+        public ExCard()
         {
             InitializeComponent();
         }
@@ -30,7 +27,7 @@ namespace Flow.Launcher.Resources.Controls
             set { SetValue(TitleValueProperty, value); }
         }
         public static readonly DependencyProperty TitleValueProperty =
-          DependencyProperty.Register("Title", typeof(string), typeof(Card), new PropertyMetadata(string.Empty));
+          DependencyProperty.Register("Title", typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         public string Sub
         {
@@ -38,7 +35,7 @@ namespace Flow.Launcher.Resources.Controls
             set { SetValue(SubValueProperty, value); }
         }
         public static readonly DependencyProperty SubValueProperty =
-          DependencyProperty.Register("Sub", typeof(string), typeof(Card), new PropertyMetadata(string.Empty));
+          DependencyProperty.Register("Sub", typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         public string Icon
         {
@@ -46,7 +43,7 @@ namespace Flow.Launcher.Resources.Controls
             set { SetValue(IconValueProperty, value); }
         }
         public static readonly DependencyProperty IconValueProperty =
-          DependencyProperty.Register("Icon", typeof(string), typeof(Card), new PropertyMetadata(string.Empty));
+          DependencyProperty.Register("Icon", typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         /// <summary>
         /// Gets or sets additional content for the UserControl
@@ -57,15 +54,16 @@ namespace Flow.Launcher.Resources.Controls
             set { SetValue(AdditionalContentProperty, value); }
         }
         public static readonly DependencyProperty AdditionalContentProperty =
-            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(Card),
+            DependencyProperty.Register("AdditionalContent", typeof(object), typeof(ExCard),
               new PropertyMetadata(null));
-        public object Type
+
+        public object SideContent
         {
-            get { return (object)GetValue(TypeProperty); }
-            set { SetValue(TypeProperty, value); }
+            get { return (object)GetValue(SideContentProperty); }
+            set { SetValue(SideContentProperty, value); }
         }
-        public static readonly DependencyProperty TypeProperty =
-            DependencyProperty.Register("Type", typeof(object), typeof(Card),
+        public static readonly DependencyProperty SideContentProperty =
+            DependencyProperty.Register("SideContent", typeof(object), typeof(ExCard),
               new PropertyMetadata(null));
     }
 }

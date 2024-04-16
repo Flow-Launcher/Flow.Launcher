@@ -12,16 +12,24 @@
     mc:Ignorable="d">
     <UserControl.Template>
         <ControlTemplate TargetType="UserControl">
-            <Border Margin="0,4,0,0">
+            <Border x:Name="BD" HorizontalAlignment="Stretch">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
                         <Setter Property="Background" Value="{DynamicResource Color00B}" />
                         <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="CornerRadius" Value="5" />
-                        <Setter Property="Margin" Value="0,5,0,0" />
                         <Setter Property="MinHeight" Value="68" />
+                        <Setter Property="Margin" Value="0,4,0,0" />
                         <Setter Property="SnapsToDevicePixels" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Inside">
+                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </DataTrigger>
+                        </Style.Triggers>
                     </Style>
                 </Border.Style>
                 <Grid>

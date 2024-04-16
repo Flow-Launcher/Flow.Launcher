@@ -2636,6 +2636,24 @@
                                     Text="{DynamicResource hotkeys}"
                                     TextAlignment="left" />
 
+
+                                <cc:ExCard
+                                    Title="Fixed Hotkeys"
+                                    Icon="&#xeda7;"
+                                    Sub="TSTSTS">
+                                    <StackPanel>
+                                        <cc:Card
+                                            Title="{DynamicResource flowlauncherHotkey}"
+                                            Icon="&#xeda7;"
+                                            Sub="{DynamicResource flowlauncherHotkeyToolTip}"
+                                            Type="Inside" />
+                                        <cc:Card
+                                            Title="{DynamicResource flowlauncherHotkey}"
+                                            Icon="&#xeda7;"
+                                            Sub="{DynamicResource flowlauncherHotkeyToolTip}"
+                                            Type="Inside" />
+                                    </StackPanel>
+                                </cc:ExCard>
                                 <StackPanel Grid.Row="1">
                                     <cc:Card
                                         Title="{DynamicResource flowlauncherHotkey}"
