@@ -112,7 +112,6 @@
                         Text="{DynamicResource flowlauncherHotkey}" />
                     <flowlauncher:HotkeyControl
                         x:Name="HotkeyControl"
-                        DataContext="{Binding Path=HotkeyControlViewModel}"
                         Width="300"
                         Height="35"
                         Margin="-206,10,0,0"

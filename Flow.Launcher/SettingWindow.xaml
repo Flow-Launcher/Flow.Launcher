@@ -2641,7 +2641,11 @@
                                         Title="{DynamicResource flowlauncherHotkey}"
                                         Icon="&#xeda7;"
                                         Sub="{DynamicResource flowlauncherHotkeyToolTip}">
-                                        <flowlauncher:HotkeyControl DataContext="{Binding ToggleHotkeyViewModel}" />
+                                        <flowlauncher:HotkeyControl 
+                                            DefaultHotkey="Alt+Space"
+                                            ValidateKeyGesture="True"
+                                            Hotkey="{Binding Settings.Hotkey}"
+                                            ChangeHotkey="{Binding SetTogglingHotkeyCommand}"/>
                                     </cc:Card>
                                 </StackPanel>
 
@@ -2650,7 +2654,10 @@
                                         Title="{DynamicResource previewHotkey}"
                                         Icon="&#xe8a1;"
                                         Sub="{DynamicResource previewHotkeyToolTip}">
-                                        <flowlauncher:HotkeyControl DataContext="{Binding PreviewHotkeyViewModel}" />
+                                        <flowlauncher:HotkeyControl 
+                                            DefaultHotkey="F1"
+                                            ValidateKeyGesture="False"
+                                            Hotkey="{Binding Settings.PreviewHotkey}"/>
                                     </cc:Card>
                                 </StackPanel>
 
@@ -2740,16 +2747,25 @@
                                         Margin="0,12,0,0"
                                         Icon="&#xe893;"
                                         Sub="{DynamicResource autoCompleteHotkeyToolTip}">
-                                        <flowlauncher:HotkeyControl DataContext="{Binding AutoCompleteHotkeyViewModel}" />
+                                        <flowlauncher:HotkeyControl 
+                                            DefaultHotkey="Ctrl+Tab"
+                                            ValidateKeyGesture="False"
+                                            Hotkey="{Binding Settings.AutoCompleteHotkey}"/>
                                     </cc:Card>
 
                                     <cc:Card Title="{DynamicResource SelectNextItemHotkey}" Icon="&#xf0ae;">
-                                        <flowlauncher:HotkeyControl DataContext="{Binding SelectNextItemHotkeyViewModel}" />
+                                        <flowlauncher:HotkeyControl 
+                                            DefaultHotkey="Tab"
+                                            ValidateKeyGesture="False"
+                                            Hotkey="{Binding Settings.Hotkey}"/>
                                     </cc:Card>
 
 
                                     <cc:Card Title="{DynamicResource SelectPrevItemHotkey}" Icon="&#xf0ad;">
-                                        <flowlauncher:HotkeyControl DataContext="{Binding SelectPrevItemHotkeyViewModel}" />
+                                        <flowlauncher:HotkeyControl
+                                            DefaultHotkey="Shift+Tab"
+                                            ValidateKeyGesture="False"
+                                            Hotkey="{Binding Settings.SelectPrevItemHotkey}"/>
                                     </cc:Card>
                                 </StackPanel>
 

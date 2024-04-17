@@ -33,7 +33,7 @@ namespace Flow.Launcher
         {
             if (!update)
             {
-                if (!HotkeyControlViewModel.CurrentHotkeyAvailable)
+                if (!HotkeyControl.CurrentHotkeyAvailable)
                 {
                     MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
                     return;
@@ -46,7 +46,7 @@ namespace Flow.Launcher
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
-                    Hotkey = HotkeyControlViewModel.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
+                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
                 };
                 _settings.CustomPluginHotkeys.Add(pluginHotkey);
 
@@ -54,8 +54,8 @@ namespace Flow.Launcher
             }
             else
             {
-                if (updateCustomHotkey.Hotkey != HotkeyControlViewModel.CurrentHotkey.ToString() &&
-                    !HotkeyControlViewModel.CurrentHotkeyAvailable)
+                if (updateCustomHotkey.Hotkey != HotkeyControl.CurrentHotkey.ToString() &&
+                    !HotkeyControl.CurrentHotkeyAvailable)
                 {
                     MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
                     return;
@@ -63,7 +63,7 @@ namespace Flow.Launcher
 
                 var oldHotkey = updateCustomHotkey.Hotkey;
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = HotkeyControlViewModel.CurrentHotkey.ToString();
+                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
                 //remove origin hotkey
                 HotKeyMapper.RemoveHotkey(oldHotkey);
                 HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
@@ -72,7 +72,6 @@ namespace Flow.Launcher
             Close();
         }
 
-        public HotkeyControlViewModel HotkeyControlViewModel { get; set; } = new HotkeyControlViewModel();
 
         public void UpdateItem(CustomPluginHotkey item)
         {
@@ -86,7 +85,7 @@ namespace Flow.Launcher
             }
 
             tbAction.Text = updateCustomHotkey.ActionKeyword;
-            _ = HotkeyControlViewModel.SetHotkeyAsync(updateCustomHotkey.Hotkey, false);
+            HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
             update = true;
             lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
         }

@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
-    d:DataContext="{d:DesignInstance vm:HotkeyControlViewModel}"
     mc:Ignorable="d">
     <Grid>
         <Popup
@@ -67,19 +66,19 @@
                     </Style>
                 </Border.Style>
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="2" Command="{Binding ResetToDefaultCommand}">
+                    <Button Margin="2" Click="ResetButton_OnClick">
                         <Button.Content>
                             <ui:FontIcon FontSize="13" Glyph="&#xe72c;" />
                         </Button.Content>
                     </Button>
-                    <Button Margin="2" Command="{Binding DeleteCommand}">
+                    <Button Margin="2" Click="DeleteBtn_OnClick">
                         <Button.Content>
                             <ui:FontIcon FontSize="13" Glyph="&#xe74d;" />
                         </Button.Content>
                     </Button>
                     <Button
                         Margin="2"
-                        Command="{Binding StopRecordingCommand}"
+                        Click="StopRecordingBtn_Click"
                         Foreground="red">
                         <Button.Content>
                             <ui:FontIcon FontSize="13" Glyph="&#xe7c8;" />
@@ -92,12 +91,12 @@
                 x:Name="HotkeyBtn"
                 Grid.Column="1"
                 Width="Auto"
-                Command="{Binding StartRecordingCommand}"
+                Checked="HotkeyBtn_OnChecked"
+                Unchecked="HotkeyBtn_OnUnchecked"
                 FontSize="13"
                 FontWeight="Bold"
                 Foreground="{DynamicResource Color01B}"
                 GroupName="HotkeyReg"
-                IsChecked="{Binding Recording}"
                 KeyboardNavigation.TabNavigation="Continue"
                 PreviewKeyDown="OnPreviewKeyDown"
                 LostFocus="HotkeyBtn_OnLostFocus"
@@ -149,7 +148,7 @@
                     </ControlTemplate>
                 </RadioButton.Template>
                 <ToggleButton.Content>
-                    <ItemsControl ItemsSource="{Binding Path=KeysToDisplay}">
+                    <ItemsControl x:Name="HotkeyList">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <StackPanel Orientation="Horizontal" />

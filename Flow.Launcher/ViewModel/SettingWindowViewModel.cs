@@ -23,6 +23,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Runtime.CompilerServices;
+using Flow.Launcher.Infrastructure.Hotkey;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -69,36 +70,12 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
             };
+        }
 
-            ToggleHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.Hotkey, "Alt + Space", true, hotkey =>
-                {
-                    Settings.Hotkey = hotkey.ToString();
-                    HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
-                });
-
-            PreviewHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.PreviewHotkey, "F1", false, hotkey =>
-                {
-                    Settings.PreviewHotkey = hotkey.ToString();
-                });
-
-            AutoCompleteHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.AutoCompleteHotkey, "Ctrl+Tab", false, hotkey =>
-                {
-                    Settings.AutoCompleteHotkey = hotkey.ToString();
-                });
-
-            SelectNextItemHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.SelectNextItemHotkey, "Tab", false, hotkey =>
-                {
-                    Settings.SelectNextItemHotkey = hotkey.ToString();
-                });
-            SelectPrevItemHotkeyViewModel =
-                new HotkeyControlViewModel(Settings.SelectPrevItemHotkey, "Shift+Tab", false, hotkey =>
-                {
-                    Settings.SelectPrevItemHotkey = hotkey.ToString();
-                });
+        [RelayCommand]
+        public void SetTogglingHotkey(HotkeyModel hotkey)
+        {
+            HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
         }
 
         public Settings Settings { get; set; }
@@ -976,12 +953,6 @@ namespace Flow.Launcher.ViewModel
                     BytesToReadableString(size));
             }
         }
-
-        public HotkeyControlViewModel ToggleHotkeyViewModel { get; set; }
-        public HotkeyControlViewModel PreviewHotkeyViewModel { get; set; }
-        public HotkeyControlViewModel AutoCompleteHotkeyViewModel { get; set; }
-        public HotkeyControlViewModel SelectNextItemHotkeyViewModel { get; set; }
-        public HotkeyControlViewModel SelectPrevItemHotkeyViewModel { get; set; }
 
         private static DirectoryInfo GetLogDir(string version = "")
         {

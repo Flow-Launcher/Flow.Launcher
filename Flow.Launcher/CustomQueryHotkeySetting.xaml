@@ -106,7 +106,7 @@
                             Grid.Column="1"
                             Orientation="Horizontal">
                             <flowlauncher:HotkeyControl
-                                DataContext="{Binding HotkeyControlViewModel}"
+                                x:Name="HotkeyControl"
                                 Grid.Column="1"
                                 Width="200"
                                 Height="36"
