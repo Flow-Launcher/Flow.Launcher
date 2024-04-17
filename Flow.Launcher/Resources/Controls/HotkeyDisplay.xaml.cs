@@ -28,8 +28,8 @@ namespace Flow.Launcher.Resources.Controls
         {
             InitializeComponent();
             //List<string> stringList =e.NewValue.Split('+').ToList();
+            Values = new ObservableCollection<string>();
             KeysControl.ItemsSource = Values;
-
         }
 
         public string Keys
@@ -37,10 +37,13 @@ namespace Flow.Launcher.Resources.Controls
             get { return (string)GetValue(KeysValueProperty); }
             set { SetValue(KeysValueProperty, value); }
         }
-        public static readonly DependencyProperty KeysValueProperty =
-          DependencyProperty.Register("Keys", typeof(string), typeof(HotkeyDisplay), new PropertyMetadata(string.Empty, valueChanged));
 
-        private static void valueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        public static readonly DependencyProperty KeysValueProperty =
+            DependencyProperty.Register("Keys", typeof(string), typeof(HotkeyDisplay),
+                new PropertyMetadata(string.Empty, keyChanged));
+
+        
+        private static void keyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as UserControl;
             if (null == control) return; // This should not be possible
@@ -48,8 +51,14 @@ namespace Flow.Launcher.Resources.Controls
             var newValue = e.NewValue as string;
             if (null == newValue) return;
 
-            //String[] Values = newValue.Split('+');
-            //Debug.WriteLine(Values[0]);
+            if (d is not HotkeyDisplay hotkeyDisplay)
+                return;
+
+            hotkeyDisplay.Values.Clear();
+            foreach (var key in newValue.Split('+'))
+            {
+                hotkeyDisplay.Values.Add(key);
+            }
         }
 
         public ObservableCollection<string> Values { get; set; }
