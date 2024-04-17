@@ -47,7 +47,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     public List<Result> Query(Query query)
     {
-        // For when the plugin being previously disabled and is now reenabled
+        // For when the plugin being previously disabled and is now re-enabled
         if (!_initialized)
         {
             LoadBookmarksIfEnabled();
