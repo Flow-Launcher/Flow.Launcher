@@ -2729,7 +2729,9 @@
                                                 Title="{DynamicResource flowlauncherHotkey}"
                                                 Icon="&#xeda7;"
                                                 Sub="{DynamicResource flowlauncherHotkeyToolTip}"
-                                                Type="Inside" />
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+F4" />
+                                            </cc:Card>
                                         </StackPanel>
                                     </cc:ExCard>
 

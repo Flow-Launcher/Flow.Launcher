@@ -9,7 +9,62 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <Button
+        <ItemsControl x:Name="KeysControl">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Content="{Binding num}">
+                        <Button.InputBindings>
+                            <MouseBinding
+                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=DataContext.LeftClick}"
+                                CommandParameter="{Binding num}"
+                                Gesture="LeftClick" />
+                            <MouseBinding
+                                Command="{Binding RightClick}"
+                                CommandParameter="{Binding num}"
+                                Gesture="RightClick" />
+                        </Button.InputBindings>
+                    </Button>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+            <ItemsControl.ItemContainerStyle>
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Grid.Row" Value="{Binding row}" />
+                    <Setter Property="Grid.Column" Value="{Binding col}" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+        </ItemsControl>
+        <!--<Button
             Grid.Column="1"
             Width="Auto"
             FontSize="13"
@@ -29,7 +84,7 @@
                 </ControlTemplate>
             </Button.Template>
             <Button.Content>
-                <ItemsControl ItemsSource="{Binding Path=KeysToDisplay}">
+                <ItemsControl x:Name="KeysControl">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <StackPanel Orientation="Horizontal" />
@@ -49,6 +104,6 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </Button.Content>
-        </Button>
+        </Button>-->
     </Grid>
 </UserControl>
