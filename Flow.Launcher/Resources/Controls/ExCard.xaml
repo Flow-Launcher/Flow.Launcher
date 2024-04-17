@@ -148,7 +148,7 @@
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsExpanded" Value="true">
                                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
-                                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,1,0,0" />
+                                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,0,0,0" />
                                             <Trigger.EnterActions>
                                                 <BeginStoryboard>
                                                     <Storyboard>
