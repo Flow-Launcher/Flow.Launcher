@@ -92,14 +92,12 @@
                 Grid.Column="1"
                 Width="Auto"
                 Checked="HotkeyBtn_OnChecked"
-                Unchecked="HotkeyBtn_OnUnchecked"
                 FontSize="13"
                 FontWeight="Bold"
                 Foreground="{DynamicResource Color01B}"
                 GroupName="HotkeyReg"
                 KeyboardNavigation.TabNavigation="Continue"
                 PreviewKeyDown="OnPreviewKeyDown"
-                LostFocus="HotkeyBtn_OnLostFocus"
                 Style="{StaticResource {x:Type ToggleButton}}">
                 <RadioButton.Template>
                     <ControlTemplate TargetType="RadioButton">

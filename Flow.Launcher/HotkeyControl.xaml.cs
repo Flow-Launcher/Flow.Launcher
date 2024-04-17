@@ -51,6 +51,7 @@ namespace Flow.Launcher
             if (d is HotkeyControl hotkeyControl)
             {
                 hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
+                hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
             }
         }
 
@@ -202,8 +203,6 @@ namespace Flow.Launcher
 
         private void ResetToDefault()
         {
-            HotkeyBtn.IsChecked = false;
-
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = DefaultHotkey;
@@ -212,6 +211,8 @@ namespace Flow.Launcher
             SetKeysToDisplay(CurrentHotkey);
 
             SetHotkey(CurrentHotkey);
+
+            HotkeyBtn.IsChecked = false;
         }
 
 
@@ -241,12 +242,11 @@ namespace Flow.Launcher
 
         public void Delete()
         {
-            HotkeyBtn.IsChecked = false;
-
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = "";
             SetKeysToDisplay(KeysToDisplay, new List<string>());
+            HotkeyBtn.IsChecked = false;
         }
 
         private void SetKeysToDisplay(HotkeyModel hotkey)
