@@ -2722,7 +2722,9 @@
                                                 Title="{DynamicResource flowlauncherHotkey}"
                                                 Icon="&#xeda7;"
                                                 Sub="{DynamicResource flowlauncherHotkeyToolTip}"
-                                                Type="Inside" />
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                                            </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource flowlauncherHotkey}"
                                                 Icon="&#xeda7;"
