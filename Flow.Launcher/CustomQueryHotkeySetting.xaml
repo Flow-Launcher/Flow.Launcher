@@ -7,13 +7,13 @@
     Title="{DynamicResource customeQueryHotkeyTitle}"
     Width="530"
     Background="{DynamicResource PopuBGColor}"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     Foreground="{DynamicResource PopupTextColor}"
     Icon="Images\app.png"
     MouseDown="window_MouseDown"
     ResizeMode="NoResize"
     SizeToContent="Height"
-    WindowStartupLocation="CenterScreen"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    WindowStartupLocation="CenterScreen">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
@@ -108,8 +108,6 @@
                             <flowlauncher:HotkeyControl
                                 x:Name="HotkeyControl"
                                 Grid.Column="1"
-                                Width="200"
-                                Height="36"
                                 Margin="10,0,10,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
