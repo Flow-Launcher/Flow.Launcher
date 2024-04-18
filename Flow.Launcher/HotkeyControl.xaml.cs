@@ -78,6 +78,7 @@ namespace Flow.Launcher
             InitializeComponent();
 
             HotkeyList.ItemsSource = KeysToDisplay;
+            SetKeysToDisplay(CurrentHotkey);
         }
 
         /*------------------ New Logic Structure Part------------------------*/
@@ -157,6 +158,7 @@ namespace Flow.Launcher
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new ObservableCollection<string>();
 
+        public bool IsEmpty => KeysToDisplay.Count == 0 || (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey);
 
         public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 

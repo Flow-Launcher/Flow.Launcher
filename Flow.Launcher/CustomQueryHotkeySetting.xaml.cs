@@ -31,18 +31,14 @@ namespace Flow.Launcher
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
+            if (HotkeyControl.IsEmpty)
+            {
+                MessageBox.Show("Hotkey cannot be empty.");
+                return;
+            }
             if (!update)
             {
-                if (!HotkeyControl.CurrentHotkeyAvailable)
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
-                    return;
-                }
-
-                if (_settings.CustomPluginHotkeys == null)
-                {
-                    _settings.CustomPluginHotkeys = new ObservableCollection<CustomPluginHotkey>();
-                }
+                _settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
@@ -54,13 +50,6 @@ namespace Flow.Launcher
             }
             else
             {
-                if (updateCustomHotkey.Hotkey != HotkeyControl.CurrentHotkey.ToString() &&
-                    !HotkeyControl.CurrentHotkeyAvailable)
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
-                    return;
-                }
-
                 var oldHotkey = updateCustomHotkey.Hotkey;
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
                 updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
@@ -105,12 +94,10 @@ namespace Flow.Launcher
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
-            TextBox textBox = Keyboard.FocusedElement as TextBox;
-            if (textBox != null)
-            {
-                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                textBox.MoveFocus(tRequest);
-            }
+            if (Keyboard.FocusedElement is not TextBox textBox) return;
+
+            TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+            textBox.MoveFocus(tRequest);
         }
     }
 }

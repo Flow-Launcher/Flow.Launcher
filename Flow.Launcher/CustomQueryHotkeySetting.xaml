@@ -62,92 +62,84 @@
                 </Grid>
             </StackPanel>
             <StackPanel Margin="26,0,26,0">
-                <StackPanel Grid.Row="0" Margin="0,0,0,12">
-                    <TextBlock
-                        Grid.Column="0"
-                        Margin="0,0,0,0"
-                        FontSize="20"
-                        FontWeight="SemiBold"
-                        Text="{DynamicResource customeQueryHotkeyTitle}"
-                        TextAlignment="Left" />
-                </StackPanel>
-                <StackPanel>
-                    <TextBlock
-                        FontSize="14"
-                        Text="{DynamicResource customeQueryHotkeyTips}"
-                        TextAlignment="Left"
-                        TextWrapping="WrapWithOverflow" />
-                    <Image
-                        Width="478"
-                        Margin="0,20,0,0"
-                        Source="/Images/illustration_01.png" />
-                </StackPanel>
+                <TextBlock
+                    Margin="0,0,0,12"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Text="{DynamicResource customeQueryHotkeyTitle}"
+                    TextAlignment="Left" />
+                <TextBlock
+                    FontSize="14"
+                    Text="{DynamicResource customeQueryHotkeyTips}"
+                    TextAlignment="Left"
+                    TextWrapping="WrapWithOverflow" />
+                <Image
+                    Width="478"
+                    Margin="0,20,0,0"
+                    Source="/Images/illustration_01.png" />
 
-                <StackPanel Margin="0,20,0,0" Orientation="Horizontal">
-                    <Grid Width="478">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="10"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource hotkey}" />
-                        <StackPanel
-                            Grid.Row="0"
-                            Grid.Column="1"
-                            Orientation="Horizontal">
-                            <flowlauncher:HotkeyControl
-                                x:Name="HotkeyControl"
-                                Grid.Column="1"
-                                Margin="10,0,10,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                HorizontalContentAlignment="Left" />
-                            <TextBlock
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                Margin="10"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Text="{DynamicResource actionKeyword}" />
-                        </StackPanel>
-                        <TextBlock
-                            Grid.Row="1"
-                            Grid.Column="0"
-                            Margin="10"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            FontSize="14"
-                            Text="{DynamicResource customQuery}" />
-                        <DockPanel
-                            Grid.Row="1"
-                            Grid.Column="1"
-                            LastChildFill="True">
-                            <Button
-                                x:Name="btnTestActionKeyword"
-                                Margin="0,0,10,0"
-                                Padding="10,5,10,5"
-                                Click="BtnTestActionKeyword_OnClick"
-                                Content="{DynamicResource preview}"
-                                DockPanel.Dock="Right" />
-                            <TextBox
-                                x:Name="tbAction"
-                                Margin="10"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Center" />
-                        </DockPanel>
-                    </Grid>
-                </StackPanel>
+                <Grid Margin="0,20,0,0" Width="478">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource hotkey}" />
+                    <flowlauncher:HotkeyControl
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Grid.ColumnSpan="2"
+                        x:Name="HotkeyControl"
+                        DefaultHotkey=""
+                        Margin="10,0,10,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        HorizontalContentAlignment="Left" />
+                    <!--<TextBlock
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource actionKeyword}" />-->
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{DynamicResource customQuery}" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        x:Name="tbAction"
+                        Margin="10"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center" />
+                    <Button
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        x:Name="btnTestActionKeyword"
+                        Margin="0,0,10,0"
+                        Padding="10,5,10,5"
+                        Click="BtnTestActionKeyword_OnClick"
+                        Content="{DynamicResource preview}" />
+                </Grid>
             </StackPanel>
         </StackPanel>
         <Border
