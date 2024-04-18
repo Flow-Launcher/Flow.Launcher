@@ -2760,11 +2760,17 @@
                                             ValidateKeyGesture="False" />
                                     </cc:Card>
 
-
                                     <cc:Card Title="{DynamicResource SelectPrevItemHotkey}" Icon="&#xf0ad;">
                                         <flowlauncher:HotkeyControl
                                             DefaultHotkey="Shift+Tab"
                                             Hotkey="{Binding Settings.SelectPrevItemHotkey}"
+                                            ValidateKeyGesture="False" />
+                                    </cc:Card>
+
+                                    <cc:Card Title="{DynamicResource SettingWindowHotkey}" Icon="&#xe713;">
+                                        <flowlauncher:HotkeyControl
+                                            DefaultHotkey="Ctrl+I"
+                                            Hotkey="{Binding Settings.SettingWindowHotkey}"
                                             ValidateKeyGesture="False" />
                                     </cc:Card>
 

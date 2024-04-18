@@ -23,6 +23,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string AutoCompleteHotkey { get; set; } = $"{KeyConstant.Ctrl} + Tab";
         public string SelectNextItemHotkey { get; set; } = $"Tab";
         public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
+        public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
 
         public string Language
         {

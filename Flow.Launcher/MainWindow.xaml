@@ -47,10 +47,6 @@
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
         <KeyBinding
-            Key="I"
-            Command="{Binding OpenSettingCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
             Key="J"
             Command="{Binding SelectNextItemCommand}"
             Modifiers="Ctrl" />
@@ -106,7 +102,6 @@
             Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-
         <KeyBinding
             Key="Enter"
             Command="{Binding OpenResultCommand}"
@@ -198,6 +193,10 @@
             Key="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding SelectPrevItemCommand}"
             Modifiers="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding OpenSettingCommand}"
+            Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">

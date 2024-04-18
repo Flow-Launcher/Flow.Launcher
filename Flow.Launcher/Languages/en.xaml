@@ -186,6 +186,7 @@
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Next Item Hotkey</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Prev Item Hotkey</system:String>
+    <system:String x:Key="SettingWindowHotkey">Setting Window Hotkey</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
