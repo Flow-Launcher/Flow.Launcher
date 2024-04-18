@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Tmavý</system:String>
     <system:String x:Key="SoundEffect">Zvukový efekt</system:String>
     <system:String x:Key="SoundEffectTip">Přehrát krátký zvuk při otevření okna vyhledávání</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">Animace</system:String>
     <system:String x:Key="AnimationTip">Použít animaci v UI</system:String>
     <system:String x:Key="AnimationSpeed">Rychlost animace</system:String>
