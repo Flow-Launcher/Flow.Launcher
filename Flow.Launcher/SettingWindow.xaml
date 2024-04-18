@@ -2781,7 +2781,7 @@
                                     <cc:Card Title="{DynamicResource SelectNextItemHotkey}" Icon="&#xf0ae;">
                                         <flowlauncher:HotkeyControl
                                             DefaultHotkey="Tab"
-                                            Hotkey="{Binding Settings.Hotkey}"
+                                            Hotkey="{Binding Settings.SelectNextItemHotkey}"
                                             ValidateKeyGesture="False" />
                                     </cc:Card>
 
