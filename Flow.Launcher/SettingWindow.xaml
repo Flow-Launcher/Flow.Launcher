@@ -2726,10 +2726,28 @@
                                         Sub="{DynamicResource basicHotkeyToolTip}">
                                         <StackPanel>
                                             <cc:Card
+                                                Title="{DynamicResource OpenContainFolderHotkey}"
+                                                Icon="&#xe8b7;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+ENTER" />
+                                            </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource RunAsAdminHotkey}"
+                                                Icon="&#xe7ef;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+ENTER" />
+                                            </cc:Card>
+                                            <cc:Card
                                                 Title="{DynamicResource ToggleHistoryHotkey}"
                                                 Icon="&#xf738;"
                                                 Type="Inside">
                                                 <cc:HotkeyDisplay Keys="Ctrl+H" />
+                                            </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource CopyFilePathHotkey}"
+                                                Icon="&#xe8c8;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+C" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource OpenContextMenuHotkey}"
@@ -2756,7 +2774,12 @@
                                                     Hotkey="{Binding Settings.SettingWindowHotkey}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
-
+                                            <cc:Card
+                                                Title="{DynamicResource ToggleGameModeHotkey}"
+                                                Icon="&#xe7fc;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+C" />
+                                            </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource ReloadPluginHotkey}"
                                                 Icon="&#xe72c;"
