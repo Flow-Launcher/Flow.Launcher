@@ -89,6 +89,9 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.SelectPrevItemHotkey):
                         OnPropertyChanged(nameof(SelectPrevItemHotkey));
                         break;
+                    case nameof(Settings.OpenContextMenuHotkey):
+                        OnPropertyChanged(nameof(OpenContextMenuHotkey));
+                        break;
                     case nameof(Settings.SettingWindowHotkey):
                         OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
@@ -665,6 +668,7 @@ namespace Flow.Launcher.ViewModel
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
         public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
         public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift+Tab");
+        public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
 
 

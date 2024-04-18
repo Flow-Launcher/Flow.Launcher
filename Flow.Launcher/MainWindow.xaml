@@ -75,10 +75,6 @@
             Command="{Binding SelectLastResultCommand}"
             Modifiers="Alt" />
         <KeyBinding
-            Key="O"
-            Command="{Binding LoadContextMenuCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
             Key="R"
             Command="{Binding ReQueryCommand}"
             Modifiers="Ctrl" />
@@ -197,6 +193,10 @@
             Key="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding OpenSettingCommand}"
             Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding LoadContextMenuCommand}"
+            Modifiers="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
