@@ -1,24 +1,23 @@
 ﻿using System;
 
-namespace Flow.Launcher.Helper
-{
-    public static class SyntaxSugars
-    {
-        public static TResult CallOrRescueDefault<TResult>(Func<TResult> callback)
-        {
-            return CallOrRescueDefault(callback, default(TResult));
-        }
+namespace Flow.Launcher.Helper;
 
-        public static TResult CallOrRescueDefault<TResult>(Func<TResult> callback, TResult def)
+public static class SyntaxSugars
+{
+    public static TResult CallOrRescueDefault<TResult>(Func<TResult> callback)
+    {
+        return CallOrRescueDefault(callback, default(TResult));
+    }
+
+    public static TResult CallOrRescueDefault<TResult>(Func<TResult> callback, TResult def)
+    {
+        try
         {
-            try
-            {
-                return callback();
-            }
-            catch
-            {
-                return def;
-            }
+            return callback();
+        }
+        catch
+        {
+            return def;
         }
     }
 }
