@@ -116,7 +116,7 @@
                                                                         <Trigger Property="IsMouseOver" Value="true">
                                                                             <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
                                                                             <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
-                                                                            <Setter TargetName="ToggleBtn" Property="Background" Value="{DynamicResource CustomContextHover}" />
+                                                                            <Setter TargetName="ToggleBtn" Property="Background" Value="{DynamicResource CustomExpanderHover}" />
                                                                         </Trigger>
                                                                         <Trigger Property="IsPressed" Value="true">
                                                                             <Setter TargetName="circle" Property="Stroke" Value="Transparent" />

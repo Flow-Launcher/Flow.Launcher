@@ -2721,7 +2721,7 @@
                                 <StackPanel Grid.Row="2">
                                     <cc:ExCard
                                         Title="{DynamicResource basicHotkey}"
-                                        Margin="0,12,0,0"
+                                        Margin="0,14,0,0"
                                         Icon="&#xf0e2;"
                                         Sub="{DynamicResource basicHotkeyToolTip}">
                                         <StackPanel>
@@ -2830,7 +2830,7 @@
 
                                     <cc:ExCard
                                         Title="{DynamicResource autoCompleteHotkey}"
-                                        Margin="0,4,0,0"
+                                        Margin="0,14,0,0"
                                         Icon="&#xe893;"
                                         Sub="{DynamicResource autoCompleteHotkeyToolTip}">
                                         <cc:ExCard.SideContent>

@@ -104,6 +104,11 @@
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
+    <!--  Resources for HotkeyControl  -->
+    <SolidColorBrush x:Key="CustomHotkeyHover" Color="#323232" />
+    <!--  Resources for Expander  -->
+    <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
+
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />

@@ -35,7 +35,7 @@
                     FontWeight="SemiBold"
                     Foreground="{Binding MessageColor}"
                     Text="{Binding Message}"
-                    Visibility="{Binding MessageVisibility}"/>
+                    Visibility="{Binding MessageVisibility}" />
             </Border>
         </Popup>
         <Grid>
@@ -104,7 +104,7 @@
                         <Border
                             x:Name="ButtonBorder"
                             Padding="5,0,5,0"
-                            Background="{DynamicResource Color12B}"
+                            Background="{DynamicResource ButtonBackgroundColor}"
                             BorderBrush="{DynamicResource ButtonInsideBorder}"
                             BorderThickness="1"
                             CornerRadius="5">
@@ -125,7 +125,7 @@
                                     <Condition Property="IsMouseOver" Value="True" />
                                     <Condition Property="IsChecked" Value="False" />
                                 </MultiTrigger.Conditions>
-                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource CustomContextHover}" />
+                                <Setter TargetName="ButtonBorder" Property="Background" Value="{DynamicResource ButtonMouseOver}" />
                             </MultiTrigger>
                             <MultiTrigger>
                                 <MultiTrigger.Conditions>
@@ -157,7 +157,7 @@
                                 <Border
                                     Margin="2,5,2,5"
                                     Padding="10,5,10,5"
-                                    Background="{DynamicResource SystemAccentColorLight2Brush}"
+                                    Background="{DynamicResource AccentButtonBackground}"
                                     BorderThickness="1"
                                     CornerRadius="5">
                                     <TextBlock Text="{Binding}" />
