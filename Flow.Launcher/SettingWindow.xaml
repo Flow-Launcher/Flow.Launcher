@@ -2841,9 +2841,8 @@
                                         </cc:ExCard.SideContent>
                                         <cc:Card
                                             Title="{DynamicResource autoCompleteHotkey}"
-                                            Icon="&#xe710;"
                                             Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                                            Type="Inside">
+                                            Type="InsideFit">
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.AutoCompleteHotkey2}"
@@ -2864,9 +2863,8 @@
                                         </cc:ExCard.SideContent>
                                         <cc:Card
                                             Title="{DynamicResource SelectNextItemHotkey}"
-                                            Icon="&#xe710;"
                                             Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                                            Type="Inside">
+                                            Type="InsideFit">
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.SelectNextItemHotkey2}"
@@ -2886,9 +2884,8 @@
                                         </cc:ExCard.SideContent>
                                         <cc:Card
                                             Title="{DynamicResource SelectPrevItemHotkey}"
-                                            Icon="&#xe710;"
                                             Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                                            Type="Inside">
+                                            Type="InsideFit">
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.SelectPrevItemHotkey2}"

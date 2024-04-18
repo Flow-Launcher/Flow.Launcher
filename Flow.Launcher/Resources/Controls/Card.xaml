@@ -29,6 +29,13 @@
                                 <Setter Property="Margin" Value="0,0,0,0" />
                                 <Setter Property="Background" Value="Transparent" />
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="InsideFit">
+                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Padding" Value="38,0,26,0" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Border.Style>
@@ -48,7 +55,6 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
                         Content="{TemplateBinding Content}" />
-
                     <StackPanel>
                         <StackPanel.Style>
                             <Style TargetType="{x:Type StackPanel}">
