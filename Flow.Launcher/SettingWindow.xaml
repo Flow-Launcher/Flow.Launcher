@@ -2739,6 +2739,25 @@
                                                 Type="Inside">
                                                 <cc:HotkeyDisplay Keys="Ctrl+F4" />
                                             </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource OpenContextMenuHotkey}"
+                                                Icon="&#xede3;"
+                                                Type="Inside">
+                                                <flowlauncher:HotkeyControl
+                                                    DefaultHotkey="Ctrl+I"
+                                                    Hotkey="{Binding Settings.OpenContextMenuHotkey}"
+                                                    ValidateKeyGesture="False" />
+                                            </cc:Card>
+
+                                            <cc:Card
+                                                Title="{DynamicResource SettingWindowHotkey}"
+                                                Icon="&#xe713;"
+                                                Type="Inside">
+                                                <flowlauncher:HotkeyControl
+                                                    DefaultHotkey="Ctrl+I"
+                                                    Hotkey="{Binding Settings.SettingWindowHotkey}"
+                                                    ValidateKeyGesture="False" />
+                                            </cc:Card>
                                         </StackPanel>
                                     </cc:ExCard>
 
@@ -2764,20 +2783,6 @@
                                         <flowlauncher:HotkeyControl
                                             DefaultHotkey="Shift+Tab"
                                             Hotkey="{Binding Settings.SelectPrevItemHotkey}"
-                                            ValidateKeyGesture="False" />
-                                    </cc:Card>
-
-                                    <cc:Card Title="{DynamicResource OpenContextMenuHotkey}" Icon="&#xede3;">
-                                        <flowlauncher:HotkeyControl
-                                            DefaultHotkey="Ctrl+I"
-                                            Hotkey="{Binding Settings.OpenContextMenuHotkey}"
-                                            ValidateKeyGesture="False" />
-                                    </cc:Card>
-
-                                    <cc:Card Title="{DynamicResource SettingWindowHotkey}" Icon="&#xe713;">
-                                        <flowlauncher:HotkeyControl
-                                            DefaultHotkey="Ctrl+I"
-                                            Hotkey="{Binding Settings.SettingWindowHotkey}"
                                             ValidateKeyGesture="False" />
                                     </cc:Card>
 
