@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -13,12 +11,13 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.ViewModel;
-using NHotkey;
+using JetBrains.Annotations;
+
+#nullable enable
 
 namespace Flow.Launcher
 {
-    public partial class HotkeyControl : UserControl, INotifyPropertyChanged
+    public partial class HotkeyControl : INotifyPropertyChanged
     {
         /// <summary>
         /// Designed for Preview Hotkey and KeyGesture.
@@ -42,28 +41,31 @@ namespace Flow.Launcher
             set { SetValue(DefaultHotkeyProperty, value); }
         }
 
-        public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
-            nameof(Hotkey), typeof(string), typeof(HotkeyControl),
-            new PropertyMetadata(default(string), OnHotkeyChanged));
-
         private static void OnHotkeyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is HotkeyControl hotkeyControl)
+            if (d is not HotkeyControl hotkeyControl)
             {
-                hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
-                hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
+                return;
             }
+
+            hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
+            hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
         }
 
 
         public static readonly DependencyProperty ChangeHotkeyProperty = DependencyProperty.Register(
             nameof(ChangeHotkey), typeof(ICommand), typeof(HotkeyControl), new PropertyMetadata(default(ICommand)));
 
-        public ICommand ChangeHotkey
+        public ICommand? ChangeHotkey
         {
             get { return (ICommand)GetValue(ChangeHotkeyProperty); }
             set { SetValue(ChangeHotkeyProperty, value); }
         }
+
+
+        public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
+            nameof(Hotkey), typeof(string), typeof(HotkeyControl),
+            new PropertyMetadata("", OnHotkeyChanged));
 
         public string Hotkey
         {
@@ -122,17 +124,11 @@ namespace Flow.Launcher
             tbMsg.SetResourceReference(TextBox.ForegroundProperty, "Color05B");
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        private void HotkeyBtn_OnLostFocus(object sender, RoutedEventArgs e)
-        {
-            HotkeyBtn.IsChecked = false;
-            RegisterHotkey();
         }
 
 
@@ -162,7 +158,7 @@ namespace Flow.Launcher
         public ObservableCollection<string> KeysToDisplay { get; set; } = new ObservableCollection<string>();
 
 
-        public HotkeyModel CurrentHotkey { get; private set; }
+        public HotkeyModel CurrentHotkey { get; private set; } = new(false, false, false, false, Key.None);
 
 
         public void StartRecording()
@@ -186,7 +182,7 @@ namespace Flow.Launcher
             try
             {
                 var converter = new KeyGestureConverter();
-                var key = (KeyGesture)converter.ConvertFromString(CurrentHotkey.ToString())!;
+                _ = (KeyGesture)converter.ConvertFromString(CurrentHotkey.ToString())!;
             }
             catch (Exception e) when (e is NotSupportedException or InvalidEnumArgumentException)
             {
@@ -226,12 +222,14 @@ namespace Flow.Launcher
                 bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
                 SetMessage(hotkeyAvailable ? "success" : "hotkeyUnavailable", !hotkeyAvailable);
 
-                if (hotkeyAvailable)
+                if (!hotkeyAvailable)
                 {
-                    Hotkey = keyModel.ToString();
-                    SetKeysToDisplay(CurrentHotkey);
-                    ChangeHotkey?.Execute(keyModel);
+                    return;
                 }
+
+                Hotkey = keyModel.ToString();
+                SetKeysToDisplay(CurrentHotkey);
+                ChangeHotkey?.Execute(keyModel);
             }
             else
             {
@@ -245,62 +243,24 @@ namespace Flow.Launcher
             if (!string.IsNullOrEmpty(Hotkey))
                 HotKeyMapper.RemoveHotkey(Hotkey);
             Hotkey = "";
-            SetKeysToDisplay(KeysToDisplay, new List<string>());
+            SetKeysToDisplay(new HotkeyModel(false, false, false, false, Key.None));
             HotkeyBtn.IsChecked = false;
         }
 
-        private void SetKeysToDisplay(HotkeyModel hotkey)
+        private void SetKeysToDisplay(HotkeyModel? hotkey)
         {
             KeysToDisplay.Clear();
-            if (hotkey.Alt)
-            {
-                KeysToDisplay.Add("Alt");
-            }
 
-            if (hotkey.Ctrl)
+            if (hotkey == null || hotkey == default(HotkeyModel))
             {
-                KeysToDisplay.Add("Ctrl");
-            }
-
-            if (hotkey.Shift)
-            {
-                KeysToDisplay.Add("Shift");
-            }
-
-            if (hotkey.Win)
-            {
-                KeysToDisplay.Add("Win");
-            }
-
-            if (hotkey.CharKey != Key.None)
-            {
-                KeysToDisplay.Add(hotkey.CharKey.ToString());
-            }
-        }
-
-        private void SetKeysToDisplay(ICollection<string> container, ICollection<string>? keys)
-        {
-            container.Clear();
-
-            if (keys == null)
-            {
+                KeysToDisplay.Add(EmptyHotkey);
                 return;
             }
 
-            foreach (var key in keys)
+            foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
             {
-                container.Add(key);
+                KeysToDisplay.Add(key);
             }
-
-            if (!keys.Any())
-            {
-                container.Add(EmptyHotkey);
-            }
-        }
-
-        public void RegisterHotkey()
-        {
-            SetHotkey(Hotkey, true);
         }
 
         public void SetHotkey(string? keyStr, bool triggerValidate = true)
@@ -309,29 +269,12 @@ namespace Flow.Launcher
         }
 
 
-        private void HotkeyBtn_OnChecked(object sender, RoutedEventArgs e)
-        {
-            StartRecording();
-        }
+        private void HotkeyBtn_OnChecked(object sender, RoutedEventArgs e) => StartRecording();
 
-        private void HotkeyBtn_OnUnchecked(object sender, RoutedEventArgs e)
-        {
-            StopRecording();
-        }
 
-        private void ResetButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            ResetToDefault();
-        }
+        private void ResetButton_OnClick(object sender, RoutedEventArgs e) => ResetToDefault();
+        private void DeleteBtn_OnClick(object sender, RoutedEventArgs e) => Delete();
 
-        private void DeleteBtn_OnClick(object sender, RoutedEventArgs e)
-        {
-            Delete();
-        }
-
-        public void StopRecordingBtn_Click(object sender, RoutedEventArgs e)
-        {
-            StopRecording();
-        }
+        private void StopRecordingBtn_Click(object sender, RoutedEventArgs e) => StopRecording();
     }
 }
