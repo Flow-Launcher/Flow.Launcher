@@ -2726,11 +2726,10 @@
                                         Sub="{DynamicResource basicHotkeyToolTip}">
                                         <StackPanel>
                                             <cc:Card
-                                                Title="{DynamicResource flowlauncherHotkey}"
-                                                Icon="&#xeda7;"
-                                                Sub="{DynamicResource flowlauncherHotkeyToolTip}"
+                                                Title="{DynamicResource ToggleHistoryHotkey}"
+                                                Icon="&#xf738;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+H" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource OpenContextMenuHotkey}"
@@ -2740,6 +2739,12 @@
                                                     DefaultHotkey="Ctrl+I"
                                                     Hotkey="{Binding Settings.OpenContextMenuHotkey}"
                                                     ValidateKeyGesture="False" />
+                                            </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource OpenContextMenuHotkey}"
+                                                Icon="&#xede3;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="SHIFT+ENTER" />
                                             </cc:Card>
 
                                             <cc:Card

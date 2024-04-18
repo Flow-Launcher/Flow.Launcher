@@ -188,6 +188,7 @@
     <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Use it when the plugin settings you changed don't take effect.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
