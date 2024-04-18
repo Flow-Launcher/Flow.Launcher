@@ -65,7 +65,7 @@ namespace Flow.Launcher
 
         public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
             nameof(Hotkey), typeof(string), typeof(HotkeyControl),
-            new PropertyMetadata("", OnHotkeyChanged));
+            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged));
 
         public string Hotkey
         {
