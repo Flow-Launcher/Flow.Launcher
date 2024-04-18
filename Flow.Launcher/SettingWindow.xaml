@@ -2733,13 +2733,6 @@
                                                 <cc:HotkeyDisplay Keys="Ctrl+F12" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="{DynamicResource flowlauncherHotkey}"
-                                                Icon="&#xeda7;"
-                                                Sub="{DynamicResource flowlauncherHotkeyToolTip}"
-                                                Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+F4" />
-                                            </cc:Card>
-                                            <cc:Card
                                                 Title="{DynamicResource OpenContextMenuHotkey}"
                                                 Icon="&#xede3;"
                                                 Type="Inside">
@@ -2757,6 +2750,14 @@
                                                     DefaultHotkey="Ctrl+I"
                                                     Hotkey="{Binding Settings.SettingWindowHotkey}"
                                                     ValidateKeyGesture="False" />
+                                            </cc:Card>
+
+                                            <cc:Card
+                                                Title="{DynamicResource ReloadPluginHotkey}"
+                                                Icon="&#xe72c;"
+                                                Sub="{DynamicResource ReloadPluginHotkeyToolTip}"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="F5" />
                                             </cc:Card>
                                         </StackPanel>
                                     </cc:ExCard>
