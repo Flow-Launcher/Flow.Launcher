@@ -2884,7 +2884,7 @@
 
                                     <cc:ExCard
                                         Title="{DynamicResource customQueryHotkey}"
-                                        Margin="0,14,0,0"
+                                        Margin="0,20,0,0"
                                         Icon="&#xf26c;">
                                         <StackPanel Margin="0,0,0,0">
                                             <Separator
@@ -2951,11 +2951,72 @@
                                     <cc:ExCard
                                         Title="{DynamicResource customQueryShortcut}"
                                         Margin="0,4,0,0"
-                                        Icon="&#xf26b;" />
+                                        Icon="&#xf26b;">
+                                        <StackPanel>
+                                            <Separator
+                                                Width="Auto"
+                                                Margin="0"
+                                                BorderThickness="1"
+                                                Style="{StaticResource SettingSeparatorStyle}" />
+                                            <StackPanel Margin="18,12,18,0">
+                                                <ListView
+                                                    Grid.Row="8"
+                                                    MinHeight="160"
+                                                    Margin="0,6,0,0"
+                                                    Background="{DynamicResource Color02B}"
+                                                    BorderBrush="DarkGray"
+                                                    BorderThickness="1"
+                                                    ItemsSource="{Binding CustomShortcuts}"
+                                                    SelectedItem="{Binding SelectedCustomShortcut}"
+                                                    Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                                                    <ListView.View>
+                                                        <GridView>
+                                                            <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Key}" />
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                            <GridViewColumn Width="430" Header="{DynamicResource customShortcutExpansion}">
+                                                                <GridViewColumn.CellTemplate>
+                                                                    <DataTemplate>
+                                                                        <TextBlock Text="{Binding Value}" />
+                                                                    </DataTemplate>
+                                                                </GridViewColumn.CellTemplate>
+                                                            </GridViewColumn>
+                                                        </GridView>
+                                                    </ListView.View>
+                                                </ListView>
+                                                <StackPanel
+                                                    Grid.Row="9"
+                                                    Margin="0"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"
+                                                    Orientation="Horizontal">
+                                                    <Button
+                                                        MinWidth="100"
+                                                        Margin="10"
+                                                        Click="OnDeleteCustomShortCutClick"
+                                                        Content="{DynamicResource delete}" />
+                                                    <Button
+                                                        MinWidth="100"
+                                                        Margin="10"
+                                                        Click="OnEditCustomShortCutClick"
+                                                        Content="{DynamicResource edit}" />
+                                                    <Button
+                                                        MinWidth="100"
+                                                        Margin="10,10,0,10"
+                                                        Click="OnAddCustomShortCutClick"
+                                                        Content="{DynamicResource add}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </cc:ExCard>
 
                                     <cc:ExCard
                                         Title="{DynamicResource builtinShortcuts}"
-                                        Margin="0,4,0,0"
+                                        Margin="0,4,0,14"
                                         Icon="&#xf158;">
                                         <StackPanel>
                                             <Separator
@@ -2996,60 +3057,8 @@
                                         </StackPanel>
                                     </cc:ExCard>
                                 </StackPanel>
-                                <StackPanel>
-                                    <ListView
-                                        Name="customShortcutView"
-                                        Grid.Row="8"
-                                        MinHeight="160"
-                                        Margin="0,6,0,0"
-                                        Background="{DynamicResource Color02B}"
-                                        BorderBrush="DarkGray"
-                                        BorderThickness="1"
-                                        ItemsSource="{Binding CustomShortcuts}"
-                                        SelectedItem="{Binding SelectedCustomShortcut}"
-                                        Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
-                                        <ListView.View>
-                                            <GridView>
-                                                <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Key}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                                <GridViewColumn Width="430" Header="{DynamicResource customShortcutExpansion}">
-                                                    <GridViewColumn.CellTemplate>
-                                                        <DataTemplate>
-                                                            <TextBlock Text="{Binding Value}" />
-                                                        </DataTemplate>
-                                                    </GridViewColumn.CellTemplate>
-                                                </GridViewColumn>
-                                            </GridView>
-                                        </ListView.View>
-                                    </ListView>
-                                    <StackPanel
-                                        Grid.Row="9"
-                                        Margin="0"
-                                        HorizontalAlignment="Right"
-                                        VerticalAlignment="Top"
-                                        Orientation="Horizontal">
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10"
-                                            Click="OnDeleteCustomShortCutClick"
-                                            Content="{DynamicResource delete}" />
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10"
-                                            Click="OnEditCustomShortCutClick"
-                                            Content="{DynamicResource edit}" />
-                                        <Button
-                                            MinWidth="100"
-                                            Margin="10,10,0,10"
-                                            Click="OnAddCustomShortCutClick"
-                                            Content="{DynamicResource add}" />
-                                    </StackPanel>
-                                </StackPanel>
+
+
 
                             </StackPanel>
                         </Border>

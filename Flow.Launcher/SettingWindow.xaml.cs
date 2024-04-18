@@ -360,7 +360,7 @@ namespace Flow.Launcher
         {
             if (viewModel.EditSelectedCustomShortcut())
             {
-                customShortcutView.Items.Refresh();
+                //customShortcutView.Items.Refresh(); Should Fix
             }
         }
 
