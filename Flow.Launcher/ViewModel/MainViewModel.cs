@@ -83,11 +83,26 @@ namespace Flow.Launcher.ViewModel
                     case nameof(Settings.AutoCompleteHotkey):
                         OnPropertyChanged(nameof(AutoCompleteHotkey));
                         break;
+                    case nameof(Settings.AutoCompleteHotkey2):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey2));
+                        break;
                     case nameof(Settings.SelectNextItemHotkey):
                         OnPropertyChanged(nameof(SelectNextItemHotkey));
                         break;
+                    case nameof(Settings.SelectNextItemHotkey2):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey2));
+                        break;
                     case nameof(Settings.SelectPrevItemHotkey):
                         OnPropertyChanged(nameof(SelectPrevItemHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey2):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey2));
+                        break;
+                    case nameof(Settings.SelectNextPageHotkey):
+                        OnPropertyChanged(nameof(SelectNextPageHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevPageHotkey):
+                        OnPropertyChanged(nameof(SelectPrevPageHotkey));
                         break;
                     case nameof(Settings.OpenContextMenuHotkey):
                         OnPropertyChanged(nameof(OpenContextMenuHotkey));
@@ -666,8 +681,13 @@ namespace Flow.Launcher.ViewModel
         
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
+        public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");
         public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
+        public string SelectNextItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey2, "");
         public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift+Tab");
+        public string SelectPrevItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey2, "");
+        public string SelectNextPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextPageHotkey, "");
+        public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
         public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
 
