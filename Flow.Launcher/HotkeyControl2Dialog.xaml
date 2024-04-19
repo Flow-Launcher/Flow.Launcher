@@ -92,10 +92,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontSize="14"
-                    FontWeight="SemiBold"
-                    Foreground="{Binding MessageColor}"
-                    Text="{Binding Message}"
-                    Visibility="{Binding MessageVisibility}" />
+                    FontWeight="SemiBold" />
             </StackPanel>
         </Border>
 

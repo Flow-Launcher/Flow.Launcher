@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using ModernWpf.Controls;
@@ -26,6 +27,7 @@ public partial class HotkeyControl2Dialog : ContentDialog
     public EResultType ResultType { get; private set; } = EResultType.Cancel;
     public string ResultValue { get; private set; } = string.Empty;
     public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+
     public HotkeyControl2Dialog(string hotkey, string windowTitle = "")
     {
         WindowTitle = windowTitle;
@@ -94,6 +96,21 @@ public partial class HotkeyControl2Dialog : ContentDialog
         {
             KeysToDisplay.Add(key);
         }
+
+        if (tbMsg == null)
+            return;
+        
+        if (!CheckHotkeyAvailability(hotkey.Value, true))
+        {
+            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed");
+            tbMsg.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            tbMsg.Visibility = Visibility.Collapsed;
+        }
     }
 
+    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
+        hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 }
