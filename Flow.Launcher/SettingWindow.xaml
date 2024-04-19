@@ -2645,7 +2645,8 @@
                                             ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                                             DefaultHotkey="Alt+Space"
                                             Hotkey="{Binding Settings.Hotkey}"
-                                            ValidateKeyGesture="True" />
+                                            ValidateKeyGesture="True"
+                                            WindowTitle="{DynamicResource flowlauncherHotkey}" />
                                     </cc:Card>
                                 </StackPanel>
 
@@ -2657,8 +2658,8 @@
                                         <flowlauncher:HotkeyControl2
                                             DefaultHotkey="F1"
                                             Hotkey="{Binding Settings.PreviewHotkey}"
-                                            WindowTitle="Preview hotkey"
-                                            ValidateKeyGesture="False" />
+                                            ValidateKeyGesture="False"
+                                            WindowTitle="Preview hotkey" />
                                     </cc:Card>
                                 </StackPanel>
 
