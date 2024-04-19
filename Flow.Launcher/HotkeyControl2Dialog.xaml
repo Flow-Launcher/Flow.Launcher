@@ -1,0 +1,76 @@
+﻿<Window x:Class="Flow.Launcher.HotkeyControl2Dialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterOwner"
+        Width="400"
+        Height="300"
+        MinWidth="400"
+        MinHeight="300"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        Icon="Images\app.ico"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="Transparent"
+        AllowsTransparency="True"
+        WindowStyle="None"
+        PreviewKeyDown="OnPreviewKeyDown">
+    <WindowChrome.WindowChrome>
+        <WindowChrome
+            CaptionHeight="0"
+            GlassFrameThickness="0" />
+    </WindowChrome.WindowChrome>
+    <Border Background="#AA000000" CornerRadius="8">
+        <Border Background="DarkGray" Width="400" Height="300" HorizontalAlignment="Center" VerticalAlignment="Center"
+                CornerRadius="8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding Title}" />
+                    <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <ItemsControl ItemsSource="{Binding KeysToDisplay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="Red" CornerRadius="6" Padding="8" Margin="0 0 10 0">
+                                        <TextBlock Text="{Binding}" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Grid>
+
+                <Border Grid.Row="0" Grid.Column="1" Background="Gray" CornerRadius="0 8 0 0">
+                    <StackPanel>
+                        <Button Content="Reset" Click="Reset" />
+                        <Button Content="Delete" Click="Delete" />
+                    </StackPanel>
+                </Border>
+
+                <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="Black" CornerRadius="0 0 8 8">
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Margin="10">
+
+                        <Button Content="Save" Margin="0 0 10 0" Click="Save" />
+                        <Button Content="Cancel" Click="Cancel" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Border>
+    </Border>
+</Window>

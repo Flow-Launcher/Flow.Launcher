@@ -2641,7 +2641,7 @@
                                         Title="{DynamicResource flowlauncherHotkey}"
                                         Icon="&#xeda7;"
                                         Sub="{DynamicResource flowlauncherHotkeyToolTip}">
-                                        <flowlauncher:HotkeyControl
+                                        <flowlauncher:HotkeyControl2
                                             ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                                             DefaultHotkey="Alt+Space"
                                             Hotkey="{Binding Settings.Hotkey}"
@@ -2654,9 +2654,10 @@
                                         Title="{DynamicResource previewHotkey}"
                                         Icon="&#xe8a1;"
                                         Sub="{DynamicResource previewHotkeyToolTip}">
-                                        <flowlauncher:HotkeyControl
+                                        <flowlauncher:HotkeyControl2
                                             DefaultHotkey="F1"
                                             Hotkey="{Binding Settings.PreviewHotkey}"
+                                            WindowTitle="Preview hotkey"
                                             ValidateKeyGesture="False" />
                                     </cc:Card>
                                 </StackPanel>
