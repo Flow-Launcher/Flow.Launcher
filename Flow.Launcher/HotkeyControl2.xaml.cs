@@ -1,6 +1,7 @@
 ﻿#nullable enable
 
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Core.Resource;
@@ -11,13 +12,16 @@ namespace Flow.Launcher
 {
     public partial class HotkeyControl2
     {
-        public string WindowTitle { get; set; } = string.Empty;
+        public string WindowTitle {
+            get { return (string)GetValue(WindowTitleProperty); }
+            set { SetValue(WindowTitleProperty, value); }
+        }
 
         public static readonly DependencyProperty WindowTitleProperty = DependencyProperty.Register(
             nameof(WindowTitle),
             typeof(string),
             typeof(HotkeyControl2),
-            new PropertyMetadata(default(string))
+            new PropertyMetadata(string.Empty)
         );
 
         /// <summary>
@@ -108,28 +112,24 @@ namespace Flow.Launcher
 
         public void GetNewHotkey(object sender, RoutedEventArgs e)
         {
+            OpenHotkeyDialog();
+        }
+
+        private async Task OpenHotkeyDialog()
+        {
             if (!string.IsNullOrEmpty(Hotkey))
             {
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var owner = Window.GetWindow(this);
-            var width = owner?.ActualWidth ?? 0;
-            var height = owner?.ActualHeight ?? 0;
-            var w = new HotkeyControl2Dialog
-            {
-                Title = WindowTitle,
-                Owner = owner,
-                Width = width,
-                Height = height
-            };
-            w.ShowDialog();
-            switch (w.ResultType)
+            var dialog = new HotkeyControl2Dialog(Hotkey, WindowTitle);
+            await dialog.ShowAsync();
+            switch (dialog.ResultType)
             {
                 case HotkeyControl2Dialog.EResultType.Cancel:
                     return;
                 case HotkeyControl2Dialog.EResultType.Save:
-                    SetHotkey(w.ResultValue);
+                    SetHotkey(dialog.ResultValue);
                     break;
                 case HotkeyControl2Dialog.EResultType.Reset:
                     ResetToDefault();
