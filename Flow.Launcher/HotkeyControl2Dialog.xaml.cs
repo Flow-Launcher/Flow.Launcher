@@ -102,12 +102,14 @@ public partial class HotkeyControl2Dialog : ContentDialog
         
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
-            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed");
-            tbMsg.Visibility = Visibility.Visible;
+            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
+            Alert.Visibility = Visibility.Visible;
+            SaveBtn.IsEnabled = false;
         }
         else
         {
-            tbMsg.Visibility = Visibility.Collapsed;
+            Alert.Visibility = Visibility.Collapsed;
+            SaveBtn.IsEnabled = true;
         }
     }
 

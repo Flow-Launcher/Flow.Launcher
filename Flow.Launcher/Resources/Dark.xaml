@@ -110,6 +110,10 @@
     <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
     <!--  Resource for ContentDialog  -->
     <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
+    <!--  Infobar Warning  -->
+    <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
+    <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />
+    <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />

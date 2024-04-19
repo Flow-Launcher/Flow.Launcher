@@ -19,7 +19,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="80" />
         </Grid.RowDefinitions>
 
@@ -49,7 +49,8 @@
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Width="450"
-                Height="250"
+                Height="100"
+                Margin="0,100,0,0"
                 Padding="26,12,26,0">
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                     <ItemsControl ItemsSource="{Binding KeysToDisplay}">
@@ -86,14 +87,38 @@
         <!--  Action buttons to the right of the title and keys  -->
 
         <Border Grid.Row="1">
-            <StackPanel>
-                <TextBlock
-                    x:Name="tbMsg"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    FontSize="14"
-                    FontWeight="SemiBold" />
-            </StackPanel>
+
+            <Border
+                x:Name="Alert"
+                Width="420"
+                Height="50"
+                HorizontalAlignment="Center"
+                Background="{DynamicResource InfoBarWarningBG}"
+                BorderBrush="{DynamicResource InfoBarBD}"
+                BorderThickness="1"
+                CornerRadius="5"
+                Visibility="Collapsed">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <ui:FontIcon
+                        FontSize="13"
+                        Foreground="{DynamicResource InfoBarWarningIcon}"
+                        Glyph="&#xeb90;" />
+                    <TextBlock
+                        x:Name="tbMsg"
+                        Grid.Column="1"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        FontSize="14"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource PopupTextColor}"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </Border>
+
         </Border>
 
         <!--  Action buttons at the bottom of the dialog  -->
@@ -110,6 +135,7 @@
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
+                    x:Name="SaveBtn"
                     Height="30"
                     MinWidth="100"
                     Margin="0,0,4,0"

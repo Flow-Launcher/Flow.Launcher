@@ -309,7 +309,7 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
     <system:String x:Key="update">Update</system:String>
-    <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
+    <system:String x:Key="hotkeyUnavailable">It's unavailable hotkey.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -320,7 +320,7 @@
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
-    <!-- Common Action-->
+    <!--  Common Action  -->
     <system:String x:Key="commonSave">Save</system:String>
     <system:String x:Key="commonCancel">Cancel</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
