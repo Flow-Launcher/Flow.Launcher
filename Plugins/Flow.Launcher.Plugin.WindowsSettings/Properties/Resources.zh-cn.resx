@@ -1926,13 +1926,13 @@
     <value>微软拼音 SimpleFast 选项</value>
   </data>
   <data name="ChangeWhatClosingTheLidDoes" xml:space="preserve">
-    <value>Change what closing the lid does</value>
+    <value>更改盖上盖子时的操作</value>
   </data>
   <data name="TurnOffUnnecessaryAnimations" xml:space="preserve">
-    <value>Turn off unnecessary animations</value>
+    <value>关闭不必要的动画效果</value>
   </data>
   <data name="CreateARestorePoint" xml:space="preserve">
-    <value>Create a restore point</value>
+    <value>创建还原点</value>
   </data>
   <data name="TurnOffAutomaticWindowArrangement" xml:space="preserve">
     <value>Turn off automatic window arrangement</value>
@@ -2007,7 +2007,7 @@
     <value>Set up ODBC data sources (64-bit)</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
-    <value>Configure proxy server</value>
+    <value>设置代理服务器</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
     <value>Change your homepage</value>
@@ -2242,7 +2242,7 @@
     <value>Allow Remote Assistance invitations to be sent from this computer</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
-    <value>Task Manager</value>
+    <value>任务管理器</value>
   </data>
   <data name="TurnFlicksOnOrOff" xml:space="preserve">
     <value>Turn flicks on or off</value>
@@ -2356,7 +2356,7 @@
     <value>是否显示文件扩展名</value>
   </data>
   <data name="AllowAnAppThroughWindowsFirewall" xml:space="preserve">
-    <value>Allow an app through Windows Firewall</value>
+    <value>允许应用程序通过 Windows 防火墙</value>
   </data>
   <data name="ChangeSystemSounds" xml:space="preserve">
     <value>更改系统声音</value>

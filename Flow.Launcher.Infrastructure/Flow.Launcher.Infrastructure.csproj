@@ -49,11 +49,12 @@
 
   <ItemGroup>
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
+    <PackageReference Include="FastCache.Cached" Version="1.8.2" />
     <PackageReference Include="Fody" Version="6.5.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MemoryPack" Version="1.10.0" />
+    <PackageReference Include="MemoryPack" Version="1.21.1" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.7.30" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="NLog.Schema" Version="4.7.10" />

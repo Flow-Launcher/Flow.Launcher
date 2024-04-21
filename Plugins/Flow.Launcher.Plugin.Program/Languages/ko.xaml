@@ -71,6 +71,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">관리자 권한으로 실행</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">포함된 폴더 열기</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">이 프로그램 표시 비활성화</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">프로그램</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Flow Launcher에서 프로그램을 검색합니다</system:String>

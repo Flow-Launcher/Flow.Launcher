@@ -28,11 +28,11 @@
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">此插件已安装</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">插件列表下载失败</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">请检查您是否可以连接到 github.com。这个错误意味着您可能无法安装或更新插件。</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">更新所有插件</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">您想要更新所有插件吗？</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">您想要更新 {0} 插件吗？{1}更新所有插件后 Flow Launcher 将重启。</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">您想要更新 {0} 插件吗？</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">插件 {0} 更新成功。正在重新启动 Flow Launcher，请稍候..……</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">插件{0}更新成功。正在重新启动 Flow Launcher，请稍候...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">从未知源安装</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">您正在从未知源安装此插件，它可能包含潜在风险！{0}{0}请确保您了解来源以及安全性。{0}{0}您想要继续吗？{0}{0}(您可以通过设置关闭此警告)</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">成功安装插件{0}。请重新启动 Flow Launcher。</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">成功卸载插件{0}。请重新启动 Flow Launcher。</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">成功更新插件{0}。请重新启动 Flow Launcher。</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">插件 {0} 更新成功。请重新启动 Flow Launcher。</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">插件 {0} 已被修改。请在进行任何进一步更改之前重新启动Flow。</system:String>
    
     <!--  Plugin Infos  -->

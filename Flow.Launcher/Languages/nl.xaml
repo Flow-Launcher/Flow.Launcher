@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Donker</system:String>
     <system:String x:Key="SoundEffect">Geluidseffect</system:String>
     <system:String x:Key="SoundEffectTip">Een klein geluid afspelen wanneer het zoekvenster wordt geopend</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">Animatie</system:String>
     <system:String x:Key="AnimationTip">Animatie gebruiken in UI</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
@@ -182,7 +184,7 @@
     <system:String x:Key="customQuery">Query</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="builtinShortcutDescription">Beschrijving</system:String>
     <system:String x:Key="delete">Verwijder</system:String>
     <system:String x:Key="edit">Bewerken</system:String>
     <system:String x:Key="add">Toevoegen</system:String>
