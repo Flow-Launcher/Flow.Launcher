@@ -42,7 +42,16 @@ namespace Flow.Launcher.Resources.Controls
             DependencyProperty.Register("Keys", typeof(string), typeof(HotkeyDisplay),
                 new PropertyMetadata(string.Empty, keyChanged));
 
-        
+        public string Type
+        {
+            get { return (string)GetValue(TypeValueProperty); }
+            set { SetValue(TypeValueProperty, value); }
+        }
+
+        public static readonly DependencyProperty TypeValueProperty =
+            DependencyProperty.Register("Type", typeof(string), typeof(HotkeyDisplay),
+                new PropertyMetadata(null));
+
         private static void keyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = d as UserControl;

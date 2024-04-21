@@ -19,11 +19,22 @@
                 <ControlTemplate TargetType="Button">
                     <Border
                         x:Name="ButtonBorder"
-                        Padding="5,0,5,0"
-                        Background="{DynamicResource Color12B}"
                         BorderBrush="{DynamicResource ButtonInsideBorder}"
-                        BorderThickness="1"
                         CornerRadius="5">
+                        <Border.Style>
+                            <Style TargetType="{x:Type Border}">
+                                <Setter Property="Background" Value="{DynamicResource Color12B}" />
+                                <Setter Property="Padding" Value="5,0,5,0" />
+                                <Setter Property="BorderThickness" Value="1" />
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:HotkeyDisplay}}" Value="Small">
+                                        <Setter Property="Background" Value="Transparent" />
+                                        <Setter Property="Padding" Value="0,0,0,0" />
+                                        <Setter Property="BorderThickness" Value="0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Border.Style>
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
                     </Border>
                 </ControlTemplate>
@@ -37,12 +48,22 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border
-                                Margin="2,5,2,5"
-                                Padding="10,5,10,5"
-                                Background="{DynamicResource SystemControlBackgroundBaseLowBrush}"
-                                BorderThickness="1"
-                                CornerRadius="5">
+                            <Border BorderThickness="1" CornerRadius="5">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
+                                        <Setter Property="Padding" Value="10,5,10,5" />
+                                        <Setter Property="Margin" Value="2,5,2,5" />
+                                        <Setter Property="BorderThickness" Value="1" />
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:HotkeyDisplay}}" Value="Small">
+                                                <Setter Property="Background" Value="{DynamicResource AccentButtonBackground}" />
+                                                <Setter Property="Padding" Value="10,5,10,5" />
+                                                <Setter Property="Margin" Value="2,0,2,0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
                                 <TextBlock Foreground="{DynamicResource AccentButtonForegroundPointerOver}" Text="{Binding}" />
                             </Border>
                         </DataTemplate>
