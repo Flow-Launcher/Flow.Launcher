@@ -30,14 +30,11 @@ public partial class HotkeyControl2Dialog : ContentDialog
 
     public HotkeyControl2Dialog(string hotkey, string windowTitle = "")
     {
-        if (windowTitle == string.Empty)
+        WindowTitle = windowTitle switch
         {
-            WindowTitle = InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle");
-        }
-        else 
-        {
-            WindowTitle = windowTitle;
-        }        
+            "" or null => InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle"),
+            _ => windowTitle
+        };
         CurrentHotkey = new HotkeyModel(hotkey);
         SetKeysToDisplay(CurrentHotkey);
 
@@ -106,7 +103,7 @@ public partial class HotkeyControl2Dialog : ContentDialog
 
         if (tbMsg == null)
             return;
-        
+
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
             tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");

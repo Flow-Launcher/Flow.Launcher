@@ -26,7 +26,6 @@
         <!--  Window title and the keys in the hotkey  -->
         <Grid
             Grid.Row="0"
-            Grid.Column="0"
             Margin="26,12,26,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -40,14 +39,11 @@
                     Text="{Binding WindowTitle}"
                     TextAlignment="Left" />
                 <TextBlock
-                    Grid.Row="0"
                     FontSize="14"
                     Text="{DynamicResource hotkeyRegGuide}" />
             </StackPanel>
             <Border
                 Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
                 Width="450"
                 Height="100"
                 Margin="0,100,0,0"
@@ -84,8 +80,7 @@
             </Border>
         </Grid>
 
-        <!--  Action buttons to the right of the title and keys  -->
-
+        <!-- Warning message for when something went wrong with the new hotkey. -->
         <Border Grid.Row="1">
 
             <Border
@@ -124,8 +119,6 @@
         <!--  Action buttons at the bottom of the dialog  -->
         <Border
             Grid.Row="2"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
             BorderThickness="0,1,0,0"
