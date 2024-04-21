@@ -22,21 +22,21 @@ namespace Flow.Launcher.Resources.Controls
 
         public string Keys
         {
-            get { return (string)GetValue(KeysValueProperty); }
-            set { SetValue(KeysValueProperty, value); }
+            get { return (string)GetValue(KeysProperty); }
+            set { SetValue(KeysProperty, value); }
         }
 
-        public static readonly DependencyProperty KeysValueProperty =
+        public static readonly DependencyProperty KeysProperty =
             DependencyProperty.Register(nameof(Keys), typeof(string), typeof(HotkeyDisplay),
                 new PropertyMetadata(string.Empty, keyChanged));
 
         public DisplayType Type
         {
-            get { return (DisplayType)GetValue(TypeValueProperty); }
-            set { SetValue(TypeValueProperty, value); }
+            get { return (DisplayType)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
         }
 
-        public static readonly DependencyProperty TypeValueProperty =
+        public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register(nameof(Type), typeof(DisplayType), typeof(HotkeyDisplay),
                 new PropertyMetadata(null));
 

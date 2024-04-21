@@ -11,26 +11,26 @@ namespace Flow.Launcher.Resources.Controls
         }
         public string Title
         {
-            get { return (string)GetValue(TitleValueProperty); }
-            set { SetValue(TitleValueProperty, value); }
+            get { return (string)GetValue(TitleProperty); }
+            set { SetValue(TitleProperty, value); }
         }
-        public static readonly DependencyProperty TitleValueProperty =
+        public static readonly DependencyProperty TitleProperty =
           DependencyProperty.Register(nameof(Title), typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         public string Sub
         {
-            get { return (string)GetValue(SubValueProperty); }
-            set { SetValue(SubValueProperty, value); }
+            get { return (string)GetValue(SubProperty); }
+            set { SetValue(SubProperty, value); }
         }
-        public static readonly DependencyProperty SubValueProperty =
+        public static readonly DependencyProperty SubProperty =
           DependencyProperty.Register(nameof(Sub), typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         public string Icon
         {
-            get { return (string)GetValue(IconValueProperty); }
-            set { SetValue(IconValueProperty, value); }
+            get { return (string)GetValue(IconProperty); }
+            set { SetValue(IconProperty, value); }
         }
-        public static readonly DependencyProperty IconValueProperty =
+        public static readonly DependencyProperty IconProperty =
           DependencyProperty.Register(nameof(Icon), typeof(string), typeof(ExCard), new PropertyMetadata(string.Empty));
 
         /// <summary>
