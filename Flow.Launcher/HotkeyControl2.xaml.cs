@@ -122,7 +122,7 @@ namespace Flow.Launcher
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControl2Dialog(Hotkey, WindowTitle);
+            var dialog = new HotkeyControl2Dialog(Hotkey, DefaultHotkey, WindowTitle);
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {
@@ -131,25 +131,10 @@ namespace Flow.Launcher
                 case HotkeyControl2Dialog.EResultType.Save:
                     SetHotkey(dialog.ResultValue);
                     break;
-                case HotkeyControl2Dialog.EResultType.Reset:
-                    ResetToDefault();
-                    break;
                 case HotkeyControl2Dialog.EResultType.Delete:
                     Delete();
                     break;
             }
-        }
-
-        private void ResetToDefault()
-        {
-            if (!string.IsNullOrEmpty(Hotkey))
-                HotKeyMapper.RemoveHotkey(Hotkey);
-            Hotkey = DefaultHotkey;
-            CurrentHotkey = new HotkeyModel(Hotkey);
-
-            SetKeysToDisplay(CurrentHotkey);
-
-            SetHotkey(CurrentHotkey);
         }
 
 

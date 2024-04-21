@@ -11,7 +11,7 @@ namespace Flow.Launcher;
 
 public partial class HotkeyControl2Dialog : ContentDialog
 {
-    public string Hotkey { get; set; } = string.Empty;
+    private string DefaultHotkey { get; }
     public string WindowTitle { get; }
     public HotkeyModel CurrentHotkey { get; private set; }
     public ObservableCollection<string> KeysToDisplay { get; } = new();
@@ -20,47 +20,52 @@ public partial class HotkeyControl2Dialog : ContentDialog
     {
         Cancel,
         Save,
-        Reset,
         Delete
     }
 
     public EResultType ResultType { get; private set; } = EResultType.Cancel;
     public string ResultValue { get; private set; } = string.Empty;
-    public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+    public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
 
-    public HotkeyControl2Dialog(string hotkey, string windowTitle = "")
+    public HotkeyControl2Dialog(string hotkey, string defaultHotkey, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
         {
             "" or null => InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle"),
             _ => windowTitle
         };
+        DefaultHotkey = defaultHotkey;
         CurrentHotkey = new HotkeyModel(hotkey);
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();
     }
 
-    public void Reset(object sender, RoutedEventArgs routedEventArgs)
+    private void Reset(object sender, RoutedEventArgs routedEventArgs)
     {
-        ResultType = EResultType.Reset;
-        Hide();
+        SetKeysToDisplay(new HotkeyModel(DefaultHotkey));
     }
 
-    public void Delete(object sender, RoutedEventArgs routedEventArgs)
+    private void Delete(object sender, RoutedEventArgs routedEventArgs)
     {
-        ResultType = EResultType.Delete;
-        Hide();
+        KeysToDisplay.Clear();
+        KeysToDisplay.Add(EmptyHotkey);
     }
 
-    public void Cancel(object sender, RoutedEventArgs routedEventArgs)
+    private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
         ResultType = EResultType.Cancel;
         Hide();
     }
 
-    public void Save(object sender, RoutedEventArgs routedEventArgs)
+    private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
+        if (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey)
+        {
+            ResultType = EResultType.Delete;
+            Hide();
+            return;
+        }
         ResultType = EResultType.Save;
         ResultValue = string.Join("+", KeysToDisplay);
         Hide();
