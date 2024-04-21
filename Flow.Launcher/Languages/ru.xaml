@@ -154,8 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Тёмная</system:String>
     <system:String x:Key="SoundEffect">Звуковой эффект</system:String>
     <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
-    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
-    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectVolume">Громкость звукового эффекта</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Регулировка громкости звукового эффекта</system:String>
     <system:String x:Key="Animation">Анимация</system:String>
     <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
     <system:String x:Key="AnimationSpeed">Скорость анимации</system:String>
@@ -290,9 +290,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Ярлык пользовательского запроса</system:String>
     <system:String x:Key="customeQueryShortcutTips">Введите ярлык, который автоматически расширяется до указанного запроса.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Ярлык заменяется, когда полностью совпадает с запросом.
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Если вы добавите префикс '@' при вводе ярлыка, он будет заменяться в любом местоположении в запросе. Встроенные ярлыки всегда заменяются в любом месте в запросе.
     </system:String>
     <system:String x:Key="duplicateShortcut">Ярлык уже существует, пожалуйста, введите новый ярлык или измените существующий.</system:String>
     <system:String x:Key="emptyShortcut">Ярлык и/или его расширение пусты.</system:String>
