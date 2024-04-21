@@ -31,11 +31,6 @@ namespace Flow.Launcher
 
         private void btnAdd_OnClick(object sender, RoutedEventArgs e)
         {
-            if (HotkeyControl.IsEmpty)
-            {
-                MessageBox.Show("Hotkey cannot be empty.");
-                return;
-            }
             if (!update)
             {
                 _settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();

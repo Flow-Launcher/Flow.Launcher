@@ -9,8 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage2"
-    mc:Ignorable="d"
-    DataContext="{Binding RelativeSource={RelativeSource Self}}">
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    mc:Ignorable="d">
     <Page.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
         <Style x:Key="StyleImageFadeIn" TargetType="{x:Type Image}">
@@ -110,13 +110,13 @@
                         FontSize="14"
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncherHotkey}" />
-                    <flowlauncher:HotkeyControl
-                        x:Name="HotkeyControl"
-                        Width="300"
-                        Height="35"
-                        Margin="-206,10,0,0"
-                        GotFocus="HotkeyControl_OnGotFocus"
-                        LostFocus="HotkeyControl_OnLostFocus"/>
+                    <flowlauncher:HotkeyControl2
+                        Margin="0,8,0,0"
+                        ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
+                        DefaultHotkey="Alt+Space"
+                        Hotkey="{Binding Settings.Hotkey}"
+                        ValidateKeyGesture="True"
+                        WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
 
             </StackPanel>

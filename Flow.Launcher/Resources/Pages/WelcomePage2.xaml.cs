@@ -14,10 +14,6 @@ namespace Flow.Launcher.Resources.Pages
     {
         private Settings Settings { get; set; }
 
-        private Brush tbMsgForegroundColorOriginal;
-
-        private string tbMsgTextOriginal;
-
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.ExtraData is Settings settings)
@@ -26,29 +22,7 @@ namespace Flow.Launcher.Resources.Pages
                 throw new ArgumentException("Unexpected Parameter setting.");
 
             InitializeComponent();
-
-            tbMsgTextOriginal = HotkeyControl.tbMsg.Text;
-            tbMsgForegroundColorOriginal = HotkeyControl.tbMsg.Foreground;
-
-            HotkeyControl.ChangeHotkey = ChangeHotkeyCommand;
         }
 
-        [RelayCommand]
-        public void ChangeHotkey(HotkeyModel hotkeyModel)
-        {
-            Settings.Hotkey = hotkeyModel.ToString();
-            HotKeyMapper.SetHotkey(hotkeyModel, HotKeyMapper.OnToggleHotkey);
-        }
-
-        private void HotkeyControl_OnGotFocus(object sender, RoutedEventArgs args)
-        {
-            HotKeyMapper.RemoveHotkey(Settings.Hotkey);
-        }
-
-        private void HotkeyControl_OnLostFocus(object sender, RoutedEventArgs args)
-        {
-            HotkeyControl.tbMsg.Text = tbMsgTextOriginal;
-            HotkeyControl.tbMsg.Foreground = tbMsgForegroundColorOriginal;
-        }
     }
 }

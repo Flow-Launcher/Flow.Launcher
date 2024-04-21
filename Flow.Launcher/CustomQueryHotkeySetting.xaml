@@ -78,7 +78,7 @@
                     Margin="0,20,0,0"
                     Source="/Images/illustration_01.png" />
 
-                <Grid Margin="0,20,0,0" Width="478">
+                <Grid Width="478" Margin="0,20,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition />
                         <RowDefinition />
@@ -97,25 +97,16 @@
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="{DynamicResource hotkey}" />
-                    <flowlauncher:HotkeyControl
+                    <flowlauncher:HotkeyControl2
+                        x:Name="HotkeyControl"
                         Grid.Row="0"
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
-                        x:Name="HotkeyControl"
-                        DefaultHotkey=""
                         Margin="10,0,10,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
-                        HorizontalContentAlignment="Left" />
-                    <!--<TextBlock
-                        Grid.Row="0"
-                        Grid.Column="2"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        FontSize="14"
-                        Text="{DynamicResource actionKeyword}" />-->
-
+                        HorizontalContentAlignment="Left"
+                        DefaultHotkey="" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
@@ -125,16 +116,16 @@
                         FontSize="14"
                         Text="{DynamicResource customQuery}" />
                     <TextBox
+                        x:Name="tbAction"
                         Grid.Row="1"
                         Grid.Column="1"
-                        x:Name="tbAction"
                         Margin="10"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center" />
                     <Button
+                        x:Name="btnTestActionKeyword"
                         Grid.Row="1"
                         Grid.Column="2"
-                        x:Name="btnTestActionKeyword"
                         Margin="0,0,10,0"
                         Padding="10,5,10,5"
                         Click="BtnTestActionKeyword_OnClick"
