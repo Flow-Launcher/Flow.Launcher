@@ -30,7 +30,14 @@ public partial class HotkeyControl2Dialog : ContentDialog
 
     public HotkeyControl2Dialog(string hotkey, string windowTitle = "")
     {
-        WindowTitle = windowTitle;
+        if (windowTitle == string.Empty)
+        {
+            WindowTitle = InternationalizationManager.Instance.GetTranslation("hotkeyRegTitle");
+        }
+        else 
+        {
+            WindowTitle = windowTitle;
+        }        
         CurrentHotkey = new HotkeyModel(hotkey);
         SetKeysToDisplay(CurrentHotkey);
 
