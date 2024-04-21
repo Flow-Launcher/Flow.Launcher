@@ -1,29 +1,17 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Windows.Media.Capture.Frames;
-using static System.Windows.Forms.LinkLabel;
-using static ABI.System.Collections.Generic.IReadOnlyDictionary_Delegates;
 
 namespace Flow.Launcher.Resources.Controls
 {
     public partial class HotkeyDisplay : UserControl
     {
+        public enum DisplayType
+        {
+            Default,
+            Small
+        }
+
         public HotkeyDisplay()
         {
             InitializeComponent();
@@ -39,17 +27,17 @@ namespace Flow.Launcher.Resources.Controls
         }
 
         public static readonly DependencyProperty KeysValueProperty =
-            DependencyProperty.Register("Keys", typeof(string), typeof(HotkeyDisplay),
+            DependencyProperty.Register(nameof(Keys), typeof(string), typeof(HotkeyDisplay),
                 new PropertyMetadata(string.Empty, keyChanged));
 
-        public string Type
+        public DisplayType Type
         {
-            get { return (string)GetValue(TypeValueProperty); }
+            get { return (DisplayType)GetValue(TypeValueProperty); }
             set { SetValue(TypeValueProperty, value); }
         }
 
         public static readonly DependencyProperty TypeValueProperty =
-            DependencyProperty.Register("Type", typeof(string), typeof(HotkeyDisplay),
+            DependencyProperty.Register(nameof(Type), typeof(DisplayType), typeof(HotkeyDisplay),
                 new PropertyMetadata(null));
 
         private static void keyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
