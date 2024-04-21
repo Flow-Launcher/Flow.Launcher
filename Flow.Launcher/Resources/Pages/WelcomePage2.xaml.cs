@@ -12,7 +12,7 @@ namespace Flow.Launcher.Resources.Pages
 {
     public partial class WelcomePage2
     {
-        private Settings Settings { get; set; }
+        public Settings Settings { get; set; }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -24,5 +24,10 @@ namespace Flow.Launcher.Resources.Pages
             InitializeComponent();
         }
 
+        [RelayCommand]
+        private static void SetTogglingHotkey(HotkeyModel hotkey)
+        {
+            HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+        }
     }
 }
