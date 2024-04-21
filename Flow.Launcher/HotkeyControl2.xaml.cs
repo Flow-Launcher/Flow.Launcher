@@ -127,6 +127,7 @@ namespace Flow.Launcher
             switch (dialog.ResultType)
             {
                 case HotkeyControl2Dialog.EResultType.Cancel:
+                    SetHotkey(Hotkey);
                     return;
                 case HotkeyControl2Dialog.EResultType.Save:
                     SetHotkey(dialog.ResultValue);
