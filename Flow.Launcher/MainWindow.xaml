@@ -188,8 +188,8 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="C"
-            Modifiers="Ctrl+Shift"
-            Command="{Binding CopyAlternativeCommand}" />
+            Command="{Binding CopyAlternativeCommand}"
+            Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
@@ -216,6 +216,7 @@
                             <TextBox
                                 x:Name="QueryTextBox"
                                 AllowDrop="True"
+                                AutomationProperties.Name="{Binding Results.SelectedItem.Result.Title}"
                                 InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                                 InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                                 PreviewDragOver="OnPreviewDragOver"
