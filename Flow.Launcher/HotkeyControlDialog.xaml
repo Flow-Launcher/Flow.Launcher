@@ -24,9 +24,7 @@
         </Grid.RowDefinitions>
 
         <!--  Window title and the keys in the hotkey  -->
-        <Grid
-            Grid.Row="0"
-            Margin="26,12,26,0">
+        <Grid Grid.Row="0" Margin="26,12,26,0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -38,9 +36,7 @@
                     FontWeight="SemiBold"
                     Text="{Binding WindowTitle}"
                     TextAlignment="Left" />
-                <TextBlock
-                    FontSize="14"
-                    Text="{DynamicResource hotkeyRegGuide}" />
+                <TextBlock FontSize="14" Text="{DynamicResource hotkeyRegGuide}" />
             </StackPanel>
             <Border
                 Grid.Row="1"
@@ -80,7 +76,7 @@
             </Border>
         </Grid>
 
-        <!-- Warning message for when something went wrong with the new hotkey. -->
+        <!--  Warning message for when something went wrong with the new hotkey.  -->
         <Border Grid.Row="1">
 
             <Border
@@ -94,23 +90,21 @@
                 CornerRadius="5"
                 Visibility="Collapsed">
                 <Grid VerticalAlignment="Center">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="50" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <ui:FontIcon
-                        FontSize="13"
-                        Foreground="{DynamicResource InfoBarWarningIcon}"
-                        Glyph="&#xeb90;" />
-                    <TextBlock
-                        x:Name="tbMsg"
-                        Grid.Column="1"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        FontSize="14"
-                        FontWeight="SemiBold"
-                        Foreground="{DynamicResource PopupTextColor}"
-                        TextWrapping="Wrap" />
+                    <StackPanel Orientation="Horizontal">
+                        <ui:FontIcon
+                            Margin="20,0,14,0"
+                            VerticalAlignment="Center"
+                            FontSize="15"
+                            Foreground="{DynamicResource InfoBarWarningIcon}"
+                            Glyph="&#xf167;" />
+                        <TextBlock
+                            x:Name="tbMsg"
+                            Margin="0,0,0,2"
+                            HorizontalAlignment="Left"
+                            FontSize="13"
+                            FontWeight="SemiBold"
+                            Foreground="{DynamicResource Color05B}" />
+                    </StackPanel>
                 </Grid>
             </Border>
 

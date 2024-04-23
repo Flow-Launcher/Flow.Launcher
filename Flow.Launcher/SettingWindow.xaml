@@ -2731,13 +2731,13 @@
                                                 Title="{DynamicResource OpenContainFolderHotkey}"
                                                 Icon="&#xe8b7;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+ENTER" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+Enter" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource RunAsAdminHotkey}"
                                                 Icon="&#xe7ef;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+ENTER" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource ToggleHistoryHotkey}"
@@ -2749,7 +2749,7 @@
                                                 Title="{DynamicResource CopyFilePathHotkey}"
                                                 Icon="&#xe8c8;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+C" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource OpenContextMenuHotkey}"
@@ -2764,7 +2764,7 @@
                                                 Title="{DynamicResource OpenContextMenuHotkey}"
                                                 Icon="&#xede3;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="SHIFT+ENTER" />
+                                                <cc:HotkeyDisplay Keys="Shift+Enter" />
                                             </cc:Card>
 
                                             <cc:Card
@@ -2780,7 +2780,7 @@
                                                 Title="{DynamicResource ToggleGameModeHotkey}"
                                                 Icon="&#xe7fc;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+SHIFT+C" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource ReloadPluginHotkey}"
@@ -2813,8 +2813,8 @@
                                                 Icon="&#xe7ea;"
                                                 Type="Inside">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <cc:HotkeyDisplay Keys="CTRL+[" />
-                                                    <cc:HotkeyDisplay Margin="4,0,0,0" Keys="CTRL+]" />
+                                                    <cc:HotkeyDisplay Keys="Ctrl+[" />
+                                                    <cc:HotkeyDisplay Margin="4,0,0,0" Keys="Ctrl+]" />
                                                 </StackPanel>
                                             </cc:Card>
                                             <cc:Card
@@ -2822,8 +2822,8 @@
                                                 Icon="&#xe7eb;"
                                                 Type="Inside">
                                                 <StackPanel Orientation="Horizontal">
-                                                    <cc:HotkeyDisplay Keys="CTRL+Plus" />
-                                                    <cc:HotkeyDisplay Margin="4,0,0,0" Keys="CTRL+Minus" />
+                                                    <cc:HotkeyDisplay Keys="Ctrl+Plus" />
+                                                    <cc:HotkeyDisplay Margin="4,0,0,0" Keys="Ctrl+Minus" />
                                                 </StackPanel>
                                             </cc:Card>
                                         </StackPanel>
