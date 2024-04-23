@@ -264,7 +264,6 @@ namespace Flow.Launcher.Plugin.Shell
                             var arguments = parts[1];
                             info.FileName = filename;
                             info.ArgumentList.Add(arguments);
-                            info.UseShellExecute = true;
                         }
                         else
                         {
@@ -275,6 +274,8 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         info.FileName = command;
                     }
+
+                    info.UseShellExecute = true;
 
                     break;
                 }
