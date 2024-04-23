@@ -7,6 +7,7 @@ namespace Flow.Launcher.Infrastructure
     public static class Constant
     {
         public const string FlowLauncher = "Flow.Launcher";
+        public const string FlowLauncherFullName = "Flow Launcher";
         public const string Plugins = "Plugins";
         public const string PluginMetadataFileName = "plugin.json";
 

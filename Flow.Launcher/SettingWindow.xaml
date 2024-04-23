@@ -67,6 +67,20 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="SwitchFocusVisualStyleKey">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle
+                            Margin="-8,-4,-8,-4"
+                            RadiusX="5"
+                            RadiusY="5"
+                            Stroke="{DynamicResource Color05B}"
+                            StrokeThickness="2" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="SettingGrid" TargetType="ItemsControl">
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Margin" Value="0" />
@@ -137,6 +151,7 @@
             <Setter Property="Grid.Column" Value="2" />
             <Setter Property="FocusVisualMargin" Value="5" />
             <Setter Property="Width" Value="Auto" />
+            <Setter Property="FocusVisualStyle" Value="{DynamicResource SwitchFocusVisualStyleKey}" />
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="HorizontalContentAlignment" Value="Right" />
             <Setter Property="OffContent" Value="{DynamicResource disable}" />
@@ -447,7 +462,10 @@
                                 IsItemsHost="true"
                                 LastChildFill="False" />
                             <Border Grid.Column="1">
-                                <ContentPresenter Grid.Column="1" ContentSource="SelectedContent" />
+                                <ContentPresenter
+                                    x:Name="PART_SelectedContentHost"
+                                    Grid.Column="1"
+                                    ContentSource="SelectedContent" />
                             </Border>
                         </Grid>
                     </ControlTemplate>
@@ -693,7 +711,7 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border 
+                            <Border
                                 Margin="0,30,0,0"
                                 Padding="0"
                                 Style="{DynamicResource SettingGroupBox}">
@@ -720,7 +738,7 @@
                                                 <ComboBox
                                                     x:Name="SelectScreen"
                                                     MinWidth="160"
-                                                    Margin="0,0,18,0" 
+                                                    Margin="0,0,18,0"
                                                     VerticalAlignment="Center"
                                                     FontSize="14"
                                                     ItemsSource="{Binding ScreenNumbers}"
@@ -738,14 +756,12 @@
                                                 </ComboBox>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
 
-                                    <Separator
-                                        Width="Auto"
-                                        BorderThickness="1">
+                                    <Separator Width="Auto" BorderThickness="1">
                                         <Separator.Style>
                                             <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -758,9 +774,7 @@
                                         </Separator.Style>
                                     </Separator>
 
-                                    <Border
-                                        Margin="0"
-                                        BorderThickness="0">
+                                    <Border Margin="0" BorderThickness="0">
                                         <Border.Style>
                                             <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                                 <Setter Property="Visibility" Value="Visible" />
@@ -786,8 +800,7 @@
                                                     FontSize="14"
                                                     ItemsSource="{Binding SearchWindowAligns}"
                                                     SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                                    SelectedValuePath="Value">
-                                                </ComboBox>
+                                                    SelectedValuePath="Value" />
                                                 <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                     <StackPanel.Style>
                                                         <Style TargetType="StackPanel">
@@ -817,7 +830,7 @@
                                                 </StackPanel>
                                             </StackPanel>
                                             <TextBlock Style="{StaticResource Glyph}">
-                                            &#xe7f4;
+                                                &#xe7f4;
                                             </TextBlock>
                                         </ItemsControl>
                                     </Border>
@@ -2446,8 +2459,7 @@
                                                                 FontSize="14"
                                                                 ItemsSource="{Binding AnimationSpeeds}"
                                                                 SelectedValue="{Binding Settings.AnimationSpeed}"
-                                                                SelectedValuePath="Value">
-                                                            </ComboBox>
+                                                                SelectedValuePath="Value" />
                                                             <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
                                                                 <StackPanel.Style>
                                                                     <Style TargetType="StackPanel">
@@ -2543,7 +2555,7 @@
                                                                 TickFrequency="1"
                                                                 Value="{Binding SoundEffectVolume, Mode=TwoWay}" />
                                                         </StackPanel>
-                                                        <TextBlock Style="{StaticResource Glyph}"> 
+                                                        <TextBlock Style="{StaticResource Glyph}">
                                                             &#xe994;
                                                         </TextBlock>
                                                     </ItemsControl>
