@@ -7,6 +7,7 @@ namespace Flow.Launcher.Resources.Controls
     {
         public enum CardType
         {
+            Default,
             Inside,
             InsideFit
         }
@@ -57,6 +58,6 @@ namespace Flow.Launcher.Resources.Controls
         }
         public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register(nameof(Type), typeof(CardType), typeof(Card),
-              new PropertyMetadata(null));
+              new PropertyMetadata(CardType.Default));
     }
 }

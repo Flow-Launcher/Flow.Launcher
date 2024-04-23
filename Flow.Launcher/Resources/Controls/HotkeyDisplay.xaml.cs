@@ -38,7 +38,7 @@ namespace Flow.Launcher.Resources.Controls
 
         public static readonly DependencyProperty TypeProperty =
             DependencyProperty.Register(nameof(Type), typeof(DisplayType), typeof(HotkeyDisplay),
-                new PropertyMetadata(null));
+                new PropertyMetadata(DisplayType.Default));
 
         private static void keyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
