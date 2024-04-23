@@ -43,7 +43,7 @@ namespace Flow.Launcher
         private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
-        private ContextMenuStrip contextMenu;
+        private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
         MediaPlayer animationSound = new MediaPlayer();
@@ -263,11 +263,11 @@ namespace Flow.Launcher
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            //((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
-            //((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
-            //((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
-            //((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
-            //((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
+            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
+            ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
+            ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
+            ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
 
         }
 
@@ -280,7 +280,7 @@ namespace Flow.Launcher
                 Visible = !_settings.HideNotifyIcon
             };
 
-            var contextMenu = new ContextMenu();
+            //var contextMenu = contextMenu;
 
             var openIcon = new FontIcon
             {
