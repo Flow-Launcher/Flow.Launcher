@@ -110,7 +110,7 @@
                         FontSize="14"
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncherHotkey}" />
-                    <flowlauncher:HotkeyControl2
+                    <flowlauncher:HotkeyControl
                         Margin="0,8,0,0"
                         ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"

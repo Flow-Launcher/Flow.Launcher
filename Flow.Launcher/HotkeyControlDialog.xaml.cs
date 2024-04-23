@@ -9,7 +9,7 @@ using ModernWpf.Controls;
 
 namespace Flow.Launcher;
 
-public partial class HotkeyControl2Dialog : ContentDialog
+public partial class HotkeyControlDialog : ContentDialog
 {
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
@@ -27,7 +27,7 @@ public partial class HotkeyControl2Dialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
 
-    public HotkeyControl2Dialog(string hotkey, string defaultHotkey, string windowTitle = "")
+    public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
         {

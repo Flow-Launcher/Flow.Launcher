@@ -97,7 +97,7 @@
                         VerticalAlignment="Center"
                         FontSize="14"
                         Text="{DynamicResource hotkey}" />
-                    <flowlauncher:HotkeyControl2
+                    <flowlauncher:HotkeyControl
                         x:Name="HotkeyControl"
                         Grid.Row="0"
                         Grid.Column="1"
