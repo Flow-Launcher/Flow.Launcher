@@ -2725,7 +2725,7 @@
                                         Title="{DynamicResource hotkeyPresets}"
                                         Margin="0,14,0,0"
                                         Icon="&#xf0e2;"
-                                        Sub="{DynamicResource basicHotkeyToolTip}">
+                                        Sub="{DynamicResource hotkeyPresetsToolTip}">
                                         <StackPanel>
                                             <cc:Card
                                                 Title="{DynamicResource OpenContainFolderHotkey}"
