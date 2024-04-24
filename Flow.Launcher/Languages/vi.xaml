@@ -5,8 +5,8 @@
     <system:String x:Key="MessageBoxTitle">Trình khởi chạy luồng</system:String>
     <system:String x:Key="couldnotStartCmd">Không thể khởi động {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Định dạng tệp plugin Flow Launcher không chính xác</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Cancel topmost in this query</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Đặt ở vị trí trên cùng trong truy vấn này</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Hủy trên cùng trong truy vấn này</system:String>
     <system:String x:Key="executeQuery">Thực thi truy vấn:{0}</system:String>
     <system:String x:Key="lastExecuteTime">Thời gian thực hiện lần cuối:{0}</system:String>
     <system:String x:Key="iconTrayOpen">Mở</system:String>
@@ -48,7 +48,7 @@
     <system:String x:Key="SearchWindowAlignLeftTop">Liên kết oben</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Trên cùng bên phải</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Vị trí tùy chỉnh</system:String>
-    <system:String x:Key="language">Language</system:String>
+    <system:String x:Key="language">Ngôn Ngữ </system:String>
     <system:String x:Key="lastQueryMode">Chọn kiểu truy vấn</system:String>
     <system:String x:Key="lastQueryModeToolTip">Hiển thị/ẩn các kết quả trước đó khi Flow Launcher được kích hoạt lại.</system:String>
     <system:String x:Key="LastQueryPreserved">Giữ lại truy vấn cuối cùng</system:String>
@@ -132,13 +132,13 @@
     <system:String x:Key="browserMoreThemes">Tìm kiếm thêm chủ đề</system:String>
     <system:String x:Key="howToCreateTheme">Cách tạo chủ đề</system:String>
     <system:String x:Key="hiThere">Xin chào!</system:String>
-    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleTitleExplorer">Thư mục </system:String>
     <system:String x:Key="SampleSubTitleExplorer">Tìm kiếm tệp, thư mục và nội dung tệp</system:String>
     <system:String x:Key="SampleTitleWebSearch">Tìm kiếm trên web</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Tìm kiếm trên web với sự hỗ trợ của công cụ tìm kiếm khác</system:String>
     <system:String x:Key="SampleTitleProgram">Chương trình</system:String>
     <system:String x:Key="SampleSubTitleProgram">Khởi chạy chương trình với tư cách quản trị viên hoặc người dùng khác</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Buộc Tắt Tiến Trình </system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Chấm dứt các tiến trình không mong muốn</system:String>
     <system:String x:Key="queryBoxFont">Phông chữ hộp truy vấn</system:String>
     <system:String x:Key="resultItemFont">Phông chữ kết quả</system:String>
@@ -180,11 +180,11 @@
     <system:String x:Key="showOpenResultHotkeyToolTip">Hiển thị phím tắt chọn kết quả cùng với kết quả.</system:String>
     <system:String x:Key="customQueryHotkey">Phím tắt truy vấn tùy chỉnh</system:String>
     <system:String x:Key="customQueryShortcut">Lối tắt truy vấn tùy chỉnh</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
+    <system:String x:Key="builtinShortcuts">Phím tắt tích hợp</system:String>
     <system:String x:Key="customQuery">Truy vấn</system:String>
     <system:String x:Key="customShortcut">Phím tắt</system:String>
     <system:String x:Key="customShortcutExpansion">Mở rộng</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="builtinShortcutDescription">Mô Tả</system:String>
     <system:String x:Key="delete">Xóa</system:String>
     <system:String x:Key="edit">Chỉnh sửa</system:String>
     <system:String x:Key="add">Thêm</system:String>
@@ -213,8 +213,8 @@
     <system:String x:Key="serverCantBeEmpty">Máy chủ không được để trống</system:String>
     <system:String x:Key="portCantBeEmpty">Cổng máy chủ không được để trống</system:String>
     <system:String x:Key="invalidPortFormat">Định dạng cổng Falsches</system:String>
-    <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
-    <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
+    <system:String x:Key="saveProxySuccessfully">Đã lưu cấu hình proxy thành công</system:String>
+    <system:String x:Key="proxyIsCorrect">Proxy được cấu hình đúng</system:String>
     <system:String x:Key="proxyConnectFailed">Kết nối với proxy không thành công</system:String>
 
     <!--  Setting About  -->
@@ -276,7 +276,7 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Từ khóa hành động mới không được để trống</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Từ khóa hành động đã được một plugin khác sử dụng. Vui lòng đặt từ khóa hành động khác.</system:String>
     <system:String x:Key="success">Thành công</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Đã hoàn tất thành công</system:String>
     <system:String x:Key="actionkeyword_tips">Sử dụng * nếu bạn muốn xác định từ khóa hành động.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
@@ -307,8 +307,8 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="reportWindow_send_report">Gửi báo cáo</system:String>
     <system:String x:Key="reportWindow_cancel">Huỷ bỏ</system:String>
     <system:String x:Key="reportWindow_general">Chung</system:String>
-    <system:String x:Key="reportWindow_exceptions">Exceptions</system:String>
-    <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
+    <system:String x:Key="reportWindow_exceptions">Ngoại lệ</system:String>
+    <system:String x:Key="reportWindow_exception_type">Loại ngoại lệ</system:String>
     <system:String x:Key="reportWindow_source">Nguồn</system:String>
     <system:String x:Key="reportWindow_stack_trace">Ngăn xếp dấu vết</system:String>
     <system:String x:Key="reportWindow_sending">Gửi</system:String>
@@ -341,7 +341,7 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="update_flowlauncher_update_update_description">mô tả Cập nhật</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
+    <system:String x:Key="Skip">Bỏ Qua</system:String>
     <system:String x:Key="Welcome_Page1_Title">Chào mừng bạn đến với Trình khởi chạy luồng</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Xin chào, đây là lần đầu tiên bạn sử dụng Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Trước khi bạn bắt đầu, trình hướng dẫn này sẽ giúp thiết lập Flow Launcher. Bạn có thể bỏ qua điều này nếu bạn muốn. Vui lòng chọn ngôn ngữ</system:String>
@@ -368,13 +368,13 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="HotkeyCtrlIDesc">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="HotkeyF5Desc">Dữ liệu plugin không tải</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Thời Tiết</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Thời tiết từ kết quả của Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
-    <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendShellDesc">Lệnh Shell</system:String>
+    <system:String x:Key="RecommendBluetooth"> Bluetooth</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Cài đặt Bluetooth </system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Ghi chú </system:String>
 
 </ResourceDictionary>
