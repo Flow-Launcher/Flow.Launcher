@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Core.Resource;
@@ -15,6 +16,28 @@ public partial class HotkeyControlDialog : ContentDialog
     public string WindowTitle { get; }
     public HotkeyModel CurrentHotkey { get; private set; }
     public ObservableCollection<string> KeysToDisplay { get; } = new();
+
+    private readonly Dictionary<HotkeyModel, string> StaticHotkeys = new()
+    {
+        [new HotkeyModel("Escape")] = "", // TODO
+        [new HotkeyModel("F5")] = "ReloadPluginHotkey",
+        [new HotkeyModel("Alt+Home")] = "Select first result", // TODO
+        [new HotkeyModel("Alt+End")] = "Select last result", // TODO
+        [new HotkeyModel("Ctrl+R")] = "Requery", // TODO
+        [new HotkeyModel("Ctrl+H")] = "ToggleHistoryHotkey",
+        [new HotkeyModel("Ctrl+OemCloseBrackets")] = "QuickWidthHotkey",
+        [new HotkeyModel("Ctrl+OemOpenBrackets")] = "QuickWidthHotkey",
+        [new HotkeyModel("Ctrl+OemPlus")] = "QuickHeightHotkey",
+        [new HotkeyModel("Ctrl+OemMinus")] = "QuickHeightHotkey",
+        [new HotkeyModel("Ctrl+Shift+Enter")] = "HotkeyCtrlShiftEnterDesc",
+        [new HotkeyModel("Shift+Enter")] = "OpenContextMenuHotkey",
+        [new HotkeyModel("Enter")] = "HotkeyRunDesc",
+        [new HotkeyModel("Ctrl+Enter")] = "Open result", // TODO
+        [new HotkeyModel("Alt+Enter")] = "Open result", // TODO
+        // TODO D0-D9 But not here since they're not completely static, they can be Ctrl+D0-D9, Alt+D0-D9, or Ctrl+Alt+D0-D9
+        [new HotkeyModel("Ctrl+F12")] = "ToggleGameModeHotkey",
+        [new HotkeyModel("Ctrl+Shift+C")] = "Copy alternative", // TODO
+    };
 
     public enum EResultType
     {
@@ -109,17 +132,33 @@ public partial class HotkeyControlDialog : ContentDialog
         if (tbMsg == null)
             return;
 
+
+        if (StaticHotkeys.TryGetValue((HotkeyModel)hotkey, out var staticHotkey))
+        {
+            ShowWarningAndDisableSaveButton(
+                string.Format(
+                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableInUseStatic"),
+                    InternationalizationManager.Instance.GetTranslation(staticHotkey)
+                )
+            );
+            return;
+        }
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
-            tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
-            Alert.Visibility = Visibility.Visible;
-            SaveBtn.IsEnabled = false;
+            ShowWarningAndDisableSaveButton(InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable"));
         }
         else
         {
             Alert.Visibility = Visibility.Collapsed;
             SaveBtn.IsEnabled = true;
         }
+    }
+
+    private void ShowWarningAndDisableSaveButton(string message)
+    {
+        tbMsg.Text = message;
+        Alert.Visibility = Visibility.Visible;
+        SaveBtn.IsEnabled = false;
     }
 
     private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
