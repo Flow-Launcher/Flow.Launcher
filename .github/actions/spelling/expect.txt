@@ -97,6 +97,7 @@ Português
 Português (Brasil)
 Italiano
 Slovenský
+Tiếng Việt
 Droplex
 Preinstalled
 errormetadatafile
