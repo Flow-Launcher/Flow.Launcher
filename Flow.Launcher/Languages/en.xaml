@@ -198,7 +198,7 @@
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width Size</system:String>
     <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height Size</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use it when the plugin settings you changed don't take effect.</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
