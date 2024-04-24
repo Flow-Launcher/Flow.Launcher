@@ -170,14 +170,34 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
     <system:String x:Key="hotkeys">Raccourcis</system:String>
-    <system:String x:Key="flowlauncherHotkey">Ouvrir Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Entrez le raccourci pour afficher/masquer Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Prévisualiser le raccourci</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Entrez le raccourci pour afficher/masquer l'aperçu dans la fenêtre de recherche.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Modificateurs de résultats ouverts</system:String>
     <system:String x:Key="openResultModifiersToolTip">Sélectionnez une touche de modification pour ouvrir le résultat sélectionné via le clavier.</system:String>
     <system:String x:Key="showOpenResultHotkey">Afficher le raccourci clavier</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Afficher le raccourci de sélection des résultats avec les résultats.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Prev Page</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Ouvrir le Menu Contextuel</system:String>
+    <system:String x:Key="SettingWindowHotkey">Ouvrir la Fenêtre des Réglages</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Basculer le mode de jeu</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Ouvrir le répertoire</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width Size</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height Size</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Requêtes personnalisées</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
@@ -188,6 +208,7 @@
     <system:String x:Key="delete">Supprimer</system:String>
     <system:String x:Key="edit">Modifier</system:String>
     <system:String x:Key="add">Ajouter</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Veuillez sélectionner un élément</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Voulez-vous vraiment supprimer {0} raccourci(s) ?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Êtes-vous sûr de vouloir supprimer le raccourci : {0} avec l'expansion {1} ?</system:String>
@@ -285,6 +306,9 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Raccourci indisponible. Veuillez en choisir un autre.</system:String>
     <system:String x:Key="invalidPluginHotkey">Raccourci invalide</system:String>
     <system:String x:Key="update">Actualiser</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
@@ -296,8 +320,11 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Raccourci indisponible</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Sauvegarder</system:String>
+    <system:String x:Key="commonCancel">Annuler</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">Supprimer</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
