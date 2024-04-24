@@ -310,7 +310,7 @@
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
     <system:String x:Key="update">Update</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">This hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
