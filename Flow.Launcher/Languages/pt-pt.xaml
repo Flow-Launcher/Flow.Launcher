@@ -172,7 +172,7 @@
     <system:String x:Key="hotkeys">Teclas de atalho</system:String>
     <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
-    <system:String x:Key="previewHotkey">Alternar pré-visualização</system:String>
+    <system:String x:Key="previewHotkey">Comutar pré-visualização</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduza o atalho para mostrar/ocultar a pré-visualização na janela de pesquisa.</system:String>
     <system:String x:Key="hotkeyPresets">Predefinições de teclas de atalho</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Listagem de teclas de atalho registadas</system:String>
@@ -190,14 +190,14 @@
     <system:String x:Key="SettingWindowHotkey">Abrir janela de definições</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar caminho do ficheiro</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Comutar modo de jogo</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Alternar histórico</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Comutar histórico</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir pasta do resultado</system:String>
     <system:String x:Key="RunAsAdminHotkey">Executar como administrador</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recarregar dados dos plugins</system:String>
     <system:String x:Key="QuickWidthHotkey">Ajuste rápido da largura da janela</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height Size</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuste rápido da altura da janela</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Para utilizar quando pretende recarregar o plugin e os dados existentes.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Ainda pode adicionar mais uma tecla de atalho para esta função.</system:String>
     <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
     <system:String x:Key="customQueryShortcut">Atalhos de consultas personalizadas</system:String>
     <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
@@ -208,7 +208,7 @@
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Adicionar</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">Nenhuma</system:String>
     <system:String x:Key="pleaseSelectAnItem">Selecione um item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Tem a certeza de que deseja remover a tecla de atalho do plugin {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Tem a certeza de que deseja eliminar o atalho: {0} com expansão {1}?</system:String>
@@ -306,9 +306,9 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla de atalho indisponível, por favor escolha outra</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla de atalho inválida</system:String>
     <system:String x:Key="update">Atualizar</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
+    <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
@@ -323,7 +323,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
     <system:String x:Key="commonCancel">Cancelar</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">Repor</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
 
     <!--  Crash Reporter  -->
