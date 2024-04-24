@@ -117,6 +117,11 @@ namespace Flow.Launcher.ViewModel
             SelectedIndex = NewIndex(0);
         }
 
+        public void SelectLastResult()
+        {
+            SelectedIndex = NewIndex(Results.Count - 1);
+        }
+
         public void Clear()
         {
             lock (_collectionLock)
