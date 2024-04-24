@@ -107,12 +107,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Resources\open.wav">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="Resources\open.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
