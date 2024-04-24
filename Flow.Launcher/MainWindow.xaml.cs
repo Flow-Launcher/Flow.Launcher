@@ -27,6 +27,7 @@ using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -41,9 +42,8 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
         private bool _animating;
-        //MediaPlayer animationSound = new MediaPlayer();
-        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
-
+        MediaPlayer animationSound = new MediaPlayer();
+        
         #endregion
 
         public MainWindow(Settings settings, MainViewModel mainVM)
@@ -55,8 +55,8 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            //animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.mp3"));
+           
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
@@ -133,8 +133,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    //animationSound.Position = TimeSpan.Zero;
-                                    //animationSound.Volume = _settings.SoundVolume / 100.0;
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
