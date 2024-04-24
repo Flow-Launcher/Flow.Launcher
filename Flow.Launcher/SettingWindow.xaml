@@ -2722,7 +2722,7 @@
 
                                 <StackPanel Grid.Row="2">
                                     <cc:ExCard
-                                        Title="{DynamicResource basicHotkey}"
+                                        Title="{DynamicResource hotkeyPresets}"
                                         Margin="0,14,0,0"
                                         Icon="&#xf0e2;"
                                         Sub="{DynamicResource basicHotkeyToolTip}">
