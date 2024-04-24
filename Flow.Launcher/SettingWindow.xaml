@@ -2809,7 +2809,7 @@
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource SelectNextPageHotkey}"
-                                                Icon="&#xf0ad;"
+                                                Icon="&#xf0ae;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
@@ -2818,7 +2818,7 @@
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource SelectPrevPageHotkey}"
-                                                Icon="&#xf0ae;"
+                                                Icon="&#xf0ad;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
