@@ -280,7 +280,6 @@ namespace Flow.Launcher
                 Visible = !_settings.HideNotifyIcon
             };
 
-            //var contextMenu = contextMenu;
 
             var openIcon = new FontIcon
             {
