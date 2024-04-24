@@ -41,7 +41,8 @@ namespace Flow.Launcher
         private ContextMenu contextMenu;
         private MainViewModel _viewModel;
         private bool _animating;
-        MediaPlayer animationSound = new MediaPlayer();
+        //MediaPlayer animationSound = new MediaPlayer();
+        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
 
         #endregion
 
@@ -54,7 +55,7 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            //animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
@@ -132,8 +133,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
-                                    animationSound.Volume = _settings.SoundVolume / 100.0;
+                                    //animationSound.Position = TimeSpan.Zero;
+                                    //animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
