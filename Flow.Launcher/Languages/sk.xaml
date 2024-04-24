@@ -170,14 +170,34 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
     <system:String x:Key="hotkeys">Klávesové skratky</system:String>
-    <system:String x:Key="flowlauncherHotkey">Klávesová skratka pre Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Zadajte skratku na zobrazenie/skrytie Flow Launchera.</system:String>
-    <system:String x:Key="previewHotkey">Klávesová skratka pre náhľad</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Zadajte klávesovú skratku pre zobrazenie/skrytie náhľadu vo vyhľadávacom okne.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Modifikačný kláves na otvorenie výsledkov</system:String>
     <system:String x:Key="openResultModifiersToolTip">Vyberte modifikačný kláves na otvorenie vybraného výsledku pomocou klávesnice.</system:String>
     <system:String x:Key="showOpenResultHotkey">Zobraziť klávesovú skratku</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Zobrazí klávesovú skratku spolu s výsledkami.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Prev Page</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Otvoriť kontextovú ponuku</system:String>
+    <system:String x:Key="SettingWindowHotkey">Otvoriť okno s nastaveniami</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Prepnúť herný režim</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Otvoriť umiestnenie priečinka</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width Size</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height Size</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Klávesové skratky vlastného vyhľadávania</system:String>
     <system:String x:Key="customQueryShortcut">Klávesové skratky vlastného dopytu</system:String>
     <system:String x:Key="builtinShortcuts">Vstavané skratky</system:String>
@@ -188,6 +208,7 @@
     <system:String x:Key="delete">Odstrániť</system:String>
     <system:String x:Key="edit">Upraviť</system:String>
     <system:String x:Key="add">Pridať</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Vyberte položku, prosím</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ste si istý, že chcete odstrániť klávesovú skratku {0} pre plugin?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Naozaj chcete odstrániť skratku: {0} pre dopyt {1}?</system:String>
@@ -286,6 +307,9 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Klávesová skratka je nedostupná, prosím, zadajte novú skratku</system:String>
     <system:String x:Key="invalidPluginHotkey">Neplatná klávesová skratka pluginu</system:String>
     <system:String x:Key="update">Aktualizovať</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Klávesová skratka vlastného dopytu</system:String>
@@ -297,8 +321,11 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="duplicateShortcut">Skratka už existuje, zadajte novú skratku alebo upravte existujúcu.</system:String>
     <system:String x:Key="emptyShortcut">Skratka a/alebo jej celé znenie je prázdne.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Klávesová skratka je nedostupná</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Uložiť</system:String>
+    <system:String x:Key="commonCancel">Zrušiť</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">Odstrániť</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
