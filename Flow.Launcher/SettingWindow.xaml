@@ -2808,21 +2808,21 @@
                                                 <cc:HotkeyDisplay Keys="F5" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="{DynamicResource SelectNextPageHotkey}"
-                                                Icon="&#xf0ae;"
-                                                Type="Inside">
-                                                <flowlauncher:HotkeyControl
-                                                    DefaultHotkey=""
-                                                    Hotkey="{Binding Settings.SelectNextPageHotkey}"
-                                                    ValidateKeyGesture="False" />
-                                            </cc:Card>
-                                            <cc:Card
                                                 Title="{DynamicResource SelectPrevPageHotkey}"
                                                 Icon="&#xf0ad;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
                                                     Hotkey="{Binding Settings.SelectPrevPageHotkey}"
+                                                    ValidateKeyGesture="False" />
+                                            </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource SelectNextPageHotkey}"
+                                                Icon="&#xf0ae;"
+                                                Type="Inside">
+                                                <flowlauncher:HotkeyControl
+                                                    DefaultHotkey=""
+                                                    Hotkey="{Binding Settings.SelectNextPageHotkey}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
 
