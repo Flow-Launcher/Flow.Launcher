@@ -20,7 +20,7 @@
     <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
-    <system:String x:Key="plugin_explorer_delete">Delete</system:String>
+    <system:String x:Key="plugin_explorer_delete">Xóa</system:String>
     <system:String x:Key="plugin_explorer_edit">Edit</system:String>
     <system:String x:Key="plugin_explorer_add">Add</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
@@ -71,7 +71,7 @@
     <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefolder">Delete</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefolder">Xóa</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
     <system:String x:Key="plugin_explorer_path">Path:</system:String>
