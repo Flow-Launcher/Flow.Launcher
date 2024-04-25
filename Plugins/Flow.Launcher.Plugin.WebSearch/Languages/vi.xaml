@@ -7,7 +7,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete">Xóa</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Edit</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Add</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
