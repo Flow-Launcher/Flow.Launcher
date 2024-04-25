@@ -3,7 +3,7 @@
 
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_delete">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_delete">Xóa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">Edit</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Add</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
