@@ -106,6 +106,7 @@
                         Grid.Column="1"
                         x:Name="tbMsg"
                         Margin="0,0,0,2"
+                        Padding="0,0,8,0"
                         HorizontalAlignment="Left"
                         FontSize="13"
                         FontWeight="SemiBold"
@@ -127,6 +128,15 @@
                 Margin="10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
+                <Button
+                    x:Name="OverwriteBtn"
+                    Height="30"
+                    MinWidth="100"
+                    Margin="0,0,4,0"
+                    Click="Overwrite"
+                    Content="{DynamicResource commonOverwrite}"
+                    Visibility="Collapsed"
+                    Style="{StaticResource AccentButtonStyle}" />
                 <Button
                     x:Name="SaveBtn"
                     Height="30"

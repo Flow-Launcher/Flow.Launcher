@@ -2663,6 +2663,7 @@
                                             ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                                             DefaultHotkey="Alt+Space"
                                             Hotkey="{Binding Settings.Hotkey}"
+                                            HotkeySettings="{Binding Settings}"
                                             ValidateKeyGesture="True"
                                             WindowTitle="{DynamicResource flowlauncherHotkey}" />
                                     </cc:Card>
@@ -2676,6 +2677,7 @@
                                         <flowlauncher:HotkeyControl
                                             DefaultHotkey="F1"
                                             Hotkey="{Binding Settings.PreviewHotkey}"
+                                            HotkeySettings="{Binding Settings}"
                                             ValidateKeyGesture="False"
                                             WindowTitle="{DynamicResource previewHotkey}" />
                                     </cc:Card>
@@ -2776,6 +2778,7 @@
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey="Ctrl+I"
                                                     Hotkey="{Binding Settings.OpenContextMenuHotkey}"
+                                                    HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
                                             <cc:Card
@@ -2792,6 +2795,7 @@
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey="Ctrl+I"
                                                     Hotkey="{Binding Settings.SettingWindowHotkey}"
+                                                    HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
                                             <cc:Card
@@ -2814,6 +2818,7 @@
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
                                                     Hotkey="{Binding Settings.SelectNextPageHotkey}"
+                                                    HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
                                             <cc:Card
@@ -2823,6 +2828,7 @@
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
                                                     Hotkey="{Binding Settings.SelectPrevPageHotkey}"
+                                                    HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
 
@@ -2857,6 +2863,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey="Ctrl+Tab"
                                                 Hotkey="{Binding Settings.AutoCompleteHotkey}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:ExCard.SideContent>
                                         <cc:Card
@@ -2866,6 +2873,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.AutoCompleteHotkey2}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:Card>
                                     </cc:ExCard>
@@ -2879,6 +2887,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey="Tab"
                                                 Hotkey="{Binding Settings.SelectNextItemHotkey}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:ExCard.SideContent>
                                         <cc:Card
@@ -2888,6 +2897,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.SelectNextItemHotkey2}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:Card>
                                     </cc:ExCard>
@@ -2900,6 +2910,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey="Shift+Tab"
                                                 Hotkey="{Binding Settings.SelectPrevItemHotkey}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:ExCard.SideContent>
                                         <cc:Card
@@ -2909,6 +2920,7 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.SelectPrevItemHotkey2}"
+                                                HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:Card>
                                     </cc:ExCard>
