@@ -322,7 +322,7 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="emptyShortcut">Phím tắt và/hoặc phần mở rộng của nó trống.</system:String>
 
     <!--  Common Action  -->
-    <system:String x:Key="commonSave">Save</system:String>
+    <system:String x:Key="commonSave">Lưu</system:String>
     <system:String x:Key="commonCancel">Cancel</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Delete</system:String>
