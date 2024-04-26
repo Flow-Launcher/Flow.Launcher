@@ -194,8 +194,8 @@
     <system:String x:Key="OpenContainFolderHotkey">開啟檔案位置</system:String>
     <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width Size</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height Size</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">自定義查詢快捷鍵</system:String>
