@@ -398,6 +398,12 @@
     <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
     <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
 
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+
     <system:String x:Key="RecommendWeather">Weather</system:String>
     <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>

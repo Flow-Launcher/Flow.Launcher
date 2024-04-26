@@ -119,12 +119,16 @@ public partial class HotkeyControlDialog : ContentDialog
 
         if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
         {
+            var description = string.Format(
+                InternationalizationManager.Instance.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
+                registeredHotkeyData.DescriptionFormatVariables
+            );
             Alert.Visibility = Visibility.Visible;
             if (registeredHotkeyData.RemoveHotkey is not null)
             {
                 tbMsg.Text = string.Format(
                     InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableEditable"),
-                    registeredHotkeyData.Description
+                    description
                 );
                 SaveBtn.IsEnabled = false;
                 SaveBtn.Visibility = Visibility.Collapsed;
@@ -136,7 +140,7 @@ public partial class HotkeyControlDialog : ContentDialog
             {
                 tbMsg.Text = string.Format(
                     InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableUneditable"),
-                    registeredHotkeyData.Description
+                    description
                 );
                 SaveBtn.IsEnabled = false;
                 SaveBtn.Visibility = Visibility.Visible;

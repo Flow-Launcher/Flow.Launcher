@@ -282,65 +282,69 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 var list = new List<RegisteredHotkeyData>
                 {
-                    new("Escape", "Escape"), // TODO
-                    new("F5", "ReloadPluginHotkey"), // TODO
-                    new("Alt+Home", "Select last result"), // TODO
-                    new("Alt+End", "Select last result"), // TODO
-                    new("Ctrl+R", "Requery"), // TODO
-                    new("Ctrl+H", "ToggleHistoryHotkey"), // TODO
-                    new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"), // TODO
-                    new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"), // TODO
-                    new("Ctrl+OemPlus", "QuickHeightHotkey"), // TODO
-                    new("Ctrl+OemMinus", "QuickHeightHotkey"), // TODO
-                    new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"), // TODO
-                    new("Shift+Enter", "OpenContextMenuHotkey"), // TODO
-                    new("Enter", "HotkeyRunDesc"), // TODO
-                    new("Ctrl+Enter", "Open result"), // TODO
-                    new("Alt+Enter", "Open result"), // TODO
-                    new("Ctrl+F12", "ToggleGameModeHotkey"), // TODO
-                    new("Ctrl+Shift+C", "Copy alternative"), // TODO
+                    new("Up", "HotkeyLeftRightDesc"),
+                    new("Down", "HotkeyLeftRightDesc"),
+                    new("Left", "HotkeyUpDownDesc"),
+                    new("Right", "HotkeyUpDownDesc"),
+                    new("Escape", "HotkeyESCDesc"),
+                    new("F5", "ReloadPluginHotkey"),
+                    new("Alt+Home", "HotkeySelectFirstResult"),
+                    new("Alt+End", "HotkeySelectLastResult"),
+                    new("Ctrl+R", "HotkeyRequery"),
+                    new("Ctrl+H", "ToggleHistoryHotkey"),
+                    new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
+                    new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
+                    new("Ctrl+OemPlus", "QuickHeightHotkey"),
+                    new("Ctrl+OemMinus", "QuickHeightHotkey"),
+                    new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"),
+                    new("Shift+Enter", "OpenContextMenuHotkey"),
+                    new("Enter", "HotkeyRunDesc"),
+                    new("Ctrl+Enter", "OpenContainFolderHotkey"),
+                    new("Alt+Enter", "HotkeyOpenResult"),
+                    new("Ctrl+F12", "ToggleGameModeHotkey"),
+                    new("Ctrl+Shift+C", "CopyFilePathHotkey"),
 
-                    new($"{OpenResultModifiers}+D1", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D2", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D3", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D4", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D5", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D6", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D7", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D8", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D9", "Open Result"), // TODO
-                    new($"{OpenResultModifiers}+D0", "Open Result"), // TODO
+                    new($"{OpenResultModifiers}+D1", "HotkeyOpenResultN", 1),
+                    new($"{OpenResultModifiers}+D2", "HotkeyOpenResultN", 2),
+                    new($"{OpenResultModifiers}+D3", "HotkeyOpenResultN", 3),
+                    new($"{OpenResultModifiers}+D4", "HotkeyOpenResultN", 4),
+                    new($"{OpenResultModifiers}+D5", "HotkeyOpenResultN", 5),
+                    new($"{OpenResultModifiers}+D6", "HotkeyOpenResultN", 6),
+                    new($"{OpenResultModifiers}+D7", "HotkeyOpenResultN", 7),
+                    new($"{OpenResultModifiers}+D8", "HotkeyOpenResultN", 8),
+                    new($"{OpenResultModifiers}+D9", "HotkeyOpenResultN", 9),
+                    new($"{OpenResultModifiers}+D0", "HotkeyOpenResultN", 10)
                 };
 
                 if(!string.IsNullOrEmpty(Hotkey))
-                    list.Add(new(Hotkey, "Open main window", () => Hotkey = "")); // TODO
+                    list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
                 if(!string.IsNullOrEmpty(PreviewHotkey))
-                    list.Add(new(PreviewHotkey, "Preview Hotkey", () => PreviewHotkey = "")); // TODO
+                    list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
                 if(!string.IsNullOrEmpty(AutoCompleteHotkey))
-                    list.Add(new(AutoCompleteHotkey, "AutoCompleteHotkey", () => AutoCompleteHotkey = "")); // TODO
+                    list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
                 if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
-                    list.Add(new(AutoCompleteHotkey2, "AutoCompleteHotkey", () => AutoCompleteHotkey2 = "")); // TODO
+                    list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
                 if(!string.IsNullOrEmpty(SelectNextItemHotkey))
-                    list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = "")); // TODO
+                    list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectNextItemHotkey2))
-                    list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = "")); // TODO
+                    list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
                 if(!string.IsNullOrEmpty(SelectPrevItemHotkey))
-                    list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = "")); // TODO
+                    list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectPrevItemHotkey2))
-                    list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = "")); // TODO
+                    list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
                 if(!string.IsNullOrEmpty(SettingWindowHotkey))
-                    list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = "")); // TODO
+                    list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
                 if(!string.IsNullOrEmpty(OpenContextMenuHotkey))
-                    list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = "")); // TODO
+                    list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectNextPageHotkey))
-                    list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = "")); // TODO
+                    list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
-                    list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = "")); // TODO
+                    list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
 
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
                 {
                     if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
-                        list.Add(new(customPluginHotkey.Hotkey, "Custom plugin hotkey", () => customPluginHotkey.Hotkey = "")); // TODO
+                        list.Add(new(customPluginHotkey.Hotkey, "customQueryHotkey", () => customPluginHotkey.Hotkey = ""));
                 }
 
                 return list;
