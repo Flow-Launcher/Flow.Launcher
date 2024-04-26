@@ -2812,22 +2812,22 @@
                                                 <cc:HotkeyDisplay Keys="F5" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="{DynamicResource SelectNextPageHotkey}"
+                                                Title="{DynamicResource SelectPrevPageHotkey}"
                                                 Icon="&#xf0ad;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
-                                                    Hotkey="{Binding Settings.SelectNextPageHotkey}"
+                                                    Hotkey="{Binding Settings.SelectPrevPageHotkey}"
                                                     HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="{DynamicResource SelectPrevPageHotkey}"
+                                                Title="{DynamicResource SelectNextPageHotkey}"
                                                 Icon="&#xf0ae;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey=""
-                                                    Hotkey="{Binding Settings.SelectPrevPageHotkey}"
+                                                    Hotkey="{Binding Settings.SelectNextPageHotkey}"
                                                     HotkeySettings="{Binding Settings}"
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
@@ -2878,6 +2878,28 @@
                                         </cc:Card>
                                     </cc:ExCard>
 
+                                    <cc:ExCard
+                                        Title="{DynamicResource SelectPrevItemHotkey}"
+                                        Margin="0,4,0,0"
+                                        Icon="&#xe74a;">
+                                        <cc:ExCard.SideContent>
+                                            <flowlauncher:HotkeyControl
+                                                DefaultHotkey="Shift+Tab"
+                                                Hotkey="{Binding Settings.SelectPrevItemHotkey}"
+                                                HotkeySettings="{Binding Settings}"
+                                                ValidateKeyGesture="False" />
+                                        </cc:ExCard.SideContent>
+                                        <cc:Card
+                                            Title="{DynamicResource SelectPrevItemHotkey}"
+                                            Sub="{DynamicResource AdditionalHotkeyToolTip}"
+                                            Type="InsideFit">
+                                            <flowlauncher:HotkeyControl
+                                                DefaultHotkey=""
+                                                Hotkey="{Binding Settings.SelectPrevItemHotkey2}"
+                                                HotkeySettings="{Binding Settings}"
+                                                ValidateKeyGesture="False" />
+                                        </cc:Card>
+                                    </cc:ExCard>
 
                                     <cc:ExCard
                                         Title="{DynamicResource SelectNextItemHotkey}"
@@ -2897,29 +2919,6 @@
                                             <flowlauncher:HotkeyControl
                                                 DefaultHotkey=""
                                                 Hotkey="{Binding Settings.SelectNextItemHotkey2}"
-                                                HotkeySettings="{Binding Settings}"
-                                                ValidateKeyGesture="False" />
-                                        </cc:Card>
-                                    </cc:ExCard>
-
-                                    <cc:ExCard
-                                        Title="{DynamicResource SelectPrevItemHotkey}"
-                                        Margin="0,4,0,0"
-                                        Icon="&#xe74a;">
-                                        <cc:ExCard.SideContent>
-                                            <flowlauncher:HotkeyControl
-                                                DefaultHotkey="Shift+Tab"
-                                                Hotkey="{Binding Settings.SelectPrevItemHotkey}"
-                                                HotkeySettings="{Binding Settings}"
-                                                ValidateKeyGesture="False" />
-                                        </cc:ExCard.SideContent>
-                                        <cc:Card
-                                            Title="{DynamicResource SelectPrevItemHotkey}"
-                                            Sub="{DynamicResource AdditionalHotkeyToolTip}"
-                                            Type="InsideFit">
-                                            <flowlauncher:HotkeyControl
-                                                DefaultHotkey=""
-                                                Hotkey="{Binding Settings.SelectPrevItemHotkey2}"
                                                 HotkeySettings="{Binding Settings}"
                                                 ValidateKeyGesture="False" />
                                         </cc:Card>
