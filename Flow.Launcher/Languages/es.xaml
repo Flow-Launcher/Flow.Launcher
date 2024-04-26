@@ -170,11 +170,11 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
+    <system:String x:Key="previewHotkey">Cambiar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
-    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresets">Ajustes de atajo de teclado</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
