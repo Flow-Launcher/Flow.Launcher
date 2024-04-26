@@ -194,8 +194,8 @@
     <system:String x:Key="OpenContainFolderHotkey">Abrir pasta do resultado</system:String>
     <system:String x:Key="RunAsAdminHotkey">Executar como administrador</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recarregar dados dos plugins</system:String>
-    <system:String x:Key="QuickWidthHotkey">Ajuste rápido da largura da janela</system:String>
-    <system:String x:Key="QuickHeightHotkey">Ajuste rápido da altura da janela</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Para utilizar quando pretende recarregar o plugin e os dados existentes.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Ainda pode adicionar mais uma tecla de atalho para esta função.</system:String>
     <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
