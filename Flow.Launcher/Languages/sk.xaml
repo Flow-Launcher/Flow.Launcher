@@ -194,8 +194,8 @@
     <system:String x:Key="OpenContainFolderHotkey">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="RunAsAdminHotkey">Spustiť ako správca</system:String>
     <system:String x:Key="ReloadPluginHotkey">Znova načítať údaje pluginov</system:String>
-    <system:String x:Key="QuickWidthHotkey">Rýchla úprava veľkosti šírky okna</system:String>
-    <system:String x:Key="QuickHeightHotkey">Rýchla úprava veľkosti výšky okna</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Použite, ak potrebujete, aby pluginy znovu načítali a aktualizovali svoje existujúce údaje.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Pre túto funkciu môžete pridať alternatívnu klávesovú skratku.</system:String>
     <system:String x:Key="customQueryHotkey">Klávesové skratky vlastného vyhľadávania</system:String>
