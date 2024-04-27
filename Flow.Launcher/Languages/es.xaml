@@ -327,7 +327,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="commonSave">Guardar</system:String>
     <system:String x:Key="commonOverwrite">Sobrescribir</system:String>
     <system:String x:Key="commonCancel">Cancelar</system:String>
-    <system:String x:Key="commonReset">Reiniciar</system:String>
+    <system:String x:Key="commonReset">Restablecer</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
 
     <!--  Crash Reporter  -->
