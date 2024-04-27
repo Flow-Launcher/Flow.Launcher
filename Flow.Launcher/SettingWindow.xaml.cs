@@ -24,6 +24,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
+using Flow.Launcher.SettingPages.Views;
 
 namespace Flow.Launcher
 {
@@ -502,6 +503,29 @@ namespace Flow.Launcher
         private void Plugin_GotFocus(object sender, RoutedEventArgs e)
         {
             Keyboard.Focus(pluginFilterTxb);
+        }
+
+        /** For Navigation View **/
+        private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
+        {
+            if (args.IsSettingsSelected)
+            {
+                contentFrame.Navigate(typeof(General));
+            }
+            else
+            {
+                var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
+                if (selectedItem == null)
+                {
+                    return;
+                }
+                string selectedItemTag = (string)selectedItem.Tag;
+
+                sender.Header = (string)selectedItem.Content;
+                string pageName = $"Flow.Launcher.SettingPages.Views.{selectedItemTag}";
+                Type pageType = typeof(About).Assembly.GetType(pageName);
+                contentFrame.Navigate(pageType, settings);
+            }
         }
     }
 }

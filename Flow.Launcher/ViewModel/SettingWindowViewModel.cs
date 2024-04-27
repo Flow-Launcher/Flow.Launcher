@@ -24,6 +24,7 @@ using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Hotkey;
+using ModernWpf.Media.Animation;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -32,6 +33,12 @@ namespace Flow.Launcher.ViewModel
         private readonly Updater _updater;
         private readonly IPortable _portable;
         private readonly FlowLauncherJsonStorage<Settings> _storage;
+
+        /* For Navigation View */ 
+        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
+        {
+            Effect = SlideNavigationTransitionEffect.FromBottom
+        };
 
         public SettingWindowViewModel(Updater updater, IPortable portable)
         {
