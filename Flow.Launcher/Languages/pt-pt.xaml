@@ -194,8 +194,8 @@
     <system:String x:Key="OpenContainFolderHotkey">Abrir pasta do resultado</system:String>
     <system:String x:Key="RunAsAdminHotkey">Executar como administrador</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recarregar dados dos plugins</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajuste rápido da largura da janela</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuste rápido da altura da janela</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Para utilizar quando pretende recarregar o plugin e os dados existentes.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Ainda pode adicionar mais uma tecla de atalho para esta função.</system:String>
     <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
@@ -308,8 +308,8 @@
     <system:String x:Key="update">Atualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
     <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Esta tecla de atalho está reservada para &quot;{0}&quot; e não pode ser usada. Por favor, escolha outra.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Esta tecla de atalho está a ser utilizada por &quot;{0}&quot;. Se escolher &quot;Substituir&quot;, será removida de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -324,7 +324,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Substituir</system:String>
     <system:String x:Key="commonCancel">Cancelar</system:String>
     <system:String x:Key="commonReset">Repor</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
@@ -397,11 +397,11 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
     <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Selecionar primeiro resultado</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Selecionar último resultado</system:String>
+    <system:String x:Key="HotkeyRequery">Executar consulta novamente</system:String>
+    <system:String x:Key="HotkeyOpenResult">Abrir resultado</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Abrir resultado #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Meteorologia</system:String>
     <system:String x:Key="RecommendWeatherDesc">Meteorologia no Google</system:String>
