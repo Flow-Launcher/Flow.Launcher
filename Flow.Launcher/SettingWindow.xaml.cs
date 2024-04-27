@@ -42,7 +42,7 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
-
+            NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
         }
 
         #region General
@@ -54,28 +54,28 @@ namespace Flow.Launcher
             // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
             HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
             HwndTarget hwndTarget = hwndSource.CompositionTarget;
-            hwndTarget.RenderMode = RenderMode.SoftwareOnly;
+            hwndTarget.RenderMode = RenderMode.Default;
 
-            pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
-            pluginListView.Filter = PluginListFilter;
+            //pluginListView = (CollectionView)CollectionViewSource.GetDefaultView(Plugins.ItemsSource);
+            //pluginListView.Filter = PluginListFilter;
 
-            pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
-            pluginStoreView.Filter = PluginStoreFilter;
+            //pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+            //pluginStoreView.Filter = PluginStoreFilter;
 
-            viewModel.PropertyChanged += new PropertyChangedEventHandler(SettingsWindowViewModelChanged);
+            //viewModel.PropertyChanged += new PropertyChangedEventHandler(SettingsWindowViewModelChanged);
 
             InitializePosition();
         }
 
-        private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == nameof(viewModel.ExternalPlugins))
-            {
-                pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
-                pluginStoreView.Filter = PluginStoreFilter;
-                pluginStoreView.Refresh();
-            }
-        }
+        //private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
+        //{
+        //    if (e.PropertyName == nameof(viewModel.ExternalPlugins))
+        //    {
+        //        pluginStoreView = (CollectionView)CollectionViewSource.GetDefaultView(StoreListBox.ItemsSource);
+        //        pluginStoreView.Filter = PluginStoreFilter;
+        //        pluginStoreView.Refresh();
+        //    }
+        //}
 
         private void OnSelectPythonPathClick(object sender, RoutedEventArgs e)
         {
@@ -375,75 +375,75 @@ namespace Flow.Launcher
         private CollectionView pluginListView;
         private CollectionView pluginStoreView;
 
-        private bool PluginListFilter(object item)
-        {
-            if (string.IsNullOrEmpty(pluginFilterTxb.Text))
-                return true;
-            if (item is PluginViewModel model)
-            {
-                return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
-            }
-            return false;
-        }
+        //private bool PluginListFilter(object item)
+        //{
+        //    if (string.IsNullOrEmpty(pluginFilterTxb.Text))
+        //        return true;
+        //    if (item is PluginViewModel model)
+        //    {
+        //        return StringMatcher.FuzzySearch(pluginFilterTxb.Text, model.PluginPair.Metadata.Name).IsSearchPrecisionScoreMet();
+        //    }
+        //    return false;
+        //}
 
-        private bool PluginStoreFilter(object item)
-        {
-            if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
-                return true;
-            if (item is PluginStoreItemViewModel model)
-            {
-                return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
-                    || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
-            }
-            return false;
-        }
+        //private bool PluginStoreFilter(object item)
+        //{
+        //    if (string.IsNullOrEmpty(pluginStoreFilterTxb.Text))
+        //        return true;
+        //    if (item is PluginStoreItemViewModel model)
+        //    {
+        //        return StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Name).IsSearchPrecisionScoreMet()
+        //            || StringMatcher.FuzzySearch(pluginStoreFilterTxb.Text, model.Description).IsSearchPrecisionScoreMet();
+        //    }
+        //    return false;
+        //}
 
         private string lastPluginListSearch = "";
         private string lastPluginStoreSearch = "";
 
-        private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
-        {
-            if (pluginFilterTxb.Text != lastPluginListSearch)
-            {
-                lastPluginListSearch = pluginFilterTxb.Text;
-                pluginListView.Refresh();
-            }
-        }
+        //private void RefreshPluginListEventHandler(object sender, RoutedEventArgs e)
+        //{
+        //    if (pluginFilterTxb.Text != lastPluginListSearch)
+        //    {
+        //        lastPluginListSearch = pluginFilterTxb.Text;
+        //        pluginListView.Refresh();
+        //    }
+        //}
 
-        private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
-        {
-            if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
-            {
-                lastPluginStoreSearch = pluginStoreFilterTxb.Text;
-                pluginStoreView.Refresh();
-            }
-        }
+        //private void RefreshPluginStoreEventHandler(object sender, RoutedEventArgs e)
+        //{
+        //    if (pluginStoreFilterTxb.Text != lastPluginStoreSearch)
+        //    {
+        //        lastPluginStoreSearch = pluginStoreFilterTxb.Text;
+        //        pluginStoreView.Refresh();
+        //    }
+        //}
 
-        private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                RefreshPluginListEventHandler(sender, e);
-        }
+        //private void PluginFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //        RefreshPluginListEventHandler(sender, e);
+        //}
 
-        private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-                RefreshPluginStoreEventHandler(sender, e);
-        }
+        //private void PluginStoreFilterTxb_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.Enter)
+        //        RefreshPluginStoreEventHandler(sender, e);
+        //}
 
-        private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
-        {
-            if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
-                pluginFilterTxb.Focus();
-        }
+        //private void OnPluginSettingKeydown(object sender, KeyEventArgs e)
+        //{
+        //    if ((Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control && e.Key == Key.F)
+        //        pluginFilterTxb.Focus();
+        //}
 
-        private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
-            {
-                pluginStoreFilterTxb.Focus();
-            }
-        }
+        //private void PluginStore_OnKeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Key == Key.F && (Keyboard.Modifiers & ModifierKeys.Control) != 0)
+        //    {
+        //        pluginStoreFilterTxb.Focus();
+        //    }
+        //}
 
         public void InitializePosition()
         {
@@ -495,15 +495,15 @@ namespace Flow.Launcher
 
         }
 
-        private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Keyboard.Focus(pluginStoreFilterTxb);
-        }
+        //private void PluginStore_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    Keyboard.Focus(pluginStoreFilterTxb);
+        //}
 
-        private void Plugin_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Keyboard.Focus(pluginFilterTxb);
-        }
+        //private void Plugin_GotFocus(object sender, RoutedEventArgs e)
+        //{
+        //    Keyboard.Focus(pluginFilterTxb);
+        //}
 
         /** For Navigation View **/
         private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)

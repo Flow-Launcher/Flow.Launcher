@@ -111,10 +111,6 @@
     </Content>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SettingPages\Views\" />
-  </ItemGroup>
-
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="taskkill /f /fi &quot;IMAGENAME eq Flow.Launcher.exe&quot;" />
   </Target>

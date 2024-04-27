@@ -1,0 +1,180 @@
+﻿<Page
+    x:Class="Flow.Launcher.SettingPages.Views.Proxy"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.SettingPages.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title="Proxy"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
+        </ResourceDictionary>
+    </Page.Resources>
+    <ScrollViewer
+        Margin="0,0,0,0"
+        Padding="5,0,24,0"
+        ScrollViewer.CanContentScroll="True"
+        VirtualizingStackPanel.IsVirtualizing="True"
+        VirtualizingStackPanel.ScrollUnit="Pixel">
+        <Border>
+
+            <StackPanel>
+                <Border Margin="0,18,0,0">
+                    <TextBlock
+                        Grid.Row="0"
+                        Margin="0,5,0,0"
+                        FontSize="30"
+                        Style="{StaticResource PageTitle}"
+                        Text="{DynamicResource proxy}"
+                        TextAlignment="left" />
+                </Border>
+
+
+                <Border
+                    Margin="0,10,0,0"
+                    Padding="0"
+                    CornerRadius="5"
+                    Style="{DynamicResource SettingGroupBox}">
+                    <StackPanel Orientation="Vertical">
+                        <Border
+                            Margin="0"
+                            BorderThickness="0"
+                            Style="{DynamicResource SettingGroupBox}">
+                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    VerticalAlignment="Center"
+                                    Style="{DynamicResource SettingTitleLabel}"
+                                    Text="{DynamicResource enableProxy}" />
+                                <ui:ToggleSwitch
+                                    Grid.Column="2"
+                                    IsOn="{Binding Settings.Proxy.Enabled}"
+                                    Style="{DynamicResource SideToggleSwitch}" />
+                            </ItemsControl>
+                        </Border>
+                        <Separator
+                            Width="Auto"
+                            BorderThickness="1"
+                            Style="{StaticResource SettingSeparatorStyle}" />
+                        <Border
+                            Margin="0"
+                            BorderThickness="0"
+                            Style="{DynamicResource SettingGroupBox}">
+                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="22,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Style="{DynamicResource SettingTitleLabel}"
+                                    Text="{DynamicResource server}" />
+                                <TextBox
+                                    Grid.Column="2"
+                                    Width="300"
+                                    Margin="0,0,16,0"
+                                    Padding="5"
+                                    IsEnabled="{Binding Settings.Proxy.Enabled}"
+                                    Text="{Binding Settings.Proxy.Server}" />
+                            </ItemsControl>
+                        </Border>
+                        <Separator
+                            Width="Auto"
+                            BorderThickness="1"
+                            Style="{StaticResource SettingSeparatorStyle}" />
+                        <Border
+                            Margin="0"
+                            BorderThickness="0"
+                            Style="{DynamicResource SettingGroupBox}">
+                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="22,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Style="{DynamicResource SettingTitleLabel}"
+                                    Text="{DynamicResource port}" />
+                                <TextBox
+                                    Grid.Column="2"
+                                    Width="100"
+                                    Margin="0,0,16,0"
+                                    IsEnabled="{Binding Settings.Proxy.Enabled}"
+                                    Text="{Binding Settings.Proxy.Port, TargetNullValue={x:Static sys:String.Empty}}" />
+                            </ItemsControl>
+                        </Border>
+                        <Separator
+                            Width="Auto"
+                            BorderThickness="1"
+                            Style="{StaticResource SettingSeparatorStyle}" />
+                        <Border
+                            Margin="0"
+                            BorderThickness="0"
+                            Style="{DynamicResource SettingGroupBox}">
+                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="22,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Style="{DynamicResource SettingTitleLabel}"
+                                    Text="{DynamicResource userName}" />
+                                <TextBox
+                                    Grid.Column="2"
+                                    Width="200"
+                                    Margin="0,0,16,0"
+                                    Padding="5"
+                                    IsEnabled="{Binding Settings.Proxy.Enabled}"
+                                    Text="{Binding Settings.Proxy.UserName}" />
+                            </ItemsControl>
+                        </Border>
+                        <Separator
+                            Width="Auto"
+                            BorderThickness="1"
+                            Style="{StaticResource SettingSeparatorStyle}" />
+                        <Border
+                            Margin="0"
+                            BorderThickness="0"
+                            Style="{DynamicResource SettingGroupBox}">
+                            <ItemsControl Style="{StaticResource SettingGrid}">
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="22,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Style="{DynamicResource SettingTitleLabel}"
+                                    Text="{DynamicResource password}" />
+                                <TextBox
+                                    Grid.Column="2"
+                                    Width="200"
+                                    Margin="0,0,16,0"
+                                    Padding="5"
+                                    IsEnabled="{Binding Settings.Proxy.Enabled}"
+                                    Text="{Binding Settings.Proxy.Password}" />
+                            </ItemsControl>
+                        </Border>
+                    </StackPanel>
+                </Border>
+                <Border Margin="0,12,0,0" Style="{DynamicResource SettingGroupBox}">
+                    <ItemsControl Style="{StaticResource SettingGrid}">
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            Style="{DynamicResource SettingTitleLabel}"
+                            Text="{DynamicResource testProxy}" />
+                        <Button
+                            Grid.Column="2"
+                            Width="150"
+                            Margin="0,0,16,0"
+                            HorizontalAlignment="Right"
+                            Content="{DynamicResource testProxy}"
+                            IsEnabled="{Binding Settings.Proxy.Enabled}" />
+                    </ItemsControl>
+                </Border>
+            </StackPanel>
+        </Border>
+    </ScrollViewer>
+</Page>

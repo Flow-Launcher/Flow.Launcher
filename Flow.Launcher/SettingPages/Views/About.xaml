@@ -1,0 +1,232 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.About"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.SettingPages.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title="About"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ui:Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
+        </ResourceDictionary>
+    </ui:Page.Resources>
+    <ScrollViewer
+        Margin="0,0,0,0"
+        Background="{DynamicResource Color01B}"
+        ScrollViewer.CanContentScroll="True"
+        VirtualizingStackPanel.IsVirtualizing="True"
+        VirtualizingStackPanel.ScrollUnit="Pixel">
+        <StackPanel Margin="5,14,25,30" Orientation="Vertical">
+            <TextBlock
+                Grid.Row="2"
+                Margin="0,5,0,5"
+                FontSize="30"
+                Style="{DynamicResource PageTitle}"
+                Text="{DynamicResource about}"
+                TextAlignment="left" />
+
+
+            <Border Margin="0,9,0,0" Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontWeight="Bold"
+                            Style="{DynamicResource SettingTitleLabel}"
+                            Text="{Binding Version}" />
+                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource version}" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Orientation="Horizontal">
+                        <Button
+                            Margin="0,0,10,0"
+                            HorizontalAlignment="Right"
+                            Content="{DynamicResource checkUpdates}" />
+                        <Button
+                            Margin="0,0,14,0"
+                            Padding="0"
+                            HorizontalAlignment="Right"
+                            Style="{StaticResource AccentButtonStyle}">
+                            <Hyperlink
+                                NavigateUri="{Binding SponsorPage, Mode=OneWay}"
+                                RequestNavigate="OnRequestNavigate"
+                                TextDecorations="None">
+                                <TextBlock
+                                    Padding="10,5,10,5"
+                                    Foreground="White"
+                                    Text="{DynamicResource BecomeASponsor}" />
+                            </Hyperlink>
+                        </Button>
+
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xe946;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <Border Height="62" Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource releaseNotes}" />
+                    </StackPanel>
+                    <TextBlock
+                        Margin="0,0,-12,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SideTextAbout}">
+                        <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                            <Run Text="{DynamicResource releaseNotes}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xe8fd;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <Border
+                Height="62"
+                Margin="0,14,0,0"
+                Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource website}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="0,0,18,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock Margin="0,0,12,0">
+                            <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                <Run Text="{DynamicResource website}" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock>
+                            <Hyperlink NavigateUri="{Binding Github, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                <Run Text="{DynamicResource github}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xeb41;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <Border Height="62" Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource documentation}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="2"
+                        Margin="0,0,18,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <TextBlock Margin="0,0,12,0">
+                            <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                <Run Text="{DynamicResource documentation}" />
+                            </Hyperlink>
+                        </TextBlock>
+                        <TextBlock>
+                            <Hyperlink NavigateUri="{Binding Docs, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
+                                <Run Text="{DynamicResource docs}" />
+                            </Hyperlink>
+                        </TextBlock>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xe82f;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <Border
+                Height="62"
+                Margin="0,14,0,0"
+                Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource icons}" />
+                    </StackPanel>
+                    <TextBlock
+                        Margin="0,0,-12,0"
+                        VerticalAlignment="Center"
+                        Style="{StaticResource SideTextAbout}">
+                        <Hyperlink NavigateUri="https://icons8.com" RequestNavigate="OnRequestNavigate">
+                            <Run Text="icons8.com" />
+                        </Hyperlink>
+
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xE8FE;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <Border Style="{DynamicResource SettingGroupBox}">
+                <ItemsControl Style="{StaticResource SettingGrid}">
+                    <StackPanel Style="{StaticResource TextPanel}">
+                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource devtool}" />
+                    </StackPanel>
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,-20,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Name="ClearLogFolderBtn"
+                            Margin="0,0,12,0"
+                            Content="{Binding CheckLogFolder, Mode=OneWay}" />
+                        <Button
+                            Margin="0,0,8,0"
+                            Content="&#xec7a;"
+                            FontFamily="/Resources/#Segoe Fluent Icons"
+                            FontSize="20">
+                            <ui:FlyoutService.Flyout>
+                                <ui:MenuFlyout>
+                                    <MenuItem Header="{DynamicResource welcomewindow}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe939;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource settingfolder}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe8b7;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Header="{DynamicResource logfolder}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe8b7;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ui:MenuFlyout>
+                            </ui:FlyoutService.Flyout>
+                        </Button>
+                    </StackPanel>
+                    <TextBlock Style="{StaticResource Glyph}">
+                        &#xf12b;
+                    </TextBlock>
+                </ItemsControl>
+            </Border>
+
+            <TextBlock
+                Margin="14,20,0,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                DockPanel.Dock="Bottom"
+                FontSize="12"
+                Foreground="{DynamicResource Color15B}"
+                Text="{Binding ActivatedTimes, Mode=OneWay}"
+                TextWrapping="WrapWithOverflow" />
+        </StackPanel>
+    </ScrollViewer>
+</ui:Page>

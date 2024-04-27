@@ -481,29 +481,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public class SearchWindowScreen
-        {
-            public string Display { get; set; }
-            public SearchWindowScreens Value { get; set; }
-        }
-
-        public List<SearchWindowScreen> SearchWindowScreens
-        {
-            get
-            {
-                List<SearchWindowScreen> modes = new List<SearchWindowScreen>();
-                var enums = (SearchWindowScreens[])Enum.GetValues(typeof(SearchWindowScreens));
-                foreach (var e in enums)
-                {
-                    var key = $"SearchWindowScreen{e}";
-                    var display = _translater.GetTranslation(key);
-                    var m = new SearchWindowScreen { Display = display, Value = e, };
-                    modes.Add(m);
-                }
-
-                return modes;
-            }
-        }
 
         public class SearchWindowAlign
         {
