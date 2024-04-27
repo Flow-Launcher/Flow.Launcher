@@ -309,8 +309,8 @@
     <system:String x:Key="update">Actualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Enlazando atajo de teclado</system:String>
     <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -325,7 +325,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Sobrescribir</system:String>
     <system:String x:Key="commonCancel">Cancelar</system:String>
     <system:String x:Key="commonReset">Reiniciar</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
@@ -398,11 +398,11 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="HotkeyCtrlIDesc">Abrir ventana de configuración</system:String>
     <system:String x:Key="HotkeyF5Desc">Recargar datos del complemento</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Seleccionar primer resultado</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Seleccionar último resultado</system:String>
+    <system:String x:Key="HotkeyRequery">Ejecutar consulta actual de nuevo</system:String>
+    <system:String x:Key="HotkeyOpenResult">Abrir resultado</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Abrir resultado #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">El tiempo</system:String>
     <system:String x:Key="RecommendWeatherDesc">El tiempo en los resultados de Google</system:String>
