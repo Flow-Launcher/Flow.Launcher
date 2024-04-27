@@ -3697,6 +3697,8 @@
     </Style>
 
     <!--  Navigation View  -->
+    <system:Double x:Key="NavigationViewCompactPaneLength">48</system:Double>
+
     <Style x:Key="DefaultContentControlStyle" TargetType="ContentControl">
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
@@ -3908,7 +3910,7 @@
 
                                 <Viewbox
                                     x:Name="IconBox"
-                                    Height="16"
+                                    Height="24"
                                     Margin="{DynamicResource NavigationViewItemOnLeftIconBoxMargin}">
                                     <ContentPresenter x:Name="Icon" Content="{TemplateBinding Icon}" />
                                 </Viewbox>

@@ -229,7 +229,7 @@
                             Content="{DynamicResource general}"
                             Tag="General">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe713;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/settings.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -238,7 +238,7 @@
                             SelectsOnInvoked="True"
                             Tag="Plugins">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xea86;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/plugins.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -246,7 +246,7 @@
                             Content="{DynamicResource pluginStore}"
                             Tag="PluginStore">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe719;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/store.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -254,7 +254,7 @@
                             Content="{DynamicResource theme}"
                             Tag="Theme">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe790;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/theme.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -262,7 +262,7 @@
                             Content="{DynamicResource hotkey}"
                             Tag="Hotkey">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe92e;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/keyboard.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -270,7 +270,7 @@
                             Content="{DynamicResource proxy}"
                             Tag="Proxy">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xec27;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/proxy.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                         <ui:NavigationViewItem
@@ -278,7 +278,7 @@
                             Content="{DynamicResource about}"
                             Tag="About">
                             <ui:NavigationViewItem.Icon>
-                                <ui:FontIcon FontFamily="/Resources/#Segoe Fluent Icons" Glyph="&#xe946;" />
+                                <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/info.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
                     </ui:NavigationView.MenuItems>
