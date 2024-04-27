@@ -308,6 +308,8 @@
     <system:String x:Key="update">Atualizar</system:String>
     <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
     <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -322,6 +324,7 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Guardar</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
     <system:String x:Key="commonCancel">Cancelar</system:String>
     <system:String x:Key="commonReset">Repor</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
@@ -393,6 +396,12 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyRunDesc">Abrir/Executar item selecionado</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
     <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Meteorologia</system:String>
     <system:String x:Key="RecommendWeatherDesc">Meteorologia no Google</system:String>
