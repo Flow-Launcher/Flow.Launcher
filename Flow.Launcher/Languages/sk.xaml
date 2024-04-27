@@ -309,8 +309,8 @@
     <system:String x:Key="update">Aktualizovať</system:String>
     <system:String x:Key="hotkeyRegTitle">Priradenie klávesovej skratky</system:String>
     <system:String x:Key="hotkeyUnavailable">Aktuálna klávesová skratka nie je k dispozícii.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Táto skratka je rezervovaná pre &quot;{0}&quot; a nemôže byť použitá. Prosím, vyberte inú skratku.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Táto skratka sa používa pre &quot;{0}&quot;. Ak stlačíte &quot;Prepísať&quot;, odstráni sa pre &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Stlačte kláves, ktorý chcete nastaviť pre túto funkciu.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -325,7 +325,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Uložiť</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Prepísať</system:String>
     <system:String x:Key="commonCancel">Zrušiť</system:String>
     <system:String x:Key="commonReset">Resetovať</system:String>
     <system:String x:Key="commonDelete">Odstrániť</system:String>
@@ -398,11 +398,11 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="HotkeyCtrlIDesc">Otvoriť okno s nastaveniami</system:String>
     <system:String x:Key="HotkeyF5Desc">Znova načítať údaje pluginov</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Vybrať prvý výsledok</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Vybrať posledný výsledok</system:String>
+    <system:String x:Key="HotkeyRequery">Spustiť aktuálny dopyt znova</system:String>
+    <system:String x:Key="HotkeyOpenResult">Otvoriť výsledok</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Otvoriť výsledok #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Počasie</system:String>
     <system:String x:Key="RecommendWeatherDesc">Počasie na Googli</system:String>
