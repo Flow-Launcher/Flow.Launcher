@@ -82,7 +82,8 @@
             <Border
                 x:Name="Alert"
                 Width="420"
-                Height="50"
+                Padding="0, 10"
+                VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 Background="{DynamicResource InfoBarWarningBG}"
                 BorderBrush="{DynamicResource InfoBarBD}"
@@ -90,21 +91,27 @@
                 CornerRadius="5"
                 Visibility="Collapsed">
                 <Grid VerticalAlignment="Center">
-                    <StackPanel Orientation="Horizontal">
-                        <ui:FontIcon
-                            Margin="20,0,14,0"
-                            VerticalAlignment="Center"
-                            FontSize="15"
-                            Foreground="{DynamicResource InfoBarWarningIcon}"
-                            Glyph="&#xf167;" />
-                        <TextBlock
-                            x:Name="tbMsg"
-                            Margin="0,0,0,2"
-                            HorizontalAlignment="Left"
-                            FontSize="13"
-                            FontWeight="SemiBold"
-                            Foreground="{DynamicResource Color05B}" />
-                    </StackPanel>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:FontIcon
+                        Grid.Column="0"
+                        Margin="20,0,14,0"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Foreground="{DynamicResource InfoBarWarningIcon}"
+                        Glyph="&#xf167;" />
+                    <TextBlock
+                        Grid.Column="1"
+                        x:Name="tbMsg"
+                        Margin="0,0,0,2"
+                        Padding="0,0,8,0"
+                        HorizontalAlignment="Left"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        TextWrapping="Wrap"
+                        Foreground="{DynamicResource Color05B}" />
                 </Grid>
             </Border>
 
@@ -121,6 +128,15 @@
                 Margin="10"
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
+                <Button
+                    x:Name="OverwriteBtn"
+                    Height="30"
+                    MinWidth="100"
+                    Margin="0,0,4,0"
+                    Click="Overwrite"
+                    Content="{DynamicResource commonOverwrite}"
+                    Visibility="Collapsed"
+                    Style="{StaticResource AccentButtonStyle}" />
                 <Button
                     x:Name="SaveBtn"
                     Height="30"

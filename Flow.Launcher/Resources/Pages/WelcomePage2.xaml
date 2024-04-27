@@ -115,6 +115,7 @@
                         ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"
                         Hotkey="{Binding Settings.Hotkey}"
+                        HotkeySettings="{Binding Settings}"
                         ValidateKeyGesture="True"
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>

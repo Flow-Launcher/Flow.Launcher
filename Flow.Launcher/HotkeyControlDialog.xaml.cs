@@ -1,4 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Core.Resource;
@@ -9,8 +11,12 @@ using ModernWpf.Controls;
 
 namespace Flow.Launcher;
 
+#nullable enable
+
 public partial class HotkeyControlDialog : ContentDialog
 {
+    private IHotkeySettings _hotkeySettings;
+    private Action? _overwriteOtherHotkey;
     private string DefaultHotkey { get; }
     public string WindowTitle { get; }
     public HotkeyModel CurrentHotkey { get; private set; }
@@ -27,7 +33,7 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
 
-    public HotkeyControlDialog(string hotkey, string defaultHotkey, string windowTitle = "")
+    public HotkeyControlDialog(string hotkey, string defaultHotkey, IHotkeySettings hotkeySettings, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
         {
@@ -36,6 +42,7 @@ public partial class HotkeyControlDialog : ContentDialog
         };
         DefaultHotkey = defaultHotkey;
         CurrentHotkey = new HotkeyModel(hotkey);
+        _hotkeySettings = hotkeySettings;
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();
@@ -93,6 +100,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
     private void SetKeysToDisplay(HotkeyModel? hotkey)
     {
+        _overwriteOtherHotkey = null;
         KeysToDisplay.Clear();
 
         if (hotkey == null || hotkey == default(HotkeyModel))
@@ -109,19 +117,63 @@ public partial class HotkeyControlDialog : ContentDialog
         if (tbMsg == null)
             return;
 
+        if (_hotkeySettings.RegisteredHotkeys.FirstOrDefault(v => v.Hotkey == hotkey) is { } registeredHotkeyData)
+        {
+            var description = string.Format(
+                InternationalizationManager.Instance.GetTranslation(registeredHotkeyData.DescriptionResourceKey),
+                registeredHotkeyData.DescriptionFormatVariables
+            );
+            Alert.Visibility = Visibility.Visible;
+            if (registeredHotkeyData.RemoveHotkey is not null)
+            {
+                tbMsg.Text = string.Format(
+                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableEditable"),
+                    description
+                );
+                SaveBtn.IsEnabled = false;
+                SaveBtn.Visibility = Visibility.Collapsed;
+                OverwriteBtn.IsEnabled = true;
+                OverwriteBtn.Visibility = Visibility.Visible;
+                _overwriteOtherHotkey = registeredHotkeyData.RemoveHotkey;
+            }
+            else
+            {
+                tbMsg.Text = string.Format(
+                    InternationalizationManager.Instance.GetTranslation("hotkeyUnavailableUneditable"),
+                    description
+                );
+                SaveBtn.IsEnabled = false;
+                SaveBtn.Visibility = Visibility.Visible;
+                OverwriteBtn.IsEnabled = false;
+                OverwriteBtn.Visibility = Visibility.Collapsed;
+            }
+            return;
+        }
+
+        OverwriteBtn.IsEnabled = false;
+        OverwriteBtn.Visibility = Visibility.Collapsed;
+
         if (!CheckHotkeyAvailability(hotkey.Value, true))
         {
             tbMsg.Text = InternationalizationManager.Instance.GetTranslation("hotkeyUnavailable");
             Alert.Visibility = Visibility.Visible;
             SaveBtn.IsEnabled = false;
+            SaveBtn.Visibility = Visibility.Visible;
         }
         else
         {
             Alert.Visibility = Visibility.Collapsed;
             SaveBtn.IsEnabled = true;
+            SaveBtn.Visibility = Visibility.Visible;
         }
     }
 
     private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
         hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+
+    private void Overwrite(object sender, RoutedEventArgs e)
+    {
+        _overwriteOtherHotkey?.Invoke();
+        Save(sender, e);
+    }
 }
