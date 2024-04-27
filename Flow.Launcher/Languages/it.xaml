@@ -309,6 +309,8 @@
     <system:String x:Key="update">Aggiorna</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -323,6 +325,7 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Salva</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
     <system:String x:Key="commonCancel">Annulla</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Cancella</system:String>
@@ -394,6 +397,12 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="HotkeyRunDesc">Apri / Esegui Elemento Selezionato</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Aprire la finestra delle impostazioni</system:String>
     <system:String x:Key="HotkeyF5Desc">Ricarica i dati del plugin</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Meteo</system:String>
     <system:String x:Key="RecommendWeatherDesc">Meteo nel risultato di Google</system:String>
