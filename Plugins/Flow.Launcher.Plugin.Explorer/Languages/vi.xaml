@@ -21,8 +21,8 @@
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Xóa</system:String>
-    <system:String x:Key="plugin_explorer_edit">Edit</system:String>
-    <system:String x:Key="plugin_explorer_add">Add</system:String>
+    <system:String x:Key="plugin_explorer_edit">Sửa</system:String>
+    <system:String x:Key="plugin_explorer_add">Thêm</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
@@ -43,7 +43,7 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_done">Done</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_done">Xong</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
@@ -74,11 +74,11 @@
     <system:String x:Key="plugin_explorer_deletefilefolder">Xóa</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
     <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
-    <system:String x:Key="plugin_explorer_path">Path:</system:String>
+    <system:String x:Key="plugin_explorer_path">Đường dẫn:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder">Open containing folder</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder">Mở thư mục chứa</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
