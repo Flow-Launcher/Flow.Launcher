@@ -108,6 +108,7 @@
             Grid.ColumnSpan="2"
             Margin="4,0,0,0"
             Padding="0,0,18,0"
+            FontSize="14"
             ItemContainerStyle="{StaticResource StoreList}"
             ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
             ScrollViewer.HorizontalScrollBarVisibility="Disabled"

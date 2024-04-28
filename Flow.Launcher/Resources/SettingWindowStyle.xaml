@@ -20,10 +20,6 @@
         </CollectionViewSource.GroupDescriptions>
     </CollectionViewSource>
 
-    <Style x:Key="SettingPageBasic" TargetType="{x:Type ui:Page}">
-        <Setter Property="FontSize" Value="14" />
-    </Style>
-
     <Style x:Key="StoreItemFocusVisualStyleKey">
         <Setter Property="Control.Template">
             <Setter.Value>

@@ -3696,6 +3696,7 @@
         </Setter>
     </Style>
 
+
     <!--  Navigation View  -->
     <system:Double x:Key="NavigationViewCompactPaneLength">48</system:Double>
 
