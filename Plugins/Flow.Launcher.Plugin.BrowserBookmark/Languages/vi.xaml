@@ -2,8 +2,8 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Plugin Info  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Browser Bookmarks</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Search your browser bookmarks</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_name">Dấu trang trình duyệt</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tìm kiếm dấu trang trình duyệt của bạn</system:String>
 
     <!--  Settings  -->
     <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
@@ -17,8 +17,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Add</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Thêm</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Sửa</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Xóa</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
