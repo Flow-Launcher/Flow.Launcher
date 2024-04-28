@@ -4,8 +4,8 @@
     <!--  Program setting  -->
     <system:String x:Key="flowlauncher_plugin_program_reset">Reset Default</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">Xóa</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_edit">Edit</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_add">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_edit">Sửa</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_add">Thêm</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
@@ -47,7 +47,7 @@
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_title">Program Source</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit_program_source_tips">Edit directory and status of this program source.</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_update">Update</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_update">Cập nhật</system:String>
     <system:String x:Key="flowlauncher_plugin_program_only_index_tip">Program Plugin will only index files with selected suffixes and .url files with selected protocols.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_update_file_suffixes">Successfully updated file suffixes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">File suffixes can't be empty</system:String>
@@ -69,7 +69,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Run As Administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Open containing folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Mở thư mục chứa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
@@ -84,7 +84,7 @@
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Success</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Thành công</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
