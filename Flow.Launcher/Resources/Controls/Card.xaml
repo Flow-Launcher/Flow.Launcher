@@ -20,6 +20,7 @@
                         <Setter Property="BorderThickness" Value="1" />
                         <Setter Property="CornerRadius" Value="5" />
                         <Setter Property="MinHeight" Value="68" />
+                        <Setter Property="Padding" Value="0,15,0,15" />
                         <Setter Property="Margin" Value="0,4,0,0" />
                         <Setter Property="SnapsToDevicePixels" Value="True" />
                         <Style.Triggers>

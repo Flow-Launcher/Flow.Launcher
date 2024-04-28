@@ -1487,10 +1487,11 @@
     <KeySpline x:Key="RepositionKeySpline">0.1,0.9 0.2,1.0</KeySpline>
     <Style x:Key="DefaultToggleSwitch" TargetType="ui:ToggleSwitch">
         <Setter Property="Foreground" Value="{DynamicResource ToggleSwitchContentForeground}" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualMargin" Value="5" />
         <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />

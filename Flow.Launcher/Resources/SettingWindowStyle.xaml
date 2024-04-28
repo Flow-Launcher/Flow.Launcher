@@ -109,21 +109,6 @@
         </Setter>
     </Style>
 
-    <Style
-        x:Key="SideToggleSwitch"
-        BasedOn="{StaticResource DefaultToggleSwitch}"
-        TargetType="{x:Type ui:ToggleSwitch}">
-        <Setter Property="Grid.Column" Value="2" />
-        <Setter Property="FocusVisualMargin" Value="5" />
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource SwitchFocusVisualStyleKey}" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="HorizontalContentAlignment" Value="Right" />
-        <Setter Property="OffContent" Value="{DynamicResource disable}" />
-        <Setter Property="OnContent" Value="{DynamicResource enable}" />
-        <Setter Property="Margin" Value="0,4,22,4" />
-    </Style>
-
     <Style x:Key="SideTextAbout" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="Grid.Column" Value="1" />
