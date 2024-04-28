@@ -8,8 +8,8 @@
     <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Xóa</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_edit">Edit</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_add">Add</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_edit">Sửa</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_add">Thêm</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
@@ -36,13 +36,13 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Select Icon</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Icon</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancel</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_cancel">Hủy</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_invalid_web_search">Invalid web search</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_title">Please enter a title</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_action_keyword">Please enter an action keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Please enter a URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Action keyword already exists, please enter a different one</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_succeed">Success</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_succeed">Thành công</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Hint: You do not need to place custom images in this directory, if Flow's version is updated they will be lost. Flow will automatically copy any images outside of this directory across to WebSearch's custom image location.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Web Searches</system:String>
