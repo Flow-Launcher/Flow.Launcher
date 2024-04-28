@@ -12,6 +12,17 @@ namespace Flow.Launcher
 {
     public partial class HotkeyControl
     {
+        public IHotkeySettings HotkeySettings {
+            get { return (IHotkeySettings)GetValue(HotkeySettingsProperty); }
+            set { SetValue(HotkeySettingsProperty, value); }
+        }
+
+        public static readonly DependencyProperty HotkeySettingsProperty = DependencyProperty.Register(
+            nameof(HotkeySettings),
+            typeof(IHotkeySettings),
+            typeof(HotkeyControl),
+            new PropertyMetadata()
+        );
         public string WindowTitle {
             get { return (string)GetValue(WindowTitleProperty); }
             set { SetValue(WindowTitleProperty, value); }
@@ -122,7 +133,7 @@ namespace Flow.Launcher
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, HotkeySettings, WindowTitle);
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {

@@ -4,13 +4,14 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.Infrastructure.UserSettings
 {
-    public class Settings : BaseModel
+    public class Settings : BaseModel, IHotkeySettings
     {
         private string language = "en";
         private string _theme = Constant.DefaultTheme;
@@ -207,17 +208,17 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
-        
+
         /// <summary>
         /// Custom left position on selected monitor
         /// </summary>
         public double CustomWindowLeft { get; set; } = 0;
-        
+
         /// <summary>
         /// Custom top position on selected monitor
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
-        
+
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 
@@ -229,7 +230,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonIgnore]
         public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText), 
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
@@ -253,7 +254,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
-        
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowAligns SearchWindowAlign { get; set; } = SearchWindowAligns.Center;
 
@@ -273,6 +274,82 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
+
+        [JsonIgnore]
+        public List<RegisteredHotkeyData> RegisteredHotkeys
+        {
+            get
+            {
+                var list = new List<RegisteredHotkeyData>
+                {
+                    new("Up", "HotkeyLeftRightDesc"),
+                    new("Down", "HotkeyLeftRightDesc"),
+                    new("Left", "HotkeyUpDownDesc"),
+                    new("Right", "HotkeyUpDownDesc"),
+                    new("Escape", "HotkeyESCDesc"),
+                    new("F5", "ReloadPluginHotkey"),
+                    new("Alt+Home", "HotkeySelectFirstResult"),
+                    new("Alt+End", "HotkeySelectLastResult"),
+                    new("Ctrl+R", "HotkeyRequery"),
+                    new("Ctrl+H", "ToggleHistoryHotkey"),
+                    new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
+                    new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
+                    new("Ctrl+OemPlus", "QuickHeightHotkey"),
+                    new("Ctrl+OemMinus", "QuickHeightHotkey"),
+                    new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"),
+                    new("Shift+Enter", "OpenContextMenuHotkey"),
+                    new("Enter", "HotkeyRunDesc"),
+                    new("Ctrl+Enter", "OpenContainFolderHotkey"),
+                    new("Alt+Enter", "HotkeyOpenResult"),
+                    new("Ctrl+F12", "ToggleGameModeHotkey"),
+                    new("Ctrl+Shift+C", "CopyFilePathHotkey"),
+
+                    new($"{OpenResultModifiers}+D1", "HotkeyOpenResultN", 1),
+                    new($"{OpenResultModifiers}+D2", "HotkeyOpenResultN", 2),
+                    new($"{OpenResultModifiers}+D3", "HotkeyOpenResultN", 3),
+                    new($"{OpenResultModifiers}+D4", "HotkeyOpenResultN", 4),
+                    new($"{OpenResultModifiers}+D5", "HotkeyOpenResultN", 5),
+                    new($"{OpenResultModifiers}+D6", "HotkeyOpenResultN", 6),
+                    new($"{OpenResultModifiers}+D7", "HotkeyOpenResultN", 7),
+                    new($"{OpenResultModifiers}+D8", "HotkeyOpenResultN", 8),
+                    new($"{OpenResultModifiers}+D9", "HotkeyOpenResultN", 9),
+                    new($"{OpenResultModifiers}+D0", "HotkeyOpenResultN", 10)
+                };
+
+                if(!string.IsNullOrEmpty(Hotkey))
+                    list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
+                if(!string.IsNullOrEmpty(PreviewHotkey))
+                    list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
+                if(!string.IsNullOrEmpty(AutoCompleteHotkey))
+                    list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
+                if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
+                    list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
+                if(!string.IsNullOrEmpty(SelectNextItemHotkey))
+                    list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
+                if(!string.IsNullOrEmpty(SelectNextItemHotkey2))
+                    list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
+                if(!string.IsNullOrEmpty(SelectPrevItemHotkey))
+                    list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
+                if(!string.IsNullOrEmpty(SelectPrevItemHotkey2))
+                    list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
+                if(!string.IsNullOrEmpty(SettingWindowHotkey))
+                    list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
+                if(!string.IsNullOrEmpty(OpenContextMenuHotkey))
+                    list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
+                if(!string.IsNullOrEmpty(SelectNextPageHotkey))
+                    list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
+                if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
+                    list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
+
+                foreach (var customPluginHotkey in CustomPluginHotkeys)
+                {
+                    if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
+                        list.Add(new(customPluginHotkey.Hotkey, "customQueryHotkey", () => customPluginHotkey.Hotkey = ""));
+                }
+
+                return list;
+            }
+        }
     }
 
     public enum LastQueryMode
@@ -288,7 +365,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Light,
         Dark
     }
-    
+
     public enum SearchWindowScreens
     {
         RememberLastLaunchLocation,
@@ -297,7 +374,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Primary,
         Custom
     }
-    
+
     public enum SearchWindowAligns
     {
         Center,
