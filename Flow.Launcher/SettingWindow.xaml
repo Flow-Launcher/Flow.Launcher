@@ -42,9 +42,6 @@
 
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
                 <CollectionViewSource.SortDescriptions>
                     <scm:SortDescription PropertyName="Source" />

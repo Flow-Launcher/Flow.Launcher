@@ -47,5 +47,7 @@ namespace Flow.Launcher.SettingPages.Views
             }
             base.OnNavigatedTo(e);
         }
+
+
     }
 }

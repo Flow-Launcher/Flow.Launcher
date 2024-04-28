@@ -11,14 +11,6 @@
     d:DesignWidth="800"
     Style="{DynamicResource SettingPageBasic}"
     mc:Ignorable="d">
-    <Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
-        </ResourceDictionary>
-    </Page.Resources>
     <ScrollViewer
         Margin="0,0,0,0"
         Background="{DynamicResource Color01B}"

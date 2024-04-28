@@ -107,6 +107,10 @@ namespace Flow.Launcher.ViewModel
         }
 
         public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
+        private Internationalization _translater => InternationalizationManager.Instance;
+        public string AlwaysPreviewToolTip =>
+            string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
+
 
         public bool StartFlowLauncherOnSystemStartup
         {
@@ -191,109 +195,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        #region general
-
-        // todo a better name?
-        public class LastQueryMode : BaseModel
-        {
-            public string Display { get; set; }
-            public Infrastructure.UserSettings.LastQueryMode Value { get; set; }
-        }
-
-        private List<LastQueryMode> _lastQueryModes = new List<LastQueryMode>();
-
-        public List<LastQueryMode> LastQueryModes
-        {
-            get
-            {
-                if (_lastQueryModes.Count == 0)
-                {
-                    _lastQueryModes = InitLastQueryModes();
-                }
-
-                return _lastQueryModes;
-            }
-        }
-
-        private List<LastQueryMode> InitLastQueryModes()
-        {
-            var modes = new List<LastQueryMode>();
-            var enums = (Infrastructure.UserSettings.LastQueryMode[])Enum.GetValues(
-                typeof(Infrastructure.UserSettings.LastQueryMode));
-            foreach (var e in enums)
-            {
-                var key = $"LastQuery{e}";
-                var display = _translater.GetTranslation(key);
-                var m = new LastQueryMode { Display = display, Value = e, };
-                modes.Add(m);
-            }
-
-            return modes;
-        }
-
-        private void UpdateLastQueryModeDisplay()
-        {
-            foreach (var item in LastQueryModes)
-            {
-                item.Display = _translater.GetTranslation($"LastQuery{item.Value}");
-            }
-        }
-
-        public string Language
-        {
-            get
-            {
-                return Settings.Language;
-            }
-            set
-            {
-                InternationalizationManager.Instance.ChangeLanguage(value);
-
-                if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
-                    ShouldUsePinyin = true;
-
-                UpdateLastQueryModeDisplay();
-            }
-        }
-
-        public bool ShouldUsePinyin
-        {
-            get
-            {
-                return Settings.ShouldUsePinyin;
-            }
-            set
-            {
-                Settings.ShouldUsePinyin = value;
-            }
-        }
-
-        public List<string> QuerySearchPrecisionStrings
-        {
-            get
-            {
-                var precisionStrings = new List<string>();
-
-                var enumList = Enum.GetValues(typeof(SearchPrecisionScore)).Cast<SearchPrecisionScore>().ToList();
-
-                enumList.ForEach(x => precisionStrings.Add(x.ToString()));
-
-                return precisionStrings;
-            }
-        }
-
-        public List<string> OpenResultModifiersList => new List<string>
-        {
-            KeyConstant.Alt, KeyConstant.Ctrl, $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
-        };
-
-        private Internationalization _translater => InternationalizationManager.Instance;
-        public List<Language> Languages => _translater.LoadAvailableLanguages();
-        public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
-
-        public string AlwaysPreviewToolTip =>
-            string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
-
+ 
         public string TestProxy()
         {
             var proxyServer = Settings.Proxy.Server;
@@ -339,8 +241,6 @@ namespace Flow.Launcher.ViewModel
                 return InternationalizationManager.Instance.GetTranslation("proxyConnectFailed");
             }
         }
-
-        #endregion
 
         #region plugin
 
