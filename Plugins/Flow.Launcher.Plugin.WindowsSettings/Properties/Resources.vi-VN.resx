@@ -1572,7 +1572,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
-    <value>Version</value>
+    <value>Phiên bản</value>
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
