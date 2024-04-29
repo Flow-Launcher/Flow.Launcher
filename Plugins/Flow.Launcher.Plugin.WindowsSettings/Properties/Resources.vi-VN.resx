@@ -992,10 +992,10 @@
     <value>Note</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Chỉ khả dụng khi bạn đã kết nối thiết bị di động với thiết bị của mình.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Chỉ khả dụng trên các thiết bị hỗ trợ tùy chọn đồ họa nâng cao.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>Only available on devices that have a battery, such as a tablet.</value>
@@ -1560,7 +1560,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
-    <value>Uninstall</value>
+    <value>Gỡ cài đặt</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Usb" xml:space="preserve">
