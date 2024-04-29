@@ -3,18 +3,18 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Please make a selection first</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
-    <system:String x:Key="plugin_explorer_delete_folder_link">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Hãy chọn một thư mục.</system:String>
+    <system:String x:Key="plugin_explorer_delete_folder_link">Bạn có chắc chắn muốn xóa {0} không?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Are you sure you want to permanently delete this file?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Are you sure you want to permanently delete this file/folder?</system:String>
-    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Deletion successful</system:String>
+    <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Xóa thành công</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Successfully deleted {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
-    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
-    <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
-    <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Việc chỉ định từ khóa hành động chung có thể mang lại quá nhiều kết quả trong quá trình tìm kiếm. Vui lòng chọn từ khóa hành động cụ thể</system:String>
+    <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Không thể đặt Truy cập nhanh thành từ khóa hành động chung khi được bật. Vui lòng chọn từ khóa hành động cụ thể</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Dịch vụ cần thiết cho Windows Index Search dường như không chạy</system:String>
+    <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Để khắc phục điều này, hãy khởi động dịch vụ Windows Search. Chọn vào đây để xóa cảnh báo này</system:String>
+    <system:String x:Key="plugin_explorer_alternative">Thông báo cảnh báo đã bị tắt. Là một giải pháp thay thế cho việc tìm kiếm tệp và thư mục, bạn có muốn cài đặt plugin Mọi thứ không?{0}{0}Chọn 'Có' để cài đặt plugin Mọi thứ hoặc 'Không' để quay lại</system:String>
+    <system:String x:Key="plugin_explorer_alternative_title">Nhà thám hiểm thay thế</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
     <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
@@ -24,28 +24,28 @@
     <system:String x:Key="plugin_explorer_edit">Sửa</system:String>
     <system:String x:Key="plugin_explorer_add">Thêm</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
-    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
-    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Tùy chỉnh từ khóa hành động</system:String>
+    <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liên kết truy cập nhanh</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
-    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Index Search Excluded Paths</system:String>
+    <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Đường dẫn bị loại trừ tìm kiếm chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
-    <system:String x:Key="plugin_explorer_manageindexoptions">Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_search">Search:</system:String>
+    <system:String x:Key="plugin_explorer_manageindexoptions">Tùy chọn lập chỉ mục</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_search">Tìm kiếm trên web với sự hỗ trợ của công cụ tìm kiếm khác</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Path Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_filecontentsearch">File Content Search:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_indexsearch">Index Search:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Truy cập nhanh</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_current">Từ hành động hiện tại</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Xong</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Đã bật</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Khi bị tắt, Flow sẽ không thực thi tùy chọn tìm kiếm này và sẽ hoàn nguyên về '*' để giải phóng từ khóa hành động</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
@@ -58,7 +58,7 @@
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">Thư mục </system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
 
     <!--  Plugin Tooltip  -->
@@ -66,9 +66,9 @@
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
+    <system:String x:Key="plugin_explorer_copypath">Copy đường dẫn</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">Sao chép</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Xóa</system:String>
@@ -77,27 +77,27 @@
     <system:String x:Key="plugin_explorer_path">Đường dẫn:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Delete the selected</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Run as different user</system:String>
-    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Run the selected using a different user account</system:String>
+    <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Chạy phần đã chọn bằng tài khoản người dùng khác</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Mở thư mục chứa</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor">Open With Editor:</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor">Mở bằng trình chỉnh sửa:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
     <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_excludefromindexsearch">Exclude current and sub-directories from Index Search</system:String>
-    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Excluded from Index Search</system:String>
+    <system:String x:Key="plugin_explorer_excludefromindexsearch">Loại trừ các thư mục hiện tại và thư mục con khỏi Tìm kiếm chỉ mục</system:String>
+    <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Bị loại trừ khỏi Tìm kiếm chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Open Windows Indexing Options</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Manage indexed files and folders</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Failed to open Windows Indexing Options</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Add to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Thêm vào Bảng truy cập nhanh</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Successfully Added</system:String>
+    <system:String x:Key="plugin_explorer_addfilefoldersuccess">Đã thêm thành công</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Successfully added to Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Successfully Removed</system:String>
+    <system:String x:Key="plugin_explorer_removefilefoldersuccess">Đã được gỡ bỏ thành công</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess_detail">Successfully removed from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Add to Quick Access so it can be opened with Explorer's Search Activation action keyword</system:String>
-    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Remove from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Loại bỏ khỏi bảng truy cập nhanh</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Loại bỏ khỏi bảng truy cập nhanh</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
     <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
