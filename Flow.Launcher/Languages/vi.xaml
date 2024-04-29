@@ -131,7 +131,7 @@
     <system:String x:Key="appearance">Giao diện</system:String>
     <system:String x:Key="browserMoreThemes">Tìm kiếm thêm chủ đề</system:String>
     <system:String x:Key="howToCreateTheme">Cách tạo chủ đề</system:String>
-    <system:String x:Key="hiThere">Xin chào!</system:String>
+    <system:String x:Key="hiThere">Xin chào</system:String>
     <system:String x:Key="SampleTitleExplorer">Thư mục </system:String>
     <system:String x:Key="SampleSubTitleExplorer">Tìm kiếm tệp, thư mục và nội dung tệp</system:String>
     <system:String x:Key="SampleTitleWebSearch">Tìm kiếm trên web</system:String>
@@ -248,16 +248,18 @@
     <system:String x:Key="about_activate_times">Bạn đã kích hoạt Flow Launcher {0} lần</system:String>
     <system:String x:Key="checkUpdates">Kiểm tra các bản cập nhật</system:String>
     <system:String x:Key="BecomeASponsor">Trở thành nhà tài trợ</system:String>
-    <system:String x:Key="newVersionTips">Đã tồn tại một phiên bản mới ({0}). Vui lòng khởi động lại Flow Launcher.</system:String>
+    <system:String x:Key="newVersionTips">Đã có phiên bản mới {0}, bạn có muốn khởi động lại Flow Launcher để sử dụng bản cập nhật không?</system:String>
     <system:String x:Key="checkUpdatesFailed">Kiểm tra cập nhật không thành công. Vui lòng kiểm tra kết nối và cài đặt proxy của bạn tới api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Tải xuống bản cập nhật không thành công. Vui lòng kiểm tra cài đặt kết nối và proxy của bạn tới github-cloud.s3.amazonaws.com,
-        hoặc truy cập https://github.com/Flow-Launcher/Flow.Launcher/releases để tải xuống các bản cập nhật theo cách thủ công.
+        
+					Tải xuống bản cập nhật không thành công. Vui lòng kiểm tra cài đặt kết nối và proxy của bạn tới github-cloud.s3.amazonaws.com,
+					hoặc truy cập https://github.com/Flow-Launcher/Flow.Launcher/releases để tải xuống các bản cập nhật theo cách thủ công.
+				
     </system:String>
     <system:String x:Key="releaseNotes">Ghi chú phát hành</system:String>
     <system:String x:Key="documentation">Mẹo sử dụng</system:String>
     <system:String x:Key="devtool">Công cụ dành cho nhà phát triển</system:String>
-    <system:String x:Key="settingfolder">cài đặt thư mục</system:String>
+    <system:String x:Key="settingfolder">Thư mục cài đặt</system:String>
     <system:String x:Key="logfolder">Thư mục nhật ký</system:String>
     <system:String x:Key="clearlogfolder">Xóa tệp nhật ký</system:String>
     <system:String x:Key="clearlogfolderMessage">Bạn có chắc chắn muốn xóa tất cả nhật ký không?</system:String>
@@ -295,7 +297,7 @@
     <system:String x:Key="done">Fertig</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Không thể tìm thấy plugin được chỉ định</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Từ khóa hành động mới không được để trống</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">Từ khóa hành động đã được một plugin khác sử dụng. Vui lòng đặt từ khóa hành động khác.</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Từ khóa hành động mới này đã được gán cho một plugin khác, vui lòng chọn một plugin khác</system:String>
     <system:String x:Key="success">Thành công</system:String>
     <system:String x:Key="completedSuccessfully">Đã hoàn tất thành công</system:String>
     <system:String x:Key="actionkeyword_tips">Sử dụng * nếu bạn muốn xác định từ khóa hành động.</system:String>
@@ -316,9 +318,11 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Phím tắt truy vấn tùy chỉnh</system:String>
     <system:String x:Key="customeQueryShortcutTips">Nhập một phím tắt tự động mở rộng theo truy vấn đã chỉ định.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Một phím tắt được mở rộng khi nó khớp chính xác với truy vấn.
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">
+					Một phím tắt được mở rộng khi nó khớp chính xác với truy vấn.
 
-Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó sẽ khớp với bất kỳ vị trí nào trong truy vấn. Các phím tắt dựng sẵn khớp với bất kỳ vị trí nào trong truy vấn.
+					Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó sẽ khớp với bất kỳ vị trí nào trong truy vấn. Các phím tắt dựng sẵn khớp với bất kỳ vị trí nào trong truy vấn.
+				
     </system:String>
     <system:String x:Key="duplicateShortcut">Phím tắt đã tồn tại, vui lòng nhập Phím tắt mới hoặc chỉnh sửa phím tắt hiện có.</system:String>
     <system:String x:Key="emptyShortcut">Phím tắt và/hoặc phần mở rộng của nó trống.</system:String>
@@ -333,7 +337,7 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Phiên bản</system:String>
     <system:String x:Key="reportWindow_time">Thời gian</system:String>
-    <system:String x:Key="reportWindow_reproduce">Vui lòng cho chúng tôi biết ứng dụng bị lỗi như thế nào để chúng tôi có thể khắc phục lỗi.</system:String>
+    <system:String x:Key="reportWindow_reproduce">Vui lòng cho chúng tôi biết ứng dụng bị lỗi như thế nào để chúng tôi có thể khắc phục</system:String>
     <system:String x:Key="reportWindow_send_report">Gửi báo cáo</system:String>
     <system:String x:Key="reportWindow_cancel">Huỷ bỏ</system:String>
     <system:String x:Key="reportWindow_general">Chung</system:String>
@@ -355,12 +359,14 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="update_flowlauncher_update_found">Tìm thấy cập nhật</system:String>
     <system:String x:Key="update_flowlauncher_updating">Đang cập nhật...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher không thể di chuyển dữ liệu hồ sơ của bạn sang phiên bản cập nhật mới.
-        Vui lòng di chuyển thủ công thư mục dữ liệu hồ sơ của bạn từ {0} sang {1}
+        
+					Flow Launcher không thể di chuyển dữ liệu hồ sơ của bạn sang phiên bản cập nhật mới.
+					Vui lòng di chuyển thủ công thư mục dữ liệu hồ sơ của bạn từ {0} sang {1}
+				
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Cập nhật mới</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Đã có sẵn V{0} của Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">Đã xảy ra lỗi khi cài đặt bản cập nhật.</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">Đã xảy ra lỗi khi cố cài đặt bản cập nhật phần mềm</system:String>
     <system:String x:Key="update_flowlauncher_update">Cập nhật</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Viết tắt</system:String>
     <system:String x:Key="update_flowlauncher_fail">Cập nhật không thành công</system:String>
@@ -368,7 +374,7 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Bản cập nhật này sẽ khởi động lại Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Các tệp sau sẽ được cập nhật</system:String>
     <system:String x:Key="update_flowlauncher_update_files">Cập nhật tệp</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">mô tả Cập nhật</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Thông tin mô tả</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Bỏ Qua</system:String>
@@ -378,7 +384,7 @@ Nếu bạn thêm tiền tố '@' trong khi nhập phím tắt, phím tắt đó
     <system:String x:Key="Welcome_Page2_Title">Tìm kiếm và khởi chạy tất cả các tệp và ứng dụng trên PC của bạn</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Tìm kiếm mọi thứ từ ứng dụng, tệp, dấu trang, YouTube, Twitter và hơn thế nữa. Tất cả đều từ bàn phím thoải mái mà không cần chạm vào chuột.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Trình khởi chạy Flow bắt đầu bằng phím nóng bên dưới, hãy tiếp tục và dùng thử ngay bây giờ. Để thay đổi nó, hãy nhấp vào đầu vào và nhấn phím nóng mong muốn trên bàn phím.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">phím tắt</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Phím tắt</system:String>
     <system:String x:Key="Welcome_Page4_Title">Từ khóa và lệnh hành động</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Tìm kiếm trên web, khởi chạy ứng dụng hoặc chạy các chức năng khác nhau thông qua plugin Flow Launcher. Một số chức năng nhất định bắt đầu bằng từ khóa hành động và nếu cần, chúng có thể được sử dụng mà không cần từ khóa hành động. Hãy thử các truy vấn bên dưới trong Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Bắt đầu Flow-Launcher</system:String>
