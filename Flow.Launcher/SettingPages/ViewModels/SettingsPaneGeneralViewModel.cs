@@ -16,8 +16,6 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneGeneralViewModel : BaseModel
 {
-    private static Internationalization Translator => InternationalizationManager.Instance;
-
     public Settings Settings { get; set; }
     private readonly Updater _updater;
     private readonly IPortable _portable;
@@ -122,7 +120,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         foreach (var item in LastQueryModes)
         {
-            item.Display = Translator.GetTranslation($"LastQuery{item.Value}");
+            item.Display = InternationalizationManager.Instance.GetTranslation($"LastQuery{item.Value}");
         }
     }
 
@@ -159,11 +157,13 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
     };
 
-    public List<Language> Languages => Translator.LoadAvailableLanguages();
+    public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-    public string AlwaysPreviewToolTip =>
-        string.Format(Translator.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
+    public string AlwaysPreviewToolTip => string.Format(
+        InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),
+        Settings.PreviewHotkey
+    );
 
     private string GetFileFromDialog(string title, string filter = "")
     {
@@ -207,7 +207,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            Translator.GetTranslation("selectPythonExecutable"),
+            InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
             "Python|pythonw.exe"
         );
 
@@ -218,7 +218,10 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     [RelayCommand]
     private void SelectNode()
     {
-        var selectedFile = GetFileFromDialog(Translator.GetTranslation("selectNodeExecutable"), "*.exe");
+        var selectedFile = GetFileFromDialog(
+            InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"),
+            "*.exe"
+        );
 
         if (!string.IsNullOrEmpty(selectedFile))
             Settings.PluginSettings.NodeExecutablePath = selectedFile;
