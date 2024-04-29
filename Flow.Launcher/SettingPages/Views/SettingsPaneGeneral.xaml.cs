@@ -13,9 +13,9 @@ public partial class SettingsPaneGeneral
     {
         if (!IsInitialized)
         {
-            if (e.ExtraData is not Settings settings)
-                throw new ArgumentException("Settings is not passed to General page");
-            _viewModel = new SettingsPaneGeneralViewModel(settings);
+            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings, Updater: {} updater, Portable: {} portable })
+                throw new ArgumentException("Settings, Updater and Portable are required for SettingsPaneGeneral.");
+            _viewModel = new SettingsPaneGeneralViewModel(settings, updater, portable);
             DataContext = _viewModel;
             InitializeComponent();
         }

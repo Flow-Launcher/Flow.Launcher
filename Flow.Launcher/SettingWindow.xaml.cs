@@ -17,6 +17,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Navigation;
+using Flow.Launcher.Core;
+using Flow.Launcher.Core.Configuration;
 using NHotkey;
 using Button = System.Windows.Controls.Button;
 using Control = System.Windows.Controls.Control;
@@ -531,8 +533,9 @@ namespace Flow.Launcher
                     nameof(About) => typeof(SettingsPaneAbout),
                     _ => typeof(SettingsPaneGeneral)
                 };
-                ContentFrame.Navigate(pageType, settings);
+                ContentFrame.Navigate(pageType, new PaneData(settings, viewModel.Updater, viewModel.Portable));
             }
         }
+        public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
     }
 }

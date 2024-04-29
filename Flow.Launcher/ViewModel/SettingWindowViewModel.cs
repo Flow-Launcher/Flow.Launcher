@@ -34,7 +34,10 @@ namespace Flow.Launcher.ViewModel
         private readonly IPortable _portable;
         private readonly FlowLauncherJsonStorage<Settings> _storage;
 
-        /* For Navigation View */ 
+        public Updater Updater => _updater;
+        public IPortable Portable => _portable;
+
+        /* For Navigation View */
         private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
         {
             Effect = SlideNavigationTransitionEffect.FromBottom
@@ -152,7 +155,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
- 
+
         public string TestProxy()
         {
             var proxyServer = Settings.Proxy.Server;

@@ -13,7 +13,6 @@ using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
-// TODO: _updater, _portable
 public partial class SettingsPaneGeneralViewModel
 {
     private static Internationalization Translator => InternationalizationManager.Instance;
@@ -22,9 +21,12 @@ public partial class SettingsPaneGeneralViewModel
     private readonly Updater _updater;
     private readonly IPortable _portable;
 
-    public SettingsPaneGeneralViewModel(Settings settings)
+    public SettingsPaneGeneralViewModel(Settings settings, Updater updater, IPortable portable)
     {
         Settings = settings;
+        _updater = updater;
+        _portable = portable;
+        UpdateLastQueryModeDisplay();
     }
 
     public class SearchWindowScreen : DropdownDataGeneric<SearchWindowScreens> { }
@@ -179,6 +181,25 @@ public partial class SettingsPaneGeneralViewModel
             DialogResult.OK => dlg.FileName,
             _ => string.Empty
         };
+    }
+
+    private void UpdateApp()
+    {
+        _ = _updater.UpdateAppAsync(App.API, false);
+    }
+
+    public bool AutoUpdates
+    {
+        get => Settings.AutoUpdates;
+        set
+        {
+            Settings.AutoUpdates = value;
+
+            if (value)
+            {
+                UpdateApp();
+            }
+        }
     }
 
     [RelayCommand]
