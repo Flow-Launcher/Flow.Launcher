@@ -9,11 +9,12 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
-public partial class SettingsPaneGeneralViewModel
+public partial class SettingsPaneGeneralViewModel : BaseModel
 {
     private static Internationalization Translator => InternationalizationManager.Instance;
 
