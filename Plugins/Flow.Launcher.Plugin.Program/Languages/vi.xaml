@@ -81,7 +81,7 @@
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Trình khám phá tùy chỉnh</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Đối số</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Nhập các đối số tùy chỉnh mà bạn muốn thêm cho trình khám phá tùy chỉnh của mình. %s cho thư mục mẹ, %f cho đường dẫn đầy đủ (chỉ hoạt động với win32). Kiểm tra trang web của nhà thám hiểm để biết chi tiết.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Thành công</system:String>
