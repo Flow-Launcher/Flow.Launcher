@@ -170,9 +170,9 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Phím tắt</system:String>
     <system:String x:Key="hotkeys">Phím tắt</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Chào mừng bạn đến với Trình khởi chạy luồng</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Nhập phím tắt để hiển thị/ẩn Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
+    <system:String x:Key="previewHotkey">Bật tắt xem trước</system:String>
     <system:String x:Key="previewHotkeyToolTip">Nhập phím tắt để hiển thị/ẩn bản xem trước trong cửa sổ tìm kiếm.</system:String>
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
@@ -180,20 +180,20 @@
     <system:String x:Key="openResultModifiersToolTip">Chọn phím bổ trợ để mở kết quả đã chọn từ bàn phím.</system:String>
     <system:String x:Key="showOpenResultHotkey">Giải thích phím nóng</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Hiển thị phím tắt chọn kết quả cùng với kết quả.</system:String>
-    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkey">Tự động hoàn thành</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Prev Page</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Trang Tiếp Theo</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Trang trước</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
-    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Mở thư mục chứa</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
-    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Chạy với quyền admin</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Dữ liệu plugin không tải</system:String>
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
     <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
@@ -208,7 +208,7 @@
     <system:String x:Key="delete">Xóa</system:String>
     <system:String x:Key="edit">Chỉnh sửa</system:String>
     <system:String x:Key="add">Thêm</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">Không</system:String>
     <system:String x:Key="pleaseSelectAnItem">Vui lòng chọn một mục</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Bạn có chắc chắn muốn xóa tổ hợp phím plugin {0} không?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Bạn có chắc chắn muốn xóa lối tắt: {0} với phần mở rộng {1} không?</system:String>
@@ -329,9 +329,9 @@
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lưu</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Ghi đè lên</system:String>
     <system:String x:Key="commonCancel">Hủy</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">Đặt lại</system:String>
     <system:String x:Key="commonDelete">Xóa</system:String>
 
     <!--  Crash Reporter  -->
