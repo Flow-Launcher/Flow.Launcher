@@ -490,6 +490,18 @@
                                         x:Name="PreviewSubTitle"
                                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                                         Text="{Binding Result.SubTitle}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="FileSize" />
+                                        <TextBlock Style="{DynamicResource PreviewItemSubTitleStyle}" Text="{Binding Result.FileSize}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Created" />
+                                        <TextBlock Style="{DynamicResource PreviewItemSubTitleStyle}" Text="{Binding Result.FileCreated}" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Last Modified" />
+                                        <TextBlock Style="{DynamicResource PreviewItemSubTitleStyle}" Text="{Binding Result.LastModifed}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </Grid>
                         </Border>

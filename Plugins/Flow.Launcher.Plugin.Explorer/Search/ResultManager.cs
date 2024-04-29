@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using System.Windows.Input;
+using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -239,6 +241,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var title = Path.GetFileName(filePath);
 
+            /* Preview Detail */
+            long fileSize = new System.IO.FileInfo(filePath).Length;
+            string fileSizStr = fileSize.ToString();
+
+            DateTime created = System.IO.File.GetCreationTime(filePath);
+            string createdStr = created.ToString("yyyy-MM-dd HH:mm:ss");
+            DateTime lastModified = System.IO.File.GetLastWriteTime(filePath);
+            string lastModifiedStr = lastModified.ToString("yyyy-MM-dd HH:mm:ss");
+
+
             var result = new Result
             {
                 Title = title,
@@ -248,6 +260,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
+                FileSize = fileSizStr,
+                FileCreated = createdStr,
+                LastModifed = lastModifiedStr,
                 CopyText = filePath,
                 Action = c =>
                 {
