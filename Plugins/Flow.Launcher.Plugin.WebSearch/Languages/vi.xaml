@@ -3,15 +3,15 @@
 
     <system:String x:Key="flowlauncher_plugin_websearch_window_title">Search Source Setting</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
-    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_window">Cửa sổ mới</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_new_tab">Tab mới</system:String>
+    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Đặt trình duyệt từ đường dẫn:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">Chọn</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Xóa</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Sửa</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Thêm</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Enabled</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Đã bật</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Đã bật</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirm</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
@@ -20,7 +20,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Bạn có chắc chắn muốn xóa {0} không?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
