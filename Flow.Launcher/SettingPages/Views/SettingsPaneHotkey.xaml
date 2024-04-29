@@ -113,8 +113,8 @@
                                 </StackPanel>
                                 <ui:ToggleSwitch
                                     Grid.Column="2"
-                                    IsOn="{Binding Settings.ShowOpenResultHotkey}"
-                                    Style="{DynamicResource SideToggleSwitch}" />
+                                    Margin="0,0,18,0"
+                                    IsOn="{Binding Settings.ShowOpenResultHotkey}" />
                             </ItemsControl>
                         </Border>
                     </StackPanel>

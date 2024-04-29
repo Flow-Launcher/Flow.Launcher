@@ -58,8 +58,8 @@
                                     Text="{DynamicResource enableProxy}" />
                                 <ui:ToggleSwitch
                                     Grid.Column="2"
-                                    IsOn="{Binding Settings.Proxy.Enabled}"
-                                    Style="{DynamicResource SideToggleSwitch}" />
+                                    Margin="0,0,18,0"
+                                    IsOn="{Binding Settings.Proxy.Enabled}" />
                             </ItemsControl>
                         </Border>
                         <Separator
