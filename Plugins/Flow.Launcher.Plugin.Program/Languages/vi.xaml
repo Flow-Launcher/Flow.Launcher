@@ -9,7 +9,7 @@
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Đã bật</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable">Vô hiệu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
     <system:String x:Key="flowlauncher_plugin_program_true">Đã bật</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
