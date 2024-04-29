@@ -6,18 +6,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:settingsVm="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="About"
+    d:DataContext="{d:DesignInstance Type=settingsVm:SettingsPaneAboutViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <ui:Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
-        </ResourceDictionary>
-    </ui:Page.Resources>
     <ScrollViewer
         Margin="0,0,0,0"
         Background="{DynamicResource Color01B}"
@@ -36,7 +30,10 @@
 
             <cc:Card Title="{Binding Version}" Sub="{DynamicResource version}" Icon="&#xe946;">
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="0,0,10,0" Content="{DynamicResource checkUpdates}" />
+                    <Button
+                        Margin="0,0,10,0"
+                        Command="{Binding UpdateAppCommand}"
+                        Content="{DynamicResource checkUpdates}" />
                     <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
                         <Hyperlink
                             NavigateUri="{Binding SponsorPage, Mode=OneWay}"
@@ -100,21 +97,32 @@
 
             <cc:Card Title="{DynamicResource devtool}" Icon="&#xf12b;">
                 <StackPanel Orientation="Horizontal">
-                    <Button Margin="0,0,12,0" Content="{Binding CheckLogFolder, Mode=OneWay}" />
+                    <Button
+                        Margin="0,0,12,0"
+                        Command="{Binding AskClearLogFolderConfirmationCommand}"
+                        Content="{Binding LogFolderSize, Mode=OneWay}" />
                     <Button Content="&#xec7a;" FontFamily="/Resources/#Segoe Fluent Icons" FontSize="20">
                         <ui:FlyoutService.Flyout>
                             <ui:MenuFlyout>
-                                <MenuItem Header="{DynamicResource welcomewindow}">
+                                <MenuItem
+                                    Command="{Binding OpenWelcomeWindowCommand}"
+                                    Header="{DynamicResource welcomewindow}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe939;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{DynamicResource settingfolder}">
+
+                                <MenuItem
+                                    Command="{Binding OpenSettingsFolderCommand}"
+                                    Header="{DynamicResource settingfolder}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
                                 </MenuItem>
-                                <MenuItem Header="{DynamicResource logfolder}">
+
+                                <MenuItem
+                                    Command="{Binding OpenLogsFolderCommand}"
+                                    Header="{DynamicResource logfolder}">
                                     <MenuItem.Icon>
                                         <ui:FontIcon Glyph="&#xe8b7;" />
                                     </MenuItem.Icon>
