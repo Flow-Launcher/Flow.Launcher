@@ -4763,7 +4763,7 @@
                                 IsPaneOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPaneOpen, Mode=TwoWay}"
                                 IsTabStop="False"
                                 OpenPaneLength="{TemplateBinding OpenPaneLength}"
-                                PaneBackground="{DynamicResource NavigationViewDefaultPaneBackground}">
+                                PaneBackground="Transparent">
 
                                 <ui:SplitView.Pane>
                                     <Grid

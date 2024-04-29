@@ -179,6 +179,7 @@
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     AlwaysShowHeader="False"
+                    Background="{DynamicResource Color01B}"
                     ExpandedModeThresholdWidth="300"
                     IsBackButtonVisible="Collapsed"
                     IsPaneToggleButtonVisible="False"

@@ -5,9 +5,9 @@
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
-    xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="General"
     d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
     d:DesignHeight="450"
@@ -15,7 +15,6 @@
     mc:Ignorable="d">
     <ScrollViewer
         Margin="0,0,0,0"
-        Background="{DynamicResource Color01B}"
         CanContentScroll="False"
         FontSize="14"
         VirtualizingPanel.ScrollUnit="Pixel"
