@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Flow.Launcher.SettingPages.Views
 {
     /// <summary>
-    /// PluginStore.xaml에 대한 상호 작용 논리
+    /// Proxy.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class PluginStore : Page
+    public partial class SettingsPaneProxy : Page
     {
-        public PluginStore()
+        public SettingsPaneProxy()
         {
             InitializeComponent();
         }

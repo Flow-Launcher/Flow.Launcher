@@ -221,66 +221,52 @@
                     </ui:NavigationView.PaneCustomContent>
                     <ui:NavigationView.MenuItems>
 
-                        <ui:NavigationViewItem
-                            x:Name="General"
-                            Content="{DynamicResource general}"
-                            Tag="General">
+                        <ui:NavigationViewItem x:Name="General" Content="{DynamicResource general}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/settings.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="plugin"
-                            Content="{DynamicResource plugin}"
-                            SelectsOnInvoked="True"
-                            Tag="Plugins">
+
+                        <ui:NavigationViewItem x:Name="Plugins" Content="{DynamicResource plugin}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/plugins.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="pluginstore"
-                            Content="{DynamicResource pluginStore}"
+
+                        <ui:NavigationViewItem x:Name="PluginStore" Content="{DynamicResource pluginStore}"
                             Tag="PluginStore">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/store.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="Theme"
-                            Content="{DynamicResource theme}"
-                            Tag="Theme">
+
+                        <ui:NavigationViewItem x:Name="Theme" Content="{DynamicResource theme}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/theme.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="Hotkey"
-                            Content="{DynamicResource hotkey}"
-                            Tag="Hotkey">
+
+                        <ui:NavigationViewItem x:Name="Hotkey" Content="{DynamicResource hotkey}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/keyboard.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="Proxy"
-                            Content="{DynamicResource proxy}"
-                            Tag="Proxy">
+
+                        <ui:NavigationViewItem x:Name="Proxy" Content="{DynamicResource proxy}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/proxy.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
-                        <ui:NavigationViewItem
-                            x:Name="About"
-                            Content="{DynamicResource about}"
-                            Tag="About">
+
+                        <ui:NavigationViewItem x:Name="About" Content="{DynamicResource about}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/info.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
+
                     </ui:NavigationView.MenuItems>
                     <Grid>
-                        <ui:Frame x:Name="contentFrame" Margin="0" />
+                        <ui:Frame x:Name="ContentFrame" Margin="0" />
                     </Grid>
                 </ui:NavigationView>
             </Grid>

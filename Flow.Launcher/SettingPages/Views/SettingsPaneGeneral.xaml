@@ -1,5 +1,5 @@
 ﻿<ui:Page
-    x:Class="Flow.Launcher.SettingPages.Views.General"
+    x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneGeneral"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"

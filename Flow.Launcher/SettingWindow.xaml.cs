@@ -506,25 +506,32 @@ namespace Flow.Launcher
         //}
 
         /** For Navigation View **/
-        private void NavigationView_SelectionChanged(ModernWpf.Controls.NavigationView sender, ModernWpf.Controls.NavigationViewSelectionChangedEventArgs args)
+        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
-                contentFrame.Navigate(typeof(General));
+                ContentFrame.Navigate(typeof(SettingsPaneGeneral));
             }
             else
             {
-                var selectedItem = (ModernWpf.Controls.NavigationViewItem)args.SelectedItem;
+                var selectedItem = (NavigationViewItem)args.SelectedItem;
                 if (selectedItem == null)
                 {
                     return;
                 }
-                string selectedItemTag = (string)selectedItem.Tag;
 
-                sender.Header = (string)selectedItem.Content;
-                string pageName = $"Flow.Launcher.SettingPages.Views.{selectedItemTag}";
-                Type pageType = typeof(About).Assembly.GetType(pageName);
-                contentFrame.Navigate(pageType, settings);
+                var pageType = selectedItem.Name switch
+                {
+                    nameof(General) => typeof(SettingsPaneGeneral),
+                    nameof(Plugins) => typeof(SettingsPanePlugins),
+                    nameof(PluginStore) => typeof(SettingsPanePluginStore),
+                    nameof(Theme) => typeof(SettingsPaneTheme),
+                    nameof(Hotkey) => typeof(SettingsPaneHotkey),
+                    nameof(Proxy) => typeof(SettingsPaneProxy),
+                    nameof(About) => typeof(SettingsPaneAbout),
+                    _ => typeof(SettingsPaneGeneral)
+                };
+                ContentFrame.Navigate(pageType, settings);
             }
         }
     }

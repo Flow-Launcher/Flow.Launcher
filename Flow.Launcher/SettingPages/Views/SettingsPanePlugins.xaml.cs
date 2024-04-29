@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Flow.Launcher.SettingPages.Views
 {
     /// <summary>
-    /// Hotkey.xaml에 대한 상호 작용 논리
+    /// Plugins.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Hotkey : Page
+    public partial class SettingsPanePlugins
     {
-        public Hotkey()
+        public SettingsPanePlugins()
         {
             InitializeComponent();
         }

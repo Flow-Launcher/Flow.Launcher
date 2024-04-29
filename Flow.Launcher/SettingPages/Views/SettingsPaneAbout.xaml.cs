@@ -12,17 +12,26 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows;
+using System.Windows.Navigation;
+using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.UserSettings;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.SettingPages.Views
 {
-    /// <summary>
-    /// Plugins.xaml에 대한 상호 작용 논리
-    /// </summary>
-    public partial class Plugins
+
+    public partial class SettingsPaneAbout
     {
-        public Plugins()
+        public SettingsPaneAbout()
         {
             InitializeComponent();
+        }
+        private void OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            //API.OpenUrl(e.Uri.AbsoluteUri);
+            e.Handled = true;
         }
     }
 }

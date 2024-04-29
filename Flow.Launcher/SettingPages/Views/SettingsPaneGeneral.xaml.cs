@@ -34,7 +34,7 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.SettingPages.Views
 {
-    public partial class General
+    public partial class SettingsPaneGeneral
     {
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

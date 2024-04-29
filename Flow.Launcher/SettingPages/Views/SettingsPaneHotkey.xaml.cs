@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Flow.Launcher.SettingPages.Views
 {
     /// <summary>
-    /// Proxy.xaml에 대한 상호 작용 논리
+    /// Hotkey.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class Proxy : Page
+    public partial class SettingsPaneHotkey : Page
     {
-        public Proxy()
+        public SettingsPaneHotkey()
         {
             InitializeComponent();
         }
