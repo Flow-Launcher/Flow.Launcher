@@ -8,10 +8,10 @@
     <system:String x:Key="flowlauncher_plugin_program_add">Thêm</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enabled">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enabled">Đã bật</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Disable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_true">Enabled</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_true">Đã bật</system:String>
     <system:String x:Key="flowlauncher_plugin_program_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_program_location">Location</system:String>
     <system:String x:Key="flowlauncher_plugin_program_all_programs">All Programs</system:String>
@@ -73,7 +73,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Chương trình</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Search programs in Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Invalid Path</system:String>
