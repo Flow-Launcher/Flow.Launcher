@@ -7,7 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="General"
+    d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -292,6 +294,7 @@
                     Width="160"
                     MaxWidth="250"
                     Margin="10,0,0,0"
+                    Command="{Binding SelectFileManagerCommand}"
                     Content="{Binding Settings.CustomExplorer.Name}" />
             </cc:Card>
 
@@ -303,6 +306,7 @@
                     Width="160"
                     MaxWidth="250"
                     Margin="10,0,0,0"
+                    Command="{Binding SelectBrowserCommand}"
                     Content="{Binding Settings.CustomBrowser.Name}" />
             </cc:Card>
 
@@ -315,6 +319,7 @@
                     <Button
                         Height="34"
                         Margin="10,0,0,0"
+                        Command="{Binding SelectPythonCommand}"
                         Content="{DynamicResource select}" />
                 </StackPanel>
             </cc:Card>
@@ -328,6 +333,7 @@
                     <Button
                         Height="34"
                         Margin="10,0,0,0"
+                        Command="{Binding SelectNodeCommand}"
                         Content="{DynamicResource select}" />
                 </StackPanel>
             </cc:Card>
