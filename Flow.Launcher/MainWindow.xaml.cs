@@ -114,9 +114,9 @@ namespace Flow.Launcher
             margins.cyTopHeight = -1;
             margins.cyBottomHeight = -1;
             Methods.ExtendFrame(mainWindowSrc.Handle, margins);
-            Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle,DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,1);
+            Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle,DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,0);
             Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-            Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+            Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 2);
             // Remove OS minimizing/maximizing animation
             Methods.SetWindowAttribute(new WindowInteropHelper(this).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
         }

@@ -201,6 +201,9 @@
             Modifiers="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
+        <Grid.Background>
+            <SolidColorBrush Opacity="0.5" Color="RED" />
+        </Grid.Background>
         <Border MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
                 <Grid>
