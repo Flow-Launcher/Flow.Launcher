@@ -6,17 +6,17 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_plugin_description">Tìm kiếm dấu trang trình duyệt của bạn</system:String>
 
     <!--  Settings  -->
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Bookmark Data</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Open bookmarks in:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">New window</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">New tab</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Choose</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Copy url</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Copy the bookmark's url to clipboard</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Load Browser From:</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_bookmarkDataSetting">Dữ liệu đánh dấu</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_openBookmarks">Mở dấu trang trong:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newWindow">Cửa sổ mới</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Thêm Tab mới</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Đặt trình duyệt từ đường dẫn:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Chọn</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Sao chép url</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Sao chép url của dấu trang vào clipboard</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Tải trình duyệt từ:</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Tên trình duyệt</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Đường dẫn thư mục dữ liệu</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Thêm</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Sửa</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Xóa</system:String>
