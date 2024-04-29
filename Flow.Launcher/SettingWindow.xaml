@@ -233,14 +233,16 @@
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="PluginStore" Content="{DynamicResource pluginStore}"
+                        <ui:NavigationViewItem
+                            x:Name="PluginStore"
+                            Content="{DynamicResource pluginStore}"
                             Tag="PluginStore">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/store.png" />
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Theme" Content="{DynamicResource theme}">
+                        <ui:NavigationViewItem x:Name="Theme" Content="{DynamicResource appearance}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/theme.png" />
                             </ui:NavigationViewItem.Icon>
