@@ -112,49 +112,6 @@ namespace Flow.Launcher.ViewModel
             string.Format(_translater.GetTranslation("AlwaysPreviewToolTip"), Settings.PreviewHotkey);
 
 
-        public bool StartFlowLauncherOnSystemStartup
-        {
-            get => Settings.StartFlowLauncherOnSystemStartup;
-            set
-            {
-                Settings.StartFlowLauncherOnSystemStartup = value;
-
-                try
-                {
-                    if (value)
-                        AutoStartup.Enable();
-                    else
-                        AutoStartup.Disable();
-                }
-                catch (Exception e)
-                {
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                        e.Message);
-                }
-            }
-        }
-
-        // This is only required to set at startup. When portable mode enabled/disabled a restart is always required
-        private bool _portableMode = DataLocation.PortableDataLocationInUse();
-
-        public bool PortableMode
-        {
-            get => _portableMode;
-            set
-            {
-                if (!_portable.CanUpdatePortability())
-                    return;
-
-                if (DataLocation.PortableDataLocationInUse())
-                {
-                    _portable.DisablePortableMode();
-                }
-                else
-                {
-                    _portable.EnablePortableMode();
-                }
-            }
-        }
 
         /// <summary>
         /// Save Flow settings. Plugins settings are not included.
