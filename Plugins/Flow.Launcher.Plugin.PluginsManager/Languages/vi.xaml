@@ -3,22 +3,22 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Plugin đang được tải</system:String>
-    <system:String x:Key="plugin_pluginsmanager_download_success">Successfully downloaded {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_download_success">Đã tải xuống thành công!</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Lỗi: Không thể tải plugin xuống</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Đã cài đặt plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installing Plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_installing_plugin">Cài đặt Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Tải về và cài đặt</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Đã gỡ cài đặt plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin {0} successfully installed. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_restart">Đã cài đặt thành công plugin. Đang khởi động lại Flow, vui lòng đợi...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Không thể tìm thấy tệp siêu dữ liệu plugin.json từ tệp zip được giải nén.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Lỗi: Đã tồn tại một plugin có phiên bản tương tự hoặc cao hơn với {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Lỗi cài đặt plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Đã xảy ra lỗi khi cố gắng cài đặt {0}</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Lỗi cài đặt plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Không có cập nhật</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Tất cả các plugin đều được cập nhật</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
