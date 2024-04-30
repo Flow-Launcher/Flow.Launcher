@@ -10,6 +10,7 @@ using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using System.Windows.Input;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
+using System.Globalization;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -189,11 +190,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             if (mok == 1)
                 uom = "KB";
             else if (mok == 2)
-                uom = " MB";
+                uom = "MB";
             else if (mok == 3)
-                uom = " GB";
+                uom = "GB";
             else if (mok == 4)
-                uom = " TB";
+                uom = "TB";
 
             var returnStr = $"{Convert.ToInt32(drvSize)}{uom}";
             if (mok != 0)
@@ -241,14 +242,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var title = Path.GetFileName(filePath);
 
+           
             /* Preview Detail */
             long fileSize = new System.IO.FileInfo(filePath).Length;
-            string fileSizStr = fileSize.ToString();
+            string fileSizStr = ToReadableSize(fileSize, 2);
 
             DateTime created = System.IO.File.GetCreationTime(filePath);
-            string createdStr = created.ToString("yyyy-MM-dd HH:mm:ss");
+            string createdStr = created.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
             DateTime lastModified = System.IO.File.GetLastWriteTime(filePath);
-            string lastModifiedStr = lastModified.ToString("yyyy-MM-dd HH:mm:ss");
+            string lastModifiedStr = lastModified.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
+
 
 
             var result = new Result
