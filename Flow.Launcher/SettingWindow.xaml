@@ -2561,6 +2561,40 @@
                                                         </TextBlock>
                                                     </ItemsControl>
                                                 </Border>
+                                                <Border
+                                                    Name="WMPWarning"
+                                                    Padding="0,10"
+                                                    HorizontalAlignment="Stretch"
+                                                    VerticalAlignment="Center"
+                                                    Background="{DynamicResource InfoBarWarningBG}"
+                                                    BorderBrush="{DynamicResource Color03B}"
+                                                    BorderThickness="0,1,0,0"
+                                                    CornerRadius="0 0 5 5"
+                                                    Visibility="Visible">
+                                                    <Grid VerticalAlignment="Center">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="58" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <ui:FontIcon
+                                                            Grid.Column="0"
+                                                            Margin="20,0,14,0"
+                                                            VerticalAlignment="Center"
+                                                            FontSize="15"
+                                                            Foreground="{DynamicResource InfoBarWarningIcon}"
+                                                            Glyph="&#xf167;" />
+                                                        <TextBlock
+                                                            Grid.Column="1"
+                                                            Margin="0,0,0,2"
+                                                            Padding="0,0,8,0"
+                                                            HorizontalAlignment="Left"
+                                                            FontSize="13"
+                                                            FontWeight="SemiBold"
+                                                            Foreground="{DynamicResource Color05B}"
+                                                            Text="{DynamicResource SoundEffectWarning}"
+                                                            TextWrapping="Wrap" />
+                                                    </Grid>
+                                                </Border>
                                             </StackPanel>
                                         </Border>
 

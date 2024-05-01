@@ -24,6 +24,7 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -63,9 +64,18 @@ namespace Flow.Launcher
 
             viewModel.PropertyChanged += new PropertyChangedEventHandler(SettingsWindowViewModelChanged);
 
+            CheckMediaPlayer();
             InitializePosition();
         }
 
+        private void CheckMediaPlayer()
+        {
+            
+            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer.exe")))
+            {
+                /* Binding WMPWarning visibility */
+            }
+        }
         private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(viewModel.ExternalPlugins))
@@ -294,8 +304,8 @@ namespace Flow.Launcher
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
-        {
-            if (Keyboard.FocusedElement is not TextBox textBox)
+                {
+                    if (Keyboard.FocusedElement is not TextBox textBox)
             {
                 return;
             }
