@@ -276,7 +276,7 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Contains data used to populate the the preview section of this result.
+        /// Contains data used to populate the preview section of this result.
         /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
 
