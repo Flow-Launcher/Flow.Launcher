@@ -26,6 +26,7 @@
     </UserControl.Resources>
     <Border Background="{DynamicResource Color00B}" BorderBrush="{DynamicResource Color03B}" BorderThickness="1"
             CornerRadius="5">
-        <ItemsControl ItemsSource="{Binding Content}" ItemContainerStyleSelector="{StaticResource CardStyleSelector}" />
+        <ItemsControl ItemsSource="{Binding Content, RelativeSource={RelativeSource AncestorType=cc:CardGroup}}"
+                      ItemContainerStyleSelector="{StaticResource CardStyleSelector}" />
     </Border>
 </UserControl>

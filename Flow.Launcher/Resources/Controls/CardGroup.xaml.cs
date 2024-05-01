@@ -13,13 +13,12 @@ public partial class CardGroup : UserControl
         set { SetValue(ContentProperty, value); }
     }
 
-    public static readonly DependencyProperty ContentProperty =
+    public static new readonly DependencyProperty ContentProperty =
         DependencyProperty.Register(nameof(Content), typeof(ObservableCollection<Card>), typeof(CardGroup));
 
     public CardGroup()
     {
         InitializeComponent();
-        DataContext = this;
         Content = new ObservableCollection<Card>();
     }
 }
