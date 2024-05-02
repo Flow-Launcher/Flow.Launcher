@@ -99,11 +99,25 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 ### Installation
 
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
+[Windows 7+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
-| `winget install "Flow Launcher"` | `scoop install Flow-Launcher` | `choco install Flow-Launcher` |
-| :------------------------------: | :------------------------------: | :------------------------------: |
+
+#### Winget
+
+```
+winget install "Flow Launcher"
+```
+#### Scoop
+
+```
+scoop install Flow-Launcher
+```
+
+#### Chocolatey
+
+```
+choco install Flow-Launcher
+```
 
 > When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
