@@ -66,10 +66,6 @@ Dedicated to making your work flow more seamless. Search everything from applica
 - Support for .url files, flow can now search installed steam/epic games.
 - Improved UWP indexing.
 
-### Improved Memory Usage
-
-- Fixed a memory leak and reduced overall memory usage.
-
 ### Improved Plugin / Plugin Store
 
 - Search plugins in the Plugin Store and existing plugin tab.
