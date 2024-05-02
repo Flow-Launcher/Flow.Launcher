@@ -218,7 +218,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
-    <value>System settings</value>
+    <value>Thiết lập hệ thống</value>
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>App volume and device preferences</value>
+    <value>Âm lượng của từng ứng dụng và tùy chọn thiết bị</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -460,11 +460,11 @@
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
-    <value>Connected Devices</value>
+    <value>Các thiết bị đã kết nối</value>
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Danh bạ</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
@@ -705,7 +705,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Cổng</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
@@ -717,11 +717,11 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
-    <value>Getting started</value>
+    <value>Bắt đầu</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Glance</value>
+    <value>Ánh Nhìn</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
@@ -760,7 +760,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Id" xml:space="preserve">
-    <value>ID</value>
+    <value>Mã ID</value>
     <comment>MEans The "Windows Identifier"</comment>
   </data>
   <data name="Image" xml:space="preserve">
@@ -888,7 +888,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="MobileDevices" xml:space="preserve">
-    <value>Mobile devices</value>
+    <value>Thiết bị di động</value>
   </data>
   <data name="MobileHotspot" xml:space="preserve">
     <value>Điểm phát sóng di động</value>
@@ -922,7 +922,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="MousePointer" xml:space="preserve">
-    <value>Mouse pointer</value>
+    <value>Con trỏ chuột</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MultimediaProperties" xml:space="preserve">
@@ -930,7 +930,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Multitasking" xml:space="preserve">
-    <value>Multitasking</value>
+    <value>Đa nhiệm</value>
     <comment>Area System</comment>
   </data>
   <data name="Narrator" xml:space="preserve">
@@ -1055,11 +1055,11 @@
     <value>Only available if enterprise has deployed a provisioning package.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Thông báo</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notifications and actions</value>
+    <value>Hành động thông báo</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
@@ -1087,7 +1087,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Bàn đồ ngoại tuyến</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
@@ -1285,7 +1285,7 @@
     <value>Sự công nhận</value>
   </data>
   <data name="Recovery" xml:space="preserve">
-    <value>Recovery</value>
+    <value>Phục Hồi</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="RedEye" xml:space="preserve">
@@ -1293,7 +1293,7 @@
     <comment>Mean red eye effect by over-the-night flights</comment>
   </data>
   <data name="RedGreen" xml:space="preserve">
-    <value>Red-green</value>
+    <value>Đỏ – xanh lục</value>
     <comment>Mean the weakness you can't differ between red and green colors</comment>
   </data>
   <data name="RedWeek" xml:space="preserve">
@@ -1301,11 +1301,11 @@
     <comment>Mean you don't can see red colors</comment>
   </data>
   <data name="Region" xml:space="preserve">
-    <value>Region</value>
+    <value>Khu vực</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalLanguage" xml:space="preserve">
-    <value>Regional language</value>
+    <value>Khu vực, ngôn ngữ</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="RegionalSettingsProperties" xml:space="preserve">
@@ -1313,7 +1313,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionAndLanguage" xml:space="preserve">
-    <value>Region and language</value>
+    <value>Khu vực, ngôn ngữ</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RegionFormatting" xml:space="preserve">
@@ -1324,7 +1324,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>VNC</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
@@ -1336,21 +1336,21 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Lịch trình</value>
   </data>
   <data name="ScheduledTasks" xml:space="preserve">
-    <value>Scheduled tasks</value>
+    <value>Hoạt động theo lịch trình</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Screen rotation</value>
+    <value>Xoay màn hình</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
-    <value>Scroll bars</value>
+    <value>Thanh cuộn</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
-    <value>Scroll Lock</value>
+    <value>Khóa cuộn</value>
     <comment>Mean the "Scroll Lock" key</comment>
   </data>
   <data name="Sdns" xml:space="preserve">
@@ -1404,19 +1404,20 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Kích thước</value>
     <comment>Size for text and symbols</comment>
   </data>
   <data name="Sound" xml:space="preserve">
-    <value>Sound</value>
+    <value>Âm thanh</value>
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Nói
+</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
-    <value>Speech recognition</value>
+    <value>Nhận dạng tiếng nói</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SpeechTyping" xml:space="preserve">
@@ -1493,18 +1494,18 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
-    <value>Taskbar</value>
+    <value>Thanh tác vụ</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
     <value>Taskbar color</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Tasks</value>
+    <value>Công việc</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Team Conferencing</value>
+    <value>Web Conferencing</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
@@ -1512,11 +1513,11 @@
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
-    <value>Text to speech</value>
+    <value>Văn bản thành giọng nói</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Themes" xml:space="preserve">
-    <value>Themes</value>
+    <value>Giao diện</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="themes.cpl" xml:space="preserve">
@@ -1528,27 +1529,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Timeline" xml:space="preserve">
-    <value>Timeline</value>
+    <value>Dòng thời gian</value>
   </data>
   <data name="Touch" xml:space="preserve">
-    <value>Touch</value>
+    <value>Chạm</value>
   </data>
   <data name="TouchFeedback" xml:space="preserve">
-    <value>Touch feedback</value>
+    <value>Phản hồi khi chạm</value>
   </data>
   <data name="Touchpad" xml:space="preserve">
     <value>Touchpad</value>
     <comment>Area Device</comment>
   </data>
   <data name="Transparency" xml:space="preserve">
-    <value>Transparency</value>
+    <value>Minh bạch</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopia</value>
+    <value>Mù màu lam</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
-    <value>Troubleshoot</value>
+    <value>Khắc phục sự cố</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
@@ -1576,11 +1577,11 @@
     <comment>Means The "Windows Version"</comment>
   </data>
   <data name="VideoPlayback" xml:space="preserve">
-    <value>Video playback</value>
+    <value>Phát lại video</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Videos" xml:space="preserve">
-    <value>Videos</value>
+    <value>Video</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="VirtualDesktops" xml:space="preserve">
@@ -1591,18 +1592,18 @@
     <comment>Means the virus in computers and software</comment>
   </data>
   <data name="VoiceActivation" xml:space="preserve">
-    <value>Voice activation</value>
+    <value>giọng nói "gây nghiện"</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Volume" xml:space="preserve">
-    <value>Volume</value>
+    <value>Âm lượng</value>
   </data>
   <data name="Vpn" xml:space="preserve">
     <value>VPN</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="Wallpaper" xml:space="preserve">
-    <value>Wallpaper</value>
+    <value>Hình nền</value>
   </data>
   <data name="WarmerColor" xml:space="preserve">
     <value>Warmer color</value>
@@ -1612,7 +1613,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WelcomeScreen" xml:space="preserve">
-    <value>Welcome screen</value>
+    <value>Màn hình chào mừng</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="wgpocpl.cpl" xml:space="preserve">
@@ -1620,23 +1621,23 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Wheel" xml:space="preserve">
-    <value>Wheel</value>
+    <value>Bánh xe</value>
     <comment>Area Device</comment>
   </data>
   <data name="WiFi" xml:space="preserve">
-    <value>Wi-Fi</value>
+    <value>Wifi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiCalling" xml:space="preserve">
-    <value>Wi-Fi Calling</value>
+    <value>Gọi qua Wi-Fi</value>
     <comment>Area NetworkAndInternet, only available if Wi-Fi calling is enabled</comment>
   </data>
   <data name="WiFiSettings" xml:space="preserve">
-    <value>Wi-Fi settings</value>
+    <value>Cài đặt WiFi</value>
     <comment>"Wi-Fi" should not translated</comment>
   </data>
   <data name="WindowBorder" xml:space="preserve">
-    <value>Window border</value>
+    <value>chế độ cửa sổ</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
     <value>Windows Anytime Upgrade</value>
