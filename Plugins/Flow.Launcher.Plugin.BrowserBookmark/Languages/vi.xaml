@@ -22,7 +22,7 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Xóa</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Duyệt</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Khác</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Công cụ trình duyệt</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Nếu bạn không sử dụng Chrome, Firefox hoặc Edge hoặc bạn đang sử dụng phiên bản di động của chúng, bạn cần thêm thư mục dữ liệu dấu trang và chọn đúng công cụ trình duyệt để plugin này hoạt động.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Ví dụ: Engine của Brave là Chrome; và vị trí dữ liệu dấu trang mặc định của nó là: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. Đối với công cụ Firefox, thư mục dấu trang là thư mục dữ liệu người dùng chứa tệp địa điểm.sqlite.</system:String>
 </ResourceDictionary>
