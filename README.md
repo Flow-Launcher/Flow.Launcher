@@ -16,7 +16,10 @@
 </p>
 
 <p align="center">
-Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
+A open source launcher app.</p>
+
+<p align="center">
+Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
 
@@ -31,7 +34,7 @@ Dedicated to making your work flow more seamless. Search everything from applica
 - Use <kbd>F1</kbd> to toggle the preview panel.
 - Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
 - Turn on preview permanently via Settings (Always Preview).
-- Use hotkeys (<kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd>) to adjust flow's search window width and height quickly if the preview area is too narrow.
+- Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
 
 ### Everything Plugin Merged Into Explorer
 
@@ -44,14 +47,14 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 <img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
 
-- Display the date and time when the search window is triggered.
+- Display date and time in search window.
 
 ### Drag & Drop
 
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
 
-- Drag an item to Discord or computer location.
-- The target program determines whether the drop is to copy or move the item (can change via <kbd>Ctrl</kbd> or <kbd>Alt</kbd>), and the operation is displayed on the mouse cursor.
+- Drag a file/folder to File Exlporer, or even Discord.
+- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Custom Shortcut
 
@@ -62,11 +65,11 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 ### Improved Program Plugin
 
-- PATH is now indexed
+- PATH is now indexed.
 - Support for .url files, flow can now search installed steam/epic games.
 - Improved UWP indexing.
 
-### Improved Plugin / Plugin Store
+### Improved Plugin Store
 
 - Search plugins in the Plugin Store and existing plugin tab.
 - Categorised sections in Plugin Store to easily see new and updated plugins.
@@ -78,7 +81,7 @@ Dedicated to making your work flow more seamless. Search everything from applica
 - The design has been adjusted to align to the overall look and feel of flow.
 - Simplified the information displayed on buttons
 
-🚂[Full Changelogs](https://github.com/Flow-Launcher/Flow.Launcher/releases)
+🚂[Full Changelog](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -243,7 +246,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
-- When in search window use <kbd>Ctrl</kbd>+F12 to toggle on/off.
+- When in search window use <kbd>Ctrl</kbd>+<kbd>F12</kbd> to toggle on/off.
 - Type `Toggle Game Mode`
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
