@@ -47,7 +47,7 @@ namespace Flow.Launcher
             }
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update)
-                && viewModel.ShortcutExists(Key))
+                && (viewModel?.ShortcutExists(Key) ?? false)) // TODO Remove this check after removing unused code from SettingWindow.xaml.cs
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;
