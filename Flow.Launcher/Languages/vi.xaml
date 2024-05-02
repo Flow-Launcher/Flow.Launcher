@@ -174,14 +174,14 @@
     <system:String x:Key="flowlauncherHotkeyToolTip">Nhập phím tắt để hiển thị/ẩn Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Bật tắt xem trước</system:String>
     <system:String x:Key="previewHotkeyToolTip">Nhập phím tắt để hiển thị/ẩn bản xem trước trong cửa sổ tìm kiếm.</system:String>
-    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
+    <system:String x:Key="hotkeyPresets">Cài đặt trước phím nóng</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Danh sách các phím nóng hiện đã đăng ký</system:String>
     <system:String x:Key="openResultModifiers">Mở công cụ sửa đổi kết quả</system:String>
     <system:String x:Key="openResultModifiersToolTip">Chọn phím bổ trợ để mở kết quả đã chọn từ bàn phím.</system:String>
     <system:String x:Key="showOpenResultHotkey">Giải thích phím nóng</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Hiển thị phím tắt chọn kết quả cùng với kết quả.</system:String>
     <system:String x:Key="autoCompleteHotkey">Tự động hoàn thành</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Chạy tự động hoàn thành cho các mục đã chọn.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Trang Tiếp Theo</system:String>
