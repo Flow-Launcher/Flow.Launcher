@@ -28,11 +28,10 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 <img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
 
-- Use the F1 key to open/hide the preview panel.
+- Use <kbd>F1</kbd> to toggle the preview panel.
 - Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
 - Turn on preview permanently via Settings (Always Preview).
-- Use hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to adjust flow's search window width and height quickly if the preview area is too narrow.
-- This feature is currently in its early stages.
+- Use hotkeys (<kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd>) to adjust flow's search window width and height quickly if the preview area is too narrow.
 
 ### Everything Plugin Merged Into Explorer
 
@@ -52,7 +51,7 @@ Dedicated to making your work flow more seamless. Search everything from applica
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
 
 - Drag an item to Discord or computer location.
-- The target program determines whether the drop is to copy or move the item (can change via CTRL or Alt), and the operation is displayed on the mouse cursor.
+- The target program determines whether the drop is to copy or move the item (can change via <kbd>Ctrl</kbd> or <kbd>Alt</kbd>), and the operation is displayed on the mouse cursor.
 
 ### Custom Shortcut
 
@@ -156,7 +155,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/207142197-9e910147-96a9-466e-bbc4-b1163314ef59.png" width="400">
 
 - Run batch and PowerShell commands as Administrator or a different user.
-- Ctrl+Enter to Run as Administrator.
+- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> to Run as Administrator.
 
 ### Explorer
 
@@ -206,7 +205,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
-- When in search window use Ctrl+F12 to toggle on/off.
+- When in search window use <kbd>Ctrl</kbd>+F12 to toggle on/off.
 - Type `Toggle Game Mode`
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -271,22 +270,22 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 | ------------------------------------------------------------------ | ---------------------------------------------- |
 | <kbd>Alt</kbd>+ <kbd>Space</kbd>                                   | Open search window (default and configurable)  |
 | <kbd>Enter</kbd>                                                   | Execute                                        |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                  | Run as admin                                   |
+| <kbd><kbd>Ctrl</kbd></kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                  | Run as admin                                   |
 | <kbd>↑</kbd><kbd>↓</kbd>                                           | Scroll up & down                               |
 | <kbd>←</kbd><kbd>→</kbd>                                           | Back to result / Open Context Menu             |
-| <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                              |
+| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                              |
 | <kbd>Tab</kbd>                                                     | Autocomplete                                   |
 | <kbd>F1</kbd>                                                      | Toggle Preview Panel (default and configurable)|
 | <kbd>Esc</kbd>                                                     | Back to results / hide search window           |
-| <kbd>Ctrl</kbd> +<kbd>C</kbd>                                      | Copy the actual folder / file                  |
-| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                      | Open flow's settings                           |
-| <kbd>Ctrl</kbd> +<kbd>R</kbd>                                      | Run the current query again (refresh results)  |
+| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>C</kbd>                                      | Copy the actual folder / file                  |
+| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>I</kbd>                                      | Open flow's settings                           |
+| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>R</kbd>                                      | Run the current query again (refresh results)  |
 | <kbd>F5</kbd>                                                      | Reload all plugin data                         |
-| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                                   | Toggle Game Mode when in search window         |
-| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                        | Quickly change maximum results shown           |
-| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                        | Quickly change search window width             |
-| <kbd>Ctrl</kbd> + <kbd>H</kbd>                                     | Open search history                            |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                             | Back to previous directory                     |
+| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>F12</kbd>                                   | Toggle Game Mode when in search window         |
+| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>+</kbd>,<kbd>-</kbd>                        | Quickly change maximum results shown           |
+| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>[</kbd>,<kbd>]</kbd>                        | Quickly change search window width             |
+| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>H</kbd>                                     | Open search history                            |
+| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>Backspace</kbd>                             | Back to previous directory                     |
 
 ## System Command List
 
