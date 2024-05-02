@@ -313,22 +313,22 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 | ------------------------------------------------------------------ | ---------------------------------------------- |
 | <kbd>Alt</kbd>+ <kbd>Space</kbd>                                   | Open search window (default and configurable)  |
 | <kbd>Enter</kbd>                                                   | Execute                                        |
-| <kbd><kbd>Ctrl</kbd></kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                  | Run as admin                                   |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                  | Run as admin                                   |
 | <kbd>↑</kbd><kbd>↓</kbd>                                           | Scroll up & down                               |
 | <kbd>←</kbd><kbd>→</kbd>                                           | Back to result / Open Context Menu             |
-| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                              |
+| <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                              |
 | <kbd>Tab</kbd>                                                     | Autocomplete                                   |
 | <kbd>F1</kbd>                                                      | Toggle Preview Panel (default and configurable)|
 | <kbd>Esc</kbd>                                                     | Back to results / hide search window           |
-| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>C</kbd>                                      | Copy the actual folder / file                  |
-| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>I</kbd>                                      | Open flow's settings                           |
-| <kbd><kbd>Ctrl</kbd></kbd> +<kbd>R</kbd>                                      | Run the current query again (refresh results)  |
+| <kbd>Ctrl</kbd> +<kbd>C</kbd>                                      | Copy the actual folder / file                  |
+| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                      | Open flow's settings                           |
+| <kbd>Ctrl</kbd> +<kbd>R</kbd>                                      | Run the current query again (refresh results)  |
 | <kbd>F5</kbd>                                                      | Reload all plugin data                         |
-| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>F12</kbd>                                   | Toggle Game Mode when in search window         |
-| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>+</kbd>,<kbd>-</kbd>                        | Quickly change maximum results shown           |
-| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>[</kbd>,<kbd>]</kbd>                        | Quickly change search window width             |
-| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>H</kbd>                                     | Open search history                            |
-| <kbd><kbd>Ctrl</kbd></kbd> + <kbd>Backspace</kbd>                             | Back to previous directory                     |
+| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                                   | Toggle Game Mode when in search window         |
+| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                        | Quickly change maximum results shown           |
+| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                        | Quickly change search window width             |
+| <kbd>Ctrl</kbd> + <kbd>H</kbd>                                     | Open search history                            |
+| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                             | Back to previous directory                     |
 
 ## System Command List
 
