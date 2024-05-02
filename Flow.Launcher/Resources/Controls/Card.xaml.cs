@@ -12,26 +12,10 @@ namespace Flow.Launcher.Resources.Controls
             InsideFit
         }
 
-        public enum CardGroupPosition
-        {
-            NotInGroup,
-            First,
-            Middle,
-            Last
-        }
-
         public Card()
         {
             InitializeComponent();
         }
-
-        public CardGroupPosition GroupPosition
-        {
-            get { return (CardGroupPosition)GetValue(GroupPositionProperty); }
-            set { SetValue(GroupPositionProperty, value); }
-        }
-        public static readonly DependencyProperty GroupPositionProperty =
-            DependencyProperty.Register(nameof(GroupPosition), typeof(CardGroupPosition), typeof(Card), new PropertyMetadata(CardGroupPosition.NotInGroup));
 
         public string Title
         {

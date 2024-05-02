@@ -9,13 +9,13 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Style TargetType="cc:Card" x:Key="FirstStyle">
-            <Setter Property="GroupPosition" Value="First" />
+            <Setter Property="cc:CardGroup.Position" Value="First" />
         </Style>
         <Style TargetType="cc:Card" x:Key="MiddleStyle">
-            <Setter Property="GroupPosition" Value="Middle" />
+            <Setter Property="cc:CardGroup.Position" Value="Middle" />
         </Style>
         <Style TargetType="cc:Card" x:Key="LastStyle">
-            <Setter Property="GroupPosition" Value="Last" />
+            <Setter Property="cc:CardGroup.Position" Value="Last" />
         </Style>
 
         <cc:CardGroupCardStyleSelector
