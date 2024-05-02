@@ -196,11 +196,39 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 - There are various themes and you also can make your own.
 
-### 💬 Language
+### 💬 Languages
 
 - Supports languages from Chinese to Italian and more.
-- Supports Pinyin search.
+- Supports Pinyin (拼音) search.
 - [Crowdin](https://crowdin.com/project/flow-launcher) support for language translations.
+
+<supported-languages>
+<summary>Supported languages</summary>
+- English
+- 中文
+- 中文（繁体）
+- Українська
+- Русский
+- Français
+- 日本語
+- Dutch
+- Polski
+- Dansk
+- de, Deutsch
+- ko, 한국어
+- Srpski
+- Português
+- Português (Brasil)
+- Spanish
+- es-419, Spanish (Latin America)
+- Italiano
+- Norsk Bokmål
+- Slovenčina
+- Türkçe
+- čeština
+- اللغة العربية
+- Tiếng Việt
+</supported-languages>
 
 ### Portable
 
