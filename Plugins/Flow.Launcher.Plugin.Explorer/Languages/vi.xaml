@@ -15,8 +15,8 @@
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Để khắc phục điều này, hãy khởi động dịch vụ Windows Search. Chọn vào đây để xóa cảnh báo này</system:String>
     <system:String x:Key="plugin_explorer_alternative">Thông báo cảnh báo đã bị tắt. Là một giải pháp thay thế cho việc tìm kiếm tệp và thư mục, bạn có muốn cài đặt plugin Mọi thứ không?{0}{0}Chọn 'Có' để cài đặt plugin Mọi thứ hoặc 'Không' để quay lại</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Nhà thám hiểm thay thế</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Đã xảy ra lỗi trong quá trình tìm kiếm: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Không thể mở thư mục</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Không thể mở file</system:String>
 
     <!--  Controls  -->
@@ -34,7 +34,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Đường dẫn bị loại trừ tìm kiếm chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Chạy với tư cách quản trị viên / mở thư mục trong trình quản lý tệp tiêu chuẩn</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Tùy chọn lập chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Tìm kiếm trên web với sự hỗ trợ của công cụ tìm kiếm khác</system:String>
@@ -46,7 +46,7 @@
     <system:String x:Key="plugin_explorer_actionkeyword_done">Xong</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Đã bật</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Khi bị tắt, Flow sẽ không thực thi tùy chọn tìm kiếm này và sẽ hoàn nguyên về '*' để giải phóng từ khóa hành động</system:String>
-    <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
+    <system:String x:Key="plugin_explorer_engine_everything">Tất cả mọi thứ</system:String>
     <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
@@ -55,7 +55,7 @@
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Mở tùy chọn lập chỉ mục Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Thư mục </system:String>
