@@ -170,11 +170,11 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
     <system:String x:Key="hotkeys">Raccourcis</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Ouvrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Entrez le raccourci pour afficher/masquer Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
+    <system:String x:Key="previewHotkey">Afficher/masquer l'aperçu</system:String>
     <system:String x:Key="previewHotkeyToolTip">Entrez le raccourci pour afficher/masquer l'aperçu dans la fenêtre de recherche.</system:String>
-    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresets">Préréglages des raccourcis clavier</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Modificateurs de résultats ouverts</system:String>
     <system:String x:Key="openResultModifiersToolTip">Sélectionnez une touche de modification pour ouvrir le résultat sélectionné via le clavier.</system:String>
@@ -184,18 +184,18 @@
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Prev Page</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Page suivante</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Page précédente</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Ouvrir le Menu Contextuel</system:String>
     <system:String x:Key="SettingWindowHotkey">Ouvrir la Fenêtre des Réglages</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Basculer le mode de jeu</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Ouvrir le répertoire</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Exécuter en tant qu'Administrateur</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajuster rapidement la largeur de la fenêtre</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuster rapidement la hauteur de la fenêtre</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Requêtes personnalisées</system:String>
@@ -308,8 +308,8 @@
     <system:String x:Key="update">Actualiser</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Ce raccourci est réservé à &quot;{0}&quot; et ne peut pas être utilisé. Veuillez choisir un autre raccourci clavier.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Ce raccourci est déjà utilisé par &quot;{0}&quot;. Si vous appuyez sur &quot;Écraser&quot;, il sera supprimé de &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
@@ -324,7 +324,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Sauvegarder</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Écraser</system:String>
     <system:String x:Key="commonCancel">Annuler</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Supprimer</system:String>
@@ -397,11 +397,11 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="HotkeyCtrlIDesc">Ouvrir la Fenêtre des Réglages</system:String>
     <system:String x:Key="HotkeyF5Desc">Recharger les Données des Plugins</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Sélectionner le premier résultat</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Sélectionner le dernier résultat</system:String>
+    <system:String x:Key="HotkeyRequery">Exécuter à nouveau la requête actuelle</system:String>
+    <system:String x:Key="HotkeyOpenResult">Ouvrir le résultat</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Ouvrir le résultat #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Météo</system:String>
     <system:String x:Key="RecommendWeatherDesc">Météo dans les résultats Google</system:String>
