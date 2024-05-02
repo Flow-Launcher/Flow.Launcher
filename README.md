@@ -205,33 +205,35 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 - Supports Pinyin (拼音) search.
 - [Crowdin](https://crowdin.com/project/flow-launcher) support for language translations.
 
-<supported-languages>
+<details>
 <summary>Supported languages</summary>
-- English
-- 中文
-- 中文（繁体）
-- Українська
-- Русский
-- Français
-- 日本語
-- Dutch
-- Polski
-- Dansk
-- de, Deutsch
-- ko, 한국어
-- Srpski
-- Português
-- Português (Brasil)
-- Spanish
-- es-419, Spanish (Latin America)
-- Italiano
-- Norsk Bokmål
-- Slovenčina
-- Türkçe
-- čeština
-- اللغة العربية
-- Tiếng Việt
-</supported-languages>
+<ul>
+  <li>English</li>
+  <li>中文</li>
+  <li>中文（繁体）</li>
+  <li>Українська</li>
+  <li>Русский</li>
+  <li>Français</li>
+  <li>日本語</li>
+  <li>Dutch</li>
+  <li>Polski</li>
+  <li>Dansk</li>
+  <li>de, Deutsch</li>
+  <li>ko, 한국어</li>
+  <li>Srpski</li>
+  <li>Português</li>
+  <li>Português (Brasil)</li>
+  <li>Spanish</li>
+  <li>es-419, Spanish (Latin America)</li>
+  <li>Italiano</li>
+  <li>Norsk Bokmål</li>
+  <li>Slovenčina</li>
+  <li>Türkçe</li>
+  <li>čeština</li>
+  <li>اللغة العربية</li>
+  <li>Tiếng Việt</li>
+</ul>
+</details>
 
 ### Portable
 
