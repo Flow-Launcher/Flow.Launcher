@@ -183,9 +183,9 @@
     <system:String x:Key="autoCompleteHotkey">Tự động hoàn thành</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Chạy tự động hoàn thành cho các mục đã chọn.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Prev Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Trang Tiếp Theo</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Trang trước</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
@@ -193,6 +193,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Mở thư mục chứa</system:String>
     <system:String x:Key="RunAsAdminHotkey">Chạy với quyền admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Dữ liệu plugin không tải</system:String>
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
     <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
