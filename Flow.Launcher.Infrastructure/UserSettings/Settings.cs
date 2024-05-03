@@ -27,8 +27,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectNextItemHotkey2 { get; set; } = $"";
         public string SelectPrevItemHotkey { get; set; } = $"Shift + Tab";
         public string SelectPrevItemHotkey2 { get; set; } = $"";
-        public string SelectNextPageHotkey { get; set; } = $"";
-        public string SelectPrevPageHotkey { get; set; } = $"";
+        public string SelectNextPageHotkey { get; set; } = $"PageUp";
+        public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
 
