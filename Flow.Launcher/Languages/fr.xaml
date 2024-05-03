@@ -183,9 +183,9 @@
     <system:String x:Key="autoCompleteHotkey">Saisie automatique</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Exécute la saisie automatique pour les éléments sélectionnés.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Sélectionner l'objet suivant</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Sélectionner l'élément précédent</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Page suivante</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Page précédente</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Ouvrir le Menu Contextuel</system:String>
     <system:String x:Key="SettingWindowHotkey">Ouvrir la Fenêtre des Réglages</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copier le chemin du fichier</system:String>
@@ -193,6 +193,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Basculer l'historique</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Ouvrir le répertoire</system:String>
     <system:String x:Key="RunAsAdminHotkey">Exécuter en tant qu'Administrateur</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recharger les données des plugins</system:String>
     <system:String x:Key="QuickWidthHotkey">Ajuster rapidement la largeur de la fenêtre</system:String>
     <system:String x:Key="QuickHeightHotkey">Ajuster rapidement la hauteur de la fenêtre</system:String>
