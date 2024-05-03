@@ -119,7 +119,10 @@ function Pack-Velopack-Installer($path, $version, $output)
     {
         dotnet tool install --global vpk
     }
-    
+
+    # Create UserData folder before Packing
+    New-Item -ItemType Directory -Force -Path "$input\UserData"
+
     vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel
 }
 
