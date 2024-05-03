@@ -101,7 +101,7 @@ function Pack-Velopack-Installer($path, $version, $output)
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    $input = "$path\Output\Release"
+    $input = "$path\Output\$config"
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
