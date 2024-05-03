@@ -25,8 +25,8 @@
     <ScrollViewer
         Margin="0,0,0,0"
         Padding="6,0,24,0"
-        FontSize="14"
         CanContentScroll="True"
+        FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
         <Grid Margin="0,0,0,0">
@@ -460,10 +460,10 @@
                                             ItemsSource="{Binding TimeFormatList}"
                                             SelectedItem="{Binding TimeFormat}" />
                                         <ui:ToggleSwitch
+                                            Margin="0,0,18,0"
                                             IsOn="{Binding UseClock, Mode=TwoWay}"
                                             OffContent="{DynamicResource disable}"
-                                            OnContent="{DynamicResource enable}"
-                                            Style="{DynamicResource SideToggleSwitch}" />
+                                            OnContent="{DynamicResource enable}" />
                                     </StackPanel>
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xec92;
@@ -502,10 +502,10 @@
                                             ItemsSource="{Binding DateFormatList}"
                                             SelectedItem="{Binding DateFormat}" />
                                         <ui:ToggleSwitch
+                                            Margin="0,0,18,0"
                                             IsOn="{Binding UseDate, Mode=TwoWay}"
                                             OffContent="{DynamicResource disable}"
-                                            OnContent="{DynamicResource enable}"
-                                            Style="{DynamicResource SideToggleSwitch}" />
+                                            OnContent="{DynamicResource enable}" />
                                     </StackPanel>
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe787;
@@ -534,10 +534,10 @@
                                         x:Name="Animation"
                                         Grid.Row="0"
                                         Grid.Column="2"
+                                        Margin="0,0,18,0"
                                         IsOn="{Binding UseAnimation, Mode=TwoWay}"
                                         OffContent="{DynamicResource disable}"
-                                        OnContent="{DynamicResource enable}"
-                                        Style="{DynamicResource SideToggleSwitch}" />
+                                        OnContent="{DynamicResource enable}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xedb5;
                                     </TextBlock>
@@ -620,10 +620,10 @@
                                         x:Name="SoundEffect"
                                         Grid.Row="0"
                                         Grid.Column="2"
+                                        Margin="0,0,18,0"
                                         IsOn="{Binding UseSound, Mode=TwoWay}"
                                         OffContent="{DynamicResource disable}"
-                                        OnContent="{DynamicResource enable}"
-                                        Style="{DynamicResource SideToggleSwitch}" />
+                                        OnContent="{DynamicResource enable}" />
                                     <TextBlock Style="{StaticResource Glyph}">
                                         &#xe7f5;
                                     </TextBlock>
