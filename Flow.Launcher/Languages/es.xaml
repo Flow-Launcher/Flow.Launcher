@@ -183,9 +183,9 @@
     <system:String x:Key="autoCompleteHotkey">Completar automáticamente</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Ejecuta completar automáticamente para los elementos seleccionados.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Seleccionar siguiente elemento</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Siguiente página</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
@@ -193,6 +193,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recargar datos de complementos</system:String>
     <system:String x:Key="QuickWidthHotkey">Ajuste rápido de la anchuira de la ventana</system:String>
     <system:String x:Key="QuickHeightHotkey">Ajuste rápido de la altura de la ventana</system:String>
