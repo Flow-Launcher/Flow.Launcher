@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-A quick file search and app launcher for Windows with community-made plugins。</p>
+A quick file search and app launcher for Windows with community-made plugins.</p>
 
 <p align="center">
 Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
@@ -64,7 +64,7 @@ choco install Flow-Launcher
 
 > When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
-And you can download [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
+Or download the [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
