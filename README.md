@@ -104,12 +104,12 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 [Windows 7+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
-
 #### Winget
 
 ```
 winget install "Flow Launcher"
 ```
+
 #### Scoop
 
 ```
@@ -299,6 +299,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ### 🛒 Plugin Store
+
 <img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
@@ -331,6 +332,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 | <kbd>Ctrl</kbd>+<kbd>[</kbd>,<kbd>]</kbd>                                 | Adjust search window width                      |
 | <kbd>Ctrl</kbd>+<kbd>H</kbd>                                              | Open search history                             |
 | <kbd>Ctrl</kbd>+<kbd>Backspace</kbd>                                      | Back to previous directory                      |
+| <kbd>PageUp</kbd>/<kbd>PageDown</kbd>                                     | Previous / Next Page                            |
 
 ## System Command List
 
@@ -356,8 +358,6 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 | Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
-
-
 
 ### 💁‍♂️ Tips
 
