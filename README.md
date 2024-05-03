@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-A open source launcher app.</p>
+A quick file search and app launcher for Windows with community-made plugins。</p>
 
 <p align="center">
 Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
