@@ -28,8 +28,6 @@
                 Text="{DynamicResource hotkeys}"
                 TextAlignment="left" />
 
-            <TextBlock Text="{Binding Settings.OpenResultModifiers}" />
-
             <cc:Card
                 Title="{DynamicResource flowlauncherHotkey}"
                 Icon="&#xeda7;"
