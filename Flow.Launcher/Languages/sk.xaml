@@ -183,9 +183,9 @@
     <system:String x:Key="autoCompleteHotkey">Automatické dokončovanie</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Spustí automatické dokončovanie vybraných položiek.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Vybrať ďalšiu položku</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Vybrať prechádzajúcu položku</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Ďalšia strana</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Predchádzajúca strana</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Otvoriť kontextovú ponuku</system:String>
     <system:String x:Key="SettingWindowHotkey">Otvoriť okno s nastaveniami</system:String>
     <system:String x:Key="CopyFilePathHotkey">Kopírovať cestu k súboru</system:String>
@@ -193,6 +193,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Prepnúť históriu</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Otvoriť umiestnenie priečinka</system:String>
     <system:String x:Key="RunAsAdminHotkey">Spustiť ako správca</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Znova načítať údaje pluginov</system:String>
     <system:String x:Key="QuickWidthHotkey">Rýchla úprava šírky okna</system:String>
     <system:String x:Key="QuickHeightHotkey">Rýchla úprava výšky okna</system:String>
