@@ -25,66 +25,6 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
-## 🎅 New Features🤶
-
-### Preview Panel
-
-<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
-
-- Use <kbd>F1</kbd> to toggle the preview panel.
-- Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
-- Turn on preview permanently via Settings (Always Preview).
-- Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
-
-### Everything Plugin Merged Into Explorer
-
-<img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
-
-- Switch easily between Everything and Windows Search to take advantage of both search engines (remember to remove existing Everything plugin).
-- Use features available to both Everything and Explorer plugins
-
-### Date & Time Display In Search Window
-
-<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
-
-- Display date and time in search window.
-
-### Drag & Drop
-
-<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
-
-- Drag a file/folder to File Exlporer, or even Discord.
-- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
-
-### Custom Shortcut
-
-<img src="Flow.Launcher/Images/illustration_02.png" width="300">
-<img src="Flow.Launcher/Images/illustration_01.png" width="300">
-
-- New shortcut functionality to set additional action keywords or search terms.
-
-### Improved Program Plugin
-
-- PATH is now indexed.
-- Support for .url files, flow can now search installed steam/epic games.
-- Improved UWP indexing.
-
-### Improved Plugin Store
-
-- Search plugins in the Plugin Store and existing plugin tab.
-- Categorised sections in Plugin Store to easily see new and updated plugins.
-
-### Improved Non-C# Plugin's Panel Design
-
-<img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
-
-- The design has been adjusted to align to the overall look and feel of flow.
-- Simplified the information displayed on buttons
-
-🚂[Full Changelog](https://github.com/Flow-Launcher/Flow.Launcher/releases)
-
-<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
-
 <h4 align="center">
   <a href="#-getting-started">Getting Started</a> •
   <a href="#-features">Features</a> •
@@ -135,6 +75,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/145332614-74909973-f6eb-47c2-8235-289931e30718.png" width="400">
 
 - Search for apps, files or file contents.
+- Supports Everything and Windows Index.
 
 <img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
 
@@ -176,6 +117,13 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 - Save file or folder locations for quick access.
 
+#### Drag & Drop
+
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+
+- Drag a file/folder to File Exlporer, or even Discord.
+- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
+
 ### Windows & Control Panel Settings
 
 <img src="https://user-images.githubusercontent.com/6903107/207140658-52c1bea6-5b14-4db8-ae35-acc65e6bda85.png" width="400">
@@ -188,6 +136,16 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 - Prioritise the order of each plugin's results.
 
+### Preview Panel
+
+<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
+
+- Use <kbd>F1</kbd> to toggle the preview panel.
+- Media files will be displayed as large images, otherwise a large icon and full path will be displayed.
+- Turn on preview permanently via Settings (Always Preview).
+- Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
+
+
 ### Customizations
 
 <img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
@@ -198,6 +156,12 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/144527796-7c06ca31-d933-4f6b-9eb0-4fb06fa94384.png" width="500">
 
 - There are various themes and you also can make your own.
+
+#### Date & Time Display In Search Window
+
+<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
+
+- Display date and time in search window.
 
 ### 💬 Languages
 
