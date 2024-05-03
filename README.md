@@ -16,74 +16,12 @@
 </p>
 
 <p align="center">
-Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.
+A quick file search and app launcher for Windows with community-made plugins.</p>
+
+<p align="center">
+Dedicated to making your work flow more seamless. Search everything from applications, files, bookmarks, YouTube, Twitter and more. Flow will continue to evolve, designed to be open and built with the community at heart.</p>
 
 <p align="center"> <sub>Remember to star it, flow will love you more :)</sub></p>
-
-<img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
-
-## 🎅 New Features🤶
-
-### Preview Panel
-
-<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
-
-- Use the F1 key to open/hide the preview panel.
-- Media files will be displayed as large images, otherwise a large icon and entire path will be displayed.
-- Turn on preview permanently via Settings (Always Preview).
-- Use hotkeys (Ctrl+Plus,Minus / Ctrl+],[) to adjust flow's search window width and height quickly if the preview area is too narrow.
-- This feature is currently in its early stages.
-
-### Everything Plugin Merged Into Explorer
-
-<img src="https://user-images.githubusercontent.com/6903107/207171178-78912e76-31c2-4ba2-b3cf-de4b0b5e5691.png" width="300">
-
-- Switch easily between Everything and Windows Search to take advantage of both search engines (remember to remove existing Everything plugin).
-- Use features available to both Everything and Explorer plugins
-
-### Date & Time Display In Search Window
-
-<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
-
-- Display the date and time when the search window is triggered.
-
-### Drag & Drop
-
-<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
-
-- Drag an item to Discord or computer location.
-- The target program determines whether the drop is to copy or move the item (can change via CTRL or Alt), and the operation is displayed on the mouse cursor.
-
-### Custom Shortcut
-
-<img src="Flow.Launcher/Images/illustration_02.png" width="300">
-<img src="Flow.Launcher/Images/illustration_01.png" width="300">
-
-- New shortcut functionality to set additional action keywords or search terms.
-
-### Improved Program Plugin
-
-- PATH is now indexed
-- Support for .url files, flow can now search installed steam/epic games.
-- Improved UWP indexing.
-
-### Improved Memory Usage
-
-- Fixed a memory leak and reduced overall memory usage.
-
-### Improved Plugin / Plugin Store
-
-- Search plugins in the Plugin Store and existing plugin tab.
-- Categorised sections in Plugin Store to easily see new and updated plugins.
-
-### Improved Non-C# Plugin's Panel Design
-
-<img src="https://user-images.githubusercontent.com/6903107/207166078-871a17aa-5ab4-4808-8d8f-12b7cb66ea89.png" width="450">
-
-- The design has been adjusted to align to the overall look and feel of flow.
-- Simplified the information displayed on buttons
-
-🚂[Full Changelogs](https://github.com/Flow-Launcher/Flow.Launcher/releases)
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -104,15 +42,29 @@ Dedicated to making your work flow more seamless. Search everything from applica
 
 ### Installation
 
-| [Windows 7+ installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) | [Portable](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip) |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
+[Windows 7+ Installer](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Setup.exe) or [Portable Version](https://github.com/Flow-Launcher/Flow.Launcher/releases/latest/download/Flow-Launcher-Portable.zip)
 
-| `winget install "Flow Launcher"` | `scoop install Flow-Launcher` | `choco install Flow-Launcher` |
-| :------------------------------: | :------------------------------: | :------------------------------: |
+#### Winget
+
+```
+winget install "Flow Launcher"
+```
+
+#### Scoop
+
+```
+scoop install Flow-Launcher
+```
+
+#### Chocolatey
+
+```
+choco install Flow-Launcher
+```
 
 > When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
 
-And you can download [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
+Or download the [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
@@ -123,6 +75,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/145332614-74909973-f6eb-47c2-8235-289931e30718.png" width="400">
 
 - Search for apps, files or file contents.
+- Supports Everything and Windows Index.
 
 <img src="https://user-images.githubusercontent.com/6903107/145018796-658b7c24-a34f-46b6-98d4-cf4f636d8b60.png" width="400">
 
@@ -156,13 +109,20 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/207142197-9e910147-96a9-466e-bbc4-b1163314ef59.png" width="400">
 
 - Run batch and PowerShell commands as Administrator or a different user.
-- Ctrl+Enter to Run as Administrator.
+- <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd> to Run as Administrator.
 
 ### Explorer
 
 <img src="https://user-images.githubusercontent.com/6903107/207145376-fbb68ec2-93b9-4b0f-befe-0aeb792367a7.png" width="400">
 
 - Save file or folder locations for quick access.
+
+#### Drag & Drop
+
+<img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
+
+- Drag a file/folder to File Exlporer, or even Discord.
+- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Windows & Control Panel Settings
 
@@ -176,6 +136,16 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 - Prioritise the order of each plugin's results.
 
+### Preview Panel
+
+<img src="https://user-images.githubusercontent.com/6903107/207159213-662999d3-2c18-4256-b473-c417efca0069.png" width="400">
+
+- Use <kbd>F1</kbd> to toggle the preview panel.
+- Media files will be displayed as large images, otherwise a large icon and full path will be displayed.
+- Turn on preview permanently via Settings (Always Preview).
+- Use <kbd>Ctrl</kbd>+<kbd>+</kbd>/<kbd>-</kbd> and <kbd>Ctrl</kbd>+<kbd>[</kbd>/<kbd>]</kbd> to adjust search window width and height quickly if the preview area is too narrow.
+
+
 ### Customizations
 
 <img src="https://user-images.githubusercontent.com/6903107/144693887-1b92ed16-dca1-4b7e-8644-5e9524cdfb31.gif" width="500">
@@ -187,11 +157,47 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 - There are various themes and you also can make your own.
 
-### 💬 Language
+#### Date & Time Display In Search Window
+
+<img src="https://user-images.githubusercontent.com/6903107/207159348-8b0c7a2b-0836-4764-916b-e0236087f7f3.png" width="400">
+
+- Display date and time in search window.
+
+### 💬 Languages
 
 - Supports languages from Chinese to Italian and more.
-- Supports Pinyin search.
+- Supports Pinyin (拼音) search.
 - [Crowdin](https://crowdin.com/project/flow-launcher) support for language translations.
+
+<details>
+<summary>Supported languages</summary>
+<ul>
+  <li>English</li>
+  <li>中文</li>
+  <li>中文（繁体）</li>
+  <li>Українська</li>
+  <li>Русский</li>
+  <li>Français</li>
+  <li>日本語</li>
+  <li>Dutch</li>
+  <li>Polski</li>
+  <li>Dansk</li>
+  <li>de, Deutsch</li>
+  <li>ko, 한국어</li>
+  <li>Srpski</li>
+  <li>Português</li>
+  <li>Português (Brasil)</li>
+  <li>Spanish</li>
+  <li>es-419, Spanish (Latin America)</li>
+  <li>Italiano</li>
+  <li>Norsk Bokmål</li>
+  <li>Slovenčina</li>
+  <li>Türkçe</li>
+  <li>čeština</li>
+  <li>اللغة العربية</li>
+  <li>Tiếng Việt</li>
+</ul>
+</details>
 
 ### Portable
 
@@ -206,7 +212,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/207144711-0c5f8b2b-4b1b-44c8-b23e-c123f6b05146.png" width="200">
 
 - Pause hotkey activation when you are playing games.
-- When in search window use Ctrl+F12 to toggle on/off.
+- When in search window use <kbd>Ctrl</kbd>+<kbd>F12</kbd> to toggle on/off.
 - Type `Toggle Game Mode`
 
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
@@ -257,6 +263,7 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ### 🛒 Plugin Store
+
 <img src="https://user-images.githubusercontent.com/6903107/207155616-d559f0d2-ee95-4072-a7bc-3ffcc2faec27.png" width="700">
 
 - You can view the full plugin list or quickly install a plugin via the Plugin Store menu inside Settings
@@ -267,26 +274,29 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 
 ## ⌨️ Hotkeys
 
-| Hotkey                                                             | Description                                    |
-| ------------------------------------------------------------------ | ---------------------------------------------- |
-| <kbd>Alt</kbd>+ <kbd>Space</kbd>                                   | Open search window (default and configurable)  |
-| <kbd>Enter</kbd>                                                   | Execute                                        |
-| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                  | Run as admin                                   |
-| <kbd>↑</kbd><kbd>↓</kbd>                                           | Scroll up & down                               |
-| <kbd>←</kbd><kbd>→</kbd>                                           | Back to result / Open Context Menu             |
-| <kbd>Ctrl</kbd> +<kbd>O</kbd> , <kbd>Shift</kbd> +<kbd>Enter</kbd> | Open Context Menu                              |
-| <kbd>Tab</kbd>                                                     | Autocomplete                                   |
-| <kbd>F1</kbd>                                                      | Toggle Preview Panel (default and configurable)|
-| <kbd>Esc</kbd>                                                     | Back to results / hide search window           |
-| <kbd>Ctrl</kbd> +<kbd>C</kbd>                                      | Copy the actual folder / file                  |
-| <kbd>Ctrl</kbd> +<kbd>I</kbd>                                      | Open flow's settings                           |
-| <kbd>Ctrl</kbd> +<kbd>R</kbd>                                      | Run the current query again (refresh results)  |
-| <kbd>F5</kbd>                                                      | Reload all plugin data                         |
-| <kbd>Ctrl</kbd> + <kbd>F12</kbd>                                   | Toggle Game Mode when in search window         |
-| <kbd>Ctrl</kbd> + <kbd>+</kbd>,<kbd>-</kbd>                        | Quickly change maximum results shown           |
-| <kbd>Ctrl</kbd> + <kbd>[</kbd>,<kbd>]</kbd>                        | Quickly change search window width             |
-| <kbd>Ctrl</kbd> + <kbd>H</kbd>                                     | Open search history                            |
-| <kbd>Ctrl</kbd> + <kbd>Backspace</kbd>                             | Back to previous directory                     |
+| Hotkey                                                                    | Description                                     |
+| ------------------------------------------------------------------------- | ----------------------------------------------- |
+| <kbd>Alt</kbd>+<kbd>Space</kbd>                                           | Open search window (default and configurable)   |
+| <kbd>Enter</kbd>                                                          | Execute                                         |
+| <kbd>Ctrl</kbd>+<kbd>Enter</kbd>                                          | Open containing folder                          |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>                         | Run as admin                                    |
+| <kbd>↑</kbd>/<kbd>↓</kbd>, <kbd>Shift</kbd>+<kbd>Tab</kbd>/<kbd>Tab</kbd> | Previous / Next result                          |
+| <kbd>←</kbd>/<kbd>→</kbd>                                                 | Back to result / Open Context Menu              |
+| <kbd>Ctrl</kbd>+<kbd>O</kbd> , <kbd>Shift</kbd>+<kbd>Enter</kbd>          | Open Context Menu                               |
+| <kbd>Ctrl</kbd>+<kbd>Tab</kbd>                                            | Autocomplete                                    |
+| <kbd>F1</kbd>                                                             | Toggle Preview Panel (default and configurable) |
+| <kbd>Esc</kbd>                                                            | Back to results / hide search window            |
+| <kbd>Ctrl</kbd>+<kbd>C</kbd>                                              | Copy folder / file                              |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>C</kbd>                             | Copy folder / file path                         |
+| <kbd>Ctrl</kbd>+<kbd>I</kbd>                                              | Open Flow's settings                            |
+| <kbd>Ctrl</kbd>+<kbd>R</kbd>                                              | Run the current query again (refresh results)   |
+| <kbd>F5</kbd>                                                             | Reload all plugin data                          |
+| <kbd>Ctrl</kbd>+<kbd>F12</kbd>                                            | Toggle Game Mode when in search window          |
+| <kbd>Ctrl</kbd>+<kbd>+</kbd>,<kbd>-</kbd>                                 | Adjust maximum results shown                    |
+| <kbd>Ctrl</kbd>+<kbd>[</kbd>,<kbd>]</kbd>                                 | Adjust search window width                      |
+| <kbd>Ctrl</kbd>+<kbd>H</kbd>                                              | Open search history                             |
+| <kbd>Ctrl</kbd>+<kbd>Backspace</kbd>                                      | Back to previous directory                      |
+| <kbd>PageUp</kbd>/<kbd>PageDown</kbd>                                     | Previous / Next Page                            |
 
 ## System Command List
 
@@ -312,8 +322,6 @@ And you can download [early access version](https://github.com/Flow-Launcher/Pre
 | Flow Launcher Tips                 | Visit Flow Launcher's documentation for more help and how to use tips       |
 | Flow Launcher UserData Folder      | Open the location where Flow Launcher's settings are stored                 |
 | Toggle Game Mode                   | Toggle Game Mode                                                            |
-
-
 
 ### 💁‍♂️ Tips
 

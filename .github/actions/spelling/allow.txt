@@ -21,3 +21,6 @@ vkcode
 winget
 workaround
 nupkg
+Firefox
+Português
+Português (Brasil)

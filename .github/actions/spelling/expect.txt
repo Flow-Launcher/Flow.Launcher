@@ -74,6 +74,7 @@ WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
+Firefox
 msedge
 svgc
 ime
@@ -97,6 +98,7 @@ Português
 Português (Brasil)
 Italiano
 Slovenský
+Tiếng Việt
 Droplex
 Preinstalled
 errormetadatafile
