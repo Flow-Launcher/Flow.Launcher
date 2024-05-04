@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Scuro</system:String>
     <system:String x:Key="SoundEffect">Effetto sonoro</system:String>
     <system:String x:Key="SoundEffectTip">Riproduce un piccolo suono all'apertura della finestra di ricerca</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">Animazione</system:String>
     <system:String x:Key="AnimationTip">Usa l'animazione nell'interfaccia utente</system:String>
     <system:String x:Key="AnimationSpeed">Velocità di animazione</system:String>

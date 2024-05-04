@@ -26,6 +26,9 @@ using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
+using System.Windows.Media;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
 
 namespace Flow.Launcher
 {
@@ -33,14 +36,17 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern IntPtr SetForegroundWindow(IntPtr hwnd);
+
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
         private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
-        private ContextMenu contextMenu;
+        private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
-        SoundPlayer animationSound = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+        MediaPlayer animationSound = new MediaPlayer();
 
         #endregion
 
@@ -52,6 +58,9 @@ namespace Flow.Launcher
 
             InitializeComponent();
             InitializePosition();
+
+            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
 
@@ -128,6 +137,8 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
+                                    animationSound.Position = TimeSpan.Zero;
+                                    animationSound.Volume = _settings.SoundVolume / 100.0;
                                     animationSound.Play();
                                 }
                                 UpdatePosition();
@@ -264,12 +275,11 @@ namespace Flow.Launcher
         {
             _notifyIcon = new NotifyIcon
             {
-                Text = Infrastructure.Constant.FlowLauncher,
+                Text = Infrastructure.Constant.FlowLauncherFullName,
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
 
-            contextMenu = new ContextMenu();
 
             var openIcon = new FontIcon
             {
@@ -277,7 +287,8 @@ namespace Flow.Launcher
             };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")", Icon = openIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
             var gamemodeIcon = new FontIcon
             {
@@ -285,7 +296,8 @@ namespace Flow.Launcher
             };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon
             {
@@ -293,7 +305,8 @@ namespace Flow.Launcher
             };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon
             {
@@ -301,7 +314,8 @@ namespace Flow.Launcher
             };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
             var exitIcon = new FontIcon
             {
@@ -309,7 +323,8 @@ namespace Flow.Launcher
             };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -327,7 +342,6 @@ namespace Flow.Launcher
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
             _notifyIcon.MouseClick += (o, e) =>
             {
                 switch (e.Button)
@@ -335,9 +349,15 @@ namespace Flow.Launcher
                     case MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-
                     case MouseButtons.Right:
+
                         contextMenu.IsOpen = true;
+                        // Get context menu handle and bring it to the foreground
+                        if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
+                        {
+                            _ = SetForegroundWindow(hwndSource.Handle);
+                        }
+                        contextMenu.Focus();
                         break;
                 }
             };

@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">深色</system:String>
     <system:String x:Key="SoundEffect">音效</system:String>
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
+    <system:String x:Key="SoundEffectVolume">音效音量</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">调整音效音量</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
     <system:String x:Key="AnimationSpeed">动画速度</system:String>

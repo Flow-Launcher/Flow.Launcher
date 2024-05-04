@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Темна</system:String>
     <system:String x:Key="SoundEffect">Звуковий ефект</system:String>
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
+    <system:String x:Key="SoundEffectVolume">Гучність звукового ефекту</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Налаштуйте гучність звукового ефекту</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
     <system:String x:Key="AnimationSpeed">Швидкість анімації</system:String>

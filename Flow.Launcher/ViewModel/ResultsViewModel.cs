@@ -117,6 +117,11 @@ namespace Flow.Launcher.ViewModel
             SelectedIndex = NewIndex(0);
         }
 
+        public void SelectLastResult()
+        {
+            SelectedIndex = NewIndex(Results.Count - 1);
+        }
+
         public void Clear()
         {
             lock (_collectionLock)
@@ -147,23 +152,23 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
+        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
             var newResults = NewResults(resultsForUpdates);
 
             if (token.IsCancellationRequested)
                 return;
 
-            UpdateResults(newResults, token);
+            UpdateResults(newResults, token, reselect);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)
+        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default, bool reselect = true)
         {
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (Results.Any())
+                if (reselect && Results.Any())
                     SelectedItem = Results[0];
             }
 

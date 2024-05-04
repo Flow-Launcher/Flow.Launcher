@@ -83,7 +83,7 @@ function Delete-Unused($path, $config)
     foreach ($i in $deleteList)
     {
         write "Deleting duplicated $($i.Name) with version $($i.VersionInfo.FileVersion) at location $($i.Directory.FullName)"
-        Remove-Item $i
+        Remove-Item -Path $i.FullName
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse
 }
@@ -101,7 +101,7 @@ function Pack-Velopack-Installer($path, $version, $output)
     Write-Host "Begin pack squirrel installer"
 
     $spec = "$path\Scripts\flowlauncher.nuspec"
-    $input = "$path\Output\Release"
+    $input = "$path\Output\$config"
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
@@ -119,8 +119,11 @@ function Pack-Velopack-Installer($path, $version, $output)
     {
         dotnet tool install --global vpk
     }
-    
-    vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel
+
+    # Create UserData folder before Packing
+    New-Item -ItemType Directory -Force -Path "$input\UserData"
+
+    vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel --outputDir $output --packTitle "Flow Launcher" --icon "$input\Images\app.ico"
 }
 
 function Publish-Self-Contained($p)
