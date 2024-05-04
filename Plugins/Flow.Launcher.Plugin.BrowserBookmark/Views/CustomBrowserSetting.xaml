@@ -63,7 +63,6 @@
             <StackPanel Margin="26,0,26,0">
                 <StackPanel Margin="0,0,0,12">
                     <TextBlock
-                        Grid.Column="0"
                         Margin="0,0,0,0"
                         FontSize="20"
                         FontWeight="SemiBold"
