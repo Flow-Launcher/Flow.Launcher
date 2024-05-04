@@ -11,7 +11,7 @@
     <system:String x:Key="lastExecuteTime">Thời gian thực hiện lần cuối:{0}</system:String>
     <system:String x:Key="iconTrayOpen">Mở</system:String>
     <system:String x:Key="iconTraySettings">Cài đặt</system:String>
-    <system:String x:Key="iconTrayAbout">Über</system:String>
+    <system:String x:Key="iconTrayAbout">Giới thiệu</system:String>
     <system:String x:Key="iconTrayExit">Thoát</system:String>
     <system:String x:Key="closeWindow">Đóng</system:String>
     <system:String x:Key="copy">Sao chép</system:String>
@@ -189,8 +189,8 @@
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Chuyển đổi chế độ trò chơi</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Chuyển đổi lịch sử</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Mở thư mục chứa</system:String>
     <system:String x:Key="RunAsAdminHotkey">Chạy với quyền admin</system:String>
     <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
