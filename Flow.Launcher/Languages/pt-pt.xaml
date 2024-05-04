@@ -183,9 +183,9 @@
     <system:String x:Key="autoCompleteHotkey">Conclusão automática</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Executa a conclusão automática para os itens selecionados.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Selecionar seguinte</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Selecionar anterior</system:String>
     <system:String x:Key="SelectNextPageHotkey">Página seguinte</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menu de contexto</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir janela de definições</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar caminho do ficheiro</system:String>
@@ -193,7 +193,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Comutar histórico</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir pasta do resultado</system:String>
     <system:String x:Key="RunAsAdminHotkey">Executar como administrador</system:String>
-    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="RequeryHotkey">Recarregar resultados</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recarregar dados dos plugins</system:String>
     <system:String x:Key="QuickWidthHotkey">Ajuste rápido da largura da janela</system:String>
     <system:String x:Key="QuickHeightHotkey">Ajuste rápido da altura da janela</system:String>
