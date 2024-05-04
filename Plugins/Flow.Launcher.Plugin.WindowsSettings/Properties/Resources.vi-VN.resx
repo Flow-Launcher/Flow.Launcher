@@ -122,19 +122,19 @@
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
-    <value>access.cpl</value>
+    <value>truy cập.cpl</value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Accessibility Options</value>
+    <value>Tùy chọn khả năng tiếp cận</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value>Ứng dụng phụ kiện</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Access work or school</value>
+    <value>Truy cập cơ quan hoặc trường học</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
@@ -150,7 +150,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>Activation</value>
+    <value>Kích hoạt</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
@@ -158,15 +158,15 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Add Hardware</value>
+    <value>Thêm phần cứng</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Add/Remove Programs</value>
+    <value>Thêm chương trình xóa</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
-    <value>Add your phone</value>
+    <value>Thêm điện thoại của bạn</value>
     <comment>Area Phone</comment>
   </data>
   <data name="AdministrativeTools" xml:space="preserve">
@@ -174,11 +174,11 @@
     <comment>Area System</comment>
   </data>
   <data name="AdvancedDisplaySettings" xml:space="preserve">
-    <value>Advanced display settings</value>
+    <value>Cài đặt hiển thị nâng cao</value>
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Advanced graphics</value>
+    <value>Đồ họa nâng cao</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
     <value>ID quảng cáo</value>
@@ -189,7 +189,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
-    <value>Alt+Tab</value>
+    <value>Alt-Tab thay thế cho phép tìm kiếm thông qua các cửa sổ của bạn.</value>
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
@@ -214,7 +214,7 @@
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Apps and Features</value>
+    <value>Ứng dụng và tính năng</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
@@ -222,7 +222,7 @@
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Apps for websites</value>
+    <value>Ứng dụng cho trang web</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
@@ -245,13 +245,13 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Appearance and Personalization</value>
+    <value>Ngoại hình và cá nhân hóa</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
     <value>Ứng dụng</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>Clock and Region</value>
+    <value>Đồng hồ và khu vực</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
     <value>Bảng điều khiển</value>
@@ -272,16 +272,16 @@
     <value>Trò chơi</value>
   </data>
   <data name="AreaHardwareAndSound" xml:space="preserve">
-    <value>Hardware and Sound</value>
+    <value>Phần cứng và âm thanh</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
     <value>Trang chủ</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
-    <value>Mixed reality</value>
+    <value>Thực tế hỗn hợp</value>
   </data>
   <data name="AreaNetworkAndInternet" xml:space="preserve">
-    <value>Network and Internet</value>
+    <value>Mạng và Internet</value>
   </data>
   <data name="AreaPersonalization" xml:space="preserve">
     <value>Cá nhân hóa</value>
@@ -302,33 +302,33 @@
     <value>Hệ thống</value>
   </data>
   <data name="AreaSystemAndSecurity" xml:space="preserve">
-    <value>System and Security</value>
+    <value>Hệ thống và bảo mật</value>
   </data>
   <data name="AreaTimeAndLanguage" xml:space="preserve">
-    <value>Time and language</value>
+    <value>Thời gian và ngôn ngữ</value>
   </data>
   <data name="AreaUpdateAndSecurity" xml:space="preserve">
-    <value>Update and security</value>
+    <value>Cập nhật và bảo mật</value>
   </data>
   <data name="AreaUserAccounts" xml:space="preserve">
     <value>Tài khoản người sử dụng</value>
   </data>
   <data name="AssignedAccess" xml:space="preserve">
-    <value>Assigned access</value>
+    <value>Quyền truy cập được chỉ định</value>
   </data>
   <data name="Audio" xml:space="preserve">
     <value>Âm thanh</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="AudioAlerts" xml:space="preserve">
-    <value>Audio alerts</value>
+    <value>Cảnh báo âm thanh</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
-    <value>Audio and speech</value>
+    <value>Âm thanh và lời nói</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="AutomaticFileDownloads" xml:space="preserve">
-    <value>Automatic file downloads</value>
+    <value>Tải tập tin tự động</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AutoPlay" xml:space="preserve">
@@ -356,22 +356,22 @@
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
-    <value>Battery Saver settings</value>
+    <value>Cài đặt tiết kiệm pin</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
-    <value>Battery saver usage details</value>
+    <value>Chi tiết sử dụng trình tiết kiệm pin</value>
   </data>
   <data name="BatteryUse" xml:space="preserve">
     <value>Sử dụng Pin</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BiometricDevices" xml:space="preserve">
-    <value>Biometric Devices</value>
+    <value>Thiết bị sinh trắc học</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BitLockerDriveEncryption" xml:space="preserve">
-    <value>BitLocker Drive Encryption</value>
+    <value>Mã hóa ổ đĩa BitLocker</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
@@ -424,31 +424,31 @@
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Cellular and SIM</value>
+    <value>Di động và SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Choose which folders appear on Start</value>
+    <value>Chọn thư mục nào xuất hiện trên Bắt đầu</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
-    <value>Client service for NetWare</value>
+    <value>Dịch vụ khách hàng cho NetWare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>Nhận văn bản từ bảng nhớ tạm.</value>
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Closed captions</value>
+    <value>Phụ đề chi tiết</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Color filters</value>
+    <value>Bộ lọc màu</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
-    <value>Color management</value>
+    <value>Quản lý màu sắc</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Colors" xml:space="preserve">
@@ -475,7 +475,7 @@
     <value>Sao chép lệnh</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
-    <value>Core Isolation</value>
+    <value>Cách ly lõi</value>
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
@@ -483,22 +483,22 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana across my devices</value>
+    <value>Cortana trên các thiết bị của tôi</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
-    <value>Cortana - Language</value>
+    <value>Cortana - Ngôn ngữ</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CredentialManager" xml:space="preserve">
-    <value>Credential manager</value>
+    <value>Người quản lý thông tin xác thực</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Crossdevice</value>
+    <value>Thiết bị chéo</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
-    <value>Custom devices</value>
+    <value>Thiết bị tùy chỉnh</value>
   </data>
   <data name="DarkColor" xml:space="preserve">
     <value>Màu tối</value>
@@ -998,10 +998,10 @@
     <value>Chỉ khả dụng trên các thiết bị hỗ trợ tùy chọn đồ họa nâng cao.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Chỉ khả dụng trên các thiết bị có pin, chẳng hạn như máy tính bảng.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Không được dùng nữa trong Windows 10, phiên bản 1809 (bản dựng 17763) trở lên.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
     <value>Only available if Dial is paired.</value>
@@ -1557,7 +1557,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
-    <value>Typing</value>
+    <value>Đang nhập</value>
     <comment>Area Device</comment>
   </data>
   <data name="Uninstall" xml:space="preserve">
@@ -1585,7 +1585,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="VirtualDesktops" xml:space="preserve">
-    <value>Virtual Desktops</value>
+    <value>Máy ảo</value>
   </data>
   <data name="Virus" xml:space="preserve">
     <value>Virus</value>
@@ -2456,7 +2456,7 @@
     <value>Press key combinations one at a time</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
-    <value>Restore data, files or computer from backup (Windows 7)</value>
+    <value>Khôi phục dữ liệu, tập tin hoặc máy tính từ bản sao lưu (Windows 7)</value>
   </data>
   <data name="SetYourDefaultPrograms" xml:space="preserve">
     <value>Set your default programs</value>
