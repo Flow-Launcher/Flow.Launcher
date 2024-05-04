@@ -105,6 +105,7 @@ function Pack-Velopack-Installer($path, $version, $output)
 
     Write-Host "Packing: $spec"
     Write-Host "Input path:  $input"
+    Write-Host "Output path: $output"
 
     $repoUrl = "https://github.com/Flow-Launcher/Prereleases"
 
@@ -121,7 +122,8 @@ function Pack-Velopack-Installer($path, $version, $output)
     }
 
     # Create UserData folder before Packing
-    New-Item -ItemType Directory -Force -Path "$input\UserData"
+    # FIXME userdata should not be created in installer version
+    # New-Item -ItemType Directory -Force -Path "$input\UserData"
 
     vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel --outputDir $output --packTitle "Flow Launcher" --icon "$input\Images\app.ico"
 }
@@ -147,7 +149,7 @@ function Main
 
         Publish-Self-Contained $p
 
-        $o = "$p\Output\Packages"
+        $o = "$p\Releases"
         Validate-Directory $o
         Pack-Velopack-Installer $p $v $o
     }
