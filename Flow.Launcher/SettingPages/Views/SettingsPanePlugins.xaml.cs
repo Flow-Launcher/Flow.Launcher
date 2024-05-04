@@ -1,28 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Flow.Launcher.SettingPages.ViewModels;
 
-namespace Flow.Launcher.SettingPages.Views
+namespace Flow.Launcher.SettingPages.Views;
+
+public partial class SettingsPanePlugins
 {
-    /// <summary>
-    /// Plugins.xaml에 대한 상호 작용 논리
-    /// </summary>
-    public partial class SettingsPanePlugins
+    private SettingsPanePluginsViewModel _viewModel = null!;
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        public SettingsPanePlugins()
+        if (!IsInitialized)
         {
+            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
+                throw new ArgumentException("Settings are required for SettingsPaneHotkey.");
+            _viewModel = new SettingsPanePluginsViewModel(settings);
+            DataContext = _viewModel;
             InitializeComponent();
         }
+        base.OnNavigatedTo(e);
+    }
+
+    private void SettingsPanePlugins_OnKeyDown(object sender, KeyEventArgs e)
+    {
+        if (e.Key is not Key.F || Keyboard.Modifiers is not ModifierKeys.Control) return;
+        PluginFilterTextbox.Focus();
     }
 }

@@ -3,27 +3,22 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:local="clr-namespace:Flow.Launcher.SettingPages.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     Title="Plugins"
+    FocusManager.FocusedElement="{Binding ElementName=PluginFilterTextbox}"
+    KeyDown="SettingsPanePlugins_OnKeyDown"
+    d:DataContext="{d:DesignInstance viewModels:SettingsPanePluginsViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ui:Page.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}" />
-        </ResourceDictionary>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     </ui:Page.Resources>
-
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="73" />
             <RowDefinition Height="*" />
@@ -40,52 +35,50 @@
                     Style="{StaticResource PageTitle}"
                     Text="{DynamicResource plugins}"
                     TextAlignment="Left" />
-                <DockPanel DockPanel.Dock="Right">
-                    <TextBox
-                        Name="pluginFilterTxb"
-                        Width="150"
-                        Height="34"
-                        Margin="0,5,26,0"
-                        HorizontalAlignment="Right"
-                        ContextMenu="{StaticResource TextBoxContextMenu}"
-                        DockPanel.Dock="Right"
-                        FontSize="14"
-                        Text=""
-                        TextAlignment="Left"
-                        ToolTip="{DynamicResource searchpluginToolTip}"
-                        ToolTipService.InitialShowDelay="200"
-                        ToolTipService.Placement="Top">
-                        <TextBox.Style>
-                            <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                                <Style.Resources>
-                                    <VisualBrush
-                                        x:Key="CueBannerBrush"
-                                        AlignmentX="Left"
-                                        AlignmentY="Center"
-                                        Stretch="None">
-                                        <VisualBrush.Visual>
-                                            <Label
-                                                Padding="10,0,0,0"
-                                                Content="{DynamicResource searchplugin}"
-                                                Foreground="{DynamicResource CustomContextDisabled}" />
-                                        </VisualBrush.Visual>
-                                    </VisualBrush>
-                                </Style.Resources>
-                                <Style.Triggers>
-                                    <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="Text" Value="{x:Null}">
-                                        <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                        <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </DockPanel>
+                <TextBox
+                    Name="PluginFilterTextbox"
+                    Width="150"
+                    Height="34"
+                    Margin="0,5,26,0"
+                    HorizontalAlignment="Right"
+                    ContextMenu="{StaticResource TextBoxContextMenu}"
+                    DockPanel.Dock="Right"
+                    FontSize="14"
+                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                    TextAlignment="Left"
+                    ToolTip="{DynamicResource searchpluginToolTip}"
+                    ToolTipService.InitialShowDelay="200"
+                    ToolTipService.Placement="Top">
+                    <TextBox.Style>
+                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                            <Style.Resources>
+                                <VisualBrush
+                                    x:Key="CueBannerBrush"
+                                    AlignmentX="Left"
+                                    AlignmentY="Center"
+                                    Stretch="None">
+                                    <VisualBrush.Visual>
+                                        <Label
+                                            Padding="10,0,0,0"
+                                            Content="{DynamicResource searchplugin}"
+                                            Foreground="{DynamicResource CustomContextDisabled}" />
+                                    </VisualBrush.Visual>
+                                </VisualBrush>
+                            </Style.Resources>
+                            <Style.Triggers>
+                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="Text" Value="{x:Null}">
+                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                                </Trigger>
+                                <Trigger Property="IsKeyboardFocused" Value="True">
+                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
             </DockPanel>
         </Border>
         <Border
@@ -94,289 +87,21 @@
             Padding="0,0,0,0"
             Background="{DynamicResource Color01B}">
             <ListBox
-                Name="PluginsList"
-                Width="Auto"
-                Margin="5,0,0,0"
-                Padding="0,0,7,0"
-                HorizontalAlignment="Stretch"
+                Margin="5 0 7 10"
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
+                ItemsSource="{Binding FilteredPluginViewModels}"
                 ItemContainerStyle="{StaticResource PluginList}"
-                ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SelectedItem="{Binding SelectedPlugin}"
                 SnapsToDevicePixels="True"
                 Style="{DynamicResource PluginListStyle}"
                 VirtualizingPanel.ScrollUnit="Pixel"
-                VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.IsVirtualizing="False"
                 VirtualizingStackPanel.VirtualizationMode="Recycling">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <VirtualizingStackPanel Margin="0,0,0,10" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Expander
-                            x:Name="expanderHeader"
-                            Grid.Column="4"
-                            Padding="0"
-                            BorderThickness="0"
-                            ClipToBounds="True"
-                            IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
-                            SnapsToDevicePixels="True"
-                            Style="{StaticResource ExpanderStyle1}">
-                            <Expander.Header>
-                                <Border Padding="0,12,0,12">
-                                    <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}" HorizontalAlignment="Left">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="36" MinWidth="36" />
-                                            <ColumnDefinition Width="7*" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <StackPanel
-                                            Grid.Column="0"
-                                            Margin="0,0,0,0"
-                                            VerticalAlignment="Center">
-                                            <Image
-                                                Width="32"
-                                                Height="32"
-                                                Margin="0,0,0,0"
-                                                FlowDirection="LeftToRight"
-                                                Source="{Binding Image, IsAsync=True}" />
-                                        </StackPanel>
-                                        <StackPanel Grid.Column="1" Margin="16,0,14,0">
-                                            <TextBlock
-                                                Foreground="{DynamicResource Color05B}"
-                                                Text="{Binding PluginPair.Metadata.Name}"
-                                                TextWrapping="Wrap"
-                                                ToolTip="{Binding PluginPair.Metadata.Version}" />
-                                            <TextBlock
-                                                Margin="0,2,0,0"
-                                                Foreground="{DynamicResource Color04B}"
-                                                TextWrapping="WrapWithOverflow">
-                                                <Run FontSize="12" Text="{Binding PluginPair.Metadata.Description}" />
-                                            </TextBlock>
-                                        </StackPanel>
-                                        <StackPanel
-                                            Grid.Column="2"
-                                            HorizontalAlignment="Right"
-                                            Orientation="Horizontal">
-                                            <TextBlock
-                                                Margin="0,0,8,0"
-                                                VerticalAlignment="Center"
-                                                FontSize="12"
-                                                Foreground="{DynamicResource Color08B}"
-                                                Text="{DynamicResource priority}" />
-                                            <Button
-                                                x:Name="PriorityButton"
-                                                Margin="0,0,22,0"
-                                                VerticalAlignment="Center"
-                                                Command="{Binding EditPluginPriorityCommand}"
-                                                Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
-                                                Cursor="Hand"
-                                                ToolTip="{DynamicResource priorityToolTip}">
-                                                <!--#region Priority Button Style-->
-                                                <Button.Resources>
-                                                    <Style TargetType="Border">
-                                                        <Setter Property="CornerRadius" Value="2" />
-                                                    </Style>
-                                                </Button.Resources>
-                                                <Button.Style>
-                                                    <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                                                        <Setter Property="Padding" Value="12,8,12,8" />
-                                                        <Setter Property="BorderThickness" Value="0" />
-                                                        <Setter Property="FontWeight" Value="DemiBold" />
-                                                        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
-                                                        <Style.Triggers>
-                                                            <DataTrigger Binding="{Binding ElementName=PriorityButton, UpdateSourceTrigger=PropertyChanged, Path=Content}" Value="0">
-                                                                <Setter Property="Foreground" Value="{DynamicResource Color08B}" />
-                                                                <Setter Property="FontWeight" Value="Normal" />
-                                                            </DataTrigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Button.Style>
-                                                <!--#endregion-->
-                                            </Button>
-
-                                        </StackPanel>
-                                        <DockPanel Grid.Column="3">
-                                            <ui:ToggleSwitch
-                                                Margin="0,0,60,0"
-                                                HorizontalAlignment="Right"
-                                                DockPanel.Dock="Right"
-                                                IsOn="{Binding PluginState}"
-                                                OffContent="{DynamicResource disable}"
-                                                OnContent="{DynamicResource enable}" />
-                                        </DockPanel>
-                                    </Grid>
-                                </Border>
-                            </Expander.Header>
-
-                            <Grid FlowDirection="LeftToRight">
-                                <StackPanel Margin="0,0,0,0" Orientation="Vertical">
-                                    <StackPanel>
-                                        <Border
-                                            Width="Auto"
-                                            Height="52"
-                                            Margin="0"
-                                            Padding="0"
-                                            BorderThickness="0,1,0,0"
-                                            CornerRadius="0"
-                                            Style="{DynamicResource SettingGroupBox}"
-                                            Visibility="{Binding ActionKeywordsVisibility}">
-                                            <ItemsControl Padding="22,0,18,0" VerticalAlignment="Center">
-                                                <DockPanel>
-                                                    <TextBlock
-                                                        Margin="48,0,10,0"
-                                                        VerticalAlignment="Center"
-                                                        DockPanel.Dock="Left"
-                                                        FontFamily="/Resources/#Segoe Fluent Icons"
-                                                        FontSize="20"
-                                                        Style="{StaticResource Glyph}">
-                                                        &#xe819;
-                                                    </TextBlock>
-                                                    <TextBlock
-                                                        Grid.Column="0"
-                                                        Margin="0,0,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        VerticalAlignment="Center"
-                                                        DockPanel.Dock="Left"
-                                                        Style="{DynamicResource SettingTitleLabel}"
-                                                        Text="{DynamicResource actionKeywords}" />
-                                                    <Button
-                                                        Grid.Column="2"
-                                                        Width="100"
-                                                        Height="34"
-                                                        Margin="5,0,0,0"
-                                                        HorizontalAlignment="Right"
-                                                        Command="{Binding SetActionKeywordsCommand}"
-                                                        Content="{Binding ActionKeywordsText}"
-                                                        Cursor="Hand"
-                                                        DockPanel.Dock="Right"
-                                                        FontWeight="Bold"
-                                                        ToolTip="{DynamicResource actionKeywordsTooltip}"
-                                                        Visibility="{Binding ActionKeywordsVisibility}" />
-                                                </DockPanel>
-                                            </ItemsControl>
-                                        </Border>
-                                    </StackPanel>
-
-                                    <StackPanel>
-                                        <Border
-                                            Padding="0"
-                                            HorizontalAlignment="Stretch"
-                                            VerticalAlignment="Center"
-                                            Background="{DynamicResource Color02B}"
-                                            BorderBrush="{DynamicResource Color03B}"
-                                            BorderThickness="0,1,0,0">
-                                            <!--#region SubInfo Styling-->
-                                            <Border.Style>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=PluginSettingControl, Path=ActualHeight}" Value="0">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                            <Setter Property="BorderThickness" Value="0" />
-                                                            <Setter Property="Padding" Value="0" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </Border.Style>
-
-                                        </Border>
-                                        <Border Background="{DynamicResource Color00B}">
-                                            <ContentControl
-                                                x:Name="PluginSettingControl"
-                                                Margin="0"
-                                                Padding="1"
-                                                VerticalAlignment="Stretch"
-                                                Content="{Binding SettingControl}" />
-                                        </Border>
-                                        <!--#endregion-->
-
-                                    </StackPanel>
-
-                                    <StackPanel>
-                                        <Border
-                                            Margin="0"
-                                            Padding="0,10,0,10"
-                                            VerticalAlignment="Center"
-                                            BorderThickness="0,1,0,0"
-                                            CornerRadius="0 0 5 5"
-                                            Style="{DynamicResource SettingGroupBox}">
-                                            <ItemsControl Style="{DynamicResource SettingGrid}">
-                                                <StackPanel
-                                                    Margin="0,0,-14,0"
-                                                    HorizontalAlignment="Right"
-                                                    VerticalAlignment="Center"
-                                                    Orientation="Horizontal"
-                                                    Style="{StaticResource TextPanel}">
-                                                    <TextBlock
-                                                        Margin="10,0,0,0"
-                                                        VerticalAlignment="center"
-                                                        FontSize="11"
-                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                        Text="{DynamicResource author}" />
-                                                    <TextBlock
-                                                        Margin="5,0,0,0"
-                                                        VerticalAlignment="center"
-                                                        FontSize="11"
-                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                        Text="{Binding PluginPair.Metadata.Author}" />
-                                                    <TextBlock
-                                                        Margin="10,0,0,0"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="11"
-                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                        Text="|" />
-                                                    <TextBlock
-                                                        Margin="10,0,5,0"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="11"
-                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                        Text="{Binding Version}"
-                                                        ToolTip="{Binding InitAndQueryTime}"
-                                                        ToolTipService.InitialShowDelay="500" />
-                                                    <TextBlock
-                                                        Margin="5,0,5,0"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="11"
-                                                        Foreground="{DynamicResource PluginInfoColor}"
-                                                        Text="|" />
-                                                    <TextBlock
-                                                        Margin="5,0,0,0"
-                                                        Style="{DynamicResource LinkBtnStyle}"
-                                                        ToolTip="{DynamicResource plugin_query_web}">
-                                                        <Hyperlink
-                                                            NavigateUri="{Binding PluginPair.Metadata.Website}"
-                                                            Style="{DynamicResource HyperLinkBtnStyle}"
-                                                            TextDecorations="None">
-                                                            <Run Text="&#xe80f;" />
-                                                        </Hyperlink>
-                                                    </TextBlock>
-                                                    <TextBlock
-                                                        Margin="10,0,0,0"
-                                                        Style="{DynamicResource LinkBtnStyle}"
-                                                        Text="&#xe74d;"
-                                                        ToolTip="{DynamicResource plugin_uninstall}" />
-                                                    <TextBlock
-                                                        Margin="10,0,5,0"
-                                                        Style="{DynamicResource LinkBtnStyle}"
-                                                        Text="&#xe8b7;"
-                                                        ToolTip="{DynamicResource pluginDirectory}">
-                                                        <TextBlock.InputBindings>
-                                                            <MouseBinding Command="{Binding OpenPluginDirectoryCommand}" MouseAction="LeftClick" />
-                                                        </TextBlock.InputBindings>
-                                                    </TextBlock>
-                                                </StackPanel>
-                                            </ItemsControl>
-                                        </Border>
-                                    </StackPanel>
-                                </StackPanel>
-                            </Grid>
-                        </Expander>
+                        <cc:InstalledPluginDisplay />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
