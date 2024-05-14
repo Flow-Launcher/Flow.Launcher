@@ -38,7 +38,7 @@
     mc:Ignorable="d">
     <!--  WindowChrome  -->
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="8" ResizeBorderThickness="0 4 32 32" />
+        <WindowChrome CaptionHeight="9" ResizeBorderThickness="32 4 32 32" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
@@ -213,6 +213,7 @@
                         <TextBox
                             x:Name="QueryTextSuggestionBox"
                             Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             IsEnabled="False"
                             Style="{DynamicResource QuerySuggestionBoxStyle}">
                             <TextBox.Text>
@@ -228,6 +229,7 @@
                             Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             AllowDrop="True"
                             AutomationProperties.Name="{Binding Results.SelectedItem.Result.Title}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                             PreviewDragOver="OnPreviewDragOver"
