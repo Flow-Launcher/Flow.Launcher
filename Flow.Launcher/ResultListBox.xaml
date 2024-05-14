@@ -48,7 +48,6 @@
                         Margin="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Cursor="Hand"
                         UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
@@ -210,7 +209,7 @@
             <!--  a result item height is 52 including margin  -->
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
-                    
+
                     <Setter TargetName="Bullet" Property="Style" Value="{DynamicResource ItemBulletSelectedStyle}" />
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
