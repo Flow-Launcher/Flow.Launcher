@@ -219,7 +219,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" />
+            <Setter Property="Height" Value="{Binding ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />

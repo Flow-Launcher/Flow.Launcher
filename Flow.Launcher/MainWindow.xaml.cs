@@ -29,6 +29,8 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System.Windows.Media.Media3D;
 
 namespace Flow.Launcher
 {
@@ -62,14 +64,73 @@ namespace Flow.Launcher
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
+
+            this.Loaded += (obj, args) =>
+            {
+                var handle = new WindowInteropHelper(this).Handle;
+                var win = HwndSource.FromHwnd(handle);
+                win.AddHook(new HwndSourceHook(WndProc));
+            };
         }
+
+        DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = new TimeSpan(0, 0, 0, 0, 500),
+            IsEnabled = false
+        };
 
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        private void OnCopy(object sender, ExecutedRoutedEventArgs e)
+        private void OnSizeChanged(object sender, SizeChangedEventArgs e)
+        {
+
+        }
+
+        private const int WM_ENTERSIZEMOVE = 0x0231;
+        private const int WM_EXITSIZEMOVE = 0x0232;
+        public event EventHandler ResizeBegin;
+        public event EventHandler ResizeEnd;
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_ENTERSIZEMOVE)
+            {
+                OnResizeBegin();
+                handled = true;
+            }
+            if (msg == WM_EXITSIZEMOVE)
+            {
+                OnResizeEnd();
+                handled = true;
+            }
+            return IntPtr.Zero;
+        }
+        private void OnResizeBegin()
+        {
+
+        }
+        private void OnResizeEnd()
+        {
+            int shadowMargin = 0;
+            if (_settings.UseDropShadowEffect)
+            {
+                shadowMargin = 32;
+            }
+
+            if (System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize) < 1)
+            {
+                _settings.MaxResultsToShow = 2;
+            }
+            else
+            {
+                _settings.MaxResultsToShow = System.Convert.ToInt32(Math.Truncate((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize));
+            }
+            _settings.WindowSize = Width;
+            FlowMainWindow.SizeToContent = SizeToContent.Height;
+        }
+    private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             var result = _viewModel.Results.SelectedItem?.Result;
             if (QueryTextBox.SelectionLength == 0 && result != null)

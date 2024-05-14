@@ -54,6 +54,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = false;
+
+        /* Appearance Settings. It should be separated from the setting later.*/
+        public double WindowHeightSize { get; set; } = 40;
+        public double ItemHeightSize { get; set; } = 58;
+        public double QueryBoxFontSize { get; set; } = 18;
+        public double ResultItemFontSize { get; set; } = 16;
+        public double ResultSubItemFontSize { get; set; } = 13; 
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
