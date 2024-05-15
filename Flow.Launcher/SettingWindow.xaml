@@ -187,6 +187,7 @@
                     IsTabStop="False"
                     OpenPaneLength="230"
                     PaneDisplayMode="Left"
+                    IsBackEnabled="False"
                     SelectionChanged="NavigationView_SelectionChanged">
                     <ui:NavigationView.HeaderTemplate>
                         <DataTemplate>
