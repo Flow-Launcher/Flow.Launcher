@@ -158,7 +158,7 @@
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
-    <system:String x:Key="SoundEffectWarning">Sound effect is unavailable because Windows Media Player is missing. Please install it if you need sound effect.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for volume adjust. Please check your WMP installation</system:String>
     <system:String x:Key="Animation">Animation</system:String>
     <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
