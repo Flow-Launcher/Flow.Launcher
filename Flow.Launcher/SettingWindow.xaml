@@ -2570,7 +2570,7 @@
                                                     BorderBrush="{DynamicResource Color03B}"
                                                     BorderThickness="0,1,0,0"
                                                     CornerRadius="0 0 5 5"
-                                                    Visibility="Visible">
+                                                    Visibility="Collapsed">
                                                     <Grid VerticalAlignment="Center">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="58" />

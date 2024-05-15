@@ -29,6 +29,7 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace Flow.Launcher
 {
@@ -46,7 +47,8 @@ namespace Flow.Launcher
         private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
-        MediaPlayer animationSound = new MediaPlayer();
+        MediaPlayer animationSoundWMP = new MediaPlayer();
+        SoundPlayer animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
 
         #endregion
 
@@ -59,7 +61,7 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
@@ -137,9 +139,7 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
-                                    animationSound.Volume = _settings.SoundVolume / 100.0;
-                                    animationSound.Play();
+                                    SoundPlay();
                                 }
                                 UpdatePosition();
                                 PreviewReset();
@@ -503,6 +503,20 @@ namespace Flow.Launcher
             windowsb.Begin(FlowMainWindow);
         }
 
+        private void SoundPlay()
+        {
+
+            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer.exe")))
+            {
+                animationSoundWPF.Play();
+            }
+            else
+            {
+                animationSoundWMP.Position = TimeSpan.Zero;
+                animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
+                animationSoundWMP.Play();
+            }
+        }
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();

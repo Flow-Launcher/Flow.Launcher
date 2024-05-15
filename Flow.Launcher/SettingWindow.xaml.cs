@@ -73,7 +73,7 @@ namespace Flow.Launcher
             
             if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer.exe")))
             {
-                /* Binding WMPWarning visibility */
+                WMPWarning.Visibility = Visibility.Visible;
             }
         }
         private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
