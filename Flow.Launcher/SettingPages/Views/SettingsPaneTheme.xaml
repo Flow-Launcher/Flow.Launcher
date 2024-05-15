@@ -5,11 +5,12 @@
     xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:flowlauncher="clr-namespace:Flow.Launcher"
-    xmlns:local="clr-namespace:Flow.Launcher.SettingPages.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     Title="Theme"
+    d:DataContext="{d:DesignInstance viewModels:SettingsPaneThemeViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Style="{DynamicResource SettingPageBasic}"
@@ -202,8 +203,10 @@
                         <ListBox.ItemContainerStyle>
                             <Style TargetType="ListBoxItem">
                                 <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
-                                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                <Setter Property="HorizontalContentAlignment"
+                                        Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                                <Setter Property="VerticalContentAlignment"
+                                        Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
                                 <Setter Property="Padding" Value="0,0,0,0" />
                                 <Setter Property="Margin" Value="4" />
                                 <Setter Property="Template">
@@ -230,12 +233,15 @@
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="true">
-                                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ThemeHoverButton}" />
+                                                    <Setter TargetName="Bd" Property="Background"
+                                                            Value="{DynamicResource ThemeHoverButton}" />
                                                 </Trigger>
                                                 <Trigger Property="IsSelected" Value="true">
-                                                    <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ToggleSwitchFillOn}" />
+                                                    <Setter TargetName="Bd" Property="Background"
+                                                            Value="{DynamicResource ToggleSwitchFillOn}" />
                                                     <Setter TargetName="Bd2" Property="BorderThickness" Value="0" />
-                                                    <Setter TargetName="Bd2" Property="TextElement.Foreground" Value="{DynamicResource Color02B}" />
+                                                    <Setter TargetName="Bd2" Property="TextElement.Foreground"
+                                                            Value="{DynamicResource Color02B}" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -281,7 +287,8 @@
                         Margin="10"
                         HorizontalAlignment="Right"
                         DockPanel.Dock="Top">
-                        <Hyperlink NavigateUri="{Binding ThemeGallery, Mode=OneWay}">
+                        <Hyperlink NavigateUri="{Binding LinkThemeGallery, Mode=OneWay}"
+                                   RequestNavigate="Hyperlink_OnRequestNavigate">
                             <Run Text="{DynamicResource browserMoreThemes}" />
                         </Hyperlink>
                     </TextBlock>
@@ -297,7 +304,6 @@
                 <Border
                     Margin="0,30,0,0"
                     Padding="0"
-                    CornerRadius="5"
                     Style="{DynamicResource SettingGroupBox}">
                     <StackPanel Orientation="Vertical">
                         <Border
@@ -306,8 +312,10 @@
                             Style="{DynamicResource SettingGroupBox}">
                             <ItemsControl Style="{StaticResource SettingGrid}">
                                 <StackPanel Style="{StaticResource TextPanel}">
-                                    <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource useGlyphUI}" />
-                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource useGlyphUIEffect}" />
+                                    <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                               Text="{DynamicResource useGlyphUI}" />
+                                    <TextBlock Style="{DynamicResource SettingSubTitleLabel}"
+                                               Text="{DynamicResource useGlyphUIEffect}" />
                                 </StackPanel>
                                 <ui:ToggleSwitch
                                     Grid.Row="0"
@@ -429,7 +437,6 @@
                     <Border
                         Margin="0,24,0,12"
                         Padding="0"
-                        CornerRadius="5"
                         Style="{DynamicResource SettingGroupBox}">
                         <StackPanel Orientation="Vertical">
                             <Border
@@ -438,7 +445,8 @@
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Clock}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource Clock}" />
                                     </StackPanel>
                                     <StackPanel
                                         Grid.Row="0"
@@ -451,8 +459,6 @@
                                             Foreground="{DynamicResource Color04B}"
                                             Text="{Binding ClockText}" />
                                         <ComboBox
-                                            x:Name="TimeFormat"
-                                            Grid.Column="2"
                                             MinWidth="180"
                                             Margin="0,0,18,0"
                                             VerticalAlignment="Center"
@@ -480,7 +486,8 @@
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Date}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource Date}" />
                                     </StackPanel>
                                     <StackPanel
                                         Grid.Row="0"
@@ -493,8 +500,6 @@
                                             Foreground="{DynamicResource Color04B}"
                                             Text="{Binding DateText}" />
                                         <ComboBox
-                                            x:Name="DateFormat"
-                                            Grid.Column="2"
                                             MinWidth="180"
                                             Margin="0,0,18,0"
                                             VerticalAlignment="Center"
@@ -518,7 +523,6 @@
                     <Border
                         Margin="0,12,0,12"
                         Padding="0"
-                        CornerRadius="5"
                         Style="{DynamicResource SettingGroupBox}">
                         <StackPanel Orientation="Vertical">
                             <Border
@@ -527,8 +531,10 @@
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource Animation}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AnimationTip}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource Animation}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}"
+                                                   Text="{DynamicResource AnimationTip}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         x:Name="Animation"
@@ -552,7 +558,8 @@
                                     <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=Animation, Path=IsOn}" Value="True">
+                                            <DataTrigger Binding="{Binding ElementName=Animation, Path=IsOn}"
+                                                         Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -561,8 +568,10 @@
 
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource AnimationSpeed}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource AnimationSpeedTip}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource AnimationSpeed}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}"
+                                                   Text="{DynamicResource AnimationSpeedTip}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                                         <ComboBox
@@ -580,7 +589,9 @@
                                                 <Style TargetType="StackPanel">
                                                     <Setter Property="Visibility" Value="Collapsed" />
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding ElementName=AnimationSpeed, Path=SelectedValue}" Value="{x:Static userSettings:AnimationSpeeds.Custom}">
+                                                        <DataTrigger
+                                                            Binding="{Binding ElementName=AnimationSpeed, Path=SelectedValue}"
+                                                            Value="{x:Static userSettings:AnimationSpeeds.Custom}">
                                                             <Setter Property="Visibility" Value="Visible" />
                                                         </DataTrigger>
                                                     </Style.Triggers>
@@ -604,7 +615,6 @@
                     <Border
                         Margin="0,12,0,12"
                         Padding="0"
-                        CornerRadius="5"
                         Style="{DynamicResource SettingGroupBox}">
                         <StackPanel Orientation="Vertical">
                             <Border
@@ -613,8 +623,10 @@
                                 Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SoundEffect}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource SoundEffectTip}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource SoundEffect}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}"
+                                                   Text="{DynamicResource SoundEffectTip}" />
                                     </StackPanel>
                                     <ui:ToggleSwitch
                                         x:Name="SoundEffect"
@@ -638,7 +650,8 @@
                                     <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding ElementName=SoundEffect, Path=IsOn}" Value="True">
+                                            <DataTrigger Binding="{Binding ElementName=SoundEffect, Path=IsOn}"
+                                                         Value="True">
                                                 <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                         </Style.Triggers>
@@ -647,8 +660,10 @@
 
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SoundEffectVolume}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource SoundEffectVolumeTip}" />
+                                        <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                                   Text="{DynamicResource SoundEffectVolume}" />
+                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}"
+                                                   Text="{DynamicResource SoundEffectVolumeTip}" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" Orientation="Horizontal">
                                         <TextBlock
@@ -681,7 +696,8 @@
                     <Border Margin="0,12,0,12" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ColorScheme}" />
+                                <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                           Text="{DynamicResource ColorScheme}" />
                             </StackPanel>
                             <ComboBox
                                 x:Name="ColorSchemeComboBox"
@@ -702,7 +718,8 @@
                     <Border Margin="0,0,0,0" Style="{DynamicResource SettingGroupBox}">
                         <ItemsControl Style="{StaticResource SettingGrid}">
                             <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource ThemeFolder}" />
+                                <TextBlock Style="{DynamicResource SettingTitleLabel}"
+                                           Text="{DynamicResource ThemeFolder}" />
                             </StackPanel>
                             <Button
                                 Grid.Column="2"
@@ -721,7 +738,8 @@
                             Margin="10,10,10,18"
                             HorizontalAlignment="Right"
                             DockPanel.Dock="Top">
-                            <Hyperlink NavigateUri="{Binding Theme, Mode=OneWay}">
+                            <Hyperlink NavigateUri="{Binding LinkHowToCreateTheme, Mode=OneWay}"
+                                       RequestNavigate="Hyperlink_OnRequestNavigate">
                                 <Run Text="{DynamicResource howToCreateTheme}" />
                             </Hyperlink>
                         </TextBlock>

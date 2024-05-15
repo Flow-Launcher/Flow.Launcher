@@ -1,23 +1,31 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Flow.Launcher.SettingPages.ViewModels;
 using ModernWpf.Controls;
 
 namespace Flow.Launcher.SettingPages.Views;
 
 public partial class SettingsPaneTheme : Page
 {
-    public SettingsPaneTheme()
+    private SettingsPaneThemeViewModel _viewModel = null!;
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
     {
-        InitializeComponent();
+        if (!IsInitialized)
+        {
+            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
+                throw new ArgumentException($"Settings are required for {nameof(SettingsPaneTheme)}.");
+            _viewModel = new SettingsPaneThemeViewModel(settings);
+            DataContext = _viewModel;
+            InitializeComponent();
+        }
+
+        base.OnNavigatedTo(e);
+    }
+
+    private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
+    {
+        App.API.OpenUrl(e.Uri);
+        e.Handled = true;
     }
 }
