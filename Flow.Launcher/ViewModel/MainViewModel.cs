@@ -290,23 +290,6 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        public void ReverseHistoryOnEmptyQuery()
-        {
-            var results = SelectedResults;
-            if (_history.Items.Count > 0
-                && _queryText == String.Empty
-                && !HistorySelected()
-                && !ContextMenuSelected())
-            {
-                ReverseHistory();
-            }
-            else
-            {
-                SelectedResults.SelectPrevResult();
-            }
-        }
-
-        [RelayCommand]
         private void LoadContextMenu()
         {
             if (SelectedIsFromQueryResults())
