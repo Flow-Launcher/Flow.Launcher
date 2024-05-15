@@ -337,13 +337,13 @@ namespace Flow.Launcher
         {
             if (WindowState == WindowState.Maximized)
             {
-                maximizeButton.Visibility = Visibility.Collapsed;
-                restoreButton.Visibility = Visibility.Visible;
+                MaximizeButton.Visibility = Visibility.Collapsed;
+                RestoreButton.Visibility = Visibility.Visible;
             }
             else
             {
-                maximizeButton.Visibility = Visibility.Visible;
-                restoreButton.Visibility = Visibility.Collapsed;
+                MaximizeButton.Visibility = Visibility.Visible;
+                RestoreButton.Visibility = Visibility.Collapsed;
             }
         }
 

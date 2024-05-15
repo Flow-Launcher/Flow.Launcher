@@ -88,7 +88,7 @@
                     </Path>
                 </Button>
                 <Button
-                    Name="maximizeButton"
+                    Name="MaximizeButton"
                     Grid.Row="0"
                     Grid.Column="3"
                     Click="OnMaximizeRestoreButtonClick"
@@ -112,6 +112,7 @@
                 </Button>
                 <Button
                     Name="restoreButton"
+                    Name="RestoreButton"
                     Grid.Column="3"
                     Click="OnMaximizeRestoreButtonClick"
                     Style="{StaticResource TitleBarButtonStyle}">
