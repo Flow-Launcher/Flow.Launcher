@@ -111,7 +111,7 @@
                     </Path>
                 </Button>
                 <Button
-                    Name="restoreButton"
+                    Grid.Row="0"
                     Name="RestoreButton"
                     Grid.Column="3"
                     Click="OnMaximizeRestoreButtonClick"
@@ -134,6 +134,7 @@
                     </Path>
                 </Button>
                 <Button
+                    Grid.Row="0"
                     Grid.Column="4"
                     Click="OnCloseButtonClick"
                     Style="{StaticResource TitleBarCloseButtonStyle}">
@@ -158,6 +159,7 @@
                 <ui:NavigationView
                     x:Name="NavView"
                     Grid.Row="1"
+                    Grid.Column="0"
                     Grid.ColumnSpan="5"
                     Margin="0,0,0,0"
                     HorizontalAlignment="Stretch"
