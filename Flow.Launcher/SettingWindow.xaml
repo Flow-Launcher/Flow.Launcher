@@ -2836,7 +2836,13 @@
                                                 Title="{DynamicResource ToggleGameModeHotkey}"
                                                 Icon="&#xe7fc;"
                                                 Type="Inside">
-                                                <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                                                <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                                            </cc:Card>
+                                            <cc:Card
+                                                Title="{DynamicResource RequeryHotkey}"
+                                                Icon="&#xe72c;"
+                                                Type="Inside">
+                                                <cc:HotkeyDisplay Keys="Ctrl+R" />
                                             </cc:Card>
                                             <cc:Card
                                                 Title="{DynamicResource ReloadPluginHotkey}"
