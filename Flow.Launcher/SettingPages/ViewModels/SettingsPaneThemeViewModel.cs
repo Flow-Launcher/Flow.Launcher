@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
@@ -15,7 +16,7 @@ using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
-public class SettingsPaneThemeViewModel : BaseModel
+public partial class SettingsPaneThemeViewModel : BaseModel
 {
     private CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
@@ -363,6 +364,12 @@ public class SettingsPaneThemeViewModel : BaseModel
     }
 
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
+
+    [RelayCommand]
+    private void OpenThemesFolder()
+    {
+        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+    }
 
     public SettingsPaneThemeViewModel(Settings settings)
     {

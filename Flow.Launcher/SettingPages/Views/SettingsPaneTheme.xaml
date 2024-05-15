@@ -726,8 +726,8 @@
                                 MinWidth="180"
                                 Margin="0,0,18,0"
                                 HorizontalAlignment="Center"
-                                Content="{DynamicResource OpenThemeFolder}"
-                                DockPanel.Dock="Top" />
+                                Command="{Binding OpenThemesFolderCommand}"
+                                Content="{DynamicResource OpenThemeFolder}" />
                             <TextBlock Style="{StaticResource Glyph}">
                                 &#xe838;
                             </TextBlock>
