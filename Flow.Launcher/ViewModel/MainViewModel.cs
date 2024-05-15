@@ -42,6 +42,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly History _history;
+        private int lasthistoryindex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -82,6 +83,12 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.AutoCompleteHotkey):
                         OnPropertyChanged(nameof(AutoCompleteHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryUpHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryUpHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryDownHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryDownHotkey));
                         break;
                     case nameof(Settings.AutoCompleteHotkey2):
                         OnPropertyChanged(nameof(AutoCompleteHotkey2));
@@ -257,6 +264,49 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        public void ReverseHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
+                if (lasthistoryindex < _history.Items.Count)
+                {
+                    lasthistoryindex++;
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void ForwardHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
+                if (lasthistoryindex > 1)
+                {
+                    lasthistoryindex--;
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void ReverseHistoryOnEmptyQuery()
+        {
+            var results = SelectedResults;
+            if (_history.Items.Count > 0
+                && _queryText == String.Empty
+                && !HistorySelected()
+                && !ContextMenuSelected())
+            {
+                ReverseHistory();
+            }
+            else
+            {
+                SelectedResults.SelectPrevResult();
+            }
+        }
+
+        [RelayCommand]
         private void LoadContextMenu()
         {
             if (SelectedIsFromQueryResults())
@@ -394,7 +444,20 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            SelectedResults.SelectPrevResult();
+            var results = SelectedResults;
+            if (_history.Items.Count > 0
+                && _queryText == String.Empty
+                && !HistorySelected()
+                && !ContextMenuSelected())
+            {
+                lasthistoryindex = 1;
+                ReverseHistory();
+            }
+            else
+            {
+                SelectedResults.SelectPrevResult();
+            }
+        
         }
 
         [RelayCommand]
@@ -690,6 +753,8 @@ namespace Flow.Launcher.ViewModel
         public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
         public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
+        public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
 
         public string Image => Constant.QueryTextBoxIconImagePath;
@@ -1116,6 +1181,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            lasthistoryindex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
             lastContextMenuResult = new Result();

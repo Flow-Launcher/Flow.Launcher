@@ -31,6 +31,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
+        public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
+        public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
         public string Language
         {
@@ -340,6 +342,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
                     list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
+                if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
+                    list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
+                if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
+                    list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
 
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
                 {
