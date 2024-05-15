@@ -2,23 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:Flow.Launcher.Converters"
-    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core"
-    xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
-    xmlns:ui="http://schemas.modernwpf.com/2019">
+    xmlns:core="clr-namespace:Flow.Launcher.Core.Resource;assembly=Flow.Launcher.Core">
     <converters:BorderClipConverter x:Key="BorderClipConverter" />
     <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <converters:TextConverter x:Key="TextConverter" />
     <core:TranslationConverter x:Key="TranslationConverter" />
-    <CollectionViewSource x:Key="SortedFonts" Source="{Binding Source={x:Static Fonts.SystemFontFamilies}}">
-        <CollectionViewSource.SortDescriptions>
-            <scm:SortDescription PropertyName="Source" />
-        </CollectionViewSource.SortDescriptions>
-    </CollectionViewSource>
-    <CollectionViewSource x:Key="PluginStoreCollectionView" Source="{Binding ExternalPlugins}">
-        <CollectionViewSource.GroupDescriptions>
-            <PropertyGroupDescription PropertyName="Category" />
-        </CollectionViewSource.GroupDescriptions>
-    </CollectionViewSource>
 
     <Style x:Key="StoreItemFocusVisualStyleKey">
         <Setter Property="Control.Template">
