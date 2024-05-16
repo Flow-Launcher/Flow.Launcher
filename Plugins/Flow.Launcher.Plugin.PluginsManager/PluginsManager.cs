@@ -3,19 +3,15 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.IO.Compression;
-using Newtonsoft.Json;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -101,21 +97,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 if (Context.API.GetAllPlugins()
                     .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
                 {
-                    if (MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_update_exists"),
-                            Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                            MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                    {
-                        if (File.Exists(plugin.UrlDownload))
-                        {
-                            Context.API.ChangeQuery(
-                                $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {plugin.UrlDownload}");
-                        }
-                        else
-                        {
-                            Context.API.ChangeQuery(
-                                $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {plugin.Name}");
-                        }
-                    }
+                    var updateDetail = !plugin.IsFromLocalInstallPath ? plugin.Name : plugin.LocalInstallPath;
+
+                    Context
+                        .API
+                        .ChangeQuery(
+                            $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {updateDetail}");
 
                     var mainWindow = Application.Current.MainWindow;
                     mainWindow.Show();
@@ -148,12 +135,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
-            if (File.Exists(plugin.UrlDownload))
-            {
-                Install(plugin, plugin.UrlDownload);
-                return;
-            }
-
             // at minimum should provide a name, but handle plugin that is not downloaded from plugins manifest and is a url download
             var downloadFilename = string.IsNullOrEmpty(plugin.Version)
                 ? $"{plugin.Name}-{Guid.NewGuid()}.zip"
@@ -163,12 +144,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
-                if (File.Exists(filePath))
+                if (!plugin.IsFromLocalInstallPath)
                 {
-                    File.Delete(filePath);
-                }
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
 
-                await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                    await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                }
+                else
+                {
+                    filePath = plugin.LocalInstallPath;
+                }
 
                 Install(plugin, filePath);
             }
@@ -209,128 +195,38 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
-            if (File.Exists(search) && search.Split('.').Last() == zip)
+            var pluginFromLocalPath = null as UserPlugin;
+            var updateFromLocalPath = false;
+
+            if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
             {
-                var plugin = null as UserPlugin;
+                pluginFromLocalPath = Utilities.GetPluginInfoFromZip(search);
+                pluginFromLocalPath.LocalInstallPath = search;
+                updateFromLocalPath = true;
+            }                
 
-                using (ZipArchive archive = ZipFile.OpenRead(search))
-                {
-                    var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json").ToString();
-                    ZipArchiveEntry pluginJsonEntry = archive.GetEntry(pluginJsonPath);
-
-                    if (pluginJsonEntry != null)
-                    {
-                        using (StreamReader reader = new StreamReader(pluginJsonEntry.Open()))
-                        {
-                            string pluginJsonContent = await reader.ReadToEndAsync();
-                            plugin = JsonConvert.DeserializeObject<UserPlugin>(pluginJsonContent);
-                            plugin.IcoPath = "Images\\zipfolder.png";
-                        }
-                    }
-                }
-                if (plugin == null)
-                {
-                    return new List<Result>
-                    {
-                        new Result
-                        {
-                            Title = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_title"),
-                            SubTitle = Context.API.GetTranslation("plugin_pluginsmanager_update_noresult_subtitle"),
-                            IcoPath = icoPath
-                        }
-                    };
-                }
-
-                var pluginOld = Context.API.GetAllPlugins().FirstOrDefault(x => x.Metadata.ID == plugin.ID);
-
-                return new List<Result> {
-                    new Result
-                    {
-
-                        Title = $"{plugin.Name} by {plugin.Author}",
-                        SubTitle = $"Update from version {pluginOld.Metadata.Version} to {plugin.Version}",
-                        IcoPath = pluginOld.Metadata.IcoPath,
-                        Action = e =>
-                        {
-                            string message;
-                            if (Settings.AutoRestartAfterChanging)
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt"),
-                                    plugin.Name, plugin.Author,
-                                    Environment.NewLine, Environment.NewLine);
-                            }
-                            else
-                            {
-                                message = string.Format(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_prompt_no_restart"),
-                                    plugin.Name, plugin.Author,
-                                    Environment.NewLine);
-                            }
-
-                            if (MessageBox.Show(message,
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                    MessageBoxButton.YesNo) != MessageBoxResult.Yes)
-                            {
-                                return false;
-                            }
-
-                            var downloadToFilePath = search;
-
-
-                            PluginManager.UpdatePlugin(pluginOld.Metadata, plugin,
-                                    downloadToFilePath);
-
-                            if (Settings.AutoRestartAfterChanging)
-                            {
-                                Context.API.ShowMsg(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                    string.Format(
-                                        Context.API.GetTranslation(
-                                            "plugin_pluginsmanager_update_success_restart"),
-                                        plugin.Name));
-                                Context.API.RestartApp();
-                            }
-                            else
-                            {
-                                Context.API.ShowMsg(
-                                    Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                    string.Format(
-                                        Context.API.GetTranslation(
-                                            "plugin_pluginsmanager_update_success_no_restart"),
-                                        plugin.Name));
-                            }
-
-                            return true;
-
-                        },
-                        ContextData =
-                            new UserPlugin
-                            {
-                                Website = plugin.Website,
-                                UrlSourceCode = plugin.UrlSourceCode
-                            }
-                    }};
-            }
+            var updateSource = !updateFromLocalPath
+                                ? PluginsManifest.UserPlugins 
+                                : new List<UserPlugin> { pluginFromLocalPath };
 
             var resultsForUpdate = (
                 from existingPlugin in Context.API.GetAllPlugins()
-                join pluginFromManifest in PluginsManifest.UserPlugins
-                    on existingPlugin.Metadata.ID equals pluginFromManifest.ID
-                where String.Compare(existingPlugin.Metadata.Version, pluginFromManifest.Version,
+                join pluginUpdateSource in updateSource
+                    on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
+                where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
                           StringComparison.InvariantCulture) <
-                      0 // if current version precedes manifest version
+                      0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
                       && !PluginManager.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
                     {
-                        pluginFromManifest.Name,
-                        pluginFromManifest.Author,
+                        pluginUpdateSource.Name,
+                        pluginUpdateSource.Author,
                         CurrentVersion = existingPlugin.Metadata.Version,
-                        NewVersion = pluginFromManifest.Version,
+                        NewVersion = pluginUpdateSource.Version,
                         existingPlugin.Metadata.IcoPath,
                         PluginExistingMetadata = existingPlugin.Metadata,
-                        PluginNewUserPlugin = pluginFromManifest
+                        PluginNewUserPlugin = pluginUpdateSource
                     }).ToList();
 
             if (!resultsForUpdate.Any())
@@ -381,13 +277,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                             _ = Task.Run(async delegate
                             {
-                                if (File.Exists(downloadToFilePath))
+                                if (!x.PluginNewUserPlugin.IsFromLocalInstallPath)
                                 {
-                                    File.Delete(downloadToFilePath);
-                                }
+                                    if (File.Exists(downloadToFilePath))
+                                    {
+                                        File.Delete(downloadToFilePath);
+                                    }
 
-                                await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
-                                    .ConfigureAwait(false);
+                                    await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
+                                        .ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    downloadToFilePath = x.PluginNewUserPlugin.LocalInstallPath;
+                                }
+                                
 
                                 PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin,
                                     downloadToFilePath);
@@ -516,7 +420,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 results = results.Prepend(updateAllResult);
             }
 
-            return Search(results, search);
+            return !updateFromLocalPath ? Search(results, search) : results.ToList();
         }
 
         internal bool PluginExists(string id)
@@ -590,52 +494,40 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new List<Result> { result };
         }
 
-        internal List<Result> InstallFromLocal(string path)
+        internal List<Result> InstallFromLocalPath(string localPath)
         {
-            if (string.IsNullOrEmpty(path) || !File.Exists(path))
+            var plugin = Utilities.GetPluginInfoFromZip(localPath);
+
+            plugin.LocalInstallPath = localPath;
+
+            return new List<Result>
             {
-                return new List<Result>();
-            }
-
-            var plugin = null as UserPlugin;
-
-            using (ZipArchive archive = ZipFile.OpenRead(path))
-            {
-                var pluginJsonPath = archive.Entries.FirstOrDefault(x => x.Name == "plugin.json").ToString();
-                ZipArchiveEntry pluginJsonEntry = archive.GetEntry(pluginJsonPath);
-
-                if (pluginJsonEntry != null)
+                new Result
                 {
-                    using (StreamReader reader = new StreamReader(pluginJsonEntry.Open()))
+                    Title = $"{plugin.Name} by {plugin.Author}",
+                    SubTitle = plugin.Description,
+                    IcoPath = plugin.IcoPath,
+                    Action = e =>
                     {
-                        string pluginJsonContent = reader.ReadToEnd();
-                        plugin = JsonConvert.DeserializeObject<UserPlugin>(pluginJsonContent);
-                        plugin.IcoPath = "Images\\zipfolder.png";
+                        if (Settings.WarnFromUnknownSource)
+                        {
+                            if (!InstallSourceKnown(plugin.Website)
+                                && MessageBox.Show(string.Format(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
+                                        Environment.NewLine),
+                                    Context.API.GetTranslation(
+                                        "plugin_pluginsmanager_install_unknown_source_warning_title"),
+                                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                                return false;
+                        }
+
+                        Application.Current.MainWindow.Hide();
+                        _ = InstallOrUpdateAsync(plugin);
+
+                        return ShouldHideWindow;
                     }
                 }
-            }
-
-            if (plugin == null)
-            {
-                return new List<Result>();
-            }
-
-            plugin.UrlDownload = path;
-
-            var result = new Result
-            {
-                Title = plugin.Name,
-                SubTitle = plugin.UrlDownload,
-                IcoPath = plugin.IcoPath,
-                Action = e =>
-                {
-                    Application.Current.MainWindow.Hide();
-                    _ = InstallOrUpdateAsync(plugin);
-
-                    return ShouldHideWindow;
-                }
             };
-            return new List<Result> { result };
         }
 
         private bool InstallSourceKnown(string url)
@@ -657,8 +549,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 && search.Split('.').Last() == zip)
                 return InstallFromWeb(search);
 
-            if (File.Exists(search) && search.Split('.').Last() == zip)
-                return InstallFromLocal(search);
+            if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
+                return InstallFromLocalPath(search);
 
             var results =
                 PluginsManifest
@@ -693,14 +585,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (!File.Exists(downloadedFilePath))
                 throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}",
                     downloadedFilePath);
+
             try
             {
                 PluginManager.InstallPlugin(plugin, downloadedFilePath);
-                if (downloadedFilePath.StartsWith(Path.GetTempPath()))
-                {
+                
+                if (!plugin.IsFromLocalInstallPath)
                     File.Delete(downloadedFilePath);
-                }
-
             }
             catch (FileNotFoundException e)
             {
