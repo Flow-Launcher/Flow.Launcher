@@ -8,21 +8,22 @@
     xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:ext="clr-namespace:Flow.Launcher.Resources.MarkupExtensions"
     Title="General"
     d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ScrollViewer
-        Margin="0,0,0,0"
+        Margin="0"
         CanContentScroll="False"
         FontSize="14"
         VirtualizingPanel.ScrollUnit="Pixel"
         VirtualizingStackPanel.IsVirtualizing="True">
-        <VirtualizingStackPanel Margin="5,18,25,30" Orientation="Vertical">
+        <VirtualizingStackPanel Margin="5 18 25 30" Orientation="Vertical">
             <TextBlock
                 Grid.Row="2"
-                Margin="0,5,0,5"
+                Margin="0 5"
                 FontSize="30"
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource general}"
@@ -36,7 +37,7 @@
                 <ui:ToggleSwitch IsOn="{Binding Settings.HideOnStartup}" />
             </cc:Card>
 
-            <cc:Card Title="{DynamicResource hideFlowLauncherWhenLoseFocus}" Margin="0,30,0,0">
+            <cc:Card Title="{DynamicResource hideFlowLauncherWhenLoseFocus}" Margin="0 30 0 0">
                 <ui:ToggleSwitch IsOn="{Binding Settings.HideWhenDeactivated}" />
             </cc:Card>
 
@@ -44,132 +45,63 @@
                 <ui:ToggleSwitch IsOn="{Binding Settings.HideNotifyIcon}" />
             </cc:Card>
 
-            <Border
-                Margin="0,30,0,0"
-                Padding="0"
-                Style="{DynamicResource SettingGroupBox}">
-                <StackPanel Orientation="Vertical">
-                    <Border
-                        Margin="0"
-                        BorderThickness="0"
-                        Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowPosition}" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                <ComboBox
-                                    x:Name="SearchWindowScreen"
-                                    MinWidth="220"
-                                    Margin="0,0,18,0"
-                                    VerticalAlignment="Center"
-                                    DisplayMemberPath="Display"
-                                    FontSize="14"
-                                    ItemsSource="{Binding SearchWindowScreens}"
-                                    SelectedValue="{Binding Settings.SearchWindowScreen}"
-                                    SelectedValuePath="Value" />
-                                <ComboBox
-                                    x:Name="SelectScreen"
-                                    MinWidth="160"
-                                    Margin="0,0,18,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="14"
-                                    ItemsSource="{Binding ScreenNumbers}"
-                                    SelectedValue="{Binding Settings.CustomScreenNumber}">
-                                    <ComboBox.Style>
-                                        <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="ComboBox">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.Custom}">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ComboBox.Style>
-                                </ComboBox>
-                            </StackPanel>
-                            <TextBlock Style="{StaticResource Glyph}">
-                                &#xe7f4;
-                            </TextBlock>
-                        </ItemsControl>
-                    </Border>
+            <cc:CardGroup Margin="0 30 0 0">
+                <cc:Card Icon="&#xe7f4;" Title="{DynamicResource SearchWindowPosition}">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox
+                            MinWidth="220"
+                            DisplayMemberPath="Display"
+                            SelectedValuePath="Value"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding SearchWindowScreens}"
+                            SelectedValue="{Binding Settings.SearchWindowScreen}" />
+                        <ComboBox
+                            MinWidth="160"
+                            Margin="18 0 0 0"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding ScreenNumbers}"
+                            SelectedValue="{Binding Settings.CustomScreenNumber}"
+                            Visibility="{ext:VisibleWhen
+                                        {Binding Settings.SearchWindowScreen},
+                                        {x:Static userSettings:SearchWindowScreens.Custom}}"
+                            />
+                    </StackPanel>
+                </cc:Card>
 
-                    <Separator Width="Auto" BorderThickness="1">
-                        <Separator.Style>
-                            <Style BasedOn="{StaticResource SettingSeparatorStyle}" TargetType="Separator">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Separator.Style>
-                    </Separator>
+                <cc:Card
+                    Icon="&#xe7f4;"
+                    Title="{DynamicResource SearchWindowAlign}"
+                    Visibility="{ext:CollapsedWhen
+                                {Binding Settings.SearchWindowScreen},
+                                {x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox
+                            MinWidth="160"
+                            DisplayMemberPath="Display"
+                            SelectedValuePath="Value"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding SearchWindowAligns}"
+                            SelectedValue="{Binding Settings.SearchWindowAlign}" />
 
-                    <Border Margin="0" BorderThickness="0">
-                        <Border.Style>
-                            <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
-                                <Setter Property="Visibility" Value="Visible" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=SearchWindowScreen, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}">
-                                        <Setter Property="Visibility" Value="Collapsed" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Border.Style>
-
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource SearchWindowAlign}" />
-                            </StackPanel>
-                            <StackPanel Grid.Column="2" Orientation="Horizontal">
-                                <ComboBox
-                                    x:Name="SearchWindowPosition"
-                                    MinWidth="160"
-                                    Margin="0,0,18,0"
-                                    VerticalAlignment="Center"
-                                    DisplayMemberPath="Display"
-                                    FontSize="14"
-                                    ItemsSource="{Binding SearchWindowAligns}"
-                                    SelectedValue="{Binding Settings.SearchWindowAlign}"
-                                    SelectedValuePath="Value" />
-                                <StackPanel Margin="0,0,18,0" Orientation="Horizontal">
-                                    <StackPanel.Style>
-                                        <Style TargetType="StackPanel">
-                                            <Setter Property="Visibility" Value="Collapsed" />
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding ElementName=SearchWindowPosition, Path=SelectedValue}" Value="{x:Static userSettings:SearchWindowAligns.Custom}">
-                                                    <Setter Property="Visibility" Value="Visible" />
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </StackPanel.Style>
-                                    <TextBox
-                                        Height="35"
-                                        MinWidth="80"
-                                        Text="{Binding Settings.CustomWindowLeft}"
-                                        TextWrapping="NoWrap" />
-                                    <TextBlock
-                                        Margin="10"
-                                        VerticalAlignment="Center"
-                                        Foreground="{DynamicResource Color05B}"
-                                        Text="x" />
-                                    <TextBox
-                                        Height="35"
-                                        MinWidth="80"
-                                        Text="{Binding Settings.CustomWindowTop}"
-                                        TextWrapping="NoWrap" />
-                                </StackPanel>
-                            </StackPanel>
-                            <TextBlock Style="{StaticResource Glyph}">
-                                &#xe7f4;
-                            </TextBlock>
-                        </ItemsControl>
-                    </Border>
-                </StackPanel>
-            </Border>
-
+                        <StackPanel
+                            Margin="18 0 0 0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Visibility="{ext:VisibleWhen
+                                        {Binding Settings.SearchWindowAlign},
+                                        {x:Static userSettings:SearchWindowAligns.Custom}}">
+                            <TextBox VerticalAlignment="Center" MinWidth="80"
+                                     Text="{Binding Settings.CustomWindowLeft}" />
+                            <TextBlock VerticalAlignment="Center" Margin="10" Text="x" />
+                            <TextBox VerticalAlignment="Center" MinWidth="80" Text="{Binding Settings.CustomWindowTop}"
+                                     TextWrapping="NoWrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </cc:Card>
+            </cc:CardGroup>
 
             <cc:Card
                 Title="{DynamicResource ignoreHotkeysOnFullscreen}"
@@ -180,7 +112,7 @@
 
             <cc:Card
                 Title="{DynamicResource AlwaysPreview}"
-                Margin="0,30,0,0"
+                Margin="0 30 0 0"
                 Icon="&#xe8a1;"
                 Sub="{DynamicResource AlwaysPreviewToolTip}">
                 <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysPreview}" ToolTip="{Binding AlwaysPreviewToolTip}" />
@@ -188,7 +120,7 @@
 
             <cc:Card
                 Title="{DynamicResource autoUpdates}"
-                Margin="0,30,0,0"
+                Margin="0 30 0 0"
                 Icon="&#xecc5;">
                 <ui:ToggleSwitch IsOn="{Binding AutoUpdates}" />
             </cc:Card>
@@ -200,99 +132,41 @@
                 <ui:ToggleSwitch IsOn="{Binding PortableMode}" />
             </cc:Card>
 
-            <Border
-                Margin="0,30,0,0"
-                Padding="0"
-                CornerRadius="5"
-                Style="{DynamicResource SettingGroupBox}">
-                <StackPanel Orientation="Vertical">
-                    <Border
-                        Margin="0"
-                        BorderThickness="0"
-                        Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Style="{DynamicResource SettingTitleLabel}"
-                                    Text="{DynamicResource querySearchPrecision}" />
-                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource querySearchPrecisionToolTip}" />
-                            </StackPanel>
-                            <ComboBox
-                                Grid.Column="2"
-                                MaxWidth="200"
-                                Margin="10,0,18,0"
-                                ItemsSource="{Binding QuerySearchPrecisionStrings}"
-                                SelectedItem="{Binding Settings.QuerySearchPrecisionString}" />
-                        </ItemsControl>
-                    </Border>
-                    <Separator
-                        Width="Auto"
-                        BorderThickness="1"
-                        Style="{StaticResource SettingSeparatorStyle}" />
-                    <Border
-                        Margin="0"
-                        BorderThickness="0"
-                        Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Style="{StaticResource TextPanel}">
-                                <TextBlock
-                                    Grid.Column="1"
-                                    VerticalAlignment="Center"
-                                    Style="{DynamicResource SettingTitleLabel}"
-                                    Text="{DynamicResource lastQueryMode}" />
-                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource lastQueryModeToolTip}" />
-                            </StackPanel>
-                            <ComboBox
-                                Grid.Column="2"
-                                Margin="10,0,18,0"
-                                DisplayMemberPath="Display"
-                                ItemsSource="{Binding LastQueryModes}"
-                                SelectedValue="{Binding Settings.LastQueryMode}"
-                                SelectedValuePath="Value" />
-                        </ItemsControl>
-                    </Border>
-                    <Separator
-                        Width="Auto"
-                        BorderThickness="1"
-                        Style="{StaticResource SettingSeparatorStyle}" />
-                    <Border
-                        Margin="0"
-                        BorderThickness="0"
-                        Style="{DynamicResource SettingGroupBox}">
-                        <ItemsControl Style="{StaticResource SettingGrid}">
-                            <StackPanel Grid.Column="1">
-                                <TextBlock
-                                    VerticalAlignment="Center"
-                                    Style="{DynamicResource SettingTitleLabel}"
-                                    Text="{DynamicResource maxShowResults}" />
-                                <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource maxShowResultsToolTip}" />
-                            </StackPanel>
-                            <ComboBox
-                                Grid.Column="2"
-                                Width="100"
-                                Margin="10,0,18,0"
-                                HorizontalContentAlignment="Center"
-                                ItemsSource="{Binding MaxResultsRange}"
-                                SelectedItem="{Binding Settings.MaxResultsToShow}" />
-                            <TextBlock Style="{StaticResource Glyph}">
-                                &#xe8fd;
-                            </TextBlock>
-                        </ItemsControl>
-                    </Border>
-                </StackPanel>
-            </Border>
+            <cc:CardGroup Margin="0 30 0 0">
+                <cc:Card Title="{DynamicResource querySearchPrecision}"
+                         Sub="{DynamicResource querySearchPrecisionToolTip}">
+                    <ComboBox
+                        MaxWidth="200"
+                        ItemsSource="{Binding QuerySearchPrecisionStrings}"
+                        SelectedItem="{Binding Settings.QuerySearchPrecisionString}" />
+                </cc:Card>
+
+                <cc:Card Title="{DynamicResource lastQueryMode}" Sub="{DynamicResource lastQueryModeToolTip}">
+                    <ComboBox
+                        DisplayMemberPath="Display"
+                        SelectedValuePath="Value"
+                        ItemsSource="{Binding LastQueryModes}"
+                        SelectedValue="{Binding Settings.LastQueryMode}" />
+                </cc:Card>
+
+                <cc:Card Icon="&#xe8fd;" Title="{DynamicResource maxShowResults}"
+                         Sub="{DynamicResource maxShowResultsToolTip}">
+                    <ComboBox
+                        Width="100"
+                        ItemsSource="{Binding MaxResultsRange}"
+                        SelectedItem="{Binding Settings.MaxResultsToShow}" />
+                </cc:Card>
+            </cc:CardGroup>
 
             <cc:Card
                 Title="{DynamicResource defaultFileManager}"
-                Margin="0,30,0,0"
+                Margin="0 30 0 0"
                 Icon="&#xe838;"
                 Sub="{DynamicResource defaultFileManagerToolTip}">
                 <Button
                     Width="160"
                     MaxWidth="250"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     Command="{Binding SelectFileManagerCommand}"
                     Content="{Binding Settings.CustomExplorer.Name}" />
             </cc:Card>
@@ -304,12 +178,12 @@
                 <Button
                     Width="160"
                     MaxWidth="250"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     Command="{Binding SelectBrowserCommand}"
                     Content="{Binding Settings.CustomBrowser.Name}" />
             </cc:Card>
 
-            <cc:Card Title="{DynamicResource pythonFilePath}" Margin="0,30,0,0">
+            <cc:Card Title="{DynamicResource pythonFilePath}" Margin="0 30 0 0">
                 <StackPanel Orientation="Horizontal">
                     <TextBox
                         Width="300"
@@ -317,7 +191,7 @@
                         Text="{Binding Settings.PluginSettings.PythonExecutablePath, TargetNullValue='None'}" />
                     <Button
                         Height="34"
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         Command="{Binding SelectPythonCommand}"
                         Content="{DynamicResource select}" />
                 </StackPanel>
@@ -331,7 +205,7 @@
                         Text="{Binding Settings.PluginSettings.NodeExecutablePath, TargetNullValue='None'}" />
                     <Button
                         Height="34"
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         Command="{Binding SelectNodeCommand}"
                         Content="{DynamicResource select}" />
                 </StackPanel>
@@ -339,7 +213,7 @@
 
             <cc:Card
                 Title="{DynamicResource typingStartEn}"
-                Margin="0,30,0,0"
+                Margin="0 30 0 0"
                 Icon="&#xe8d3;"
                 Sub="{DynamicResource typingStartEnTooltip}">
                 <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysStartEn}" />
@@ -349,16 +223,17 @@
                 Title="{DynamicResource ShouldUsePinyin}"
                 Icon="&#xe98a;"
                 Sub="{DynamicResource ShouldUsePinyinToolTip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.ShouldUsePinyin}" ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                <ui:ToggleSwitch IsOn="{Binding Settings.ShouldUsePinyin}"
+                                 ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource language}"
-                Margin="0,30,0,0"
+                Margin="0 30 0 0"
                 Icon="&#xf2b7;">
                 <ComboBox
                     MaxWidth="200"
-                    Margin="10,0,0,0"
+                    Margin="10 0 0 0"
                     DisplayMemberPath="Display"
                     ItemsSource="{Binding Languages}"
                     SelectedValue="{Binding Language}"
