@@ -469,7 +469,8 @@
                     FontSize="14"
                     ItemsSource="{Binding ColorSchemes}"
                     SelectedValue="{Binding Settings.ColorScheme}"
-                    SelectedValuePath="Value" />
+                    SelectedValuePath="Value"
+                    SelectionChanged="Selector_OnSelectionChanged"/>
             </cc:Card>
 
             <!-- Theme folder -->

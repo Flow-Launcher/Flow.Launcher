@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Windows.Controls;
 using System.Windows.Navigation;
 using Flow.Launcher.SettingPages.ViewModels;
-using ModernWpf.Controls;
+using Page = ModernWpf.Controls.Page;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -21,5 +22,10 @@ public partial class SettingsPaneTheme : Page
         }
 
         base.OnNavigatedTo(e);
+    }
+
+    private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        _viewModel.UpdateColorScheme();
     }
 }

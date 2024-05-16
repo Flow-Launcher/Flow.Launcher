@@ -13,6 +13,9 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using ModernWpf;
+using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
+using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -369,6 +372,17 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     private void OpenThemesFolder()
     {
         App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
+    }
+
+    public void UpdateColorScheme()
+    {
+        ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = Settings.ColorScheme switch
+        {
+            Constant.Light => ApplicationTheme.Light,
+            Constant.Dark => ApplicationTheme.Dark,
+            Constant.System => null,
+            _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+        };
     }
 
     public SettingsPaneThemeViewModel(Settings settings)
