@@ -13,14 +13,14 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ScrollViewer
-        Margin="0,0,0,0"
+        Margin="0"
         CanContentScroll="True"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
-        <StackPanel Margin="5,14,25,30" Orientation="Vertical">
+        <StackPanel Margin="5 14 25 30" Orientation="Vertical">
             <TextBlock
-                Margin="0,5,0,5"
+                Margin="0 5"
                 FontSize="30"
                 Style="{DynamicResource PageTitle}"
                 Text="{DynamicResource about}"
@@ -33,16 +33,16 @@
                 Sub="{DynamicResource version}">
                 <StackPanel Orientation="Horizontal">
                     <Button
-                        Margin="0,0,10,0"
+                        Margin="0 0 10 0"
                         Command="{Binding UpdateAppCommand}"
                         Content="{DynamicResource checkUpdates}" />
                     <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
                         <Hyperlink
-                            NavigateUri="{Binding SponsorPage, Mode=OneWay}"
+                            NavigateUri="{Binding SponsorPage}"
                             RequestNavigate="OnRequestNavigate"
                             TextDecorations="None">
                             <TextBlock
-                                Padding="10,5,10,5"
+                                Padding="10 5"
                                 Foreground="White"
                                 Text="{DynamicResource BecomeASponsor}" />
                         </Hyperlink>
@@ -51,62 +51,37 @@
             </cc:Card>
 
             <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <TextBlock>
-                    <Hyperlink NavigateUri="{Binding ReleaseNotes, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                        <Run Text="{DynamicResource releaseNotes}" />
-                    </Hyperlink>
-                </TextBlock>
+                <cc:HyperLink Uri="{Binding ReleaseNotes}" Text="{DynamicResource releaseNotes}" />
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource website}"
-                Margin="0,14,0,0"
+                Margin="0 14 0 0"
                 Icon="&#xeb41;">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="0,0,12,0">
-                        <Hyperlink NavigateUri="{Binding Website, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                            <Run Text="{DynamicResource website}" />
-                        </Hyperlink>
-                    </TextBlock>
-
-                    <TextBlock>
-                        <Hyperlink NavigateUri="{Binding Github, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                            <Run Text="{DynamicResource github}" />
-                        </Hyperlink>
-                    </TextBlock>
+                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Website}" Text="{DynamicResource website}" />
+                    <cc:HyperLink Uri="{Binding Github}" Text="{DynamicResource github}" />
                 </StackPanel>
             </cc:Card>
 
             <cc:Card Title="{DynamicResource documentation}" Icon="&#xe82f;">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Margin="0,0,12,0">
-                        <Hyperlink NavigateUri="{Binding Documentation, Mode=OneWay}" RequestNavigate="OnRequestNavigate">
-                            <Run Text="{DynamicResource documentation}" />
-                        </Hyperlink>
-                    </TextBlock>
-                    <TextBlock>
-                        <Hyperlink NavigateUri="{Binding Docs}" RequestNavigate="OnRequestNavigate">
-                            <Run Text="{DynamicResource docs}" />
-                        </Hyperlink>
-                    </TextBlock>
+                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Documentation}" Text="{DynamicResource documentation}" />
+                    <cc:HyperLink Uri="{Binding Website}" Text="{DynamicResource website}" />
                 </StackPanel>
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource icons}"
-                Margin="0,14,0,0"
+                Margin="0 14 0 0"
                 Icon="&#xE8FE;">
-                <TextBlock>
-                    <Hyperlink NavigateUri="https://icons8.com/" RequestNavigate="OnRequestNavigate">
-                        <Run Text="icons8.com" />
-                    </Hyperlink>
-                </TextBlock>
+                <cc:HyperLink Uri="https://icons8.com/" Text="icons8.com" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource devtool}" Icon="&#xf12b;">
                 <StackPanel Orientation="Horizontal">
                     <Button
-                        Margin="0,0,12,0"
+                        Margin="0 0 12 0"
                         Command="{Binding AskClearLogFolderConfirmationCommand}"
                         Content="{Binding LogFolderSize, Mode=OneWay}" />
                     <Button
@@ -139,13 +114,13 @@
             </cc:Card>
 
             <TextBlock
-                Margin="14,20,0,0"
+                Margin="14 20 0 0"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 DockPanel.Dock="Bottom"
                 FontSize="12"
                 Foreground="{DynamicResource Color15B}"
-                Text="{Binding ActivatedTimes, Mode=OneWay}"
+                Text="{Binding ActivatedTimes}"
                 TextWrapping="WrapWithOverflow" />
         </StackPanel>
     </ScrollViewer>
