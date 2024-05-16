@@ -22,10 +22,4 @@ public partial class SettingsPaneTheme : Page
 
         base.OnNavigatedTo(e);
     }
-
-    private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
-    {
-        App.API.OpenUrl(e.Uri);
-        e.Handled = true;
-    }
 }
