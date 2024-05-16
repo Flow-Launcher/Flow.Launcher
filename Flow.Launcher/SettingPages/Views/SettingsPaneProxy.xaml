@@ -17,7 +17,6 @@
         <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
     </Page.Resources>
     <ScrollViewer
-        Margin="0 0 0 0"
         Padding="5 0 24 0"
         FontSize="14"
         CanContentScroll="True"
