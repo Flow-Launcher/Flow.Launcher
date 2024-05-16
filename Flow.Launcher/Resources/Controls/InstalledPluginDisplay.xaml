@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ui="http://schemas.modernwpf.com/2019"
              xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
+             xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
              d:DesignHeight="300" d:DesignWidth="300">
@@ -16,7 +17,7 @@
         SnapsToDevicePixels="True"
         Style="{StaticResource ExpanderStyle1}">
         <Expander.Header>
-            <Border Padding="0,12,0,12">
+            <Border Padding="0 12">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="36" MinWidth="36" />
@@ -28,14 +29,14 @@
                         Width="32"
                         Height="32"
                         Source="{Binding Image, IsAsync=True}" />
-                    <StackPanel Grid.Column="1" Margin="16,0,14,0">
+                    <StackPanel Grid.Column="1" Margin="16 0 14 0">
                         <TextBlock
                             Foreground="{DynamicResource Color05B}"
                             Text="{Binding PluginPair.Metadata.Name}"
                             TextWrapping="Wrap"
                             ToolTip="{Binding PluginPair.Metadata.Version}" />
                         <TextBlock
-                            Margin="0,2,0,0"
+                            Margin="0 2 0 0"
                             Foreground="{DynamicResource Color04B}"
                             FontSize="12"
                             Text="{Binding PluginPair.Metadata.Description}"
@@ -43,14 +44,14 @@
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
                         <TextBlock
-                            Margin="0,0,8,0"
+                            Margin="0 0 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Foreground="{DynamicResource Color08B}"
                             Text="{DynamicResource priority}" />
                         <Button
                             x:Name="PriorityButton"
-                            Margin="0,0,22,0"
+                            Margin="0 0 22 0"
                             VerticalAlignment="Center"
                             Command="{Binding EditPluginPriorityCommand}"
                             Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
@@ -64,7 +65,7 @@
                             </Button.Resources>
                             <Button.Style>
                                 <Style BasedOn="{StaticResource DefaultButtonStyle}" TargetType="Button">
-                                    <Setter Property="Padding" Value="12,8,12,8" />
+                                    <Setter Property="Padding" Value="12 8" />
                                     <Setter Property="BorderThickness" Value="0" />
                                     <Setter Property="FontWeight" Value="DemiBold" />
                                     <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
@@ -97,13 +98,13 @@
                 Height="52"
                 Margin="0"
                 Padding="0"
-                BorderThickness="0,1,0,0"
+                BorderThickness="0 1 0 0"
                 CornerRadius="0"
                 Style="{DynamicResource SettingGroupBox}"
                 Visibility="{Binding ActionKeywordsVisibility}">
-                <DockPanel Margin="22,0,18,0" VerticalAlignment="Center">
+                <DockPanel Margin="22 0 18 0" VerticalAlignment="Center">
                     <TextBlock
-                        Margin="48,0,10,0"
+                        Margin="48 0 10 0"
                         DockPanel.Dock="Left"
                         Style="{StaticResource Glyph}">
                         &#xe819;
@@ -117,7 +118,7 @@
                     <Button
                         Width="100"
                         Height="34"
-                        Margin="5,0,0,0"
+                        Margin="5 0 0 0"
                         HorizontalAlignment="Right"
                         Command="{Binding SetActionKeywordsCommand}"
                         Content="{Binding ActionKeywordsText}"
@@ -130,7 +131,7 @@
             </Border>
 
             <Border
-                BorderThickness="0,1,0,0"
+                BorderThickness="0 1 0 0"
                 BorderBrush="{DynamicResource Color03B}"
                 Background="{DynamicResource Color00B}">
                 <Border.Style>
@@ -153,7 +154,7 @@
                 Margin="0"
                 Padding="15 10"
                 VerticalAlignment="Center"
-                BorderThickness="0,1,0,0"
+                BorderThickness="0 1 0 0"
                 CornerRadius="0 0 5 5"
                 Style="{DynamicResource SettingGroupBox}">
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
@@ -170,7 +171,7 @@
                         Foreground="{DynamicResource PluginInfoColor}"
                         Text="{Binding PluginPair.Metadata.Author}" />
                     <TextBlock
-                        Margin="10,0,0,0"
+                        Margin="10 0 0 0"
                         VerticalAlignment="Center"
                         FontSize="11"
                         Foreground="{DynamicResource PluginInfoColor}"
@@ -184,7 +185,7 @@
                         ToolTip="{Binding InitAndQueryTime}"
                         ToolTipService.InitialShowDelay="500" />
                     <TextBlock
-                        Margin="5 0 5 0"
+                        Margin="5 0"
                         VerticalAlignment="Center"
                         FontSize="11"
                         Foreground="{DynamicResource PluginInfoColor}"

@@ -23,81 +23,73 @@
             <RowDefinition Height="73" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Border
-            Grid.Row="0"
-            Padding="5,18,0,0"
-            HorizontalAlignment="Stretch">
-            <DockPanel>
-                <TextBlock
-                    Margin="0,5,0,0"
-                    DockPanel.Dock="Left"
-                    FontSize="30"
-                    Style="{StaticResource PageTitle}"
-                    Text="{DynamicResource plugins}"
-                    TextAlignment="Left" />
-                <TextBox
-                    Name="PluginFilterTextbox"
-                    Width="150"
-                    Height="34"
-                    Margin="0,5,26,0"
-                    HorizontalAlignment="Right"
-                    ContextMenu="{StaticResource TextBoxContextMenu}"
-                    DockPanel.Dock="Right"
-                    FontSize="14"
-                    Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
-                    TextAlignment="Left"
-                    ToolTip="{DynamicResource searchpluginToolTip}"
-                    ToolTipService.InitialShowDelay="200"
-                    ToolTipService.Placement="Top">
-                    <TextBox.Style>
-                        <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
-                            <Style.Resources>
-                                <VisualBrush
-                                    x:Key="CueBannerBrush"
-                                    AlignmentX="Left"
-                                    AlignmentY="Center"
-                                    Stretch="None">
-                                    <VisualBrush.Visual>
-                                        <Label
-                                            Padding="10,0,0,0"
-                                            Content="{DynamicResource searchplugin}"
-                                            Foreground="{DynamicResource CustomContextDisabled}" />
-                                    </VisualBrush.Visual>
-                                </VisualBrush>
-                            </Style.Resources>
-                            <Style.Triggers>
-                                <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="Text" Value="{x:Null}">
-                                    <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
-                                </Trigger>
-                                <Trigger Property="IsKeyboardFocused" Value="True">
-                                    <Setter Property="Background" Value="{DynamicResource Color02B}" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBox.Style>
-                </TextBox>
-            </DockPanel>
-        </Border>
-        <Border
-            Grid.Row="1"
-            Grid.Column="0"
-            Padding="0,0,0,0"
-            Background="{DynamicResource Color01B}">
+        <DockPanel Grid.Row="0" Margin="5 18 0 0">
+            <TextBlock
+                Margin="0 5 0 0"
+                DockPanel.Dock="Left"
+                FontSize="30"
+                Style="{StaticResource PageTitle}"
+                Text="{DynamicResource plugins}"
+                TextAlignment="Left" />
+            <TextBox
+                Name="PluginFilterTextbox"
+                Width="150"
+                Height="34"
+                Margin="0 5 26 0"
+                HorizontalAlignment="Right"
+                ContextMenu="{StaticResource TextBoxContextMenu}"
+                DockPanel.Dock="Right"
+                FontSize="14"
+                Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                TextAlignment="Left"
+                ToolTip="{DynamicResource searchpluginToolTip}"
+                ToolTipService.InitialShowDelay="200"
+                ToolTipService.Placement="Top">
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                        <Style.Resources>
+                            <VisualBrush
+                                x:Key="CueBannerBrush"
+                                AlignmentX="Left"
+                                AlignmentY="Center"
+                                Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label
+                                        Padding="10 0 0 0"
+                                        Content="{DynamicResource searchplugin}"
+                                        Foreground="{DynamicResource CustomContextDisabled}" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </DockPanel>
+        <Border Grid.Row="1" Grid.Column="0" Background="{DynamicResource Color01B}">
             <ListBox
                 Margin="5 0 7 10"
                 Background="{DynamicResource Color01B}"
                 FontSize="14"
                 ItemsSource="{Binding FilteredPluginViewModels}"
                 ItemContainerStyle="{StaticResource PluginList}"
+                ScrollViewer.CanContentScroll="False"
                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SelectedItem="{Binding SelectedPlugin}"
                 SnapsToDevicePixels="True"
                 Style="{DynamicResource PluginListStyle}"
                 VirtualizingPanel.ScrollUnit="Pixel"
-                VirtualizingStackPanel.IsVirtualizing="False"
+                VirtualizingStackPanel.IsVirtualizing="True"
                 VirtualizingStackPanel.VirtualizationMode="Recycling">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
