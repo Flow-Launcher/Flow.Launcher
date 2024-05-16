@@ -2811,8 +2811,8 @@
                                                 <cc:HotkeyDisplay Keys="Ctrl+R" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="Cycle History Up"
-                                                Icon="&#xf0ad;"
+                                                Title="{DynamicResource CycleHistoryUpHotkey}"
+                                                Icon="&#xe70e;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey="Alt+Up"
@@ -2821,8 +2821,8 @@
                                                     ValidateKeyGesture="False" />
                                             </cc:Card>
                                             <cc:Card
-                                                Title="Cycle History Down"
-                                                Icon="&#xf0ad;"
+                                                Title="{DynamicResource CycleHistoryDownHotkey}"
+                                                Icon="&#xe70d;"
                                                 Type="Inside">
                                                 <flowlauncher:HotkeyControl
                                                     DefaultHotkey="Alt+Down"
