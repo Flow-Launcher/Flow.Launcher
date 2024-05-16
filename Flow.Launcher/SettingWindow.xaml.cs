@@ -71,7 +71,7 @@ namespace Flow.Launcher
         private void CheckMediaPlayer()
         {
             
-            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer2.exe")))
+            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer.exe")))
             {
                 WMPWarning.Visibility = Visibility.Visible;
                 SoundEffectValue.IsEnabled = false;
