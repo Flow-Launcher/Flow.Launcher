@@ -15,14 +15,13 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <ScrollViewer
-        Margin="0,0,0,0"
-        Padding="0,0,6,0"
+        Padding="0 0 6 0"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
-        <StackPanel Margin="5,18,18,10">
+        <StackPanel Margin="5 18 18 10">
             <TextBlock
-                Margin="0,5,0,6"
+                Margin="0 5 0 6"
                 FontSize="30"
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource hotkeys}"
@@ -73,7 +72,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource hotkeyPresets}"
-                Margin="0,14,0,0"
+                Margin="0 14 0 0"
                 Icon="&#xf0e2;"
                 Sub="{DynamicResource hotkeyPresetsToolTip}">
                 <StackPanel>
@@ -174,7 +173,7 @@
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
                             <cc:HotkeyDisplay Keys="Ctrl+[" />
-                            <cc:HotkeyDisplay Margin="4,0,0,0" Keys="Ctrl+]" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+]" />
                         </StackPanel>
                     </cc:Card>
                     <cc:Card
@@ -183,7 +182,7 @@
                         Type="Inside">
                         <StackPanel Orientation="Horizontal">
                             <cc:HotkeyDisplay Keys="Ctrl+Plus" />
-                            <cc:HotkeyDisplay Margin="4,0,0,0" Keys="Ctrl+Minus" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
                         </StackPanel>
                     </cc:Card>
                 </StackPanel>
@@ -192,7 +191,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource autoCompleteHotkey}"
-                Margin="0,14,0,0"
+                Margin="0 14 0 0"
                 Icon="&#xe893;"
                 Sub="{DynamicResource autoCompleteHotkeyToolTip}">
                 <cc:ExCard.SideContent>
@@ -216,7 +215,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource SelectPrevItemHotkey}"
-                Margin="0,4,0,0"
+                Margin="0 4 0 0"
                 Icon="&#xe74a;">
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
@@ -239,7 +238,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource SelectNextItemHotkey}"
-                Margin="0,4,0,0"
+                Margin="0 4 0 0"
                 Icon="&#xe74b;">
                 <cc:ExCard.SideContent>
                     <flowlauncher:HotkeyControl
@@ -262,18 +261,18 @@
 
             <cc:ExCard
                 Title="{DynamicResource customQueryHotkey}"
-                Margin="0,20,0,0"
+                Margin="0 20 0 0"
                 Icon="&#xf26c;">
-                <StackPanel Margin="0,0,0,0">
+                <StackPanel>
                     <Separator
                         Width="Auto"
                         Margin="0"
                         BorderThickness="1"
                         Style="{StaticResource SettingSeparatorStyle}" />
-                    <StackPanel Margin="18,18,18,0">
+                    <StackPanel Margin="18 18 18 0">
                         <ListView
                             MinHeight="160"
-                            Margin="0,0,0,0"
+                            Margin="0"
                             Background="{DynamicResource Color02B}"
                             BorderBrush="DarkGray"
                             BorderThickness="1"
@@ -299,11 +298,7 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
-                        <StackPanel
-                            Margin="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Orientation="Horizontal">
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
                             <Button
                                 MinWidth="100"
                                 Margin="10"
@@ -316,7 +311,7 @@
                                 Content="{DynamicResource edit}" />
                             <Button
                                 MinWidth="100"
-                                Margin="10,10,0,10"
+                                Margin="10 10 0 10"
                                 Command="{Binding CustomHotkeyAddCommand}"
                                 Content="{DynamicResource add}" />
                         </StackPanel>
@@ -326,7 +321,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource customQueryShortcut}"
-                Margin="0,4,0,0"
+                Margin="0 4 0 0"
                 Icon="&#xf26b;">
                 <StackPanel>
                     <Separator
@@ -334,10 +329,10 @@
                         Margin="0"
                         BorderThickness="1"
                         Style="{StaticResource SettingSeparatorStyle}" />
-                    <StackPanel Margin="18,12,18,0">
+                    <StackPanel Margin="18 12 18 0">
                         <ListView
                             MinHeight="160"
-                            Margin="0,6,0,0"
+                            Margin="0 6 0 0"
                             Background="{DynamicResource Color02B}"
                             BorderBrush="DarkGray"
                             BorderThickness="1"
@@ -380,7 +375,7 @@
                                 Content="{DynamicResource edit}" />
                             <Button
                                 MinWidth="100"
-                                Margin="10,10,0,10"
+                                Margin="10 10 0 10"
                                 Command="{Binding CustomShortcutAddCommand}"
                                 Content="{DynamicResource add}" />
                         </StackPanel>
@@ -390,7 +385,7 @@
 
             <cc:ExCard
                 Title="{DynamicResource builtinShortcuts}"
-                Margin="0,4,0,14"
+                Margin="0 4 0 14"
                 Icon="&#xf158;">
                 <StackPanel>
                     <Separator
@@ -398,10 +393,10 @@
                         Margin="0"
                         BorderThickness="1"
                         Style="{StaticResource SettingSeparatorStyle}" />
-                    <StackPanel Margin="16,8,16,0">
+                    <StackPanel Margin="16 8 16 0">
                         <ListView
                             MinHeight="160"
-                            Margin="0,6,0,16"
+                            Margin="0 6 0 16"
                             Background="{DynamicResource Color02B}"
                             BorderBrush="DarkGray"
                             BorderThickness="1"
