@@ -21,16 +21,6 @@ public class CollapsedWhenExtension : MarkupExtension {
         set => IsEqualTo = value;
     }
 
-    public string? IsEqualToString
-    {
-        get => IsEqualTo switch
-        {
-            string s => s,
-            _ => null
-        };
-        set => IsEqualTo = value;
-    }
-
     public int? IsEqualToInt
     {
         get => IsEqualTo switch
@@ -40,6 +30,7 @@ public class CollapsedWhenExtension : MarkupExtension {
         };
         set => IsEqualTo = value;
     }
+
     protected virtual Visibility DefaultVisibility => Visibility.Visible;
     protected virtual Visibility InvertedVisibility => Visibility.Collapsed;
 

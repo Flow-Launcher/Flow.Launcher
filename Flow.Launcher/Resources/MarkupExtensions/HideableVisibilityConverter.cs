@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -26,14 +25,11 @@ public class HideableVisibilityConverter : IMultiValueConverter, IValueConverter
             value2 = System.Convert.ToInt32(enum2);
         }
 
-        Debug.WriteLine($"HideableConverter: {value1} == {value2}");
-
         return Equals(value1, value2) ? InvertedVisibility : DefaultVisibility;
     }
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        Debug.WriteLine($"HideableConverter: {value} ({value?.GetType()}) == {IsEqualTo} ({IsEqualTo?.GetType()})");
         return Equals(value, IsEqualTo) ? InvertedVisibility : DefaultVisibility;
     }
 
