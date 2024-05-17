@@ -5,6 +5,7 @@ using System.IO.Pipelines;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
@@ -141,7 +142,20 @@ namespace Flow.Launcher.Core.Plugin
 
         public virtual async ValueTask DisposeAsync()
         {
-            await RPC.InvokeAsync("close");
+            try
+            {
+                await RPC.InvokeAsync("close");
+            }
+            catch (RemoteMethodNotFoundException e)
+            {
+            }
+            catch (Exception e)
+            {
+                Log.Exception(
+                    $"Exception when calling close method for plugin <{Context.CurrentPluginMetadata.Name}>",
+                    e);
+            }
+
             RPC?.Dispose();
             ErrorStream?.Dispose();
         }
