@@ -2519,7 +2519,7 @@
                                                     Width="Auto"
                                                     BorderThickness="1"
                                                     Style="{StaticResource SettingSeparatorStyle}" />
-                                                <Border Margin="0" BorderThickness="0">
+                                                <Border Margin="0" BorderThickness="0" Name="VolumeAdjustCard">
                                                     <Border.Style>
                                                         <Style BasedOn="{StaticResource SettingGroupBox}" TargetType="Border">
                                                             <Setter Property="Visibility" Value="Collapsed" />
