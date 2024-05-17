@@ -49,6 +49,7 @@ namespace Flow.Launcher
         private bool _animating;
         MediaPlayer animationSoundWMP = new MediaPlayer();
         SoundPlayer animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+        private bool isArrowKeyPressed = false;
 
         #endregion
 
@@ -111,9 +112,11 @@ namespace Flow.Launcher
         private void OnInitialized(object sender, EventArgs e)
         {
         }
-
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // MouseEventHandler
+            PreviewMouseMove += MainPreviewMouseMove;
+
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
@@ -406,6 +409,7 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
+            isArrowKeyPressed = true;
             _animating = true;
             UpdatePosition();
 
@@ -494,6 +498,7 @@ namespace Flow.Launcher
             windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+            isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
             {
@@ -658,10 +663,12 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
                     break;
@@ -712,7 +719,21 @@ namespace Flow.Launcher
 
             }
         }
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up || e.Key == Key.Down)
+            {
+                isArrowKeyPressed = false;
+            }
+        }
 
+        private void MainPreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isArrowKeyPressed)
+            {
+                e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
+            }
+        }
         public void PreviewReset()
         {
             _viewModel.ResetPreview();
