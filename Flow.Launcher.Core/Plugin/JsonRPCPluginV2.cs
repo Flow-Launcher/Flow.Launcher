@@ -139,11 +139,11 @@ namespace Flow.Launcher.Core.Plugin
             return Task.CompletedTask;
         }
 
-        public virtual ValueTask DisposeAsync()
+        public virtual async ValueTask DisposeAsync()
         {
+            await RPC.InvokeAsync("close");
             RPC?.Dispose();
             ErrorStream?.Dispose();
-            return ValueTask.CompletedTask;
         }
     }
 }
