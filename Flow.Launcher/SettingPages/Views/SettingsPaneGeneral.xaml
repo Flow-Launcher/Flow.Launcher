@@ -65,7 +65,7 @@
                             SelectedValue="{Binding Settings.CustomScreenNumber}"
                             Visibility="{ext:VisibleWhen
                                         {Binding Settings.SearchWindowScreen},
-                                        {x:Static userSettings:SearchWindowScreens.Custom}}"
+                                        IsEqualTo={x:Static userSettings:SearchWindowScreens.Custom}}"
                             />
                     </StackPanel>
                 </cc:Card>
@@ -75,7 +75,7 @@
                     Title="{DynamicResource SearchWindowAlign}"
                     Visibility="{ext:CollapsedWhen
                                 {Binding Settings.SearchWindowScreen},
-                                {x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
+                                IsEqualTo={x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
                     <StackPanel Orientation="Horizontal">
                         <ComboBox
                             MinWidth="160"
@@ -92,7 +92,7 @@
                             VerticalAlignment="Center"
                             Visibility="{ext:VisibleWhen
                                         {Binding Settings.SearchWindowAlign},
-                                        {x:Static userSettings:SearchWindowAligns.Custom}}">
+                                        IsEqualTo={x:Static userSettings:SearchWindowAligns.Custom}}">
                             <TextBox VerticalAlignment="Center" MinWidth="80"
                                      Text="{Binding Settings.CustomWindowLeft}" />
                             <TextBlock VerticalAlignment="Center" Margin="10" Text="x" />

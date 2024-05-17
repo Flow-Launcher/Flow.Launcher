@@ -11,6 +11,4 @@ public class VisibleWhenExtension : CollapsedWhenExtension
     protected override Visibility InvertedVisibility => Visibility.Visible;
 
     public VisibleWhenExtension(Binding when) : base(when) { }
-
-    public VisibleWhenExtension(Binding when, object? isEqualTo) : base(when, isEqualTo) { }
 }

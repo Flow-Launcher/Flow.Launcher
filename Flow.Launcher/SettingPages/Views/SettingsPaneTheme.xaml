@@ -425,7 +425,7 @@
                             TextWrapping="NoWrap"
                             Visibility="{ext:VisibleWhen
                                          {Binding Settings.AnimationSpeed},
-                                         {x:Static userSettings:AnimationSpeeds.Custom}}" />
+                                         IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
                     </StackPanel>
                 </cc:Card>
             </cc:CardGroup>

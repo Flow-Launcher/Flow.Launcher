@@ -39,12 +39,6 @@ public class CollapsedWhenExtension : MarkupExtension {
         When = when;
     }
 
-    public CollapsedWhenExtension(Binding when, object? isEqualTo)
-    {
-        When = when;
-        IsEqualTo = isEqualTo;
-    }
-
     public override object ProvideValue(IServiceProvider serviceProvider) {
         if (serviceProvider.GetService(typeof(IProvideValueTarget)) is not IProvideValueTarget provideValueTarget)
             return DependencyProperty.UnsetValue;
