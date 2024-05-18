@@ -313,11 +313,11 @@
                     <Line
                         x:Name="ProgressBar"
                         Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
-                        Height="2"
+                        Height="1"
                         Margin="12,0,12,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"
-                        StrokeThickness="2"
+                        StrokeThickness="1"
                         Style="{DynamicResource PendingLineStyle}"
                         Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         X1="-100"
