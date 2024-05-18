@@ -114,7 +114,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomShortcutSetting(item.Key, item.Value, null);
+        var window = new CustomShortcutSetting(item.Key, item.Value);
         if (window.ShowDialog() is not true) return;
 
         var index = Settings.CustomShortcuts.IndexOf(item);
