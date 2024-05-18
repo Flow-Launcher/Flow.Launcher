@@ -15,7 +15,7 @@
     MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
-    AllowsTransparency="True"
+    AllowsTransparency="False"
     Background="Transparent"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
@@ -29,12 +29,14 @@
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
-    Style="{DynamicResource WindowStyle}"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="None"
+    WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -200,7 +202,10 @@
             Modifiers="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
-        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
+        <Grid.Background>
+            <SolidColorBrush Opacity="0.5" Color="RED" />
+        </Grid.Background>
+        <Border MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">
