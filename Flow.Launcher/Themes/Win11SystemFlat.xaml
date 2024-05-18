@@ -27,7 +27,6 @@
         <Setter Property="FontSize" Value="22" />
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
         <Setter Property="CaretBrush" Value="{DynamicResource Color05B}" />
-        <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0,4,66,0" />
         <Setter Property="Height" Value="42" />
     </Style>
