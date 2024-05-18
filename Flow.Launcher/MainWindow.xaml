@@ -26,6 +26,7 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
+    PreviewKeyUp="OnKeyUp"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
