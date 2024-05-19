@@ -379,7 +379,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
-
+                lastHistoryIndex = 1;
             }
 
             if (hideWindow)
