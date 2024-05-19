@@ -42,7 +42,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly History _history;
-        private int lasthistoryindex = 1;
+        private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -268,10 +268,10 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
-                if (lasthistoryindex < _history.Items.Count)
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex < _history.Items.Count)
                 {
-                    lasthistoryindex++;
+                    lastHistoryIndex++;
                 }
             }
         }
@@ -281,10 +281,10 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lasthistoryindex].Query.ToString());
-                if (lasthistoryindex > 1)
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex > 1)
                 {
-                    lasthistoryindex--;
+                    lastHistoryIndex--;
                 }
             }
         }
@@ -379,6 +379,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
+
             }
 
             if (hideWindow)
@@ -427,13 +428,12 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            var results = SelectedResults;
             if (_history.Items.Count > 0
                 && _queryText == String.Empty
                 && !HistorySelected()
                 && !ContextMenuSelected())
             {
-                lasthistoryindex = 1;
+                lastHistoryIndex = 1;
                 ReverseHistory();
             }
             else
@@ -1164,7 +1164,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
-            lasthistoryindex = 1;
+            lastHistoryIndex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
             lastContextMenuResult = new Result();
