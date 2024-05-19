@@ -136,7 +136,7 @@
     <system:String x:Key="SampleSubTitleExplorer">Rechercher des fichiers, dossiers et contenus de fichiers</system:String>
     <system:String x:Key="SampleTitleWebSearch">Recherche Web</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Recherchez sur le Web avec la prise en charge de moteurs de recherche différents</system:String>
-    <system:String x:Key="SampleTitleProgram">Programme</system:String>
+    <system:String x:Key="SampleTitleProgram">Programmes</system:String>
     <system:String x:Key="SampleSubTitleProgram">Lancez des programmes en tant qu'administrateur ou un utilisateur différent</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Tueur de processus</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminer les processus non désirés</system:String>
