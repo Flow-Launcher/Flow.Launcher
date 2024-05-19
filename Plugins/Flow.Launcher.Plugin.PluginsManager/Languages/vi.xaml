@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} bởi {1} {2}{3}Bạn có muốn gỡ cài đặt plugin này không? Sau khi gỡ cài đặt Flow sẽ tự động khởi động lại.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Cập nhật plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Plugin này có bản cập nhật, bạn có muốn xem nó không?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Đã cài đặt plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Tải xuống bản kê khai plugin không thành công</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Vui lòng kiểm tra xem bạn có thể kết nối với github.com không. Lỗi này có nghĩa là bạn không thể cài đặt hoặc cập nhật plugin.</system:String>
