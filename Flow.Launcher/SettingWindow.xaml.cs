@@ -305,8 +305,8 @@ namespace Flow.Launcher
         }
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
-                {
-                    if (Keyboard.FocusedElement is not TextBox textBox)
+        {
+            if (Keyboard.FocusedElement is not TextBox textBox)
             {
                 return;
             }
