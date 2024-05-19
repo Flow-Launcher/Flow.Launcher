@@ -12,7 +12,6 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 using Screen = System.Windows.Forms.Screen;
-using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
@@ -24,12 +23,10 @@ using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
-using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
-using System.IO;
 
 namespace Flow.Launcher
 {
@@ -47,9 +44,11 @@ namespace Flow.Launcher
         private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
-        MediaPlayer animationSoundWMP = new MediaPlayer();
-        SoundPlayer animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
         private bool isArrowKeyPressed = false;
+
+        private bool isWMPInstalled = true;
+        private MediaPlayer animationSoundWMP;
+        private SoundPlayer animationSoundWPF;
 
         #endregion
 
@@ -62,7 +61,7 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            InitSoundEffects();
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
@@ -508,20 +507,35 @@ namespace Flow.Launcher
             windowsb.Begin(FlowMainWindow);
         }
 
+        private void InitSoundEffects()
+        {
+            isWMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            if (isWMPInstalled)
+            {
+                animationSoundWMP = new MediaPlayer();
+                animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            }
+            else
+            {
+                animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+            }
+        }
+
         private void SoundPlay()
         {
 
-            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer.exe")))
-            {
-                animationSoundWPF.Play();
-            }
-            else
+            if (isWMPInstalled)
             {
                 animationSoundWMP.Position = TimeSpan.Zero;
                 animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
                 animationSoundWMP.Play();
             }
+            else
+            {
+                animationSoundWPF.Play();
+            }
         }
+
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Left) DragMove();

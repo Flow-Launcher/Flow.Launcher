@@ -2,7 +2,6 @@
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
@@ -24,7 +23,6 @@ using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using MessageBox = System.Windows.MessageBox;
 using TextBox = System.Windows.Controls.TextBox;
 using ThemeManager = ModernWpf.ThemeManager;
-using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -42,7 +40,6 @@ namespace Flow.Launcher
             API = api;
             InitializePosition();
             InitializeComponent();
-
         }
 
         #region General
@@ -70,13 +67,13 @@ namespace Flow.Launcher
 
         private void CheckMediaPlayer()
         {
-            
-            if (!File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Windows Media Player", "wmplayer2.exe")))
+            if (!WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled())
             {
                 WMPWarning.Visibility = Visibility.Visible;
                 VolumeAdjustCard.Visibility = Visibility.Collapsed;
             }
         }
+
         private void SettingsWindowViewModelChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(viewModel.ExternalPlugins))
