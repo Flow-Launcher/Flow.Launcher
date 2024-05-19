@@ -429,9 +429,8 @@ namespace Flow.Launcher.ViewModel
         private void SelectPrevItem()
         {
             if (_history.Items.Count > 0
-                && _queryText == String.Empty
-                && !HistorySelected()
-                && !ContextMenuSelected())
+                && QueryText == string.Empty
+                && SelectedIsFromQueryResults())
             {
                 lastHistoryIndex = 1;
                 ReverseHistory();
