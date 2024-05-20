@@ -67,7 +67,7 @@ namespace Flow.Launcher
 
         private void CheckMediaPlayer()
         {
-            if (!WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled())
+            if (settings.WMPInstalled)
             {
                 WMPWarning.Visibility = Visibility.Visible;
                 VolumeAdjustCard.Visibility = Visibility.Collapsed;

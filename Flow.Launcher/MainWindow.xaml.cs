@@ -46,7 +46,6 @@ namespace Flow.Launcher
         private bool _animating;
         private bool isArrowKeyPressed = false;
 
-        private bool isWMPInstalled = true;
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
 
@@ -509,8 +508,7 @@ namespace Flow.Launcher
 
         private void InitSoundEffects()
         {
-            isWMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-            if (isWMPInstalled)
+            if (_settings.WMPInstalled)
             {
                 animationSoundWMP = new MediaPlayer();
                 animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
@@ -523,8 +521,7 @@ namespace Flow.Launcher
 
         private void SoundPlay()
         {
-
-            if (isWMPInstalled)
+            if (_settings.WMPInstalled)
             {
                 animationSoundWMP.Position = TimeSpan.Zero;
                 animationSoundWMP.Volume = _settings.SoundVolume / 100.0;

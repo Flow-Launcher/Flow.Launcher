@@ -271,6 +271,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
         public int CustomAnimationLength { get; set; } = 360;
 
+        [JsonIgnore]
+        public bool WMPInstalled { get; set; } = true;
+
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
