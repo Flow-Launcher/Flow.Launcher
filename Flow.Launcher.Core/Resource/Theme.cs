@@ -377,7 +377,6 @@ namespace Flow.Launcher.Core.Resource
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
             if (BlurEnabled)
             {
-          
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
@@ -403,7 +402,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
             }
-            else if (Color == "Auto")
+            else
             {
                 //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
             }
@@ -437,6 +436,7 @@ namespace Flow.Launcher.Core.Resource
 
             return null;
         }
+
         #endregion
     }
 }

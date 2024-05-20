@@ -8,9 +8,9 @@
 
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="BlurMode">Dark</system:String>
-    <Style x:Key="BlurTint" TargetType="{x:Type Grid}">
-        <Setter Property="Background" Value="red" />
-    </Style>
+    <Color x:Key="WindowBlurTint">red</Color>
+    <system:Double x:Key="TintValue">0.5</system:Double>
+
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
     </Style>

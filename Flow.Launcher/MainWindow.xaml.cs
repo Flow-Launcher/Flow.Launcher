@@ -744,25 +744,40 @@ namespace Flow.Launcher
             if (_settings.ColorScheme == Constant.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
-                ThemeManager.Instance.BlurColor("Light");
             }
             else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
-                ThemeManager.Instance.BlurColor("Dark");
             }
+            TintColor();
         }
 
         private void OnThemeChanged(ModernWpf.ThemeManager sender, object args)
         {
-            var newTheme = sender.ActualApplicationTheme;
-            if (newTheme == ApplicationTheme.Dark)
+            TintColor();
+        }
+
+        private void TintColor()
+        {
+            if (ThemeManager.Instance.BlurMode() == "Light")
+            {
+                ThemeManager.Instance.BlurColor("Light");
+            }
+            else if (ThemeManager.Instance.BlurMode() == "Dark")
             {
                 ThemeManager.Instance.BlurColor("Dark");
             }
-            else if (newTheme == ApplicationTheme.Light)
+            else if (ThemeManager.Instance.BlurMode() == "Auto")
             {
-                ThemeManager.Instance.BlurColor("Light");
+                var newTheme = ModernWpf.ThemeManager.Current.ActualApplicationTheme;
+                if (newTheme == ApplicationTheme.Dark)
+                {
+                    ThemeManager.Instance.BlurColor("Dark");
+                }
+                else if (newTheme == ApplicationTheme.Light)
+                {
+                    ThemeManager.Instance.BlurColor("Light");
+                }
             }
         }
 
