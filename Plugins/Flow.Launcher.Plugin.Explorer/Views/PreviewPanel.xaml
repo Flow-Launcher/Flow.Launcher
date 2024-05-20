@@ -1,0 +1,137 @@
+﻿<UserControl x:Class="Flow.Launcher.Plugin.Explorer.Views.PreviewPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:sys="clr-namespace:System;assembly=System.Runtime"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid Margin="20 0 10 0" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" VerticalAlignment="Center">
+            <Image
+                Margin="0 16 0 0"
+                Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                HorizontalAlignment="Stretch"
+                StretchDirection="DownOnly">
+                <Image.Style>
+                    <Style TargetType="Image">
+                        <Setter Property="MaxWidth" Value="96" />
+                        <Setter Property="MaxHeight" Value="320" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding UseBigThumbnail}" Value="True">
+                                <Setter Property="MaxWidth" Value="{Binding ElementName=Preview, Path=ActualWidth}" />
+                                <Setter Property="MaxHeight" Value="{Binding ElementName=Preview, Path=ActualHeight}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <TextBlock
+                Margin="0 6 0 16"
+                HorizontalAlignment="Stretch"
+                Style="{DynamicResource PreviewItemTitleStyle}"
+                Text="{Binding Result.Title}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+        </StackPanel>
+        <StackPanel Grid.Row="1">
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Style.Triggers>
+                        <DataTrigger
+                            Binding="{Binding Result.SubTitle.Length}"
+                            Value="0">
+                            <Setter Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
+            <Separator Style="{DynamicResource PreviewSep}" />
+            <TextBlock
+                Style="{DynamicResource PreviewItemSubTitleStyle}"
+                Text="{Binding Result.SubTitle}" />
+            <StackPanel Orientation="Vertical">
+                <StackPanel.Style>
+                    <Style TargetType="StackPanel">
+                        <Style.Triggers>
+                            <DataTrigger
+                                Binding="{Binding ElementName=SizeValue, Path=Text}"
+                                Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Height" Value="0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Style>
+                <Separator Margin="0" Style="{DynamicResource PreviewSep}" />
+                <Grid Margin="0 10 0 0" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{DynamicResource FileSize}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Name="SizeValue"
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{Binding FileSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="0"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{DynamicResource Created}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{Binding CreatedAt, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                        TextWrapping="Wrap" />
+
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{DynamicResource LastModified}"
+                        TextWrapping="Wrap" />
+                    <TextBlock
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        Margin="0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        Style="{DynamicResource PreviewItemSubTitleStyle}"
+                        Text="{Binding LastModifiedAt, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

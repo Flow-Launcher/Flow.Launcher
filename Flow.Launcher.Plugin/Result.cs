@@ -130,21 +130,6 @@ namespace Flow.Launcher.Plugin
         public int Score { get; set; }
 
         /// <summary>
-        /// File Size
-        /// </summary>
-        public string FileSize { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Created
-        /// </summary>
-        public string FileCreated { get; set; } = string.Empty;
-
-        /// <summary>
-        /// Last Modified Date File
-        /// </summary>
-        public string LastModifed { get; set; } = string.Empty;
-
-        /// <summary>
         /// A list of indexes for the characters to be highlighted in Title
         /// </summary>
         public IList<int> TitleHighlightData { get; set; }
@@ -220,9 +205,6 @@ namespace Flow.Launcher.Plugin
                 TitleHighlightData = TitleHighlightData,
                 OriginQuery = OriginQuery,
                 PluginDirectory = PluginDirectory,
-                FileCreated = FileCreated,
-                FileSize = FileSize,
-                LastModifed = LastModifed
             };
         }
 
@@ -318,8 +300,6 @@ namespace Flow.Launcher.Plugin
                 IsMedia = false,
                 PreviewDelegate = null,
             };
-
-
         }
     }
 }

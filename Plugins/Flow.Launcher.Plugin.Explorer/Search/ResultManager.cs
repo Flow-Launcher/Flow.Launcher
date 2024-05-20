@@ -8,14 +8,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using System.Windows.Input;
-using System.Windows.Shapes;
 using Path = System.IO.Path;
-using System.Globalization;
+using System.Windows.Controls;
+using Flow.Launcher.Plugin.Explorer.Views;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
     public static class ResultManager
     {
+        private static readonly string[] SizeUnits = { "B", "KB", "MB", "GB", "TB" };
         private static PluginInitContext Context;
         private static Settings Settings { get; set; }
 
@@ -175,36 +176,28 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
-        private static string ToReadableSize(long pDrvSize, int pi)
+        internal static string ToReadableSize(long sizeOnDrive, int pi)
         {
-            int mok = 0;
-            double drvSize = pDrvSize;
-            string uom = "Byte"; // Unit Of Measurement
+            var unitIndex = 0;
+            double readableSize = sizeOnDrive;
 
-            while (drvSize > 1024.0)
+            while (readableSize > 1024.0 && unitIndex < SizeUnits.Length - 1)
             {
-                drvSize /= 1024.0;
-                mok++;
+                readableSize /= 1024.0;
+                unitIndex++;
             }
 
-            if (mok == 1)
-                uom = "KB";
-            else if (mok == 2)
-                uom = "MB";
-            else if (mok == 3)
-                uom = "GB";
-            else if (mok == 4)
-                uom = "TB";
+            var unit = SizeUnits[unitIndex] ?? "";
 
-            var returnStr = $"{Convert.ToInt32(drvSize)}{uom}";
-            if (mok != 0)
+            var returnStr = $"{Convert.ToInt32(readableSize)} {unit}";
+            if (unitIndex != 0)
             {
                 returnStr = pi switch
                 {
-                    1 => $"{drvSize:F1}{uom}",
-                    2 => $"{drvSize:F2}{uom}",
-                    3 => $"{drvSize:F3}{uom}",
-                    _ => $"{Convert.ToInt32(drvSize)}{uom}"
+                    1 => $"{readableSize:F1} {unit}",
+                    2 => $"{readableSize:F2} {unit}",
+                    3 => $"{readableSize:F3} {unit}",
+                    _ => $"{Convert.ToInt32(readableSize)} {unit}"
                 };
             }
 
@@ -242,17 +235,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             var title = Path.GetFileName(filePath);
 
-           
+
             /* Preview Detail */
-            long fileSize = new System.IO.FileInfo(filePath).Length;
-            string fileSizStr = ToReadableSize(fileSize, 2);
-
-            DateTime created = System.IO.File.GetCreationTime(filePath);
-            string createdStr = created.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
-            DateTime lastModified = System.IO.File.GetLastWriteTime(filePath);
-            string lastModifiedStr = lastModified.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
-
-
 
             var result = new Result
             {
@@ -263,10 +247,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
-                FileSize = fileSizStr,
-                FileCreated = createdStr,
-                LastModifed = lastModifiedStr,
                 CopyText = filePath,
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(filePath)),
                 Action = c =>
                 {
                     try
