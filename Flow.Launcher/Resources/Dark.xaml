@@ -18,6 +18,7 @@
     <SolidColorBrush x:Key="HotkeyForeground" Color="#7b7b7b" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#7b7b7b" />
     <SolidColorBrush x:Key="ClockDateForeground" Color="#4d4d4d" />
+    <Color x:Key="WindowBlurTint">#CC202020</Color>
     <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
 
 

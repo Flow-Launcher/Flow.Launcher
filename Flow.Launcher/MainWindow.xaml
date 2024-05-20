@@ -32,10 +32,13 @@
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="SingleBorderWindow"
+    WindowStyle="None"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="0" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+        <WindowChrome
+            CaptionHeight="9"
+            GlassFrameThickness="-2"
+            ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
@@ -203,9 +206,9 @@
     </Window.InputBindings>
     <Grid>
         <Grid.Background>
-            <SolidColorBrush Opacity="0.5" Color="White" />
+            <SolidColorBrush Opacity="{DynamicResource TintValue}" Color="{DynamicResource WindowBlurTint}" />
         </Grid.Background>
-        <Border MouseDown="OnMouseDown">
+        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
                 <Grid>
                     <Border Style="{DynamicResource QueryBoxBgStyle}">

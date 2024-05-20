@@ -303,17 +303,10 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
+
+        #region Blur Handling
         public class ParameterTypes
         {
-            /*
-            [Flags]
-            enum DWM_SYSTEMBACKDROP_TYPE
-            {
-                DWMSBT_MAINWINDOW = 2, // Mica
-                DWMSBT_TRANSIENTWINDOW = 3, // Acrylic
-                DWMSBT_TABBEDWINDOW = 4 // Tabbed
-            }
-            */
 
             [Flags]
             public enum DWMWINDOWATTRIBUTE
@@ -357,7 +350,7 @@ namespace Flow.Launcher.Core.Resource
         {
             IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
             HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
-            mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 255, 181, 178);
+            //mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 255, 181, 178);
 
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
             margins.cxLeftWidth = -1;
@@ -365,66 +358,57 @@ namespace Flow.Launcher.Core.Resource
             margins.cyTopHeight = -1;
             margins.cyBottomHeight = -1;
             Methods.ExtendFrame(mainWindowSrc.Handle, margins);
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+
             // Remove OS minimizing/maximizing animation
             Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
+            SetBlurForWindow();
         }
 
-        #region Blur Handling
-        /*
-        Found on https://github.com/riverar/sample-win10-aeroglass *****************
-        */
-        private enum AccentState
-        {
-            ACCENT_DISABLED = 0,
-            ACCENT_ENABLE_GRADIENT = 1,
-            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-            ACCENT_ENABLE_BLURBEHIND = 3,
-            ACCENT_INVALID_STATE = 4
-        }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct AccentPolicy
-        {
-            public AccentState AccentState;
-            public int AccentFlags;
-            public int GradientColor;
-            public int AnimationId;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct WindowCompositionAttributeData
-        {
-            public WindowCompositionAttribute Attribute;
-            public IntPtr Data;
-            public int SizeOfData;
-        }
-
-        private enum WindowCompositionAttribute
-        {
-            WCA_ACCENT_POLICY = 19
-        }
-        [DllImport("user32.dll")]
-        private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
 
         /// <summary>
         /// Sets the blur for a window via SetWindowCompositionAttribute
         /// </summary>
         public void SetBlurForWindow()
         {
-
+            //SetWindowAccent();
+            var dict = GetThemeResourceDictionary(Settings.Theme);
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
             if (BlurEnabled)
             {
-                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
+          
+                windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+                BlurColor(BlurMode());
             }
             else
             {
-                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
+                windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                mainWindow.WindowStyle = WindowStyle.None;
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
             }
+            UpdateResourceDictionary(dict);
         }
 
+        public void BlurColor(string Color)
+        {
+            if (Color == "Light")
+            {
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+            }
+            else if (Color == "Dark")
+            {
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+            }
+            else if (Color == "Auto")
+            {
+                //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+            }
+
+        }
         private bool IsBlurTheme()
         {
             if (Environment.OSVersion.Version >= new Version(6, 2))
@@ -439,29 +423,19 @@ namespace Flow.Launcher.Core.Resource
 
             return false;
         }
-
-        private void SetWindowAccent(Window w, AccentState state)
+        public string BlurMode()
         {
-            var windowHelper = new WindowInteropHelper(w);
-
-            windowHelper.EnsureHandle();
-
-            var accent = new AccentPolicy { AccentState = state };
-            var accentStructSize = Marshal.SizeOf(accent);
-
-            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-            Marshal.StructureToPtr(accent, accentPtr, false);
-
-            var data = new WindowCompositionAttributeData
+            if (Environment.OSVersion.Version >= new Version(6, 2))
             {
-                Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                SizeOfData = accentStructSize,
-                Data = accentPtr
-            };
+                var resource = Application.Current.TryFindResource("BlurMode");
 
-            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
+                if (resource is string)
+                    return (string)resource;
 
-            Marshal.FreeHGlobal(accentPtr);
+                return null;
+            }
+
+            return null;
         }
         #endregion
     }

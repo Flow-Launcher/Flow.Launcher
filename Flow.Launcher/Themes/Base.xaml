@@ -3,6 +3,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure">
+
+    <Style x:Key="BlurTint" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
     <CornerRadius x:Key="ItemRadius">0</CornerRadius>
     <Thickness x:Key="ItemMargin">0</Thickness>
     <Thickness x:Key="ResultMargin">0</Thickness>

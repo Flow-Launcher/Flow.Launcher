@@ -31,6 +31,8 @@ using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Drawing.Printing;
+using ModernWpf;
+using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 
 namespace Flow.Launcher
 {
@@ -63,8 +65,8 @@ namespace Flow.Launcher
             InitializePosition();
 
             animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
-
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
+            ModernWpf.ThemeManager.Current.ActualApplicationThemeChanged += OnThemeChanged;
         }
 
         public MainWindow()
@@ -742,10 +744,25 @@ namespace Flow.Launcher
             if (_settings.ColorScheme == Constant.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+                ThemeManager.Instance.BlurColor("Light");
             }
             else if (_settings.ColorScheme == Constant.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+                ThemeManager.Instance.BlurColor("Dark");
+            }
+        }
+
+        private void OnThemeChanged(ModernWpf.ThemeManager sender, object args)
+        {
+            var newTheme = sender.ActualApplicationTheme;
+            if (newTheme == ApplicationTheme.Dark)
+            {
+                ThemeManager.Instance.BlurColor("Dark");
+            }
+            else if (newTheme == ApplicationTheme.Light)
+            {
+                ThemeManager.Instance.BlurColor("Light");
             }
         }
 
