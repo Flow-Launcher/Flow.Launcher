@@ -169,7 +169,7 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
-    <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
+    <system:String x:Key="hotkeys">Гарячі клавіші</system:String>
     <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть скорочення, щоб показати/приховати Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Toggle Preview</system:String>
@@ -379,7 +379,7 @@
     <system:String x:Key="Welcome_Page2_Title">Пошук та запуск усіх файлів і програм на вашому комп'ютері</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Шукайте все: програми, файли, закладки, YouTube, Twitter тощо. І все це за допомогою клавіатури, навіть не торкаючись миші.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher запускається за допомогою наведеної нижче гарячої клавіші, спробуйте натиснути її зараз. Щоб її змінити, клацніть на ввід і натисніть потрібну гарячу клавішу на клавіатурі.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Гаряча клавіша</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Гарячі клавіші</system:String>
     <system:String x:Key="Welcome_Page4_Title">Ключове слово дії та команди</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Шукайте в Інтернеті, запускайте програми або виконуйте різноманітні функції за допомогою плагінів Flow Launcher. Деякі функції починаються з ключового слова дії, але за потреби їх можна використовувати і без нього. Спробуйте наведені нижче запити у Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Давайте запустимо Flow Launcher</system:String>
