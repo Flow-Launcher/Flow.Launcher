@@ -448,13 +448,13 @@ namespace Flow.Launcher
         {
             if (settings.SettingWindowTop == null)
             {
-                Top = settings.SettingWindowTop;
-                Left = settings.SettingWindowLeft;
+                Top = WindowTop();
+                Left = WindowLeft();
             }
             else
             {
-                Top = WindowTop();
-                Left = WindowLeft();
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
             }
             WindowState = settings.SettingWindowState;
         }
