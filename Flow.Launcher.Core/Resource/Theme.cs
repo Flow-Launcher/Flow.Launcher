@@ -12,6 +12,7 @@ using System.Windows.Media.Effects;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using static Flow.Launcher.Core.Resource.Theme.ParameterTypes;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -302,9 +303,78 @@ namespace Flow.Launcher.Core.Resource
             UpdateResourceDictionary(dict);
         }
 
+        public class ParameterTypes
+        {
+            /*
+            [Flags]
+            enum DWM_SYSTEMBACKDROP_TYPE
+            {
+                DWMSBT_MAINWINDOW = 2, // Mica
+                DWMSBT_TRANSIENTWINDOW = 3, // Acrylic
+                DWMSBT_TABBEDWINDOW = 4 // Tabbed
+            }
+            */
+
+            [Flags]
+            public enum DWMWINDOWATTRIBUTE
+            {
+                DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
+                DWMWA_SYSTEMBACKDROP_TYPE = 38,
+                DWMWA_TRANSITIONS_FORCEDISABLED = 3,
+                DWMWA_BORDER_COLOR
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct MARGINS
+            {
+                public int cxLeftWidth;      // width of left border that retains its size
+                public int cxRightWidth;     // width of right border that retains its size
+                public int cyTopHeight;      // height of top border that retains its size
+                public int cyBottomHeight;   // height of bottom border that retains its size
+            };
+        }
+
+        public static class Methods
+        {
+            [DllImport("DwmApi.dll")]
+            static extern int DwmExtendFrameIntoClientArea(
+                IntPtr hwnd,
+                ref ParameterTypes.MARGINS pMarInset);
+
+            [DllImport("dwmapi.dll")]
+            static extern int DwmSetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE dwAttribute, ref int pvAttribute, int cbAttribute);
+
+            public static int ExtendFrame(IntPtr hwnd, ParameterTypes.MARGINS margins)
+                => DwmExtendFrameIntoClientArea(hwnd, ref margins);
+
+            public static int SetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE attribute, int parameter)
+                => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
+        }
+
+        Window mainWindow = Application.Current.MainWindow;
+
+        public void RefreshFrame()
+        {
+            IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
+            HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
+            mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 255, 181, 178);
+
+            ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
+            margins.cxLeftWidth = -1;
+            margins.cxRightWidth = -1;
+            margins.cyTopHeight = -1;
+            margins.cyBottomHeight = -1;
+            Methods.ExtendFrame(mainWindowSrc.Handle, margins);
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+            // Remove OS minimizing/maximizing animation
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+        }
+
         #region Blur Handling
         /*
-        Found on https://github.com/riverar/sample-win10-aeroglass
+        Found on https://github.com/riverar/sample-win10-aeroglass *****************
         */
         private enum AccentState
         {
@@ -344,6 +414,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+
             if (BlurEnabled)
             {
                 SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);

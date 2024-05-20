@@ -203,7 +203,7 @@
     </Window.InputBindings>
     <Grid>
         <Grid.Background>
-            <SolidColorBrush Opacity="0.5" Color="RED" />
+            <SolidColorBrush Opacity="0.5" Color="White" />
         </Grid.Background>
         <Border MouseDown="OnMouseDown">
             <StackPanel Orientation="Vertical">
