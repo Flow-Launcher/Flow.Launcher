@@ -62,7 +62,11 @@ namespace Flow.Launcher.ViewModel
         public bool PluginState
         {
             get => !PluginPair.Metadata.Disabled;
-            set => PluginPair.Metadata.Disabled = !value;
+            set
+            {
+                PluginPair.Metadata.Disabled = !value;
+                PluginSettingsObject.Disabled = !value;
+            }
         }
         public bool IsExpanded
         {
@@ -96,6 +100,7 @@ namespace Flow.Launcher.ViewModel
         public string InitAndQueryTime => InternationalizationManager.Instance.GetTranslation("plugin_init_time") + " " + PluginPair.Metadata.InitTime + "ms, " + InternationalizationManager.Instance.GetTranslation("plugin_query_time") + " " + PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
+        public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
         public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
         {
@@ -106,6 +111,7 @@ namespace Flow.Launcher.ViewModel
         public void ChangePriority(int newPriority)
         {
             PluginPair.Metadata.Priority = newPriority;
+            PluginSettingsObject.Priority = newPriority;
             OnPropertyChanged(nameof(Priority));
         }
 

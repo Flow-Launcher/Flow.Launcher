@@ -54,7 +54,7 @@
                             Margin="0 0 22 0"
                             VerticalAlignment="Center"
                             Command="{Binding EditPluginPriorityCommand}"
-                            Content="{Binding Priority, UpdateSourceTrigger=PropertyChanged}"
+                            Content="{Binding Priority}"
                             Cursor="Hand"
                             ToolTip="{DynamicResource priorityToolTip}">
                             <!--#region Priority Button Style-->
