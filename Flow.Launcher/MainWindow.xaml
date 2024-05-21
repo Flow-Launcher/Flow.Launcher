@@ -204,10 +204,10 @@
             Command="{Binding SelectPrevPageCommand}"
             Modifiers="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
-    <Grid>
-        <Grid.Background>
+    <Grid Style="{DynamicResource BlurTint}">
+        <!--<Grid.Background>
             <SolidColorBrush Opacity="{DynamicResource TintValue}" Color="{DynamicResource WindowBlurTint}" />
-        </Grid.Background>
+        </Grid.Background>-->
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
             <StackPanel Orientation="Vertical">
                 <Grid>
@@ -356,6 +356,9 @@
 
                 </Grid>
                 <Grid>
+                    <!--<Grid.Background>
+                        <SolidColorBrush Opacity="0.5" Color="#000000" />
+                    </Grid.Background>-->
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" MinWidth="100" />
                         <ColumnDefinition Width="Auto" />

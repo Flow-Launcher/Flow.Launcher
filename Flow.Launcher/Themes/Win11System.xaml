@@ -9,6 +9,9 @@
     </ResourceDictionary.MergedDictionaries>
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="BlurMode">Auto</system:String>
+    <Style x:Key="BlurTint" TargetType="{x:Type Grid}">
+        <Setter Property="Background" Value="{DynamicResource WindowBlurTintColor}" />
+    </Style>
 
     <Style
         x:Key="BulletStyle"
