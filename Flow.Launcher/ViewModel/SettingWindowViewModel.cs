@@ -418,8 +418,11 @@ namespace Flow.Launcher.ViewModel
             {
                 ThemeManager.Instance.ChangeTheme(value);
 
-                if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
+                if (Settings.UseDropShadowEffect && ThemeManager.Instance.IsBlurTheme())
+                {
                     DropShadowEffect = false;
+                    ThemeManager.Instance.SetBlurForWindow();
+                }
             }
         }
 

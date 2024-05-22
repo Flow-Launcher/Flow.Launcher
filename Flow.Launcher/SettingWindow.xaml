@@ -1928,75 +1928,80 @@
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
                                         Orientation="Horizontal">
+
                                         <Border
                                             Width="{Binding WindowWidthSize}"
                                             Margin="0"
                                             SnapsToDevicePixels="True"
                                             Style="{DynamicResource WindowBorderStyle}"
                                             UseLayoutRounding="True">
-                                            <Border Style="{DynamicResource WindowRadius}">
-                                                <Border.Clip>
-                                                    <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                                        <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                                    </MultiBinding>
-                                                </Border.Clip>
-                                                <Grid>
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="Auto" />
-                                                        <RowDefinition />
-                                                        <RowDefinition />
-                                                    </Grid.RowDefinitions>
-                                                    <Border Grid.Row="0">
-                                                        <TextBox
-                                                            x:Name="QueryTextBox"
+                                            <Border.Clip>
+                                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                                </MultiBinding>
+                                            </Border.Clip>
+                                            <Grid Style="{DynamicResource BlurTint}">
+
+
+                                                <Border Style="{DynamicResource WindowRadius}">
+                                                    <Grid>
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="Auto" />
+                                                            <RowDefinition />
+                                                            <RowDefinition />
+                                                        </Grid.RowDefinitions>
+                                                        <Border Grid.Row="0">
+                                                            <TextBox
+                                                                x:Name="QueryTextBox"
+                                                                IsHitTestVisible="False"
+                                                                IsReadOnly="True"
+                                                                Style="{DynamicResource QueryBoxStyle}"
+                                                                Text="{DynamicResource hiThere}" />
+                                                        </Border>
+                                                        <StackPanel
+                                                            x:Name="ClockPanel"
                                                             IsHitTestVisible="False"
-                                                            IsReadOnly="True"
-                                                            Style="{DynamicResource QueryBoxStyle}"
-                                                            Text="{DynamicResource hiThere}" />
-                                                    </Border>
-                                                    <StackPanel
-                                                        x:Name="ClockPanel"
-                                                        IsHitTestVisible="False"
-                                                        Style="{DynamicResource ClockPanel}"
-                                                        Visibility="Visible">
-                                                        <TextBlock
-                                                            x:Name="ClockBox"
-                                                            Style="{DynamicResource ClockBox}"
-                                                            Text="{Binding ClockText}"
-                                                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                        <TextBlock
-                                                            x:Name="DateBox"
-                                                            Style="{DynamicResource DateBox}"
-                                                            Text="{Binding DateText}"
-                                                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                    </StackPanel>
-                                                    <Canvas Style="{DynamicResource SearchIconPosition}">
-                                                        <Path
-                                                            Margin="0"
-                                                            Data="{DynamicResource SearchIconImg}"
-                                                            Stretch="Fill"
-                                                            Style="{DynamicResource SearchIconStyle}" />
-                                                    </Canvas>
+                                                            Style="{DynamicResource ClockPanel}"
+                                                            Visibility="Visible">
+                                                            <TextBlock
+                                                                x:Name="ClockBox"
+                                                                Style="{DynamicResource ClockBox}"
+                                                                Text="{Binding ClockText}"
+                                                                Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                            <TextBlock
+                                                                x:Name="DateBox"
+                                                                Style="{DynamicResource DateBox}"
+                                                                Text="{Binding DateText}"
+                                                                Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                        </StackPanel>
+                                                        <Canvas Style="{DynamicResource SearchIconPosition}">
+                                                            <Path
+                                                                Margin="0"
+                                                                Data="{DynamicResource SearchIconImg}"
+                                                                Stretch="Fill"
+                                                                Style="{DynamicResource SearchIconStyle}" />
+                                                        </Canvas>
 
-                                                    <Border Grid.Row="1" Margin="0,0,0,0">
-                                                        <Rectangle
-                                                            Width="Auto"
-                                                            HorizontalAlignment="Stretch"
-                                                            Style="{DynamicResource SeparatorStyle}"
-                                                            Visibility="Visible" />
-                                                    </Border>
+                                                        <Border Grid.Row="1" Margin="0,0,0,0">
+                                                            <Rectangle
+                                                                Width="Auto"
+                                                                HorizontalAlignment="Stretch"
+                                                                Style="{DynamicResource SeparatorStyle}"
+                                                                Visibility="Visible" />
+                                                        </Border>
 
-                                                    <ContentControl Grid.Row="2">
-                                                        <flowlauncher:ResultListBox
-                                                            DataContext="{Binding PreviewResults, Mode=OneTime}"
-                                                            IsHitTestVisible="False"
-                                                            Visibility="Visible" />
-                                                    </ContentControl>
+                                                        <ContentControl Grid.Row="2">
+                                                            <flowlauncher:ResultListBox
+                                                                DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                                IsHitTestVisible="False"
+                                                                Visibility="Visible" />
+                                                        </ContentControl>
 
-                                                </Grid>
-                                            </Border>
+                                                    </Grid>
+                                                </Border>
+                                            </Grid>
                                         </Border>
                                     </StackPanel>
                                 </StackPanel>

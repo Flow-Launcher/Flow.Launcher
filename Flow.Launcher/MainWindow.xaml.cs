@@ -22,6 +22,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using System.Windows.Threading;
 using System.Windows.Data;
 using ModernWpf.Controls;
+using ModernWpf;
 using Key = System.Windows.Input.Key;
 using System.Media;
 using static Flow.Launcher.ViewModel.SettingWindowViewModel;
@@ -31,7 +32,6 @@ using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Drawing.Printing;
-using ModernWpf;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 
 namespace Flow.Launcher

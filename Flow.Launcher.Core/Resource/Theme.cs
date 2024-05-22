@@ -12,6 +12,7 @@ using System.Windows.Media.Effects;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+
 using static Flow.Launcher.Core.Resource.Theme.ParameterTypes;
 
 namespace Flow.Launcher.Core.Resource
@@ -28,7 +29,6 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
-
         public bool BlurEnabled { get; set; }
 
         private double mainWindowWidth;
@@ -95,11 +95,12 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = IsBlurTheme();
+                SetBlurForWindow();
 
-                if (Settings.UseDropShadowEffect && !BlurEnabled)
+                if (Settings.UseDropShadowEffect && BlurEnabled == false)
                     AddDropShadowEffectToCurrentTheme();
 
-                SetBlurForWindow();
+
             }
             catch (DirectoryNotFoundException)
             {
@@ -273,7 +274,6 @@ namespace Flow.Launcher.Core.Resource
             }
 
             windowBorderStyle.Setters.Add(effectSetter);
-
             UpdateResourceDictionary(dict);
         }
 
@@ -362,6 +362,7 @@ namespace Flow.Launcher.Core.Resource
             // Remove OS minimizing/maximizing animation
             Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
             Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
+
             SetBlurForWindow();
         }
 
@@ -385,8 +386,11 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 mainWindow.WindowStyle = WindowStyle.None;
+                if (windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background") != null)
+                {
+                    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                }
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
             }
             UpdateResourceDictionary(dict);
@@ -404,11 +408,10 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
             }
 
         }
-        private bool IsBlurTheme()
+        public bool IsBlurTheme()
         {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
