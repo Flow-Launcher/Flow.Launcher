@@ -32,9 +32,11 @@ namespace Flow.Launcher.Core.Resource
         public bool BlurEnabled { get; set; }
 
         private double mainWindowWidth;
+        private Func<bool> _isDarkTheme;
 
-        public Theme()
+        public Theme(Func<bool> isDarkTheme)
         {
+            _isDarkTheme = isDarkTheme;
             _themeDirectories.Add(DirectoryPath);
             _themeDirectories.Add(UserDirectoryPath);
             MakeSureThemeDirectoriesExist();
@@ -408,6 +410,14 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
+                if (_isDarkTheme())
+                {
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+                }
+                else
+                {
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+                }
             }
 
         }

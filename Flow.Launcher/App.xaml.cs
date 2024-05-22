@@ -95,6 +95,7 @@ namespace Flow.Launcher
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
                 // main windows needs initialized before theme change because of blur settings
+                ThemeManager.IsDarkMode = () => ModernWpf.ThemeManager.Current.ActualApplicationTheme is ModernWpf.ApplicationTheme.Dark;
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
