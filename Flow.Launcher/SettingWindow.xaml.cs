@@ -108,17 +108,17 @@ public partial class SettingWindow
         RefreshMaximizeRestoreButton();
     }
 
-    private void InitializePosition()
+    public void InitializePosition()
     {
-        if (_settings.SettingWindowTop >= 0 && _settings.SettingWindowLeft >= 0)
-        {
-            Top = _settings.SettingWindowTop;
-            Left = _settings.SettingWindowLeft;
-        }
-        else
+        if (_settings.SettingWindowTop == null)
         {
             Top = WindowTop();
             Left = WindowLeft();
+        }
+        else
+        {
+            Top = _settings.SettingWindowTop;
+            Left = _settings.SettingWindowLeft;
         }
         WindowState = _settings.SettingWindowState;
     }
