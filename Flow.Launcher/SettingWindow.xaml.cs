@@ -446,15 +446,15 @@ namespace Flow.Launcher
 
         public void InitializePosition()
         {
-            if (settings.SettingWindowTop >= 0 && settings.SettingWindowLeft >= 0)
-            {
-                Top = settings.SettingWindowTop;
-                Left = settings.SettingWindowLeft;
-            }
-            else
+            if (settings.SettingWindowTop == null)
             {
                 Top = WindowTop();
                 Left = WindowLeft();
+            }
+            else
+            {
+                Top = settings.SettingWindowTop;
+                Left = settings.SettingWindowLeft;
             }
             WindowState = settings.SettingWindowState;
         }
