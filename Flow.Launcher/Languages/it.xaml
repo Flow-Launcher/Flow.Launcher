@@ -186,6 +186,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Seleziona Elemento Precedente</system:String>
     <system:String x:Key="SelectNextPageHotkey">Pagina Successiva</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Pagina Precedente</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Apri il menu di scelta rapida</system:String>
     <system:String x:Key="SettingWindowHotkey">Aprire la finestra delle impostazioni</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copia Percorso File</system:String>
