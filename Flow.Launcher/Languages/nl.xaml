@@ -116,7 +116,7 @@
     <system:String x:Key="pluginStore_None">Plugins</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Vernieuwen</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="installbtn">Installeren</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
     <system:String x:Key="updatebtn">Update</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
@@ -186,8 +186,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Ga naar vorige zoekopdracht</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Ga naar volgende zoekopdracht</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
@@ -204,7 +204,7 @@
     <system:String x:Key="customQueryHotkey">Custom Query Sneltoets</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customQuery">Zoekopdracht</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
     <system:String x:Key="builtinShortcutDescription">Beschrijving</system:String>
@@ -217,12 +217,12 @@
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Zoekvenster schaduweffect</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Schaduw effect vergt een substantieel gebruik van uw GPU. Niet aanbevolen als uw computerprestaties beperkt zijn.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Gebruik Segoe Fluent pictogrammen</system:String>
+    <system:String x:Key="useGlyphUIEffect">Gebruik Segoe Fluent iconen voor zoekresultaten wanneer ondersteund</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
@@ -277,7 +277,7 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">Standaard webbrowser</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
