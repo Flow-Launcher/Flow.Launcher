@@ -186,6 +186,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Vybrať prechádzajúcu položku</system:String>
     <system:String x:Key="SelectNextPageHotkey">Ďalšia strana</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Predchádzajúca strana</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Otvoriť kontextovú ponuku</system:String>
     <system:String x:Key="SettingWindowHotkey">Otvoriť okno s nastaveniami</system:String>
     <system:String x:Key="CopyFilePathHotkey">Kopírovať cestu k súboru</system:String>
