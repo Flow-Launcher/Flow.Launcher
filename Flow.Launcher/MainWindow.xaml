@@ -37,7 +37,7 @@
     <WindowChrome.WindowChrome>
         <WindowChrome
             CaptionHeight="9"
-            GlassFrameThickness="-2"
+            GlassFrameThickness="-1"
             ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
