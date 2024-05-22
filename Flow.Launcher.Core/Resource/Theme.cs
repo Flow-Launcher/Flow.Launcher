@@ -408,7 +408,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
             }
-            else
+            else /* Case of "Auto" Blur Type Theme */
             {
                 if (_isDarkTheme())
                 {
