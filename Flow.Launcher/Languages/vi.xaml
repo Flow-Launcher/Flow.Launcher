@@ -186,6 +186,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
     <system:String x:Key="SelectNextPageHotkey">Trang Tiếp Theo</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
