@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -181,11 +182,22 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return speeds;
         }
     }
-
     public bool UseSound
     {
         get => Settings.UseSound;
         set => Settings.UseSound = value;
+    }
+    public bool CheckMediaPlayer
+    {
+        get
+        {
+            if (Settings.WMPInstalled)
+            {
+                return true;
+            }
+            else { return false; }
+        }
+        set { }
     }
 
     public double SoundEffectVolume
