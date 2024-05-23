@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Security.Policy;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -187,17 +186,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.UseSound;
         set => Settings.UseSound = value;
     }
-    public bool CheckMediaPlayer
+
+    public bool ShowWMPWarning
     {
-        get
-        {
-            if (Settings.WMPInstalled)
-            {
-                return true;
-            }
-            else { return false; }
-        }
-        set { }
+        get => !Settings.WMPInstalled;
+    }
+
+    public bool EnableVolumeAdjustment
+    {
+        get => Settings.WMPInstalled;
     }
 
     public double SoundEffectVolume
