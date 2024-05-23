@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Riproduce un piccolo suono all'apertura della finestra di ricerca</system:String>
     <system:String x:Key="SoundEffectVolume">Volume Effetti Sonori</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Regola il volume degli effetti sonori</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Animazione</system:String>
     <system:String x:Key="AnimationTip">Usa l'animazione nell'interfaccia utente</system:String>
     <system:String x:Key="AnimationSpeed">Velocità di animazione</system:String>
