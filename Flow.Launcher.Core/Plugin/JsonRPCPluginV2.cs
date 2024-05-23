@@ -149,12 +149,6 @@ namespace Flow.Launcher.Core.Plugin
             catch (RemoteMethodNotFoundException e)
             {
             }
-            catch (Exception e)
-            {
-                Log.Exception(
-                    $"Exception when calling close method for plugin <{Context.CurrentPluginMetadata.Name}>",
-                    e);
-            }
 
             RPC?.Dispose();
             ErrorStream?.Dispose();
