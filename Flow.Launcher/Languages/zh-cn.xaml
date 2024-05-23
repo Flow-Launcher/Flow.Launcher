@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="SoundEffectVolume">音效音量</system:String>
     <system:String x:Key="SoundEffectVolumeTip">调整音效音量</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
     <system:String x:Key="AnimationSpeed">动画速度</system:String>
