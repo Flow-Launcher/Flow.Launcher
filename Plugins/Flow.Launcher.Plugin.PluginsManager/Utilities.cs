@@ -1,6 +1,4 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using System.IO;
 using System.IO.Compression;
