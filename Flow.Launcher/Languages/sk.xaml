@@ -156,7 +156,7 @@
     <system:String x:Key="SoundEffectTip">Po otvorení okna vyhľadávania prehrať krátky zvuk</system:String>
     <system:String x:Key="SoundEffectVolume">Hlasitosť zvukového efektu</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Upraviť hlasitosť zvukového efektu</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Prehrávač Windows Media Player, ktorý sa vyžaduje sa na nastavenie hlasitosti Flow Launchera nie je k dispozícii. Ak potrebujete upraviť hlasitosť, prosím, skontrolujte si svoju inštaláciu.</system:String>
     <system:String x:Key="Animation">Animácia</system:String>
     <system:String x:Key="AnimationTip">Animovať používateľské rozhranie</system:String>
     <system:String x:Key="AnimationSpeed">Rýchlosť animácie</system:String>
