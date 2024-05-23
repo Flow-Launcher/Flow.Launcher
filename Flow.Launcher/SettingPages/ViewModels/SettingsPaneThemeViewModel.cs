@@ -189,7 +189,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public bool ShowWMPWarning
     {
-        get => !Settings.WMPInstalled;
+        get => !Settings.WMPInstalled && UseSound;
     }
 
     public bool EnableVolumeAdjustment
