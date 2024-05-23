@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">検索ウィンドウが開いたとき、小さな音を鳴らします</system:String>
     <system:String x:Key="SoundEffectVolume">効果音の音量</system:String>
     <system:String x:Key="SoundEffectVolumeTip">効果音の音量を調整します</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">アニメーション</system:String>
     <system:String x:Key="AnimationTip">UIでアニメーションを使用します</system:String>
     <system:String x:Key="AnimationSpeed">アニメーション速度</system:String>
