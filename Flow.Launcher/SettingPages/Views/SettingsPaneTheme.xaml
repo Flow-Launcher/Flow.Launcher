@@ -442,6 +442,7 @@
                 <cc:Card
                     Title="{DynamicResource SoundEffectVolume}"
                     Icon="&#xe994;"
+                    IsEnabled="{Binding EnableVolumeAdjustment}"
                     Sub="{DynamicResource SoundEffectVolumeTip}"
                     Visibility="{Binding UseSound, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
@@ -449,7 +450,6 @@
                             Margin="0,0,8,0"
                             VerticalAlignment="Center"
                             Text="{Binding SoundEffectVolume}" />
-
                         <Slider
                             Width="250"
                             VerticalAlignment="Center"
@@ -462,6 +462,40 @@
                     </StackPanel>
                 </cc:Card>
             </cc:CardGroup>
+            <Border
+                Name="WMPWarning"
+                Padding="0,10"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                Background="{DynamicResource InfoBarWarningBG}"
+                BorderBrush="{DynamicResource Color03B}"
+                BorderThickness="0,1,0,0"
+                CornerRadius="5 5 5 5"
+                Visibility="{Binding ShowWMPWarning, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="58" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:FontIcon
+                        Grid.Column="0"
+                        Margin="20,0,14,0"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Foreground="{DynamicResource InfoBarWarningIcon}"
+                        Glyph="&#xf167;" />
+                    <TextBlock
+                        Grid.Column="1"
+                        Margin="0,0,0,2"
+                        Padding="0,0,8,0"
+                        HorizontalAlignment="Left"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        Foreground="{DynamicResource Color05B}"
+                        Text="{DynamicResource SoundEffectWarning}"
+                        TextWrapping="Wrap" />
+                </Grid>
+            </Border>
 
             <!--  Settings color scheme  -->
             <cc:Card
