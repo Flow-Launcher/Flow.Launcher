@@ -36,7 +36,26 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
-  <Target Name="RemoveUnnecessaryRuntimes" AfterTargets="Publish">
+  <Target Name="RemoveUnnecessaryRuntimesAfterBuild" AfterTargets="Build">
+    <RemoveDir Directories="$(OutputPath)runtimes\browser-wasm;
+                            $(OutputPath)runtimes\linux-arm;
+                            $(OutputPath)runtimes\linux-arm64;
+                            $(OutputPath)runtimes\linux-armel;
+                            $(OutputPath)runtimes\linux-mips64;
+                            $(OutputPath)runtimes\linux-musl-arm;
+                            $(OutputPath)runtimes\linux-musl-arm64;
+                            $(OutputPath)runtimes\linux-musl-x64;
+                            $(OutputPath)runtimes\linux-ppc64le;
+                            $(OutputPath)runtimes\linux-s390x;
+                            $(OutputPath)runtimes\linux-x64;
+                            $(OutputPath)runtimes\linux-x86;
+                            $(OutputPath)runtimes\maccatalyst-arm64;
+                            $(OutputPath)runtimes\maccatalyst-x64;
+                            $(OutputPath)runtimes\osx-arm64;
+                            $(OutputPath)runtimes\osx-x64"/>
+  </Target>
+
+  <Target Name="RemoveUnnecessaryRuntimesAfterDeploy" AfterTargets="Deploy">
     <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
                             $(PublishDir)runtimes\linux-arm;
                             $(PublishDir)runtimes\linux-arm64;
