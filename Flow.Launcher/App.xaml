@@ -24,6 +24,7 @@
                 </ui:ThemeResources>
                 <ui:XamlControlsResources />
                 <ResourceDictionary Source="pack://application:,,,/Resources/CustomControlTemplate.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Resources/SettingWindowStyle.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Themes/Win11System.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Languages/en.xaml" />
             </ResourceDictionary.MergedDictionaries>
