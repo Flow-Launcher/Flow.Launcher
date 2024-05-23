@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="SoundEffectVolume">Гучність звукового ефекту</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Налаштуйте гучність звукового ефекту</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
     <system:String x:Key="AnimationSpeed">Швидкість анімації</system:String>
