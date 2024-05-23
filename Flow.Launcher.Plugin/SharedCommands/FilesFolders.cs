@@ -16,24 +16,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
         private const string FileExplorerProgramName = "explorer";
 
         /// <summary>
-        /// Checks if <paramref name="subPath"/> is a subpath of <paramref name="basePath"/>
-        /// </summary>
-        /// <param name="subPath"></param>
-        /// <param name="basePath"></param>
-        /// <returns></returns>
-        public static bool IsSubPathOf(this string subPath, string basePath)
-        {
-            var rel = Path.GetRelativePath(
-                basePath.Replace('\\', '/'),
-                subPath.Replace('\\', '/'));
-            return rel != "."
-                   && rel != ".."
-                   && !rel.StartsWith("../")
-                   && !Path.IsPathRooted(rel);
-        }
-
-
-        /// <summary>
         /// Copies the folder and all of its files and folders 
         /// including subFolders to the target location
         /// </summary>
@@ -287,7 +269,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="subPath">Sub path</param>
         /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
         /// <returns></returns>
-        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
+        public static bool PathContains(this string parentPath, string subPath, bool allowEqual = false)
         {
             var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
             return (rel != "." || allowEqual)

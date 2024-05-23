@@ -1,17 +1,11 @@
-﻿using Microsoft.Win32;
-using System;
+﻿using System;
 using System.IO;
-using System.Reflection;
 using System.Windows;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Linq;
 using Flow.Launcher.Core.Plugin;
-using Velopack;
-using Velopack.Locators;
-using Velopack.Windows;
 
 namespace Flow.Launcher.Core.Configuration
 {
@@ -84,8 +78,7 @@ namespace Flow.Launcher.Core.Configuration
             // if not create the portable data folder
             // Don't create the folder if the version is 1.0.0 (Dev) to allow potential debugging with data in the project folder
             // It is still possible to create the UserData folder for dev version manually but we want to keep the current behavior
-            if (!Constant.ProgramDirectory.IsSubPathOf(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData))
+            if (!Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData).PathContains(Constant.ProgramDirectory)
                 && Constant.Version != "1.0.0")
             {
                 Directory.CreateDirectory(DataLocation.PortableDataPath);
