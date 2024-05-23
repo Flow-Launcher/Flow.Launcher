@@ -37,8 +37,6 @@
   </PropertyGroup>
 
   <Target Name="RemoveUnnecessaryRuntimes" AfterTargets="Publish">
-    <Message Text="Removing unnecessary runtime directories..." Importance="high" />
-    <Message Text="PublishDir: $(PublishDir)" Importance="high" />
     <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
                             $(PublishDir)runtimes\linux-arm;
                             $(PublishDir)runtimes\linux-arm64;
@@ -55,7 +53,6 @@
                             $(PublishDir)runtimes\maccatalyst-x64;
                             $(PublishDir)runtimes\osx-arm64;
                             $(PublishDir)runtimes\osx-x64"/>
-    <Message Text="Unnecessary runtime directories removed." Importance="high" />
   </Target>
 
   <ItemGroup>
