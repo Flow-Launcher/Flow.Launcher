@@ -55,7 +55,7 @@
                             $(OutputPath)runtimes\osx-x64"/>
   </Target>
 
-  <Target Name="RemoveUnnecessaryRuntimesAfterDeploy" AfterTargets="Deploy">
+  <Target Name="RemoveUnnecessaryRuntimesAfterPublish" AfterTargets="Publish">
     <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
                             $(PublishDir)runtimes\linux-arm;
                             $(PublishDir)runtimes\linux-arm64;
