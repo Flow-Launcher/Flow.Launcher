@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Phát âm thanh khi cửa sổ tìm kiếm mở</system:String>
     <system:String x:Key="SoundEffectVolume">Âm lượng hiệu ứng âm thanh</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Điều chỉnh âm lượng của hiệu ứng âm thanh</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Hoạt hình</system:String>
     <system:String x:Key="AnimationTip">Sử dụng hình động trong giao diện</system:String>
     <system:String x:Key="AnimationSpeed">Tốc độ hoạt ảnh</system:String>
