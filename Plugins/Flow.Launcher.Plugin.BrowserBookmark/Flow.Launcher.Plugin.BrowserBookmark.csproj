@@ -36,6 +36,25 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
 
+  <Target Name="RemoveUnnecessaryRuntimes" AfterTargets="Publish">
+    <RemoveDir Directories="$(PublishDir)runtimes\browser-wasm;
+                            $(PublishDir)runtimes\linux-arm;
+                            $(PublishDir)runtimes\linux-arm64;
+                            $(PublishDir)runtimes\linux-armel;
+                            $(PublishDir)runtimes\linux-mips64;
+                            $(PublishDir)runtimes\linux-musl-arm;
+                            $(PublishDir)runtimes\linux-musl-arm64;
+                            $(PublishDir)runtimes\linux-musl-x64;
+                            $(PublishDir)runtimes\linux-ppc64le;
+                            $(PublishDir)runtimes\linux-s390x;
+                            $(PublishDir)runtimes\linux-x64;
+                            $(PublishDir)runtimes\linux-x86;
+                            $(PublishDir)runtimes\maccatalyst-arm64;
+                            $(PublishDir)runtimes\maccatalyst-x64;
+                            $(PublishDir)runtimes\osx-arm64;
+                            $(PublishDir)runtimes\osx-x64"/>
+  </Target>
+
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
