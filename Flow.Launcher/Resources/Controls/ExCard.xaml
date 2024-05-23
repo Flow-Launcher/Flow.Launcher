@@ -14,7 +14,6 @@
                 x:Name="expanderHeader"
                 Padding="0"
                 BorderThickness="1"
-                IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
                 SnapsToDevicePixels="False">
                 <Expander.Style>
                     <Style TargetType="{x:Type Expander}">
