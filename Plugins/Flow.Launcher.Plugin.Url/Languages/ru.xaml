@@ -12,6 +12,6 @@
     <system:String x:Key="flowlauncher_plugin_url_plugin_description">Open the typed URL from Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_url_plugin_set_tip">Please set your browser path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Choose</system:String>
+    <system:String x:Key="flowlauncher_plugin_url_plugin_choose">Выберите</system:String>
     <system:String x:Key="flowlauncher_plugin_url_plugin_filter">Application(*.exe)|*.exe|All files|*.*</system:String>
 </ResourceDictionary>

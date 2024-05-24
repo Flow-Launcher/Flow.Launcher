@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="registerHotkeyFailed">Не удалось зарегистрировать сочетание клавиш &quot;{0}&quot;. Возможно, оно используется другой программой. Измените сочетание клавиш или закройте другую программу.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Не удалось запустить {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Недопустимый формат файла плагина Flow Launcher</system:String>
@@ -154,8 +154,9 @@
     <system:String x:Key="ColorSchemeDark">Тёмная</system:String>
     <system:String x:Key="SoundEffect">Звуковой эффект</system:String>
     <system:String x:Key="SoundEffectTip">Воспроизведение небольшого звука при открытии окна поиска</system:String>
-    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
-    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectVolume">Громкость звукового эффекта</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Регулировка громкости звукового эффекта</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Анимация</system:String>
     <system:String x:Key="AnimationTip">Использование анимации в меню</system:String>
     <system:String x:Key="AnimationSpeed">Скорость анимации</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Горячая клавиша</system:String>
     <system:String x:Key="hotkeys">Горячая клавиша</system:String>
-    <system:String x:Key="flowlauncherHotkey">Горячая клавиша Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введите ярлык, чтобы показать/скрыть Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Просмотр горячей клавиши</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Введите ярлык для показа/скрытия предпросмотра в окне поиска.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Открыть ключ модификации результата</system:String>
     <system:String x:Key="openResultModifiersToolTip">Выберите клавишу-модификатор, чтобы открыть выбранный результат с помощью клавиатуры.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показать горячую клавишу</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Показать горячую клавишу выбора результата с результатами.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Открыть контекстное меню</system:String>
+    <system:String x:Key="SettingWindowHotkey">Открыть окно настроек</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Открыть папку с содержимым</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Горячие клавиши пользовательского запроса</system:String>
     <system:String x:Key="customQueryShortcut">Ярлыки пользовательского запроса</system:String>
     <system:String x:Key="builtinShortcuts">Встроенные ярлыки</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">Удалить</system:String>
     <system:String x:Key="edit">Редактировать</system:String>
     <system:String x:Key="add">Добавить</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Сначала выберите элемент</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Вы уверены что хотите удалить горячую клавишу для плагина {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Вы уверены, что хотите удалить ярлык: {0} с расширением {1}?</system:String>
@@ -286,19 +311,28 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Горячая клавиша недоступна. Пожалуйста, задайте новую</system:String>
     <system:String x:Key="invalidPluginHotkey">Недействительная горячая клавиша плагина</system:String>
     <system:String x:Key="update">Обновить</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Ярлык пользовательского запроса</system:String>
     <system:String x:Key="customeQueryShortcutTips">Введите ярлык, который автоматически расширяется до указанного запроса.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Ярлык заменяется, когда полностью совпадает с запросом.
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Если вы добавите префикс '@' при вводе ярлыка, он будет заменяться в любом местоположении в запросе. Встроенные ярлыки всегда заменяются в любом месте в запросе.
     </system:String>
     <system:String x:Key="duplicateShortcut">Ярлык уже существует, пожалуйста, введите новый ярлык или измените существующий.</system:String>
     <system:String x:Key="emptyShortcut">Ярлык и/или его расширение пусты.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Горячая клавиша недоступна</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Сохранить</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">Отменить</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">Удалить</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Версия</system:String>
@@ -367,6 +401,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyRunDesc">Открыть / Выполнить выбранный элемент</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Открыть окно настроек</system:String>
     <system:String x:Key="HotkeyF5Desc">Перезагрузить данные плагинов</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Команда Weather</system:String>
     <system:String x:Key="RecommendWeatherDesc">Погода в результатах Google</system:String>
