@@ -31,6 +31,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string SelectPrevPageHotkey { get; set; } = $"PageDown";
         public string OpenContextMenuHotkey { get; set; } = $"Ctrl+O";
         public string SettingWindowHotkey { get; set; } = $"Ctrl+I";
+        public string CycleHistoryUpHotkey { get; set; } = $"{KeyConstant.Alt} + Up";
+        public string CycleHistoryDownHotkey { get; set; } = $"{KeyConstant.Alt} + Down";
 
         public string Language
         {
@@ -271,6 +273,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public AnimationSpeeds AnimationSpeed { get; set; } = AnimationSpeeds.Medium;
         public int CustomAnimationLength { get; set; } = 360;
 
+        [JsonIgnore]
+        public bool WMPInstalled { get; set; } = true;
+
 
         // This needs to be loaded last by staying at the bottom
         public PluginsSettings PluginSettings { get; set; } = new PluginsSettings();
@@ -280,42 +285,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         {
             get
             {
-                var list = new List<RegisteredHotkeyData>
-                {
-                    new("Up", "HotkeyLeftRightDesc"),
-                    new("Down", "HotkeyLeftRightDesc"),
-                    new("Left", "HotkeyUpDownDesc"),
-                    new("Right", "HotkeyUpDownDesc"),
-                    new("Escape", "HotkeyESCDesc"),
-                    new("F5", "ReloadPluginHotkey"),
-                    new("Alt+Home", "HotkeySelectFirstResult"),
-                    new("Alt+End", "HotkeySelectLastResult"),
-                    new("Ctrl+R", "HotkeyRequery"),
-                    new("Ctrl+H", "ToggleHistoryHotkey"),
-                    new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
-                    new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
-                    new("Ctrl+OemPlus", "QuickHeightHotkey"),
-                    new("Ctrl+OemMinus", "QuickHeightHotkey"),
-                    new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"),
-                    new("Shift+Enter", "OpenContextMenuHotkey"),
-                    new("Enter", "HotkeyRunDesc"),
-                    new("Ctrl+Enter", "OpenContainFolderHotkey"),
-                    new("Alt+Enter", "HotkeyOpenResult"),
-                    new("Ctrl+F12", "ToggleGameModeHotkey"),
-                    new("Ctrl+Shift+C", "CopyFilePathHotkey"),
+                var list = FixedHotkeys();
 
-                    new($"{OpenResultModifiers}+D1", "HotkeyOpenResultN", 1),
-                    new($"{OpenResultModifiers}+D2", "HotkeyOpenResultN", 2),
-                    new($"{OpenResultModifiers}+D3", "HotkeyOpenResultN", 3),
-                    new($"{OpenResultModifiers}+D4", "HotkeyOpenResultN", 4),
-                    new($"{OpenResultModifiers}+D5", "HotkeyOpenResultN", 5),
-                    new($"{OpenResultModifiers}+D6", "HotkeyOpenResultN", 6),
-                    new($"{OpenResultModifiers}+D7", "HotkeyOpenResultN", 7),
-                    new($"{OpenResultModifiers}+D8", "HotkeyOpenResultN", 8),
-                    new($"{OpenResultModifiers}+D9", "HotkeyOpenResultN", 9),
-                    new($"{OpenResultModifiers}+D0", "HotkeyOpenResultN", 10)
-                };
-
+                // Customizeable hotkeys
                 if(!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
                 if(!string.IsNullOrEmpty(PreviewHotkey))
@@ -340,7 +312,12 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
                 if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
                     list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
+                if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
+                    list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
+                if (!string.IsNullOrEmpty(CycleHistoryDownHotkey))
+                    list.Add(new(CycleHistoryDownHotkey, "CycleHistoryDownHotkey", () => CycleHistoryDownHotkey = ""));
 
+                // Custom Query Hotkeys
                 foreach (var customPluginHotkey in CustomPluginHotkeys)
                 {
                     if (!string.IsNullOrEmpty(customPluginHotkey.Hotkey))
@@ -349,6 +326,45 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
                 return list;
             }
+        }
+
+        private List<RegisteredHotkeyData> FixedHotkeys()
+        {
+            return new List<RegisteredHotkeyData>
+            {
+                new("Up", "HotkeyLeftRightDesc"),
+                new("Down", "HotkeyLeftRightDesc"),
+                new("Left", "HotkeyUpDownDesc"),
+                new("Right", "HotkeyUpDownDesc"),
+                new("Escape", "HotkeyESCDesc"),
+                new("F5", "ReloadPluginHotkey"),
+                new("Alt+Home", "HotkeySelectFirstResult"),
+                new("Alt+End", "HotkeySelectLastResult"),
+                new("Ctrl+R", "HotkeyRequery"),
+                new("Ctrl+H", "ToggleHistoryHotkey"),
+                new("Ctrl+OemCloseBrackets", "QuickWidthHotkey"),
+                new("Ctrl+OemOpenBrackets", "QuickWidthHotkey"),
+                new("Ctrl+OemPlus", "QuickHeightHotkey"),
+                new("Ctrl+OemMinus", "QuickHeightHotkey"),
+                new("Ctrl+Shift+Enter", "HotkeyCtrlShiftEnterDesc"),
+                new("Shift+Enter", "OpenContextMenuHotkey"),
+                new("Enter", "HotkeyRunDesc"),
+                new("Ctrl+Enter", "OpenContainFolderHotkey"),
+                new("Alt+Enter", "HotkeyOpenResult"),
+                new("Ctrl+F12", "ToggleGameModeHotkey"),
+                new("Ctrl+Shift+C", "CopyFilePathHotkey"),
+
+                new($"{OpenResultModifiers}+D1", "HotkeyOpenResultN", 1),
+                new($"{OpenResultModifiers}+D2", "HotkeyOpenResultN", 2),
+                new($"{OpenResultModifiers}+D3", "HotkeyOpenResultN", 3),
+                new($"{OpenResultModifiers}+D4", "HotkeyOpenResultN", 4),
+                new($"{OpenResultModifiers}+D5", "HotkeyOpenResultN", 5),
+                new($"{OpenResultModifiers}+D6", "HotkeyOpenResultN", 6),
+                new($"{OpenResultModifiers}+D7", "HotkeyOpenResultN", 7),
+                new($"{OpenResultModifiers}+D8", "HotkeyOpenResultN", 8),
+                new($"{OpenResultModifiers}+D9", "HotkeyOpenResultN", 9),
+                new($"{OpenResultModifiers}+D0", "HotkeyOpenResultN", 10)
+            };
         }
     }
 
