@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}您要更新此插件吗？ 更新后，Flow Launcher 将自动重启。</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} 作者： {1} {2}{2}您想要更新这个插件吗？</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">插件更新</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">该插件有更新，您想看看吗？</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">此插件已安装</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">插件列表下载失败</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">请检查您是否可以连接到 github.com。这个错误意味着您可能无法安装或更新插件。</system:String>

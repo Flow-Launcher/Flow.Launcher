@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="SoundEffectVolume">Гучність звукового ефекту</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Налаштуйте гучність звукового ефекту</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
     <system:String x:Key="AnimationSpeed">Швидкість анімації</system:String>
@@ -169,15 +170,38 @@
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
-    <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
-    <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
+    <system:String x:Key="hotkeys">Гарячі клавіші</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть скорочення, щоб показати/приховати Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Гаряча клавіша попереднього перегляду</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Введіть скорочення, щоб показати/приховати попередній перегляд у вікні пошуку.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Відкрити ключ зміни результатів</system:String>
     <system:String x:Key="openResultModifiersToolTip">Виберіть ключ модифікатора для відкриття вибраних результатів за допомогою клавіатури.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показати гарячу клавішу</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Показати гарячу клавішу вибору результату з результатами.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Відкрити контекстне меню</system:String>
+    <system:String x:Key="SettingWindowHotkey">Відкрити вікно налаштувань</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Перемкнути режим гри</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Відкрийте папку, що містить файл</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
     <system:String x:Key="customQueryShortcut">Користувацькі скорочення запитів</system:String>
     <system:String x:Key="builtinShortcuts">Вбудовані скорочення</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Редагувати</system:String>
     <system:String x:Key="add">Додати</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Спочатку виберіть елемент</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Ви впевнені, що хочете видалити скорочення: {0} з розширенням {1}?</system:String>
@@ -286,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нову</system:String>
     <system:String x:Key="invalidPluginHotkey">Недійсна гаряча клавіша плагіна</system:String>
     <system:String x:Key="update">Оновити</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Власне скорочення запиту</system:String>
@@ -297,8 +327,12 @@
     <system:String x:Key="duplicateShortcut">Скорочення вже існує, будь ласка, введіть нове або відредагуйте існуюче.</system:String>
     <system:String x:Key="emptyShortcut">Скорочення та/або його розширення є порожнім.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Гаряча клавіша недоступна</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Зберегти</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">Скасувати</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">Видалити</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Версія</system:String>
@@ -348,7 +382,7 @@
     <system:String x:Key="Welcome_Page2_Title">Пошук та запуск усіх файлів і програм на вашому комп'ютері</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Шукайте все: програми, файли, закладки, YouTube, Twitter тощо. І все це за допомогою клавіатури, навіть не торкаючись миші.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher запускається за допомогою наведеної нижче гарячої клавіші, спробуйте натиснути її зараз. Щоб її змінити, клацніть на ввід і натисніть потрібну гарячу клавішу на клавіатурі.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Гаряча клавіша</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Гарячі клавіші</system:String>
     <system:String x:Key="Welcome_Page4_Title">Ключове слово дії та команди</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Шукайте в Інтернеті, запускайте програми або виконуйте різноманітні функції за допомогою плагінів Flow Launcher. Деякі функції починаються з ключового слова дії, але за потреби їх можна використовувати і без нього. Спробуйте наведені нижче запити у Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Давайте запустимо Flow Launcher</system:String>
@@ -367,6 +401,12 @@
     <system:String x:Key="HotkeyRunDesc">Відкрити / запустити вибраний елемент</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Відкрити вікно налаштувань</system:String>
     <system:String x:Key="HotkeyF5Desc">Перезавантажити дані плагінів</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Погода</system:String>
     <system:String x:Key="RecommendWeatherDesc">Погода в результатах Google</system:String>

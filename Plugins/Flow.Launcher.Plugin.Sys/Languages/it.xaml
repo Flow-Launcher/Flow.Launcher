@@ -5,25 +5,25 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">Comando</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Descrizione</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernate</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Index Option</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Empty Recycle Bin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Open Recycle Bin</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Spegni</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Riavvia</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Riavvia con Opzioni di Avvio Avanzate</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Disconnetti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Blocca</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sospendi</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Ibernazione</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">Opzioni di Indice</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">Svuota Cestino</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Apri Cestino</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Esci</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Save Settings</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Salva Impostazioni</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Riavvia Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Impostazioni</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Ricarica i dati del plugin</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Check For Update</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Open Log Location</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Controlla Aggiornamenti</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Apri Posizione dei Log</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consigli di Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Cartella UserData di Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Attiva/Disattiva Modalità Di Gioco</system:String>
 
     <!--  Command Descriptions  -->
