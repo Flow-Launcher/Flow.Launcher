@@ -14,7 +14,6 @@
                 x:Name="expanderHeader"
                 Padding="0"
                 BorderThickness="1"
-                IsExpanded="{Binding Mode=TwoWay, Path=IsExpanded}"
                 SnapsToDevicePixels="False">
                 <Expander.Style>
                     <Style TargetType="{x:Type Expander}">
@@ -54,7 +53,7 @@
                                                 FontStyle="{TemplateBinding FontStyle}"
                                                 FontWeight="{TemplateBinding FontWeight}"
                                                 Foreground="{TemplateBinding Foreground}"
-                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Expander}}">
                                                 <ToggleButton.Style>
                                                     <Style TargetType="{x:Type ToggleButton}">
                                                         <Setter Property="Template">
