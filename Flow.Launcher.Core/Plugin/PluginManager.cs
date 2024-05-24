@@ -380,7 +380,8 @@ namespace Flow.Launcher.Core.Plugin
 
 
         /// <summary>
-        /// Update a plugin to new version, from a zip file. Will Delete zip after updating.
+        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
+        /// unless it's a local path installation
         /// </summary>
         public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
@@ -390,11 +391,11 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Install a plugin. Will Delete zip after updating.
+        /// Install a plugin. By default will remove the zip file if installation is from url, unless it's a local path installation
         /// </summary>
         public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, zipFilePath, true);
+            InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
         /// <summary>
@@ -420,7 +421,9 @@ namespace Flow.Launcher.Core.Plugin
             // Unzip plugin files to temp folder
             var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
-            File.Delete(zipFilePath);
+            
+            if(!plugin.IsFromLocalInstallPath)
+                File.Delete(zipFilePath);
 
             var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
 

@@ -25,6 +25,7 @@
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
+    PreviewKeyUp="OnKeyUp"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
@@ -46,47 +47,14 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
-        <KeyBinding
-            Key="Tab"
-            Command="{Binding AutocompleteQueryCommand}"
-            Modifiers="Shift" />
-        <KeyBinding
-            Key="I"
-            Command="{Binding OpenSettingCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="N"
-            Command="{Binding SelectNextItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="J"
-            Command="{Binding SelectNextItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="D"
-            Command="{Binding SelectNextPageCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="P"
-            Command="{Binding SelectPrevItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="K"
-            Command="{Binding SelectPrevItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="U"
-            Command="{Binding SelectPrevPageCommand}"
-            Modifiers="Ctrl" />
         <KeyBinding
             Key="Home"
             Command="{Binding SelectFirstResultCommand}"
             Modifiers="Alt" />
         <KeyBinding
-            Key="O"
-            Command="{Binding LoadContextMenuCommand}"
-            Modifiers="Ctrl" />
+            Key="End"
+            Command="{Binding SelectLastResultCommand}"
+            Modifiers="Alt" />
         <KeyBinding
             Key="R"
             Command="{Binding ReQueryCommand}"
@@ -111,10 +79,6 @@
             Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="H"
-            Command="{Binding LoadHistoryCommand}"
-            Modifiers="Ctrl" />
         <KeyBinding
             Key="Enter"
             Command="{Binding OpenResultCommand}"
@@ -188,12 +152,60 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="C"
-            Modifiers="Ctrl+Shift"
-            Command="{Binding CopyAlternativeCommand}" />
+            Command="{Binding CopyAlternativeCommand}"
+            Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding AutocompleteQueryCommand}"
+            Modifiers="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding AutoCompleteHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding AutocompleteQueryCommand}"
+            Modifiers="{Binding AutoCompleteHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextItemCommand}"
+            Modifiers="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevItemCommand}"
+            Modifiers="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextItemCommand}"
+            Modifiers="{Binding SelectNextItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevItemCommand}"
+            Modifiers="{Binding SelectPrevItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding OpenSettingCommand}"
+            Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding LoadContextMenuCommand}"
+            Modifiers="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextPageCommand}"
+            Modifiers="{Binding SelectNextPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevPageCommand}"
+            Modifiers="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ReverseHistoryCommand}"
+            Modifiers="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ForwardHistoryCommand}"
+            Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
     <Grid>
         <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
@@ -216,6 +228,7 @@
                             <TextBox
                                 x:Name="QueryTextBox"
                                 AllowDrop="True"
+                                AutomationProperties.Name="{Binding Results.SelectedItem.Result.Title}"
                                 InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                                 InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
                                 PreviewDragOver="OnPreviewDragOver"

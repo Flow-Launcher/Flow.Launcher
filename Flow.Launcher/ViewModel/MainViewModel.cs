@@ -42,6 +42,7 @@ namespace Flow.Launcher.ViewModel
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly History _history;
+        private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -79,6 +80,42 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.PreviewHotkey):
                         OnPropertyChanged(nameof(PreviewHotkey));
+                        break;
+                    case nameof(Settings.AutoCompleteHotkey):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryUpHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryUpHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryDownHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryDownHotkey));
+                        break;
+                    case nameof(Settings.AutoCompleteHotkey2):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey2));
+                        break;
+                    case nameof(Settings.SelectNextItemHotkey):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey));
+                        break;
+                    case nameof(Settings.SelectNextItemHotkey2):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey2));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey2):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey2));
+                        break;
+                    case nameof(Settings.SelectNextPageHotkey):
+                        OnPropertyChanged(nameof(SelectNextPageHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevPageHotkey):
+                        OnPropertyChanged(nameof(SelectPrevPageHotkey));
+                        break;
+                    case nameof(Settings.OpenContextMenuHotkey):
+                        OnPropertyChanged(nameof(OpenContextMenuHotkey));
+                        break;
+                    case nameof(Settings.SettingWindowHotkey):
+                        OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
                 }
             };
@@ -227,6 +264,32 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        public void ReverseHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex < _history.Items.Count)
+                {
+                    lastHistoryIndex++;
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void ForwardHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex > 1)
+                {
+                    lastHistoryIndex--;
+                }
+            }
+        }
+
+        [RelayCommand]
         private void LoadContextMenu()
         {
             if (SelectedIsFromQueryResults())
@@ -316,6 +379,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
+                lastHistoryIndex = 1;
             }
 
             if (hideWindow)
@@ -343,6 +407,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void SelectLastResult()
+        {
+            SelectedResults.SelectLastResult();
+        }
+
+
+        [RelayCommand]
         private void SelectPrevPage()
         {
             SelectedResults.SelectPrevPage();
@@ -357,7 +428,18 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            SelectedResults.SelectPrevResult();
+            if (_history.Items.Count > 0
+                && QueryText == string.Empty
+                && SelectedIsFromQueryResults())
+            {
+                lastHistoryIndex = 1;
+                ReverseHistory();
+            }
+            else
+            {
+                SelectedResults.SelectPrevResult();
+            }
+        
         }
 
         [RelayCommand]
@@ -627,25 +709,35 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string PreviewHotkey
+        public string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
         {
-            get
+            try
             {
-                // TODO try to patch issue #1755
-                // Added in v1.14.0, remove after v1.16.0. 
-                try
-                {
-                    var converter = new KeyGestureConverter();
-                    var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
-                }
-                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
-                {
-                    Settings.PreviewHotkey = "F1";
-                }
-
-                return Settings.PreviewHotkey;
+                var converter = new KeyGestureConverter();
+                var key = (KeyGesture)converter.ConvertFromString(hotkey);
             }
+            catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+            {
+                return defaultHotkey;
+            }
+
+            return hotkey;
         }
+        
+        public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
+        public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
+        public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");
+        public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
+        public string SelectNextItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey2, "");
+        public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift+Tab");
+        public string SelectPrevItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey2, "");
+        public string SelectNextPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextPageHotkey, "");
+        public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
+        public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
+        public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
+        public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
+
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -1071,6 +1163,7 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            lastHistoryIndex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
             lastContextMenuResult = new Result();

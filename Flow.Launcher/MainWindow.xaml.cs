@@ -12,7 +12,6 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 using Screen = System.Windows.Forms.Screen;
-using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
@@ -24,9 +23,10 @@ using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
-using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
+using System.Windows.Interop;
+using System.Runtime.InteropServices;
 
 namespace Flow.Launcher
 {
@@ -34,14 +34,20 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        public static extern IntPtr SetForegroundWindow(IntPtr hwnd);
+
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
         private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
-        private ContextMenu contextMenu;
+        private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
-        MediaPlayer animationSound = new MediaPlayer();
+        private bool isArrowKeyPressed = false;
+
+        private MediaPlayer animationSoundWMP;
+        private SoundPlayer animationSoundWPF;
 
         #endregion
 
@@ -54,7 +60,7 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            InitSoundEffects();
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
         }
@@ -104,9 +110,11 @@ namespace Flow.Launcher
         private void OnInitialized(object sender, EventArgs e)
         {
         }
-
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // MouseEventHandler
+            PreviewMouseMove += MainPreviewMouseMove;
+
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
@@ -132,9 +140,7 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
-                                    animationSound.Volume = _settings.SoundVolume / 100.0;
-                                    animationSound.Play();
+                                    SoundPlay();
                                 }
                                 UpdatePosition();
                                 PreviewReset();
@@ -270,12 +276,11 @@ namespace Flow.Launcher
         {
             _notifyIcon = new NotifyIcon
             {
-                Text = Infrastructure.Constant.FlowLauncher,
+                Text = Infrastructure.Constant.FlowLauncherFullName,
                 Icon = Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
 
-            contextMenu = new ContextMenu();
 
             var openIcon = new FontIcon
             {
@@ -283,7 +288,8 @@ namespace Flow.Launcher
             };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")", Icon = openIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Icon = openIcon
             };
             var gamemodeIcon = new FontIcon
             {
@@ -291,7 +297,8 @@ namespace Flow.Launcher
             };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon
             {
@@ -299,7 +306,8 @@ namespace Flow.Launcher
             };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon
             {
@@ -307,7 +315,8 @@ namespace Flow.Launcher
             };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
             var exitIcon = new FontIcon
             {
@@ -315,7 +324,8 @@ namespace Flow.Launcher
             };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -333,7 +343,6 @@ namespace Flow.Launcher
             contextMenu.Items.Add(settings);
             contextMenu.Items.Add(exit);
 
-            _notifyIcon.ContextMenuStrip = new ContextMenuStrip(); // it need for close the context menu. if not, context menu can't close. 
             _notifyIcon.MouseClick += (o, e) =>
             {
                 switch (e.Button)
@@ -341,9 +350,15 @@ namespace Flow.Launcher
                     case MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-
                     case MouseButtons.Right:
+
                         contextMenu.IsOpen = true;
+                        // Get context menu handle and bring it to the foreground
+                        if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
+                        {
+                            _ = SetForegroundWindow(hwndSource.Handle);
+                        }
+                        contextMenu.Focus();
                         break;
                 }
             };
@@ -392,6 +407,7 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
+            isArrowKeyPressed = true;
             _animating = true;
             UpdatePosition();
 
@@ -480,6 +496,7 @@ namespace Flow.Launcher
             windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+            isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
             {
@@ -487,6 +504,33 @@ namespace Flow.Launcher
             }
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
+        }
+
+        private void InitSoundEffects()
+        {
+            if (_settings.WMPInstalled)
+            {
+                animationSoundWMP = new MediaPlayer();
+                animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            }
+            else
+            {
+                animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+            }
+        }
+
+        private void SoundPlay()
+        {
+            if (_settings.WMPInstalled)
+            {
+                animationSoundWMP.Position = TimeSpan.Zero;
+                animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
+                animationSoundWMP.Play();
+            }
+            else
+            {
+                animationSoundWPF.Play();
+            }
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -630,10 +674,12 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
                     break;
@@ -684,7 +730,21 @@ namespace Flow.Launcher
 
             }
         }
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up || e.Key == Key.Down)
+            {
+                isArrowKeyPressed = false;
+            }
+        }
 
+        private void MainPreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isArrowKeyPressed)
+            {
+                e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
+            }
+        }
         public void PreviewReset()
         {
             _viewModel.ResetPreview();

@@ -104,6 +104,16 @@
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
+    <!--  Resources for HotkeyControl  -->
+    <SolidColorBrush x:Key="CustomHotkeyHover" Color="#323232" />
+    <!--  Resources for Expander  -->
+    <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
+    <!--  Resource for ContentDialog  -->
+    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
+    <!--  Infobar Warning  -->
+    <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
+    <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />
+    <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />
@@ -772,7 +782,7 @@
     <m:StaticResource x:Key="ContentDialogForeground" ResourceKey="SystemControlPageTextBaseHighBrush" />
     <m:StaticResource x:Key="ContentDialogBackground" ResourceKey="SystemControlPageBackgroundAltHighBrush" />
     <m:StaticResource x:Key="ContentDialogBorderBrush" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-    <m:StaticResource x:Key="ContentDialogLightDismissOverlayBackground" ResourceKey="SystemControlPageBackgroundMediumAltMediumBrush" />
+    <m:StaticResource x:Key="ContentDialogLightDismissOverlayBackground" ResourceKey="ContentDialogOverlayBG" />
 
     <!--  Resources for DataGrid  -->
     <sys:Double x:Key="ListAccentLowOpacity">0.6</sys:Double>

@@ -1,0 +1,312 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.Resources.Controls.ExCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    mc:Ignorable="d">
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Expander
+                x:Name="expanderHeader"
+                Padding="0"
+                BorderThickness="1"
+                SnapsToDevicePixels="False">
+                <Expander.Style>
+                    <Style TargetType="{x:Type Expander}">
+                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                        <Setter Property="Background" Value="{DynamicResource Color00B}" />
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Expander}">
+                                    <Border
+                                        x:Name="Bd"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="5"
+                                        SnapsToDevicePixels="true">
+                                        <DockPanel>
+                                            <ToggleButton
+                                                x:Name="HeaderSite"
+                                                MinWidth="0"
+                                                MinHeight="68"
+                                                Margin="0,0,0,0"
+                                                Padding="0,0,0,0"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                Content="{TemplateBinding Header}"
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                ContentTemplateSelector="{TemplateBinding HeaderTemplateSelector}"
+                                                DockPanel.Dock="Top"
+                                                FocusVisualStyle="{DynamicResource ExpanderHeaderFocusVisual}"
+                                                FontFamily="{TemplateBinding FontFamily}"
+                                                FontSize="{TemplateBinding FontSize}"
+                                                FontStretch="{TemplateBinding FontStretch}"
+                                                FontStyle="{TemplateBinding FontStyle}"
+                                                FontWeight="{TemplateBinding FontWeight}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Expander}}">
+                                                <ToggleButton.Style>
+                                                    <Style TargetType="{x:Type ToggleButton}">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                                                                    <Border
+                                                                        x:Name="ToggleBtn"
+                                                                        Padding="{TemplateBinding Padding}"
+                                                                        Background="{DynamicResource Color00B}"
+                                                                        ClipToBounds="True"
+                                                                        CornerRadius="5">
+                                                                        <Grid SnapsToDevicePixels="True">
+                                                                            <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="*" />
+                                                                                <ColumnDefinition Width="Auto" />
+                                                                                <ColumnDefinition Width="30" />
+                                                                            </Grid.ColumnDefinitions>
+                                                                            <ContentPresenter
+                                                                                Grid.Column="0"
+                                                                                Margin="0,0,0,0"
+                                                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                                Content="{TemplateBinding Content}"
+                                                                                RecognizesAccessKey="True"
+                                                                                SnapsToDevicePixels="True" />
+                                                                            <Grid
+                                                                                x:Name="ChevronGrid"
+                                                                                Grid.Column="2"
+                                                                                Margin="0,0,18,0"
+                                                                                VerticalAlignment="Center"
+                                                                                Background="Transparent"
+                                                                                RenderTransformOrigin="0.5, 0.5">
+                                                                                <Grid.RenderTransform>
+                                                                                    <RotateTransform Angle="0" />
+                                                                                </Grid.RenderTransform>
+                                                                                <Ellipse
+                                                                                    x:Name="circle"
+                                                                                    Width="19"
+                                                                                    Height="19"
+                                                                                    HorizontalAlignment="Center"
+                                                                                    VerticalAlignment="Center"
+                                                                                    Stroke="Transparent" />
+                                                                                <Path
+                                                                                    x:Name="arrow"
+                                                                                    HorizontalAlignment="Center"
+                                                                                    VerticalAlignment="Center"
+                                                                                    Data="M 1,1.5 L 4.5,5 L 8,1.5"
+                                                                                    SnapsToDevicePixels="false"
+                                                                                    Stroke="#666"
+                                                                                    StrokeThickness="1" />
+                                                                            </Grid>
+                                                                        </Grid>
+                                                                    </Border>
+                                                                    <ControlTemplate.Triggers>
+                                                                        <Trigger Property="IsChecked" Value="true">
+                                                                            <Setter TargetName="arrow" Property="Data" Value="M 1,4.5  L 4.5,1  L 8,4.5" />
+                                                                            <Setter TargetName="ToggleBtn" Property="CornerRadius" Value="5 5 0 0" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsMouseOver" Value="true">
+                                                                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                                                                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color05B}" />
+                                                                            <Setter TargetName="ToggleBtn" Property="Background" Value="{DynamicResource CustomExpanderHover}" />
+                                                                        </Trigger>
+                                                                        <Trigger Property="IsPressed" Value="true">
+                                                                            <Setter TargetName="circle" Property="Stroke" Value="Transparent" />
+                                                                            <Setter TargetName="circle" Property="StrokeThickness" Value="1.5" />
+                                                                            <Setter TargetName="arrow" Property="Stroke" Value="{DynamicResource Color17B}" />
+                                                                        </Trigger>
+                                                                    </ControlTemplate.Triggers>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+
+                                                    </Style>
+                                                </ToggleButton.Style>
+                                            </ToggleButton>
+                                            <Border x:Name="ContentPresenterBorder" BorderThickness="0">
+                                                <ContentPresenter
+                                                    x:Name="ExpandSite"
+                                                    Margin="{TemplateBinding Padding}"
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    DockPanel.Dock="Bottom"
+                                                    Focusable="false" />
+                                                <Border.LayoutTransform>
+                                                    <ScaleTransform ScaleY="0" />
+                                                </Border.LayoutTransform>
+                                            </Border>
+                                        </DockPanel>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsExpanded" Value="true">
+                                            <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
+                                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,0,0,0" />
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="ContentPresenterBorder"
+                                                            Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                            From="0.0"
+                                                            To="1.0"
+                                                            Duration="00:00:00.00" />
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="ContentPresenterBorder"
+                                                            Storyboard.TargetProperty="(Border.Opacity)"
+                                                            From="0.0"
+                                                            To="1.0"
+                                                            Duration="00:00:00.00" />
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="ContentPresenterBorder"
+                                                            Storyboard.TargetProperty="(Border.LayoutTransform).(ScaleTransform.ScaleY)"
+                                                            From="1.0"
+                                                            To="0"
+                                                            Duration="00:00:00.00" />
+                                                        <!--  Animation 00:00:00.167  -->
+                                                        <DoubleAnimation
+                                                            Storyboard.TargetName="ContentPresenterBorder"
+                                                            Storyboard.TargetProperty="(Border.Opacity)"
+                                                            From="1.0"
+                                                            To="0.0"
+                                                            Duration="00:00:00.00" />
+                                                        <!--  Animation 00:00:00.167  -->
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                        <Trigger Property="ExpandDirection" Value="Right">
+                                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Right" />
+                                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Left" />
+                                            <Setter TargetName="HeaderSite" Property="Style" Value="{StaticResource ExpanderRightHeaderStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="ExpandDirection" Value="Up">
+                                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Top" />
+                                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Bottom" />
+                                            <Setter TargetName="HeaderSite" Property="Style" Value="{StaticResource ExpanderUpHeaderStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="ExpandDirection" Value="Left">
+                                            <Setter TargetName="ExpandSite" Property="DockPanel.Dock" Value="Left" />
+                                            <Setter TargetName="HeaderSite" Property="DockPanel.Dock" Value="Right" />
+                                            <Setter TargetName="HeaderSite" Property="Style" Value="{StaticResource ExpanderLeftHeaderStyle}" />
+                                        </Trigger>
+                                        <Trigger Property="IsEnabled" Value="false">
+                                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Expander.Style>
+                <Expander.Header>
+                    <Border Margin="0" Padding="0,12,0,12">
+                        <Grid Width="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Expander}}, Path=ActualWidth}" HorizontalAlignment="Left">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition
+                                    Width="auto"
+                                    MinWidth="20"
+                                    MaxWidth="60" />
+                                <ColumnDefinition Width="7*" />
+                                <ColumnDefinition Width="Auto" MinWidth="30" />
+                                <ColumnDefinition Width="Auto" MinWidth="30" />
+                            </Grid.ColumnDefinitions>
+                            <ContentControl
+                                x:Name="firstContentPresenter"
+                                Grid.Column="2"
+                                Margin="0,0,14,0"
+                                HorizontalAlignment="Right"
+                                Content="{Binding SideContent, RelativeSource={RelativeSource AncestorType=local:ExCard}}" />
+                            <TextBlock
+                                x:Name="ItemIcon"
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=local:ExCard}}">
+                                <TextBlock.Style>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding ElementName=ItemIcon, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                                <Setter Property="Margin" Value="24,0,0,0" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="Grid.Column" Value="0" />
+                                        <Setter Property="Margin" Value="24,0,16,0" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="FontSize" Value="20" />
+                                        <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+                                        <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <StackPanel Grid.Column="1" Margin="0,0,14,0">
+                                <StackPanel.Style>
+                                    <Style TargetType="{x:Type StackPanel}">
+                                        <Setter Property="Grid.Column" Value="1" />
+                                        <Setter Property="Width" Value="Auto" />
+                                        <Setter Property="VerticalAlignment" Value="Center" />
+                                        <Setter Property="HorizontalAlignment" Value="Left" />
+
+                                    </Style>
+                                </StackPanel.Style>
+                                <TextBlock x:Name="ItemTitle" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:ExCard}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                            <Setter Property="Margin" Value="0,0,0,0" />
+                                            <Setter Property="TextWrapping" Value="Wrap" />
+                                            <Setter Property="VerticalAlignment" Value="Center" />
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <TextBlock x:Name="SubTitle" Text="{Binding Sub, RelativeSource={RelativeSource AncestorType=local:ExCard}}">
+                                    <TextBlock.Style>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ElementName=SubTitle, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+                                            <Setter Property="FontSize" Value="12" />
+                                            <Setter Property="Margin" Value="0,0,0,0" />
+                                            <Setter Property="Padding" Value="0,0,24,0" />
+                                            <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+                </Expander.Header>
+                <Grid
+                    Grid.Column="0"
+                    Grid.ColumnSpan="4"
+                    HorizontalAlignment="Stretch"
+                    FlowDirection="LeftToRight">
+                    <StackPanel Margin="0,0,0,0" Orientation="Vertical">
+                        <ContentControl
+                            Grid.Column="0"
+                            Grid.ColumnSpan="4"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}" />
+                    </StackPanel>
+                </Grid>
+            </Expander>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

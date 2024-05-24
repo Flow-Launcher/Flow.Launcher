@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace Flow.Launcher.Core.ExternalPlugins
 {
@@ -13,9 +13,11 @@ namespace Flow.Launcher.Core.ExternalPlugins
         public string Website { get; set; }
         public string UrlDownload { get; set; }
         public string UrlSourceCode { get; set; }
+        public string LocalInstallPath { get; set; }
         public string IcoPath { get; set; }
         public DateTime? LatestReleaseDate { get; set; }
         public DateTime? DateAdded { get; set; }
 
+        public bool IsFromLocalInstallPath => !string.IsNullOrEmpty(LocalInstallPath);
     }
 }
