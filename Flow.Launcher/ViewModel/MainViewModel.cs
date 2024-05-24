@@ -34,12 +34,15 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
+        private Result lastContextMenuResult = new Result();
+        private List<Result> lastContextMenuResults = new List<Result>();
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
         private readonly FlowLauncherJsonStorage<UserSelectedRecord> _userSelectedRecordStorage;
         private readonly FlowLauncherJsonStorage<TopMostRecord> _topMostRecordStorage;
         private readonly History _history;
+        private int lastHistoryIndex = 1;
         private readonly UserSelectedRecord _userSelectedRecord;
         private readonly TopMostRecord _topMostRecord;
 
@@ -77,6 +80,42 @@ namespace Flow.Launcher.ViewModel
                         break;
                     case nameof(Settings.PreviewHotkey):
                         OnPropertyChanged(nameof(PreviewHotkey));
+                        break;
+                    case nameof(Settings.AutoCompleteHotkey):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryUpHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryUpHotkey));
+                        break;
+                    case nameof(Settings.CycleHistoryDownHotkey):
+                        OnPropertyChanged(nameof(CycleHistoryDownHotkey));
+                        break;
+                    case nameof(Settings.AutoCompleteHotkey2):
+                        OnPropertyChanged(nameof(AutoCompleteHotkey2));
+                        break;
+                    case nameof(Settings.SelectNextItemHotkey):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey));
+                        break;
+                    case nameof(Settings.SelectNextItemHotkey2):
+                        OnPropertyChanged(nameof(SelectNextItemHotkey2));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevItemHotkey2):
+                        OnPropertyChanged(nameof(SelectPrevItemHotkey2));
+                        break;
+                    case nameof(Settings.SelectNextPageHotkey):
+                        OnPropertyChanged(nameof(SelectNextPageHotkey));
+                        break;
+                    case nameof(Settings.SelectPrevPageHotkey):
+                        OnPropertyChanged(nameof(SelectPrevPageHotkey));
+                        break;
+                    case nameof(Settings.OpenContextMenuHotkey):
+                        OnPropertyChanged(nameof(OpenContextMenuHotkey));
+                        break;
+                    case nameof(Settings.SettingWindowHotkey):
+                        OnPropertyChanged(nameof(SettingWindowHotkey));
                         break;
                 }
             };
@@ -174,7 +213,8 @@ namespace Flow.Launcher.ViewModel
                     var token = e.Token == default ? _updateToken : e.Token;
 
                     PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query, token)))
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query,
+                            token)))
                     {
                         Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                     }
@@ -188,7 +228,8 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"), InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"),
+                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
         }
 
         [RelayCommand]
@@ -206,11 +247,45 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
-        private void ReQuery()
+        public void ReQuery()
         {
             if (SelectedIsFromQueryResults())
             {
                 QueryResults(isReQuery: true);
+            }
+        }
+
+        public void ReQuery(bool reselect)
+        {
+            if (SelectedIsFromQueryResults())
+            {
+                QueryResults(isReQuery: true, reSelect: reselect);
+            }
+        }
+
+        [RelayCommand]
+        public void ReverseHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex < _history.Items.Count)
+                {
+                    lastHistoryIndex++;
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void ForwardHistory()
+        {
+            if (_history.Items.Count > 0)
+            {
+                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                if (lastHistoryIndex > 1)
+                {
+                    lastHistoryIndex--;
+                }
             }
         }
 
@@ -257,6 +332,13 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
                 {
+                    var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
+                    // check if result.actionkeywordassigned is empty
+                    if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
+                    {
+                        autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
+                    }
+
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
 
@@ -278,11 +360,13 @@ namespace Flow.Launcher.ViewModel
             {
                 results.SelectedIndex = int.Parse(index);
             }
+
             var result = results.SelectedItem?.Result;
             if (result == null)
             {
                 return;
             }
+
             var hideWindow = await result.ExecuteAsync(new ActionContext
                 {
                     // not null means pressing modifier key + number, should ignore the modifier key
@@ -295,6 +379,7 @@ namespace Flow.Launcher.ViewModel
             {
                 _userSelectedRecord.Add(result);
                 _history.Add(result.OriginQuery.RawQuery);
+                lastHistoryIndex = 1;
             }
 
             if (hideWindow)
@@ -322,6 +407,13 @@ namespace Flow.Launcher.ViewModel
         }
 
         [RelayCommand]
+        private void SelectLastResult()
+        {
+            SelectedResults.SelectLastResult();
+        }
+
+
+        [RelayCommand]
         private void SelectPrevPage()
         {
             SelectedResults.SelectPrevPage();
@@ -336,7 +428,18 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void SelectPrevItem()
         {
-            SelectedResults.SelectPrevResult();
+            if (_history.Items.Count > 0
+                && QueryText == string.Empty
+                && SelectedIsFromQueryResults())
+            {
+                lastHistoryIndex = 1;
+                ReverseHistory();
+            }
+            else
+            {
+                SelectedResults.SelectPrevResult();
+            }
+        
         }
 
         [RelayCommand]
@@ -362,6 +465,17 @@ namespace Flow.Launcher.ViewModel
         public void ToggleGameMode()
         {
             GameModeStatus = !GameModeStatus;
+        }
+        
+        [RelayCommand]
+        public void CopyAlternative()
+        {
+            var result = Results.SelectedItem?.Result?.CopyText;
+
+            if (result != null)
+            {
+                App.API.CopyToClipboard(result, directCopy: false);
+            }
         }
 
         #endregion
@@ -395,6 +509,7 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
+
         public string QueryText
         {
             get => _queryText;
@@ -418,6 +533,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowSize += 100;
                 Settings.WindowLeft -= 50;
             }
+
             OnPropertyChanged();
         }
 
@@ -433,6 +549,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowLeft += 50;
                 Settings.WindowSize -= 100;
             }
+
             OnPropertyChanged();
         }
 
@@ -512,18 +629,17 @@ namespace Flow.Launcher.ViewModel
             {
                 if (QueryText != queryText)
                 {
-
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
-
                 }
                 else if (isReQuery)
                 {
                     Query(isReQuery: true);
                 }
+
                 QueryTextCursorMovedToEnd = true;
             });
         }
@@ -593,24 +709,35 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string PreviewHotkey 
-        { 
-            get
+        public string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
+        {
+            try
             {
-                // TODO try to patch issue #1755
-                // Added in v1.14.0, remove after v1.16.0. 
-                try
-                {
-                    var converter = new KeyGestureConverter();
-                    var key = (KeyGesture)converter.ConvertFromString(Settings.PreviewHotkey);
-                }
-                catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
-                {
-                    Settings.PreviewHotkey = "F1";
-                }
-                return Settings.PreviewHotkey;
+                var converter = new KeyGestureConverter();
+                var key = (KeyGesture)converter.ConvertFromString(hotkey);
             }
+            catch (Exception e) when (e is NotSupportedException || e is InvalidEnumArgumentException)
+            {
+                return defaultHotkey;
+            }
+
+            return hotkey;
         }
+        
+        public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
+        public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
+        public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");
+        public string SelectNextItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey, "Tab");
+        public string SelectNextItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectNextItemHotkey2, "");
+        public string SelectPrevItemHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey, "Shift+Tab");
+        public string SelectPrevItemHotkey2 => VerifyOrSetDefaultHotkey(Settings.SelectPrevItemHotkey2, "");
+        public string SelectNextPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectNextPageHotkey, "");
+        public string SelectPrevPageHotkey => VerifyOrSetDefaultHotkey(Settings.SelectPrevPageHotkey, "");
+        public string OpenContextMenuHotkey => VerifyOrSetDefaultHotkey(Settings.OpenContextMenuHotkey, "Ctrl+O");
+        public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
+        public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
+        public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
+
 
         public string Image => Constant.QueryTextBoxIconImagePath;
 
@@ -650,13 +777,24 @@ namespace Flow.Launcher.ViewModel
 
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
-                var results = PluginManager.GetContextMenusForPlugin(selected);
-                results.Add(ContextMenuTopMost(selected));
-                results.Add(ContextMenuPluginInfo(selected.PluginID));
+                List<Result> results;
+                if (selected == lastContextMenuResult)
+                {
+                    results = lastContextMenuResults;
+                }
+                else
+                {
+                    results = PluginManager.GetContextMenusForPlugin(selected);
+                    lastContextMenuResults = results;
+                    lastContextMenuResult = selected;
+                    results.Add(ContextMenuTopMost(selected));
+                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                }
+
 
                 if (!string.IsNullOrEmpty(query))
                 {
-                    var filtered = results.Where
+                    var filtered = results.Select(x => x.Clone()).Where
                     (
                         r =>
                         {
@@ -670,7 +808,6 @@ namespace Flow.Launcher.ViewModel
 
                             r.Score = match.Score;
                             return true;
-
                         }).ToList();
                     ContextMenu.AddResults(filtered, id);
                 }
@@ -697,10 +834,7 @@ namespace Flow.Launcher.ViewModel
                     Title = string.Format(title, h.Query),
                     SubTitle = string.Format(time, h.ExecutedDateTime),
                     IcoPath = "Images\\history.png",
-                    OriginQuery = new Query
-                    {
-                        RawQuery = h.Query
-                    },
+                    OriginQuery = new Query { RawQuery = h.Query },
                     Action = _ =>
                     {
                         SelectedResults = Results;
@@ -728,7 +862,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool isReQuery = false)
+        private async void QueryResults(bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
@@ -803,7 +937,7 @@ namespace Flow.Launcher.ViewModel
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTask(plugin),
+                false => QueryTask(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
 
@@ -831,26 +965,29 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTask(PluginPair plugin)
+            async Task QueryTask(PluginPair plugin, bool reSelect = true)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
                 await Task.Yield();
 
-                IReadOnlyList<Result> results = await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
+                IReadOnlyList<Result> results =
+                    await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
 
                 currentCancellationToken.ThrowIfCancellationRequested();
 
                 results ??= _emptyResult;
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query, currentCancellationToken)))
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query,
+                        currentCancellationToken, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
             }
         }
 
-        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts, IEnumerable<BuiltinShortcutModel> builtInShortcuts)
+        private Query ConstructQuery(string queryText, IEnumerable<CustomShortcutModel> customShortcuts,
+            IEnumerable<BuiltinShortcutModel> builtInShortcuts)
         {
             if (string.IsNullOrWhiteSpace(queryText))
             {
@@ -860,7 +997,8 @@ namespace Flow.Launcher.ViewModel
             StringBuilder queryBuilder = new(queryText);
             StringBuilder queryBuilderTmp = new(queryText);
 
-            foreach (var shortcut in customShortcuts)
+            // Sorting order is important here, the reason is for matching longest shortcut by default
+            foreach (var shortcut in customShortcuts.OrderByDescending(x => x.Key.Length))
             {
                 if (queryBuilder.Equals(shortcut.Key))
                 {
@@ -887,7 +1025,9 @@ namespace Flow.Launcher.ViewModel
                     }
                     catch (Exception e)
                     {
-                        Log.Exception($"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}", e);
+                        Log.Exception(
+                            $"{nameof(MainViewModel)}.{nameof(ConstructQuery)}|Error when expanding shortcut {shortcut.Key}",
+                            e);
                     }
                 }
             });
@@ -1023,13 +1163,17 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
+            lastHistoryIndex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
+            lastContextMenuResult = new Result();
+            lastContextMenuResults = new List<Result>();
 
             if (!SelectedIsFromQueryResults())
             {
                 SelectedResults = Results;
             }
+
             switch (Settings.LastQueryMode)
             {
                 case LastQueryMode.Empty:
@@ -1077,7 +1221,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void UpdateResultView(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        public void UpdateResultView(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return;
@@ -1116,7 +1260,10 @@ namespace Flow.Launcher.ViewModel
                 }
             }
 
-            Results.AddResults(resultsForUpdates, token);
+            // it should be the same for all results
+            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+            Results.AddResults(resultsForUpdates, token, reSelect);
         }
 
         #endregion

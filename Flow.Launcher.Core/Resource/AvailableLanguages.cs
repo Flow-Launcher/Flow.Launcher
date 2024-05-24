@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -27,6 +27,8 @@ namespace Flow.Launcher.Core.Resource
         public static Language Turkish = new Language("tr", "Türkçe");
         public static Language Czech = new Language("cs", "čeština");
         public static Language Arabic = new Language("ar", "اللغة العربية");
+        public static Language Vietnamese = new Language("vi-vn", "Tiếng Việt");
+
 
         public static List<Language> GetAvailableLanguages()
         {
@@ -54,7 +56,8 @@ namespace Flow.Launcher.Core.Resource
                 Slovak,
                 Turkish,
                 Czech,
-                Arabic
+                Arabic,
+                Vietnamese
             };
             return languages;
         }

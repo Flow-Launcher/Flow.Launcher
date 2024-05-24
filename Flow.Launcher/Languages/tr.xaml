@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">Koyu</system:String>
     <system:String x:Key="SoundEffect">Ses Efekti</system:String>
     <system:String x:Key="SoundEffectTip">Arama penceresi açıldığında küçük bir ses oynat</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">Animasyon</system:String>
     <system:String x:Key="AnimationTip">Arayüzde Animasyon Kullan</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>

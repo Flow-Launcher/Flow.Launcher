@@ -1,0 +1,244 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneGeneral"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settingsViewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:ext="clr-namespace:Flow.Launcher.Resources.MarkupExtensions"
+    Title="General"
+    d:DataContext="{d:DesignInstance settingsViewModels:SettingsPaneGeneralViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ScrollViewer
+        Margin="0"
+        CanContentScroll="False"
+        FontSize="14"
+        VirtualizingPanel.ScrollUnit="Pixel"
+        VirtualizingStackPanel.IsVirtualizing="True">
+        <VirtualizingStackPanel Margin="5 18 25 30" Orientation="Vertical">
+            <TextBlock
+                Grid.Row="2"
+                Margin="0 5"
+                FontSize="30"
+                Style="{StaticResource PageTitle}"
+                Text="{DynamicResource general}"
+                TextAlignment="left" />
+
+            <cc:Card Title="{DynamicResource startFlowLauncherOnSystemStartup}" Icon="&#xe8fc;">
+                <ui:ToggleSwitch IsOn="{Binding StartFlowLauncherOnSystemStartup}" />
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource hideOnStartup}" Icon="&#xed1a;">
+                <ui:ToggleSwitch IsOn="{Binding Settings.HideOnStartup}" />
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource hideFlowLauncherWhenLoseFocus}" Margin="0 30 0 0">
+                <ui:ToggleSwitch IsOn="{Binding Settings.HideWhenDeactivated}" />
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource hideNotifyIcon}" Sub="{DynamicResource hideNotifyIconToolTip}">
+                <ui:ToggleSwitch IsOn="{Binding Settings.HideNotifyIcon}" />
+            </cc:Card>
+
+            <cc:CardGroup Margin="0 30 0 0">
+                <cc:Card Icon="&#xe7f4;" Title="{DynamicResource SearchWindowPosition}">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox
+                            MinWidth="220"
+                            DisplayMemberPath="Display"
+                            SelectedValuePath="Value"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding SearchWindowScreens}"
+                            SelectedValue="{Binding Settings.SearchWindowScreen}" />
+                        <ComboBox
+                            MinWidth="160"
+                            Margin="18 0 0 0"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding ScreenNumbers}"
+                            SelectedValue="{Binding Settings.CustomScreenNumber}"
+                            Visibility="{ext:VisibleWhen
+                                        {Binding Settings.SearchWindowScreen},
+                                        IsEqualTo={x:Static userSettings:SearchWindowScreens.Custom}}"
+                            />
+                    </StackPanel>
+                </cc:Card>
+
+                <cc:Card
+                    Icon="&#xe7f4;"
+                    Title="{DynamicResource SearchWindowAlign}"
+                    Visibility="{ext:CollapsedWhen
+                                {Binding Settings.SearchWindowScreen},
+                                IsEqualTo={x:Static userSettings:SearchWindowScreens.RememberLastLaunchLocation}}">
+                    <StackPanel Orientation="Horizontal">
+                        <ComboBox
+                            MinWidth="160"
+                            DisplayMemberPath="Display"
+                            SelectedValuePath="Value"
+                            FontSize="14"
+                            VerticalAlignment="Center"
+                            ItemsSource="{Binding SearchWindowAligns}"
+                            SelectedValue="{Binding Settings.SearchWindowAlign}" />
+
+                        <StackPanel
+                            Margin="18 0 0 0"
+                            Orientation="Horizontal"
+                            VerticalAlignment="Center"
+                            Visibility="{ext:VisibleWhen
+                                        {Binding Settings.SearchWindowAlign},
+                                        IsEqualTo={x:Static userSettings:SearchWindowAligns.Custom}}">
+                            <TextBox VerticalAlignment="Center" MinWidth="80"
+                                     Text="{Binding Settings.CustomWindowLeft}" />
+                            <TextBlock VerticalAlignment="Center" Margin="10" Text="x" />
+                            <TextBox VerticalAlignment="Center" MinWidth="80" Text="{Binding Settings.CustomWindowTop}"
+                                     TextWrapping="NoWrap" />
+                        </StackPanel>
+                    </StackPanel>
+                </cc:Card>
+            </cc:CardGroup>
+
+            <cc:Card
+                Title="{DynamicResource ignoreHotkeysOnFullscreen}"
+                Icon="&#xe7fc;"
+                Sub="{DynamicResource ignoreHotkeysOnFullscreenToolTip}">
+                <ui:ToggleSwitch IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource AlwaysPreview}"
+                Margin="0 30 0 0"
+                Icon="&#xe8a1;"
+                Sub="{DynamicResource AlwaysPreviewToolTip}">
+                <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysPreview}" ToolTip="{Binding AlwaysPreviewToolTip}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource autoUpdates}"
+                Margin="0 30 0 0"
+                Icon="&#xecc5;">
+                <ui:ToggleSwitch IsOn="{Binding AutoUpdates}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource portableMode}"
+                Icon="&#xe88e;"
+                Sub="{DynamicResource portableModeToolTIp}">
+                <ui:ToggleSwitch IsOn="{Binding PortableMode}" />
+            </cc:Card>
+
+            <cc:CardGroup Margin="0 30 0 0">
+                <cc:Card Title="{DynamicResource querySearchPrecision}"
+                         Sub="{DynamicResource querySearchPrecisionToolTip}">
+                    <ComboBox
+                        MaxWidth="200"
+                        ItemsSource="{Binding QuerySearchPrecisionStrings}"
+                        SelectedItem="{Binding Settings.QuerySearchPrecisionString}" />
+                </cc:Card>
+
+                <cc:Card Title="{DynamicResource lastQueryMode}" Sub="{DynamicResource lastQueryModeToolTip}">
+                    <ComboBox
+                        DisplayMemberPath="Display"
+                        SelectedValuePath="Value"
+                        ItemsSource="{Binding LastQueryModes}"
+                        SelectedValue="{Binding Settings.LastQueryMode}" />
+                </cc:Card>
+
+                <cc:Card Icon="&#xe8fd;" Title="{DynamicResource maxShowResults}"
+                         Sub="{DynamicResource maxShowResultsToolTip}">
+                    <ComboBox
+                        Width="100"
+                        ItemsSource="{Binding MaxResultsRange}"
+                        SelectedItem="{Binding Settings.MaxResultsToShow}" />
+                </cc:Card>
+            </cc:CardGroup>
+
+            <cc:Card
+                Title="{DynamicResource defaultFileManager}"
+                Margin="0 30 0 0"
+                Icon="&#xe838;"
+                Sub="{DynamicResource defaultFileManagerToolTip}">
+                <Button
+                    Width="160"
+                    MaxWidth="250"
+                    Margin="10 0 0 0"
+                    Command="{Binding SelectFileManagerCommand}"
+                    Content="{Binding Settings.CustomExplorer.Name}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource defaultBrowser}"
+                Icon="&#xf6fa;"
+                Sub="{DynamicResource defaultBrowserToolTip}">
+                <Button
+                    Width="160"
+                    MaxWidth="250"
+                    Margin="10 0 0 0"
+                    Command="{Binding SelectBrowserCommand}"
+                    Content="{Binding Settings.CustomBrowser.Name}" />
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource pythonFilePath}" Margin="0 30 0 0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="300"
+                        Height="34"
+                        Text="{Binding Settings.PluginSettings.PythonExecutablePath, TargetNullValue='None'}" />
+                    <Button
+                        Height="34"
+                        Margin="10 0 0 0"
+                        Command="{Binding SelectPythonCommand}"
+                        Content="{DynamicResource select}" />
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource nodeFilePath}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBox
+                        Width="300"
+                        Height="34"
+                        Text="{Binding Settings.PluginSettings.NodeExecutablePath, TargetNullValue='None'}" />
+                    <Button
+                        Height="34"
+                        Margin="10 0 0 0"
+                        Command="{Binding SelectNodeCommand}"
+                        Content="{DynamicResource select}" />
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource typingStartEn}"
+                Margin="0 30 0 0"
+                Icon="&#xe8d3;"
+                Sub="{DynamicResource typingStartEnTooltip}">
+                <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysStartEn}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource ShouldUsePinyin}"
+                Icon="&#xe98a;"
+                Sub="{DynamicResource ShouldUsePinyinToolTip}">
+                <ui:ToggleSwitch IsOn="{Binding Settings.ShouldUsePinyin}"
+                                 ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource language}"
+                Margin="0 30 0 0"
+                Icon="&#xf2b7;">
+                <ComboBox
+                    MaxWidth="200"
+                    Margin="10 0 0 0"
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding Languages}"
+                    SelectedValue="{Binding Language}"
+                    SelectedValuePath="LanguageCode" />
+            </cc:Card>
+        </VirtualizingStackPanel>
+    </ScrollViewer>
+</ui:Page>

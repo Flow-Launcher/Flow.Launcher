@@ -7,97 +7,96 @@ using Flow.Launcher.Core.Resource;
 using System.Windows;
 using Flow.Launcher.ViewModel;
 
-namespace Flow.Launcher.Helper
+namespace Flow.Launcher.Helper;
+
+internal static class HotKeyMapper
 {
-    internal static class HotKeyMapper
+    private static Settings _settings;
+    private static MainViewModel _mainViewModel;
+
+    internal static void Initialize(MainViewModel mainVM)
     {
-        private static Settings settings;
-        private static MainViewModel mainViewModel;
+        _mainViewModel = mainVM;
+        _settings = _mainViewModel.Settings;
 
-        internal static void Initialize(MainViewModel mainVM)
+        SetHotkey(_settings.Hotkey, OnToggleHotkey);
+        LoadCustomPluginHotkey();
+    }
+
+    internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+    {
+        if (!_mainViewModel.ShouldIgnoreHotkeys())
+            _mainViewModel.ToggleFlowLauncher();
+    }
+
+    private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
+    {
+        var hotkey = new HotkeyModel(hotkeyStr);
+        SetHotkey(hotkey, action);
+    }
+
+    internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
+    {
+        string hotkeyStr = hotkey.ToString();
+        try
         {
-            mainViewModel = mainVM;
-            settings = mainViewModel.Settings;
-
-            SetHotkey(settings.Hotkey, OnToggleHotkey);
-            LoadCustomPluginHotkey();
+            HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
         }
-
-        internal static void OnToggleHotkey(object sender, HotkeyEventArgs args)
+        catch (Exception)
         {
-            if (!mainViewModel.ShouldIgnoreHotkeys())
-                mainViewModel.ToggleFlowLauncher();
+            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
+            MessageBox.Show(errorMsg,errorMsgTitle);
         }
+    }
 
-        private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
+    internal static void RemoveHotkey(string hotkeyStr)
+    {
+        if (!string.IsNullOrEmpty(hotkeyStr))
         {
-            var hotkey = new HotkeyModel(hotkeyStr);
-            SetHotkey(hotkey, action);
+            HotkeyManager.Current.Remove(hotkeyStr);
         }
+    }
 
-        internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
+    internal static void LoadCustomPluginHotkey()
+    {
+        if (_settings.CustomPluginHotkeys == null)
+            return;
+
+        foreach (CustomPluginHotkey hotkey in _settings.CustomPluginHotkeys)
         {
-            string hotkeyStr = hotkey.ToString();
-            try
-            {
-                HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
-            }
-            catch (Exception)
-            {
-                string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
-                string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-                MessageBox.Show(errorMsg,errorMsgTitle);
-            }
+            SetCustomQueryHotkey(hotkey);
         }
+    }
 
-        internal static void RemoveHotkey(string hotkeyStr)
+    internal static void SetCustomQueryHotkey(CustomPluginHotkey hotkey)
+    {
+        SetHotkey(hotkey.Hotkey, (s, e) =>
         {
-            if (!string.IsNullOrEmpty(hotkeyStr))
-            {
-                HotkeyManager.Current.Remove(hotkeyStr);
-            }
-        }
-
-        internal static void LoadCustomPluginHotkey()
-        {
-            if (settings.CustomPluginHotkeys == null)
+            if (_mainViewModel.ShouldIgnoreHotkeys())
                 return;
 
-            foreach (CustomPluginHotkey hotkey in settings.CustomPluginHotkeys)
-            {
-                SetCustomQueryHotkey(hotkey);
-            }
-        }
+            _mainViewModel.Show();
+            _mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
+        });
+    }
 
-        internal static void SetCustomQueryHotkey(CustomPluginHotkey hotkey)
+    internal static bool CheckAvailability(HotkeyModel currentHotkey)
+    {
+        try
         {
-            SetHotkey(hotkey.Hotkey, (s, e) =>
-            {
-                if (mainViewModel.ShouldIgnoreHotkeys())
-                    return;
+            HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", currentHotkey.CharKey, currentHotkey.ModifierKeys, (sender, e) => { });
 
-                mainViewModel.Show();
-                mainViewModel.ChangeQueryText(hotkey.ActionKeyword, true);
-            });
+            return true;
         }
-
-        internal static bool CheckAvailability(HotkeyModel currentHotkey)
+        catch
         {
-            try
-            {
-                HotkeyManager.Current.AddOrReplace("HotkeyAvailabilityTest", currentHotkey.CharKey, currentHotkey.ModifierKeys, (sender, e) => { });
-
-                return true;
-            }
-            catch
-            {
-            }
-            finally
-            {
-                HotkeyManager.Current.Remove("HotkeyAvailabilityTest");
-            }
-
-            return false;
         }
+        finally
+        {
+            HotkeyManager.Current.Remove("HotkeyAvailabilityTest");
+        }
+
+        return false;
     }
 }

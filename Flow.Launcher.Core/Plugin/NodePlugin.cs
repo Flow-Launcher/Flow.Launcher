@@ -28,20 +28,21 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override Task<Stream> RequestAsync(JsonRPCRequestModel request, CancellationToken token = default)
         {
-            _startInfo.ArgumentList[1] = JsonSerializer.Serialize(request);
+            _startInfo.ArgumentList[1] = JsonSerializer.Serialize(request, RequestSerializeOption);
             return ExecuteAsync(_startInfo, token);
         }
 
         protected override string Request(JsonRPCRequestModel rpcRequest, CancellationToken token = default)
         {
             // since this is not static, request strings will build up in ArgumentList if index is not specified
-            _startInfo.ArgumentList[1] = JsonSerializer.Serialize(rpcRequest);
+            _startInfo.ArgumentList[1] = JsonSerializer.Serialize(rpcRequest, RequestSerializeOption);
             return Execute(_startInfo);
         }
 
         public override async Task InitAsync(PluginInitContext context)
         {
             _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
+            _startInfo.ArgumentList.Add(string.Empty);
             _startInfo.WorkingDirectory = context.CurrentPluginMetadata.PluginDirectory;
             await base.InitAsync(context);
         }

@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
-    <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más y Ctrl+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite activar Flow Launcher con aplicaciones a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
@@ -73,13 +73,13 @@
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
-    <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
+    <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse {0} para mostrar/ocultar la vista previa.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -154,8 +154,10 @@
     <system:String x:Key="ColorSchemeDark">Oscuro</system:String>
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
+    <system:String x:Key="SoundEffectVolume">Volumen del efecto de sonido</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Ajusta el volumen del efecto de sonido</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Usar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationTip">Usa animación en la Interfaz de Usuario</system:String>
     <system:String x:Key="AnimationSpeed">Velocidad de animación</system:String>
     <system:String x:Key="AnimationSpeedTip">Velocidad de animación de la interfaz de usuario</system:String>
     <system:String x:Key="AnimationSpeedSlow">Lenta</system:String>
@@ -170,7 +172,7 @@
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Atajo de teclado para vista previa</system:String>
+    <system:String x:Key="previewHotkey">Acceso directo para vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
@@ -188,13 +190,13 @@
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro de que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">También puede ajustarlo rápidamente usando Ctrl+[y Ctrl+].</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">También puede ajustarse rápidamente usando Ctrl+[ y Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
@@ -237,7 +239,7 @@
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
-    <system:String x:Key="clearlogfolderMessage">¿Está seguro que desea eliminar todos los registros?</system:String>
+    <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
@@ -296,7 +298,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
 
     <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Atajo de teclado no disponible</system:String>
+    <system:String x:Key="hotkeyUnavailable">No disponible</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>

@@ -84,7 +84,7 @@ namespace Flow.Launcher.Plugin.Program
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload win32 programs <{_win32s.Length}>");
             Log.Info($"|Flow.Launcher.Plugin.Program.Main|Number of preload uwps <{_uwps.Length}>");
 
-            bool cacheEmpty = !_win32s.Any() && !_uwps.Any();
+            bool cacheEmpty = !_win32s.Any() || !_uwps.Any();
 
             if (cacheEmpty || _settings.LastIndexTime.AddHours(30) < DateTime.Now)
             {

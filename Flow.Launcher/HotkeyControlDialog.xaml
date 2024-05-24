@@ -1,0 +1,169 @@
+﻿<ui:ContentDialog
+    x:Class="Flow.Launcher.HotkeyControlDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Background="{DynamicResource PopuBGColor}"
+    BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+    BorderThickness="0,1,0,0"
+    CornerRadius="8"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
+    Foreground="{DynamicResource PopupTextColor}"
+    PreviewKeyDown="OnPreviewKeyDown"
+    Style="{DynamicResource ContentDialog}">
+    <ui:ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+        <Thickness x:Key="ContentDialogTitleMargin">0</Thickness>
+    </ui:ContentDialog.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="80" />
+        </Grid.RowDefinitions>
+
+        <!--  Window title and the keys in the hotkey  -->
+        <Grid Grid.Row="0" Margin="26,12,26,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel>
+                <TextBlock
+                    Margin="0,0,0,0"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    Text="{Binding WindowTitle}"
+                    TextAlignment="Left" />
+                <TextBlock FontSize="14" Text="{DynamicResource hotkeyRegGuide}" />
+            </StackPanel>
+            <Border
+                Grid.Row="1"
+                Width="450"
+                Height="100"
+                Margin="0,100,0,0"
+                Padding="26,12,26,0">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <ItemsControl ItemsSource="{Binding KeysToDisplay}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border
+                                    MinWidth="50"
+                                    MinHeight="50"
+                                    Margin="5,0,5,0"
+                                    Padding="8"
+                                    Background="{DynamicResource AccentButtonBackground}"
+                                    CornerRadius="6">
+                                    <TextBlock
+                                        Margin="5,0,5,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="18"
+                                        FontWeight="Bold"
+                                        Foreground="{DynamicResource Color01B}"
+                                        Text="{Binding}" />
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!--  Warning message for when something went wrong with the new hotkey.  -->
+        <Border Grid.Row="1">
+
+            <Border
+                x:Name="Alert"
+                Width="420"
+                Padding="0, 10"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Background="{DynamicResource InfoBarWarningBG}"
+                BorderBrush="{DynamicResource InfoBarBD}"
+                BorderThickness="1"
+                CornerRadius="5"
+                Visibility="Collapsed">
+                <Grid VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <ui:FontIcon
+                        Grid.Column="0"
+                        Margin="20,0,14,0"
+                        VerticalAlignment="Center"
+                        FontSize="15"
+                        Foreground="{DynamicResource InfoBarWarningIcon}"
+                        Glyph="&#xf167;" />
+                    <TextBlock
+                        Grid.Column="1"
+                        x:Name="tbMsg"
+                        Margin="0,0,0,2"
+                        Padding="0,0,8,0"
+                        HorizontalAlignment="Left"
+                        FontSize="13"
+                        FontWeight="SemiBold"
+                        TextWrapping="Wrap"
+                        Foreground="{DynamicResource Color05B}" />
+                </Grid>
+            </Border>
+
+        </Border>
+
+        <!--  Action buttons at the bottom of the dialog  -->
+        <Border
+            Grid.Row="2"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0,1,0,0"
+            CornerRadius="0 0 8 8">
+            <StackPanel
+                Margin="10"
+                HorizontalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="OverwriteBtn"
+                    Height="30"
+                    MinWidth="100"
+                    Margin="0,0,4,0"
+                    Click="Overwrite"
+                    Content="{DynamicResource commonOverwrite}"
+                    Visibility="Collapsed"
+                    Style="{StaticResource AccentButtonStyle}" />
+                <Button
+                    x:Name="SaveBtn"
+                    Height="30"
+                    MinWidth="100"
+                    Margin="0,0,4,0"
+                    Click="Save"
+                    Content="{DynamicResource commonSave}"
+                    Style="{StaticResource AccentButtonStyle}" />
+                <Button
+                    Height="30"
+                    MinWidth="100"
+                    Margin="4,0,4,0"
+                    Click="Reset"
+                    Content="{DynamicResource commonReset}" />
+                <Button
+                    Height="30"
+                    MinWidth="100"
+                    Margin="4,0,4,0"
+                    Click="Delete"
+                    Content="{DynamicResource commonDelete}" />
+                <Button
+                    Height="30"
+                    MinWidth="100"
+                    Margin="4,0,0,0"
+                    Click="Cancel"
+                    Content="{DynamicResource commonCancel}" />
+            </StackPanel>
+        </Border>
+    </Grid>
+</ui:ContentDialog>

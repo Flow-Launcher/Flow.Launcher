@@ -154,6 +154,8 @@
     <system:String x:Key="ColorSchemeDark">어둡게</system:String>
     <system:String x:Key="SoundEffect">소리 효과</system:String>
     <system:String x:Key="SoundEffectTip">검색창을 열 때 작은 소리를 재생합니다.</system:String>
+    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="Animation">애니메이션</system:String>
     <system:String x:Key="AnimationTip">일부 UI에 애니메이션을 사용합니다.</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
