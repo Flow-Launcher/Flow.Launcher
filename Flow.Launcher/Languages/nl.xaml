@@ -156,7 +156,7 @@
     <system:String x:Key="SoundEffectTip">Een klein geluid afspelen wanneer het zoekvenster wordt geopend</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is niet beschikbaar en is vereist voor volume aanpassing door Flow. Controleer uw installatie als u volume wilt aanpassen.</system:String>
     <system:String x:Key="Animation">Animatie</system:String>
     <system:String x:Key="AnimationTip">Animatie gebruiken in UI</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
