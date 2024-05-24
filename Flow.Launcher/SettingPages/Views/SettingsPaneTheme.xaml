@@ -14,7 +14,6 @@
     d:DataContext="{d:DesignInstance viewModels:SettingsPaneThemeViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Style="{DynamicResource SettingPageBasic}"
     mc:Ignorable="d">
     <ui:Page.Resources>
         <ResourceDictionary>
@@ -112,10 +111,12 @@
                                     Visibility="Visible" />
 
                                 <flowlauncher:ResultListBox
+                                    x:Name="ResultListBox"
                                     Grid.Row="2"
                                     DataContext="{Binding PreviewResults, Mode=OneTime}"
                                     Visibility="Visible" />
-
+                                <Border x:Name="ContextMenu" Visibility="Collapsed" />
+                                <Border x:Name="History" Visibility="Collapsed" />
                             </Grid>
                         </Border>
                     </Border>
