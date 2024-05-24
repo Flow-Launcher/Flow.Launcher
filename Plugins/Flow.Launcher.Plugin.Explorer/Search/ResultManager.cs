@@ -248,7 +248,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
                 CopyText = filePath,
-                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(filePath)),
+                PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath)),
                 Action = c =>
                 {
                     try

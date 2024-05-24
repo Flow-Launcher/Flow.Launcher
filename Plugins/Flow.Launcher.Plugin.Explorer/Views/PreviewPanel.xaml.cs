@@ -1,9 +1,9 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,10 +17,11 @@ namespace Flow.Launcher.Plugin.Explorer.Views;
 public partial class PreviewPanel : UserControl, INotifyPropertyChanged
 {
     private string FilePath { get; }
-    public string FileSize { get; }
-    public string CreatedAt { get; }
-    public string LastModifiedAt { get; }
+    public string FileSize { get; } = "";
+    public string CreatedAt { get; } = "";
+    public string LastModifiedAt { get; } = "";
     private ImageSource _previewImage = new BitmapImage();
+    private Settings Settings { get; }
 
     public ImageSource PreviewImage
     {
@@ -32,20 +33,49 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         }
     }
 
-    public PreviewPanel(string filePath)
+    public Visibility FileSizeVisibility => Settings.ShowFileSizeInPreviewPanel
+        ? Visibility.Visible
+        : Visibility.Collapsed;
+    public Visibility CreatedAtVisibility => Settings.ShowCreatedDateInPreviewPanel
+        ? Visibility.Visible
+        : Visibility.Collapsed;
+    public Visibility LastModifiedAtVisibility => Settings.ShowModifiedDateInPreviewPanel
+        ? Visibility.Visible
+        : Visibility.Collapsed;
+
+    public PreviewPanel(Settings settings, string filePath)
     {
         InitializeComponent();
 
+        Settings = settings;
+
         FilePath = filePath;
 
-        var fileSize = new FileInfo(filePath).Length;
-        FileSize = ResultManager.ToReadableSize(fileSize, 2);
+        if (Settings.ShowFileSizeInPreviewPanel)
+        {
+            var fileSize = new FileInfo(filePath).Length;
+            FileSize = ResultManager.ToReadableSize(fileSize, 2);
+        }
 
-        DateTime created = File.GetCreationTime(filePath);
-        CreatedAt = created.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
+        if (Settings.ShowCreatedDateInPreviewPanel)
+        {
+            CreatedAt = File
+                .GetCreationTime(filePath)
+                .ToString(
+                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                    CultureInfo.CurrentCulture
+                );
+        }
 
-        DateTime lastModified = File.GetLastWriteTime(filePath);
-        LastModifiedAt = lastModified.ToString("yy-M-dd ddd hh:mm", CultureInfo.CurrentCulture);
+        if (Settings.ShowModifiedDateInPreviewPanel)
+        {
+            LastModifiedAt = File
+                .GetLastWriteTime(filePath)
+                .ToString(
+                    $"{Settings.PreviewPanelDateFormat} {Settings.PreviewPanelTimeFormat}",
+                    CultureInfo.CurrentCulture
+                );
+        }
 
         _ = LoadImageAsync();
     }
