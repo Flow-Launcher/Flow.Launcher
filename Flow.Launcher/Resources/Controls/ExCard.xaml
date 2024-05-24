@@ -53,7 +53,7 @@
                                                 FontStyle="{TemplateBinding FontStyle}"
                                                 FontWeight="{TemplateBinding FontWeight}"
                                                 Foreground="{TemplateBinding Foreground}"
-                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                                IsChecked="{Binding IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource AncestorType=Expander}}">
                                                 <ToggleButton.Style>
                                                     <Style TargetType="{x:Type ToggleButton}">
                                                         <Setter Property="Template">
