@@ -43,6 +43,13 @@ public partial class PreviewPanel : UserControl, INotifyPropertyChanged
         ? Visibility.Visible
         : Visibility.Collapsed;
 
+    public Visibility FileInfoVisibility =>
+        Settings.ShowFileSizeInPreviewPanel ||
+        Settings.ShowCreatedDateInPreviewPanel ||
+        Settings.ShowModifiedDateInPreviewPanel
+        ? Visibility.Visible
+        : Visibility.Collapsed;
+
     public PreviewPanel(Settings settings, string filePath)
     {
         InitializeComponent();

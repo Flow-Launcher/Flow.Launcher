@@ -54,20 +54,12 @@
             <TextBlock
                 Style="{DynamicResource PreviewItemSubTitleStyle}"
                 Text="{Binding Result.SubTitle}" />
-            <StackPanel Orientation="Vertical">
-                <StackPanel.Style>
-                    <Style TargetType="StackPanel">
-                        <Style.Triggers>
-                            <DataTrigger
-                                Binding="{Binding ElementName=SizeValue, Path=Text}"
-                                Value="{x:Static sys:String.Empty}">
-                                <Setter Property="Height" Value="0" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </StackPanel.Style>
+            <StackPanel
+                Visibility="{Binding FileInfoVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
+
                 <Separator Margin="0" Style="{DynamicResource PreviewSep}" />
-                <Grid Margin="0 10 0 0" VerticalAlignment="Center">
+
+                <Grid Margin="0 10 0 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
@@ -77,6 +69,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
+
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
@@ -87,7 +80,6 @@
                         Text="{DynamicResource FileSize}"
                         TextWrapping="Wrap" />
                     <TextBlock
-                        Name="SizeValue"
                         Grid.Row="0"
                         Grid.Column="1"
                         Margin="0"
