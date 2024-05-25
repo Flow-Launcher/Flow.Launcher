@@ -59,4 +59,16 @@
     <PackageReference Include="Microsoft.Data.Sqlite" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference
+      Include="..\..\Flow.Launcher.Analyzers\Flow.Launcher.Analyzers.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <ProjectReference
+      Include="..\..\Flow.Launcher.SourceGenerators\Flow.Launcher.SourceGenerators.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <AdditionalFiles Include="Languages\en.xaml" />
+  </ItemGroup>
+
 </Project>

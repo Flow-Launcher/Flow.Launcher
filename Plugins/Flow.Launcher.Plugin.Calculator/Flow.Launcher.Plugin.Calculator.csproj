@@ -13,7 +13,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -34,13 +34,13 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Include="plugin.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\..\Flow.Launcher.Core\Flow.Launcher.Core.csproj" />
   </ItemGroup>
@@ -64,5 +64,17 @@
   <ItemGroup>
     <PackageReference Include="Mages" Version="2.0.2" />
   </ItemGroup>
-  
+
+  <ItemGroup>
+    <ProjectReference
+      Include="..\..\Flow.Launcher.Analyzers\Flow.Launcher.Analyzers.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <ProjectReference
+      Include="..\..\Flow.Launcher.SourceGenerators\Flow.Launcher.SourceGenerators.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <AdditionalFiles Include="Languages\en.xaml" />
+  </ItemGroup>
+
 </Project>
