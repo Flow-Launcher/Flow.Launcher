@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Size</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Voorbeeld Paneel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Grootte</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Bestandsinformatie weergeven</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formaat voor datum en tijd</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
