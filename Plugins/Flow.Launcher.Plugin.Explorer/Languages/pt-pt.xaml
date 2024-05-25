@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palavras-chave</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Ligações de acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Definições Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenação:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Caminho para Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Iniciar oculto</system:String>
@@ -103,10 +109,11 @@
     <system:String x:Key="plugin_explorer_openwith">Abrir com</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Selecione o programa a utilizar</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} livre de {1} no total</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Abrir no gestor de ficheiros padrão</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Utilize '&gt;' para pesquisar nesta pasta, '*' para pesquisar por extensão de ficheiro e '&gt;*' para combinar ambas as anteriores.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Utilize '&gt;' para pesquisar nesta pasta, '*' para pesquisar por extensão de ficheiro e '&gt;*' para combinar ambas as anteriores.</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Falha ao carregar Everything SDK</system:String>
@@ -131,7 +138,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Aviso: esta não é uma opção de ordenação rápida e as pesquisas podem ser demoradas</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Pesquisar caminho completo</system:String>
-    
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Clique para iniciar ou instalar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalação Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">A instalar o serviço Everything. Por favor aguarde...</system:String>
