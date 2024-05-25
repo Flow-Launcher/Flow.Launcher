@@ -119,7 +119,7 @@ namespace Flow.Launcher.Infrastructure
         /// </summary>
         /// <param name="stringToTranslate">String to translate.</param>
         /// <returns></returns>
-        public bool CanBeTranslated(string stringToTranslate);
+        public bool ShouldTranslate(string stringToTranslate);
     }
 
     public class PinyinAlphabet : IAlphabet
@@ -134,7 +134,7 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public bool CanBeTranslated(string stringToTranslate)
+        public bool ShouldTranslate(string stringToTranslate)
         {
             return WordsHelper.HasChinese(stringToTranslate);
         }

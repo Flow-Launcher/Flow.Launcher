@@ -22,9 +22,9 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public bool CanBeTranslated(string stringToTranslate)
+        public bool ShouldTranslate(string stringToTranslate)
         {
-            return WordsHelper.HasChinese(stringToTranslate);
+            return stringToTranslate.Length % 2 == 0 && !WordsHelper.HasChinese(stringToTranslate);
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
