@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Налаштування Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Розмір</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Дата створення</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Дата останньої зміни</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Варіант сортування:</system:String>
@@ -113,7 +113,8 @@
     <system:String x:Key="plugin_explorer_diskfreespace">{0} не містить {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Відкрити у файловому менеджері за замовчуванням</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Використовуйте '&gt;' для пошуку в цьому каталозі, '*' для пошуку за розширеннями файлів або '&gt;*' для поєднання обох варіантів пошуку.</system:String>
+        Використовуйте '&gt;' для пошуку в цьому каталозі, '*' для пошуку за розширеннями файлів або '&gt;*' для поєднання обох варіантів пошуку.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Не вдалося завантажити Everything SDK</system:String>
