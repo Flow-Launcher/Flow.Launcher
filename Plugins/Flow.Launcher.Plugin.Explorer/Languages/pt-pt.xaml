@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Definições Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de criação</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de modificação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenação:</system:String>
@@ -113,7 +113,8 @@
     <system:String x:Key="plugin_explorer_diskfreespace">{0} livre de {1} no total</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Abrir no gestor de ficheiros padrão</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Utilize '&gt;' para pesquisar nesta pasta, '*' para pesquisar por extensão de ficheiro e '&gt;*' para combinar ambas as anteriores.</system:String>
+        Utilize '&gt;' para pesquisar nesta pasta, '*' para pesquisar por extensão de ficheiro e '&gt;*' para combinar ambas as anteriores.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Falha ao carregar Everything SDK</system:String>
