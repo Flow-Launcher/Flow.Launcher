@@ -77,22 +77,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.ItemHeightSize = value;
     }
 
-    public double queryBoxFontSize
-    {
-        get => Settings.QueryBoxFontSize;
-        set => Settings.QueryBoxFontSize = value;
-    }
-    public double resultItemFontSize
-    {
-        get => Settings.ResultItemFontSize;
-        set => Settings.ResultItemFontSize = value;
-    }
-
-    public double resultSubItemFontSize
-    {
-        get => Settings.ResultSubItemFontSize;
-        set => Settings.ResultSubItemFontSize = value;
-    }
     public List<string> Themes =>
         ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
 
@@ -169,12 +153,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string DateText => DateTime.Now.ToString(DateFormat, Culture);
 
-    public double WindowWidthSize
-    {
-        get => Settings.WindowSize;
-        set => Settings.WindowSize = value;
-    }
-
     public bool UseGlyphIcons
     {
         get => Settings.UseGlyphIcons;
@@ -210,6 +188,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return speeds;
         }
     }
+
     public bool UseSound
     {
         get => Settings.UseSound;
@@ -472,27 +451,183 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings = settings;
     }
 
+    public string QueryBoxFont
+    {
+        get => Settings.QueryBoxFont;
+        set
+        {
+            Settings.QueryBoxFont = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string QueryBoxFontStyle
+    {
+        get => Settings.QueryBoxFontStyle;
+        set
+        {
+            Settings.QueryBoxFontStyle = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string QueryBoxFontWeight
+    {
+        get => Settings.QueryBoxFontWeight;
+        set
+        {
+            Settings.QueryBoxFontWeight = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string QueryBoxFontStretch
+    {
+        get => Settings.QueryBoxFontStretch;
+        set
+        {
+            Settings.QueryBoxFontStretch = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public double QueryBoxFontSize
+    {
+        get => Settings.QueryBoxFontSize;
+        set
+        {
+            Settings.QueryBoxFontSize = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultFont
+    {
+        get => Settings.ResultFont;
+        set
+        {
+            Settings.ResultFont = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultFontStyle
+    {
+        get => Settings.ResultFontStyle;
+        set
+        {
+            Settings.ResultFontStyle = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultFontWeight
+    {
+        get => Settings.ResultFontWeight;
+        set
+        {
+            Settings.ResultFontWeight = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultFontStretch
+    {
+        get => Settings.ResultFontStretch;
+        set
+        {
+            Settings.ResultFontStretch = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public double ResultItemFontSize
+    {
+        get => Settings.ResultItemFontSize;
+        set
+        {
+            Settings.ResultItemFontSize = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultSubFont
+    {
+        get => Settings.ResultSubFont;
+        set
+        {
+            Settings.ResultSubFont = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultSubFontStyle
+    {
+        get => Settings.ResultSubFontStyle;
+        set
+        {
+            Settings.ResultSubFontStyle = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultSubFontWeight
+    {
+        get => Settings.ResultSubFontWeight;
+        set
+        {
+            Settings.ResultSubFontWeight = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public string ResultSubFontStretch
+    {
+        get => Settings.ResultSubFontStretch;
+        set
+        {
+            Settings.ResultSubFontStretch = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public double ResultSubItemFontSize
+    {
+        get => Settings.ResultSubItemFontSize;
+        set
+        {
+            Settings.ResultSubItemFontSize = value;
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public int CustomAnimationLength
+    {
+        get => Settings.CustomAnimationLength;
+        set => Settings.CustomAnimationLength = value;
+    }
+
     public void ResetCustomize()
     {
-        Settings.QueryBoxFont = "Segoe UI";
-        Settings.QueryBoxFontStyle = "Normal";
-        Settings.QueryBoxFontWeight = "Normal";
-        Settings.QueryBoxFontStretch = "Normal";
-        Settings.QueryBoxFontSize = 20;
+        QueryBoxFont = "Segoe UI";
+        QueryBoxFontStyle = "Normal";
+        QueryBoxFontWeight = "Normal";
+        QueryBoxFontStretch = "Normal";
+        QueryBoxFontSize = 20;
 
-        Settings.ResultFont = "Segoe UI";
-        Settings.ResultFontStyle = "Normal";
-        Settings.ResultFontWeight = "Normal";
-        Settings.ResultFontStretch = "Normal";
-        Settings.ResultItemFontSize = 16;
+        ResultFont = "Segoe UI";
+        ResultFontStyle = "Normal";
+        ResultFontWeight = "Normal";
+        ResultFontStretch = "Normal";
+        ResultItemFontSize = 16;
 
-        Settings.ResultSubFont = "Segoe UI";
-        Settings.ResultSubFontStyle = "Normal";
-        Settings.ResultSubFontWeight = "Normal";
-        Settings.ResultSubFontStretch = "Normal";
-        Settings.ResultSubItemFontSize = 13;
+        ResultSubFont = "Segoe UI";
+        ResultSubFontStyle = "Normal";
+        ResultSubFontWeight = "Normal";
+        ResultSubFontStretch = "Normal";
+        ResultSubItemFontSize = 13;
 
-        Settings.ItemHeightSize = 58;
+        ItemHeightSize = 58;
         WindowHeightSize = 42;
     }
 }

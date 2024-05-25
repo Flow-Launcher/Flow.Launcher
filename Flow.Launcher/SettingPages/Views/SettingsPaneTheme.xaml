@@ -114,7 +114,7 @@
                                             Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                                             Minimum="10"
                                             TickFrequency="1"
-                                            Value="{Binding queryBoxFontSize, Mode=TwoWay}" />
+                                            Value="{Binding QueryBoxFontSize, Mode=TwoWay}" />
                                         <ComboBox
                                             Width="150"
                                             Margin="8 4 8 0"
@@ -175,7 +175,7 @@
                                             Maximum="80"
                                             Minimum="10"
                                             TickFrequency="1"
-                                            Value="{Binding resultItemFontSize, Mode=TwoWay}" />
+                                            Value="{Binding ResultItemFontSize, Mode=TwoWay}" />
                                         <ComboBox
                                             Width="140"
                                             Margin="8 4 8 0"
@@ -219,7 +219,7 @@
                                             Maximum="80"
                                             Minimum="6"
                                             TickFrequency="1"
-                                            Value="{Binding resultSubItemFontSize, Mode=TwoWay}" />
+                                            Value="{Binding ResultSubItemFontSize, Mode=TwoWay}" />
                                         <ComboBox
                                             Width="140"
                                             Margin="8 4 8 0"
@@ -288,7 +288,7 @@
                                             <TextBox
                                                 x:Name="QueryTextBox"
                                                 Height="{Binding WindowHeightSize, Mode=TwoWay}"
-                                                FontSize="{Binding queryBoxFontSize, Mode=TwoWay}"
+                                                FontSize="{Binding QueryBoxFontSize, Mode=TwoWay}"
                                                 IsHitTestVisible="False"
                                                 IsReadOnly="True"
                                                 Style="{DynamicResource QueryBoxStyle}"
@@ -304,12 +304,12 @@
                                                 x:Name="ClockBox"
                                                 Style="{DynamicResource ClockBox}"
                                                 Text="{Binding ClockText}"
-                                                Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
                                             <TextBlock
                                                 x:Name="DateBox"
                                                 Style="{DynamicResource DateBox}"
                                                 Text="{Binding DateText}"
-                                                Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
                                         </StackPanel>
                                         <Canvas Style="{DynamicResource SearchIconPosition}">
                                             <Path
@@ -614,9 +614,9 @@
                         <TextBox
                             MinWidth="80"
                             Margin="18 0 0 0"
-                            Text="{Binding Settings.CustomAnimationLength}"
+                            Text="{Binding CustomAnimationLength}"
                             TextWrapping="NoWrap"
-                            Visibility="{ext:VisibleWhen {Binding Settings.AnimationSpeed},
+                            Visibility="{ext:VisibleWhen {Binding AnimationSpeed},
                                                          IsEqualTo={x:Static userSettings:AnimationSpeeds.Custom}}" />
                     </StackPanel>
                 </cc:Card>
