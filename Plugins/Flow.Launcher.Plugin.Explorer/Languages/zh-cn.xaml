@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">创建日期</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">修改日期</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
@@ -113,7 +113,8 @@
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">在默认文件管理器中打开</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        使用 '&gt;' 在这个目录中搜索，'*' 以搜索文件扩展名或 '&gt;*' 以结合这两个搜索。</system:String>
+        使用 '&gt;' 在这个目录中搜索，'*' 以搜索文件扩展名或 '&gt;*' 以结合这两个搜索。
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">加载 Everything SDK 失败</system:String>
