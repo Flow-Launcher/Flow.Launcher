@@ -418,7 +418,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Veľkosť súboru</system:String>
+    <system:String x:Key="Created">Vytvorené</system:String>
+    <system:String x:Key="LastModified">Upravené</system:String>
 </ResourceDictionary>
