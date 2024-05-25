@@ -56,7 +56,7 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Style="{DynamicResource CustomToggleButtonStyle}"
-                                ToolTip="Show details">
+                                ToolTip="{DynamicResource CustomizeToolTip}">
                                 <ui:FontIcon
                                     FontSize="14"
                                     Foreground="{DynamicResource Color05B}"
@@ -90,7 +90,7 @@
                                             Width="140"
                                             Margin="8"
                                             VerticalAlignment="Center"
-                                            ui:ControlHelper.Header="Search Bar Height"
+                                            ui:ControlHelper.Header="{DynamicResource SearchBarHeight}"
                                             AutoToolTipPlacement="TopLeft"
                                             IsMoveToPointEnabled="True"
                                             IsSnapToTickEnabled="True"
@@ -107,7 +107,7 @@
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
-                                            ui:ControlHelper.Header="Query Box Font"
+                                            ui:ControlHelper.Header="{DynamicResource queryBoxFont}"
                                             AutoToolTipPlacement="TopLeft"
                                             IsMoveToPointEnabled="True"
                                             IsSnapToTickEnabled="True"
@@ -151,7 +151,7 @@
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
-                                            ui:ControlHelper.Header="Item Height"
+                                            ui:ControlHelper.Header="{DynamicResource ItemHeight}"
                                             AutoToolTipPlacement="TopLeft"
                                             IsMoveToPointEnabled="True"
                                             IsSnapToTickEnabled="True"
@@ -168,7 +168,7 @@
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
-                                            ui:ControlHelper.Header="Item Title Font"
+                                            ui:ControlHelper.Header="{DynamicResource resultItemFont}"
                                             AutoToolTipPlacement="TopLeft"
                                             IsMoveToPointEnabled="True"
                                             IsSnapToTickEnabled="True"
@@ -212,7 +212,7 @@
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
-                                            ui:ControlHelper.Header="Item Subtitle Font"
+                                            ui:ControlHelper.Header="{DynamicResource resultSubItemFont}"
                                             AutoToolTipPlacement="TopLeft"
                                             IsMoveToPointEnabled="True"
                                             IsSnapToTickEnabled="True"
@@ -254,9 +254,8 @@
                                         <Button
                                             Width="140"
                                             Margin="8"
-                                            HorizontalAlignment="Center">
-                                            Reset
-                                        </Button>
+                                            HorizontalAlignment="Center"
+                                            Content="{DynamicResource resetCustomize}" />
 
                                     </StackPanel>
                                 </ScrollViewer>
