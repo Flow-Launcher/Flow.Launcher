@@ -50,12 +50,18 @@
                             Orientation="Horizontal">
                             <ToggleButton
                                 x:Name="Editor"
+                                Width="36"
+                                Height="36"
                                 Margin="8"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                Content="Edit"
                                 Style="{DynamicResource CustomToggleButtonStyle}"
-                                ToolTip="Show details" />
+                                ToolTip="Show details">
+                                <ui:FontIcon
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Glyph="&#xe70f;" />
+                            </ToggleButton>
                             <!--  Theme Size Editor  -->
                             <Border
                                 Padding="0 0 0 0"
