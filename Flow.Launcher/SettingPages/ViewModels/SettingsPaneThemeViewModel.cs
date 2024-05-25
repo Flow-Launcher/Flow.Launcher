@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
@@ -483,15 +484,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings.ResultFontStyle = "Normal";
         Settings.ResultFontWeight = "Normal";
         Settings.ResultFontStretch = "Normal";
-        Settings.ResultItemFontSize = 18;
+        Settings.ResultItemFontSize = 16;
 
         Settings.ResultSubFont = "Segoe UI";
         Settings.ResultSubFontStyle = "Normal";
         Settings.ResultSubFontWeight = "Normal";
         Settings.ResultSubFontStretch = "Normal";
-        Settings.ResultSubItemFontSize = 14;
+        Settings.ResultSubItemFontSize = 13;
 
-        Settings.ItemHeightSize = 52;
+        Settings.ItemHeightSize = 58;
         Settings.WindowHeightSize = 42;
     }
 }
