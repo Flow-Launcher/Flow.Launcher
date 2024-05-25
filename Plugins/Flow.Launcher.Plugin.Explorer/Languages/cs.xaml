@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavení Everything</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Velikost</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Datum vytvoření</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Datum změny</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Možnosti řazení:</system:String>
@@ -113,7 +113,8 @@
     <system:String x:Key="plugin_explorer_diskfreespace">Volných {0} z {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Otevřít ve výchozím správci souborů</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Použijte &quot;&gt;&quot; pro vyhledávání v této složce, &quot;*&quot; pro vyhledávání přípon souborů nebo &quot;&gt;*&quot; pro kombinaci obou vyhledávání.</system:String>
+        Použijte &quot;&gt;&quot; pro vyhledávání v této složce, &quot;*&quot; pro vyhledávání přípon souborů nebo &quot;&gt;*&quot; pro kombinaci obou vyhledávání.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodařilo se načíst SDK Everything</system:String>
