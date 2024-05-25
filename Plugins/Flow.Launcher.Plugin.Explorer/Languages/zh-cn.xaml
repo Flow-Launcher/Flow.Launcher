@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 路径</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">隐藏启动</system:String>
@@ -103,10 +109,11 @@
     <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">在默认文件管理器中打开</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">使用 '&gt;' 在这个目录中搜索，'*' 以搜索文件扩展名或 '&gt;*' 以结合这两个搜索。</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        使用 '&gt;' 在这个目录中搜索，'*' 以搜索文件扩展名或 '&gt;*' 以结合这两个搜索。</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">加载 Everything SDK 失败</system:String>
@@ -131,7 +138,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">搜索完整路径</system:String>
-    
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">正在安装 Everything 服务。请稍后...</system:String>
