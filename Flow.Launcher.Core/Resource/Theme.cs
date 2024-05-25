@@ -79,14 +79,14 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
-                
+
                 // reload all resources even if the theme itself hasn't changed in order to pickup changes
                 // to things like fonts
                 UpdateResourceDictionary(GetResourceDictionary(theme));
-                
+
                 Settings.Theme = theme;
 
-                
+
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
-                    MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    MessageBox.Show(Localize.theme_load_failure_path_not_exists(theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
-                    MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
+                    MessageBox.Show(Localize.theme_load_failure_parse_error(theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -148,7 +148,7 @@ namespace Flow.Launcher.Core.Resource
         public ResourceDictionary GetResourceDictionary(string theme)
         {
             var dict = GetThemeResourceDictionary(theme);
-            
+
             if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
                 dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
@@ -189,7 +189,7 @@ namespace Flow.Launcher.Core.Resource
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
-                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
             /* Ignore Theme Window Width and use setting */

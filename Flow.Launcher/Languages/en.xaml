@@ -146,7 +146,9 @@
     <system:String x:Key="resultItemFont">Result Item Font</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>
     <system:String x:Key="opacity">Opacity</system:String>
+    <!-- <param index="0" name="themeName" type="string" /> -->
     <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
+    <!-- <param index="0" name="themeName" type="string" /> -->
     <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
     <system:String x:Key="ThemeFolder">Theme Folder</system:String>
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
@@ -254,6 +256,7 @@
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <!-- <param index="0" name="version" type="string" /> -->
     <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
     <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -358,6 +361,8 @@
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
     <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <!-- <param index="0" name="locationFrom" type="string" />
+         <param index="1" name="locationTo" type="string" />-->
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher was not able to move your user profile data to the new update version.
         Please manually move your profile data folder from {0} to {1}

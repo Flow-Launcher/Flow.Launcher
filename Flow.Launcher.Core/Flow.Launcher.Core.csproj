@@ -13,7 +13,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>portable</DebugType>
@@ -24,7 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
-  
+
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
@@ -39,11 +39,11 @@
     <None Include="Plugin\README.md" />
     <None Include="README.md" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <None Remove="FodyWeavers.xml" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <Compile Include="..\SolutionAssemblyInfo.cs" Link="Properties\SolutionAssemblyInfo.cs" />
   </ItemGroup>
@@ -51,7 +51,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
     <PackageReference Include="FSharp.Core" Version="7.0.401" />
@@ -60,10 +60,22 @@
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
     <PackageReference Include="StreamJsonRpc" Version="2.17.11" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <ProjectReference Include="..\Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj" />
     <ProjectReference Include="..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference
+      Include="..\Flow.Launcher.Analyzers\Flow.Launcher.Analyzers.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <ProjectReference
+      Include="..\Flow.Launcher.SourceGenerators\Flow.Launcher.SourceGenerators.csproj"
+      ReferenceOutputAssembly="false"
+      OutputItemType="Analyzer" />
+    <AdditionalFiles Include="..\Flow.Launcher\Languages\en.xaml" />
   </ItemGroup>
 
 </Project>

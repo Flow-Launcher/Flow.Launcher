@@ -37,8 +37,7 @@ namespace Flow.Launcher.Core
             try
             {
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("pleaseWait"),
-                        api.GetTranslation("update_flowlauncher_update_check"));
+                    api.ShowMsg(Localize.pleaseWait(), Localize.update_flowlauncher_update_check());
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
@@ -53,13 +52,12 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        MessageBox.Show(api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        MessageBox.Show(Localize.update_flowlauncher_already_on_latest());
                     return;
                 }
 
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("update_flowlauncher_update_found"),
-                        api.GetTranslation("update_flowlauncher_updating"));
+                    api.ShowMsg(Localize.update_flowlauncher_update_found(), Localize.update_flowlauncher_updating());
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -70,20 +68,22 @@ namespace Flow.Launcher.Core
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
                     FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
                     if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
-                        MessageBox.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
-                            DataLocation.PortableDataPath,
-                            targetDestination));
+                        MessageBox.Show(
+                            Localize.update_flowlauncher_fail_moving_portable_user_profile_data(
+                                DataLocation.PortableDataPath, targetDestination
+                            )
+                        );
                 }
                 else
                 {
                     await updateManager.CreateUninstallerRegistryEntry().ConfigureAwait(false);
                 }
 
-                var newVersionTips = NewVersionTips(newReleaseVersion.ToString());
+                var newVersionTips = Localize.newVersionTips(newReleaseVersion.ToString());
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (MessageBox.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (MessageBox.Show(newVersionTips, Localize.update_flowlauncher_new_update(), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
@@ -94,10 +94,9 @@ namespace Flow.Launcher.Core
                     Log.Exception($"|Updater.UpdateApp|Check your connection and proxy settings to github-cloud.s3.amazonaws.com.", e);
                 else
                     Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
-                
+
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                        api.GetTranslation("update_flowlauncher_check_connection"));
+                    api.ShowMsg(Localize.update_flowlauncher_fail(), Localize.update_flowlauncher_check_connection());
             }
             finally
             {
@@ -139,14 +138,6 @@ namespace Flow.Launcher.Core
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);
 
             return manager;
-        }
-
-        public string NewVersionTips(string version)
-        {
-            var translator = InternationalizationManager.Instance;
-            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
-
-            return tips;
         }
     }
 }
