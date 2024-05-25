@@ -255,7 +255,8 @@
                                             Width="140"
                                             Margin="8"
                                             HorizontalAlignment="Center"
-                                            Content="{DynamicResource resetCustomize}" Click="Reset_Click" />
+                                            Click="Reset_Click"
+                                            Content="{DynamicResource resetCustomize}" />
 
                                     </StackPanel>
                                 </ScrollViewer>
@@ -286,8 +287,8 @@
                                         <Border Grid.Row="0">
                                             <TextBox
                                                 x:Name="QueryTextBox"
-                                                Height="{Binding WindowHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                                FontSize="{Binding queryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                Height="{Binding WindowHeightSize, Mode=TwoWay}"
+                                                FontSize="{Binding queryBoxFontSize, Mode=TwoWay}"
                                                 IsHitTestVisible="False"
                                                 IsReadOnly="True"
                                                 Style="{DynamicResource QueryBoxStyle}"

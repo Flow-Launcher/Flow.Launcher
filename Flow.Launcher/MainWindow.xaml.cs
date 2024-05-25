@@ -27,8 +27,6 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
-using System.Diagnostics;
-using System.Windows.Media.Media3D;
 
 namespace Flow.Launcher
 {
@@ -108,10 +106,12 @@ namespace Flow.Launcher
             }
             return IntPtr.Zero;
         }
+
         private void OnResizeBegin()
         {
 
         }
+
         private void OnResizeEnd()
         {
             int shadowMargin = 0;
@@ -131,7 +131,8 @@ namespace Flow.Launcher
             _settings.WindowSize = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
         }
-    private void OnCopy(object sender, ExecutedRoutedEventArgs e)
+
+        private void OnCopy(object sender, ExecutedRoutedEventArgs e)
         {
             var result = _viewModel.Results.SelectedItem?.Result;
             if (QueryTextBox.SelectionLength == 0 && result != null)

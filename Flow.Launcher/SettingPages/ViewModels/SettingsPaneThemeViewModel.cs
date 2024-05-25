@@ -493,6 +493,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings.ResultSubItemFontSize = 13;
 
         Settings.ItemHeightSize = 58;
-        Settings.WindowHeightSize = 42;
+        WindowHeightSize = 42;
     }
 }
