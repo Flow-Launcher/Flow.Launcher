@@ -540,16 +540,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
-            {
-                Settings.WindowSize = 1920;
-            }
-            else
-            {
-                Settings.WindowSize += 100;
-                Settings.WindowLeft -= 50;
-            }
-
+            Settings.WindowSize += 100;
+            Settings.WindowLeft -= 50;
             OnPropertyChanged();
         }
 

@@ -269,7 +269,7 @@
                                     </MenuItem>
                                     <Separator
                                         Margin="0"
-                                        Padding="0,4,0,4"
+                                        Padding="0 4 0 4"
                                         Background="{DynamicResource ContextSeparator}" />
                                     <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}">
                                         <MenuItem.Icon>
@@ -328,7 +328,7 @@
                     x:Name="ProgressBar"
                     Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
                     Height="2"
-                    Margin="12,0,12,0"
+                    Margin="12 0 12 0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     StrokeThickness="2"
@@ -444,7 +444,7 @@
                         Style="{DynamicResource PreviewBorderStyle}"
                         Visibility="{Binding ShowDefaultPreview}">
                         <Grid
-                            Margin="20,0,10,0"
+                            Margin="20 0 10 0"
                             VerticalAlignment="Stretch"
                             Background="Transparent">
                             <Grid.RowDefinitions>
@@ -460,7 +460,7 @@
                                     x:Name="PreviewGlyphIcon"
                                     Grid.Row="0"
                                     Height="Auto"
-                                    Margin="0,16,0,0"
+                                    Margin="0 16 0 0"
                                     FontFamily="{Binding Glyph.FontFamily}"
                                     Style="{DynamicResource PreviewGlyph}"
                                     Text="{Binding Glyph.Glyph}"
@@ -469,7 +469,7 @@
                                     x:Name="PreviewImageIcon"
                                     Grid.Row="0"
                                     MaxHeight="320"
-                                    Margin="0,16,0,0"
+                                    Margin="0 16 0 0"
                                     HorizontalAlignment="Center"
                                     Source="{Binding PreviewImage}"
                                     StretchDirection="DownOnly"
@@ -488,7 +488,7 @@
                                 <TextBlock
                                     x:Name="PreviewTitle"
                                     Grid.Row="1"
-                                    Margin="0,6,0,16"
+                                    Margin="0 6 0 16"
                                     HorizontalAlignment="Stretch"
                                     Style="{DynamicResource PreviewItemTitleStyle}"
                                     Text="{Binding Result.Title}"
