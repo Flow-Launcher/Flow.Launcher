@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin;
 using System.IO;
 using System.Drawing.Text;
 using System.Collections.Generic;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -25,6 +26,7 @@ namespace Flow.Launcher.ViewModel
             {
                 return;
             }
+
             Result = result;
 
             if (Result.Glyph is { FontFamily: not null } glyph)
@@ -41,19 +43,14 @@ namespace Flow.Launcher.ViewModel
 
                     if (fonts.ContainsKey(fontFamilyPath))
                     {
-                        Glyph = glyph with
-                        {
-                            FontFamily = fonts[fontFamilyPath]
-                        };
+                        Glyph = glyph with { FontFamily = fonts[fontFamilyPath] };
                     }
                     else
                     {
                         fontCollection.AddFontFile(fontFamilyPath);
-                        fonts[fontFamilyPath] = $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
-                        Glyph = glyph with
-                        {
-                            FontFamily = fonts[fontFamilyPath]
-                        };
+                        fonts[fontFamilyPath] =
+                            $"{Path.GetDirectoryName(fontFamilyPath)}/#{fontCollection.Families[^1].Name}";
+                        Glyph = glyph with { FontFamily = fonts[fontFamilyPath] };
                     }
                 }
                 else
@@ -61,7 +58,6 @@ namespace Flow.Launcher.ViewModel
                     Glyph = glyph;
                 }
             }
-
         }
 
         private Settings Settings { get; }
@@ -71,7 +67,8 @@ namespace Flow.Launcher.ViewModel
 
         public Visibility ShowDefaultPreview => Result.PreviewPanel == null ? Visibility.Visible : Visibility.Collapsed;
 
-        public Visibility ShowCustomizedPreview => Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility ShowCustomizedPreview =>
+            Result.PreviewPanel == null ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility ShowIcon
         {
@@ -114,9 +111,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     return IconXY / 2;
                 }
+
                 return IconXY;
             }
-
         }
 
         public Visibility ShowGlyph
@@ -136,7 +133,8 @@ namespace Flow.Launcher.ViewModel
 
         private bool ImgIconAvailable => !string.IsNullOrEmpty(Result.IcoPath) || Result.Icon is not null;
 
-        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) || Result.Preview.PreviewDelegate != null;
+        private bool PreviewImageAvailable => !string.IsNullOrEmpty(Result.Preview.PreviewImagePath) ||
+                                              Result.Preview.PreviewDelegate != null;
 
         public string OpenResultModifiers => Settings.OpenResultModifiers;
 
@@ -148,19 +146,42 @@ namespace Flow.Launcher.ViewModel
             ? Result.SubTitle
             : Result.SubTitleToolTip;
 
-        private volatile bool ImageLoaded;
-        private volatile bool PreviewImageLoaded;
+        private volatile bool imageLoaded;
+        private volatile bool pluginIconLoaded;
+        private volatile bool previewImageLoaded;
 
         private ImageSource image = ImageLoader.LoadingImage;
         private ImageSource previewImage = ImageLoader.LoadingImage;
+        private ImageSource pluginIcon = ImageLoader.LoadingImage;
+
+        public ImageSource PluginIcon
+        {
+            get
+            {
+                if (!pluginIconLoaded)
+                {
+                    pluginIconLoaded = true;
+                    _ = LoadPluginIconAsync();
+                }
+
+                return pluginIcon;
+            }
+            private set => pluginIcon = value;
+        }
+
+        private async Task LoadPluginIconAsync()
+        {
+            PluginIcon = await ImageLoader.LoadAsync(PluginManager.GetPluginForId(Result.PluginID).Metadata.IcoPath)
+                .ConfigureAwait(false);
+        }
 
         public ImageSource Image
         {
             get
             {
-                if (!ImageLoaded)
+                if (!imageLoaded)
                 {
-                    ImageLoaded = true;
+                    imageLoaded = true;
                     _ = LoadImageAsync();
                 }
 
@@ -182,7 +203,8 @@ namespace Flow.Launcher.ViewModel
 
         public GlyphInfo Glyph { get; set; }
 
-        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon, bool loadFullImage)
+        private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon,
+            bool loadFullImage)
         {
             if (string.IsNullOrEmpty(imagePath) && icon != null)
             {
@@ -236,15 +258,16 @@ namespace Flow.Launcher.ViewModel
         {
             if (ShowDefaultPreview == Visibility.Visible)
             {
-                if (!PreviewImageLoaded && ShowPreviewImage == Visibility.Visible)
+                if (!previewImageLoaded && ShowPreviewImage == Visibility.Visible)
                 {
-                    PreviewImageLoaded = true;
+                    previewImageLoaded = true;
                     _ = LoadPreviewImageAsync();
                 }
             }
         }
 
         public Result Result { get; }
+
         public int ResultProgress
         {
             get

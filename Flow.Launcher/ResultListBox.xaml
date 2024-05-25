@@ -74,12 +74,15 @@
                                 VerticalAlignment="Center"
                                 Style="{DynamicResource ItemHotkeyStyle}">
                                 <TextBlock.Visibility>
-                                    <Binding Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
+                                    <Binding
+                                        Converter="{StaticResource ResourceKey=OpenResultHotkeyVisibilityConverter}"
+                                        RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                 </TextBlock.Visibility>
                                 <TextBlock.Text>
                                     <MultiBinding StringFormat="{}{0}+{1}">
                                         <Binding Path="OpenResultModifiers" />
-                                        <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
+                                        <Binding Converter="{StaticResource ResourceKey=OrdinalConverter}"
+                                                 RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=ListBoxItem}" />
                                     </MultiBinding>
                                 </TextBlock.Text>
                             </TextBlock>
@@ -96,53 +99,84 @@
                                 Grid.Column="0"
                                 Style="{DynamicResource BulletStyle}" />
 
-                            <Border
-                                Grid.Column="1"
-                                Margin="9,0,0,0"
-                                BorderBrush="Transparent"
-                                BorderThickness="1">
+                            <Grid Grid.Column="1"
+                                  Margin="9,0,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="6*" />
+                                    <RowDefinition Height="4*" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="6*" />
+                                    <ColumnDefinition Width="4*" />
+                                </Grid.ColumnDefinitions>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="9,0,0,0"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1"
+                                    Grid.ZIndex="0">
+                                    <Image
+                                        x:Name="ImageIcon"
+                                        Margin="0,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        IsHitTestVisible="False"
+                                        RenderOptions.BitmapScalingMode="Fant"
+                                        Source="{Binding Image, TargetNullValue={x:Null}}"
+                                        Stretch="Uniform"
+                                        Style="{DynamicResource ImageIconStyle}"
+                                        Visibility="{Binding ShowIcon}">
+                                        <Image.Clip>
+                                            <EllipseGeometry
+                                                Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
+                                                <EllipseGeometry.RadiusX>
+                                                    <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                        <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                        <Binding Path="Result.RoundedIcon" />
+                                                    </MultiBinding>
+                                                </EllipseGeometry.RadiusX>
+                                                <EllipseGeometry.RadiusY>
+                                                    <MultiBinding Converter="{StaticResource IconRadiusConverter}">
+                                                        <Binding ElementName="ImageIcon" Path="ActualWidth" />
+                                                        <Binding Path="Result.RoundedIcon" />
+                                                    </MultiBinding>
+                                                </EllipseGeometry.RadiusY>
+                                            </EllipseGeometry>
+                                        </Image.Clip>
+                                    </Image>
+                                </Border>
+                                <Border
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    Grid.RowSpan="2"
+                                    Grid.ColumnSpan="2"
+                                    Margin="9,0,0,0"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="0"
+                                    Grid.ZIndex="0">
+                                    <TextBlock
+                                        x:Name="GlyphIcon"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontFamily="{Binding Glyph.FontFamily}"
+                                        Style="{DynamicResource ItemGlyph}"
+                                        Text="{Binding Glyph.Glyph}"
+                                        Visibility="{Binding ShowGlyph}" />
+                                </Border>
+
                                 <Image
-                                    x:Name="ImageIcon"
-                                    Margin="0,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    IsHitTestVisible="False"
-                                    RenderOptions.BitmapScalingMode="Fant"
-                                    Source="{Binding Image, TargetNullValue={x:Null}}"
-                                    Stretch="Uniform"
-                                    Style="{DynamicResource ImageIconStyle}"
-                                    Visibility="{Binding ShowIcon}">
-                                    <Image.Clip>
-                                        <EllipseGeometry Center="{Binding ElementName=ImageIcon, Path=ActualWidth, Converter={StaticResource DiameterToCenterPointConverter}}">
-                                            <EllipseGeometry.RadiusX>
-                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
-                                                    <Binding Path="Result.RoundedIcon" />
-                                                </MultiBinding>
-                                            </EllipseGeometry.RadiusX>
-                                            <EllipseGeometry.RadiusY>
-                                                <MultiBinding Converter="{StaticResource IconRadiusConverter}">
-                                                    <Binding ElementName="ImageIcon" Path="ActualWidth" />
-                                                    <Binding Path="Result.RoundedIcon" />
-                                                </MultiBinding>
-                                            </EllipseGeometry.RadiusY>
-                                        </EllipseGeometry>
-                                    </Image.Clip>
-                                </Image>
-                            </Border>
-                            <Border
-                                Grid.Column="1"
-                                Margin="9,0,0,0"
-                                BorderBrush="Transparent"
-                                BorderThickness="0">
-                                <TextBlock
-                                    x:Name="GlyphIcon"
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Grid.ZIndex="1"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
-                                    FontFamily="{Binding Glyph.FontFamily}"
-                                    Style="{DynamicResource ItemGlyph}"
-                                    Text="{Binding Glyph.Glyph}"
-                                    Visibility="{Binding ShowGlyph}" />
-                            </Border>
+                                    RenderOptions.BitmapScalingMode="Fant"
+                                    Source="{Binding PluginIcon}">
+                                </Image>
+                            </Grid>
+
                         </Grid>
 
                         <Grid
@@ -204,7 +238,9 @@
             </Button>
             <!--  a result item height is 52 including margin  -->
             <DataTemplate.Triggers>
-                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" Value="True">
+                <DataTrigger
+                    Binding="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
+                    Value="True">
                     <Setter TargetName="Bullet" Property="Style" Value="{DynamicResource ItemBulletSelectedStyle}" />
                     <Setter TargetName="Title" Property="Style" Value="{DynamicResource ItemTitleSelectedStyle}" />
                     <Setter TargetName="SubTitle" Property="Style" Value="{DynamicResource ItemSubTitleSelectedStyle}" />
@@ -243,8 +279,10 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter TargetName="Bd" Property="Background" Value="{DynamicResource ItemSelectedBackgroundColor}" />
-                                <Setter TargetName="Bd" Property="BorderBrush" Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                                <Setter TargetName="Bd" Property="Background"
+                                        Value="{DynamicResource ItemSelectedBackgroundColor}" />
+                                <Setter TargetName="Bd" Property="BorderBrush"
+                                        Value="{DynamicResource ItemSelectedBackgroundColor}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
