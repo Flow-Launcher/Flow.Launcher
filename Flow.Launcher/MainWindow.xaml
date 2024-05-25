@@ -521,6 +521,7 @@
                         <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                     </Border>
                 </Grid>
+            </Grid>
         </StackPanel>
     </Border>
 </Window>

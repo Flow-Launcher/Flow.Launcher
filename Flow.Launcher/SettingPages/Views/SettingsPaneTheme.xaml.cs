@@ -28,4 +28,9 @@ public partial class SettingsPaneTheme : Page
     {
         _viewModel.UpdateColorScheme();
     }
+
+    private void Reset_Click(object sender, System.Windows.RoutedEventArgs e)
+    {
+        _viewModel.ResetCustomize();
+    }
 }

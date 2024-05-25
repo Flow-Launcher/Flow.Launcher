@@ -470,4 +470,28 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         Settings = settings;
     }
+
+    public void ResetCustomize()
+    {
+        Settings.QueryBoxFont = "Segoe UI";
+        Settings.QueryBoxFontStyle = "Normal";
+        Settings.QueryBoxFontWeight = "Normal";
+        Settings.QueryBoxFontStretch = "Normal";
+        Settings.QueryBoxFontSize = 20;
+
+        Settings.ResultFont = "Segoe UI";
+        Settings.ResultFontStyle = "Normal";
+        Settings.ResultFontWeight = "Normal";
+        Settings.ResultFontStretch = "Normal";
+        Settings.ResultItemFontSize = 18;
+
+        Settings.ResultSubFont = "Segoe UI";
+        Settings.ResultSubFontStyle = "Normal";
+        Settings.ResultSubFontWeight = "Normal";
+        Settings.ResultSubFontStretch = "Normal";
+        Settings.ResultSubItemFontSize = 14;
+
+        Settings.ItemHeightSize = 52;
+        Settings.WindowHeightSize = 42;
+    }
 }

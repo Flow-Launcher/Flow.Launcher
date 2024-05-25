@@ -255,7 +255,7 @@
                                             Width="140"
                                             Margin="8"
                                             HorizontalAlignment="Center"
-                                            Content="{DynamicResource resetCustomize}" />
+                                            Content="{DynamicResource resetCustomize}" Click="Reset_Click" />
 
                                     </StackPanel>
                                 </ScrollViewer>
