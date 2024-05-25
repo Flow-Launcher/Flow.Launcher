@@ -354,31 +354,6 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
-            <!--  Window width size  -->
-            <cc:Card
-                Title="{DynamicResource windowWidthSize}"
-                Icon="&#xe740;"
-                Sub="{DynamicResource windowWidthSizeToolTip}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Width="Auto"
-                        Margin="0 0 8 2"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource Color05B}"
-                        Text="{Binding WindowWidthSize}"
-                        TextAlignment="Right" />
-                    <Slider
-                        Width="250"
-                        VerticalAlignment="Center"
-                        IsMoveToPointEnabled="True"
-                        IsSnapToTickEnabled="True"
-                        Maximum="1920"
-                        Minimum="400"
-                        TickFrequency="10"
-                        Value="{Binding WindowWidthSize}" />
-                </StackPanel>
-            </cc:Card>
-
             <!--  Theme  -->
             <Border
                 Height="64"
