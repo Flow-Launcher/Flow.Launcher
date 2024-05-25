@@ -12,7 +12,6 @@ using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 using Screen = System.Windows.Forms.Screen;
-using ContextMenuStrip = System.Windows.Forms.ContextMenuStrip;
 using DragEventArgs = System.Windows.DragEventArgs;
 using KeyEventArgs = System.Windows.Input.KeyEventArgs;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
@@ -24,7 +23,6 @@ using System.Windows.Data;
 using ModernWpf.Controls;
 using Key = System.Windows.Input.Key;
 using System.Media;
-using static Flow.Launcher.ViewModel.SettingWindowViewModel;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
@@ -48,7 +46,10 @@ namespace Flow.Launcher
         private ContextMenu contextMenu = new ContextMenu();
         private MainViewModel _viewModel;
         private bool _animating;
-        MediaPlayer animationSound = new MediaPlayer();
+        private bool isArrowKeyPressed = false;
+
+        private MediaPlayer animationSoundWMP;
+        private SoundPlayer animationSoundWPF;
 
         #endregion
 
@@ -61,7 +62,7 @@ namespace Flow.Launcher
             InitializeComponent();
             InitializePosition();
 
-            animationSound.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            InitSoundEffects();
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
 
@@ -170,9 +171,11 @@ namespace Flow.Launcher
         private void OnInitialized(object sender, EventArgs e)
         {
         }
-
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // MouseEventHandler
+            PreviewMouseMove += MainPreviewMouseMove;
+
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
@@ -198,9 +201,7 @@ namespace Flow.Launcher
                             {
                                 if (_settings.UseSound)
                                 {
-                                    animationSound.Position = TimeSpan.Zero;
-                                    animationSound.Volume = _settings.SoundVolume / 100.0;
-                                    animationSound.Play();
+                                    SoundPlay();
                                 }
                                 UpdatePosition();
                                 PreviewReset();
@@ -467,6 +468,7 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
+            isArrowKeyPressed = true;
             _animating = true;
             UpdatePosition();
 
@@ -555,6 +557,7 @@ namespace Flow.Launcher
             windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+            isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
             {
@@ -562,6 +565,33 @@ namespace Flow.Launcher
             }
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
+        }
+
+        private void InitSoundEffects()
+        {
+            if (_settings.WMPInstalled)
+            {
+                animationSoundWMP = new MediaPlayer();
+                animationSoundWMP.Open(new Uri(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav"));
+            }
+            else
+            {
+                animationSoundWPF = new SoundPlayer(AppDomain.CurrentDomain.BaseDirectory + "Resources\\open.wav");
+            }
+        }
+
+        private void SoundPlay()
+        {
+            if (_settings.WMPInstalled)
+            {
+                animationSoundWMP.Position = TimeSpan.Zero;
+                animationSoundWMP.Volume = _settings.SoundVolume / 100.0;
+                animationSoundWMP.Play();
+            }
+            else
+            {
+                animationSoundWPF.Play();
+            }
         }
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
@@ -705,10 +735,12 @@ namespace Flow.Launcher
             switch (e.Key)
             {
                 case Key.Down:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectNextItemCommand.Execute(null);
                     e.Handled = true;
                     break;
                 case Key.Up:
+                    isArrowKeyPressed = true;
                     _viewModel.SelectPrevItemCommand.Execute(null);
                     e.Handled = true;
                     break;
@@ -759,7 +791,21 @@ namespace Flow.Launcher
 
             }
         }
+        private void OnKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up || e.Key == Key.Down)
+            {
+                isArrowKeyPressed = false;
+            }
+        }
 
+        private void MainPreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isArrowKeyPressed)
+            {
+                e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
+            }
+        }
         public void PreviewReset()
         {
             _viewModel.ResetPreview();
