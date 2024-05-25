@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} z {1} {2}{3}Chcete tento zásuvný modul aktualizovat? Flow se po aktualizaci automaticky restartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizace Pluginu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizace tohoto pluginu je k dispozici, chcete ji zobrazit?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je již nainstalován</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stahování manifestu pluginu se nezdařilo</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Zkontrolujte, zda se můžete připojit k webu github.com. Tato chyba pravděpodobně znamená, že nemůžete instalovat nebo aktualizovat zásuvné moduly.</system:String>
