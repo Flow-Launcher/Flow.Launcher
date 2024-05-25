@@ -25,7 +25,7 @@
     </ui:Page.Resources>
     <ScrollViewer
         Padding="6 0 24 0"
-        CanContentScroll="True"
+        CanContentScroll="False"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
@@ -40,7 +40,7 @@
                 Visibility="Collapsed" />
 
             <!--  Theme preview  -->
-            <Grid Grid.Row="1">
+            <Grid>
                 <Border Background="{Binding PreviewBackground}" CornerRadius="6">
                     <DockPanel LastChildFill="True">
                         <StackPanel
