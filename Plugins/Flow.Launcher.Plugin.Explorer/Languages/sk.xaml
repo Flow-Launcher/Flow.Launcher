@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavenia Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Veľkosť</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Creation date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Modification date</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Umiestnenie Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Spustiť skryté</system:String>
@@ -103,10 +109,11 @@
     <system:String x:Key="plugin_explorer_openwith">Otvoriť s</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Vyberte program, ktorým chcete otvoriť súbor</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">Voľných {0} z {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Otvoriť v predvolenom správcovi súborov</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Použite &quot;&gt;&quot; na vyhľadávanie v tomto priečinku, &quot;*&quot; na vyhľadávanie prípon súborov alebo &quot;&gt;*&quot; na kombináciu oboch hľadaní.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Použite &quot;&gt;&quot; na vyhľadávanie v tomto priečinku, &quot;*&quot; na vyhľadávanie prípon súborov alebo &quot;&gt;*&quot; na kombináciu oboch hľadaní.</system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodarilo sa načítať SDK Everything</system:String>
@@ -131,7 +138,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Upozornenie: Toto nie je voľba Fast Sort, vyhľadávanie môže byť pomalé</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Vyhľadávanie celej cesty</system:String>
-    
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte alebo nainštalujete Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Inštalácia Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Inštaluje sa služba Everything. Čakajte, prosím…</system:String>
