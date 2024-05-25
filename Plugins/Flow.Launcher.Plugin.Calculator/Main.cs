@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Plugin.Caculator.ViewModels;
-using Flow.Launcher.Plugin.Caculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.Views;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {

@@ -1,8 +1,8 @@
 using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Plugin.Caculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
 
-namespace Flow.Launcher.Plugin.Caculator.Views
+namespace Flow.Launcher.Plugin.Calculator.Views
 {
     /// <summary>
     /// Interaction logic for CalculatorSettings.xaml

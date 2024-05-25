@@ -5,8 +5,8 @@
     <TargetFramework>net7.0-windows</TargetFramework>
     <ProjectGuid>{59BD9891-3837-438A-958D-ADC7F91F6F7E}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Flow.Launcher.Plugin.Caculator</RootNamespace>
-    <AssemblyName>Flow.Launcher.Plugin.Caculator</AssemblyName>
+    <RootNamespace>Flow.Launcher.Plugin.Calculator</RootNamespace>
+    <AssemblyName>Flow.Launcher.Plugin.Calculator</AssemblyName>
     <UseWPF>true</UseWPF>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
