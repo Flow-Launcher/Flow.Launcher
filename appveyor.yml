@@ -48,7 +48,7 @@ artifacts:
   name: Plugin nupkg
 - path: 'Releases\FlowLauncher-*.exe'
   name: Squirrel Installer
-- path: 'Release\FlowLauncher-*-Portable.zip'
+- path: 'Releases\FlowLauncher-*-Portable.zip'
   name: Portable Version
 - path: 'Releases\FlowLauncher-*-full.nupkg'
   name: Squirrel nupkg

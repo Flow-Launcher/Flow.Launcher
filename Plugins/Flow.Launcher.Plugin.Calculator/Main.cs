@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Caculator
         private const string comma = ",";
         private const string dot = ".";
 
-        private PluginInitContext Context { get; set; }
+        internal static PluginInitContext Context { get; set; }
 
         private static Settings _settings;
         private static SettingsViewModel _viewModel;
