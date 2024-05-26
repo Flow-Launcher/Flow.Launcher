@@ -232,6 +232,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
+        public bool KeepMaxResults { get; set; } = false;
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 

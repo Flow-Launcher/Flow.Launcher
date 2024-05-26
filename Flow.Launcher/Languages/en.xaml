@@ -56,6 +56,8 @@
     <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
     <system:String x:Key="LastQuerySelected">Select last Query</system:String>
     <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
+    <system:String x:Key="KeepMaxResults">Keeping Window Max Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Window height will keep to fit the maximum number of results</system:String>
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>

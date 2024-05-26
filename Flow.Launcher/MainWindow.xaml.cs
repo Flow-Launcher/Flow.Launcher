@@ -120,14 +120,17 @@ namespace Flow.Launcher
                 shadowMargin = 32;
             }
 
-            if (System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize) < 1)
-            {
-                _settings.MaxResultsToShow = 2;
+            if (!_settings.KeepMaxResults) { 
+                if (System.Convert.ToInt32((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize) < 1)
+                {
+                    _settings.MaxResultsToShow = 2;
+                }
+                else
+                {
+                    _settings.MaxResultsToShow = System.Convert.ToInt32(Math.Truncate((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize));
+                }
             }
-            else
-            {
-                _settings.MaxResultsToShow = System.Convert.ToInt32(Math.Truncate((Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize));
-            }
+
             _settings.WindowSize = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
         }

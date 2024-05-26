@@ -151,6 +151,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+    public bool KeepMaxResults
+    {
+        get => Settings.KeepMaxResults;
+        set => Settings.KeepMaxResults = value;
+    }
 
     public string AlwaysPreviewToolTip => string.Format(
         InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),
