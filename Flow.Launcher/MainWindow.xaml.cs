@@ -131,7 +131,7 @@ namespace Flow.Launcher
                 }
             }
 
-            _settings.WindowSize = Width;
+            _viewModel.MainWindowWidth = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
         }
 

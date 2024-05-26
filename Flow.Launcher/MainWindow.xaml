@@ -12,7 +12,7 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    Width="{Binding MainWindowWidth, Mode=TwoWay}"
+    Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     MinWidth="430"
     MinHeight="30"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
