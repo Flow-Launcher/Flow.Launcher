@@ -22,8 +22,6 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
-
     public Settings Settings { get; }
 
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
@@ -171,9 +169,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.KeepMaxResults;
         set => Settings.KeepMaxResults = value;
     }
-    public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
+    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
 
-    public string DateText => DateTime.Now.ToString(DateFormat, Culture);
+    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
 
     public double WindowWidthSize
     {
