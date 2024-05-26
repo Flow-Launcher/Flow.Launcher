@@ -116,6 +116,7 @@
                                             TickFrequency="1"
                                             Value="{Binding QueryBoxFontSize, Mode=TwoWay}" />
                                         <ComboBox
+                                            Name="QueryBoxFontComboBox"
                                             Width="150"
                                             Margin="8 4 8 0"
                                             HorizontalAlignment="Center"
@@ -124,6 +125,7 @@
                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                             SelectedItem="{Binding SelectedQueryBoxFont}" />
                                         <ComboBox
+                                            Name="QueryBoxFontStyleComboBox"
                                             Width="150"
                                             Margin="8"
                                             HorizontalAlignment="Center"
@@ -177,6 +179,7 @@
                                             TickFrequency="1"
                                             Value="{Binding ResultItemFontSize, Mode=TwoWay}" />
                                         <ComboBox
+                                            Name="ResultItemFontComboBox"
                                             Width="140"
                                             Margin="8 4 8 0"
                                             HorizontalAlignment="Center"
@@ -185,6 +188,7 @@
                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                             SelectedItem="{Binding SelectedResultFont}" />
                                         <ComboBox
+                                            Name="ResultItemFontStyleComboBox"
                                             Width="140"
                                             Margin="8 4 8 8"
                                             HorizontalAlignment="Center"
@@ -221,6 +225,7 @@
                                             TickFrequency="1"
                                             Value="{Binding ResultSubItemFontSize, Mode=TwoWay}" />
                                         <ComboBox
+                                            Name="ResultSubItemFontComboBox"
                                             Width="140"
                                             Margin="8 4 8 0"
                                             HorizontalAlignment="Center"
@@ -229,6 +234,7 @@
                                             ItemsSource="{Binding Source={StaticResource SortedFonts}}"
                                             SelectedItem="{Binding SelectedResultSubFont}" />
                                         <ComboBox
+                                            Name="ResultSubItemFontStyleComboBox"
                                             Width="140"
                                             Margin="8 4 8 8"
                                             HorizontalAlignment="Center"

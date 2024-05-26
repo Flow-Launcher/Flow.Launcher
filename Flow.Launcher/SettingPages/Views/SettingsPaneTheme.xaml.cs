@@ -31,6 +31,30 @@ public partial class SettingsPaneTheme : Page
 
     private void Reset_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        _viewModel.ResetCustomize();
+        //QueryBoxFont = "Segoe UI";
+        //QueryBoxFontStyle = "Normal";
+        //QueryBoxFontWeight = "Normal";
+        //QueryBoxFontStretch = "Normal";
+        //QueryBoxFontSize = 20;
+        QueryBoxFontSize.Value = 20;
+
+        //ResultFont = "Segoe UI";
+        //ResultFontStyle = "Normal";
+        //ResultFontWeight = "Normal";
+        //ResultFontStretch = "Normal";
+        //ResultItemFontSize = 16;
+        resultItemFontSize.Value = 16;
+
+        //ResultSubFont = "Segoe UI";
+        //ResultSubFontStyle = "Normal";
+        //ResultSubFontWeight = "Normal";
+        //ResultSubFontStretch = "Normal";
+        //ResultSubItemFontSize = 13;
+        resultSubItemFontSize.Value = 13;
+        //ItemHeightSize = 58;
+        //WindowHeightSize = 42;
+        WindowHeightValue.Value = 42;
+        ItemHeightValue.Value = 58;
+        //_viewModel.ResetCustomize();
     }
 }
