@@ -379,8 +379,8 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="Welcome_Page1_Text01">Esta é a primeira vez que está a utilizar Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Antes de utilizar a aplicação, este assistente ajuda a configurar Flow Launcher. Caso pretenda, pode ignorar este passo. Por favor escolha um idioma.</system:String>
     <system:String x:Key="Welcome_Page2_Title">Pesquise ficheiros/pastas e execute aplicações no seu computador</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tudo isto é efetuado através do teclado, dispensando a utilização do rato</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo. Experimente. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Pode pesquisar aplicações, ficheiros, marcadores, YouTube, Twitter e muito mais. Tudo isto é efetuado através do teclado, dispensando a utilização do rato.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher é iniciado com a tecla de atalho abaixo indicada. Para alterar esta tecla de atalho, clique no valor e escolha a combinação de teclas a utilizar.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Teclas de atalho</system:String>
     <system:String x:Key="Welcome_Page4_Title">Palavras-chave e comandos</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Pesquise na Web, inicie aplicações e execute funções com os nossos plugins. Algumas ações são invocadas com palavras-chave mas, se quiser, podem ser invocadas sem essas palavras-chave. Teste as consultas abaixo para experimentar.</system:String>
