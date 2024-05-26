@@ -165,6 +165,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.DateFormat = value;
     }
 
+    public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+    public bool KeepMaxResults
+    {
+        get => Settings.KeepMaxResults;
+        set => Settings.KeepMaxResults = value;
+    }
     public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
 
     public string DateText => DateTime.Now.ToString(DateFormat, Culture);

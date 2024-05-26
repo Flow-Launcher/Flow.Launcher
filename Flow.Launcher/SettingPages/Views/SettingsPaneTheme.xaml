@@ -511,11 +511,28 @@
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
+            <cc:CardGroup Margin="0 20 0 0">
+                <cc:Card
+                    Title="{DynamicResource KeepMaxResults}"
+                    Icon="&#xe8fd;"
+                    Sub="{DynamicResource KeepMaxResultsToolTip}">
+                    <ui:ToggleSwitch IsOn="{Binding KeepMaxResults}" />
+                </cc:Card>
+                <cc:Card
+                    Title="{DynamicResource maxShowResults}"
+                    Sub="{DynamicResource maxShowResultsToolTip}"
+                    Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ComboBox
+                        Width="100"
+                        ItemsSource="{Binding MaxResultsRange}"
+                        SelectedItem="{Binding Settings.MaxResultsToShow}" />
+                </cc:Card>
+            </cc:CardGroup>
 
             <!--  Fonts and icons  -->
             <cc:Card
                 Title="{DynamicResource useGlyphUI}"
-                Margin="0 20 0 0"
+                Margin="0 6 0 0"
                 Icon="&#xf6b8;"
                 Sub="{DynamicResource useGlyphUIEffect}">
                 <ui:ToggleSwitch
