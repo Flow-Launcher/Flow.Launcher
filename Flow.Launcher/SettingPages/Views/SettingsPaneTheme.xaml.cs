@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Drawing;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Flow.Launcher.SettingPages.ViewModels;
 using Page = ModernWpf.Controls.Page;
@@ -31,30 +34,74 @@ public partial class SettingsPaneTheme : Page
 
     private void Reset_Click(object sender, System.Windows.RoutedEventArgs e)
     {
-        //QueryBoxFont = "Segoe UI";
-        //QueryBoxFontStyle = "Normal";
-        //QueryBoxFontWeight = "Normal";
-        //QueryBoxFontStretch = "Normal";
-        //QueryBoxFontSize = 20;
+        /*The FamilyTypeface should initialize all of its various properties.*/
+        FamilyTypeface targetTypeface = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+
         QueryBoxFontSize.Value = 20;
+        QueryBoxFontComboBox.SelectedIndex = SearchFontIndex("Segoe UI", QueryBoxFontComboBox);
+        QueryBoxFontStyleComboBox.SelectedIndex = SearchFontStyleIndex(targetTypeface, QueryBoxFontStyleComboBox);
 
-        //ResultFont = "Segoe UI";
-        //ResultFontStyle = "Normal";
-        //ResultFontWeight = "Normal";
-        //ResultFontStretch = "Normal";
-        //ResultItemFontSize = 16;
-        resultItemFontSize.Value = 16;
+        ResultItemFontComboBox.SelectedIndex = SearchFontIndex("Segoe UI", ResultItemFontComboBox);
+        ResultItemFontStyleComboBox.SelectedIndex = SearchFontStyleIndex(targetTypeface, ResultItemFontStyleComboBox);
+        ResultItemFontSize.Value = 16;
 
-        //ResultSubFont = "Segoe UI";
-        //ResultSubFontStyle = "Normal";
-        //ResultSubFontWeight = "Normal";
-        //ResultSubFontStretch = "Normal";
-        //ResultSubItemFontSize = 13;
-        resultSubItemFontSize.Value = 13;
-        //ItemHeightSize = 58;
-        //WindowHeightSize = 42;
+        ResultSubItemFontComboBox.SelectedIndex = SearchFontIndex("Segoe UI", ResultSubItemFontComboBox);
+        ResultSubItemFontStyleComboBox.SelectedIndex = SearchFontStyleIndex(targetTypeface, ResultSubItemFontStyleComboBox);
+        ResultSubItemFontSize.Value = 13;
+
         WindowHeightValue.Value = 42;
         ItemHeightValue.Value = 58;
-        //_viewModel.ResetCustomize();
+    }
+    public int SearchFontIndex(string str, ComboBox combo)
+    {
+        int index = -1;
+        string targetFont = str;
+
+        for (int i = 0; i < combo.Items.Count; i++)
+        {
+            if (combo.Items[i].ToString() == targetFont)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        if (index != -1)
+        {
+            return index;
+        }
+        else
+        {
+            // If there no Default Value.
+            return 0;
+        }
+    }
+    public int SearchFontStyleIndex(FamilyTypeface targetTypeface, ComboBox combo)
+    {
+        int index = -1;
+
+        for (int i = 0; i < combo.Items.Count; i++)
+        {
+            if (combo.Items[i] is FamilyTypeface)
+            {
+                FamilyTypeface typefaceItem = (FamilyTypeface)combo.Items[i];
+                if (typefaceItem.Stretch == targetTypeface.Stretch &&
+                    typefaceItem.Weight == targetTypeface.Weight &&
+                    typefaceItem.Style == targetTypeface.Style)
+                {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        if (index != -1)
+        {
+            return index;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }

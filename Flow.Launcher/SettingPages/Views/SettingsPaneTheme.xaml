@@ -166,7 +166,7 @@
                                             BorderThickness="1"
                                             Style="{StaticResource SettingSeparatorStyle}" />
                                         <Slider
-                                            Name="resultItemFontSize"
+                                            Name="ResultItemFontSize"
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
@@ -212,7 +212,7 @@
                                             BorderThickness="1"
                                             Style="{StaticResource SettingSeparatorStyle}" />
                                         <Slider
-                                            Name="resultSubItemFontSize"
+                                            Name="ResultSubItemFontSize"
                                             Width="140"
                                             Margin="8 8 8 0"
                                             VerticalAlignment="Center"
