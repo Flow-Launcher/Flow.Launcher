@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         private ListSortDirection _lastDirection;
 
         // We do not save all program sources to settings, so using
-        // this as temporary holder for displaying all loaded programs sources. 
+        // this as temporary holder for displaying all loaded programs sources.
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
         public bool EnableDescription
@@ -44,6 +44,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 Main.ResetCache();
                 _settings.HideAppsPath = value;
+            }
+        }
+
+        public bool HideUninstallers
+        {
+            get => _settings.HideUninstallers;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideUninstallers = value;
             }
         }
 
