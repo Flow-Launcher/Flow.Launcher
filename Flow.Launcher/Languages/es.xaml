@@ -156,7 +156,7 @@
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
     <system:String x:Key="SoundEffectVolume">Volumen del efecto de sonido</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Ajusta el volumen del efecto de sonido</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player no está disponible y es necesario para el ajuste del volumen de Flow. Por favor, compruebe su instalación si necesita ajustar el volumen.</system:String>
     <system:String x:Key="Animation">Animación</system:String>
     <system:String x:Key="AnimationTip">Usa animación en la Interfaz de Usuario</system:String>
     <system:String x:Key="AnimationSpeed">Velocidad de animación</system:String>
@@ -187,8 +187,8 @@
     <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
     <system:String x:Key="SelectNextPageHotkey">Siguiente página</system:String>
     <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Ciclo consulta anterior</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Ciclo siguiente consulta</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
@@ -418,7 +418,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="RecommendAcronymsDesc">Notas adhesivas</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Tamaño del archivo</system:String>
+    <system:String x:Key="Created">Creado</system:String>
+    <system:String x:Key="LastModified">Última modificación</system:String>
 </ResourceDictionary>
