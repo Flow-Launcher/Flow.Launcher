@@ -21,22 +21,6 @@ namespace Flow.Launcher.ViewModel
         {
             Settings = settings;
 
-            Settings.PropertyChanged += (_, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(Settings.ItemHeightSize):
-                        OnPropertyChanged(nameof(ItemHeightSize));
-                        break;
-                    case nameof(Settings.ResultItemFontSize):
-                        OnPropertyChanged(nameof(ResultItemFontSize));
-                        break;
-                    case nameof(Settings.ResultSubItemFontSize):
-                        OnPropertyChanged(nameof(ResultSubItemFontSize));
-                        break;
-                }
-            };
-
 
             if (result == null)
             {
@@ -46,7 +30,7 @@ namespace Flow.Launcher.ViewModel
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
-                // Checks if it's a system installed font, which does not require path to be provided. 
+                // Checks if it's a system installed font, which does not require path to be provided.
                 if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
                 {
                     string fontFamilyPath = glyph.FontFamily;
@@ -81,7 +65,7 @@ namespace Flow.Launcher.ViewModel
 
         }
 
-        private Settings Settings { get; }
+        public Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
             Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;
@@ -136,23 +120,6 @@ namespace Flow.Launcher.ViewModel
 
         }
 
-        public double ItemHeightSize
-        {
-            get => Settings.ItemHeightSize;
-            set => Settings.ItemHeightSize = value;
-        }
-
-        public double ResultItemFontSize
-        {
-            get => Settings.ResultItemFontSize;
-            set => Settings.ResultItemFontSize = value;
-        }
-
-        public double ResultSubItemFontSize
-        {
-            get => Settings.ResultSubItemFontSize;
-            set => Settings.ResultSubItemFontSize = value;
-        }
         public Visibility ShowGlyph
         {
             get

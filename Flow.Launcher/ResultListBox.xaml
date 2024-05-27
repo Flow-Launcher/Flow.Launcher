@@ -175,7 +175,7 @@
                                 Margin="0,0,0,1"
                                 VerticalAlignment="Bottom"
                                 DockPanel.Dock="Left"
-                                FontSize="{Binding ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="{Binding Settings.ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
@@ -194,7 +194,7 @@
                                 Grid.Row="1"
                                 Margin="0,1,0,0"
                                 VerticalAlignment="Top"
-                                FontSize="{Binding ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontSize="{Binding Settings.ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
@@ -224,7 +224,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="{Binding ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />
