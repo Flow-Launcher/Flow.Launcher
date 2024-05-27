@@ -148,9 +148,11 @@ namespace Flow.Launcher.Core.Plugin
             catch (RemoteMethodNotFoundException e)
             {
             }
-
-            RPC?.Dispose();
-            ErrorStream?.Dispose();
+            finally
+            {
+                RPC?.Dispose();
+                ErrorStream?.Dispose();
+            }
         }
     }
 }
