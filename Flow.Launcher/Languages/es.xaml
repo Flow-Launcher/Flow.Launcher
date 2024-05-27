@@ -110,7 +110,7 @@
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Tienda de complementos</system:String>
+    <system:String x:Key="pluginStore">Tienda complementos</system:String>
     <system:String x:Key="pluginStore_NewRelease">Nuevo(s) lanzamiento(s)</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Actualizado(s) recientemente</system:String>
     <system:String x:Key="pluginStore_None">Complementos</system:String>
@@ -418,7 +418,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="RecommendAcronymsDesc">Notas adhesivas</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">Tamaño del archivo</system:String>
+    <system:String x:Key="FileSize">Tamaño</system:String>
     <system:String x:Key="Created">Creado</system:String>
-    <system:String x:Key="LastModified">Última modificación</system:String>
+    <system:String x:Key="LastModified">Modificado</system:String>
 </ResourceDictionary>
