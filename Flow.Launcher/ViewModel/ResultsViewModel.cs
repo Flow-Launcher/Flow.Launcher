@@ -49,7 +49,7 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * _settings.ItemHeightSize!;
+        public double MaxHeight => MaxResults * _settings.ItemHeightSize;
         public double ItemHeightSize
         {
             get => _settings.ItemHeightSize;
@@ -61,7 +61,7 @@ namespace Flow.Launcher.ViewModel
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
-        
+
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
 

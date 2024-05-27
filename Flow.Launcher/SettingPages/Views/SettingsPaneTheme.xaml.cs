@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -32,7 +31,7 @@ public partial class SettingsPaneTheme : Page
         _viewModel.UpdateColorScheme();
     }
 
-    private void Reset_Click(object sender, System.Windows.RoutedEventArgs e)
+    private void Reset_Click(object sender, RoutedEventArgs e)
     {
         /*The FamilyTypeface should initialize all of its various properties.*/
         FamilyTypeface targetTypeface = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
@@ -52,56 +51,31 @@ public partial class SettingsPaneTheme : Page
         WindowHeightValue.Value = 42;
         ItemHeightValue.Value = 58;
     }
-    public int SearchFontIndex(string str, ComboBox combo)
-    {
-        int index = -1;
-        string targetFont = str;
 
+    private int SearchFontIndex(string targetFont, ComboBox combo)
+    {
         for (int i = 0; i < combo.Items.Count; i++)
         {
-            if (combo.Items[i].ToString() == targetFont)
+            if (combo.Items[i]?.ToString() == targetFont)
             {
-                index = i;
-                break;
+                return i;
             }
         }
-
-        if (index != -1)
-        {
-            return index;
-        }
-        else
-        {
-            // If there no Default Value.
-            return 0;
-        }
+        return 0;
     }
-    public int SearchFontStyleIndex(FamilyTypeface targetTypeface, ComboBox combo)
-    {
-        int index = -1;
 
+    private int SearchFontStyleIndex(FamilyTypeface targetTypeface, ComboBox combo)
+    {
         for (int i = 0; i < combo.Items.Count; i++)
         {
-            if (combo.Items[i] is FamilyTypeface)
+            if (combo.Items[i] is FamilyTypeface typefaceItem &&
+                typefaceItem.Stretch == targetTypeface.Stretch &&
+                typefaceItem.Weight == targetTypeface.Weight &&
+                typefaceItem.Style == targetTypeface.Style)
             {
-                FamilyTypeface typefaceItem = (FamilyTypeface)combo.Items[i];
-                if (typefaceItem.Stretch == targetTypeface.Stretch &&
-                    typefaceItem.Weight == targetTypeface.Weight &&
-                    typefaceItem.Style == targetTypeface.Style)
-                {
-                    index = i;
-                    break;
-                }
+                return i;
             }
         }
-
-        if (index != -1)
-        {
-            return index;
-        }
-        else
-        {
-            return 0;
-        }
+        return 0;
     }
 }

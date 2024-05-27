@@ -19,13 +19,10 @@ using Microsoft.VisualStudio.Threading;
 using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.IO;
-using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
 using System.ComponentModel;
-using Windows.UI.Core.AnimationMetrics;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -455,7 +452,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults.SelectPrevResult();
             }
-        
+
         }
 
         [RelayCommand]
@@ -482,7 +479,7 @@ namespace Flow.Launcher.ViewModel
         {
             GameModeStatus = !GameModeStatus;
         }
-        
+
         [RelayCommand]
         public void CopyAlternative()
         {
@@ -760,7 +757,7 @@ namespace Flow.Launcher.ViewModel
 
             return hotkey;
         }
-        
+
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
         public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");

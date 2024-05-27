@@ -21,7 +21,6 @@ namespace Flow.Launcher.ViewModel
         {
             Settings = settings;
 
-
             if (result == null)
             {
                 return;

@@ -30,7 +30,6 @@
     PreviewKeyUp="OnKeyUp"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
-    SizeChanged="OnSizeChanged"
     SizeToContent="Height"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
