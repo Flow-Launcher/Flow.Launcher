@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Nascondi percorso app</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Per i file eseguibili come UWP o lnk, nascondere il percorso del file</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Cerca nella Descrizione del Programma</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffissi</system:String>
