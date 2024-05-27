@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palavras-chave</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Ligações de acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Definições Everything</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Painel de visualização</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de criação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de modificação</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar informações do ficheiro</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de data e de hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenação:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Caminho para Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Iniciar oculto</system:String>
