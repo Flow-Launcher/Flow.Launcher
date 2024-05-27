@@ -74,16 +74,6 @@ namespace Flow.Launcher.Core.Configuration
         ///</summary>
         public void PreStartCleanUpAfterPortabilityUpdate()
         {
-            // check whether the package locate in %LocalAppData%
-            // if not create the portable data folder
-            // Don't create the folder if the version is 1.0.0 (Dev) to allow potential debugging with data in the project folder
-            // It is still possible to create the UserData folder for dev version manually but we want to keep the current behavior
-            if (!Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData).PathContains(Constant.ProgramDirectory)
-                && Constant.Version != "1.0.0")
-            {
-                Directory.CreateDirectory(DataLocation.PortableDataPath);
-            }
-
             // Specify here so this method does not rely on other environment variables to initialise
             var portableDataDir = DataLocation.PortableDataPath;
             var roamingDataDir = DataLocation.RoamingDataPath;
