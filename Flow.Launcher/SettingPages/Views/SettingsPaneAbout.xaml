@@ -27,7 +27,7 @@
                 TextAlignment="left" />
 
 
-            <cc:Card
+            <cc:Card2
                 Title="{Binding Version}"
                 Icon="&#xe946;"
                 Sub="{DynamicResource version}">
@@ -48,37 +48,43 @@
                         </Hyperlink>
                     </Button>
                 </StackPanel>
-            </cc:Card>
+            </cc:Card2>
 
-            <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <cc:HyperLink Uri="{Binding ReleaseNotes}" Text="{DynamicResource releaseNotes}" />
-            </cc:Card>
+            <cc:Card2 Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
+                <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
+            </cc:Card2>
 
-            <cc:Card
+            <cc:Card2
                 Title="{DynamicResource website}"
                 Margin="0 14 0 0"
                 Icon="&#xeb41;">
                 <StackPanel Orientation="Horizontal">
-                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Website}" Text="{DynamicResource website}" />
-                    <cc:HyperLink Uri="{Binding Github}" Text="{DynamicResource github}" />
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource website}"
+                        Uri="{Binding Website}" />
+                    <cc:HyperLink Text="{DynamicResource github}" Uri="{Binding Github}" />
                 </StackPanel>
-            </cc:Card>
+            </cc:Card2>
 
-            <cc:Card Title="{DynamicResource documentation}" Icon="&#xe82f;">
+            <cc:Card2 Title="{DynamicResource documentation}" Icon="&#xe82f;">
                 <StackPanel Orientation="Horizontal">
-                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Documentation}" Text="{DynamicResource documentation}" />
-                    <cc:HyperLink Uri="{Binding Website}" Text="{DynamicResource website}" />
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource documentation}"
+                        Uri="{Binding Documentation}" />
+                    <cc:HyperLink Text="{DynamicResource website}" Uri="{Binding Website}" />
                 </StackPanel>
-            </cc:Card>
+            </cc:Card2>
 
-            <cc:Card
+            <cc:Card2
                 Title="{DynamicResource icons}"
                 Margin="0 14 0 0"
                 Icon="&#xE8FE;">
-                <cc:HyperLink Uri="https://icons8.com/" Text="icons8.com" />
-            </cc:Card>
+                <cc:HyperLink Text="icons8.com" Uri="https://icons8.com/" />
+            </cc:Card2>
 
-            <cc:Card Title="{DynamicResource devtool}" Icon="&#xf12b;">
+            <cc:Card2 Title="{DynamicResource devtool}" Icon="&#xf12b;">
                 <StackPanel Orientation="Horizontal">
                     <Button
                         Margin="0 0 12 0"
@@ -111,7 +117,7 @@
                         </ui:FlyoutService.Flyout>
                     </Button>
                 </StackPanel>
-            </cc:Card>
+            </cc:Card2>
 
             <TextBlock
                 Margin="14 20 0 0"
