@@ -19,14 +19,14 @@
                 <Setter Property="Padding" Value="0 15 0 15" />
                 <Setter Property="Margin" Value="0 4 0 0" />
                 <Setter Property="SnapsToDevicePixels" Value="True" />
-                <Style.Triggers>
-                    <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Inside">
+                <!--<Style.Triggers>
+                    <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card2}}" Value="Inside">
                         <Setter Property="BorderThickness" Value="0 1 0 0" />
                         <Setter Property="CornerRadius" Value="0" />
                         <Setter Property="Margin" Value="0 0 0 0" />
                         <Setter Property="Background" Value="Transparent" />
                     </DataTrigger>
-                    <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="InsideFit">
+                    <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card2}}" Value="InsideFit">
                         <Setter Property="BorderThickness" Value="0 1 0 0" />
                         <Setter Property="CornerRadius" Value="0" />
                         <Setter Property="Margin" Value="0 0 0 0" />
@@ -34,27 +34,27 @@
                         <Setter Property="Background" Value="Transparent" />
                     </DataTrigger>
 
-                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
+                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card2}}" Value="First">
                         <Setter Property="Margin" Value="0" />
                         <Setter Property="CornerRadius" Value="0" />
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0" />
                     </DataTrigger>
 
-                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
+                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card2}}" Value="Middle">
                         <Setter Property="Margin" Value="0" />
                         <Setter Property="CornerRadius" Value="0" />
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0 1 0 0" />
                     </DataTrigger>
 
-                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
+                    <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card2}}" Value="Last">
                         <Setter Property="Margin" Value="0" />
                         <Setter Property="CornerRadius" Value="0" />
                         <Setter Property="Background" Value="Transparent" />
                         <Setter Property="BorderThickness" Value="0 1 0 0" />
                     </DataTrigger>
-                </Style.Triggers>
+                </Style.Triggers>-->
             </Style>
         </Border.Style>
 
