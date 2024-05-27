@@ -41,17 +41,6 @@
             <!--  Theme Preview and Editor  -->
             <Grid Height="380">
                 <Grid.Resources>
-                    <!--  Style for the first ColumnDefinition  -->
-                    <Style x:Key="FirstColumnStyle" TargetType="ColumnDefinition">
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="False">
-                                <Setter Property="Width" Value="*" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="True">
-                                <Setter Property="Width" Value="8*" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
                     <!--  Style for the second ColumnDefinition  -->
                     <Style x:Key="SecondColumnStyle" TargetType="ColumnDefinition">
                         <Style.Triggers>
@@ -66,18 +55,12 @@
                     </Style>
                 </Grid.Resources>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition MinWidth="500" Style="{StaticResource FirstColumnStyle}" />
-                    <ColumnDefinition Width="0" />
+                    <ColumnDefinition Width="8*" />
                     <ColumnDefinition MaxWidth="250" Style="{StaticResource SecondColumnStyle}" />
                 </Grid.ColumnDefinitions>
-                <GridSplitter
-                    Grid.Column="1"
-                    Width="0"
-                    HorizontalAlignment="Stretch"
-                    Background="Transparent" />
                 <!--  Theme Size Editor  -->
                 <Border
-                    Grid.Column="2"
+                    Grid.Column="1"
                     Padding="0 0 0 0"
                     Background="{DynamicResource Color00B}"
                     BorderBrush="{DynamicResource Color03B}"
