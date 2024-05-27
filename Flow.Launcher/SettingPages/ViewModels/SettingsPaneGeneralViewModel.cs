@@ -143,12 +143,26 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         set => Settings.ShouldUsePinyin = value;
     }
 
-    public List<string> QuerySearchPrecisionStrings => Enum
-        .GetValues(typeof(SearchPrecisionScore))
-        .Cast<SearchPrecisionScore>()
-        .Select(v => v.ToString())
-        .ToList();
-
+    public class SearchPrecisionScoreItem
+    {
+        public string Display { get; set; }
+        public SearchPrecisionScore Value { get; set; }
+    }
+    public List<SearchPrecisionScoreItem> QuerySearchPrecisionItems
+    {
+        get
+        {
+            var items = new List<SearchPrecisionScoreItem>();
+            var values = (SearchPrecisionScore[])Enum.GetValues(typeof(SearchPrecisionScore));
+            foreach (var value in values)
+            {
+                var key = $"SearchPrecision{value}";
+                var display = InternationalizationManager.Instance.GetTranslation(key);
+                items.Add(new SearchPrecisionScoreItem { Display = display, Value = value });
+            }
+            return items;
+        }
+    }
     public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
