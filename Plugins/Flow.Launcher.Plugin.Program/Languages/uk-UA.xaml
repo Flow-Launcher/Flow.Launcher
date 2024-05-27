@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Якщо увімкнено, Flow буде завантажувати програми зі змінної середовища PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Приховати шлях до програми</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Для виконуваних файлів, таких як UWP або lnk, приховати шлях до файлу, щоб його не було видно</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Пошук в описі програми</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow буде шукати опис програми</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Суфікси</system:String>
