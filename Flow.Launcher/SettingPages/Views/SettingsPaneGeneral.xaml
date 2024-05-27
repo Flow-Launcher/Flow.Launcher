@@ -30,19 +30,31 @@
                 TextAlignment="left" />
 
             <cc:Card Title="{DynamicResource startFlowLauncherOnSystemStartup}" Icon="&#xe8fc;">
-                <ui:ToggleSwitch IsOn="{Binding StartFlowLauncherOnSystemStartup}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding StartFlowLauncherOnSystemStartup}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource hideOnStartup}" Icon="&#xed1a;">
-                <ui:ToggleSwitch IsOn="{Binding Settings.HideOnStartup}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.HideOnStartup}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource hideFlowLauncherWhenLoseFocus}" Margin="0 30 0 0">
-                <ui:ToggleSwitch IsOn="{Binding Settings.HideWhenDeactivated}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.HideWhenDeactivated}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource hideNotifyIcon}" Sub="{DynamicResource hideNotifyIconToolTip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.HideNotifyIcon}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.HideNotifyIcon}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:CardGroup Margin="0 30 0 0">
@@ -107,7 +119,10 @@
                 Title="{DynamicResource ignoreHotkeysOnFullscreen}"
                 Icon="&#xe7fc;"
                 Sub="{DynamicResource ignoreHotkeysOnFullscreenToolTip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.IgnoreHotkeysOnFullscreen}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card
@@ -115,21 +130,31 @@
                 Margin="0 30 0 0"
                 Icon="&#xe8a1;"
                 Sub="{DynamicResource AlwaysPreviewToolTip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysPreview}" ToolTip="{Binding AlwaysPreviewToolTip}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.AlwaysPreview}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}"
+                    ToolTip="{Binding AlwaysPreviewToolTip}" />
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource autoUpdates}"
                 Margin="0 30 0 0"
                 Icon="&#xecc5;">
-                <ui:ToggleSwitch IsOn="{Binding AutoUpdates}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding AutoUpdates}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource portableMode}"
                 Icon="&#xe88e;"
                 Sub="{DynamicResource portableModeToolTIp}">
-                <ui:ToggleSwitch IsOn="{Binding PortableMode}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding PortableMode}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:CardGroup Margin="0 30 0 0">
@@ -216,15 +241,21 @@
                 Margin="0 30 0 0"
                 Icon="&#xe8d3;"
                 Sub="{DynamicResource typingStartEnTooltip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.AlwaysStartEn}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.AlwaysStartEn}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
             </cc:Card>
 
             <cc:Card
                 Title="{DynamicResource ShouldUsePinyin}"
                 Icon="&#xe98a;"
                 Sub="{DynamicResource ShouldUsePinyinToolTip}">
-                <ui:ToggleSwitch IsOn="{Binding Settings.ShouldUsePinyin}"
-                                 ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
+                <ui:ToggleSwitch
+                    IsOn="{Binding Settings.ShouldUsePinyin}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}"
+                    ToolTip="{DynamicResource ShouldUsePinyinToolTip}" />
             </cc:Card>
 
             <cc:Card
