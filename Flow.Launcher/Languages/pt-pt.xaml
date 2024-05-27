@@ -417,7 +417,7 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Tamanho do ficheiro</system:String>
+    <system:String x:Key="Created">Criado</system:String>
+    <system:String x:Key="LastModified">Última modificação</system:String>
 </ResourceDictionary>
