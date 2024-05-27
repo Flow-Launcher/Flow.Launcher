@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не удалось зарегистрировать сочетание клавиш &quot;{0}&quot;. Возможно, оно используется другой программой. Измените сочетание клавиш или закройте другую программу.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -75,6 +78,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Когда значок скрыт в трее, меню настройки можно открыть, щёлкнув правой кнопкой мыши на окне поиска.</system:String>
     <system:String x:Key="querySearchPrecision">Точность поиска запросов</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Изменение минимального количества совпадений при поиске, необходимого для получения результатов.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Нет</system:String>
+    <system:String x:Key="SearchPrecisionLow">Низкая</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Обычная</system:String>
     <system:String x:Key="ShouldUsePinyin">Поиск с использованием пиньинь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Позволяет использовать пиньинь для поиска. Пиньинь - это стандартная система латинизированной орфографии для перевода китайского языка.</system:String>
     <system:String x:Key="AlwaysPreview">Всегда предпросмотр</system:String>

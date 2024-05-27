@@ -8,7 +8,8 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
 {
     public string Display { get; set; }
-    public TValue Value { get; set; }
+    public TValue Value { get; private init; }
+    private string LocalizationKey { get; init; }
 
     public static List<TR> GetValues<TR>(string keyPrefix) where TR : DropdownDataGeneric<TValue>, new()
     {
@@ -19,9 +20,17 @@ public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
         {
             var key = keyPrefix + value;
             var display = InternationalizationManager.Instance.GetTranslation(key);
-            data.Add(new TR { Display = display, Value = value });
+            data.Add(new TR { Display = display, Value = value, LocalizationKey = key });
         }
 
         return data;
+    }
+
+    public static void UpdateLabels<TR>(List<TR> options) where TR : DropdownDataGeneric<TValue>
+    {
+        foreach (var item in options)
+        {
+            item.Display = InternationalizationManager.Instance.GetTranslation(item.LocalizationKey);
+        }
     }
 }

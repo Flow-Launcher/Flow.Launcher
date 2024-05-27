@@ -162,8 +162,10 @@
                          Sub="{DynamicResource querySearchPrecisionToolTip}">
                     <ComboBox
                         MaxWidth="200"
-                        ItemsSource="{Binding QuerySearchPrecisionStrings}"
-                        SelectedItem="{Binding Settings.QuerySearchPrecisionString}" />
+                        DisplayMemberPath="Display"
+                        ItemsSource="{Binding SearchPrecisionScores}"
+                        SelectedValue="{Binding Settings.QuerySearchPrecision}"
+                        SelectedValuePath="Value" />
                 </cc:Card>
 
                 <cc:Card Title="{DynamicResource lastQueryMode}" Sub="{DynamicResource lastQueryModeToolTip}">
