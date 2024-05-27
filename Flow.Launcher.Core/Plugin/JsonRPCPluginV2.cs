@@ -5,7 +5,6 @@ using System.IO.Pipelines;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Core.Plugin.JsonRPCV2Models;
-using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 using Microsoft.VisualStudio.Threading;
 using StreamJsonRpc;
