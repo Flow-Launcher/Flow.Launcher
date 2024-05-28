@@ -78,8 +78,8 @@
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
     <system:String x:Key="SearchPrecisionNone">Žiadna</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionLow">Nízka</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
