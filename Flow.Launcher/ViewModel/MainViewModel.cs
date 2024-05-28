@@ -538,7 +538,7 @@ namespace Flow.Launcher.ViewModel
         {
             Settings.WindowSize += 100;
             Settings.WindowLeft -= 50;
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(MainWindowWidth));
         }
 
         [RelayCommand]
@@ -554,7 +554,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowSize -= 100;
             }
 
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(MainWindowWidth));
         }
 
         [RelayCommand]

@@ -23,6 +23,7 @@
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
     Initialized="OnInitialized"
+    Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
