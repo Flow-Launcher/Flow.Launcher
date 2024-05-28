@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Ninguno</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
