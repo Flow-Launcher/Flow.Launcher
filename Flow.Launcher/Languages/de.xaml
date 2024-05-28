@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Suchgenauigkeit abfragen</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Erforderliche Suchergebnisse.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
