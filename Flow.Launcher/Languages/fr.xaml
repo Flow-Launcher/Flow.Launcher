@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Lorsque l'icône est cachée dans la barre de tâches, le menu Paramètres peut être ouvert en faisant un clic droit sur la barre de recherche.</system:String>
     <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Aucun</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permet d'utiliser Pinyin pour la recherche. Pinyin est le système standard d'orthographe romanisée pour la traduction du chinois</system:String>
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
