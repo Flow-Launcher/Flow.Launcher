@@ -572,25 +572,35 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
-
-        public bool PreviewVisible { get; set; } = false;
-
-        public int ResultAreaColumn { get; set; } = 1;
-
+        
         #endregion
 
         #region Preview
 
-        // Not accurate
-        public bool ExternalPreviewOpen { get; set; } = false;
-
-        [RelayCommand]
-        private void TogglePreview()
+        public bool InternalPreviewVisible
         {
-            if (PreviewVisible)
+            get
             {
-                // To deal with always preview
-                HideInternalPreview();
+                if (ResultAreaColumn == ResultAreaColumnPreviewShown)
+                    return true;
+
+                if (ResultAreaColumn == ResultAreaColumnPreviewHidden)
+                    return false;
+#if DEBUG
+                throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
+#else
+                Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
+#endif
+                return false;
+            }
+        }
+
+        private static readonly int ResultAreaColumnPreviewShown = 1;
+
+        private static readonly int ResultAreaColumnPreviewHidden = 3;
+
+        public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
+
             }
             else if(Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
             {
