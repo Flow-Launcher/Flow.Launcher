@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Когда значок скрыт в трее, меню настройки можно открыть, щёлкнув правой кнопкой мыши на окне поиска.</system:String>
     <system:String x:Key="querySearchPrecision">Точность поиска запросов</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Изменение минимального количества совпадений при поиске, необходимого для получения результатов.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Поиск с использованием пиньинь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Позволяет использовать пиньинь для поиска. Пиньинь - это стандартная система латинизированной орфографии для перевода китайского языка.</system:String>
     <system:String x:Key="AlwaysPreview">Всегда предпросмотр</system:String>
