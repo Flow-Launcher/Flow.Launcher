@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜尋</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜尋。拼音是將中文轉換為羅馬字母拼寫的標準系統。</system:String>
     <system:String x:Key="AlwaysPreview">一律預覽</system:String>
