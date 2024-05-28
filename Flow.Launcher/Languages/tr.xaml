@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Sorgu Arama Hassasiyeti</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Sonuçlar için gereken minimum maç puanını değiştirir.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin kullanılmalı</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Arama yapmak için Pinyin'in kullanılmasına izin verir. Pinyin, Çince'yi çevirmek için standart romanlaştırılmış yazım sistemidir.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
