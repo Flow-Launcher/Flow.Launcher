@@ -399,7 +399,7 @@
                     </StackPanel>
                     <GridSplitter
                         Grid.Column="1"
-                        Width="{Binding PreviewVisible, Converter={StaticResource SplitterConverter}}"
+                        Width="{Binding InternalPreviewVisible, Converter={StaticResource SplitterConverter}}"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Stretch"
                         Background="Transparent"
@@ -409,7 +409,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
-                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Border
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                             DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
