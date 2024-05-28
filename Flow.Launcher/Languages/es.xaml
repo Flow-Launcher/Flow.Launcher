@@ -54,8 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Mantener la última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se podrá redimensionar al arrastrar el ratón</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más y Ctrl+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
@@ -77,9 +77,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
-    <system:String x:Key="SearchPrecisionNone">Ninguno</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionNone">Ninguna</system:String>
+    <system:String x:Key="SearchPrecisionLow">Baja</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
@@ -145,8 +145,8 @@
     <system:String x:Key="SampleSubTitleProgram">Iniciar programas como administrador o como usuario diferente</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Eliminar Procesos</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminar procesos no deseados</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SearchBarHeight">Altura de la barra de búsqueda</system:String>
+    <system:String x:Key="ItemHeight">Altura del elemento</system:String>
     <system:String x:Key="queryBoxFont">Fuente del texto del cuadro de consulta</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
