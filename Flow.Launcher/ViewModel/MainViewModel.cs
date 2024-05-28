@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -614,38 +614,21 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task ToggleExternalPreviewAsync(string path)
+        private void OpenExternalPreview(string path, bool sendFailToast = true)
         {
-            bool success = await QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = !ExternalPreviewOpen;
-            }
+            _ = PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
+            ExternalPreviewVisible = true;
         }
 
-        private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        private void CloseExternalPreview()
         {
-            bool success = await QuickLookHelper.OpenQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = false;
-            }
+            _ = PluginManager.CloseExternalPreviewAsync().ConfigureAwait(false);
+            ExternalPreviewVisible = false;
         }
 
-        private async Task CloseExternalPreviewAsync()
+        private void SwitchExternalPreview(string path, bool sendFailToast = true)
         {
-            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = false;
-            }
-        }
-
-        private async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
-        {
-            // Switches preview content
-            // When external is off, do nothing
-            _ = QuickLookHelper.SwitchQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
+            _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
         }
 
         private void ShowInternalPreview()
