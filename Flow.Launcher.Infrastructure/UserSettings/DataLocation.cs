@@ -28,7 +28,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public static string PortableDataPath = Path.Combine(Constant.ProgramDirectory, PortableFolderName);
 
         public static string RoamingDataPath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher")
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
 
         public static string DataDirectory()
         {
