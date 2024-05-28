@@ -45,7 +45,6 @@ namespace Flow.Launcher
         private MainViewModel _viewModel;
         private bool _animating;
         private bool isArrowKeyPressed = false;
-        private double WindowWidthForSave;
 
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
@@ -121,6 +120,8 @@ namespace Flow.Launcher
                     _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
                 }
             }
+
+            _viewModel.MainWindowWidth = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
         }
 
@@ -154,9 +155,6 @@ namespace Flow.Launcher
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
-            /* In this timing, window alreayd closed and it effect to window size. So at this point, whenever the window changes, 
-            we recall the width we've stored as a variable and specify it in the settings. This way, the existing window size will be recalled on the next run.*/
-            _settings.WindowSize = WindowWidthForSave;
             App.API.SaveAppAllSettings();
             e.Cancel = true;
             await PluginManager.DisposePluginsAsync();
@@ -833,11 +831,6 @@ namespace Flow.Launcher
                 BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
                 be.UpdateSource();
             }
-        }
-
-        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            WindowWidthForSave = Width;
         }
     }
 }
