@@ -18,6 +18,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             {
                 Directory.CreateDirectory(PortableDataPath);
             }
+
+            PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
+            PluginEnvironmentsPath = Path.Combine(DataDirectory(), PluginEnvironments);
         }
 
         public const string PortableFolderName = "UserData";
@@ -25,7 +28,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public static string PortableDataPath = Path.Combine(Constant.ProgramDirectory, PortableFolderName);
 
         public static string RoamingDataPath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher")
 
         public static string DataDirectory()
         {
@@ -43,7 +46,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             return false;
         }
 
-        public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
+        public static readonly string PluginsDirectory;
 
         public static readonly string PluginSettingsDirectory =
             Path.Combine(DataDirectory(), "Settings", Constant.Plugins);
@@ -51,6 +54,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public const string PythonEnvironmentName = "Python";
         public const string NodeEnvironmentName = "Node.js";
         public const string PluginEnvironments = "Environments";
-        public static readonly string PluginEnvironmentsPath = Path.Combine(DataDirectory(), PluginEnvironments);
+        public static readonly string PluginEnvironmentsPath;
     }
 }
