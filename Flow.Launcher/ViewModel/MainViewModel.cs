@@ -706,7 +706,11 @@ namespace Flow.Launcher.ViewModel
         public double MainWindowWidth
         {
             get => Settings.WindowSize;
-            set => Settings.WindowSize = value;
+            set
+            {
+                if (!MainWindowVisibilityStatus) return;
+                Settings.WindowSize = value;
+            }
         }
 
         public double MainWindowHeight
