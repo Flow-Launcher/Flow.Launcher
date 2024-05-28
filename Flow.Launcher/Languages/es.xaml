@@ -83,7 +83,7 @@
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
-    <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse {0} para mostrar/ocultar la vista previa.</system:String>
+    <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
 
     <!--  Setting Plugin  -->
@@ -187,19 +187,19 @@
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Ajustes preestablecidos de atajos de teclado</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">Lista de atajos de teclado actualmente registrados</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Mustra la lista de atajos de teclado actualmente registrados.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
     <system:String x:Key="autoCompleteHotkey">Completar automáticamente</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Ejecuta completar automáticamente para los elementos seleccionados.</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Ejecuta la función 'completar automáticamente' para los elementos seleccionados.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Seleccionar siguiente elemento</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Siguiente página</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Ciclo consulta anterior</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Ciclo siguiente consulta</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Seleccionar siguiente página</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Seleccionar página anterior</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra la consulta anterior</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra la siguiente consulta</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
@@ -209,8 +209,8 @@
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
     <system:String x:Key="RequeryHotkey">Actualizar resultados de búsqueda</system:String>
     <system:String x:Key="ReloadPluginHotkey">Recargar datos de complementos</system:String>
-    <system:String x:Key="QuickWidthHotkey">Ajuste rápido de la anchuira de la ventana</system:String>
-    <system:String x:Key="QuickHeightHotkey">Ajuste rápido de la altura de la ventana</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajustar rápidamente anchura de la ventana</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajustar rápidamente altura de la ventana</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">Se utiliza cuando se requiere que los complementos recarguen y actualicen sus datos existentes.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Se puede añadir otro atajo de teclado más para esta función.</system:String>
     <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
