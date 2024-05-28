@@ -173,12 +173,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
 
-    public double WindowWidthSize
-    {
-        get => Settings.WindowSize;
-        set => Settings.WindowSize = value;
-    }
-
     public bool UseGlyphIcons
     {
         get => Settings.UseGlyphIcons;
