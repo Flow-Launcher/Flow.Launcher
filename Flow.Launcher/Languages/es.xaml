@@ -148,10 +148,10 @@
     <system:String x:Key="SearchBarHeight">Altura de la barra de búsqueda</system:String>
     <system:String x:Key="ItemHeight">Altura del elemento</system:String>
     <system:String x:Key="queryBoxFont">Fuente del texto del cuadro de consulta</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resultItemFont">Fuente del título del resultado</system:String>
+    <system:String x:Key="resultSubItemFont">Fuente del subtítulo del resultado</system:String>
     <system:String x:Key="resetCustomize">Restablecer</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="CustomizeToolTip">Personaliza</system:String>
     <system:String x:Key="windowMode">Modo Ventana</system:String>
     <system:String x:Key="opacity">Opacidad</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">El tema {0} no existe, activando el tema por defecto</system:String>
@@ -184,7 +184,7 @@
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Cambiar vista previa</system:String>
+    <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Ajustes preestablecidos de atajos de teclado</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Lista de atajos de teclado actualmente registrados</system:String>
