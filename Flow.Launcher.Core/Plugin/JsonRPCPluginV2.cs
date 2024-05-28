@@ -139,11 +139,20 @@ namespace Flow.Launcher.Core.Plugin
             return Task.CompletedTask;
         }
 
-        public virtual ValueTask DisposeAsync()
+        public virtual async ValueTask DisposeAsync()
         {
-            RPC?.Dispose();
-            ErrorStream?.Dispose();
-            return ValueTask.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("close");
+            }
+            catch (RemoteMethodNotFoundException e)
+            {
+            }
+            finally
+            {
+                RPC?.Dispose();
+                ErrorStream?.Dispose();
+            }
         }
     }
 }

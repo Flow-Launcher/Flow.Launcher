@@ -188,32 +188,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool AlwaysPreview { get; set; } = false;
         public bool AlwaysStartEn { get; set; } = false;
 
+        private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
-
-        [JsonIgnore]
-        public string QuerySearchPrecisionString
+        public SearchPrecisionScore QuerySearchPrecision
         {
-            get { return QuerySearchPrecision.ToString(); }
+            get => _querySearchPrecision;
             set
             {
-                try
-                {
-                    var precisionScore = (SearchPrecisionScore)Enum
-                        .Parse(typeof(SearchPrecisionScore), value);
-
-                    QuerySearchPrecision = precisionScore;
-                    StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
-                }
-                catch (ArgumentException e)
-                {
-                    Logger.Log.Exception(nameof(Settings), "Failed to load QuerySearchPrecisionString value from Settings file", e);
-
-                    QuerySearchPrecision = SearchPrecisionScore.Regular;
-                    StringMatcher.Instance.UserSettingSearchPrecision = SearchPrecisionScore.Regular;
-
-                    throw;
-                }
+                _querySearchPrecision = value;
+                if (StringMatcher.Instance != null)
+                    StringMatcher.Instance.UserSettingSearchPrecision = value;
             }
         }
 
