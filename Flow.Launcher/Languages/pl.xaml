@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Gdy ikona jest ukryta w zasobniku, menu Ustawienia można otworzyć, klikając prawym przyciskiem myszy okno wyszukiwania.</system:String>
     <system:String x:Key="querySearchPrecision">Precyzja wyszukiwania zapytań</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Zmienia minimalny wynik dopasowania wymagany do uzyskania wyników.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Szukaj z Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umożliwia wyszukiwanie przy użyciu Pinyin. Pinyin to standardowy system pisowni zromanizowanej służący do tłumaczenia języka chińskiego.</system:String>
     <system:String x:Key="AlwaysPreview">Zawsze Podgląd</system:String>
