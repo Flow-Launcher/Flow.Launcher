@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Quando l'icona è nascosta dal menu delle icone nascoste, il menu Impostazioni può essere aperto facendo clic con il tasto destro del mouse sulla finestra di ricerca.</system:String>
     <system:String x:Key="querySearchPrecision">Precisione di ricerca delle query</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifica il punteggio minimo richiesto per i risultati.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Vuoto</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Dovrebbe usare il Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese.</system:String>
     <system:String x:Key="AlwaysPreview">Mostra Sempre Anteprima</system:String>
