@@ -75,6 +75,9 @@
     <system:String x:Key="hideNotifyIconToolTip">Pokud je ikona v oznamovací oblasti skrytá, nastavení lze otevřít kliknutím pravým tlačítkem myši na okno vyhledávání.</system:String>
     <system:String x:Key="querySearchPrecision">Přesnost vyhledávání</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Změní minimální skóre shody, které je nutné pro zobrazení výsledků.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhledávání pomocí pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhledávání pomocí pchin-jin. Pchin-jin je systém zápisu čínského jazyka pomocí písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
