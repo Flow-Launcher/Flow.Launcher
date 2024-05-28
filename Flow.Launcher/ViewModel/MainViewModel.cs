@@ -572,39 +572,86 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
-
-        public bool PreviewVisible { get; set; } = false;
-
-        public int ResultAreaColumn { get; set; } = 1;
-
+        
         #endregion
 
         #region Preview
 
-        // Not accurate
-        public bool ExternalPreviewOpen { get; set; } = false;
+        public bool InternalPreviewVisible
+        {
+            get
+            {
+                if (ResultAreaColumn == ResultAreaColumnPreviewShown)
+                    return true;
+
+                if (ResultAreaColumn == ResultAreaColumnPreviewHidden)
+                    return false;
+#if DEBUG
+                throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
+#else
+                Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
+#endif
+                return false;
+            }
+        }
+
+        private static readonly int ResultAreaColumnPreviewShown = 1;
+
+        private static readonly int ResultAreaColumnPreviewHidden = 3;
+
+        public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
+
+        // This is not a reliable indicator of whether external preview is visible due to the
+        // ability of manually closing/exiting the external preview program, and this does not inform flow that
+        // preview is no longer available.
+        public bool ExternalPreviewVisible { get; set; } = false;
+
+        private void ShowPreview()
+        {
+            var useExternalPreview = PluginManager.UseExternalPreview();
+
+            if (!useExternalPreview)
+                ShowInternalPreview();
+
+            if (useExternalPreview)
+            {
+                // Internal preview may still be on when user switches to external
+                if (InternalPreviewVisible)
+                    HideInternalPreview();
+
+                if (CanExternalPreviewSelectedResult(out var path))
+                    OpenExternalPreview(path);
+            }
+
+        }
+
+        private void HidePreview()
+        {            
+            if (PluginManager.UseExternalPreview())
+                CloseExternalPreview();
+
+            if (InternalPreviewVisible)
+                HideInternalPreview();
+        }
 
         [RelayCommand]
         private void TogglePreview()
         {
-            if (PreviewVisible)
+            switch (InternalPreviewVisible || ExternalPreviewVisible)
             {
-                // To deal with always preview
-                HideInternalPreview();
-            }
-            else if(Settings.UseExternalPreview && CanExternalPreviewSelectedResult(out var path))
-            {
-                _ = ToggleExternalPreviewAsync(path);
-            }
-            else
-            {
-                ShowInternalPreview();
+                case true:
+                    HidePreview();
+                    break;
+
+                case false:
+                    ShowPreview();
+                    break;
             }
         }
 
         private void ToggleInternalPreview()
         {
-            if (!PreviewVisible)
+            if (!InternalPreviewVisible)
             {
                 ShowInternalPreview();
             }
@@ -614,81 +661,72 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private async Task ToggleExternalPreviewAsync(string path)
+        private void OpenExternalPreview(string path, bool sendFailToast = true)
         {
-            bool success = await QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = !ExternalPreviewOpen;
-            }
+            _ = PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
+            ExternalPreviewVisible = true;
         }
 
-        private async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        private void CloseExternalPreview()
         {
-            bool success = await QuickLookHelper.OpenQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = false;
-            }
+            _ = PluginManager.CloseExternalPreviewAsync().ConfigureAwait(false);
+            ExternalPreviewVisible = false;
         }
 
-        private async Task CloseExternalPreviewAsync()
+        private void SwitchExternalPreview(string path, bool sendFailToast = true)
         {
-            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
-            if (success)
-            {
-                ExternalPreviewOpen = false;
-            }
-        }
-
-        private async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
-        {
-            // Switches preview content
-            // When external is off, do nothing
-            _ = QuickLookHelper.SwitchQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
+            _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
         }
 
         private void ShowInternalPreview()
         {
-            ResultAreaColumn = 1;
-            PreviewVisible = true;
+            ResultAreaColumn = ResultAreaColumnPreviewShown;
             Results.SelectedItem?.LoadPreviewImage();
         }
 
         private void HideInternalPreview()
         {
-            ResultAreaColumn = 3;
-            PreviewVisible = false;
+            ResultAreaColumn = ResultAreaColumnPreviewHidden;
         }
 
         public void ResetPreview()
         {
-            if (Settings.AlwaysPreview == true && !PreviewVisible)
+            switch (Settings.AlwaysPreview)
             {
-                ShowInternalPreview();
-            }
-            else
-            {
-                HideInternalPreview();
+                case true:
+                    ShowPreview();
+                    break;
+
+                case false:
+                    HidePreview();
+                    break;
             }
         }
         
         private void UpdatePreview()
         {
-            if (PreviewVisible)
+            if (InternalPreviewVisible)
             {
                 Results.SelectedItem?.LoadPreviewImage();
+                return;
             }
-            else if (Settings.UseExternalPreview)
+
+            switch (PluginManager.UseExternalPreview())
             {
-                if (CanExternalPreviewSelectedResult(out var path))
-                {
-                    _ = SwitchExternalPreviewAsync(path, false);
-                }
-                else
-                {
-                    _ = CloseExternalPreviewAsync();
-                }
+                case true
+                    when ExternalPreviewVisible && CanExternalPreviewSelectedResult(out var path):
+                    SwitchExternalPreview(path, false);
+                    break;
+
+                case true
+                    when !ExternalPreviewVisible && Settings.AlwaysPreview && CanExternalPreviewSelectedResult(out var path):
+                    ShowPreview();
+                    break;
+
+                case true
+                    when !CanExternalPreviewSelectedResult(out var _):
+                    HidePreview();
+                    break;
             }
         }
 
@@ -1104,8 +1142,8 @@ namespace Flow.Launcher.ViewModel
             // Trick for no delay
             MainWindowOpacity = 0;
 
-            if (Settings.UseExternalPreview)
-                _ = CloseExternalPreviewAsync();
+            if (ExternalPreviewVisible)
+                CloseExternalPreview();
 
             if (!SelectedIsFromQueryResults())
             {

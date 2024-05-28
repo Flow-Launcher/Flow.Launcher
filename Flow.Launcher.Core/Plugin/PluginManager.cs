@@ -88,6 +88,38 @@ namespace Flow.Launcher.Core.Plugin
             }).ToArray());
         }
 
+        public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.OpenPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task CloseExternalPreviewAsync()
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.ClosePreviewAsync(),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.SwitchPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static bool UseExternalPreview()
+        {
+            return GetPluginsForInterface<IAsyncExternalPreview>().Any(x => !x.Metadata.Disabled);
+        }
+
         static PluginManager()
         {
             // validate user directory

@@ -502,7 +502,7 @@ namespace Flow.Launcher
                 if (_settings.UseAnimation)
                     await Task.Delay(100);
 
-                if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewOpen)
+                if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
                     _viewModel.Hide();
                 }
