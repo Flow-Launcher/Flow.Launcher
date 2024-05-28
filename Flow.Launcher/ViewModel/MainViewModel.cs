@@ -19,8 +19,6 @@ using Microsoft.VisualStudio.Threading;
 using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.IO;
-using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
@@ -71,6 +69,21 @@ namespace Flow.Launcher.ViewModel
                 {
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
+                        break;
+                    case nameof(Settings.WindowHeightSize):
+                        OnPropertyChanged(nameof(MainWindowHeight));
+                        break;
+                    case nameof(Settings.QueryBoxFontSize):
+                        OnPropertyChanged(nameof(QueryBoxFontSize));
+                        break;
+                    case nameof(Settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        break;
+                    case nameof(Settings.ResultItemFontSize):
+                        OnPropertyChanged(nameof(ResultItemFontSize));
+                        break;
+                    case nameof(Settings.ResultSubItemFontSize):
+                        OnPropertyChanged(nameof(ResultSubItemFontSize));
                         break;
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
@@ -439,7 +452,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults.SelectPrevResult();
             }
-        
+
         }
 
         [RelayCommand]
@@ -466,7 +479,7 @@ namespace Flow.Launcher.ViewModel
         {
             GameModeStatus = !GameModeStatus;
         }
-        
+
         [RelayCommand]
         public void CopyAlternative()
         {
@@ -523,16 +536,8 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
-            {
-                Settings.WindowSize = 1920;
-            }
-            else
-            {
-                Settings.WindowSize += 100;
-                Settings.WindowLeft -= 50;
-            }
-
+            Settings.WindowSize += 100;
+            Settings.WindowLeft -= 50;
             OnPropertyChanged();
         }
 
@@ -704,6 +709,36 @@ namespace Flow.Launcher.ViewModel
             set => Settings.WindowSize = value;
         }
 
+        public double MainWindowHeight
+        {
+            get => Settings.WindowHeightSize;
+            set => Settings.WindowHeightSize = value;
+        }
+
+        public double QueryBoxFontSize
+        {
+            get => Settings.QueryBoxFontSize;
+            set => Settings.QueryBoxFontSize = value;
+        }
+
+        public double ItemHeightSize
+        {
+            get => Settings.ItemHeightSize;
+            set => Settings.ItemHeightSize = value;
+        }
+
+        public double ResultItemFontSize
+        {
+            get => Settings.ResultItemFontSize;
+            set => Settings.ResultItemFontSize = value;
+        }
+
+        public double ResultSubItemFontSize
+        {
+            get => Settings.ResultSubItemFontSize;
+            set => Settings.ResultSubItemFontSize = value;
+        }
+
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
@@ -722,7 +757,7 @@ namespace Flow.Launcher.ViewModel
 
             return hotkey;
         }
-        
+
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
         public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");

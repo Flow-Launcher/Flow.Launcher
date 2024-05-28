@@ -56,6 +56,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = false;
+
+        /* Appearance Settings. It should be separated from the setting later.*/
+        public double WindowHeightSize { get; set; } = 42;
+        public double ItemHeightSize { get; set; } = 58;
+        public double QueryBoxFontSize { get; set; } = 20;
+        public double ResultItemFontSize { get; set; } = 16;
+        public double ResultSubItemFontSize { get; set; } = 13; 
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -64,6 +71,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
+        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFontStyle { get; set; }
+        public string ResultSubFontWeight { get; set; }
+        public string ResultSubFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
@@ -205,6 +216,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
+        public bool KeepMaxResults { get; set; } = false;
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 

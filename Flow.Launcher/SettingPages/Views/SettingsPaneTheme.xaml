@@ -24,109 +24,351 @@
         </ResourceDictionary>
     </ui:Page.Resources>
     <ScrollViewer
-        Padding="6,0,24,0"
-        CanContentScroll="True"
+        Padding="6 0 24 0"
+        CanContentScroll="False"
         FontSize="14"
         VirtualizingStackPanel.IsVirtualizing="True"
         VirtualizingStackPanel.ScrollUnit="Pixel">
         <StackPanel>
             <!--  Page title  -->
             <TextBlock
-                Margin="5,23,0,5"
+                Margin="5 23 0 5"
                 FontSize="30"
                 Style="{StaticResource PageTitle}"
                 Text="{DynamicResource appearance}"
                 TextAlignment="left"
                 Visibility="Collapsed" />
+            <!--  Theme Preview and Editor  -->
+            <Grid Height="380">
+                <Grid.Resources>
+                    <!--  Style for the second ColumnDefinition  -->
+                    <Style x:Key="SecondColumnStyle" TargetType="ColumnDefinition">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="False">
+                                <Setter Property="Width" Value="0" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="True">
+                                <Setter Property="Width" Value="2*" />
+                                <Setter Property="MinWidth" Value="160" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Resources>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition MaxWidth="250" Style="{StaticResource SecondColumnStyle}" />
+                </Grid.ColumnDefinitions>
+                <!--  Theme Size Editor  -->
+                <Border
+                    Grid.Column="1"
+                    Padding="0 0 0 0"
+                    Background="{DynamicResource Color00B}"
+                    BorderBrush="{DynamicResource Color03B}"
+                    BorderThickness="1"
+                    CornerRadius="0 6 6 0">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="False">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <ScrollViewer
+                        ScrollViewer.CanContentScroll="False"
+                        VirtualizingStackPanel.IsVirtualizing="True"
+                        VirtualizingStackPanel.ScrollUnit="Pixel">
+                        <StackPanel>
+                            <Slider
+                                Name="WindowHeightValue"
+                                Margin="12 8 12 8"
+                                VerticalAlignment="Center"
+                                ui:ControlHelper.Header="{DynamicResource SearchBarHeight}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="60"
+                                Minimum="20"
+                                TickFrequency="2"
+                                Value="{Binding WindowHeightSize, Mode=TwoWay}" />
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Slider
+                                Name="QueryBoxFontSize"
+                                Margin="12 8 12 0"
+                                VerticalAlignment="Center"
+                                ui:ControlHelper.Header="{DynamicResource queryBoxFont}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="{Binding ElementName=WindowHeightValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                Minimum="10"
+                                TickFrequency="1"
+                                Value="{Binding QueryBoxFontSize, Mode=TwoWay}" />
+                            <ComboBox
+                                Name="QueryBoxFontComboBox"
+                                Margin="12 4 12 0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                IsSynchronizedWithCurrentItem="False"
+                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                SelectedItem="{Binding SelectedQueryBoxFont}" />
+                            <ComboBox
+                                Name="QueryBoxFontStyleComboBox"
+                                Margin="12 8 12 8"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
+                                SelectedItem="{Binding SelectedQueryBoxFontFaces}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Value}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Slider
+                                Name="ItemHeightValue"
+                                Margin="12 8 12 0"
+                                VerticalAlignment="Stretch"
+                                ui:ControlHelper.Header="{DynamicResource ItemHeight}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="100"
+                                Minimum="30"
+                                TickFrequency="2"
+                                Value="{Binding ItemHeightSize, Mode=TwoWay}" />
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Slider
+                                Name="ResultItemFontSize"
+                                Margin="12 8 12 0"
+                                VerticalAlignment="Center"
+                                ui:ControlHelper.Header="{DynamicResource resultItemFont}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="80"
+                                Minimum="10"
+                                TickFrequency="1"
+                                Value="{Binding ResultItemFontSize, Mode=TwoWay}" />
+                            <ComboBox
+                                Name="ResultItemFontComboBox"
+                                Margin="12 4 12 0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                IsSynchronizedWithCurrentItem="False"
+                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                SelectedItem="{Binding SelectedResultFont}" />
+                            <ComboBox
+                                Name="ResultItemFontStyleComboBox"
+                                Margin="12 4 12 8"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
+                                SelectedItem="{Binding SelectedResultFontFaces}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Value}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Slider
+                                Name="ResultSubItemFontSize"
+                                Margin="12 8 12 0"
+                                VerticalAlignment="Center"
+                                ui:ControlHelper.Header="{DynamicResource resultSubItemFont}"
+                                AutoToolTipPlacement="TopLeft"
+                                IsMoveToPointEnabled="True"
+                                IsSnapToTickEnabled="True"
+                                Maximum="80"
+                                Minimum="6"
+                                TickFrequency="1"
+                                Value="{Binding ResultSubItemFontSize, Mode=TwoWay}" />
+                            <ComboBox
+                                Name="ResultSubItemFontComboBox"
+                                Margin="12 4 12 0"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                IsSynchronizedWithCurrentItem="False"
+                                ItemsSource="{Binding Source={StaticResource SortedFonts}}"
+                                SelectedItem="{Binding SelectedResultSubFont}" />
+                            <ComboBox
+                                Name="ResultSubItemFontStyleComboBox"
+                                Margin="12 4 12 8"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Top"
+                                ItemsSource="{Binding SelectedResultSubFont.FamilyTypefaces}"
+                                SelectedItem="{Binding SelectedResultSubFontFaces}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding Value}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Separator
+                                Width="Auto"
+                                BorderThickness="1"
+                                Style="{StaticResource SettingSeparatorStyle}" />
+                            <Button
+                                Margin="8"
+                                HorizontalAlignment="Stretch"
+                                Click="Reset_Click"
+                                Content="{DynamicResource resetCustomize}" />
 
-            <!--  Theme preview  -->
-            <StackPanel
-                Height="350"
-                Margin="0"
-                Background="{Binding PreviewBackground}"
-                IsHitTestVisible="False">
-                <StackPanel
-                    Margin="0,30,0,0"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Border
-                        Width="{Binding WindowWidthSize}"
-                        Margin="0"
-                        SnapsToDevicePixels="True"
-                        Style="{DynamicResource WindowBorderStyle}"
-                        UseLayoutRounding="True">
-                        <Border Style="{DynamicResource WindowRadius}">
-                            <Border.Clip>
-                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                </MultiBinding>
-                            </Border.Clip>
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <!--  Query TextBox  -->
-                                <TextBox
-                                    x:Name="QueryTextBox"
-                                    Grid.Row="0"
-                                    IsReadOnly="True"
-                                    Style="{DynamicResource QueryBoxStyle}"
-                                    Text="{DynamicResource hiThere}" />
-                                <!--  Clock panel  -->
-                                <StackPanel
-                                    Grid.Row="0"
-                                    Style="{DynamicResource ClockPanel}"
-                                    Visibility="Visible">
-                                    <!--  Clock TextBox  -->
-                                    <TextBlock
-                                        x:Name="ClockBox"
-                                        Style="{DynamicResource ClockBox}"
-                                        Text="{Binding ClockText}"
-                                        Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                    <!--  Date TextBox  -->
-                                    <TextBlock
-                                        x:Name="DateBox"
-                                        Style="{DynamicResource DateBox}"
-                                        Text="{Binding DateText}"
-                                        Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                </StackPanel>
-                                <Canvas Grid.Row="0" Style="{DynamicResource SearchIconPosition}">
-                                    <Path
-                                        Margin="0"
-                                        Data="{DynamicResource SearchIconImg}"
-                                        Stretch="Fill"
-                                        Style="{DynamicResource SearchIconStyle}" />
-                                </Canvas>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Border>
+                <!--  Theme Preview  -->
+                <Border Grid.Column="0" Background="{Binding PreviewBackground}">
+                    <Border.Style>
+                        <Style TargetType="{x:Type Border}">
+                            <Setter Property="CornerRadius" Value="6 0 0 6" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="False">
+                                    <Setter Property="CornerRadius" Value="6" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <DockPanel LastChildFill="True">
+                        <StackPanel
+                            Width="Auto"
+                            Background="Transparent"
+                            DockPanel.Dock="Right"
+                            Orientation="Horizontal">
+                            <ToggleButton
+                                x:Name="Editor"
+                                Width="36"
+                                Height="36"
+                                Margin="8"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                Style="{DynamicResource CustomToggleButtonStyle}"
+                                ToolTip="{DynamicResource CustomizeToolTip}">
+                                <ui:FontIcon
+                                    FontSize="14"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Glyph="&#xe70f;" />
+                            </ToggleButton>
 
-                                <Rectangle
-                                    Grid.Row="1"
-                                    Width="Auto"
-                                    HorizontalAlignment="Stretch"
-                                    Style="{DynamicResource SeparatorStyle}"
-                                    Visibility="Visible" />
+                        </StackPanel>
+                        <StackPanel VerticalAlignment="Center" DockPanel.Dock="Left">
+                            <Border
+                                Width="400"
+                                Margin="40 30 0 30"
+                                SnapsToDevicePixels="True"
+                                Style="{DynamicResource WindowBorderStyle}"
+                                UseLayoutRounding="True">
+                                <Border Style="{DynamicResource WindowRadius}">
+                                    <Border.Clip>
+                                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                                        </MultiBinding>
+                                    </Border.Clip>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <Border Grid.Row="0">
+                                            <TextBox
+                                                x:Name="QueryTextBox"
+                                                Height="{Binding WindowHeightSize, Mode=TwoWay}"
+                                                FontSize="{Binding QueryBoxFontSize, Mode=TwoWay}"
+                                                IsHitTestVisible="False"
+                                                IsReadOnly="True"
+                                                Style="{DynamicResource QueryBoxStyle}"
+                                                Text="{DynamicResource hiThere}" />
 
-                                <flowlauncher:ResultListBox
-                                    x:Name="ResultListBox"
-                                    Grid.Row="2"
-                                    DataContext="{Binding PreviewResults, Mode=OneTime}"
-                                    Visibility="Visible" />
-                                <Border x:Name="ContextMenu" Visibility="Collapsed" />
-                                <Border x:Name="History" Visibility="Collapsed" />
-                            </Grid>
-                        </Border>
-                    </Border>
-                </StackPanel>
-            </StackPanel>
+                                        </Border>
+                                        <StackPanel
+                                            x:Name="ClockPanel"
+                                            IsHitTestVisible="False"
+                                            Style="{DynamicResource ClockPanel}"
+                                            Visibility="Visible">
+                                            <TextBlock
+                                                x:Name="ClockBox"
+                                                Style="{DynamicResource ClockBox}"
+                                                Text="{Binding ClockText}"
+                                                Visibility="{Binding UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <TextBlock
+                                                x:Name="DateBox"
+                                                Style="{DynamicResource DateBox}"
+                                                Text="{Binding DateText}"
+                                                Visibility="{Binding UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        </StackPanel>
+                                        <Canvas Style="{DynamicResource SearchIconPosition}">
+                                            <Path
+                                                Margin="0"
+                                                Data="{DynamicResource SearchIconImg}"
+                                                Stretch="Fill"
+                                                Style="{DynamicResource SearchIconStyle}" />
+                                        </Canvas>
 
+                                        <Border Grid.Row="1" Margin="0 0 0 0">
+                                            <Rectangle
+                                                Width="Auto"
+                                                HorizontalAlignment="Stretch"
+                                                Style="{DynamicResource SeparatorStyle}"
+                                                Visibility="Visible" />
+                                        </Border>
+
+                                        <ContentControl Grid.Row="2">
+                                            <flowlauncher:ResultListBox
+                                                x:Name="ResultListBox"
+                                                DataContext="{Binding PreviewResults, Mode=OneTime}"
+                                                IsHitTestVisible="False"
+                                                Visibility="Visible" />
+                                        </ContentControl>
+                                        <Border x:Name="ContextMenu" Visibility="Collapsed" />
+                                        <Border x:Name="History" Visibility="Collapsed" />
+                                    </Grid>
+                                </Border>
+                            </Border>
+                        </StackPanel>
+                    </DockPanel>
+                </Border>
+            </Grid>
             <!--  Drop shadow effect  -->
             <cc:Card
                 Title="{DynamicResource queryWindowShadowEffect}"
-                Margin="0,4,0,0"
+                Margin="0 4 0 0"
                 Icon="&#xeb91;"
                 Sub="{DynamicResource shadowEffectCPUUsage}">
                 <ui:ToggleSwitch
@@ -135,35 +377,10 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
-            <!--  Window width size  -->
-            <cc:Card
-                Title="{DynamicResource windowWidthSize}"
-                Icon="&#xe740;"
-                Sub="{DynamicResource windowWidthSizeToolTip}">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        Width="Auto"
-                        Margin="0,0,8,2"
-                        VerticalAlignment="Center"
-                        Foreground="{DynamicResource Color05B}"
-                        Text="{Binding WindowWidthSize}"
-                        TextAlignment="Right" />
-                    <Slider
-                        Width="250"
-                        VerticalAlignment="Center"
-                        IsMoveToPointEnabled="True"
-                        IsSnapToTickEnabled="True"
-                        Maximum="1920"
-                        Minimum="400"
-                        TickFrequency="10"
-                        Value="{Binding WindowWidthSize}" />
-                </StackPanel>
-            </cc:Card>
-
             <!--  Theme  -->
             <Border
                 Height="64"
-                Margin="0,8,0,0"
+                Margin="0 8 0 0"
                 CornerRadius="5 5 0 0"
                 Style="{DynamicResource SettingGroupBox}">
                 <ItemsControl Style="{StaticResource SettingGrid}">
@@ -180,7 +397,7 @@
                 Margin="0"
                 Padding="0"
                 HorizontalAlignment="Stretch"
-                BorderThickness="1,0,1,1"
+                BorderThickness="1 0 1 1"
                 CornerRadius="0 0 5 5"
                 Style="{DynamicResource SettingGroupBox}">
                 <ListBox
@@ -208,13 +425,13 @@
                                             Padding="{TemplateBinding Padding}"
                                             Background="{DynamicResource Color12B}"
                                             BorderBrush="{DynamicResource Color03B}"
-                                            BorderThickness="1,1,1,0"
+                                            BorderThickness="1 1 1 0"
                                             CornerRadius="4"
                                             SnapsToDevicePixels="true">
                                             <Border
                                                 x:Name="Bd2"
                                                 BorderBrush="{DynamicResource Color14B}"
-                                                BorderThickness="0,0,0,2"
+                                                BorderThickness="0 0 0 2"
                                                 CornerRadius="4">
                                                 <ContentPresenter
                                                     HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
@@ -252,7 +469,7 @@
                                 <TextBlock
                                     x:Name="ThemeName"
                                     Margin="0"
-                                    Padding="14,12"
+                                    Padding="14 12"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
                                     Focusable="True"
@@ -277,76 +494,38 @@
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
 
-
-            <!--  Fonts and icons  -->
-            <cc:CardGroup Margin="0,30,0,0">
+            <cc:CardGroup Margin="0 20 0 0">
                 <cc:Card
-                    Title="{DynamicResource useGlyphUI}"
-                    Icon="&#xf6b8;"
-                    Sub="{DynamicResource useGlyphUIEffect}">
-                    <ui:ToggleSwitch
-                        IsOn="{Binding UseGlyphIcons}"
-                        OffContent="{DynamicResource disable}"
-                        OnContent="{DynamicResource enable}" />
+                    Title="{DynamicResource KeepMaxResults}"
+                    Icon="&#xe8fd;"
+                    Sub="{DynamicResource KeepMaxResultsToolTip}">
+                    <ui:ToggleSwitch IsOn="{Binding KeepMaxResults}" />
                 </cc:Card>
-
-                <cc:Card Title="{DynamicResource queryBoxFont}" Icon="&#xe990;">
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox
-                            Width="180"
-                            IsSynchronizedWithCurrentItem="False"
-                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                            SelectedItem="{Binding SelectedQueryBoxFont}" />
-                        <ComboBox
-                            Width="130"
-                            Margin="10,0,0,0"
-                            ItemsSource="{Binding SelectedQueryBoxFont.FamilyTypefaces}"
-                            SelectedItem="{Binding SelectedQueryBoxFontFaces}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Value}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-                </cc:Card>
-
-                <cc:Card Title="{DynamicResource resultItemFont}" Icon="&#xe8fd;">
-                    <StackPanel Orientation="Horizontal">
-                        <ComboBox
-                            Width="180"
-                            IsSynchronizedWithCurrentItem="False"
-                            ItemsSource="{Binding Source={StaticResource SortedFonts}}"
-                            SelectedItem="{Binding SelectedResultFont}" />
-                        <ComboBox
-                            Width="130"
-                            Margin="10,0,0,0"
-                            ItemsSource="{Binding SelectedResultFont.FamilyTypefaces}"
-                            SelectedItem="{Binding SelectedResultFontFaces}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <ItemsControl ItemsSource="{Binding AdjustedFaceNames}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Text="{Binding Value}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
+                <cc:Card
+                    Title="{DynamicResource maxShowResults}"
+                    Sub="{DynamicResource maxShowResultsToolTip}"
+                    Visibility="{Binding KeepMaxResults, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <ComboBox
+                        Width="100"
+                        ItemsSource="{Binding MaxResultsRange}"
+                        SelectedItem="{Binding Settings.MaxResultsToShow}" />
                 </cc:Card>
             </cc:CardGroup>
 
+            <!--  Fonts and icons  -->
+            <cc:Card
+                Title="{DynamicResource useGlyphUI}"
+                Margin="0 6 0 0"
+                Icon="&#xf6b8;"
+                Sub="{DynamicResource useGlyphUIEffect}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseGlyphIcons}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
+
             <!--  Time and date  -->
-            <cc:CardGroup Margin="0,24,0,0">
+            <cc:CardGroup Margin="0 11 0 0">
                 <cc:Card Title="{DynamicResource Clock}" Icon="&#xec92;">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -356,7 +535,7 @@
                             Text="{Binding ClockText}" />
                         <ComboBox
                             MinWidth="180"
-                            Margin="10,0,18,0"
+                            Margin="10 0 18 0"
                             VerticalAlignment="Center"
                             FontSize="14"
                             ItemsSource="{Binding TimeFormatList}"
@@ -377,7 +556,7 @@
                             Text="{Binding DateText}" />
                         <ComboBox
                             MinWidth="180"
-                            Margin="10,0,18,0"
+                            Margin="10 0 18 0"
                             VerticalAlignment="Center"
                             FontSize="14"
                             ItemsSource="{Binding DateFormatList}"
@@ -391,7 +570,7 @@
             </cc:CardGroup>
 
             <!--  Animation  -->
-            <cc:CardGroup Margin="0,11,0,0">
+            <cc:CardGroup Margin="0 11 0 0">
                 <cc:Card
                     Title="{DynamicResource Animation}"
                     Icon="&#xedb5;"
@@ -418,7 +597,7 @@
 
                         <TextBox
                             MinWidth="80"
-                            Margin="18,0,0,0"
+                            Margin="18 0 0 0"
                             Text="{Binding Settings.CustomAnimationLength}"
                             TextWrapping="NoWrap"
                             Visibility="{ext:VisibleWhen {Binding Settings.AnimationSpeed},
@@ -428,7 +607,7 @@
             </cc:CardGroup>
 
             <!--  SFX  -->
-            <cc:CardGroup Margin="0,11,0,0">
+            <cc:CardGroup Margin="0 11 0 0">
                 <cc:Card
                     Title="{DynamicResource SoundEffect}"
                     Icon="&#xe7f5;"
@@ -446,7 +625,7 @@
                     Visibility="{Binding UseSound, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
-                            Margin="0,0,8,0"
+                            Margin="0 0 8 0"
                             VerticalAlignment="Center"
                             Text="{Binding SoundEffectVolume}" />
                         <Slider
@@ -463,12 +642,12 @@
             </cc:CardGroup>
             <Border
                 Name="WMPWarning"
-                Padding="0,10"
+                Padding="0 10"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Background="{DynamicResource InfoBarWarningBG}"
                 BorderBrush="{DynamicResource Color03B}"
-                BorderThickness="0,1,0,0"
+                BorderThickness="0 1 0 0"
                 CornerRadius="5 5 5 5"
                 Visibility="{Binding ShowWMPWarning, Converter={StaticResource BoolToVisibilityConverter}}">
                 <Grid VerticalAlignment="Center">
@@ -478,15 +657,15 @@
                     </Grid.ColumnDefinitions>
                     <ui:FontIcon
                         Grid.Column="0"
-                        Margin="20,0,14,0"
+                        Margin="20 0 14 0"
                         VerticalAlignment="Center"
                         FontSize="15"
                         Foreground="{DynamicResource InfoBarWarningIcon}"
                         Glyph="&#xf167;" />
                     <TextBlock
                         Grid.Column="1"
-                        Margin="0,0,0,2"
-                        Padding="0,0,8,0"
+                        Margin="0 0 0 2"
+                        Padding="0 0 8 0"
                         HorizontalAlignment="Left"
                         FontSize="13"
                         FontWeight="SemiBold"
@@ -499,7 +678,7 @@
             <!--  Settings color scheme  -->
             <cc:Card
                 Title="{DynamicResource ColorScheme}"
-                Margin="0,11,0,0"
+                Margin="0 11 0 0"
                 Icon="&#xe793;">
                 <ComboBox
                     MinWidth="180"
@@ -521,7 +700,7 @@
 
             <!--  How to create theme link  -->
             <cc:HyperLink
-                Margin="10,10,10,28"
+                Margin="10 10 10 28"
                 HorizontalAlignment="Right"
                 Text="{DynamicResource howToCreateTheme}"
                 Uri="{Binding LinkHowToCreateTheme}" />

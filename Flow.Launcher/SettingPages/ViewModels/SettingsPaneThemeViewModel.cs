@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
@@ -62,6 +63,34 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         }
     }
 
+    public double WindowHeightSize
+    {
+        get => Settings.WindowHeightSize;
+        set => Settings.WindowHeightSize = value;
+    }
+
+    public double ItemHeightSize
+    {
+        get => Settings.ItemHeightSize;
+        set => Settings.ItemHeightSize = value;
+    }
+
+    public double QueryBoxFontSize
+    {
+        get => Settings.QueryBoxFontSize;
+        set => Settings.QueryBoxFontSize = value;
+    }
+    public double ResultItemFontSize
+    {
+        get => Settings.ResultItemFontSize;
+        set => Settings.ResultItemFontSize = value;
+    }
+
+    public double ResultSubItemFontSize
+    {
+        get => Settings.ResultSubItemFontSize;
+        set => Settings.ResultSubItemFontSize = value;
+    }
     public List<string> Themes =>
         ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
 
@@ -134,6 +163,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.DateFormat = value;
     }
 
+    public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+    public bool KeepMaxResults
+    {
+        get => Settings.KeepMaxResults;
+        set => Settings.KeepMaxResults = value;
+    }
     public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
@@ -373,6 +408,50 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         }
     }
 
+    public FontFamily SelectedResultSubFont
+    {
+        get
+        {
+            if (Fonts.SystemFontFamilies.Count(o =>
+                    o.FamilyNames.Values != null &&
+                    o.FamilyNames.Values.Contains(Settings.ResultSubFont)) > 0)
+            {
+                var font = new FontFamily(Settings.ResultSubFont);
+                return font;
+            }
+            else
+            {
+                var font = new FontFamily("Segoe UI");
+                return font;
+            }
+        }
+        set
+        {
+            Settings.ResultSubFont = value.ToString();
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public FamilyTypeface SelectedResultSubFontFaces
+    {
+        get
+        {
+            var typeface = SyntaxSugars.CallOrRescueDefault(
+                () => SelectedResultSubFont.ConvertFromInvariantStringsOrNormal(
+                    Settings.ResultSubFontStyle,
+                    Settings.ResultSubFontWeight,
+                    Settings.ResultSubFontStretch
+                ));
+            return typeface;
+        }
+        set
+        {
+            Settings.ResultSubFontStretch = value.Stretch.ToString();
+            Settings.ResultSubFontWeight = value.Weight.ToString();
+            Settings.ResultSubFontStyle = value.Style.ToString();
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
     [RelayCommand]
@@ -396,4 +475,5 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         Settings = settings;
     }
+
 }

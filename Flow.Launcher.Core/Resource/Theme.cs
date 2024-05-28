@@ -176,8 +176,6 @@ namespace Flow.Launcher.Core.Resource
             }
 
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
-                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
-                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle &&
                 dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
                 dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
@@ -189,9 +187,25 @@ namespace Flow.Launcher.Core.Resource
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
-                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    new[] { resultItemStyle, resultItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
+
+            if (
+                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
+                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
+            {
+                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultSubFont));
+                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultSubFontStyle));
+                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.ResultSubFontWeight));
+                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultSubFontStretch));
+
+                Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
+                Array.ForEach(
+                    new[] {  resultSubItemStyle,resultSubItemSelectedStyle}, o
+                    => Array.ForEach(setters, p => o.Setters.Add(p)));
+            }
+
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = Settings.WindowSize;

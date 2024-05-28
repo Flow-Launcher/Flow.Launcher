@@ -45,7 +45,7 @@
     </Style>
     <Style x:Key="Glyph" TargetType="{x:Type TextBlock}">
         <Setter Property="Grid.Column" Value="0" />
-        <Setter Property="Margin" Value="24,0,16,0" />
+        <Setter Property="Margin" Value="24 0 16 0" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontSize" Value="20" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
@@ -57,7 +57,7 @@
         <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
     </Style>
     <Style x:Key="TabMenuIcon" TargetType="{x:Type TextBlock}">
-        <Setter Property="Margin" Value="0,0,12,0" />
+        <Setter Property="Margin" Value="0 0 12 0" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
@@ -149,7 +149,169 @@
         </Setter>
     </Style>
 
-    <!--  Repeat Button  -->
+    <!--  Toggle Button  -->
+    <Style x:Key="CustomToggleButtonStyle" TargetType="ToggleButton">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="{DynamicResource ButtonBackgroundColor}" />
+        <Setter Property="Foreground" Value="{DynamicResource ToggleButtonForeground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource ToggleButtonBorderThemeThickness}" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="ui:ControlHelper.CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
+        <Setter Property="ui:FocusVisualHelper.UseSystemFocusVisuals" Value="{DynamicResource UseSystemFocusVisuals}" />
+        <Setter Property="ui:FocusVisualHelper.FocusVisualMargin" Value="-3" />
+        <Setter Property="Stylus.IsPressAndHoldEnabled" Value="False" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border
+                        x:Name="Background"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}"
+                        SnapsToDevicePixels="True">
+                        <Border
+                            x:Name="Border"
+                            Padding="{TemplateBinding Padding}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding ui:ControlHelper.CornerRadius}">
+                            <ContentPresenter
+                                x:Name="ContentPresenter"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Focusable="False"
+                                RecognizesAccessKey="True"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--  PointerOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ButtonMouseOver}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushPointerOver}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundPointerOver}" />
+                        </MultiTrigger>
+                        <!--  Pressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ButtonMousePressed}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushPressed}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundPressed}" />
+                        </MultiTrigger>
+                        <!--  Disabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundDisabled}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundDisabled}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushDisabled}" />
+                        </MultiTrigger>
+                        <!--  Checked  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundChecked}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundChecked}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushChecked}" />
+                        </MultiTrigger>
+                        <!--  CheckedPointerOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundCheckedPointerOver}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushCheckedPointerOver}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundCheckedPointerOver}" />
+                        </MultiTrigger>
+                        <!--  CheckedPressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundCheckedPointerOver}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundCheckedPressed}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushCheckedPressed}" />
+                        </MultiTrigger>
+                        <!--  CheckedDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="True" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundCheckedDisabled}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundCheckedDisabled}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushCheckedDisabled}" />
+                        </MultiTrigger>
+                        <!--  Indeterminate  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsEnabled" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundIndeterminate}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundIndeterminate}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushIndeterminate}" />
+                        </MultiTrigger>
+                        <!--  IndeterminatePointerOver  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundIndeterminatePointerOver}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushIndeterminatePointerOver}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundIndeterminatePointerOver}" />
+                        </MultiTrigger>
+                        <!--  IndeterminatePressed  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundIndeterminatePressed}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushIndeterminatePressed}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundIndeterminatePressed}" />
+                        </MultiTrigger>
+                        <!--  IndeterminateDisabled  -->
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="{x:Null}" />
+                                <Condition Property="IsEnabled" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Background" Property="Background" Value="{DynamicResource ToggleButtonBackgroundIndeterminateDisabled}" />
+                            <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource ToggleButtonForegroundIndeterminateDisabled}" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{DynamicResource ToggleButtonBorderBrushIndeterminateDisabled}" />
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!--  Radio Button  -->
     <Style x:Key="DefaultRadioButtonStyle" TargetType="RadioButton">
@@ -157,7 +319,7 @@
         <Setter Property="Background" Value="{DynamicResource RadioButtonBackground}" />
         <Setter Property="Foreground" Value="{DynamicResource RadioButtonForeground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource RadioButtonBorderBrush}" />
-        <Setter Property="Padding" Value="8,6,0,0" />
+        <Setter Property="Padding" Value="8 6 0 0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -301,7 +463,7 @@
         <Setter Property="Background" Value="{DynamicResource CheckBoxBackgroundUnchecked}" />
         <Setter Property="Foreground" Value="{DynamicResource CheckBoxForegroundUnchecked}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CheckBoxBorderBrushUnchecked}" />
-        <Setter Property="Padding" Value="8,0,0,0" />
+        <Setter Property="Padding" Value="8 0 0 0" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
@@ -557,7 +719,7 @@
         TargetType="CheckBox">
         <Setter Property="MinWidth" Value="0" />
         <Setter Property="MinHeight" Value="0" />
-        <Setter Property="Margin" Value="12,0" />
+        <Setter Property="Margin" Value="12 0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
     </Style>
 
@@ -867,7 +1029,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Margin="{TemplateBinding Padding}"
-                            Padding="0,0,32,0"
+                            Padding="0 0 32 0"
                             HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                             VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                             Foreground="{TemplateBinding ui:ControlHelper.PlaceholderForeground}"
@@ -887,7 +1049,7 @@
                             Grid.Row="1"
                             Grid.Column="0"
                             Grid.ColumnSpan="2"
-                            Margin="0,0,0,0"
+                            Margin="0 0 0 0"
                             Padding="{DynamicResource ComboBoxEditableTextPadding}"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Stretch"
@@ -906,7 +1068,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             Width="30"
-                            Margin="0,1,1,1"
+                            Margin="0 1 1 1"
                             HorizontalAlignment="Right"
                             Background="Transparent"
                             IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -917,7 +1079,7 @@
                             Grid.Row="1"
                             Grid.Column="1"
                             MinHeight="{DynamicResource ComboBoxMinHeight}"
-                            Margin="0,0,10,0"
+                            Margin="0 0 10 0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
                             Data="{StaticResource ChevronDown}"
@@ -944,7 +1106,7 @@
                             <Popup.PlacementRectangle>
                                 <MultiBinding>
                                     <MultiBinding.Converter>
-                                        <ui:PlacementRectangleConverter Margin="-1,1,0,1" />
+                                        <ui:PlacementRectangleConverter Margin="-1 1 0 1" />
                                     </MultiBinding.Converter>
                                     <Binding ElementName="Background" Path="ActualWidth" />
                                     <Binding ElementName="Background" Path="ActualHeight" />
@@ -1063,7 +1225,7 @@
                                 <Condition SourceName="DropDownOverlay" Property="IsPressed" Value="False" />
                             </MultiTrigger.Conditions>
                             <Setter TargetName="DropDownGlyph" Property="Foreground" Value="{DynamicResource ComboBoxEditableDropDownGlyphForeground}" />
-                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0,2,2,2" />
+                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0 2 2 2" />
                         </MultiTrigger>
                         <!--  TextBoxFocusedOverlayPointerOver  -->
                         <MultiTrigger>
@@ -1073,7 +1235,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="DropDownGlyph" Property="Foreground" Value="{DynamicResource ComboBoxEditableDropDownGlyphForeground}" />
                             <Setter TargetName="DropDownOverlay" Property="Background" Value="{DynamicResource ComboBoxFocusedDropDownBackgroundPointerOver}" />
-                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0,2,2,2" />
+                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0 2 2 2" />
                         </MultiTrigger>
                         <!--  TextBoxFocusedOverlayPressed  -->
                         <MultiTrigger>
@@ -1083,7 +1245,7 @@
                             </MultiTrigger.Conditions>
                             <Setter TargetName="DropDownGlyph" Property="Foreground" Value="{DynamicResource ComboBoxEditableDropDownGlyphForeground}" />
                             <Setter TargetName="DropDownOverlay" Property="Background" Value="{DynamicResource ComboBoxFocusedDropDownBackgroundPointerPressed}" />
-                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0,2,2,2" />
+                            <Setter TargetName="DropDownOverlay" Property="Margin" Value="0 2 2 2" />
                         </MultiTrigger>
                         <!--  TextBoxOverlayPointerOver  -->
                         <MultiTrigger>
@@ -1121,7 +1283,7 @@
         x:Key="DataGridComboBoxStyle"
         BasedOn="{StaticResource DefaultComboBoxStyle}"
         TargetType="ComboBox">
-        <Setter Property="Padding" Value="12,0,0,0" />
+        <Setter Property="Padding" Value="12 0 0 0" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -1133,7 +1295,7 @@
         x:Key="DataGridTextBlockComboBoxStyle"
         BasedOn="{StaticResource DefaultComboBoxStyle}"
         TargetType="ComboBox">
-        <Setter Property="Padding" Value="12,0,0,0" />
+        <Setter Property="Padding" Value="12 0 0 0" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="Template">
             <Setter.Value>
@@ -1362,7 +1524,7 @@
                             <Setter TargetName="PlaceholderTextContentPresenter" Property="Foreground" Value="{DynamicResource TextControlPlaceholderForegroundFocused}" />
                             <Setter Property="Background" Value="{DynamicResource TextControlBackgroundFocused}" />
                             <Setter TargetName="BorderElement" Property="BorderBrush" Value="{DynamicResource TextControlBorderBrushFocused}" />
-                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="0,0,0,2" />
+                            <Setter TargetName="BorderElement" Property="BorderThickness" Value="0 0 0 2" />
                             <Setter Property="Foreground" Value="{DynamicResource TextControlForegroundFocused}" />
                         </Trigger>
                         <MultiTrigger>
@@ -1394,7 +1556,7 @@
         BasedOn="{StaticResource DefaultTextBoxStyle}"
         TargetType="TextBox">
         <Setter Property="MinWidth" Value="0" />
-        <Setter Property="Padding" Value="11,0,6,0" />
+        <Setter Property="Padding" Value="11 0 6 0" />
         <Setter Property="VerticalAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="ui:ControlHelper.CornerRadius" Value="0" />
@@ -1549,7 +1711,7 @@
                                     x:Name="SwitchAreaGrid"
                                     Grid.RowSpan="3"
                                     Grid.ColumnSpan="3"
-                                    Margin="0,5"
+                                    Margin="0 5"
                                     HorizontalAlignment="Right"
                                     ui:FocusVisualHelper.IsTemplateFocusTarget="True"
                                     Background="{DynamicResource ToggleSwitchContainerBackground}" />
@@ -1902,7 +2064,7 @@
                             </Grid>
                             <ContentPresenter
                                 Grid.Row="1"
-                                Margin="0,4,0,0"
+                                Margin="0 4 0 0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 RecognizesAccessKey="True"
@@ -1965,7 +2127,7 @@
                             </Grid>
                             <ContentPresenter
                                 Grid.Column="1"
-                                Margin="4,0,0,0"
+                                Margin="4 0 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 RecognizesAccessKey="True"
@@ -2028,7 +2190,7 @@
                             </Grid>
                             <ContentPresenter
                                 Grid.Row="1"
-                                Margin="0,4,0,0"
+                                Margin="0 4 0 0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Top"
                                 RecognizesAccessKey="True"
@@ -2081,7 +2243,7 @@
                             </Grid.ColumnDefinitions>
                             <ContentPresenter
                                 Grid.Column="0"
-                                Margin="0,0,0,0"
+                                Margin="0 0 0 0"
                                 HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                 Content="{TemplateBinding Content}"
@@ -2154,7 +2316,7 @@
                                 x:Name="HeaderSite"
                                 MinWidth="0"
                                 MinHeight="0"
-                                Margin="18,0,18,0"
+                                Margin="18 0 18 0"
                                 Padding="{TemplateBinding Padding}"
                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -2188,7 +2350,7 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="true">
                             <Setter TargetName="ExpandSite" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0,1,0,0" />
+                            <Setter TargetName="ContentPresenterBorder" Property="BorderThickness" Value="0 1 0 0" />
                             <Trigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard>
@@ -2673,7 +2835,7 @@
                             x:Name="UpSpinButton"
                             Grid.Row="1"
                             Grid.Column="1"
-                            Margin="4,0,0,0"
+                            Margin="4 0 0 0"
                             ui:ControlHelper.CornerRadius="4"
                             Content="{StaticResource ChevronUp}"
                             FontSize="{TemplateBinding FontSize}"
@@ -2807,7 +2969,7 @@
                 BorderThickness="{TemplateBinding BorderThickness}" />
 
             <ContentPresenter
-                Margin="12,0,12,0"
+                Margin="12 0 12 0"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 ContentSource="Header"
                 RecognizesAccessKey="True"
@@ -2837,7 +2999,7 @@
                 BorderThickness="{TemplateBinding BorderThickness}" />
 
             <ContentPresenter
-                Margin="12,0,12,0"
+                Margin="12 0 12 0"
                 VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                 ContentSource="Header"
                 RecognizesAccessKey="True"
@@ -2910,7 +3072,7 @@
         <Border
             x:Name="LayoutRoot"
             Height="Auto"
-            Margin="5,2,5,2"
+            Margin="5 2 5 2"
             Padding="{TemplateBinding Padding}"
             Background="{TemplateBinding Background}"
             BorderBrush="{TemplateBinding BorderBrush}"
@@ -2928,7 +3090,7 @@
                 </Grid.ColumnDefinitions>
                 <ui:FontIconFallback
                     x:Name="CheckGlyph"
-                    Margin="0,0,16,0"
+                    Margin="0 0 16 0"
                     Data="{StaticResource CheckMark}"
                     FontFamily="{DynamicResource SymbolThemeFontFamily}"
                     FontSize="12"
@@ -2940,7 +3102,7 @@
                     Grid.Column="1"
                     Width="16"
                     Height="16"
-                    Margin="0,1,12,0"
+                    Margin="0 1 12 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Stretch"
                     TextBlock.FontFamily="/Resources/#Segoe Fluent Icons">
@@ -2961,7 +3123,7 @@
                 <TextBlock
                     x:Name="KeyboardAcceleratorTextBlock"
                     Grid.Column="3"
-                    Margin="24,4,0,0"
+                    Margin="24 4 0 0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                     Foreground="{DynamicResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"
@@ -3034,7 +3196,7 @@
                     Grid.Column="1"
                     Width="16"
                     Height="16"
-                    Margin="0,0,12,0"
+                    Margin="0 0 12 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center">
                     <ContentPresenter
@@ -3074,7 +3236,7 @@
                     <Popup.PlacementRectangle>
                         <MultiBinding>
                             <MultiBinding.Converter>
-                                <ui:PlacementRectangleConverter Margin="4,-1" />
+                                <ui:PlacementRectangleConverter Margin="4 -1" />
                             </MultiBinding.Converter>
                             <Binding ElementName="LayoutRoot" Path="ActualWidth" />
                             <Binding ElementName="LayoutRoot" Path="ActualHeight" />
@@ -3219,7 +3381,7 @@
                         SnapsToDevicePixels="True">
                         <Border
                             x:Name="Border"
-                            Padding="0,4,0,4"
+                            Padding="0 4 0 4"
                             Background="{DynamicResource CustomContextBackground}"
                             BorderBrush="{DynamicResource CustomContextBorder}"
                             BorderThickness="1"
@@ -3405,7 +3567,7 @@
                                                 <Button
                                                     x:Name="PrimaryButton"
                                                     Grid.Column="0"
-                                                    Margin="0,0,2,0"
+                                                    Margin="0 0 2 0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     Content="{TemplateBinding PrimaryButtonText}"
@@ -3415,7 +3577,7 @@
                                                     x:Name="SecondaryButton"
                                                     Grid.Column="1"
                                                     Grid.ColumnSpan="2"
-                                                    Margin="2,0,2,0"
+                                                    Margin="2 0 2 0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     Content="{TemplateBinding SecondaryButtonText}"
@@ -3424,7 +3586,7 @@
                                                 <Button
                                                     x:Name="CloseButton"
                                                     Grid.Column="3"
-                                                    Margin="2,0,0,0"
+                                                    Margin="2 0 0 0"
                                                     HorizontalAlignment="Stretch"
                                                     VerticalAlignment="Stretch"
                                                     Content="{TemplateBinding CloseButtonText}"
@@ -3886,7 +4048,7 @@
                         <Grid x:Name="PresenterContentRootGrid">
                             <!--  Wrap SelectionIndicator in a grid so that its offset is 0,0 - this enables the offset animation.  -->
                             <Grid
-                                Margin="0,0,0,0"
+                                Margin="0 0 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
 
@@ -4099,7 +4261,7 @@
                                 Grid.Column="1"
                                 Width="48"
                                 Height="16"
-                                Margin="0,0,0,0"
+                                Margin="0 0 0 0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                                 <ContentPresenter
@@ -4207,7 +4369,7 @@
                                 x:Name="IconBox"
                                 Width="16"
                                 Height="16"
-                                Margin="16,0,0,0"
+                                Margin="16 0 0 0"
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center">
                                 <ContentPresenter
@@ -4250,7 +4412,7 @@
                         </Grid>
                         <Grid
                             x:Name="SelectionIndicatorGrid"
-                            Margin="16,0,16,4"
+                            Margin="16 0 16 4"
                             VerticalAlignment="Bottom">
                             <Rectangle
                                 x:Name="SelectionIndicator"
@@ -4346,13 +4508,13 @@
                             <Setter TargetName="PointerRectangle" Property="Visibility" Value="Visible" />
                             <Setter TargetName="LayoutRoot" Property="MinWidth" Value="48" />
                             <Setter TargetName="ContentPresenter" Property="Visibility" Value="Collapsed" />
-                            <Setter TargetName="SelectionIndicatorGrid" Property="Margin" Value="4,0,4,4" />
+                            <Setter TargetName="SelectionIndicatorGrid" Property="Margin" Value="4 0 4 4" />
                             <Setter TargetName="ExpandCollapseChevron" Property="Margin" Value="{DynamicResource TopNavigationViewItemIconOnlyExpandChevronMargin}" />
                         </Trigger>
                         <Trigger SourceName="NavigationViewIconPositionStatesListener" Property="CurrentStateName" Value="ContentOnly">
                             <Setter TargetName="IconBox" Property="Visibility" Value="Collapsed" />
                             <Setter TargetName="ContentPresenter" Property="Margin" Value="{DynamicResource TopNavigationViewItemContentOnlyContentPresenterMargin}" />
-                            <Setter TargetName="SelectionIndicatorGrid" Property="Margin" Value="12,0,12,4" />
+                            <Setter TargetName="SelectionIndicatorGrid" Property="Margin" Value="12 0 12 4" />
                             <Setter TargetName="ExpandCollapseChevron" Property="Margin" Value="{DynamicResource TopNavigationViewItemContentOnlyExpandChevronMargin}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
@@ -4391,7 +4553,7 @@
                         <Grid x:Name="PresenterContentRootGrid">
                             <!--  Wrap SelectionIndicator in a grid so that its offset is 0,0 - this enables the offset animation.  -->
                             <Grid
-                                Margin="4,0,0,0"
+                                Margin="4 0 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center">
 
@@ -4414,7 +4576,7 @@
                                     x:Name="IconBox"
                                     Width="16"
                                     Height="16"
-                                    Margin="16,0,0,0"
+                                    Margin="16 0 0 0"
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center">
                                     <ContentPresenter
@@ -4558,7 +4720,7 @@
                         <!--  Button grid  -->
                         <Grid
                             x:Name="PaneToggleButtonGrid"
-                            Margin="0,0,0,8"
+                            Margin="0 0 0 8"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             Canvas.ZIndex="100"
@@ -4768,7 +4930,7 @@
                                 <ui:SplitView.Pane>
                                     <Grid
                                         x:Name="PaneContentGrid"
-                                        Margin="12,0,12,0"
+                                        Margin="12 0 12 0"
                                         HorizontalAlignment="Left"
                                         Visibility="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.LeftPaneVisibility}">
                                         <Grid.RowDefinitions>
@@ -4841,7 +5003,7 @@
                                         <Grid
                                             x:Name="ItemsContainerGrid"
                                             Grid.Row="6"
-                                            Margin="0,0,0,8">
+                                            Margin="0 0 0 8">
                                             <Grid.RowDefinitions>
                                                 <RowDefinition
                                                     x:Name="MenuItemsRow"
@@ -5235,7 +5397,7 @@
                             HorizontalAlignment="Left">
                             <TextBlock
                                 x:Name="HeaderText"
-                                Margin="0,-1,0,-1"
+                                Margin="0 -1 0 -1"
                                 VerticalAlignment="Center"
                                 Style="{DynamicResource NavigationViewItemHeaderTextStyle}"
                                 Text="{TemplateBinding Content}"
