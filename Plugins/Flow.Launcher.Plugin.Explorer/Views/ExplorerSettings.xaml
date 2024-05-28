@@ -350,6 +350,57 @@
             </TabItem>
             <TabItem
                 Width="Auto"
+                Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
+                Style="{DynamicResource ExplorerTabItem}">
+                <StackPanel Margin="30,20,0,10">
+                    <TextBlock Foreground="{DynamicResource Color05B}" Text="{DynamicResource plugin_explorer_previewpanel_file_info_label}" />
+                    <CheckBox
+                        Margin="0,10,0,0"
+                        Content="{DynamicResource plugin_explorer_previewpanel_display_file_size_checkbox}"
+                        IsChecked="{Binding ShowFileSizeInPreviewPanel}" />
+
+                    <CheckBox
+                        Margin="0,10,0,0"
+                        Content="{DynamicResource plugin_explorer_previewpanel_display_file_creation_checkbox}"
+                        IsChecked="{Binding ShowCreatedDateInPreviewPanel}" />
+
+                    <CheckBox
+                        Margin="0,10,0,0"
+                        Content="{DynamicResource plugin_explorer_previewpanel_display_file_modification_checkbox}"
+                        IsChecked="{Binding ShowModifiedDateInPreviewPanel}" />
+
+                    <StackPanel
+                        Margin="0,20,0,0"
+                        IsEnabled="{Binding ShowPreviewPanelDateTimeChoices}"
+                        Visibility="{Binding PreviewPanelDateTimeChoicesVisibility}">
+                        <TextBlock Foreground="{DynamicResource Color05B}" Text="{DynamicResource plugin_explorer_previewpanel_date_and_time_format_label}" />
+                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                            <ComboBox
+                                Width="200"
+                                ItemsSource="{Binding DateFormatList}"
+                                SelectedItem="{Binding PreviewPanelDateFormat}" />
+                            <TextBlock
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Color05B}"
+                                Text="{Binding PreviewPanelDateFormatDemo}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                            <ComboBox
+                                Width="200"
+                                ItemsSource="{Binding TimeFormatList}"
+                                SelectedItem="{Binding PreviewPanelTimeFormat}" />
+                            <TextBlock
+                                Margin="12,0,0,0"
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource Color05B}"
+                                Text="{Binding PreviewPanelTimeFormatDemo}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </TabItem>
+            <TabItem
+                Width="Auto"
                 Header="{DynamicResource plugin_explorer_everything_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
@@ -403,7 +454,7 @@
                             <TextBox
                                 Grid.Row="2"
                                 Grid.Column="1"
-                                Width="250"
+                                MinWidth="350"
                                 Margin="0,15,0,0"
                                 Text="{Binding EverythingInstalledPath}" />
                         </Grid>

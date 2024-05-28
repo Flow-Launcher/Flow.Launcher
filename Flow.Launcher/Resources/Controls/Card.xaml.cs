@@ -16,6 +16,7 @@ namespace Flow.Launcher.Resources.Controls
         {
             InitializeComponent();
         }
+
         public string Title
         {
             get { return (string)GetValue(TitleProperty); }

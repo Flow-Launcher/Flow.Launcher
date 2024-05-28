@@ -62,6 +62,7 @@ namespace Flow.Launcher
 
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
+                _settings.WMPInstalled =  WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 

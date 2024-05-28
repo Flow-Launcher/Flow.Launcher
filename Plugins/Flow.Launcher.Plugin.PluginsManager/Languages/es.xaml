@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} por {1} {2}{3}¿Desea actualizar este complemento? Después de la actualización Flow se reiniciará automáticamente.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} por {1} {2}{2}¿Desea actualizar este complemento?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Actualizar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Este complemento tiene una actualización, ¿desea verla?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este complemento ya está instalado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">La descarga del manifiesto del complemento ha fallado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Por favor, compruebe que puede establecer conexión con github.com. Este error significa que es posible que no pueda instalar o actualizar complementos.</system:String>

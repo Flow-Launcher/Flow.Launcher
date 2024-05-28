@@ -6,9 +6,9 @@
     <system:String x:Key="plugin_pluginsmanager_download_success">Download completato</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Errore: non è possibile scaricare il plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} da {1} {2}{3}Vuoi disinstallare questo plugin? Dopo la disinstallazione, Flow si riavvierà automaticamente.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} di {1} {2}{2}Vuoi disinstallare questo plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} da {1} {2}{3}Vuoi installare questo plugin? Dopo l'installazione, Flow si riavvierà automaticamente.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} di {1} {2}{2}Vuoi installare questo plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_title">Installazione del plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installazione del Plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Scarica e installa {0}</system:String>
@@ -18,30 +18,29 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Errore: esiste già un plugin che ha la stessa o maggiore versione con {0}.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Errore durante l'installazione del plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Errore durante il tentativo di installare {0}</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Errore durante la disinstallazione del plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Nessun aggiornamento disponibile</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Tutti i plugin sono aggiornati</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} da {1} {2}{3}Vuoi aggiornare questo plugin? Dopo l'aggiornamento, Flow si riavvierà automaticamente.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} di {1} {2}{2}Vuoi aggiornare questo plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aggiornamento del plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Questo plugin ha un aggiornamento, vuoi vederlo?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Questo plugin è già stato installato</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Download del manifesto del plugin fallito</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Controlla se puoi connetterti a github.com. Questo errore significa che potresti non essere in grado di installare o aggiornare i plugin.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_title">Update all plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Would you like to update all plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Would you like to update {0} plugins?{1}Flow Launcher will restart after updating all plugins.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_title">Aggiorna tutti i plugin</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Vuoi aggiornare tutti i plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Vuoi aggiornare {0} plugin?{1}Flow Launcher verrà riavviato dopo aver aggiornato tutti i plugin.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Vuoi aggiornare {0} plugin?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugin aggiornati con successo. Riavviando Flow, attendere...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Il plugin {0} aggiornato con successo. Riavviando Flow, attendere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installazione da una fonte sconosciuta</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Stai installando questo plugin da una fonte sconosciuta e potrebbe contenere potenziali rischi!{0}{0}Si prega di assicurarsi di capire la provenienza di questo plugin e se sia sicuro.{0}{0}Vuoi comunque continuare?{0}{0}(Puoi disattivare questo avviso dalle impostazioni)</system:String>
     
-    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Plugin {0} successfully updated. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugins successfully updated. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plugin {0} has already been modified. Please restart Flow before making any further changes.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Il plugin {0} installato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Il plugin {0} disinstallato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Il plugin {0} aggiornato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} plugin aggiornato con successo. Riavviare Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Il plugin {0} è già stato modificato. Riavviare Flow prima di fare altre modifiche.</system:String>
    
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Gestore dei plugin</system:String>
@@ -60,5 +59,5 @@
 
     <!--  Settings menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Avviso di installazione da sorgenti sconosciute</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Riavvia automaticamente Flow Launcher dopo l'installazione/disinstallazione/aggiornamento dei plugin</system:String>
 </ResourceDictionary>
