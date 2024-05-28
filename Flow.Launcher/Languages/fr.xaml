@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Conserver la dernière recherche</system:String>
     <system:String x:Key="LastQuerySelected">Sélectionner la dernière recherche</system:String>
     <system:String x:Key="LastQueryEmpty">Ne pas afficher la dernière recherche</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
     <system:String x:Key="maxShowResults">Résultats maximums à afficher</system:String>
     <system:String x:Key="maxShowResultsToolTip">Vous pouvez également ajuster ce paramètre en utilisant CTRL+Plus ou CTRL+Moins.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore les raccourcis lorsqu'une application est en plein écran</system:String>
@@ -143,8 +145,13 @@
     <system:String x:Key="SampleSubTitleProgram">Lancez des programmes en tant qu'administrateur ou un utilisateur différent</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Tueur de processus</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminer les processus non désirés</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Police (barre de recherche)</system:String>
-    <system:String x:Key="resultItemFont">Police (liste des résultats)</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Réinitialiser</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>
     <system:String x:Key="opacity">Opacité</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Le thème {0} n'existe pas, retour au thème par défaut</system:String>
@@ -170,6 +177,7 @@
     <system:String x:Key="AnimationSpeedCustom">Personnalisé</system:String>
     <system:String x:Key="Clock">Heure</system:String>
     <system:String x:Key="Date">Date</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
