@@ -78,8 +78,8 @@
     <system:String x:Key="querySearchPrecision">Precisão da consulta</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a precisão mínima necessário para obter resultados</system:String>
     <system:String x:Key="SearchPrecisionNone">Nenhuma</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionLow">Baixa</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pesquisar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite a utilização de Pinyin para pesquisar. Pinyin é um sistema normalizado de ortografia romanizada para tradução de mandarim.</system:String>
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
