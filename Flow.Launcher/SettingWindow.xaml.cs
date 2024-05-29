@@ -114,7 +114,6 @@ public partial class SettingWindow
         {
             Top = WindowTop();
             Left = WindowLeft();
-            _settings.SettingWindowFirstLaunch = false;
         }
         else
         {
