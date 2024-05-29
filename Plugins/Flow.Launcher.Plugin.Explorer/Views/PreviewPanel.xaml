@@ -16,32 +16,38 @@
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" VerticalAlignment="Center">
+        <Grid Grid.Row="0" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="96" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Image
-                Margin="0 16 0 0"
-                Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
-                Stretch="Uniform">
+                Grid.Row="0"
+                Margin="0 12 0 0"
+                Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                 <Image.Style>
                     <Style TargetType="Image">
-                        <Setter Property="MaxWidth" Value="96" />
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding UseBigThumbnail}" Value="True">
-                                <Setter Property="Width" Value="{Binding ElementName=PreviewGrid, Path=ActualWidth}" />
-                                <Setter Property="MaxWidth" Value="{Binding ElementName=PreviewGrid, Path=ActualWidth}" />
+                            <DataTrigger Binding="{Binding UseBigThumbnail}" Value="False">
+                                <Setter Property="MaxWidth" Value="96" />
+                                <Setter Property="MaxHeight" Value="96" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Image.Style>
             </Image>
-            <TextBlock
-                Margin="0 6 0 16"
-                HorizontalAlignment="Stretch"
-                Style="{DynamicResource PreviewItemTitleStyle}"
-                Text="{Binding Result.Title}"
-                TextAlignment="Center"
-                TextWrapping="Wrap" />
-        </StackPanel>
-        <StackPanel Grid.Row="1">
+            <Grid Grid.Row="1">
+                <TextBlock
+                    Margin="0 6 0 16"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Style="{DynamicResource PreviewItemTitleStyle}"
+                    Text="{Binding Result.Title}"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </Grid>
+        <StackPanel Grid.Row="2">
             <StackPanel.Style>
                 <Style TargetType="StackPanel">
                     <Style.Triggers>

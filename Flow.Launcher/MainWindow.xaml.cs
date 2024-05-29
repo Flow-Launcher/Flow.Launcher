@@ -169,7 +169,6 @@ namespace Flow.Launcher
         {
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
-
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
