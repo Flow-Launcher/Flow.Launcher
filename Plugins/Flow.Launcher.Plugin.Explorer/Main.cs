@@ -14,7 +14,7 @@ using Flow.Launcher.Plugin.Explorer.Exceptions;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
-    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n, IAsyncExternalPreview
+    public class Main : ISettingProvider, IAsyncPlugin, IContextMenu, IPluginI18n
     {
         internal static PluginInitContext Context { get; set; }
 
@@ -85,27 +85,6 @@ namespace Flow.Launcher.Plugin.Explorer
                     }
                 };
             }
-        }
-
-        public async Task TogglePreviewAsync(string path)
-        {
-            bool success = await QuickLookHelper.ToggleQuickLookAsync(path).ConfigureAwait(false);
-        }
-        public async Task ClosePreviewAsync()
-        {
-            bool success = await QuickLookHelper.CloseQuickLookAsync().ConfigureAwait(false);
-        }
-
-        public async Task SwitchPreviewAsync(string path, bool sendFailToast = true)
-        {
-            // Switches preview content
-            // When external is off, do nothing
-            _ = QuickLookHelper.SwitchQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
-        }
-
-        public async Task OpenPreviewAsync(string path, bool sendFailToast = true)
-        {
-            bool success = await QuickLookHelper.OpenQuickLookAsync(path, sendFailToast).ConfigureAwait(false);
         }
 
         public string GetTranslatedPluginTitle()

@@ -4,8 +4,8 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_name">Explorer</system:String>
-    <system:String x:Key="plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_name">QuickLook</system:String>
+    <system:String x:Key="plugin_description">Use QuickLook to preview files</system:String>
 
     <!--  Notifications  -->
     <system:String x:Key="quicklook_failed_to_launch">Failed to launch QuickLook</system:String>

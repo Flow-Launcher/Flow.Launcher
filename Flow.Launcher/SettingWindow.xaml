@@ -859,24 +859,6 @@
                                 </ItemsControl>
                             </Border>
 
-                            <Border Style="{DynamicResource SettingGroupBox}">
-                                <ItemsControl Style="{StaticResource SettingGrid}">
-                                    <StackPanel Style="{StaticResource TextPanel}">
-                                        <TextBlock Style="{DynamicResource SettingTitleLabel}" Text="{DynamicResource UseQuickLook}" />
-                                        <TextBlock Style="{DynamicResource SettingSubTitleLabel}" Text="{DynamicResource UseQuickLookToolTip}" />
-                                    </StackPanel>
-                                    <ui:ToggleSwitch
-                                        Grid.Column="2"
-                                        FocusVisualMargin="5"
-                                        IsOn="{Binding Settings.UseExternalPreview}"
-                                        Style="{DynamicResource SideToggleSwitch}"
-                                        ToolTip="{DynamicResource UseQuickLookToolTip}" />
-                                    <TextBlock Style="{StaticResource Glyph}">
-                                        &#xe773;
-                                    </TextBlock>
-                                </ItemsControl>
-                            </Border>
-
                             <Border Margin="0,30,0,0" Style="{DynamicResource SettingGroupBox}">
                                 <ItemsControl Style="{StaticResource SettingGrid}">
                                     <StackPanel Style="{StaticResource TextPanel}">
