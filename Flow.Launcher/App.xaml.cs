@@ -122,6 +122,20 @@ namespace Flow.Launcher
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
+                switch (_settings.LogLevel)
+                {
+                    case "debug":
+                        Log.UseDebugLogLevel();
+                        break;
+                    case "info":
+                        Log.UseInfoLogLevel();
+                        break;
+                    default:
+                        Log.Error(nameof(Flow.Launcher.App), "Unrecognized log level");
+                        Log.UseDebugLogLevel();
+                        break;
+                }
+
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
                 // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
