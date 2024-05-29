@@ -514,6 +514,7 @@
                         </Grid>
                     </Border>
                     <Border
+                        MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                         DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
                         Style="{DynamicResource PreviewBorderStyle}"
