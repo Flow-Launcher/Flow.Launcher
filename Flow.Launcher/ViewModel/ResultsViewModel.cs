@@ -32,9 +32,15 @@ namespace Flow.Launcher.ViewModel
             _settings = settings;
             _settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(_settings.MaxResultsToShow))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(MaxHeight));
+                    case nameof(_settings.MaxResultsToShow):
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
+                    case nameof(_settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
                 }
             };
         }
@@ -43,14 +49,19 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
+        public double MaxHeight => MaxResults * _settings.ItemHeightSize;
+        public double ItemHeightSize
+        {
+            get => _settings.ItemHeightSize;
+            set => _settings.ItemHeightSize = value;
+        }
 
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
-        
+
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
 
@@ -117,6 +128,11 @@ namespace Flow.Launcher.ViewModel
             SelectedIndex = NewIndex(0);
         }
 
+        public void SelectLastResult()
+        {
+            SelectedIndex = NewIndex(Results.Count - 1);
+        }
+
         public void Clear()
         {
             lock (_collectionLock)
@@ -147,23 +163,23 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token)
+        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
             var newResults = NewResults(resultsForUpdates);
 
             if (token.IsCancellationRequested)
                 return;
 
-            UpdateResults(newResults, token);
+            UpdateResults(newResults, token, reselect);
         }
 
-        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default)
+        private void UpdateResults(List<ResultViewModel> newResults, CancellationToken token = default, bool reselect = true)
         {
             lock (_collectionLock)
             {
                 // update UI in one run, so it can avoid UI flickering
                 Results.Update(newResults, token);
-                if (Results.Any())
+                if (reselect && Results.Any())
                     SelectedItem = Results[0];
             }
 
