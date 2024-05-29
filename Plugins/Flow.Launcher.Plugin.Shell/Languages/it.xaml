@@ -2,11 +2,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Sostituisci Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Chiudi il Prompt dei Comandi dopo aver premuto un tasto</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Premi un tasto per chiudere questa finestra...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Non chiudere il prompt dei comandi dopo l'esecuzione dei comandi</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Esegui sempre come amministratore</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Esegui come utente differente</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Terminale</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Consente di eseguire comandi di sistema da Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">questo comando è stato eseguito {0} volte</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">esegui il comando attraverso riga di comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Esegui Come Amministratore</system:String>

@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -15,6 +16,7 @@ namespace Flow.Launcher.Infrastructure.Image
     public static class ImageLoader
     {
         private static readonly ImageCache ImageCache = new();
+        private static SemaphoreSlim storageLock { get; } = new SemaphoreSlim(1, 1);
         private static BinaryStorage<Dictionary<(string, bool), int>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
@@ -25,24 +27,18 @@ namespace Flow.Launcher.Infrastructure.Image
         public const int FullIconSize = 256;
 
 
-        private static readonly string[] ImageExtensions =
-        {
-            ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico"
-        };
+        private static readonly string[] ImageExtensions = { ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".tiff", ".ico" };
 
-        public static void Initialize()
+        public static async Task InitializeAsync()
         {
             _storage = new BinaryStorage<Dictionary<(string, bool), int>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
-            var usage = LoadStorageToConcurrentDictionary();
+            var usage = await LoadStorageToConcurrentDictionaryAsync();
 
             ImageCache.Initialize(usage.ToDictionary(x => x.Key, x => x.Value));
 
-            foreach (var icon in new[]
-                     {
-                         Constant.DefaultIcon, Constant.MissingImgIcon
-                     })
+            foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
                 ImageSource img = new BitmapImage(new Uri(icon));
                 img.Freeze();
@@ -53,33 +49,45 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
                 {
-                    foreach (var ((path, isFullImage), _) in ImageCache.Data)
+                    foreach (var ((path, isFullImage), _) in usage)
                     {
                         await LoadAsync(path, isFullImage);
                     }
                 });
-                Log.Info($"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
+                Log.Info(
+                    $"|ImageLoader.Initialize|Number of preload images is <{ImageCache.CacheSize()}>, Images Number: {ImageCache.CacheSize()}, Unique Items {ImageCache.UniqueImagesInCache()}");
             });
         }
 
-        public static void Save()
+        public static async Task Save()
         {
-            lock (_storage)
+            await storageLock.WaitAsync();
+
+            try
             {
-                _storage.Save(ImageCache.Data
+                await _storage.SaveAsync(ImageCache.EnumerateEntries()
                     .ToDictionary(
                         x => x.Key,
                         x => x.Value.usage));
             }
+            finally
+            {
+                storageLock.Release();
+            }
         }
 
-        private static ConcurrentDictionary<(string, bool), int> LoadStorageToConcurrentDictionary()
+        private static async Task<ConcurrentDictionary<(string, bool), int>> LoadStorageToConcurrentDictionaryAsync()
         {
-            lock (_storage)
+            await storageLock.WaitAsync();
+            try
             {
-                var loaded = _storage.TryLoad(new Dictionary<(string, bool), int>());
+                var loaded = await _storage.TryLoadAsync(new Dictionary<(string, bool), int>());
 
                 return new ConcurrentDictionary<(string, bool), int>(loaded);
+            }
+            finally
+            {
+                storageLock.Release();
             }
         }
 
@@ -117,9 +125,12 @@ namespace Flow.Launcher.Infrastructure.Image
                     return new ImageResult(MissingImage, ImageType.Error);
                 }
 
-                if (ImageCache.ContainsKey(path, loadFullImage))
+                // extra scope for use of same variable name
                 {
-                    return new ImageResult(ImageCache[path, loadFullImage], ImageType.Cache);
+                    if (ImageCache.TryGetValue(path, loadFullImage, out var imageSource))
+                    {
+                        return new ImageResult(imageSource, ImageType.Cache);
+                    }
                 }
 
                 if (Uri.TryCreate(path, UriKind.RelativeOrAbsolute, out var uriResult)
@@ -129,6 +140,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     ImageCache[path, loadFullImage] = image;
                     return new ImageResult(image, ImageType.ImageFile);
                 }
+
                 if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
@@ -158,6 +170,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             return imageResult;
         }
+
         private static async Task<BitmapImage> LoadRemoteImageAsync(bool loadFullImage, Uri uriResult)
         {
             // Download image from url
@@ -173,6 +186,7 @@ namespace Flow.Launcher.Infrastructure.Image
                 image.DecodePixelHeight = SmallIconSize;
                 image.DecodePixelWidth = SmallIconSize;
             }
+
             image.StreamSource = buffer;
             image.EndInit();
             image.StreamSource = null;
@@ -188,8 +202,8 @@ namespace Flow.Launcher.Infrastructure.Image
             if (Directory.Exists(path))
             {
                 /* Directories can also have thumbnails instead of shell icons.
-                 * Generating thumbnails for a bunch of folder results while scrolling 
-                 * could have a big impact on performance and Flow.Launcher responsibility. 
+                 * Generating thumbnails for a bunch of folder results while scrolling
+                 * could have a big impact on performance and Flow.Launcher responsibility.
                  * - Solution: just load the icon
                  */
                 type = ImageType.Folder;
@@ -208,9 +222,9 @@ namespace Flow.Launcher.Infrastructure.Image
                     }
                     else
                     {
-                        /* Although the documentation for GetImage on MSDN indicates that 
+                        /* Although the documentation for GetImage on MSDN indicates that
                          * if a thumbnail is available it will return one, this has proved to not
-                         * be the case in many situations while testing. 
+                         * be the case in many situations while testing.
                          * - Solution: explicitly pass the ThumbnailOnly flag
                          */
                         image = GetThumbnail(path, ThumbnailOptions.ThumbnailOnly);
@@ -236,7 +250,8 @@ namespace Flow.Launcher.Infrastructure.Image
             return new ImageResult(image, type);
         }
 
-        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly, int size = SmallIconSize)
+        private static BitmapSource GetThumbnail(string path, ThumbnailOptions option = ThumbnailOptions.ThumbnailOnly,
+            int size = SmallIconSize)
         {
             return WindowsThumbnailProvider.GetThumbnail(
                 path,
@@ -261,17 +276,19 @@ namespace Flow.Launcher.Infrastructure.Image
 
             var img = imageResult.ImageSource;
             if (imageResult.ImageType != ImageType.Error && imageResult.ImageType != ImageType.Cache)
-            { // we need to get image hash
+            {
+                // we need to get image hash
                 string hash = EnableImageHash ? _hashGenerator.GetHashFromImage(img) : null;
                 if (hash != null)
                 {
-
                     if (GuidToKey.TryGetValue(hash, out string key))
-                    { // image already exists
+                    {
+                        // image already exists
                         img = ImageCache[key, loadFullImage] ?? img;
                     }
                     else
-                    { // new guid
+                    {
+                        // new guid
 
                         GuidToKey[hash] = path;
                     }
@@ -289,7 +306,7 @@ namespace Flow.Launcher.Infrastructure.Image
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.CacheOption = BitmapCacheOption.OnLoad;
-            image.UriSource = new Uri(path);            
+            image.UriSource = new Uri(path);
             image.CreateOptions = BitmapCreateOptions.IgnoreColorProfile;
             image.EndInit();
 
@@ -314,8 +331,10 @@ namespace Flow.Launcher.Infrastructure.Image
                     resizedHeight.EndInit();
                     return resizedHeight;
                 }
+
                 return resizedWidth;
             }
+
             return image;
         }
     }

@@ -184,6 +184,31 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
+        /// Clones the current result
+        /// </summary>
+        public Result Clone()
+        {
+            return new Result
+            {
+                Title = Title,
+                SubTitle = SubTitle,
+                ActionKeywordAssigned = ActionKeywordAssigned,
+                CopyText = CopyText,
+                AutoCompleteText = AutoCompleteText,
+                IcoPath = IcoPath,
+                RoundedIcon = RoundedIcon,
+                Icon = Icon,
+                Glyph = Glyph,
+                Action = Action,
+                AsyncAction = AsyncAction,
+                Score = Score,
+                TitleHighlightData = TitleHighlightData,
+                OriginQuery = OriginQuery,
+                PluginDirectory = PluginDirectory,
+            };
+        }
+
+        /// <summary>
         /// Additional data associated with this result
         /// </summary>
         /// <example>
@@ -233,7 +258,7 @@ namespace Flow.Launcher.Plugin
         public string ProgressBarColor { get; set; } = "#26a0da";
 
         /// <summary>
-        /// Contains data used to populate the the preview section of this result.
+        /// Contains data used to populate the preview section of this result.
         /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
         

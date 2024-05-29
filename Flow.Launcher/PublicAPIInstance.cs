@@ -294,10 +294,28 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
+        public void ToggleGameMode() 
+        {
+            _mainVM.ToggleGameMode();
+        }
+
+        public void SetGameMode(bool value)
+        {
+            _mainVM.GameModeStatus = value;
+        }
+
+        public bool IsGameModeOn()
+        {
+            return _mainVM.GameModeStatus;
+        }
+
+
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
+
+        public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
         #endregion
 

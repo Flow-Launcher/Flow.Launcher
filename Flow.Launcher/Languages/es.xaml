@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
-    <system:String x:Key="maxShowResultsToolTip">También puede ajustarlo rápidamente usando CTRL+Más y CTRL+Menos.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más y Ctrl+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite activar Flow Launcher con aplicaciones a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
@@ -73,13 +73,13 @@
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
-    <system:String x:Key="querySearchPrecision">Precisión en la búsqueda de consultas</system:String>
+    <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Cambia la puntuación mínima requerida para la coincidencia de los resultados.</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar con Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite utilizar Pinyin para la búsqueda. Pinyin es el sistema estándar de ortografía romanizado para traducir chino.</system:String>
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulse {0} para mostrar/ocultar la vista previa.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido mientras el tema actual tenga el efecto de desenfoque activado</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
@@ -154,8 +154,11 @@
     <system:String x:Key="ColorSchemeDark">Oscuro</system:String>
     <system:String x:Key="SoundEffect">Efecto de sonido</system:String>
     <system:String x:Key="SoundEffectTip">Reproduce un pequeño sonido cuando se abre el cuadro de búsqueda</system:String>
+    <system:String x:Key="SoundEffectVolume">Volumen del efecto de sonido</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Ajusta el volumen del efecto de sonido</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Animación</system:String>
-    <system:String x:Key="AnimationTip">Usar animación en la Interfaz de Usuario</system:String>
+    <system:String x:Key="AnimationTip">Usa animación en la Interfaz de Usuario</system:String>
     <system:String x:Key="AnimationSpeed">Velocidad de animación</system:String>
     <system:String x:Key="AnimationSpeedTip">Velocidad de animación de la interfaz de usuario</system:String>
     <system:String x:Key="AnimationSpeedSlow">Lenta</system:String>
@@ -168,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
-    <system:String x:Key="flowlauncherHotkey">Atajo de teclado de Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Atajo de teclado para vista previa</system:String>
+    <system:String x:Key="previewHotkey">Cambiar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
+    <system:String x:Key="hotkeyPresets">Ajustes preestablecidos de atajos de teclado</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Lista de atajos de teclado actualmente registrados</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Completar automáticamente</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Ejecuta completar automáticamente para los elementos seleccionados.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Seleccionar siguiente elemento</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Seleccionar elemento anterior</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Siguiente página</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
+    <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
+    <system:String x:Key="RequeryHotkey">Actualizar resultados de búsqueda</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Recargar datos de complementos</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajuste rápido de la anchuira de la ventana</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuste rápido de la altura de la ventana</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Se utiliza cuando se requiere que los complementos recarguen y actualicen sus datos existentes.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Se puede añadir otro atajo de teclado más para esta función.</system:String>
     <system:String x:Key="customQueryHotkey">Atajos de teclado de consulta personalizada</system:String>
     <system:String x:Key="customQueryShortcut">Accesos directos de consulta personalizada</system:String>
     <system:String x:Key="builtinShortcuts">Accesos directos integrados</system:String>
@@ -186,15 +212,16 @@
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Añadir</system:String>
+    <system:String x:Key="none">Ninguno</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro de que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
     <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">También puede ajustarlo rápidamente usando Ctrl+[y Ctrl+].</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">También puede ajustarse rápidamente usando Ctrl+[ y Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
     <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
@@ -237,7 +264,7 @@
     <system:String x:Key="settingfolder">Carpeta de configuración</system:String>
     <system:String x:Key="logfolder">Carpeta de registros</system:String>
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
-    <system:String x:Key="clearlogfolderMessage">¿Está seguro que desea eliminar todos los registros?</system:String>
+    <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
 
     <!--  FileManager Setting Dialog  -->
@@ -284,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">El atajo de teclado no está disponible, por favor seleccione uno nuevo</system:String>
     <system:String x:Key="invalidPluginHotkey">Atajo de teclado de complemento no válido</system:String>
     <system:String x:Key="update">Actualizar</system:String>
+    <system:String x:Key="hotkeyRegTitle">Atajo de teclado vinculado</system:String>
+    <system:String x:Key="hotkeyUnavailable">El atajo de teclado actual no está disponible.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Este atajo de teclado está reservado para &quot;{0}&quot; y no se puede utilizar. Por favor, elija otro atajo de teclado.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Este atajo de teclado ya está siendo utilizado por &quot;{0}&quot;. Si pulsa «Sobrescribir», se eliminará de &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Pulsar las teclas que se deseen utilizar para esta función.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Acceso directo de consulta personalizada</system:String>
@@ -295,8 +327,12 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="duplicateShortcut">El acceso directo ya existe, por favor introduzca uno nuevo o edite el existente.</system:String>
     <system:String x:Key="emptyShortcut">El acceso directo y/o su expansión están vacíos.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Atajo de teclado no disponible</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Guardar</system:String>
+    <system:String x:Key="commonOverwrite">Sobrescribir</system:String>
+    <system:String x:Key="commonCancel">Cancelar</system:String>
+    <system:String x:Key="commonReset">Restablecer</system:String>
+    <system:String x:Key="commonDelete">Eliminar</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versión</system:String>
@@ -365,6 +401,12 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="HotkeyRunDesc">Abrir / Ejecutar elemento seleccionado</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Abrir ventana de configuración</system:String>
     <system:String x:Key="HotkeyF5Desc">Recargar datos del complemento</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Seleccionar primer resultado</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Seleccionar último resultado</system:String>
+    <system:String x:Key="HotkeyRequery">Ejecutar consulta actual de nuevo</system:String>
+    <system:String x:Key="HotkeyOpenResult">Abrir resultado</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Abrir resultado #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">El tiempo</system:String>
     <system:String x:Key="RecommendWeatherDesc">El tiempo en los resultados de Google</system:String>

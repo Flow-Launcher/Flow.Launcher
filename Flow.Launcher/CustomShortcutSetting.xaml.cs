@@ -8,7 +8,6 @@ namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
-        private SettingWindowViewModel viewModel;
         public string Key { get; set; } = String.Empty;
         public string Value { get; set; } = String.Empty;
         private string originalKey { get; init; } = null;
@@ -17,13 +16,11 @@ namespace Flow.Launcher
 
         public CustomShortcutSetting(SettingWindowViewModel vm)
         {
-            viewModel = vm;
             InitializeComponent();
         }
 
-        public CustomShortcutSetting(string key, string value, SettingWindowViewModel vm)
+        public CustomShortcutSetting(string key, string value)
         {
-            viewModel = vm;
             Key = key;
             Value = value;
             originalKey = key;
@@ -46,8 +43,7 @@ namespace Flow.Launcher
                 return;
             }
             // Check if key is modified or adding a new one
-            if (((update && originalKey != Key) || !update)
-                && viewModel.ShortcutExists(Key))
+            if ((update && originalKey != Key) || !update)
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;

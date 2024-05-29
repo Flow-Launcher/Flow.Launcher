@@ -52,15 +52,17 @@ namespace Flow.Launcher
             {
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
+                Log.Info(
+                    "|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
-                ImageLoader.Initialize();
+                var imageLoadertask = ImageLoader.InitializeAsync();
 
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
+                _settings.WMPInstalled =  WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
@@ -78,6 +80,8 @@ namespace Flow.Launcher
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync(API);
+                await imageLoadertask;
+
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -85,12 +89,13 @@ namespace Flow.Launcher
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                HotKeyMapper.Initialize(_mainVM);
-
                 // todo temp fix for instance code logic
                 // load plugin before change language, because plugin language also needs be changed
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+
+                HotKeyMapper.Initialize(_mainVM);
+
                 // main windows needs initialized before theme change because of blur settings
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
@@ -103,7 +108,8 @@ namespace Flow.Launcher
                 AutoUpdates();
 
                 API.SaveAppAllSettings();
-                Log.Info("|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
+                Log.Info(
+                    "|App.OnStartup|End Flow Launcher startup ----------------------------------------------------  ");
             });
         }
 
@@ -122,7 +128,8 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"), e.Message);
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
+                        e.Message);
                 }
             }
         }

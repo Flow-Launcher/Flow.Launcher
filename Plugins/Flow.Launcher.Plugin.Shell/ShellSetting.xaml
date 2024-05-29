@@ -15,6 +15,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <CheckBox
             x:Name="ReplaceWinR"
@@ -23,20 +24,26 @@
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_relace_winr}" />
         <CheckBox
-            x:Name="LeaveShellOpen"
+            x:Name="CloseShellAfterPress"
             Grid.Row="1"
+            Margin="10,5,5,5"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_close_cmd_after_press}" />
+        <CheckBox
+            x:Name="LeaveShellOpen"
+            Grid.Row="2"
             Margin="10,5,5,5"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_leave_cmd_open}" />
         <CheckBox
             x:Name="AlwaysRunAsAdministrator"
-            Grid.Row="2"
+            Grid.Row="3"
             Margin="10,5,5,5"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" />
         <ComboBox
             x:Name="ShellComboBox"
-            Grid.Row="3"
+            Grid.Row="4"
             Margin="10,5,5,5"
             HorizontalAlignment="Left">
             <ComboBoxItem>CMD</ComboBoxItem>
@@ -44,7 +51,7 @@
             <ComboBoxItem>Pwsh</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
         </ComboBox>
-        <StackPanel Grid.Row="4" Orientation="Horizontal">
+        <StackPanel Grid.Row="5" Orientation="Horizontal">
             <CheckBox
                 x:Name="ShowOnlyMostUsedCMDs"
                 Margin="10,5,5,5"

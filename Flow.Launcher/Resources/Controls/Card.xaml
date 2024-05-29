@@ -1,0 +1,139 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.Resources.Controls.Card"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <UserControl.Template>
+        <ControlTemplate TargetType="UserControl">
+            <Border x:Name="BD" HorizontalAlignment="Stretch">
+                <Border.Style>
+                    <Style TargetType="{x:Type Border}">
+                        <Setter Property="Background" Value="{DynamicResource Color00B}" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
+                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="CornerRadius" Value="5" />
+                        <Setter Property="MinHeight" Value="68" />
+                        <Setter Property="Padding" Value="0,15,0,15" />
+                        <Setter Property="Margin" Value="0,4,0,0" />
+                        <Setter Property="SnapsToDevicePixels" Value="True" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Inside">
+                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Type, RelativeSource={RelativeSource AncestorType=local:Card}}" Value="InsideFit">
+                                <Setter Property="BorderThickness" Value="0,1,0,0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,0" />
+                                <Setter Property="Padding" Value="38,0,26,0" />
+                                <Setter Property="Background" Value="Transparent" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="First">
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Middle">
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0 1 0 0" />
+                            </DataTrigger>
+
+                            <DataTrigger Binding="{Binding (local:CardGroup.Position), RelativeSource={RelativeSource AncestorType=local:Card}}" Value="Last">
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="CornerRadius" Value="0" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="BorderThickness" Value="0 1 0 0" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Border.Style>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="auto"
+                            MinWidth="20"
+                            MaxWidth="60" />
+                        <ColumnDefinition Width="8*" />
+                        <ColumnDefinition Width="Auto" MinWidth="30" />
+                    </Grid.ColumnDefinitions>
+                    <ContentControl
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        Margin="0,0,16,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Content="{TemplateBinding Content}" />
+                    <StackPanel>
+                        <StackPanel.Style>
+                            <Style TargetType="{x:Type StackPanel}">
+                                <Setter Property="Grid.Column" Value="1" />
+                                <Setter Property="Width" Value="Auto" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="HorizontalAlignment" Value="Left" />
+
+                            </Style>
+                        </StackPanel.Style>
+                        <TextBlock x:Name="ItemTitle" Text="{Binding Title, RelativeSource={RelativeSource AncestorType=local:Card}}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                    <Setter Property="Margin" Value="0,0,0,0" />
+                                    <Setter Property="TextWrapping" Value="Wrap" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="SubTitle" Text="{Binding Sub, RelativeSource={RelativeSource AncestorType=local:Card}}">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ElementName=SubTitle, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                            <Setter Property="Visibility" Value="Collapsed" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                    <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+                                    <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="Margin" Value="0,0,0,0" />
+                                    <Setter Property="Padding" Value="0,0,24,0" />
+                                    <Setter Property="TextWrapping" Value="WrapWithOverflow" />
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+
+                    <TextBlock x:Name="ItemIcon" Text="{Binding Icon, RelativeSource={RelativeSource AncestorType=local:Card}}">
+                        <TextBlock.Style>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding ElementName=ItemIcon, Path=Text}" Value="{x:Static sys:String.Empty}">
+                                        <Setter Property="Margin" Value="24,0,0,0" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                                <Setter Property="Grid.Column" Value="0" />
+                                <Setter Property="Margin" Value="24,0,16,0" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="20" />
+                                <Setter Property="FontFamily" Value="/Resources/#Segoe Fluent Icons" />
+                                <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+                </Grid>
+            </Border>
+        </ControlTemplate>
+    </UserControl.Template>
+</UserControl>

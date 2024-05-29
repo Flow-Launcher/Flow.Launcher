@@ -55,6 +55,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
 
+        public bool ShowFileSizeInPreviewPanel { get; set; } = true;
+
+        public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
+
+        public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
+
+        public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
+        
+        public string PreviewPanelTimeFormat { get; set; } = "HH:mm";
+
         private EverythingSearchManager _everythingManagerInstance;
         private WindowsIndexSearchManager _windowsIndexSearchManager;
 
@@ -137,7 +147,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
         public bool EverythingSearchFullPath { get; set; } = false;
-        
+
         #endregion
 
         internal enum ActionKeyword

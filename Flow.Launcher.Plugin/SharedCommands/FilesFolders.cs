@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 #pragma warning disable IDE0005
 using System.Windows;
 #pragma warning restore IDE0005
@@ -198,6 +199,24 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
 #endif
             }
+        }
+
+        ///<summary>
+        /// This checks whether a given string is a zip file path.
+        /// By default does not check if the zip file actually exist on disk, can do so by
+        /// setting checkFileExists = true.
+        ///</summary>
+        public static bool IsZipFilePath(string querySearchString, bool checkFileExists = false)
+        {
+            if (IsLocationPathString(querySearchString) && querySearchString.Split('.').Last() == "zip")
+            {
+                if (checkFileExists)
+                    return FileExists(querySearchString);
+
+                return true;
+            }
+
+            return false;
         }
 
         ///<summary>

@@ -1,7 +1,6 @@
 crowdin
 DWM
 workflows
-Wpf
 wpf
 actionkeyword
 stackoverflow
@@ -20,9 +19,7 @@ Prioritise
 Segoe
 Google
 Customise
-UWP
 uwp
-Uwp
 Bokmal
 Bokm
 uninstallation
@@ -61,7 +58,6 @@ popup
 ptr
 pluginindicator
 TobiasSekan
-Img
 img
 resx
 bak
@@ -87,7 +83,6 @@ txb
 btn
 otf
 searchplugin
-Noresult
 wpftk
 mkv
 flac
@@ -104,9 +99,14 @@ Português (Brasil)
 Italiano
 Slovenský
 quicklook
+Tiếng Việt
 Droplex
 Preinstalled
 errormetadatafile
 noresult
 pluginsmanager
 alreadyexists
+JsonRPC
+JsonRPCV2
+Softpedia
+img

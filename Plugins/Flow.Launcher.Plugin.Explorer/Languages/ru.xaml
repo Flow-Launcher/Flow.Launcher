@@ -3,21 +3,21 @@
 
     <!--  Dialogues  -->
     <system:String x:Key="plugin_explorer_make_selection_warning">Сначала отметьте что-нибудь</system:String>
-    <system:String x:Key="plugin_explorer_select_folder_link_warning">Please select a folder link</system:String>
+    <system:String x:Key="plugin_explorer_select_folder_link_warning">Пожалуйста, выберите ссылку на папку</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">Вы уверены, что хотите удалить {0}?</system:String>
     <system:String x:Key="plugin_explorer_deletefileconfirm">Вы действительно хотите безвозвратно удалить этот файл?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Вы действительно хотите безвозвратно удалить этот файл/папку?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Удаление завершено</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Успешно удалено {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Assigning the global action keyword could bring up too many results during search. Please choose a specific action keyword</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Назначение ключевого слова глобальных действий может привести к слишком большому количеству результатов поиска. Пожалуйста, выберите конкретное ключевое слово действий</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Quick Access can not be set to the global action keyword when enabled. Please choose a specific action keyword</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">The required service for Windows Index Search does not appear to be running</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">To fix this, start the Windows Search service. Select here to remove this warning</system:String>
     <system:String x:Key="plugin_explorer_alternative">The warning message has been switched off. As an alternative for searching files and folders, would you like to install Everything plugin?{0}{0}Select 'Yes' to install Everything plugin, or 'No' to return</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
-    <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
-    <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
+    <system:String x:Key="plugin_explorer_directoryinfosearch_error">При поиске произошла ошибка: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Не удалось открыть папку</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Не удалось открыть файл</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Удалить</system:String>
@@ -100,7 +100,9 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Remove from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
-    
+    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>

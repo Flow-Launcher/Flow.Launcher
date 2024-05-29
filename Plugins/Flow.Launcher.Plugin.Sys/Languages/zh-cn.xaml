@@ -5,6 +5,28 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">命令</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">描述</system:String>
 
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">休眠</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">索引选项</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">清空回收站</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">打开回收站</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">退出</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">保存设置</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">重启 Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">设置</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">重新加载插件数据</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">检查更新</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">打开日志文件夹</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher 提示</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher 用户数据文件夹</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">切换游戏模式</system:String>
+
+    <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">关闭电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer">重启这台电脑</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced">以高级启动选项重启计算机，用于安全和调试模式以及其他选项</system:String>
@@ -24,8 +46,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update">检查新的 Flow Launcher 更新</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">访问 Flow Launcher 的文档以获取更多帮助以及使用技巧</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">打开Flow Launcher 设置文件夹</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">切换游戏模式</system:String>
 
-    <!--  Dialogs  -->
+        <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">成功</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">所有 Flow Launcher 设置已保存</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">重新加载了所有插件数据</system:String>
