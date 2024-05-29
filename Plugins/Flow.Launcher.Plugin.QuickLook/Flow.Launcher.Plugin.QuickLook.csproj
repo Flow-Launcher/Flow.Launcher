@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <Nullable>warnings</Nullable>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <!--<OutputPath>\Output\Debug\Plugins\Flow.Launcher.Plugin.QuickLook</OutputPath>-->
+    <OutputPath>..\..\Output\Debug\Plugins\Flow.Launcher.Plugin.QuickLook</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <!--<OutputPath>\Output\Release\Plugins\Flow.Launcher.Plugin.QuickLook</OutputPath>-->
+    <OutputPath>..\..\Output\Release\Plugins\Flow.Launcher.Plugin.QuickLook</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="Flow.Launcher.Plugin" Version="4.3.0" />-->
+    <ProjectReference Include="..\..\Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="plugin.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Images\*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Languages\en.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Languages\en.xaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+</Project>

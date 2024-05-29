@@ -1,0 +1,12 @@
+{
+  "ID": "e6a13bf1-5op9-2b96-a7fd-130b7vdt3d14",
+  "ActionKeywords": [ "*" ],
+  "Name": "QuickLook",
+  "Description": "Use QuickLook to preview files",
+  "Author": "Flow Launcher",
+  "Version": "1.0.0",
+  "Language": "csharp",
+  "Website": "https://github.com/Flow-Launcher/Flow.Launcher.Plugin.QuickLook",
+  "ExecuteFileName": "Flow.Launcher.Plugin.QuickLook.dll",
+  "IcoPath": "Images\\app.png"
+}
