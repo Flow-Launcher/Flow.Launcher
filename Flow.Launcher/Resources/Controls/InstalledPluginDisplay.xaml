@@ -93,42 +93,7 @@
         </Expander.Header>
 
         <StackPanel>
-            <Border
-                Width="Auto"
-                Height="52"
-                Margin="0"
-                Padding="0"
-                BorderThickness="0 1 0 0"
-                CornerRadius="0"
-                Style="{DynamicResource SettingGroupBox}"
-                Visibility="{Binding ActionKeywordsVisibility}">
-                <DockPanel Margin="22 0 18 0" VerticalAlignment="Center">
-                    <TextBlock
-                        Margin="48 0 10 0"
-                        DockPanel.Dock="Left"
-                        Style="{StaticResource Glyph}">
-                        &#xe819;
-                    </TextBlock>
-                    <TextBlock
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Center"
-                        DockPanel.Dock="Left"
-                        Style="{DynamicResource SettingTitleLabel}"
-                        Text="{DynamicResource actionKeywords}" />
-                    <Button
-                        Width="100"
-                        Height="34"
-                        Margin="5 0 0 0"
-                        HorizontalAlignment="Right"
-                        Command="{Binding SetActionKeywordsCommand}"
-                        Content="{Binding ActionKeywordsText}"
-                        Cursor="Hand"
-                        DockPanel.Dock="Right"
-                        FontWeight="Bold"
-                        ToolTip="{DynamicResource actionKeywordsTooltip}"
-                        Visibility="{Binding ActionKeywordsVisibility}" />
-                </DockPanel>
-            </Border>
+            <ContentControl Content="{Binding BottomPart1}" />
 
             <Border
                 BorderThickness="0 1 0 0"
@@ -150,75 +115,7 @@
                     Content="{Binding SettingControl}" />
             </Border>
 
-            <Border
-                Margin="0"
-                Padding="15 10"
-                VerticalAlignment="Center"
-                BorderThickness="0 1 0 0"
-                CornerRadius="0 0 5 5"
-                Style="{DynamicResource SettingGroupBox}">
-                <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-                    <TextBlock
-                        Margin="10 0 0 0"
-                        VerticalAlignment="center"
-                        FontSize="11"
-                        Foreground="{DynamicResource PluginInfoColor}"
-                        Text="{DynamicResource author}" />
-                    <TextBlock
-                        Margin="5 0 0 0"
-                        VerticalAlignment="center"
-                        FontSize="11"
-                        Foreground="{DynamicResource PluginInfoColor}"
-                        Text="{Binding PluginPair.Metadata.Author}" />
-                    <TextBlock
-                        Margin="10 0 0 0"
-                        VerticalAlignment="Center"
-                        FontSize="11"
-                        Foreground="{DynamicResource PluginInfoColor}"
-                        Text="|" />
-                    <TextBlock
-                        Margin="10 0 5 0"
-                        VerticalAlignment="Center"
-                        FontSize="11"
-                        Foreground="{DynamicResource PluginInfoColor}"
-                        Text="{Binding Version}"
-                        ToolTip="{Binding InitAndQueryTime}"
-                        ToolTipService.InitialShowDelay="500" />
-                    <TextBlock
-                        Margin="5 0"
-                        VerticalAlignment="Center"
-                        FontSize="11"
-                        Foreground="{DynamicResource PluginInfoColor}"
-                        Text="|" />
-                    <TextBlock
-                        Margin="5 0 0 0"
-                        Style="{DynamicResource LinkBtnStyle}"
-                        Text="&#xe80f;"
-                        ToolTip="{DynamicResource plugin_query_web}">
-                        <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding OpenSourceCodeLinkCommand}" MouseAction="LeftClick" />
-                        </TextBlock.InputBindings>
-                    </TextBlock>
-                    <TextBlock
-                        Margin="10 0 0 0"
-                        Style="{DynamicResource LinkBtnStyle}"
-                        Text="&#xe74d;"
-                        ToolTip="{DynamicResource plugin_uninstall}">
-                        <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding OpenDeletePluginWindowCommand}" MouseAction="LeftClick" />
-                        </TextBlock.InputBindings>
-                    </TextBlock>
-                    <TextBlock
-                        Margin="10 0 5 0"
-                        Style="{DynamicResource LinkBtnStyle}"
-                        Text="&#xe8b7;"
-                        ToolTip="{DynamicResource pluginDirectory}">
-                        <TextBlock.InputBindings>
-                            <MouseBinding Command="{Binding OpenPluginDirectoryCommand}" MouseAction="LeftClick" />
-                        </TextBlock.InputBindings>
-                    </TextBlock>
-                </StackPanel>
-            </Border>
+            <ContentControl Content="{Binding BottomPart2}" />
         </StackPanel>
     </Expander>
 </UserControl>

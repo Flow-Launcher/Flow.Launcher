@@ -1,0 +1,47 @@
+﻿<UserControl
+    x:Class="Flow.Launcher.Resources.Controls.InstalledPluginDisplayKeyword"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModel="clr-namespace:Flow.Launcher.ViewModel"
+    d:DataContext="{d:DesignInstance viewModel:PluginViewModel}"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    mc:Ignorable="d">
+    <Border
+        Width="Auto"
+        Height="52"
+        Margin="0"
+        Padding="0"
+        BorderThickness="0 1 0 0"
+        CornerRadius="0"
+        Style="{DynamicResource SettingGroupBox}"
+        Visibility="{Binding ActionKeywordsVisibility}">
+        <DockPanel Margin="22 0 18 0" VerticalAlignment="Center">
+            <TextBlock
+                Margin="48 0 10 0"
+                DockPanel.Dock="Left"
+                Style="{StaticResource Glyph}">
+                &#xe819;
+            </TextBlock>
+            <TextBlock
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                DockPanel.Dock="Left"
+                Style="{DynamicResource SettingTitleLabel}"
+                Text="{DynamicResource actionKeywords}" />
+            <Button
+                Width="100"
+                Height="34"
+                Margin="5 0 0 0"
+                HorizontalAlignment="Right"
+                Command="{Binding SetActionKeywordsCommand}"
+                Content="{Binding ActionKeywordsText}"
+                Cursor="Hand"
+                DockPanel.Dock="Right"
+                FontWeight="Bold"
+                ToolTip="{DynamicResource actionKeywordsTooltip}" />
+        </DockPanel>
+    </Border>
+</UserControl>

@@ -7,6 +7,7 @@ using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Resources.Controls;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -82,6 +83,12 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
+
+        private Control _bottomPart1;
+        public Control BottomPart1 => IsExpanded ? _bottomPart1 ??= new InstalledPluginDisplayKeyword() : null;
+
+        private Control _bottomPart2;
+        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
         public bool HasSettingControl => PluginPair.Plugin is ISettingProvider;
         public Control SettingControl
