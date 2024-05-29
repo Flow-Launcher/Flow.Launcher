@@ -55,7 +55,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged(nameof(MaxResultsToShow));
             }
         }
-        public bool UseDropShadowEffect { get; set; } = false;
+        public bool UseDropShadowEffect { get; set; } = true;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
