@@ -285,19 +285,28 @@ public static class ShellContextMenuDisplayHelper
 
     private static BitmapSource GetBitmapSourceFromHBitmap(IntPtr hBitmap)
     {
-        var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-            hBitmap,
-            IntPtr.Zero,
-            Int32Rect.Empty,
-            BitmapSizeOptions.FromWidthAndHeight(32, 32)
-        );
-
-        if (!DeleteObject(hBitmap))
+        try
         {
-            throw new Exception("Failed to delete HBitmap.");
+            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+                hBitmap,
+                IntPtr.Zero,
+                Int32Rect.Empty,
+                BitmapSizeOptions.FromWidthAndHeight(32, 32)
+            );
+
+            if (!DeleteObject(hBitmap))
+            {
+                throw new Exception("Failed to delete HBitmap.");
+            }
+
+            return bitmapSource;
+        }
+        catch (COMException)
+        {
+            // ignore
         }
 
-        return bitmapSource;
+        return null;
     }
 }
 
