@@ -344,8 +344,22 @@
                 <ContentControl>
                     <ContentControl.Style>
                         <Style TargetType="ContentControl">
-                            <Setter Property="Visibility" Value="Collapsed" />
+                            <Setter Property="Visibility" Value="Visible" />
                             <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
+                                        <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="Height" Value="0" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                            <!--<Style.Triggers>
                                 <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
@@ -355,7 +369,7 @@
                                 <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
                                     <Setter Property="Visibility" Value="Visible" />
                                 </DataTrigger>
-                            </Style.Triggers>
+                            </Style.Triggers>-->
                         </Style>
                     </ContentControl.Style>
                     <Rectangle
@@ -428,6 +442,7 @@
                 <GridSplitter
                     Grid.Column="1"
                     Width="{Binding PreviewVisible, Converter={StaticResource SplitterConverter}}"
+                    Margin="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Stretch"
                     Background="Transparent"
