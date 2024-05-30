@@ -67,7 +67,7 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             catch (System.Exception e)
             {
-                Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
+                // Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
                 return defaultData;
             }
         }
