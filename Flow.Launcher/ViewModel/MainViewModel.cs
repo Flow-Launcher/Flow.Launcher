@@ -143,15 +143,21 @@ namespace Flow.Launcher.ViewModel
 
             ContextMenu = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
 
@@ -586,6 +592,10 @@ namespace Flow.Launcher.ViewModel
             {
                 HidePreview();
             }
+
+            ContextMenu.IsPreviewOn = PreviewVisible;
+            History.IsPreviewOn = PreviewVisible;
+            Results.IsPreviewOn = PreviewVisible;
         }
 
         private void ShowPreview()
