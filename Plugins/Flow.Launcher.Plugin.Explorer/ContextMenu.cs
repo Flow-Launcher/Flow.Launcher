@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
@@ -165,6 +166,24 @@ namespace Flow.Launcher.Plugin.Explorer
                     IcoPath = icoPath,
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
                 });
+
+                if (record.Type is ResultType.File or ResultType.Folder)
+                {
+                    var menuItems = ShellContextMenuDisplayHelper.GetContextMenuWithIcons(record.FullPath);
+                    foreach (var menuItem in menuItems)
+                    {
+                        contextMenus.Add(new Result
+                        {
+                            Title = $"{menuItem.Label}",
+                            Icon = () => menuItem.Icon,
+                            Action = _ =>
+                            {
+                                ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
+                                return true;
+                            }
+                        });
+                    }
+                }
 
 
                 if (record.Type is ResultType.File or ResultType.Folder)
