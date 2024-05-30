@@ -11,7 +11,7 @@ namespace Flow.Launcher.Infrastructure.Image
 {
     public class ImageCache
     {
-        private const int MaxCached = 10;
+        private const int MaxCached = 150;
 
         private ConcurrentLfu<(string, bool), ImageSource> CacheManager { get; set; } = new(MaxCached);
 
