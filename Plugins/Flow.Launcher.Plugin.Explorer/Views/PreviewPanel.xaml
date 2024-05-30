@@ -72,7 +72,7 @@
                 HorizontalAlignment="Stretch"
                 Style="{DynamicResource SeparatorStyle}" />
             <StackPanel Visibility="{Binding FileInfoVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
-                <Grid Margin="0 10 0 0">
+                <Grid Margin="0 10 0 10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="100" />
                         <ColumnDefinition Width="*" />
@@ -86,7 +86,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Margin="0 0 8 0"
+                        Margin="0 0 0 0"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                         Text="{DynamicResource FileSize}"

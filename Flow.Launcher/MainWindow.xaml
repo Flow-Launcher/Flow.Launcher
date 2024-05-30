@@ -368,7 +368,7 @@
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" MinWidth="100" />
+                    <ColumnDefinition Width="*" MinWidth="80" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="0.85*" MinWidth="244" />
                 </Grid.ColumnDefinitions>
