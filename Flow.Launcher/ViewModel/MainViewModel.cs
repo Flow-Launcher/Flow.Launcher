@@ -768,7 +768,7 @@ namespace Flow.Launcher.ViewModel
         public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
 
         // This is not a reliable indicator of whether external preview is visible due to the
-        // ability of manually closing/exiting the external preview program, and this does not inform flow that
+        // ability of manually closing/exiting the external preview program which, does not inform flow that
         // preview is no longer available.
         public bool ExternalPreviewVisible { get; set; } = false;
 

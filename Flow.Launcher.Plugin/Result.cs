@@ -261,7 +261,7 @@ namespace Flow.Launcher.Plugin
         /// Contains data used to populate the preview section of this result.
         /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
-        
+
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
@@ -291,7 +291,7 @@ namespace Flow.Launcher.Plugin
             public IconDelegate PreviewDelegate { get; set; } = null;
 
             /// <summary>
-            /// File path of the result. For third-party preview programs such as QuickLook.
+            /// File path of the result. For third-party programs providing external preview.
             /// </summary>
             public string FilePath { get; set; } = null;
 
