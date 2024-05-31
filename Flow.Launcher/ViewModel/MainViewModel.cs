@@ -803,15 +803,13 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void TogglePreview()
         {
-            switch (InternalPreviewVisible || ExternalPreviewVisible)
+            if (InternalPreviewVisible || ExternalPreviewVisible)
             {
-                case true:
-                    HidePreview();
-                    break;
-
-                case false:
-                    ShowPreview();
-                    break;
+                HidePreview();
+            }
+            else
+            {
+                ShowPreview();
             }
         }
 
@@ -857,15 +855,13 @@ namespace Flow.Launcher.ViewModel
 
         public void ResetPreview()
         {
-            switch (Settings.AlwaysPreview)
+            if (Settings.AlwaysPreview)
             {
-                case true:
-                    ShowPreview();
-                    break;
-
-                case false:
-                    HidePreview();
-                    break;
+                ShowPreview();
+            }
+            else
+            {
+                HidePreview();
             }
         }
         
@@ -885,7 +881,7 @@ namespace Flow.Launcher.ViewModel
                     break;
 
                 case true
-                    when !ExternalPreviewVisible && Settings.AlwaysPreview && CanExternalPreviewSelectedResult(out var path):
+                    when !ExternalPreviewVisible && Settings.AlwaysPreview && CanExternalPreviewSelectedResult(out var _):
                     ShowPreview();
                     break;
 
