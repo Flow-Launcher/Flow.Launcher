@@ -121,7 +121,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
 
-- Drag a file/folder to File Exlporer, or even Discord.
+- Drag a file/folder to File Explorer, or even Discord.
 - Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Windows & Control Panel Settings
