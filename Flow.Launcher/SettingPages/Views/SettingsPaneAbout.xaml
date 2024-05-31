@@ -43,7 +43,7 @@
                             TextDecorations="None">
                             <TextBlock
                                 Padding="10 5"
-                                Foreground="White"
+                                Foreground="{StaticResource SystemControlForegroundAltHighBrush}"
                                 Text="{DynamicResource BecomeASponsor}" />
                         </Hyperlink>
                     </Button>
@@ -51,7 +51,7 @@
             </cc:Card>
 
             <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
-                <cc:HyperLink Uri="{Binding ReleaseNotes}" Text="{DynamicResource releaseNotes}" />
+                <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
             </cc:Card>
 
             <cc:Card
@@ -59,15 +59,21 @@
                 Margin="0 14 0 0"
                 Icon="&#xeb41;">
                 <StackPanel Orientation="Horizontal">
-                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Website}" Text="{DynamicResource website}" />
-                    <cc:HyperLink Uri="{Binding Github}" Text="{DynamicResource github}" />
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource website}"
+                        Uri="{Binding Website}" />
+                    <cc:HyperLink Text="{DynamicResource github}" Uri="{Binding Github}" />
                 </StackPanel>
             </cc:Card>
 
             <cc:Card Title="{DynamicResource documentation}" Icon="&#xe82f;">
                 <StackPanel Orientation="Horizontal">
-                    <cc:HyperLink Margin="0 0 12 0" Uri="{Binding Documentation}" Text="{DynamicResource documentation}" />
-                    <cc:HyperLink Uri="{Binding Website}" Text="{DynamicResource website}" />
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource documentation}"
+                        Uri="{Binding Documentation}" />
+                    <cc:HyperLink Text="{DynamicResource website}" Uri="{Binding Website}" />
                 </StackPanel>
             </cc:Card>
 
@@ -75,7 +81,7 @@
                 Title="{DynamicResource icons}"
                 Margin="0 14 0 0"
                 Icon="&#xE8FE;">
-                <cc:HyperLink Uri="https://icons8.com/" Text="icons8.com" />
+                <cc:HyperLink Text="icons8.com" Uri="https://icons8.com/" />
             </cc:Card>
 
             <cc:Card Title="{DynamicResource devtool}" Icon="&#xf12b;">
