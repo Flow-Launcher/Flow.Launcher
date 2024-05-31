@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+﻿using System;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -49,7 +50,25 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * _settings.ItemHeightSize;
+        public bool IsPreviewOn { get; set; }
+
+        public double MaxHeight
+        {
+            get
+            {
+                var newResultsCount = MaxResults;
+                if (IsPreviewOn)
+                {
+                    newResultsCount = (int)Math.Ceiling(380 / _settings.ItemHeightSize);
+                    if (newResultsCount < MaxResults)
+                    {
+                        newResultsCount = MaxResults;
+                    }
+                }
+                return newResultsCount * _settings.ItemHeightSize;
+            }
+        }
+
         public double ItemHeightSize
         {
             get => _settings.ItemHeightSize;
