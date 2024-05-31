@@ -85,15 +85,26 @@ namespace Flow.Launcher
 
         private const int WM_ENTERSIZEMOVE = 0x0231;
         private const int WM_EXITSIZEMOVE = 0x0232;
+        private int _initialWidth;
+        private int _initialHeight;
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_ENTERSIZEMOVE)
             {
+                _initialWidth = (int)Width;
+                _initialHeight = (int)Height;
                 handled = true;
             }
             if (msg == WM_EXITSIZEMOVE)
             {
-                OnResizeEnd();
+                if ( _initialHeight != (int)Height)
+                {
+                    OnResizeEnd();
+                }
+                if (_initialWidth != (int)Width)
+                {
+                    FlowMainWindow.SizeToContent = SizeToContent.Height;
+                }
                 handled = true;
             }
             return IntPtr.Zero;
@@ -120,9 +131,8 @@ namespace Flow.Launcher
                     _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
                 }
             }
-
-            _viewModel.MainWindowWidth = Width;
             FlowMainWindow.SizeToContent = SizeToContent.Height;
+            _viewModel.MainWindowWidth = Width;
         }
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
@@ -169,7 +179,6 @@ namespace Flow.Launcher
         {
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
-
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
