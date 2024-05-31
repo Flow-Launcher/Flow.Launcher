@@ -52,13 +52,13 @@ public class SettingWindowViewModel : BaseModel
         set => Settings.SettingWindowHeight = value;
     }
 
-    public double SettingWindowTop
+    public double? SettingWindowTop
     {
         get => Settings.SettingWindowTop;
         set => Settings.SettingWindowTop = value;
     }
 
-    public double SettingWindowLeft
+    public double? SettingWindowLeft
     {
         get => Settings.SettingWindowLeft;
         set => Settings.SettingWindowLeft = value;
