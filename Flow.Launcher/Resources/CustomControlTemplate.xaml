@@ -1702,6 +1702,21 @@
         </Setter>
     </Style>
 
+    <Style x:Key="{x:Static SystemParameters.FocusVisualStyleKey}">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border
+                        Margin="-3"
+                        BorderBrush="{DynamicResource Color05B}"
+                        BorderThickness="2"
+                        CornerRadius="5"
+                        SnapsToDevicePixels="true" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--  - Custom Toggle Switch from modern wpf for left label  -->
     <system:TimeSpan x:Key="RepositionDelay">0:0:0.033</system:TimeSpan>
     <KeyTime x:Key="RepositionDuration">0:0:0.367</KeyTime>
@@ -1716,7 +1731,7 @@
         <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
         <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="FocusVisualStyle" Value="{DynamicResource {x:Static SystemParameters.FocusVisualStyleKey}}" />
-        <Setter Property="ui:FocusVisualHelper.FocusVisualMargin" Value="-7,-3,-7,-3" />
+        <Setter Property="ui:FocusVisualHelper.FocusVisualMargin" Value="-43,-3,-4,-3" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ui:ToggleSwitch">
