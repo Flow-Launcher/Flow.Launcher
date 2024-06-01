@@ -49,7 +49,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ben.Demystifier" Version="0.4.1" />
-    <PackageReference Include="FastCache.Cached" Version="1.8.2" />
+    <PackageReference Include="BitFaster.Caching" Version="2.5.0" />
     <PackageReference Include="Fody" Version="6.5.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
