@@ -123,7 +123,7 @@ namespace Flow.Launcher.Analyzers.Localize
             var propertyDeclaration = GetDeclarationSyntax<PropertyDeclarationSyntax>(root, diagnosticSpan);
             if (propertyDeclaration is null) return context.Document;
 
-            var newPropertyDeclaration = propertyDeclaration.AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
+            var newPropertyDeclaration = FixRestrictivePropertyModifiers(propertyDeclaration).AddModifiers(SyntaxFactory.Token(SyntaxKind.StaticKeyword));
 
             var newRoot = root.ReplaceNode(propertyDeclaration, newPropertyDeclaration);
             return context.Document.WithSyntaxRoot(newRoot);
@@ -134,20 +134,7 @@ namespace Flow.Launcher.Analyzers.Localize
             var propertyDeclaration = GetDeclarationSyntax<PropertyDeclarationSyntax>(root, diagnosticSpan);
             if (propertyDeclaration is null) return context.Document;
 
-            var newModifiers = SyntaxFactory.TokenList();
-            foreach (var modifier in propertyDeclaration.Modifiers)
-            {
-                if (modifier.IsKind(SyntaxKind.PrivateKeyword) || modifier.IsKind(SyntaxKind.ProtectedKeyword))
-                {
-                    newModifiers = newModifiers.Add(SyntaxFactory.Token(SyntaxKind.InternalKeyword));
-                }
-                else
-                {
-                    newModifiers = newModifiers.Add(modifier);
-                }
-            }
-
-            var newPropertyDeclaration = propertyDeclaration.WithModifiers(newModifiers);
+            var newPropertyDeclaration = FixRestrictivePropertyModifiers(propertyDeclaration);
 
             var newRoot = root.ReplaceNode(propertyDeclaration, newPropertyDeclaration);
             return context.Document.WithSyntaxRoot(newRoot);
@@ -170,6 +157,24 @@ namespace Flow.Launcher.Analyzers.Localize
             var newRoot = root.ReplaceNode(fieldDeclaration, annotatedNewPropertyDeclaration);
 
             return GetFormattedDocument(context, newRoot);
+        }
+
+        private static PropertyDeclarationSyntax FixRestrictivePropertyModifiers(PropertyDeclarationSyntax propertyDeclaration)
+        {
+            var newModifiers = SyntaxFactory.TokenList();
+            foreach (var modifier in propertyDeclaration.Modifiers)
+            {
+                if (modifier.IsKind(SyntaxKind.PrivateKeyword) || modifier.IsKind(SyntaxKind.ProtectedKeyword))
+                {
+                    newModifiers = newModifiers.Add(SyntaxFactory.Token(SyntaxKind.InternalKeyword));
+                }
+                else
+                {
+                    newModifiers = newModifiers.Add(modifier);
+                }
+            }
+
+            return propertyDeclaration.WithModifiers(newModifiers);
         }
 
         private static T GetDeclarationSyntax<T>(SyntaxNode root, TextSpan diagnosticSpan) where T : SyntaxNode =>
