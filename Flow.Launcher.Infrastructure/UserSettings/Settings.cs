@@ -186,7 +186,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
 
-        public bool UseDoublePinyin { get; set; } = false;
+        public bool UseDoublePinyin { get; set; } = true; //For developing
 
         public bool AlwaysPreview { get; set; } = false;
         public bool AlwaysStartEn { get; set; } = false;
