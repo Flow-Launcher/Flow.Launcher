@@ -80,6 +80,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.QueryBoxFontSize;
         set => Settings.QueryBoxFontSize = value;
     }
+
     public double ResultItemFontSize
     {
         get => Settings.ResultItemFontSize;
@@ -94,30 +95,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public List<string> Themes =>
         ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
 
+    public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
-    public class ColorScheme
-    {
-        public string Display { get; set; }
-        public ColorSchemes Value { get; set; }
-    }
-
-    public List<ColorScheme> ColorSchemes
-    {
-        get
-        {
-            List<ColorScheme> modes = new List<ColorScheme>();
-            var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
-            foreach (var e in enums)
-            {
-                var key = $"ColorScheme{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new ColorScheme { Display = display, Value = e, };
-                modes.Add(m);
-            }
-
-            return modes;
-        }
-    }
+    public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
 
     public List<string> TimeFormatList { get; } = new()
     {
@@ -185,29 +165,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseAnimation = value;
     }
 
-    public class AnimationSpeed
-    {
-        public string Display { get; set; }
-        public AnimationSpeeds Value { get; set; }
-    }
+    public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
+    public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
 
-    public List<AnimationSpeed> AnimationSpeeds
-    {
-        get
-        {
-            List<AnimationSpeed> speeds = new List<AnimationSpeed>();
-            var enums = (AnimationSpeeds[])Enum.GetValues(typeof(AnimationSpeeds));
-            foreach (var e in enums)
-            {
-                var key = $"AnimationSpeed{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new AnimationSpeed { Display = display, Value = e, };
-                speeds.Add(m);
-            }
-
-            return speeds;
-        }
-    }
     public bool UseSound
     {
         get => Settings.UseSound;
