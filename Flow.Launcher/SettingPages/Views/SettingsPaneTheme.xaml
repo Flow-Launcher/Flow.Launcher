@@ -466,6 +466,7 @@
                             <Grid
                                 Width="Auto"
                                 Height="34"
+                                MinWidth="140"
                                 Margin="0">
                                 <StackPanel Margin="12 0" Orientation="Horizontal">
                                     <TextBlock
