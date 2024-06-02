@@ -409,7 +409,8 @@
                     ItemsSource="{Binding Themes}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                    SelectedItem="{Binding SelectedTheme}">
+                    SelectedValue="{Binding SelectedTheme}"
+                    SelectedValuePath="FileNameWithoutExtension">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Background" Value="Transparent" />
@@ -474,7 +475,7 @@
                                     VerticalAlignment="Center"
                                     Focusable="True"
                                     FontSize="12"
-                                    Text="{Binding}"
+                                    Text="{Binding Name}"
                                     TextWrapping="Wrap" />
                             </Grid>
                         </DataTemplate>
