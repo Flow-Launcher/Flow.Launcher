@@ -6,6 +6,8 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Core.Plugin;
+using Microsoft.Win32;
+using Velopack.Windows;
 
 namespace Flow.Launcher.Core.Configuration
 {
@@ -16,6 +18,13 @@ namespace Flow.Launcher.Core.Configuration
             try
             {
                 MoveUserDataFolder(DataLocation.PortableDataPath, DataLocation.RoamingDataPath);
+#if !DEBUG
+                // Create shortcuts and uninstaller are not required in debug mode, 
+                // otherwise will repoint the path of the actual installed production version to the debug version
+                CreateShortcuts();
+                // CreateUninstallerEntry();
+#endif
+
                 IndicateDeletion(DataLocation.PortableDataPath);
 
                 MessageBox.Show("Flow Launcher needs to restart to finish disabling portable mode, " +
@@ -29,11 +38,47 @@ namespace Flow.Launcher.Core.Configuration
             }
         }
 
+        public void CreateShortcuts()
+        {
+            var shortcuts = new Shortcuts();
+
+            shortcuts.CreateShortcutForThisExe();
+        }
+
+        public void RemoveShortcuts()
+        {
+            var shortcuts = new Shortcuts();
+
+            shortcuts.DeleteShortcuts(Velopack.Locators.VelopackLocator.GetDefault(null).ThisExeRelativePath,
+                ShortcutLocation.Desktop | ShortcutLocation.StartMenu);
+        }
+
+        public void CreateUninstallerEntry()
+        {
+            var uninstallRegSubKey = @"Software\Microsoft\Windows\CurrentVersion\Uninstall";
+
+            using var baseKey = RegistryKey.OpenBaseKey(RegistryHive.CurrentUser, RegistryView.Default);
+            using var subKey1 = baseKey.CreateSubKey(uninstallRegSubKey, RegistryKeyPermissionCheck.ReadWriteSubTree);
+            using var subKey2 =
+                subKey1.CreateSubKey(Constant.FlowLauncher, RegistryKeyPermissionCheck.ReadWriteSubTree);
+            subKey2?.SetValue("DisplayIcon", Path.Combine(Constant.ApplicationDirectory, "app.ico"),
+                RegistryValueKind.String);
+        }
+
+
         public void EnablePortableMode()
         {
             try
             {
                 MoveUserDataFolder(DataLocation.RoamingDataPath, DataLocation.PortableDataPath);
+                
+#if !DEBUG
+                // Remove shortcuts and uninstaller are not required in debug mode, 
+                // otherwise will delete the actual installed production version
+                RemoveShortcuts();
+                // RemoveUninstallerEntry();
+#endif
+                
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
                 MessageBox.Show("Flow Launcher needs to restart to finish enabling portable mode, " +
