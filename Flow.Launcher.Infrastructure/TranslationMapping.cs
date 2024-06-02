@@ -12,13 +12,6 @@ namespace Flow.Launcher.Infrastructure
         private List<int> translatedIndexs = new List<int>();
         private int translatedLength = 0;
 
-        public string key { get; private set; }
-
-        public void setKey(string key)
-        {
-            this.key = key;
-        }
-
         public void AddNewIndex(int originalIndex, int translatedIndex, int length)
         {
             if (constructed)

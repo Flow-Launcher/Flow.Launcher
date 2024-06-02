@@ -83,7 +83,6 @@ namespace Flow.Launcher.Infrastructure
             map.endConstruct();
 
             var key = resultBuilder.ToString();
-            map.setKey(key);
 
             return _pinyinCache[content] = (key, map);
         }
