@@ -46,71 +46,69 @@ namespace Flow.Launcher.Infrastructure
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
-            if (WordsHelper.HasChinese(content))
-            {
-                var resultList = WordsHelper.GetPinyinList(content);
-
-                StringBuilder resultBuilder = new StringBuilder();
-                TranslationMapping map = new TranslationMapping();
-
-                bool pre = false;
-
-                for (int i = 0; i < resultList.Length; i++)
-                {
-                    if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
-                    {
-                        string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i].ToLower()) : resultList[i];
-                        map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
-                        resultBuilder.Append(' ');
-                        resultBuilder.Append(dp);
-                        pre = true;
-                    }
-                    else
-                    {
-                        if (pre)
-                        {
-                            pre = false;
-                            resultBuilder.Append(' ');
-                        }
-
-                        resultBuilder.Append(resultList[i]);
-                    }
-                }
-
-                map.endConstruct();
-
-                var key = resultBuilder.ToString();
-                map.setKey(key);
-
-                return _pinyinCache[content] = (key, map);
-            }
-            else
+            if (!WordsHelper.HasChinese(content))
             {
                 return (content, null);
             }
+
+            var resultList = WordsHelper.GetPinyinList(content);
+
+            StringBuilder resultBuilder = new StringBuilder();
+            TranslationMapping map = new TranslationMapping();
+
+            bool pre = false;
+
+            for (int i = 0; i < resultList.Length; i++)
+            {
+                if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                {
+                    string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
+                    map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
+                    resultBuilder.Append(' ');
+                    resultBuilder.Append(dp);
+                    pre = true;
+                }
+                else
+                {
+                    if (pre)
+                    {
+                        pre = false;
+                        resultBuilder.Append(' ');
+                    }
+
+                    resultBuilder.Append(resultList[i]);
+                }
+            }
+
+            map.endConstruct();
+
+            var key = resultBuilder.ToString();
+            map.setKey(key);
+
+            return _pinyinCache[content] = (key, map);
         }
 
         #region Double Pinyin
 
         private static readonly ReadOnlyDictionary<string, string> special = new(new Dictionary<string, string>(){
-            {"a", "aa"},
-            {"ai", "ai"},
-            {"an", "an"},
-            {"ang", "ah"},
-            {"ao", "ao"},
-            {"e", "ee"},
-            {"ei", "ei"},
-            {"en", "en"},
-            {"er", "er"},
-            {"o", "oo"},
-            {"ou", "ou"}
+            {"A", "aa"},
+            {"Ai", "ai"},
+            {"An", "an"},
+            {"Ang", "ah"},
+            {"Ao", "ao"},
+            {"E", "ee"},
+            {"Ei", "ei"},
+            {"En", "en"},
+            {"Er", "er"},
+            {"O", "oo"},
+            {"Ou", "ou"}
         });
 
 
         private static readonly ReadOnlyDictionary<string, string> first = new(new Dictionary<string, string>(){
-            {"ch", "i"},
-            {"sh", "u"},
-            {"zh", "v"}
+            {"Ch", "i"},
+            {"Sh", "u"},
+            {"Zh", "v"}
         });
 
 
