@@ -401,8 +401,7 @@
                     ItemsSource="{Binding Themes}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
-                    SelectedValue="{Binding SelectedTheme}"
-                    SelectedValuePath="FileNameWithoutExtension">
+                    SelectedValue="{Binding SelectedTheme}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
                             <WrapPanel />

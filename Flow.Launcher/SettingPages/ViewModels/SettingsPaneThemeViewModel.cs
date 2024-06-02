@@ -27,12 +27,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
-    public string SelectedTheme
+    private Theme.ThemeData _selectedTheme;
+    public Theme.ThemeData SelectedTheme
     {
-        get => Settings.Theme;
+        get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == Settings.Theme);
         set
         {
-            ThemeManager.Instance.ChangeTheme(value);
+            _selectedTheme = value;
+            ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                 DropShadowEffect = false;
