@@ -262,12 +262,12 @@ namespace Flow.Launcher.Core.Resource
                         )
                     };
                 }
-                else if (line.StartsWith("BlurAmount:", StringComparison.OrdinalIgnoreCase))
+                else if (line.StartsWith("IsBlur:", StringComparison.OrdinalIgnoreCase))
                 {
                     themeData = themeData with
                     {
-                        BlurAmount = int.Parse(
-                            line.Remove(0, "BlurAmount:".Length).Trim()
+                        IsBlur = bool.Parse(
+                            line.Remove(0, "IsBlur:".Length).Trim()
                         )
                     };
                 }
@@ -452,6 +452,6 @@ namespace Flow.Launcher.Core.Resource
         }
         #endregion
 
-        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, int? BlurAmount = null);
+        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? IsBlur = null);
     }
 }

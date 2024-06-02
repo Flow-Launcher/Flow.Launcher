@@ -467,16 +467,29 @@
                                 Width="Auto"
                                 Height="34"
                                 Margin="0">
-                                <TextBlock
-                                    x:Name="ThemeName"
-                                    Margin="0"
-                                    Padding="14 12"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Focusable="True"
-                                    FontSize="12"
-                                    Text="{Binding Name}"
-                                    TextWrapping="Wrap" />
+                                <StackPanel Margin="12 0" Orientation="Horizontal">
+                                    <TextBlock
+                                        x:Name="ThemeName"
+                                        Margin="0 0 0 0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Text="{Binding Name}"
+                                        TextWrapping="Wrap" />
+
+                                    <ui:FontIcon
+                                        Margin="8 0 0 0"
+                                        VerticalAlignment="Center"
+                                        FontSize="12"
+                                        Glyph="&#xED66;"
+                                        Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    <ui:FontIcon
+                                        Margin="8 0 0 0"
+                                        VerticalAlignment="Center"
+                                        FontSize="8"
+                                        Glyph="&#xEB42;"
+                                        Visibility="{Binding IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
