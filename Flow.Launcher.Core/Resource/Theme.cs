@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -219,17 +220,60 @@ namespace Flow.Launcher.Core.Resource
             return  GetResourceDictionary(Settings.Theme);
         }
 
-        public List<string> LoadAvailableThemes()
+        public List<ThemeData> LoadAvailableThemes()
         {
-            List<string> themes = new List<string>();
+            List<ThemeData> themes = new List<ThemeData>();
             foreach (var themeDirectory in _themeDirectories)
             {
-                themes.AddRange(
-                    Directory.GetFiles(themeDirectory)
-                        .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
-                        .ToList());
+                var filePaths = Directory
+                    .GetFiles(themeDirectory)
+                    .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
+                    .Select(GetThemeDataFromPath);
+                themes.AddRange(filePaths);
             }
-            return themes.OrderBy(o => o).ToList();
+
+            return themes.OrderBy(o => o.Name).ToList();
+        }
+
+        private ThemeData GetThemeDataFromPath(string path)
+        {
+            using var reader = XmlReader.Create(path);
+            reader.Read();
+
+            var extensionlessName = Path.GetFileNameWithoutExtension(path);
+
+            if (reader.NodeType is not XmlNodeType.Comment)
+                return new ThemeData(extensionlessName, extensionlessName);
+
+            var commentLines = reader.Value.Trim().Split('\n').Select(v => v.Trim());
+            var themeData = new ThemeData(extensionlessName, extensionlessName);
+            foreach (var line in commentLines)
+            {
+                if (line.StartsWith("Name:", StringComparison.OrdinalIgnoreCase))
+                {
+                    themeData = themeData with { Name = line.Remove(0, "Name:".Length).Trim() };
+                }
+                else if (line.StartsWith("IsDark:", StringComparison.OrdinalIgnoreCase))
+                {
+                    themeData = themeData with
+                    {
+                        IsDark = bool.Parse(
+                            line.Remove(0, "IsDark:".Length).Trim()
+                        )
+                    };
+                }
+                else if (line.StartsWith("BlurAmount:", StringComparison.OrdinalIgnoreCase))
+                {
+                    themeData = themeData with
+                    {
+                        BlurAmount = int.Parse(
+                            line.Remove(0, "BlurAmount:".Length).Trim()
+                        )
+                    };
+                }
+            }
+
+            return themeData;
         }
 
         private string GetThemePath(string themeName)
@@ -407,5 +451,7 @@ namespace Flow.Launcher.Core.Resource
             Marshal.FreeHGlobal(accentPtr);
         }
         #endregion
+
+        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, int? BlurAmount = null);
     }
 }
