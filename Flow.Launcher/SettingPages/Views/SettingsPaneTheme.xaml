@@ -466,7 +466,6 @@
                             <Grid
                                 Width="Auto"
                                 Height="34"
-                                MinWidth="140"
                                 Margin="0">
                                 <StackPanel Margin="12 0" Orientation="Horizontal">
                                     <TextBlock
@@ -487,7 +486,7 @@
                                     <ui:FontIcon
                                         Margin="8 0 0 0"
                                         VerticalAlignment="Center"
-                                        FontSize="8"
+                                        FontSize="12"
                                         Glyph="&#xEB42;"
                                         Visibility="{Binding IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </StackPanel>
