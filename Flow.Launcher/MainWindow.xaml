@@ -441,12 +441,18 @@
                 </StackPanel>
                 <GridSplitter
                     Grid.Column="1"
-                    Width="{Binding PreviewVisible, Converter={StaticResource SplitterConverter}}"
                     Margin="0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Stretch"
                     Background="Transparent"
-                    ShowsPreview="True" />
+                    ShowsPreview="True"
+                    Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <GridSplitter.Template>
+                        <ControlTemplate TargetType="{x:Type GridSplitter}">
+                            <Border Style="{DynamicResource PreviewBorderStyle}" />
+                        </ControlTemplate>
+                    </GridSplitter.Template>
+                </GridSplitter>
                 <Grid
                     x:Name="Preview"
                     Grid.Column="2"
@@ -457,10 +463,9 @@
                         MinHeight="380"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                         DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
-                        Style="{DynamicResource PreviewBorderStyle}"
                         Visibility="{Binding ShowDefaultPreview}">
                         <Grid
-                            Margin="20 0 10 0"
+                            Margin="0 0 10 5"
                             VerticalAlignment="Stretch"
                             Background="Transparent">
                             <Grid.RowDefinitions>
@@ -532,9 +537,9 @@
                     <Border
                         MinHeight="380"
                         MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
+                        Padding="0 0 10 10"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                         DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
-                        Style="{DynamicResource PreviewBorderStyle}"
                         Visibility="{Binding ShowCustomizedPreview}">
                         <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                     </Border>

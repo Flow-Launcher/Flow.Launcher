@@ -55,7 +55,6 @@
         </Setter>
     </Style>
     <Style x:Key="ThemeList" TargetType="ListBoxItem">
-        <Setter Property="Background" Value="Red" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="Padding" Value="0" />

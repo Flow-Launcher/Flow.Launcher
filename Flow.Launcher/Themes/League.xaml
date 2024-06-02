@@ -1,0 +1,165 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+    <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="0" />
+    </Style>
+    <Style
+        x:Key="QueryBoxStyle"
+        BasedOn="{StaticResource BaseQueryBoxStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Foreground" Value="#b88f3a" />
+        <Setter Property="CaretBrush" Value="#b88f3a" />
+        <Setter Property="Padding" Value="0,0,66,0" />
+        <Setter Property="Height" Value="42" />
+    </Style>
+    <Style
+        x:Key="ItemGlyph"
+        BasedOn="{StaticResource BaseGlyphStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#b88f3a" />
+    </Style>
+    <Style
+        x:Key="QuerySuggestionBoxStyle"
+        BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
+        TargetType="{x:Type TextBox}">
+        <Setter Property="Background" Value="#161614" />
+        <Setter Property="Foreground" Value="#a09b8c" />
+        <Setter Property="Padding" Value="0,0,66,0" />
+        <Setter Property="Height" Value="42" />
+    </Style>
+
+    <Style
+        x:Key="WindowBorderStyle"
+        BasedOn="{StaticResource BaseWindowBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="#785a28" />
+        <Setter Property="Background" Value="#161614" />
+    </Style>
+    <Style
+        x:Key="WindowStyle"
+        BasedOn="{StaticResource BaseWindowStyle}"
+        TargetType="{x:Type Window}">
+        <Setter Property="Width" Value="576" />
+    </Style>
+    <Style
+        x:Key="PendingLineStyle"
+        BasedOn="{StaticResource BasePendingLineStyle}"
+        TargetType="{x:Type Line}">
+        <Setter Property="Stroke" Value="#32EC32" />
+    </Style>
+    <Style
+        x:Key="SeparatorStyle"
+        BasedOn="{StaticResource BaseSeparatorStyle}"
+        TargetType="{x:Type Rectangle}">
+        <Setter Property="Fill" Value="#785a28" />
+        <Setter Property="Height" Value="1" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+    </Style>
+    <Style
+        x:Key="ItemTitleStyle"
+        BasedOn="{StaticResource BaseItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#a09b8c" />
+    </Style>
+    <Style
+        x:Key="ItemSubTitleStyle"
+        BasedOn="{StaticResource BaseItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#5b5a56" />
+    </Style>
+    <Style
+        x:Key="ItemTitleSelectedStyle"
+        BasedOn="{StaticResource BaseItemTitleSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#a09b8c" />
+    </Style>
+    <Style
+        x:Key="ItemSubTitleSelectedStyle"
+        BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#4bb44b" />
+        <Setter Property="FontSize" Value="13" />
+    </Style>
+    <SolidColorBrush x:Key="ItemSelectedBackgroundColor">#192026</SolidColorBrush>
+    <Style
+        x:Key="ThumbStyle"
+        BasedOn="{StaticResource BaseThumbStyle}"
+        TargetType="{x:Type Thumb}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border
+                        Background="#b88f3a"
+                        BorderBrush="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="2"
+                        DockPanel.Dock="Right" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="ScrollBarStyle"
+        BasedOn="{StaticResource BaseScrollBarStyle}"
+        TargetType="{x:Type ScrollBar}">
+        <Setter Property="Width" Value="4" />
+    </Style>
+    <Style x:Key="HighlightStyle">
+        <Setter Property="Inline.FontWeight" Value="Bold" />
+    </Style>
+    <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#5b5a56" />
+    </Style>
+    <Style x:Key="ItemHotkeySelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Foreground" Value="#5b5a56" />
+    </Style>
+    <Geometry x:Key="SearchIconImg">F1 M12000,12000z M0,0z M10354,10962C10326,10951 10279,10927 10249,10907 10216,10886 9476,10153 8370,9046 7366,8042 6541,7220 6536,7220 6532,7220 6498,7242 6461,7268 6213,7447 5883,7619 5592,7721 5194,7860 4802,7919 4360,7906 3612,7886 2953,7647 2340,7174 2131,7013 1832,6699 1664,6465 1394,6088 1188,5618 1097,5170 1044,4909 1030,4764 1030,4470 1030,4130 1056,3914 1135,3609 1263,3110 1511,2633 1850,2235 1936,2134 2162,1911 2260,1829 2781,1395 3422,1120 4090,1045 4271,1025 4667,1025 4848,1045 5505,1120 6100,1368 6630,1789 6774,1903 7081,2215 7186,2355 7362,2588 7467,2759 7579,2990 7802,3455 7911,3937 7911,4460 7911,4854 7861,5165 7737,5542 7684,5702 7675,5724 7602,5885 7517,6071 7390,6292 7270,6460 7242,6499 7220,6533 7220,6538 7220,6542 8046,7371 9055,8380 10441,9766 10898,10229 10924,10274 10945,10308 10966,10364 10976,10408 10990,10472 10991,10493 10980,10554 10952,10717 10840,10865 10690,10937 10621,10971 10607,10974 10510,10977 10425,10980 10395,10977 10354,10962z M4685,7050C5214,7001 5694,6809 6100,6484 6209,6396 6396,6209 6484,6100 7151,5267 7246,4110 6721,3190 6369,2571 5798,2137 5100,1956 4706,1855 4222,1855 3830,1957 3448,2056 3140,2210 2838,2453 2337,2855 2010,3427 1908,4080 1877,4274 1877,4656 1908,4850 1948,5105 2028,5370 2133,5590 2459,6272 3077,6782 3810,6973 3967,7014 4085,7034 4290,7053 4371,7061 4583,7059 4685,7050z</Geometry>
+    <Style x:Key="SearchIconStyle" TargetType="{x:Type Path}">
+        <Setter Property="Fill" Value="#b88f3a" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+    </Style>
+    <Style
+        x:Key="ClockBox"
+        BasedOn="{StaticResource BaseClockBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#4bb44b" />
+    </Style>
+    <Style
+        x:Key="DateBox"
+        BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#4bb44b" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="0,0,10,0" />
+        <Setter Property="BorderBrush" Value="#785a28" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#a09b8c" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#5b5a56" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#b88f3a" />
+    </Style>
+</ResourceDictionary>

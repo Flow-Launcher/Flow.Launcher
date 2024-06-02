@@ -385,19 +385,19 @@
                 Icon="&#xe790;">
                 <cc:ExCard.SideContent>
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <TextBlock Text="{Binding SelectedTheme.Name}" />
                         <ui:FontIcon
-                            Margin="8 0 0 0"
+                            Margin="0 0 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xED66;"
                             Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <ui:FontIcon
-                            Margin="8 0 0 0"
+                            Margin="0 0 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xEB42;"
                             Visibility="{Binding SelectedTheme.IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <TextBlock Text="{Binding SelectedTheme.Name}" />
                     </StackPanel>
                 </cc:ExCard.SideContent>
                 <ListBox
