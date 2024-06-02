@@ -74,7 +74,7 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
-                API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
+                API = new PublicAPIInstance(_settingsVM, _mainVM);
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
