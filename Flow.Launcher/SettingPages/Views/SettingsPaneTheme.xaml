@@ -384,10 +384,20 @@
                 Margin="0 8 0 0"
                 Icon="&#xe790;">
                 <cc:ExCard.SideContent>
-                    <StackPanel>
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <TextBlock Text="{Binding SelectedTheme.Name}" />
-                        <TextBlock Text="{Binding SelectedTheme.IsDark}" />
-                        <TextBlock Text="{Binding SelectedTheme.IsBlur}" />
+                        <ui:FontIcon
+                            Margin="8 0 0 0"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Glyph="&#xED66;"
+                            Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <ui:FontIcon
+                            Margin="8 0 0 0"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Glyph="&#xEB42;"
+                            Visibility="{Binding SelectedTheme.IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </StackPanel>
                 </cc:ExCard.SideContent>
                 <ListBox
