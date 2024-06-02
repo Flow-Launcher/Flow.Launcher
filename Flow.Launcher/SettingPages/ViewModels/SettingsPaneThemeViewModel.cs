@@ -22,6 +22,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
+    private const string DefaultFont = "Segoe UI";
     public Settings Settings { get; }
 
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
@@ -144,11 +145,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     }
 
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+
     public bool KeepMaxResults
     {
         get => Settings.KeepMaxResults;
         set => Settings.KeepMaxResults = value;
     }
+
     public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
@@ -286,7 +289,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.QueryBoxFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -330,7 +333,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.ResultFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -375,7 +378,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
             else
             {
-                var font = new FontFamily("Segoe UI");
+                var font = new FontFamily(DefaultFont);
                 return font;
             }
         }
@@ -406,6 +409,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             ThemeManager.Instance.ChangeTheme(Settings.Theme);
         }
     }
+
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
     [RelayCommand]
@@ -430,4 +434,21 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings = settings;
     }
 
+    public void Reset()
+    {
+        SelectedQueryBoxFont = new FontFamily(DefaultFont);
+        SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        QueryBoxFontSize = 20;
+
+        SelectedResultFont = new FontFamily(DefaultFont);
+        SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultItemFontSize = 16;
+
+        SelectedResultSubFont = new FontFamily(DefaultFont);
+        SelectedResultSubFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultSubItemFontSize = 13;
+
+        WindowHeightSize = 42;
+        ItemHeightSize = 58;
+    }
 }
