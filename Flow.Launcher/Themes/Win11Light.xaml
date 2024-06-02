@@ -195,7 +195,7 @@
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="{DynamicResource SeparatorForeground}" />
-        <Setter Property="Margin" Value="5 0 0 0" />
+        <Setter Property="Margin" Value="5 0 10 0" />
     </Style>
     <Style
         x:Key="PreviewItemTitleStyle"
