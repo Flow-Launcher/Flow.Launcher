@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
     <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se puede ajustar arrastrando el ratón.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más y Ctrl+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
@@ -73,7 +73,7 @@
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al inicio</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">La ventana de búsqueda de Flow Launcher se oculta en la bandeja del sistema tras el arranque.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono en la bandeja del sistema</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Cuando el icono está oculto en la bandeja del sistema, se puede abrir el menú de configuración haciendo clic con el botón derecho en la ventana de búsqueda.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de búsqueda en consultas</system:String>
@@ -278,9 +278,9 @@
     <system:String x:Key="clearlogfolder">Eliminar registros</system:String>
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
+    <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portátil o no.</system:String>
+    <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
