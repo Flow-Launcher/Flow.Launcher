@@ -460,7 +460,7 @@
                     Style="{DynamicResource PreviewArea}"
                     Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Border
-                        
+                        MinHeight="380"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                         DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
                         Visibility="{Binding ShowDefaultPreview}">
@@ -535,7 +535,7 @@
                         </Grid>
                     </Border>
                     <Border
-                        
+                        MinHeight="380"
                         MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
                         Padding="0 0 10 10"
                         d:DataContext="{d:DesignInstance vm:ResultViewModel}"
