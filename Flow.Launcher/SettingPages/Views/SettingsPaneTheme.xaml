@@ -39,7 +39,17 @@
                 TextAlignment="left"
                 Visibility="Collapsed" />
             <!--  Theme Preview and Editor  -->
-            <Grid Height="380">
+            <Grid>
+                <Grid.Style>
+                    <Style x:Name="PreviewArea" TargetType="Grid">
+                        <Setter Property="MaxHeight" Value="380" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ElementName=Editor, Path=IsChecked}" Value="True">
+                                <Setter Property="MaxHeight" Value="550" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Grid.Style>
                 <Grid.Resources>
                     <!--  Style for the second ColumnDefinition  -->
                     <Style x:Key="SecondColumnStyle" TargetType="ColumnDefinition">
@@ -386,13 +396,13 @@
                 <cc:ExCard.SideContent>
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <ui:FontIcon
-                            Margin="0 0 8 0"
+                            Margin="0 2 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xED66;"
                             Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <ui:FontIcon
-                            Margin="0 0 8 0"
+                            Margin="0 2 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xEB42;"
@@ -423,22 +433,21 @@
                                 Width="Auto"
                                 Height="34"
                                 Margin="0">
-                                <StackPanel Margin="12 0" Orientation="Horizontal">
+                                <StackPanel Margin="14 2 14 0" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="0 0 0 0"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        FontSize="12"
                                         Text="{Binding Name}"
                                         TextWrapping="Wrap" />
                                     <ui:FontIcon
-                                        Margin="8 0 0 0"
+                                        Margin="8 1 0 0"
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Glyph="&#xED66;"
                                         Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     <ui:FontIcon
-                                        Margin="8 0 0 0"
+                                        Margin="8 1 0 0"
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Glyph="&#xEB42;"
