@@ -670,12 +670,27 @@ namespace Flow.Launcher.ViewModel
             get { return _selectedResults; }
             set
             {
+                var isReturningFromContextMenu = ContextMenuSelected();
                 _selectedResults = value;
                 if (SelectedIsFromQueryResults())
                 {
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
-                    ChangeQueryText(_queryTextBeforeLeaveResults);
+
+                    // QueryText setter (used in ChangeQueryText) runs the query again, resetting the selected
+                    // result from the one that was selected before going into the context menu to the first result.
+                    // The code below correctly restores QueryText and puts the text caret at the end without
+                    // running the query again when returning from the context menu.
+                    if (isReturningFromContextMenu)
+                    {
+                        _queryText = _queryTextBeforeLeaveResults;
+                        OnPropertyChanged(nameof(QueryText));
+                        QueryTextCursorMovedToEnd = true;
+                    }
+                    else
+                    {
+                        ChangeQueryText(_queryTextBeforeLeaveResults);
+                    }
                 }
                 else
                 {
