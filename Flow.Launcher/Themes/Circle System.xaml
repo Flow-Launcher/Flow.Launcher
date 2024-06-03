@@ -1,7 +1,7 @@
 <!--
     Name: Circle
     IsDark: True
-    IsBlur: False
+    HasBlur: False
 -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

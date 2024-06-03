@@ -396,7 +396,7 @@
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xEB42;"
-                            Visibility="{Binding SelectedTheme.IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{Binding SelectedTheme.HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <TextBlock Text="{Binding SelectedTheme.Name}" />
                     </StackPanel>
                 </cc:ExCard.SideContent>
@@ -442,7 +442,7 @@
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Glyph="&#xEB42;"
-                                        Visibility="{Binding IsBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        Visibility="{Binding HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>

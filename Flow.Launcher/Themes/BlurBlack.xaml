@@ -1,7 +1,7 @@
 ﻿<!--
     Name: Blur Black
     IsDark: False
-    IsBlur: True
+    HasBlur: True
 -->
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

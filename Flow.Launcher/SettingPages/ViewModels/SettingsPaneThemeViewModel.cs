@@ -93,7 +93,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.ResultSubItemFontSize;
         set => Settings.ResultSubItemFontSize = value;
     }
-    public List<Theme.ThemeData> Themes => ThemeManager.Instance.LoadAvailableThemes();
+
+    private List<Theme.ThemeData> _themes;
+    public List<Theme.ThemeData> Themes => _themes ??= ThemeManager.Instance.LoadAvailableThemes();
 
 
     public class ColorScheme

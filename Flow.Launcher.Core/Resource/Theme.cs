@@ -18,6 +18,10 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
+        private const string ThemeMetadataNamePrefix = "Name:";
+        private const string ThemeMetadataIsDarkPrefix = "IsDark:";
+        private const string ThemeMetadataHasBlurPrefix = "HasBlur:";
+
         private const int ShadowExtraMargin = 32;
 
         private readonly List<string> _themeDirectories = new List<string>();
@@ -80,14 +84,14 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
-                
+
                 // reload all resources even if the theme itself hasn't changed in order to pickup changes
                 // to things like fonts
                 UpdateResourceDictionary(GetResourceDictionary(theme));
-                
+
                 Settings.Theme = theme;
 
-                
+
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
@@ -149,7 +153,7 @@ namespace Flow.Launcher.Core.Resource
         public ResourceDictionary GetResourceDictionary(string theme)
         {
             var dict = GetThemeResourceDictionary(theme);
-            
+
             if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
                 dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
@@ -188,7 +192,7 @@ namespace Flow.Launcher.Core.Resource
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
-                    new[] { resultItemStyle, resultItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    new[] { resultItemStyle, resultItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
 
@@ -246,34 +250,27 @@ namespace Flow.Launcher.Core.Resource
                 return new ThemeData(extensionlessName, extensionlessName);
 
             var commentLines = reader.Value.Trim().Split('\n').Select(v => v.Trim());
-            var themeData = new ThemeData(extensionlessName, extensionlessName);
+
+            var name = extensionlessName;
+            bool? isDark = null;
+            bool? hasBlur = null;
             foreach (var line in commentLines)
             {
-                if (line.StartsWith("Name:", StringComparison.OrdinalIgnoreCase))
+                if (line.StartsWith(ThemeMetadataNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    themeData = themeData with { Name = line.Remove(0, "Name:".Length).Trim() };
+                    name = line.Remove(0, ThemeMetadataNamePrefix.Length).Trim();
                 }
-                else if (line.StartsWith("IsDark:", StringComparison.OrdinalIgnoreCase))
+                else if (line.StartsWith(ThemeMetadataIsDarkPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    themeData = themeData with
-                    {
-                        IsDark = bool.Parse(
-                            line.Remove(0, "IsDark:".Length).Trim()
-                        )
-                    };
+                    isDark = bool.Parse(line.Remove(0, ThemeMetadataIsDarkPrefix.Length).Trim());
                 }
-                else if (line.StartsWith("IsBlur:", StringComparison.OrdinalIgnoreCase))
+                else if (line.StartsWith(ThemeMetadataHasBlurPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    themeData = themeData with
-                    {
-                        IsBlur = bool.Parse(
-                            line.Remove(0, "IsBlur:".Length).Trim()
-                        )
-                    };
+                    hasBlur = bool.Parse(line.Remove(0, ThemeMetadataHasBlurPrefix.Length).Trim());
                 }
             }
 
-            return themeData;
+            return new ThemeData(extensionlessName, name, isDark, hasBlur);
         }
 
         private string GetThemePath(string themeName)
@@ -452,6 +449,6 @@ namespace Flow.Launcher.Core.Resource
         }
         #endregion
 
-        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? IsBlur = null);
+        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
     }
 }
