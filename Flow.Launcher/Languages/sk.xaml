@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
@@ -73,7 +73,7 @@
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
@@ -278,9 +278,9 @@
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
+    <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
+    <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
