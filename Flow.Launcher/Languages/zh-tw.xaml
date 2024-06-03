@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">選擇上一個查詢</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜尋關鍵字</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
@@ -73,6 +73,7 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
     <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
@@ -277,6 +278,9 @@
     <system:String x:Key="clearlogfolder">清除日誌</system:String>
     <system:String x:Key="clearlogfolderMessage">請確認要刪除所有日誌嗎？</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">選擇檔案管理器</system:String>
