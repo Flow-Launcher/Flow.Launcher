@@ -81,6 +81,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
+    private void OpenParentOfSettingsFolder(object parameter)
+    {
+        string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
+        string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
+        PluginManager.API.OpenDirectory(parentFolderPath);
+    }
+
+
+    [RelayCommand]
     private void OpenLogsFolder()
     {
         App.API.OpenDirectory(GetLogDir(Constant.Version).FullName);
