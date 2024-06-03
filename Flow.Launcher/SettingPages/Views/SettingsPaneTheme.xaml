@@ -407,16 +407,13 @@
                     </StackPanel>
                 </cc:ExCard.SideContent>
                 <ListBox
-                    Padding="18 12 18 12"
                     HorizontalAlignment="Stretch"
                     HorizontalContentAlignment="Stretch"
                     Background="Transparent"
-                    BorderBrush="{DynamicResource Color03B}"
-                    BorderThickness="0 1 0 0"
                     ItemContainerStyle="{DynamicResource ThemeList}"
                     ItemsSource="{Binding Themes}"
                     ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                    ScrollViewer.VerticalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Disabled"
                     SelectedValue="{Binding SelectedTheme}">
                     <ListBox.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -428,7 +425,8 @@
                             <Grid
                                 Width="Auto"
                                 Height="34"
-                                Margin="0">
+                                Margin="0"
+                                Focusable="True">
                                 <StackPanel Margin="14 2 14 0" Orientation="Horizontal">
                                     <TextBlock
                                         Margin="0 0 0 0"
@@ -452,6 +450,16 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.Template>
+                        <ControlTemplate>
+                            <Border
+                                Padding="18 12 18 12"
+                                BorderBrush="{DynamicResource Color03B}"
+                                BorderThickness="0 1 0 0">
+                                <ItemsPresenter />
+                            </Border>
+                        </ControlTemplate>
+                    </ListBox.Template>
                 </ListBox>
             </cc:ExCard>
             <cc:HyperLink
