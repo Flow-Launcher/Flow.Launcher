@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">前回のクエリを選択</system:String>
     <system:String x:Key="LastQueryEmpty">前回のクエリを消去</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">結果の最大表示件数</system:String>
     <system:String x:Key="maxShowResultsToolTip">CTRL+PlusとCTRL+Minusを使用すれば、簡単に調整することもできます。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">ウィンドウがフルスクリーン時にホットキーを無効にする</system:String>
@@ -73,6 +73,7 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選択</system:String>
     <system:String x:Key="hideOnStartup">起動時にFlow Launcherを隠す</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">トレイアイコンを隠す</system:String>
     <system:String x:Key="hideNotifyIconToolTip">トレイアイコンが非表示になっているときは、検索ウィンドウを右クリックすることで設定メニューを開くことができます。</system:String>
     <system:String x:Key="querySearchPrecision">クエリ検索精度</system:String>
@@ -277,6 +278,9 @@
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
