@@ -12,7 +12,7 @@ namespace Flow.Launcher.Infrastructure
         private List<int> translatedIndexs = new List<int>();
         private int translatedLength = 0;
 
-        public void AddNewIndex(int originalIndex, int translatedIndex, int length)
+        public virtual void AddNewIndex(int originalIndex, int translatedIndex, int length)
         {
             if (constructed)
                 throw new InvalidOperationException("Mapping shouldn't be changed after constructed");
@@ -23,7 +23,7 @@ namespace Flow.Launcher.Infrastructure
             translatedLength += length - 1;
         }
 
-        public int MapToOriginalIndex(int translatedIndex)
+        public virtual int MapToOriginalIndex(int translatedIndex)
         {
             if (translatedIndex > translatedIndexs.Last())
                 return translatedIndex - translatedLength - 1;
@@ -87,6 +87,24 @@ namespace Flow.Launcher.Infrastructure
             if (constructed)
                 throw new InvalidOperationException("Mapping has already been constructed");
             constructed = true;
+        }
+    }
+
+    public class TranslationMappingV2 : TranslationMapping
+    {
+        // Asssuming one original maps to multi translated
+        private List<int> originalToTranslated = new();
+
+        public override void AddNewIndex(int originalIndex, int translatedIndex, int length)
+        {
+            originalToTranslated.Add(translatedIndex + length);
+        }
+
+        public override int MapToOriginalIndex(int translatedIndex)
+        {
+            int loc = originalToTranslated.BinarySearch(translatedIndex);
+
+            return loc > 0 ? loc : -loc - 1;
         }
     }
 }
