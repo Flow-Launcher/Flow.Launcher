@@ -262,7 +262,11 @@
                     </ScrollViewer>
                 </Border>
                 <!--  Theme Preview  -->
-                <Border Grid.Column="0" Background="{Binding PreviewBackground}">
+                <Border
+                    Grid.Column="0"
+                    Background="{Binding PreviewBackground}"
+                    SnapsToDevicePixels="True"
+                    UseLayoutRounding="True">
                     <Border.Style>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="6 0 0 6" />
@@ -300,16 +304,8 @@
                                 Width="400"
                                 Margin="40 30 0 30"
                                 SnapsToDevicePixels="True"
-                                Style="{DynamicResource WindowBorderStyle}"
-                                UseLayoutRounding="True">
-                                <Border Style="{DynamicResource WindowRadius}">
-                                    <Border.Clip>
-                                        <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                            <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                            <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                            <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                        </MultiBinding>
-                                    </Border.Clip>
+                                Style="{DynamicResource WindowBorderStyle}">
+                                <Border BorderThickness="0" Style="{DynamicResource WindowRadius}">
                                     <Grid>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="Auto" />
