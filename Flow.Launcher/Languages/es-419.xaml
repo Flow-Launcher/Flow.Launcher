@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Seleccionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Borrar última consulta</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
@@ -73,6 +73,7 @@
     <system:String x:Key="autoUpdates">Actualización automática</system:String>
     <system:String x:Key="select">Seleccionar</system:String>
     <system:String x:Key="hideOnStartup">Ocultar Flow Launcher al arrancar el sistema</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar icono de la bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Precisión de la búsqueda</system:String>
@@ -277,6 +278,9 @@
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar Gestor de Archivos</system:String>
