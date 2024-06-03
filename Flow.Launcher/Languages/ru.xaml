@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Выбор последнего запроса</system:String>
     <system:String x:Key="LastQueryEmpty">Очистить последний запрос</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Максимальное количество результатов</system:String>
     <system:String x:Key="maxShowResultsToolTip">Вы также можете быстро настроить это с помощью CTRL+плюс и CTRL+минус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Игнорировать горячие клавиши в полноэкранном режиме</system:String>
@@ -73,6 +73,7 @@
     <system:String x:Key="autoUpdates">Автообновление</system:String>
     <system:String x:Key="select">Выбор</system:String>
     <system:String x:Key="hideOnStartup">Скрыть Flow Launcher при запуске</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Скрыть значок в трее</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Когда значок скрыт в трее, меню настройки можно открыть, щёлкнув правой кнопкой мыши на окне поиска.</system:String>
     <system:String x:Key="querySearchPrecision">Точность поиска запросов</system:String>
@@ -277,6 +278,9 @@
     <system:String x:Key="clearlogfolder">Очистить журнал</system:String>
     <system:String x:Key="clearlogfolderMessage">Вы уверены, что хотите удалить все журналы?</system:String>
     <system:String x:Key="welcomewindow">Мастер</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Выбор менеджера файлов</system:String>
