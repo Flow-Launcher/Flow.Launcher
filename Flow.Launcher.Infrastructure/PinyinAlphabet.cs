@@ -54,28 +54,28 @@ namespace Flow.Launcher.Infrastructure
             var resultList = WordsHelper.GetPinyinList(content);
 
             StringBuilder resultBuilder = new StringBuilder();
-            TranslationMapping map = new TranslationMapping();
-
-            bool pre = false;
+            TranslationMappingV2 map = new TranslationMappingV2();
 
             for (int i = 0; i < resultList.Length; i++)
             {
                 if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
                 {
                     string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
-                    map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
-                    resultBuilder.Append(' ');
-                    resultBuilder.Append(dp);
-                    pre = true;
+                    if (i > 0)
+                    {
+                        map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
+                        resultBuilder.Append(' ');
+                        resultBuilder.Append(dp);
+                    }
+                    else
+                    {
+                        map.AddNewIndex(i, resultBuilder.Length, dp.Length);
+                        resultBuilder.Append(dp);
+                    }
                 }
                 else
                 {
-                    if (pre)
-                    {
-                        pre = false;
-                        resultBuilder.Append(' ');
-                    }
-
+                    map.AddNewIndex(i, resultBuilder.Length, resultList[i].Length);
                     resultBuilder.Append(resultList[i]);
                 }
             }
