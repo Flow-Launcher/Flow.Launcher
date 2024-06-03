@@ -11,13 +11,13 @@
     <SolidColorBrush x:Key="QuerySelectionBrush" Color="#0a68d8" />
     <SolidColorBrush x:Key="SubTitleForeground" Color="#818181" />
     <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#72767d" />
-    <SolidColorBrush x:Key="SearchIconForeground" Color="#14000000" />
+    <SolidColorBrush x:Key="SearchIconForeground" Color="#d3d3d3" />
     <SolidColorBrush x:Key="SeparatorForeground" Color="#14000000" />
     <SolidColorBrush x:Key="ThumbColor" Color="#868686" />
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
     <SolidColorBrush x:Key="HotkeyForeground" Color="#acacac" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#acacac" />
-    <SolidColorBrush x:Key="ClockDateForeground" Color="#bebebe" />
+    <SolidColorBrush x:Key="ClockDateForeground" Color="#d3d3d3" />
     <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
 
     <SolidColorBrush x:Key="Color00B" Color="#fbfbfb" />

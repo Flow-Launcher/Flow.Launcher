@@ -175,13 +175,13 @@
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource HotkeyForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
     </Style>
     <Style
         x:Key="PreviewBorderStyle"
