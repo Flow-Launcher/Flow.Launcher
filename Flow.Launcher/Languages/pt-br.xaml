@@ -55,7 +55,7 @@
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height will not be resizeable by dragging</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">Você também pode ajustar isso rapidamente usando CTRL+Mais e CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atalhos em tela cheia</system:String>
@@ -73,6 +73,7 @@
     <system:String x:Key="autoUpdates">Atualizar Automaticamente</system:String>
     <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Esconder Flow Launcher na inicialização</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone da bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Quando o ícone não está na bandeja, o menu de Configurações pode ser aberto ao clicar na janela de busca com o botão direito do mouse.</system:String>
     <system:String x:Key="querySearchPrecision">Precisão de Busca da Consulta</system:String>
@@ -277,6 +278,9 @@
     <system:String x:Key="clearlogfolder">Limpar Registros</system:String>
     <system:String x:Key="clearlogfolderMessage">Tem certeza que quer excluir todos os registros?</system:String>
     <system:String x:Key="welcomewindow">Assistente</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o Gerenciador de Arquivos</system:String>
