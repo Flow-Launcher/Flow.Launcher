@@ -54,8 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Conserver la dernière recherche</system:String>
     <system:String x:Key="LastQuerySelected">Sélectionner la dernière recherche</system:String>
     <system:String x:Key="LastQueryEmpty">Ne pas afficher la dernière recherche</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResults">Hauteur de fenêtre fixe</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">La hauteur de la fenêtre n'est pas réglable par glissement.</system:String>
     <system:String x:Key="maxShowResults">Résultats maximums à afficher</system:String>
     <system:String x:Key="maxShowResultsToolTip">Vous pouvez également ajuster ce paramètre en utilisant CTRL+Plus ou CTRL+Moins.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore les raccourcis lorsqu'une application est en plein écran</system:String>
@@ -73,14 +73,14 @@
     <system:String x:Key="autoUpdates">Mettre à jour automatiquement</system:String>
     <system:String x:Key="select">Sélectionner</system:String>
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
     <system:String x:Key="hideNotifyIcon">Masquer l'icône de la barre des tâches</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Lorsque l'icône est cachée dans la barre de tâches, le menu Paramètres peut être ouvert en faisant un clic droit sur la barre de recherche.</system:String>
     <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
     <system:String x:Key="SearchPrecisionNone">Aucun</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionLow">Faible</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permet d'utiliser Pinyin pour la recherche. Pinyin est le système standard d'orthographe romanisée pour la traduction du chinois</system:String>
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
@@ -146,13 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Lancez des programmes en tant qu'administrateur ou un utilisateur différent</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Tueur de processus</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminer les processus non désirés</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SearchBarHeight">Hauteur de la barre de recherche</system:String>
+    <system:String x:Key="ItemHeight">Hauteur de l'objet</system:String>
     <system:String x:Key="queryBoxFont">Police (barre de recherche)</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resultItemFont">Police du titre du résultat</system:String>
+    <system:String x:Key="resultSubItemFont">Police des sous-titres du résultat</system:String>
     <system:String x:Key="resetCustomize">Réinitialiser</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="CustomizeToolTip">Personnaliser</system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>
     <system:String x:Key="opacity">Opacité</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Le thème {0} n'existe pas, retour au thème par défaut</system:String>
@@ -277,9 +277,9 @@
     <system:String x:Key="clearlogfolder">Effacer le journal</system:String>
     <system:String x:Key="clearlogfolderMessage">Êtes-vous sûr de vouloir supprimer tous les journaux ?</system:String>
     <system:String x:Key="welcomewindow">Assistant</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
+    <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
+    <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
@@ -434,5 +434,5 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <!--  Preview Area  -->
     <system:String x:Key="FileSize">Taille du fichier</system:String>
     <system:String x:Key="Created">Créé</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="LastModified">Dernière modification</system:String>
 </ResourceDictionary>
