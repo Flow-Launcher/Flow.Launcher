@@ -167,7 +167,7 @@
     <system:String x:Key="SoundEffectTip">Jouer un petit son lorsque la fenêtre de recherche s'ouvre</system:String>
     <system:String x:Key="SoundEffectVolume">Volume de l'effet sonore</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Ajuster le volume de l'effet sonore</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player n'est pas disponible et est requis pour le réglage du volume de Flow. Veuillez vérifier votre installation si vous avez besoin de régler le volume.</system:String>
     <system:String x:Key="Animation">Animation</system:String>
     <system:String x:Key="AnimationTip">Utiliser l'animation dans l'interface</system:String>
     <system:String x:Key="AnimationSpeed">Vitesse d'animation</system:String>
@@ -432,7 +432,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="RecommendAcronymsDesc">Pense-bêtes</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="FileSize">Taille du fichier</system:String>
+    <system:String x:Key="Created">Créé</system:String>
     <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>
