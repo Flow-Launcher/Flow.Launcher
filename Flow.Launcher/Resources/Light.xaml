@@ -1608,9 +1608,11 @@
     <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
     <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlForegroundChromeWhiteBrush" />
     <m:StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
-    <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
-    <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemAccentColorDark2Brush" />
+    <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemAccentColorDark2Brush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPressed" ResourceKey="SystemControlForegroundTransparentBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
 
     <sys:Boolean x:Key="UseSystemFocusVisuals">True</sys:Boolean>

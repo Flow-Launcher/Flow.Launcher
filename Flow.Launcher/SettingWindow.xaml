@@ -53,12 +53,12 @@
                     Grid.Column="0"
                     Width="16"
                     Height="16"
-                    Margin="10,4,4,4"
+                    Margin="10 4 4 4"
                     Source="/Images/app.png" />
                 <TextBlock
                     Grid.Row="0"
                     Grid.Column="1"
-                    Margin="4,0,0,0"
+                    Margin="4 0 0 0"
                     VerticalAlignment="Center"
                     FontSize="12"
                     Foreground="{DynamicResource Color05B}"
@@ -111,8 +111,8 @@
                     </Path>
                 </Button>
                 <Button
-                    Grid.Row="0"
                     Name="RestoreButton"
+                    Grid.Row="0"
                     Grid.Column="3"
                     Click="OnMaximizeRestoreButtonClick"
                     Style="{StaticResource TitleBarButtonStyle}">
@@ -161,24 +161,23 @@
                     Grid.Row="1"
                     Grid.Column="0"
                     Grid.ColumnSpan="5"
-                    Margin="0,0,0,0"
+                    Margin="0 0 0 0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"
                     AlwaysShowHeader="False"
                     Background="{DynamicResource Color01B}"
-                    ExpandedModeThresholdWidth="300"
                     IsBackButtonVisible="Collapsed"
+                    IsBackEnabled="False"
                     IsPaneToggleButtonVisible="False"
                     IsSettingsVisible="False"
                     IsTabStop="False"
-                    OpenPaneLength="230"
+                    OpenPaneLength="240"
                     PaneDisplayMode="Left"
-                    IsBackEnabled="False"
                     SelectionChanged="NavigationView_SelectionChanged">
                     <ui:NavigationView.HeaderTemplate>
                         <DataTemplate>
                             <TextBlock
-                                Margin="-8,18,0,5"
+                                Margin="-8 18 0 5"
                                 VerticalAlignment="Center"
                                 FontSize="30"
                                 FontWeight="Medium"
@@ -187,7 +186,7 @@
                         </DataTemplate>
                     </ui:NavigationView.HeaderTemplate>
                     <ui:NavigationView.PaneCustomContent>
-                        <Grid Margin="0,35,0,0" HorizontalAlignment="Center">
+                        <Grid Margin="0 35 0 0" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50" />
                                 <RowDefinition Height="27" />
@@ -201,7 +200,7 @@
                                 Source="images/app.png" />
                             <TextBlock
                                 Grid.Row="1"
-                                Margin="0,12,0,0"
+                                Margin="0 12 0 0"
                                 Style="{StaticResource TabMenu}"
                                 Text="Flow Launcher"
                                 TextAlignment="Center" />
