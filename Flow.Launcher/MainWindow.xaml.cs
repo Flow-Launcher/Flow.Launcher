@@ -306,15 +306,15 @@ namespace Flow.Launcher
                         break;
                     case SearchWindowAligns.CenterTop:
                         Left = HorizonCenter(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.LeftTop:
                         Left = HorizonLeft(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.RightTop:
                         Left = HorizonRight(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.Custom:
                         Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
@@ -725,6 +725,13 @@ namespace Flow.Launcher
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
+        }
+
+        public double VerticalTop(Screen screen)
+        {
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var top = dip1.Y +10;
+            return top;
         }
 
         /// <summary>
