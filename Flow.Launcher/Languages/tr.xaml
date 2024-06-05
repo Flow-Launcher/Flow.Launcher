@@ -240,7 +240,7 @@
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Vekil Sunucu</system:String>
-    <system:String x:Key="enableProxy">HTTP Vekil Sunucuyu Etkinleştir.</system:String>
+    <system:String x:Key="enableProxy">HTTP Vekil Sunucuyu Etkinleştir</system:String>
     <system:String x:Key="server">Sunucu Adresi</system:String>
     <system:String x:Key="port">Port</system:String>
     <system:String x:Key="userName">Kullanıcı Adı</system:String>
@@ -433,5 +433,5 @@
     <!--  Preview Area  -->
     <system:String x:Key="FileSize">Dosya Boyutu</system:String>
     <system:String x:Key="Created">Oluşturuldu</system:String>
-    <system:String x:Key="LastModified">Son Değişiklik</system:String>
+    <system:String x:Key="LastModified">Değiştirme Tarihi</system:String>
 </ResourceDictionary>
