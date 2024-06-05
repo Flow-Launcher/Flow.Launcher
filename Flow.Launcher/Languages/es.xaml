@@ -204,7 +204,7 @@
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
