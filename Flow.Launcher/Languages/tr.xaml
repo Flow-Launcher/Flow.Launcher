@@ -98,7 +98,7 @@
     <system:String x:Key="enable">Açık</system:String>
     <system:String x:Key="disable">Devre Dışı</system:String>
     <system:String x:Key="actionKeywordsTitle">Anahtar kelimeyi ayarla</system:String>
-    <system:String x:Key="actionKeywords">Anahtar Kelimele</system:String>
+    <system:String x:Key="actionKeywords">Anahtar Kelimeler</system:String>
     <system:String x:Key="currentActionKeywords">Geçerli anahtar kelime</system:String>
     <system:String x:Key="newActionKeyword">Yeni anahtar kelime</system:String>
     <system:String x:Key="actionKeywordsTooltip">Anahtar kelimeyi değiştir</system:String>
