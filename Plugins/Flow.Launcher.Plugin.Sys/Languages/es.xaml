@@ -8,7 +8,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Apagar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Reiniciar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Reiniciar con opciones de arranque avanzadas</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Cerrar sesión/Apagar</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Cierra sesión/Desconecta</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Bloquear</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Suspender</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">Hibernar</system:String>
@@ -17,14 +17,14 @@
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Abrir papelera de reciclaje</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Salir</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Guardar configuración</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reinicia Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reiniciar Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Configuración</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Recargar datos del complemento</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Buscar actualizaciones</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_log_location_cmd">Abrir ubicación de registro</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consejos Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Carpeta UserData de Flow Launcher</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Cambia a Modo Juego</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Apaga el equipo</system:String>
