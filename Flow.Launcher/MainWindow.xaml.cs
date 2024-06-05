@@ -307,61 +307,53 @@ namespace Flow.Launcher
             double currentScreenWidth = screen.WorkingArea.Width;
             double currentScreenHeight = screen.WorkingArea.Height;
 
-            if (!(
-                _previousScreenWidth == currentScreenWidth &&
-                _previousScreenHeight == currentScreenHeight &&
-                _previousDpiX == currentDpi.X &&
-                _previousDpiY == currentDpi.Y
-            ))
+            if (_previousScreenWidth != 0 && _previousScreenHeight != 0 && _previousDpiX != 0 && _previousDpiY != 0)
             {
-                if (_previousScreenWidth != 0 && _previousScreenHeight != 0 && _previousDpiX != 0 && _previousDpiY != 0)
-                {
-                    double widthRatio = currentScreenWidth / _previousScreenWidth;
-                    double heightRatio = currentScreenHeight / _previousScreenHeight;
-                    double dpiXRatio = currentDpi.X / _previousDpiX;
-                    double dpiYRatio = currentDpi.Y / _previousDpiY;
+                double widthRatio = currentScreenWidth / _previousScreenWidth;
+                double heightRatio = currentScreenHeight / _previousScreenHeight;
+                double dpiXRatio = currentDpi.X / _previousDpiX;
+                double dpiYRatio = currentDpi.Y / _previousDpiY;
 
-                    _settings.WindowLeft *= widthRatio * dpiXRatio;
-                    _settings.WindowTop *= heightRatio * dpiYRatio;
-                }
-
-                if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
-                {
-                    Top = _settings.WindowTop;
-                    Left = _settings.WindowLeft;
-                }
-                else
-                {
-                    switch (_settings.SearchWindowAlign)
-                    {
-                        case SearchWindowAligns.Center:
-                            Left = HorizonCenter(screen);
-                            Top = VerticalCenter(screen);
-                            break;
-                        case SearchWindowAligns.CenterTop:
-                            Left = HorizonCenter(screen);
-                            Top = VerticalTop(screen);
-                            break;
-                        case SearchWindowAligns.LeftTop:
-                            Left = HorizonLeft(screen);
-                            Top = VerticalTop(screen);
-                            break;
-                        case SearchWindowAligns.RightTop:
-                            Left = HorizonRight(screen);
-                            Top = VerticalTop(screen);
-                            break;
-                        case SearchWindowAligns.Custom:
-                            Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                            Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
-                            break;
-                    }
-                }
-
-                _previousScreenWidth = currentScreenWidth;
-                _previousScreenHeight = currentScreenHeight;
-                _previousDpiX = currentDpi.X;
-                _previousDpiY = currentDpi.Y;
+                _settings.WindowLeft *= widthRatio * dpiXRatio;
+                _settings.WindowTop *= heightRatio * dpiYRatio;
             }
+
+            if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
+            {
+                Top = _settings.WindowTop;
+                Left = _settings.WindowLeft;
+            }
+            else
+            {
+                switch (_settings.SearchWindowAlign)
+                {
+                    case SearchWindowAligns.Center:
+                        Left = HorizonCenter(screen);
+                        Top = VerticalCenter(screen);
+                        break;
+                    case SearchWindowAligns.CenterTop:
+                        Left = HorizonCenter(screen);
+                        Top = VerticalTop(screen);
+                        break;
+                    case SearchWindowAligns.LeftTop:
+                        Left = HorizonLeft(screen);
+                        Top = VerticalTop(screen);
+                        break;
+                    case SearchWindowAligns.RightTop:
+                        Left = HorizonRight(screen);
+                        Top = VerticalTop(screen);
+                        break;
+                    case SearchWindowAligns.Custom:
+                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
+                        Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                        break;
+                }
+            }
+
+            _previousScreenWidth = currentScreenWidth;
+            _previousScreenHeight = currentScreenHeight;
+            _previousDpiX = currentDpi.X;
+            _previousDpiY = currentDpi.Y;
         }
 
         private void UpdateNotifyIconText()
