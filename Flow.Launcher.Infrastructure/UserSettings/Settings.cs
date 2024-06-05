@@ -205,6 +205,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double WindowLeft { get; set; }
         public double WindowTop { get; set; }
+        public double PreviousScreenWidth { get; set; }
+        public double PreviousScreenHeight { get; set; }
+        public double PreviousDpiX { get; set; }
+        public double PreviousDpiY { get; set; }
 
         /// <summary>
         /// Custom left position on selected monitor

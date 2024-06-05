@@ -27,6 +27,7 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
+using System.Runtime.Intrinsics.Arm;
 
 namespace Flow.Launcher
 {
@@ -292,11 +293,39 @@ namespace Flow.Launcher
         {
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                Top = _settings.WindowTop;
+                // Get the previous screen width, height, DPI X, and DPI Y
+                double previousScreenWidth = _settings.PreviousScreenWidth;
+                double previousScreenHeight = _settings.PreviousScreenHeight;
+                double previousDpiX = _settings.PreviousDpiX;
+                double previousDpiY = _settings.PreviousDpiY;
+
+                // Save current screen width, height, DPI X, and DPI Y
+                _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
+                _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
+                _settings.PreviousDpiX = GetDpiX();
+                _settings.PreviousDpiY = GetDpiY();
+
+                // If previous screen width, height, DPI X, or DPI Y are not zero
+                if (previousScreenWidth != 0 && previousScreenHeight != 0 &&
+                    previousDpiX != 0 && previousDpiY != 0)
+                {
+                    // If previous and current screen properties are different, adjust position
+                    if (previousScreenWidth != SystemParameters.VirtualScreenWidth ||
+                        previousScreenHeight != SystemParameters.VirtualScreenHeight ||
+                        previousDpiX != GetDpiX() || previousDpiY != GetDpiY())
+                    {
+                        AdjustPositionForResolutionChange();
+                        return;
+                    }
+                }
+
+                // If previous screen width, height, DPI X, and DPI Y are the same, initialize with previous position
                 Left = _settings.WindowLeft;
+                Top = _settings.WindowTop;
             }
             else
             {
+                // Keep the existing logic
                 var screen = SelectedScreen();
                 switch (_settings.SearchWindowAlign)
                 {
@@ -322,9 +351,90 @@ namespace Flow.Launcher
                         break;
                 }
             }
-
         }
 
+        private void AdjustPositionForResolutionChange()
+        {
+            double screenWidth = SystemParameters.VirtualScreenWidth;
+            double screenHeight = SystemParameters.VirtualScreenHeight;
+            double screenLeft = SystemParameters.VirtualScreenLeft;
+            double screenTop = SystemParameters.VirtualScreenTop;
+            double currentDpiX = GetDpiX();
+            double currentDpiY = GetDpiY();
+
+            // Get current screen width, height, left, top, and DPI X, DPI Y
+            double currentScreenWidth = screenWidth;
+            double currentScreenHeight = screenHeight;
+            double currentScreenLeft = screenLeft;
+            double currentScreenTop = screenTop;
+
+            // Get previous window left, top, and DPI X, DPI Y
+            double previousLeft = _settings.WindowLeft;
+            double previousTop = _settings.WindowTop;
+            double previousDpiX = _settings.PreviousDpiX;
+            double previousDpiY = _settings.PreviousDpiY;
+
+            // Calculate ratios for width, height, DPI X, and DPI Y
+            double widthRatio = currentScreenWidth / _settings.PreviousScreenWidth;
+            double heightRatio = currentScreenHeight / _settings.PreviousScreenHeight;
+            double dpiXRatio = currentDpiX / previousDpiX;
+            double dpiYRatio = currentDpiY / previousDpiY;
+
+            // Adjust previous position according to current resolution and DPI
+            double newLeft = previousLeft * widthRatio * dpiXRatio;
+            double newTop = previousTop * heightRatio * dpiYRatio;
+
+            // Ensure the adjusted position is within the current screen boundaries
+            if (newLeft + ActualWidth > currentScreenLeft + currentScreenWidth)
+            {
+                newLeft = currentScreenLeft + currentScreenWidth - ActualWidth;
+            }
+            else if (newLeft < currentScreenLeft)
+            {
+                newLeft = currentScreenLeft;
+            }
+
+            if (newTop + ActualHeight > currentScreenTop + currentScreenHeight)
+            {
+                newTop = currentScreenTop + currentScreenHeight - ActualHeight;
+            }
+            else if (newTop < currentScreenTop)
+            {
+                newTop = currentScreenTop;
+            }
+
+            // Set the new position
+            Left = newLeft;
+            Top = newTop;
+        }
+
+        private double GetDpiX()
+        {
+            // Get the PresentationSource for this visual
+            PresentationSource source = PresentationSource.FromVisual(this);
+            // Check if the PresentationSource and its CompositionTarget are not null
+            if (source != null && source.CompositionTarget != null)
+            {
+                // Get the transform matrix for the CompositionTarget
+                Matrix m = source.CompositionTarget.TransformToDevice;
+                // Calculate DPI in X direction
+                double dpiX = 96 * m.M11;
+                return dpiX;
+            }
+            return 96; //Return a default DPI of 96 if PresentationSource or CompositionTarget is null
+        }
+
+        private double GetDpiY()
+        {
+            PresentationSource source = PresentationSource.FromVisual(this);
+            if (source != null && source.CompositionTarget != null)
+            {
+                Matrix m = source.CompositionTarget.TransformToDevice;
+                double dpiY = 96 * m.M22;
+                return dpiY;
+            }
+            return 96;
+        }
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
