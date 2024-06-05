@@ -26,14 +26,14 @@
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
-    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_everything_setting_header">Everything Ayarları</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Önizleme Paneli</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Boyut</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Oluşturma Tarihi</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Değiştirme Tarihi</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Tarih ve saat biçimi</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Sıralama Seçeneği:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything Path:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Düzenleyici Konumu</system:String>
@@ -50,10 +50,10 @@
     <system:String x:Key="plugin_explorer_actionkeywordview_quickaccess">Quick Access:</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_current">Current Action Keyword</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_done">Tamam</system:String>
-    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_actionkeyword_enabled">Etkin</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">When disabled Flow will not execute this search option, and will additionally revert back to '*' to free up the action keyword</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Arama</system:String>
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Düzenleyici Konumu</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
@@ -64,11 +64,11 @@
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
 
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
+    <system:String x:Key="plugin_explorer_plugin_name">Dosya Gezgini</system:String>
     <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Dizini açmak içi Ctrl + Enter</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
 
     <!--  Context menu items  -->
