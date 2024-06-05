@@ -58,7 +58,7 @@
     <system:String x:Key="KeepMaxResultsToolTip">De vensterhoogte is niet aanpasbaar door te slepen.</system:String>
     <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>
     <system:String x:Key="maxShowResultsToolTip">Je kunt dit ook snel aanpassen met CTRL+Plus en CTRL+Minus.</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in fullscreen mode</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">Negeer sneltoetsen in vol scherm modus</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">De activatie van Flow Launcher uitschakelen als er een applicatie actief is die zich in een volledig scherm bevind (Aanbevolen voor spellen).</system:String>
     <system:String x:Key="defaultFileManager">Standaard Bestandsbeheerder</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Selecteer de bestandsbeheerder voor het openen van de map.</system:String>
@@ -147,11 +147,11 @@
     <system:String x:Key="SampleTitleProcessKiller">Procesdoder</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Ongewenste processen beëindigen</system:String>
     <system:String x:Key="SearchBarHeight">Zoekbalk hoogte</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="ItemHeight">Item hoogte</system:String>
     <system:String x:Key="queryBoxFont">Query Box lettertype</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultItemFont">Resultaat titel lettertype</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
-    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="resetCustomize">Herstellen</system:String>
     <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Venster Modus</system:String>
     <system:String x:Key="opacity">Ondoorzichtigheid</system:String>
@@ -289,23 +289,23 @@
     <system:String x:Key="fileManager_name">Bestandsbeheerder</system:String>
     <system:String x:Key="fileManager_profile_name">Profielnaam</system:String>
     <system:String x:Key="fileManager_path">Bestandsbeheerder pad</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_directory_arg">Arg voor map</system:String>
+    <system:String x:Key="fileManager_file_arg">Arg voor bestand</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Standaard webbrowser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_tips">De standaardinstelling volgt de standaardinstelling van de OS standaardinstellingen. Indien apart opgegeven, Flow gebruikt die browser.</system:String>
+    <system:String x:Key="defaultBrowser_name">Webbrowser</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Browser Naam</system:String>
+    <system:String x:Key="defaultBrowser_path">Browser pad</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">Nieuw Venster</system:String>
+    <system:String x:Key="defaultBrowser_newTab">Nieuw tabblad</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Privé modus</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Prioriteit wijzigen</system:String>
+    <system:String x:Key="priority_tips">Groter getal, hoe hoger het resultaat zal worden gerangschikt. Probeer het in te stellen als 5. Als u wilt dat de resultaten lager zijn dan welke andere plug-in dan ook, geef een negatief getal op</system:String>
+    <system:String x:Key="invalidPriority">Geef een geldig geheel getal voor de prioriteit!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Oude actie sneltoets</system:String>
@@ -316,37 +316,37 @@
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nieuwe actie sneltoets moet ingevuld worden</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nieuwe actie sneltoets is toegewezen aan een andere plugin, wijs een nieuwe actie sneltoets aan</system:String>
     <system:String x:Key="success">Succesvol</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="completedSuccessfully">Succesvol afgerond</system:String>
     <system:String x:Key="actionkeyword_tips">Gebruik * wanneer je geen nieuwe actie sneltoets wilt specificeren</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Sneltoets</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Druk op een aangepaste sneltoets om Flow Launcher te openen en de opgegeven query automatisch in te voeren.</system:String>
     <system:String x:Key="preview">Voorbeeld</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Sneltoets is niet beschikbaar, selecteer een nieuwe sneltoets</system:String>
     <system:String x:Key="invalidPluginHotkey">Ongeldige plugin sneltoets</system:String>
-    <system:String x:Key="update">Update</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="update">Bijwerken</system:String>
+    <system:String x:Key="hotkeyRegTitle">Sneltoets koppelen</system:String>
+    <system:String x:Key="hotkeyUnavailable">Huidige sneltoets is niet beschikbaar.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Deze sneltoets is gereserveerd voor &quot;{0}&quot; en kan niet worden gebruikt. Kies een andere sneltoets.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Deze sneltoets is al in gebruik door &quot;{0}&quot;. Als u op &quot;Overschrijven&quot; klikt, zal deze verwijderd worden uit &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Druk op de toetsen die u wilt gebruiken voor deze functie.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutTitle">Aangepaste Query Snelkoppeling</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Voer een snelkoppeling in die automatisch wordt uitgebreid naar de opgegeven zoekopdracht.</system:String>
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Een snelkoppeling wordt uitgebreid wanneer deze precies overeenkomt met de query. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Als u een '@' voorvoegsel toevoegt tijdens het invoeren van een snelkoppeling, matcht het met elke positie in de zoekopdracht. Ingebouwde snelkoppelingen komen overeen met elke positie in een query.
     </system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="duplicateShortcut">Snelkoppeling bestaat al, vul een nieuwe snelkoppeling in of pas de bestaande aan.</system:String>
+    <system:String x:Key="emptyShortcut">Snelkoppeling en/of uitbreiding is leeg.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Opslaan</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Overschrijf</system:String>
     <system:String x:Key="commonCancel">Annuleer</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">Herstellen</system:String>
     <system:String x:Key="commonDelete">Verwijder</system:String>
 
     <!--  Crash Reporter  -->
