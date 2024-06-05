@@ -27,7 +27,6 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
-using System.Drawing;
 
 namespace Flow.Launcher
 {
@@ -49,10 +48,6 @@ namespace Flow.Launcher
 
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
-        private double _previousScreenWidth;
-        private double _previousScreenHeight;
-        private double _previousDpiX;
-        private double _previousDpiY;
 
         #endregion
 
@@ -293,31 +288,8 @@ namespace Flow.Launcher
             };
         }
 
-        private (double X, double Y) GetCurrentDpi(Screen screen)
-        {
-            using (Graphics g = Graphics.FromHwnd(IntPtr.Zero))
-            {
-                return (g.DpiX, g.DpiY);
-            }
-        }
         private void InitializePosition()
         {
-            var screen = SelectedScreen();
-            var currentDpi = GetCurrentDpi(screen);
-            double currentScreenWidth = screen.WorkingArea.Width;
-            double currentScreenHeight = screen.WorkingArea.Height;
-
-            if (_previousScreenWidth != 0 && _previousScreenHeight != 0 && _previousDpiX != 0 && _previousDpiY != 0)
-            {
-                double widthRatio = currentScreenWidth / _previousScreenWidth;
-                double heightRatio = currentScreenHeight / _previousScreenHeight;
-                double dpiXRatio = currentDpi.X / _previousDpiX;
-                double dpiYRatio = currentDpi.Y / _previousDpiY;
-
-                _settings.WindowLeft *= widthRatio * dpiXRatio;
-                _settings.WindowTop *= heightRatio * dpiYRatio;
-            }
-
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
                 Top = _settings.WindowTop;
@@ -325,6 +297,7 @@ namespace Flow.Launcher
             }
             else
             {
+                var screen = SelectedScreen();
                 switch (_settings.SearchWindowAlign)
                 {
                     case SearchWindowAligns.Center:
@@ -350,10 +323,6 @@ namespace Flow.Launcher
                 }
             }
 
-            _previousScreenWidth = currentScreenWidth;
-            _previousScreenHeight = currentScreenHeight;
-            _previousDpiX = currentDpi.X;
-            _previousDpiY = currentDpi.Y;
         }
 
         private void UpdateNotifyIconText()
