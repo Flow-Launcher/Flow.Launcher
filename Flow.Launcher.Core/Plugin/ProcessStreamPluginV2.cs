@@ -82,10 +82,10 @@ namespace Flow.Launcher.Core.Plugin
 
         public override async ValueTask DisposeAsync()
         {
+            await base.DisposeAsync();
             ClientProcess.Kill(true);
             await ClientProcess.WaitForExitAsync();
             ClientProcess.Dispose();
-            await base.DisposeAsync();
         }
     }
 }
