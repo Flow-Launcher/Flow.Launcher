@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -782,19 +782,27 @@ namespace Flow.Launcher.ViewModel
         {
             var useExternalPreview = PluginManager.UseExternalPreview();
 
-            if (!useExternalPreview)
-                ShowInternalPreview();
-
-            if (useExternalPreview)
+            switch (useExternalPreview)
             {
-                // Internal preview may still be on when user switches to external
-                if (InternalPreviewVisible)
-                    HideInternalPreview();
-
-                if (CanExternalPreviewSelectedResult(out var path))
+                case true
+                    when CanExternalPreviewSelectedResult(out var path):
+                    // Internal preview may still be on when user switches to external
+                    if (InternalPreviewVisible)
+                        HideInternalPreview();
                     OpenExternalPreview(path);
-            }
+                    break;
 
+                case true
+                    when !CanExternalPreviewSelectedResult(out var _):
+                    if (ExternalPreviewVisible)
+                        CloseExternalPreview();
+                    ShowInternalPreview();
+                    break;
+
+                case false:
+                    ShowInternalPreview();
+                    break;
+            }
         }
 
         private void HidePreview()
@@ -873,27 +881,33 @@ namespace Flow.Launcher.ViewModel
         
         private void UpdatePreview()
         {
-            if (InternalPreviewVisible)
-            {
-                Results.SelectedItem?.LoadPreviewImage();
-                return;
-            }
-
             switch (PluginManager.UseExternalPreview())
             {
                 case true
-                    when ExternalPreviewVisible && CanExternalPreviewSelectedResult(out var path):
-                    SwitchExternalPreview(path, false);
-                    break;
-
-                case true
-                    when !ExternalPreviewVisible && Settings.AlwaysPreview && CanExternalPreviewSelectedResult(out var _):
-                    ShowPreview();
+                    when CanExternalPreviewSelectedResult(out var path):
+                    if (ExternalPreviewVisible)
+                    {
+                        SwitchExternalPreview(path, false);
+                    }
+                    else if (InternalPreviewVisible)
+                    {
+                        HideInternalPreview();
+                        OpenExternalPreview(path);
+                    }
                     break;
 
                 case true
                     when !CanExternalPreviewSelectedResult(out var _):
-                    HidePreview();
+                    if (ExternalPreviewVisible)
+                    {
+                        CloseExternalPreview();
+                        ShowInternalPreview();
+                    }
+                    break;
+
+                case false
+                    when InternalPreviewVisible:
+                    Results.SelectedItem?.LoadPreviewImage();
                     break;
             }
         }
