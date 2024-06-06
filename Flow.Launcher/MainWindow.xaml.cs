@@ -293,39 +293,31 @@ namespace Flow.Launcher
         {
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                // Get the previous screen width, height, DPI X, and DPI Y
                 double previousScreenWidth = _settings.PreviousScreenWidth;
                 double previousScreenHeight = _settings.PreviousScreenHeight;
-                double previousDpiX = _settings.PreviousDpiX;
-                double previousDpiY = _settings.PreviousDpiY;
+                double previousDpiX, previousDpiY;
+                GetDpi(out previousDpiX, out previousDpiY);
 
-                // Save current screen width, height, DPI X, and DPI Y
                 _settings.PreviousScreenWidth = SystemParameters.VirtualScreenWidth;
                 _settings.PreviousScreenHeight = SystemParameters.VirtualScreenHeight;
-                _settings.PreviousDpiX = GetDpiX();
-                _settings.PreviousDpiY = GetDpiY();
+                double currentDpiX, currentDpiY;
+                GetDpi(out currentDpiX, out currentDpiY);
 
-                // If previous screen width, height, DPI X, or DPI Y are not zero
                 if (previousScreenWidth != 0 && previousScreenHeight != 0 &&
-                    previousDpiX != 0 && previousDpiY != 0)
+                    previousDpiX != 0 && previousDpiY != 0 &&
+                    (previousScreenWidth != SystemParameters.VirtualScreenWidth ||
+                     previousScreenHeight != SystemParameters.VirtualScreenHeight ||
+                     previousDpiX != currentDpiX || previousDpiY != currentDpiY))
                 {
-                    // If previous and current screen properties are different, adjust position
-                    if (previousScreenWidth != SystemParameters.VirtualScreenWidth ||
-                        previousScreenHeight != SystemParameters.VirtualScreenHeight ||
-                        previousDpiX != GetDpiX() || previousDpiY != GetDpiY())
-                    {
-                        AdjustPositionForResolutionChange();
-                        return;
-                    }
+                    AdjustPositionForResolutionChange();
+                    return;
                 }
 
-                // If previous screen width, height, DPI X, and DPI Y are the same, initialize with previous position
                 Left = _settings.WindowLeft;
                 Top = _settings.WindowTop;
             }
             else
             {
-                // Keep the existing logic
                 var screen = SelectedScreen();
                 switch (_settings.SearchWindowAlign)
                 {
@@ -346,8 +338,10 @@ namespace Flow.Launcher
                         Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.Custom:
-                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                        Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                        var customLeft = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0);
+                        var customTop = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop);
+                        Left = customLeft.X;
+                        Top = customTop.Y;
                         break;
                 }
             }
@@ -357,83 +351,46 @@ namespace Flow.Launcher
         {
             double screenWidth = SystemParameters.VirtualScreenWidth;
             double screenHeight = SystemParameters.VirtualScreenHeight;
-            double screenLeft = SystemParameters.VirtualScreenLeft;
-            double screenTop = SystemParameters.VirtualScreenTop;
-            double currentDpiX = GetDpiX();
-            double currentDpiY = GetDpiY();
+            double currentDpiX, currentDpiY;
+            GetDpi(out currentDpiX, out currentDpiY);
 
-            // Get current screen width, height, left, top, and DPI X, DPI Y
-            double currentScreenWidth = screenWidth;
-            double currentScreenHeight = screenHeight;
-            double currentScreenLeft = screenLeft;
-            double currentScreenTop = screenTop;
-
-            // Get previous window left, top, and DPI X, DPI Y
             double previousLeft = _settings.WindowLeft;
             double previousTop = _settings.WindowTop;
-            double previousDpiX = _settings.PreviousDpiX;
-            double previousDpiY = _settings.PreviousDpiY;
+            double previousDpiX, previousDpiY;
+            GetDpi(out previousDpiX, out previousDpiY);
 
-            // Calculate ratios for width, height, DPI X, and DPI Y
-            double widthRatio = currentScreenWidth / _settings.PreviousScreenWidth;
-            double heightRatio = currentScreenHeight / _settings.PreviousScreenHeight;
+            double widthRatio = screenWidth / _settings.PreviousScreenWidth;
+            double heightRatio = screenHeight / _settings.PreviousScreenHeight;
             double dpiXRatio = currentDpiX / previousDpiX;
             double dpiYRatio = currentDpiY / previousDpiY;
 
-            // Adjust previous position according to current resolution and DPI
             double newLeft = previousLeft * widthRatio * dpiXRatio;
             double newTop = previousTop * heightRatio * dpiYRatio;
 
-            // Ensure the adjusted position is within the current screen boundaries
-            if (newLeft + ActualWidth > currentScreenLeft + currentScreenWidth)
-            {
-                newLeft = currentScreenLeft + currentScreenWidth - ActualWidth;
-            }
-            else if (newLeft < currentScreenLeft)
-            {
-                newLeft = currentScreenLeft;
-            }
+            double screenLeft = SystemParameters.VirtualScreenLeft;
+            double screenTop = SystemParameters.VirtualScreenTop;
 
-            if (newTop + ActualHeight > currentScreenTop + currentScreenHeight)
-            {
-                newTop = currentScreenTop + currentScreenHeight - ActualHeight;
-            }
-            else if (newTop < currentScreenTop)
-            {
-                newTop = currentScreenTop;
-            }
+            double maxX = screenLeft + screenWidth - ActualWidth;
+            double maxY = screenTop + screenHeight - ActualHeight;
 
-            // Set the new position
-            Left = newLeft;
-            Top = newTop;
+            Left = Math.Max(screenLeft, Math.Min(newLeft, maxX));
+            Top = Math.Max(screenTop, Math.Min(newTop, maxY));
         }
 
-        private double GetDpiX()
-        {
-            // Get the PresentationSource for this visual
-            PresentationSource source = PresentationSource.FromVisual(this);
-            // Check if the PresentationSource and its CompositionTarget are not null
-            if (source != null && source.CompositionTarget != null)
-            {
-                // Get the transform matrix for the CompositionTarget
-                Matrix m = source.CompositionTarget.TransformToDevice;
-                // Calculate DPI in X direction
-                double dpiX = 96 * m.M11;
-                return dpiX;
-            }
-            return 96; //Return a default DPI of 96 if PresentationSource or CompositionTarget is null
-        }
-
-        private double GetDpiY()
+        private void GetDpi(out double dpiX, out double dpiY)
         {
             PresentationSource source = PresentationSource.FromVisual(this);
             if (source != null && source.CompositionTarget != null)
             {
                 Matrix m = source.CompositionTarget.TransformToDevice;
-                double dpiY = 96 * m.M22;
-                return dpiY;
+                dpiX = 96 * m.M11;
+                dpiY = 96 * m.M22;
             }
-            return 96;
+            else
+            {
+                dpiX = 96;
+                dpiY = 96;
+            }
         }
         private void UpdateNotifyIconText()
         {
