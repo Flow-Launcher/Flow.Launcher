@@ -214,7 +214,7 @@
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Plugins" Content="{DynamicResource plugin}">
+                        <ui:NavigationViewItem x:Name="Plugins" Content="{DynamicResource plugins}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/plugins.png" />
                             </ui:NavigationViewItem.Icon>
@@ -235,7 +235,7 @@
                             </ui:NavigationViewItem.Icon>
                         </ui:NavigationViewItem>
 
-                        <ui:NavigationViewItem x:Name="Hotkey" Content="{DynamicResource hotkey}">
+                        <ui:NavigationViewItem x:Name="Hotkey" Content="{DynamicResource hotkeys}">
                             <ui:NavigationViewItem.Icon>
                                 <ui:BitmapIcon ShowAsMonochrome="False" UriSource="/Images/keyboard.png" />
                             </ui:NavigationViewItem.Icon>
