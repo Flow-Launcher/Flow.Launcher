@@ -368,7 +368,7 @@
             <!--  Drop shadow effect  -->
             <cc:Card
                 Title="{DynamicResource queryWindowShadowEffect}"
-                Margin="0 4 0 0"
+                Margin="0 8 0 0"
                 Icon="&#xeb91;"
                 Sub="{DynamicResource shadowEffectCPUUsage}">
                 <ui:ToggleSwitch
@@ -515,7 +515,7 @@
             <!--  Fonts and icons  -->
             <cc:Card
                 Title="{DynamicResource useGlyphUI}"
-                Margin="0 6 0 0"
+                Margin="0 14 0 0"
                 Icon="&#xf6b8;"
                 Sub="{DynamicResource useGlyphUIEffect}">
                 <ui:ToggleSwitch
@@ -525,7 +525,7 @@
             </cc:Card>
 
             <!--  Time and date  -->
-            <cc:CardGroup Margin="0 11 0 0">
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card Title="{DynamicResource Clock}" Icon="&#xec92;">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock
@@ -570,7 +570,7 @@
             </cc:CardGroup>
 
             <!--  Animation  -->
-            <cc:CardGroup Margin="0 11 0 0">
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card
                     Title="{DynamicResource Animation}"
                     Icon="&#xedb5;"
@@ -607,7 +607,7 @@
             </cc:CardGroup>
 
             <!--  SFX  -->
-            <cc:CardGroup Margin="0 11 0 0">
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card
                     Title="{DynamicResource SoundEffect}"
                     Icon="&#xe7f5;"
@@ -678,7 +678,7 @@
             <!--  Settings color scheme  -->
             <cc:Card
                 Title="{DynamicResource ColorScheme}"
-                Margin="0 11 0 0"
+                Margin="0 14 0 0"
                 Icon="&#xe793;">
                 <ComboBox
                     MinWidth="180"
@@ -691,7 +691,10 @@
             </cc:Card>
 
             <!--  Theme folder  -->
-            <cc:Card Title="{DynamicResource ThemeFolder}" Icon="&#xe838;">
+            <cc:Card
+                Title="{DynamicResource ThemeFolder}"
+                Margin="0 14 0 0"
+                Icon="&#xe838;">
                 <Button
                     MinWidth="180"
                     Command="{Binding OpenThemesFolderCommand}"
