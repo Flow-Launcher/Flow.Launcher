@@ -65,13 +65,17 @@ public static class ShellContextMenuDisplayHelper
     private const uint ContextMenuStartId = 0x0001;
     private const uint ContextMenuEndId = 0x7FFF;
 
-    // We haven't managed to make these work, so we don't display them in the context menu.
     private static readonly string[] IgnoredContextMenuCommands =
     {
-        "share",
+        // We haven't managed to make these work, so we don't display them in the context menu.
+        "Share",
         "Windows.ModernShare",
         "PinToStartScreen",
-        "CopyAsPath"
+        "CopyAsPath",
+
+        // Hide functionality provided by the Explorer plugin itself
+        "Copy",
+        "Delete"
     };
 
     #endregion
