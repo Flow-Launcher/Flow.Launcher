@@ -180,7 +180,8 @@ namespace Flow.Launcher.Plugin.Explorer
                             {
                                 ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
                                 return true;
-                            }
+                            },
+                            ContextData = "native-context-menu-item"
                         });
                     }
                 }
