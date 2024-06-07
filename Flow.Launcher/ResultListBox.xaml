@@ -108,6 +108,7 @@
                                     RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Image, TargetNullValue={x:Null}}"
                                     Stretch="Uniform"
+                                    StretchDirection="DownOnly"
                                     Style="{DynamicResource ImageIconStyle}"
                                     Visibility="{Binding ShowIcon}">
                                     <Image.Clip>

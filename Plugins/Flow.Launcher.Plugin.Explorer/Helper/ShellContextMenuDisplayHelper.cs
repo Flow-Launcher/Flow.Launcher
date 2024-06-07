@@ -314,7 +314,7 @@ public static class ShellContextMenuDisplayHelper
                 hBitmap,
                 IntPtr.Zero,
                 Int32Rect.Empty,
-                BitmapSizeOptions.FromWidthAndHeight(32, 32)
+                BitmapSizeOptions.FromWidthAndHeight(16, 16)
             );
 
             if (!DeleteObject(hBitmap))
