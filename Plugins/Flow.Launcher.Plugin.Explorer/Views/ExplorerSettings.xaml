@@ -22,7 +22,7 @@
 
                         <Border
                             x:Name="LayoutRoot"
-                            Margin="0,0,0,0"
+                            Margin="0 0 0 0"
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                             <Grid>
@@ -105,13 +105,13 @@
             </Setter>
         </Style>
         <DataTemplate x:Key="ListViewTemplateAccessLinks" DataType="qa:AccessLink">
-            <TextBlock Margin="0,5,0,5" Text="{Binding Path, Mode=OneTime}" />
+            <TextBlock Margin="0 5 0 5" Text="{Binding Path, Mode=OneTime}" />
         </DataTemplate>
         <core:TranslationConverter x:Key="TranslationConverter" />
         <DataTemplate x:Key="ListViewActionKeywords" DataType="{x:Type views:ActionKeywordModel}">
             <Grid>
                 <TextBlock
-                    Margin="0,5,0,0"
+                    Margin="0 5 0 0"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Description, Mode=OneTime, Converter={StaticResource TranslationConverter}}">
                     <TextBlock.Style>
@@ -128,7 +128,7 @@
                     </TextBlock.Style>
                 </TextBlock>
                 <TextBlock
-                    Margin="250,5,0,0"
+                    Margin="250 5 0 0"
                     IsEnabled="{Binding Enabled}"
                     Text="{Binding Keyword}">
                     <TextBlock.Style>
@@ -160,20 +160,20 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_generalsetting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <StackPanel Grid.Row="0" Margin="30,10,0,0">
+                <StackPanel Grid.Row="0" Margin="30 10 0 0">
                     <StackPanel>
                         <StackPanel Orientation="Vertical">
                             <CheckBox
-                                Margin="0,10,0,0"
+                                Margin="0 10 0 0"
                                 HorizontalAlignment="Left"
                                 Content="{DynamicResource plugin_explorer_use_location_as_working_dir}"
                                 IsChecked="{Binding Settings.UseLocationAsWorkingDir}" />
                             <CheckBox
-                                Margin="0,10,0,0"
+                                Margin="0 10 0 0"
                                 HorizontalAlignment="Left"
                                 Content="{DynamicResource plugin_explorer_default_open_in_file_manager}"
                                 IsChecked="{Binding Settings.DefaultOpenFolderInFileManager}" />
-                            <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                            <StackPanel Margin="0 10 0 10" Orientation="Horizontal">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="A" />
@@ -188,7 +188,7 @@
                                     <TextBlock
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        Margin="0,6,16,6"
+                                        Margin="0 6 16 6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_file_editor_path}"
@@ -196,7 +196,7 @@
                                     <StackPanel
                                         Grid.Row="0"
                                         Grid.Column="1"
-                                        Margin="0,6,6,6"
+                                        Margin="0 6 6 6"
                                         Orientation="Horizontal">
                                         <TextBox
                                             Width="250"
@@ -206,7 +206,7 @@
                                             TextWrapping="NoWrap" />
                                         <Button
                                             MinWidth="50"
-                                            Margin="5,0,0,0"
+                                            Margin="5 0 0 0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Command="{Binding OpenFileEditorPath}"
@@ -216,7 +216,7 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="0,6,16,6"
+                                        Margin="0 6 16 6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_folder_editor_path}"
@@ -224,7 +224,7 @@
                                     <StackPanel
                                         Grid.Row="1"
                                         Grid.Column="1"
-                                        Margin="0,6,6,6"
+                                        Margin="0 6 6 6"
                                         Orientation="Horizontal">
                                         <TextBox
                                             Width="250"
@@ -234,7 +234,7 @@
                                             TextWrapping="NoWrap" />
                                         <Button
                                             MinWidth="50"
-                                            Margin="5,0,0,0"
+                                            Margin="5 0 0 0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Command="{Binding OpenFolderEditorPath}"
@@ -244,7 +244,7 @@
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        Margin="0,16,6,6"
+                                        Margin="0 16 6 6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_shell_path}"
@@ -255,14 +255,14 @@
                                         Orientation="Horizontal">
                                         <TextBox
                                             Width="250"
-                                            Margin="0,10,0,0"
+                                            Margin="0 10 0 0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Text="{Binding ShellPath}"
                                             TextWrapping="NoWrap" />
                                         <Button
                                             MinWidth="50"
-                                            Margin="5,10,0,0"
+                                            Margin="5 10 0 0"
                                             HorizontalAlignment="Left"
                                             VerticalAlignment="Center"
                                             Command="{Binding OpenShellPath}"
@@ -271,7 +271,7 @@
                                 </Grid>
                             </StackPanel>
 
-                            <StackPanel Margin="0,0,0,5" Orientation="Horizontal">
+                            <StackPanel Margin="0 0 0 5" Orientation="Horizontal">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="Auto" SharedSizeGroup="C" />
@@ -285,7 +285,7 @@
                                     <TextBlock
                                         Grid.Row="0"
                                         Grid.Column="0"
-                                        Margin="0,0,10,0"
+                                        Margin="0 0 10 0"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_Index_Search_Engine}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
@@ -293,7 +293,7 @@
                                         Grid.Row="0"
                                         Grid.Column="1"
                                         Width="250"
-                                        Margin="10,15,10,10"
+                                        Margin="10 15 10 10"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         DisplayMemberPath="Description"
@@ -302,7 +302,7 @@
                                     <TextBlock
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Margin="0,0,10,0"
+                                        Margin="0 0 10 0"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_Content_Search_Engine}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
@@ -319,7 +319,7 @@
                                     <TextBlock
                                         Grid.Row="2"
                                         Grid.Column="0"
-                                        Margin="0,0,10,0"
+                                        Margin="0 0 10 0"
                                         VerticalAlignment="Center"
                                         Text="{DynamicResource plugin_explorer_Directory_Recursive_Search_Engine}"
                                         TextBlock.Foreground="{DynamicResource Color05B}" />
@@ -337,8 +337,8 @@
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <Button
-                                    Margin="0,10,10,20"
-                                    Padding="20,10,20,10"
+                                    Margin="0 10 10 20"
+                                    Padding="20 10 20 10"
                                     Click="btnOpenIndexingOptions_Click"
                                     Content="{DynamicResource plugin_explorer_Open_Window_Index_Option}" />
                             </StackPanel>
@@ -350,18 +350,19 @@
             </TabItem>
             <TabItem
                 Width="Auto"
-                Header="Native Context Menu"
+                Header="{DynamicResource plugin_explorer_native_context_menu_header}"
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="30 20 10 10">
                     <CheckBox
-                        Margin="0 10 0 0"
-                        Content="Display native context menu (experimental)"
+                        Margin="0 0 0 0"
+                        Content="{DynamicResource plugin_explorer_native_context_menu_display_context_menu}"
                         IsChecked="{Binding ShowWindowsContextMenu}" />
 
                     <TextBlock
-                        Margin="0 10"
+                        Margin="    0 10 20 10"
                         Foreground="{DynamicResource Color05B}"
-                        Text="Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')" />
+                        Text="{DynamicResource plugin_explorer_native_context_menu_guide}"
+                        TextWrapping="Wrap" />
 
                     <TextBox
                         Height="300"
@@ -374,46 +375,46 @@
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
-                <StackPanel Margin="30,20,0,10">
+                <StackPanel Margin="30 20 0 10">
                     <TextBlock Foreground="{DynamicResource Color05B}" Text="{DynamicResource plugin_explorer_previewpanel_file_info_label}" />
                     <CheckBox
-                        Margin="0,10,0,0"
+                        Margin="0 10 0 0"
                         Content="{DynamicResource plugin_explorer_previewpanel_display_file_size_checkbox}"
                         IsChecked="{Binding ShowFileSizeInPreviewPanel}" />
 
                     <CheckBox
-                        Margin="0,10,0,0"
+                        Margin="0 10 0 0"
                         Content="{DynamicResource plugin_explorer_previewpanel_display_file_creation_checkbox}"
                         IsChecked="{Binding ShowCreatedDateInPreviewPanel}" />
 
                     <CheckBox
-                        Margin="0,10,0,0"
+                        Margin="0 10 0 0"
                         Content="{DynamicResource plugin_explorer_previewpanel_display_file_modification_checkbox}"
                         IsChecked="{Binding ShowModifiedDateInPreviewPanel}" />
 
                     <StackPanel
-                        Margin="0,20,0,0"
+                        Margin="0 20 0 0"
                         IsEnabled="{Binding ShowPreviewPanelDateTimeChoices}"
                         Visibility="{Binding PreviewPanelDateTimeChoicesVisibility}">
                         <TextBlock Foreground="{DynamicResource Color05B}" Text="{DynamicResource plugin_explorer_previewpanel_date_and_time_format_label}" />
-                        <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                        <StackPanel Margin="0 10 0 0" Orientation="Horizontal">
                             <ComboBox
                                 Width="200"
                                 ItemsSource="{Binding DateFormatList}"
                                 SelectedItem="{Binding PreviewPanelDateFormat}" />
                             <TextBlock
-                                Margin="12,0,0,0"
+                                Margin="12 0 0 0"
                                 VerticalAlignment="Center"
                                 Foreground="{DynamicResource Color05B}"
                                 Text="{Binding PreviewPanelDateFormatDemo}" />
                         </StackPanel>
-                        <StackPanel Margin="0,10,0,10" Orientation="Horizontal">
+                        <StackPanel Margin="0 10 0 10" Orientation="Horizontal">
                             <ComboBox
                                 Width="200"
                                 ItemsSource="{Binding TimeFormatList}"
                                 SelectedItem="{Binding PreviewPanelTimeFormat}" />
                             <TextBlock
-                                Margin="12,0,0,0"
+                                Margin="12 0 0 0"
                                 VerticalAlignment="Center"
                                 Foreground="{DynamicResource Color05B}"
                                 Text="{Binding PreviewPanelTimeFormatDemo}" />
@@ -427,12 +428,12 @@
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="10" Orientation="Vertical">
                     <CheckBox
-                        Margin="20,10,0,0"
+                        Margin="20 10 0 0"
                         HorizontalAlignment="Left"
                         Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
                         IsChecked="{Binding Settings.EverythingSearchFullPath}" />
                     <StackPanel Orientation="Horizontal">
-                        <Grid Margin="20,10,0,10">
+                        <Grid Margin="20 10 0 10">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="F" />
                                 <ColumnDefinition Width="Auto" />
@@ -445,7 +446,7 @@
                             <TextBlock
                                 Grid.Row="1"
                                 Grid.Column="0"
-                                Margin="0,0,20,0"
+                                Margin="0 0 20 0"
                                 VerticalAlignment="Center"
                                 Text="{DynamicResource plugin_explorer_everything_sort_option}"
                                 TextBlock.Foreground="{DynamicResource Color05B}" />
@@ -469,7 +470,7 @@
                             <TextBlock
                                 Grid.Row="2"
                                 Grid.Column="0"
-                                Margin="0,15,20,0"
+                                Margin="0 15 20 0"
                                 VerticalAlignment="Center"
                                 Text="{DynamicResource plugin_explorer_everything_installed_path}"
                                 TextBlock.Foreground="{DynamicResource Color05B}" />
@@ -477,14 +478,14 @@
                                 Grid.Row="2"
                                 Grid.Column="1"
                                 MinWidth="350"
-                                Margin="0,15,0,0"
+                                Margin="0 15 0 0"
                                 Text="{Binding EverythingInstalledPath}" />
                         </Grid>
                     </StackPanel>
                     <StackPanel>
                         <TextBlock
                             Name="tbFastSortWarning"
-                            Margin="20,10,10,10"
+                            Margin="20 10 10 10"
                             VerticalAlignment="Center"
                             DockPanel.Dock="Right"
                             Foreground="Orange"
@@ -501,7 +502,7 @@
                 Style="{DynamicResource ExplorerTabItem}">
                 <DockPanel HorizontalAlignment="Stretch">
                     <Border
-                        Margin="10,10,10,5"
+                        Margin="10 10 10 5"
                         BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
                         BorderThickness="1"
                         DockPanel.Dock="Top">
@@ -530,7 +531,7 @@
                 <ScrollViewer>
                     <DockPanel HorizontalAlignment="Stretch">
                         <Border
-                            Margin="10,10,10,5"
+                            Margin="10 10 10 5"
                             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
                             BorderThickness="1"
                             DockPanel.Dock="Top">
@@ -578,7 +579,7 @@
                 <ScrollViewer>
                     <DockPanel HorizontalAlignment="Stretch">
                         <Border
-                            Margin="10,10,10,5"
+                            Margin="10 10 10 5"
                             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
                             BorderThickness="1"
                             DockPanel.Dock="Top">

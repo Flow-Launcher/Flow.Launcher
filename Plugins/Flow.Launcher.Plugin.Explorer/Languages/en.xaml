@@ -152,4 +152,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
 </ResourceDictionary>
