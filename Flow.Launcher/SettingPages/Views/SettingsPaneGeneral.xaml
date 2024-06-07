@@ -47,7 +47,7 @@
             </cc:Card>
 
             <cc:Card
-                Title="Always On Top Mode"
+                Title="Always On Top"
                 Margin="0 14 0 0"
                 Sub="When this setting is turned on, it will always operate in above mode. The “Hide Flow when focus is lost” setting and the “Last Query Style” setting are ignored.">
                 <ui:ToggleSwitch
