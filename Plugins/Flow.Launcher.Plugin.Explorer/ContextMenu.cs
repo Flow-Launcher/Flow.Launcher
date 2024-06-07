@@ -174,7 +174,7 @@ namespace Flow.Launcher.Plugin.Explorer
                     {
                         contextMenus.Add(new Result
                         {
-                            Title = $"{menuItem.Label}",
+                            Title = menuItem.Label,
                             Icon = () => menuItem.Icon,
                             Action = _ =>
                             {
