@@ -156,92 +156,142 @@ public static class ShellContextMenuDisplayHelper
 
     public static void ExecuteContextMenuItem(string fileName, uint menuItemId)
     {
-        var malloc = GetMalloc();
-        var hr = SHParseDisplayName(fileName, IntPtr.Zero, out var pidl, 0, out _);
-        if (hr != 0) throw new Exception("SHParseDisplayName failed");
+        IMalloc malloc = null;
+        IntPtr originalPidl = IntPtr.Zero;
+        IntPtr pShellFolder = IntPtr.Zero;
+        IntPtr pContextMenu = IntPtr.Zero;
+        IntPtr hMenu = IntPtr.Zero;
+        IContextMenu contextMenu = null;
+        IShellFolder shellFolder = null;
 
-        var originalPidl = pidl;
-
-        var guid = typeof(IShellFolder).GUID;
-        hr = SHBindToParent(pidl, guid, out var pShellFolder, ref pidl);
-        if (hr != 0) throw new Exception("SHBindToParent failed");
-
-        var shellFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pShellFolder, typeof(IShellFolder));
-        hr = shellFolder.GetUIObjectOf(
-            IntPtr.Zero, 1, new[] { pidl }, typeof(IContextMenu).GUID, IntPtr.Zero, out var pContextMenu
-        );
-        if (hr != 0) throw new Exception("GetUIObjectOf failed");
-
-        var contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
-
-        var hMenu = CreatePopupMenu();
-        contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
-
-        var directory = Path.GetDirectoryName(fileName);
-        var invokeCommandInfo = new CMINVOKECOMMANDINFO
+        try
         {
-            cbSize = (uint)Marshal.SizeOf(typeof(CMINVOKECOMMANDINFO)),
-            fMask = (uint)ContextMenuInvokeCommandFlags.Unicode,
-            hwnd = IntPtr.Zero,
-            lpVerb = (IntPtr)(menuItemId - ContextMenuStartId),
-            lpParameters = null,
-            lpDirectory = directory ?? "",
-            nShow = 1,
-            hIcon = IntPtr.Zero,
-        };
+            malloc = GetMalloc();
+            var hr = SHParseDisplayName(fileName, IntPtr.Zero, out var pidl, 0, out _);
+            if (hr != 0) throw new Exception("SHParseDisplayName failed");
 
-        hr = contextMenu.InvokeCommand(ref invokeCommandInfo);
-        if (hr != 0)
-        {
-            throw new Exception($"InvokeCommand failed with code {hr:X}");
+            originalPidl = pidl;
+
+            var guid = typeof(IShellFolder).GUID;
+            hr = SHBindToParent(pidl, guid, out pShellFolder, ref pidl);
+            if (hr != 0) throw new Exception("SHBindToParent failed");
+
+            shellFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pShellFolder, typeof(IShellFolder));
+            hr = shellFolder.GetUIObjectOf(
+                IntPtr.Zero, 1, new[] { pidl }, typeof(IContextMenu).GUID, IntPtr.Zero, out pContextMenu
+            );
+            if (hr != 0) throw new Exception("GetUIObjectOf failed");
+
+            contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
+
+            hMenu = CreatePopupMenu();
+            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
+
+            var directory = Path.GetDirectoryName(fileName);
+            var invokeCommandInfo = new CMINVOKECOMMANDINFO
+            {
+                cbSize = (uint)Marshal.SizeOf(typeof(CMINVOKECOMMANDINFO)),
+                fMask = (uint)ContextMenuInvokeCommandFlags.Unicode,
+                hwnd = IntPtr.Zero,
+                lpVerb = (IntPtr)(menuItemId - ContextMenuStartId),
+                lpParameters = null,
+                lpDirectory = directory ?? "",
+                nShow = 1,
+                hIcon = IntPtr.Zero,
+            };
+
+            hr = contextMenu.InvokeCommand(ref invokeCommandInfo);
+            if (hr != 0)
+            {
+                throw new Exception($"InvokeCommand failed with code {hr:X}");
+            }
         }
+        finally
+        {
+            if (hMenu != IntPtr.Zero)
+                DestroyMenu(hMenu);
 
-        DestroyMenu(hMenu);
-        Marshal.ReleaseComObject(contextMenu);
-        Marshal.ReleaseComObject(shellFolder);
+            if (contextMenu != null)
+                Marshal.ReleaseComObject(contextMenu);
 
-        if (originalPidl != IntPtr.Zero)
-            malloc.Free(originalPidl);
+            if (pContextMenu != IntPtr.Zero)
+                Marshal.Release(pContextMenu);
 
-        Marshal.ReleaseComObject(malloc);
+            if (shellFolder != null)
+                Marshal.ReleaseComObject(shellFolder);
+
+            if (pShellFolder != IntPtr.Zero)
+                Marshal.Release(pShellFolder);
+
+            if (originalPidl != IntPtr.Zero)
+                malloc?.Free(originalPidl);
+
+            if (malloc != null)
+                Marshal.ReleaseComObject(malloc);
+        }
     }
 
     public static List<ContextMenuItem> GetContextMenuWithIcons(string filePath)
     {
-        var malloc = GetMalloc();
-        var hr = SHParseDisplayName(filePath, IntPtr.Zero, out var pidl, 0, out _);
-        if (hr != 0) throw new Exception("SHParseDisplayName failed");
+        IMalloc malloc = null;
+        IntPtr originalPidl = IntPtr.Zero;
+        IntPtr pShellFolder = IntPtr.Zero;
+        IShellFolder shellFolder = null;
+        IntPtr pContextMenu = IntPtr.Zero;
+        IContextMenu contextMenu = null;
+        IntPtr hMenu = IntPtr.Zero;
 
-        var originalPidl = pidl;
+        try
+        {
+            malloc = GetMalloc();
+            var hr = SHParseDisplayName(filePath, IntPtr.Zero, out var pidl, 0, out _);
+            if (hr != 0) throw new Exception("SHParseDisplayName failed");
 
-        var guid = typeof(IShellFolder).GUID;
-        hr = SHBindToParent(pidl, guid, out var pShellFolder, ref pidl);
-        if (hr != 0) throw new Exception("SHBindToParent failed");
+            originalPidl = pidl;
 
-        var shellFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pShellFolder, typeof(IShellFolder));
-        hr = shellFolder.GetUIObjectOf(
-            IntPtr.Zero, 1, new[] { pidl }, typeof(IContextMenu).GUID, IntPtr.Zero, out var pContextMenu
-        );
-        if (hr != 0) throw new Exception("GetUIObjectOf failed");
+            var guid = typeof(IShellFolder).GUID;
+            hr = SHBindToParent(pidl, guid, out pShellFolder, ref pidl);
+            if (hr != 0) throw new Exception("SHBindToParent failed");
 
-        var contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
+            shellFolder = (IShellFolder)Marshal.GetTypedObjectForIUnknown(pShellFolder, typeof(IShellFolder));
+            hr = shellFolder.GetUIObjectOf(
+                IntPtr.Zero, 1, new[] { pidl }, typeof(IContextMenu).GUID, IntPtr.Zero, out pContextMenu
+            );
+            if (hr != 0) throw new Exception("GetUIObjectOf failed");
 
-        var hMenu = CreatePopupMenu();
-        contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
+            contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
 
-        var menuItems = new List<ContextMenuItem>();
-        ProcessMenuWithIcons(hMenu, contextMenu, menuItems);
+            hMenu = CreatePopupMenu();
+            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
 
-        DestroyMenu(hMenu);
-        Marshal.ReleaseComObject(contextMenu);
-        Marshal.ReleaseComObject(shellFolder);
+            var menuItems = new List<ContextMenuItem>();
+            ProcessMenuWithIcons(hMenu, contextMenu, menuItems);
 
-        if (originalPidl != IntPtr.Zero)
-            malloc.Free(originalPidl);
+            return menuItems;
+        }
+        finally
+        {
+            if (hMenu != IntPtr.Zero)
+                DestroyMenu(hMenu);
 
-        Marshal.ReleaseComObject(malloc);
+            if (contextMenu != null)
+                Marshal.ReleaseComObject(contextMenu);
 
-        return menuItems;
+            if (pContextMenu != IntPtr.Zero)
+                Marshal.Release(pContextMenu);
+
+            if (shellFolder != null)
+                Marshal.ReleaseComObject(shellFolder);
+
+            if (pShellFolder != IntPtr.Zero)
+                Marshal.Release(pShellFolder);
+
+            if (originalPidl != IntPtr.Zero)
+                malloc?.Free(originalPidl);
+
+            if (malloc != null)
+                Marshal.ReleaseComObject(malloc);
+        }
     }
 
 
