@@ -1199,16 +1199,55 @@ namespace Flow.Launcher.ViewModel
 
         #region Hotkey
 
+        public void ClearResults()
+        {
+            // Clear the selected results
+            SelectedResults.Clear();
+
+            // Clear any additional state related to results (e.g., user-selected records, history, etc.)
+            if (SelectedIsFromQueryResults())
+            {
+                ContextMenu.Clear();
+                History.Clear();
+                lastHistoryIndex = 1;
+            }
+
+            // Switch to results view
+            SelectedResults = Results;
+
+            // Clear query text
+            ChangeQueryText(string.Empty);
+        }
         public void ToggleFlowLauncher()
         {
-            if (!MainWindowVisibilityStatus)
+            if (Settings.AlwaysOnTop)
             {
                 Show();
+                ActivateWindow();
             }
             else
             {
-                Hide();
+                if (!MainWindowVisibilityStatus)
+                {
+                    Show();
+                }
+                else
+                {
+                    Hide();
+                }
             }
+        }
+
+        private void ActivateWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                // Bring the window to the foreground and activate it
+                if (Application.Current.MainWindow != null)
+                {
+                    Application.Current.MainWindow.Activate();
+                }
+            });
         }
 
         public void Show()
@@ -1226,7 +1265,13 @@ namespace Flow.Launcher.ViewModel
 
         public async void Hide()
         {
-            lastHistoryIndex = 1;
+            if (Settings.AlwaysOnTop)
+            {
+                // If AlwaysOnTop is enabled, clear results instead of hiding the window
+                ClearResults();
+                return;
+            }
+
             // Trick for no delay
             MainWindowOpacity = 0;
             lastContextMenuResult = new Result();

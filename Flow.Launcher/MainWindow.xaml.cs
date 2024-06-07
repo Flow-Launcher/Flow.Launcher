@@ -27,6 +27,7 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Flow.Launcher
 {
@@ -620,6 +621,14 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+
+            // Check if AlwaysOnTop is enabled
+            if (_settings.AlwaysOnTop)
+            {
+                _viewModel.ClearResults();
+                return; // If AlwaysOnTop is enabled, do nothing
+            }
+
             //This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -629,13 +638,9 @@ namespace Flow.Launcher
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
                     await Task.Delay(100);
-
-                if (_settings.HideWhenDeactivated)
-                {
-                    _viewModel.Hide();
-                }
             }
         }
+
 
         private void UpdatePosition()
         {

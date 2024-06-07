@@ -249,6 +249,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
+        public bool AlwaysOnTop { get; set; } = false;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
