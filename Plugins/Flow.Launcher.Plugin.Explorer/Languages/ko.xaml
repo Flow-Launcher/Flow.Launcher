@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">사용자 지정 액션 키워드</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">빠른 접근 항목</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 설정</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">미리보기 패널</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">크기</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">만든 날짜</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">수정한 날짜</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">파일 정보 표시</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">시간과 날짜 형식</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">정렬 옵션:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 경로:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
@@ -40,7 +40,7 @@
     <system:String x:Key="plugin_explorer_shell_path">쉘 경로</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">색인 제외 경로</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">검색 결과위치를 실행 가능한 작업 디렉토리(Working Directory)로 사용</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Enter 키를 눌렀을 때 기본 파일 관리자에서 폴더 열기</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">색인 옵션</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">검색:</system:String>
@@ -106,8 +106,8 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">이 항목을 빠른 접근에서 제거</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">우클릭 메뉴 보기</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_openwith">함께 열기</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">이 항목을 열 프로그램을 선택</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
