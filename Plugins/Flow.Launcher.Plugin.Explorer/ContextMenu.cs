@@ -280,7 +280,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = Constants.DifferentUserIconImagePath
                     });
 
-                if (record.Type is ResultType.File or ResultType.Folder)
+                if (record.Type is ResultType.File or ResultType.Folder && Settings.ShowWindowsContextMenu)
                 {
                     var filters = Settings
                         .WindowsContextMenuIgnoredItems
