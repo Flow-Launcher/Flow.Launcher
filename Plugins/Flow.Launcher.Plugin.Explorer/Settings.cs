@@ -30,6 +30,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool ShowWindowsContextMenu { get; set; } = true;
 
+        public string WindowsContextMenuIgnoredItems { get; set; } = string.Empty;
+
         public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
@@ -62,7 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer
         public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
 
         public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
-        
+
         public string PreviewPanelTimeFormat { get; set; } = "HH:mm";
 
         private EverythingSearchManager _everythingManagerInstance;

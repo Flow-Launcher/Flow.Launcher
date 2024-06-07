@@ -350,6 +350,28 @@
             </TabItem>
             <TabItem
                 Width="Auto"
+                Header="Native Context Menu"
+                Style="{DynamicResource ExplorerTabItem}">
+                <StackPanel Margin="30 20 10 10">
+                    <CheckBox
+                        Margin="0 10 0 0"
+                        Content="Display native context menu (experimental)"
+                        IsChecked="{Binding ShowWindowsContextMenu}" />
+
+                    <TextBlock
+                        Margin="0 10"
+                        Foreground="{DynamicResource Color05B}"
+                        Text="Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')" />
+
+                    <TextBox
+                        Height="300"
+                        AcceptsReturn="True"
+                        Text="{Binding WindowsContextMenuIgnoredItems}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </TabItem>
+            <TabItem
+                Width="Auto"
                 Header="{DynamicResource plugin_explorer_previewpanel_setting_header}"
                 Style="{DynamicResource ExplorerTabItem}">
                 <StackPanel Margin="30,20,0,10">

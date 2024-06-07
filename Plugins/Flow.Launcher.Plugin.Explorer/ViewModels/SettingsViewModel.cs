@@ -102,6 +102,30 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #endregion
 
+        #region Native Context Menu
+
+        public bool ShowWindowsContextMenu
+        {
+            get => Settings.ShowWindowsContextMenu;
+            set
+            {
+                Settings.ShowWindowsContextMenu = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuIgnoredItems
+        {
+            get => Settings.WindowsContextMenuIgnoredItems;
+            set
+            {
+                Settings.WindowsContextMenuIgnoredItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
         #region Preview Panel
 
         public bool ShowFileSizeInPreviewPanel

@@ -282,7 +282,19 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 if (record.Type is ResultType.File or ResultType.Folder)
                 {
-                    var menuItems = ShellContextMenuDisplayHelper.GetContextMenuWithIcons(record.FullPath);
+                    var filters = Settings
+                        .WindowsContextMenuIgnoredItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var menuItems = ShellContextMenuDisplayHelper
+                        .GetContextMenuWithIcons(record.FullPath)
+                        .Where(contextMenuItem =>
+                            filters.Length == 0 || !filters.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            )
+                        );
                     foreach (var menuItem in menuItems)
                     {
                         contextMenus.Add(new Result
