@@ -167,24 +167,6 @@ namespace Flow.Launcher.Plugin.Explorer
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf12b")
                 });
 
-                if (record.Type is ResultType.File or ResultType.Folder)
-                {
-                    var menuItems = ShellContextMenuDisplayHelper.GetContextMenuWithIcons(record.FullPath);
-                    foreach (var menuItem in menuItems)
-                    {
-                        contextMenus.Add(new Result
-                        {
-                            Title = menuItem.Label,
-                            Icon = () => menuItem.Icon,
-                            Action = _ =>
-                            {
-                                ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
-                                return true;
-                            }
-                        });
-                    }
-                }
-
 
                 if (record.Type is ResultType.File or ResultType.Folder)
                     contextMenus.Add(new Result
@@ -297,6 +279,24 @@ namespace Flow.Launcher.Plugin.Explorer
                         },
                         IcoPath = Constants.DifferentUserIconImagePath
                     });
+
+                if (record.Type is ResultType.File or ResultType.Folder)
+                {
+                    var menuItems = ShellContextMenuDisplayHelper.GetContextMenuWithIcons(record.FullPath);
+                    foreach (var menuItem in menuItems)
+                    {
+                        contextMenus.Add(new Result
+                        {
+                            Title = menuItem.Label,
+                            Icon = () => menuItem.Icon,
+                            Action = _ =>
+                            {
+                                ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
+                                return true;
+                            }
+                        });
+                    }
+                }
             }
 
             return contextMenus;
