@@ -66,7 +66,7 @@ public static class ShellContextMenuDisplayHelper
     private const uint ContextMenuEndId = 0x7FFF;
 
     // We haven't managed to make these work, so we don't display them in the context menu.
-    private static readonly string[] IgnoredContextMenuOptions =
+    private static readonly string[] IgnoredContextMenuCommands =
     {
         "share",
         "Windows.ModernShare",
@@ -286,7 +286,7 @@ public static class ShellContextMenuDisplayHelper
                     commandBuilder,
                     commandBuilder.Capacity
                 );
-                if (IgnoredContextMenuOptions.Contains(commandBuilder.ToString(), StringComparer.OrdinalIgnoreCase))
+                if (IgnoredContextMenuCommands.Contains(commandBuilder.ToString(), StringComparer.OrdinalIgnoreCase))
                 {
                     continue;
                 }
