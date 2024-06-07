@@ -70,7 +70,8 @@ public static class ShellContextMenuDisplayHelper
     {
         "share",
         "Windows.ModernShare",
-        "PinToStartScreen"
+        "PinToStartScreen",
+        "CopyAsPath"
     };
 
     #endregion
