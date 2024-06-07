@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
@@ -63,6 +64,14 @@ public static class ShellContextMenuDisplayHelper
 
     private const uint ContextMenuStartId = 0x0001;
     private const uint ContextMenuEndId = 0x7FFF;
+
+    // We haven't managed to make these work, so we don't display them in the context menu.
+    private static readonly string[] IgnoredContextMenuOptions =
+    {
+        "share",
+        "Windows.ModernShare",
+        "PinToStartScreen"
+    };
 
     #endregion
 
@@ -216,7 +225,7 @@ public static class ShellContextMenuDisplayHelper
         contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
 
         var menuItems = new List<ContextMenuItem>();
-        ProcessMenuWithIcons(hMenu, menuItems);
+        ProcessMenuWithIcons(hMenu, contextMenu, menuItems);
 
         DestroyMenu(hMenu);
         Marshal.ReleaseComObject(contextMenu);
@@ -231,7 +240,7 @@ public static class ShellContextMenuDisplayHelper
     }
 
 
-    private static void ProcessMenuWithIcons(IntPtr hMenu, List<ContextMenuItem> menuItems, string prefix = "")
+    private static void ProcessMenuWithIcons(IntPtr hMenu, IContextMenu contextMenu, List<ContextMenuItem> menuItems, string prefix = "")
     {
         uint menuCount = GetMenuItemCount(hMenu);
 
@@ -264,10 +273,23 @@ public static class ShellContextMenuDisplayHelper
             IntPtr hSubMenu = GetSubMenu(hMenu, (int)i);
             if (hSubMenu != IntPtr.Zero)
             {
-                ProcessMenuWithIcons(hSubMenu, menuItems, prefix + menuText + " > ");
+                ProcessMenuWithIcons(hSubMenu, contextMenu, menuItems, prefix + menuText + " > ");
             }
             else if (!string.IsNullOrWhiteSpace(menuText.ToString()))
             {
+                var commandBuilder = new StringBuilder(256);
+                contextMenu.GetCommandString(
+                    mii.wID - ContextMenuStartId,
+                    (uint)ContextMenuFlags.Explore,
+                    IntPtr.Zero,
+                    commandBuilder,
+                    commandBuilder.Capacity
+                );
+                if (IgnoredContextMenuOptions.Contains(commandBuilder.ToString(), StringComparer.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 ImageSource icon = null;
                 if (mii.hbmpItem != IntPtr.Zero)
                 {
