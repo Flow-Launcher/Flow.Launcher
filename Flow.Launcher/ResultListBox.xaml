@@ -224,7 +224,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Result.ItemType}" Value="Small">
-                    <Setter Property="Height" Value="{Binding SmallSize}" />
+                    <Setter Property="Height" Value="{Binding ItemTypeSmallSize}" />
                 </DataTrigger>
             </Style.Triggers>
             <Setter Property="Height" Value="{Binding Settings.ItemHeightSize}" />

@@ -180,7 +180,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool UseBigThumbnail => Result.Preview.IsMedia;
 
-        public double SmallSize => Settings.ItemHeightSize * 0.6;
+        public double ItemTypeSmallSize => Settings.ItemHeightSize * 0.6;
 
         public GlyphInfo Glyph { get; set; }
 

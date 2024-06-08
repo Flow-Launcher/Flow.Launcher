@@ -247,10 +247,9 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <summary>
-        /// Item Height Style. Null, Small(for OS Context), Author
+        /// Item Height Style. Null, Small (for displaying the native context menu in the Explorer plugin), Author
         /// </summary>
-        public string ItemType { get; set; }
-
+        public ResultItemType ItemType { get; set; }
 
         /// <summary>
         /// Progress bar display. Providing an int value between 0-100 will trigger the progress bar to be displayed on the result

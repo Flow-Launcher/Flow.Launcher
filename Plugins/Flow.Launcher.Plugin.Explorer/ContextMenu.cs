@@ -301,7 +301,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             Title = menuItem.Label,
                             Icon = () => menuItem.Icon,
-                            ItemType = "Small",
+                            ItemType = ResultItemType.Small,
                             Action = _ =>
                             {
                                 ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
