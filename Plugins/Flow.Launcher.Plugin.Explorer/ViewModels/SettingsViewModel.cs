@@ -106,10 +106,10 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         public bool ShowWindowsContextMenu
         {
-            get => Settings.ShowWindowsContextMenu;
+            get => Settings.ShowInlinedWindowsContextMenu;
             set
             {
-                Settings.ShowWindowsContextMenu = value;
+                Settings.ShowInlinedWindowsContextMenu = value;
                 OnPropertyChanged();
             }
         }

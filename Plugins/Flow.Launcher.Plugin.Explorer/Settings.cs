@@ -28,7 +28,7 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
-        public bool ShowWindowsContextMenu { get; set; } = true;
+        public bool ShowInlinedWindowsContextMenu { get; set; } = false;
 
         public string WindowsContextMenuIgnoredItems { get; set; } = string.Empty;
 
