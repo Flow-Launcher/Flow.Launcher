@@ -223,26 +223,11 @@
     <ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
             <Style.Triggers>
-                <!--  Condition for Type being 'Small'  -->
-                <MultiDataTrigger>
-                    <MultiDataTrigger.Conditions>
-                        <Condition Binding="{Binding Result.ItemType}" Value="Small" />
-                    </MultiDataTrigger.Conditions>
-                    <MultiDataTrigger.Setters>
-                        <Setter Property="Height" Value="{Binding SmallSize}" />
-                    </MultiDataTrigger.Setters>
-                </MultiDataTrigger>
-                <!--  Default condition for Type being other values or not set  -->
-                <DataTrigger Binding="{Binding Result.ItemType}" Value="{x:Null}">
-                    <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Result.ItemType}" Value="">
-                    <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Result.ItemType}" Value="author">
-                    <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <DataTrigger Binding="{Binding Result.ItemType}" Value="Small">
+                    <Setter Property="Height" Value="{Binding SmallSize}" />
                 </DataTrigger>
             </Style.Triggers>
+            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Visibility" Value="Visible" />
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
