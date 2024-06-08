@@ -227,7 +227,7 @@
                     <Setter Property="Height" Value="{Binding SmallSize}" />
                 </DataTrigger>
             </Style.Triggers>
-            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize}" />
             <Setter Property="Visibility" Value="Visible" />
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
