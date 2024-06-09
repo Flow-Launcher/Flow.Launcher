@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -871,7 +871,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (Settings.AlwaysPreview)
             {
-                ShowPreview();
+                ShowInternalPreview();
             }
             else
             {
