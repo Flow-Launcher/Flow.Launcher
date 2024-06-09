@@ -25,7 +25,6 @@ namespace Flow.Launcher.Core.Resource
 
         public Internationalization()
         {
-            AddPluginLanguageDirectories();
             LoadDefaultLanguage();
             // we don't want to load /Languages/en.xaml twice
             // so add flowlauncher language directory after load plugin language files
@@ -40,7 +39,7 @@ namespace Flow.Launcher.Core.Resource
         }
 
 
-        private void AddPluginLanguageDirectories()
+        internal void AddPluginLanguageDirectories()
         {
             foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
             {

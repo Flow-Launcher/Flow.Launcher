@@ -3,6 +3,14 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow определил, что вы установили {0} плагины, которым требуется {1} для работы. Скачать {1}?
+        {2}{2}
+        Кликните нет, если он уже установлен, и вам будет предложено выбрать папку, где находится исполняемый файл {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не удалось зарегистрировать сочетание клавиш &quot;{0}&quot;. Возможно, оно используется другой программой. Измените сочетание клавиш или закройте другую программу.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>

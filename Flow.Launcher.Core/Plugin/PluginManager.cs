@@ -13,6 +13,7 @@ using Flow.Launcher.Plugin;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -159,6 +160,9 @@ namespace Flow.Launcher.Core.Plugin
                     }
                 }
             }
+
+            InternationalizationManager.Instance.AddPluginLanguageDirectories();
+            InternationalizationManager.Instance.ChangeLanguage(InternationalizationManager.Instance.Settings.Language);
 
             if (failedPlugins.Any())
             {

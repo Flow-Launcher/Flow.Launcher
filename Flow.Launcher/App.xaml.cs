@@ -71,6 +71,9 @@ namespace Flow.Launcher
                 StringMatcher.Instance = _stringMatcher;
                 _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
 
+                InternationalizationManager.Instance.Settings = _settings;
+                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
@@ -88,11 +91,6 @@ namespace Flow.Launcher
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
-
-                // todo temp fix for instance code logic
-                // load plugin before change language, because plugin language also needs be changed
-                InternationalizationManager.Instance.Settings = _settings;
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
                 HotKeyMapper.Initialize(_mainVM);
 
