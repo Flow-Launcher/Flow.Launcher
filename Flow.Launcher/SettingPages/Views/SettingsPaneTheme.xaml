@@ -245,9 +245,8 @@
                             <Button
                                 Margin="8"
                                 HorizontalAlignment="Stretch"
-                                Click="Reset_Click"
+                                Command="{Binding ResetCommand}"
                                 Content="{DynamicResource resetCustomize}" />
-
                         </StackPanel>
                     </ScrollViewer>
                 </Border>

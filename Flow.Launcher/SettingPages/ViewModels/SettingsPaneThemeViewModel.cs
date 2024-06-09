@@ -434,6 +434,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings = settings;
     }
 
+    [RelayCommand]
     public void Reset()
     {
         SelectedQueryBoxFont = new FontFamily(DefaultFont);

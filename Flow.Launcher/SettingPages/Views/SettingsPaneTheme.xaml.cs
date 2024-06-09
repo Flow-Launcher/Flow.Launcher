@@ -30,9 +30,4 @@ public partial class SettingsPaneTheme : Page
     {
         _viewModel.UpdateColorScheme();
     }
-
-    private void Reset_Click(object sender, RoutedEventArgs e)
-    {
-        _viewModel.Reset();
-    }
 }
