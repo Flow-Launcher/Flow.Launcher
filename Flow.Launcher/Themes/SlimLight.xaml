@@ -179,15 +179,28 @@
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="#8f8d90" />
+        <Setter Property="Foreground" Value="#bebebe" />
         <Setter Property="Margin" Value="0,0,10,0" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=DateBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0,0,10,3" />
+            </DataTrigger>
+        </Style.Triggers>
+
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="#8f8d90" />
+        <Setter Property="Foreground" Value="#bebebe" />
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0,0,0,3" />
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
     <Style
         x:Key="PreviewBorderStyle"
