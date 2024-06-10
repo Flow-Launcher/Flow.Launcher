@@ -23,6 +23,38 @@ automations:
       - action: explain-code-experts@v1
         args:
           gt: 10
+  # Post a comment that indicates what percentage of the PR is new code.
+  percent_new_code:
+    if:
+      - true
+    run:
+      - action: add-comment@v1
+        args:
+          comment: |
+            This PR is {{ changes.ratio }}% new code.
+  # Post a comment that request changes for a PR that contains a TODO statement.
+  review_todo_comments:
+    if:
+      - {{ source.diff.files | matchDiffLines(regex=r/^[+].*(TODO)|(todo)/) | some }}
+    run:
+      - action: request-changes@v1
+        args:
+          comment: |
+            This PR contains a TODO statement. Please check to see if they should be removed.
+  # Post a comment that request a before and after screenshot
+  request_screenshot:
+    # Triggered for PRs that lack an image file or link to an image in the PR description
+    if:
+      - {{ not (has.screenshot_link or has.image_uploaded) }}
+    run:
+      - action: add-label@v1
+        args:
+          label: 'no-screenshot'
+          color: '#FF000A'
+      - action: add-comment@v1
+        args:
+          comment: |
+            Be a legend :trophy: by adding a before and after screenshot of the changes you made, especially if they are around UI/UX.
 
 
 # +----------------------------------------------------------------------------+
@@ -37,3 +69,11 @@ colors:
   red: 'b60205'
   yellow: 'fbca04'
   green: '0e8a16'
+
+changes:
+  # Sum all the lines added/edited in the PR
+  additions: {{ branch.diff.files_metadata | map(attr='additions') | sum }}
+  # Sum all the line removed in the PR
+  deletions: {{ branch.diff.files_metadata | map(attr='deletions') | sum }}
+  # Calculate the ratio of new code
+  ratio: {{ (changes.additions / (changes.additions + changes.deletions)) * 100 | round(2) }}
