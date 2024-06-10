@@ -51,7 +51,7 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: Uho7u3gk4RHzyWGgqgXZuOeI55NbqHLQ9tXahL7xmE4av2oiSldrNiyGgy/0AQYw
+      secure: sCSd5JWgdzJWDa9kpqECut5ACPKZqcoxKU8ERKC00k7VIjig3/+nFV5zzTcGb0w3
     on:
       APPVEYOR_REPO_TAG: true
 
