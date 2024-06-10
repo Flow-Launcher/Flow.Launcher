@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">검색창을 열 때 작은 소리를 재생합니다.</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">애니메이션</system:String>
     <system:String x:Key="AnimationTip">일부 UI에 애니메이션을 사용합니다.</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
     <system:String x:Key="hotkeys">단축키</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher 단축키</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Flow Launcher를 열 때 사용할 단축키를 입력하세요.</system:String>
-    <system:String x:Key="previewHotkey">미리보기 단축키</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">미리보기 패널을 켜고 끌 때 사용할 단축키를 입력하세요.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">결과 선택 단축키</system:String>
     <system:String x:Key="openResultModifiersToolTip">결과 항목을 선택하는 단축키입니다.</system:String>
     <system:String x:Key="showOpenResultHotkey">단축키 표시</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">결과창에서 결과 선택 단축키를 표시합니다.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">콘텍스트 메뉴 열기</system:String>
+    <system:String x:Key="SettingWindowHotkey">설정창 열기</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">포함된 폴더 열기</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">사용자지정 쿼리 단축키</system:String>
     <system:String x:Key="customQueryShortcut">사용자 지정 쿼리 단축어</system:String>
     <system:String x:Key="builtinShortcuts">내장 단축어</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">삭제</system:String>
     <system:String x:Key="edit">편집</system:String>
     <system:String x:Key="add">추가</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">항목을 선택하세요.</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">{0} 플러그인 단축키를 삭제하시겠습니까?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
@@ -286,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">단축키를 사용할 수 없습니다. 다른 단축키를 입력하세요.</system:String>
     <system:String x:Key="invalidPluginHotkey">플러그인 단축키가 유효하지 않습니다.</system:String>
     <system:String x:Key="update">업데이트</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">사용자 지정 쿼리 단축어</system:String>
@@ -297,8 +327,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">단축키를 사용할 수 없습니다.</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">저장</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">취소</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">삭제</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">버전</system:String>
@@ -367,6 +401,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyRunDesc">선택한 아이템 열기</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">설정창 열기</system:String>
     <system:String x:Key="HotkeyF5Desc">플러그인 데이터 새로고침</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">날씨</system:String>
     <system:String x:Key="RecommendWeatherDesc">구글 날씨 검색</system:String>

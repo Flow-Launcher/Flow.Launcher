@@ -276,7 +276,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                             return true;
                         },
-                        IcoPath = Constants.DifferentUserIconImagePath
+                        IcoPath = Constants.DifferentUserIconImagePath,
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue748"),
                     });
             }
 
@@ -403,7 +404,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     return false;
                 },
-                IcoPath = Constants.ExcludeFromIndexImagePath
+                IcoPath = Constants.ExcludeFromIndexImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf140"),
             };
         }
 
@@ -435,7 +437,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                IcoPath = Constants.IndexingOptionsIconImagePath
+                IcoPath = Constants.IndexingOptionsIconImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue773"),
             };
         }
 

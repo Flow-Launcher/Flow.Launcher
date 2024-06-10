@@ -55,7 +55,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged(nameof(MaxResultsToShow));
             }
         }
-        public bool UseDropShadowEffect { get; set; } = false;
+        public bool UseDropShadowEffect { get; set; } = true;
+
+        /* Appearance Settings. It should be separated from the setting later.*/
+        public double WindowHeightSize { get; set; } = 42;
+        public double ItemHeightSize { get; set; } = 58;
+        public double QueryBoxFontSize { get; set; } = 20;
+        public double ResultItemFontSize { get; set; } = 16;
+        public double ResultSubItemFontSize { get; set; } = 13; 
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -64,6 +71,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string ResultFontStyle { get; set; }
         public string ResultFontWeight { get; set; }
         public string ResultFontStretch { get; set; }
+        public string ResultSubFont { get; set; } = FontFamily.GenericSansSerif.Name;
+        public string ResultSubFontStyle { get; set; }
+        public string ResultSubFontWeight { get; set; }
+        public string ResultSubFontStretch { get; set; }
         public bool UseGlyphIcons { get; set; } = true;
         public bool UseAnimation { get; set; } = true;
         public bool UseSound { get; set; } = true;
@@ -77,8 +88,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public double SettingWindowWidth { get; set; } = 1000;
         public double SettingWindowHeight { get; set; } = 700;
-        public double SettingWindowTop { get; set; }
-        public double SettingWindowLeft { get; set; }
+        public double? SettingWindowTop { get; set; } = null;
+        public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
         public int CustomExplorerIndex { get; set; } = 0;
@@ -177,32 +188,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool AlwaysPreview { get; set; } = false;
         public bool AlwaysStartEn { get; set; } = false;
 
+        private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
         [JsonInclude, JsonConverter(typeof(JsonStringEnumConverter))]
-        public SearchPrecisionScore QuerySearchPrecision { get; private set; } = SearchPrecisionScore.Regular;
-
-        [JsonIgnore]
-        public string QuerySearchPrecisionString
+        public SearchPrecisionScore QuerySearchPrecision
         {
-            get { return QuerySearchPrecision.ToString(); }
+            get => _querySearchPrecision;
             set
             {
-                try
-                {
-                    var precisionScore = (SearchPrecisionScore)Enum
-                        .Parse(typeof(SearchPrecisionScore), value);
-
-                    QuerySearchPrecision = precisionScore;
-                    StringMatcher.Instance.UserSettingSearchPrecision = precisionScore;
-                }
-                catch (ArgumentException e)
-                {
-                    Logger.Log.Exception(nameof(Settings), "Failed to load QuerySearchPrecisionString value from Settings file", e);
-
-                    QuerySearchPrecision = SearchPrecisionScore.Regular;
-                    StringMatcher.Instance.UserSettingSearchPrecision = SearchPrecisionScore.Regular;
-
-                    throw;
-                }
+                _querySearchPrecision = value;
+                if (StringMatcher.Instance != null)
+                    StringMatcher.Instance.UserSettingSearchPrecision = value;
             }
         }
 
@@ -221,6 +216,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// </summary>
         public double CustomWindowTop { get; set; } = 0;
 
+        public bool KeepMaxResults { get; set; } = false;
         public int MaxResultsToShow { get; set; } = 5;
         public int ActivateTimes { get; set; }
 

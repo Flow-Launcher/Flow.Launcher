@@ -110,15 +110,15 @@ public partial class SettingWindow
 
     public void InitializePosition()
     {
-        if (_settings.SettingWindowTop == null)
+        if (_settings.SettingWindowTop == null || _settings.SettingWindowLeft == null)
         {
             Top = WindowTop();
             Left = WindowLeft();
         }
         else
         {
-            Top = _settings.SettingWindowTop;
-            Left = _settings.SettingWindowLeft;
+            Top = _settings.SettingWindowTop.Value;
+            Left = _settings.SettingWindowLeft.Value;
         }
         WindowState = _settings.SettingWindowState;
     }

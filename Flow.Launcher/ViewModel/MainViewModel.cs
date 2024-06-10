@@ -19,8 +19,6 @@ using Microsoft.VisualStudio.Threading;
 using System.Text;
 using System.Threading.Channels;
 using ISavable = Flow.Launcher.Plugin.ISavable;
-using System.IO;
-using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
@@ -71,6 +69,21 @@ namespace Flow.Launcher.ViewModel
                 {
                     case nameof(Settings.WindowSize):
                         OnPropertyChanged(nameof(MainWindowWidth));
+                        break;
+                    case nameof(Settings.WindowHeightSize):
+                        OnPropertyChanged(nameof(MainWindowHeight));
+                        break;
+                    case nameof(Settings.QueryBoxFontSize):
+                        OnPropertyChanged(nameof(QueryBoxFontSize));
+                        break;
+                    case nameof(Settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        break;
+                    case nameof(Settings.ResultItemFontSize):
+                        OnPropertyChanged(nameof(ResultItemFontSize));
+                        break;
+                    case nameof(Settings.ResultSubItemFontSize):
+                        OnPropertyChanged(nameof(ResultSubItemFontSize));
                         break;
                     case nameof(Settings.AlwaysStartEn):
                         OnPropertyChanged(nameof(StartWithEnglishMode));
@@ -130,15 +143,21 @@ namespace Flow.Launcher.ViewModel
 
             ContextMenu = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             Results = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             History = new ResultsViewModel(Settings)
             {
-                LeftClickResultCommand = OpenResultCommand, RightClickResultCommand = LoadContextMenuCommand
+                LeftClickResultCommand = OpenResultCommand,
+                RightClickResultCommand = LoadContextMenuCommand,
+                IsPreviewOn = Settings.AlwaysPreview
             };
             _selectedResults = Results;
 
@@ -439,7 +458,7 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults.SelectPrevResult();
             }
-        
+
         }
 
         [RelayCommand]
@@ -466,7 +485,7 @@ namespace Flow.Launcher.ViewModel
         {
             GameModeStatus = !GameModeStatus;
         }
-        
+
         [RelayCommand]
         public void CopyAlternative()
         {
@@ -485,7 +504,6 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
-        public CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
 
         private async Task RegisterClockAndDateUpdateAsync()
         {
@@ -494,9 +512,9 @@ namespace Flow.Launcher.ViewModel
             while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
             {
                 if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, Culture);
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
                 if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat, Culture);
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
             }
         }
 
@@ -524,17 +542,9 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void IncreaseWidth()
         {
-            if (MainWindowWidth + 100 > 1920 || Settings.WindowSize == 1920)
-            {
-                Settings.WindowSize = 1920;
-            }
-            else
-            {
-                Settings.WindowSize += 100;
-                Settings.WindowLeft -= 50;
-            }
-
-            OnPropertyChanged();
+            Settings.WindowSize += 100;
+            Settings.WindowLeft -= 50;
+            OnPropertyChanged(nameof(MainWindowWidth));
         }
 
         [RelayCommand]
@@ -550,7 +560,7 @@ namespace Flow.Launcher.ViewModel
                 Settings.WindowSize -= 100;
             }
 
-            OnPropertyChanged();
+            OnPropertyChanged(nameof(MainWindowWidth));
         }
 
         [RelayCommand]
@@ -582,6 +592,10 @@ namespace Flow.Launcher.ViewModel
             {
                 HidePreview();
             }
+
+            ContextMenu.IsPreviewOn = PreviewVisible;
+            History.IsPreviewOn = PreviewVisible;
+            Results.IsPreviewOn = PreviewVisible;
         }
 
         private void ShowPreview()
@@ -656,12 +670,27 @@ namespace Flow.Launcher.ViewModel
             get { return _selectedResults; }
             set
             {
+                var isReturningFromContextMenu = ContextMenuSelected();
                 _selectedResults = value;
                 if (SelectedIsFromQueryResults())
                 {
                     ContextMenu.Visibility = Visibility.Collapsed;
                     History.Visibility = Visibility.Collapsed;
-                    ChangeQueryText(_queryTextBeforeLeaveResults);
+
+                    // QueryText setter (used in ChangeQueryText) runs the query again, resetting the selected
+                    // result from the one that was selected before going into the context menu to the first result.
+                    // The code below correctly restores QueryText and puts the text caret at the end without
+                    // running the query again when returning from the context menu.
+                    if (isReturningFromContextMenu)
+                    {
+                        _queryText = _queryTextBeforeLeaveResults;
+                        OnPropertyChanged(nameof(QueryText));
+                        QueryTextCursorMovedToEnd = true;
+                    }
+                    else
+                    {
+                        ChangeQueryText(_queryTextBeforeLeaveResults);
+                    }
                 }
                 else
                 {
@@ -702,7 +731,41 @@ namespace Flow.Launcher.ViewModel
         public double MainWindowWidth
         {
             get => Settings.WindowSize;
-            set => Settings.WindowSize = value;
+            set
+            {
+                if (!MainWindowVisibilityStatus) return;
+                Settings.WindowSize = value;
+            }
+        }
+
+        public double MainWindowHeight
+        {
+            get => Settings.WindowHeightSize;
+            set => Settings.WindowHeightSize = value;
+        }
+
+        public double QueryBoxFontSize
+        {
+            get => Settings.QueryBoxFontSize;
+            set => Settings.QueryBoxFontSize = value;
+        }
+
+        public double ItemHeightSize
+        {
+            get => Settings.ItemHeightSize;
+            set => Settings.ItemHeightSize = value;
+        }
+
+        public double ResultItemFontSize
+        {
+            get => Settings.ResultItemFontSize;
+            set => Settings.ResultItemFontSize = value;
+        }
+
+        public double ResultSubItemFontSize
+        {
+            get => Settings.ResultSubItemFontSize;
+            set => Settings.ResultSubItemFontSize = value;
         }
 
         public string PluginIconPath { get; set; } = null;
@@ -723,7 +786,7 @@ namespace Flow.Launcher.ViewModel
 
             return hotkey;
         }
-        
+
         public string PreviewHotkey => VerifyOrSetDefaultHotkey(Settings.PreviewHotkey, "F1");
         public string AutoCompleteHotkey => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey, "Ctrl+Tab");
         public string AutoCompleteHotkey2 => VerifyOrSetDefaultHotkey(Settings.AutoCompleteHotkey2, "");

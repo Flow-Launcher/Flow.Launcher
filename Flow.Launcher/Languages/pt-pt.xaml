@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Reproduzir um som ao abrir a janela de pesquisa</system:String>
     <system:String x:Key="SoundEffectVolume">Volume dos efeitos sonoros</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Ajustar volume dos efeitos sonoros</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player não está disponível e é necessário para o ajuste de volume. Verifique a sua instalação caso precise ajustar o volume.</system:String>
     <system:String x:Key="Animation">Animação</system:String>
     <system:String x:Key="AnimationTip">Utilizar animações na aplicação</system:String>
     <system:String x:Key="AnimationSpeed">Velocidade da animação</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tecla de atalho</system:String>
     <system:String x:Key="hotkeys">Teclas de atalho</system:String>
-    <system:String x:Key="flowlauncherHotkey">Tecla de atalho Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduza o atalho para mostrar/ocultar Flow Launcher</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkey">Comutar pré-visualização</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduza o atalho para mostrar/ocultar a pré-visualização na janela de pesquisa.</system:String>
+    <system:String x:Key="hotkeyPresets">Predefinições de teclas de atalho</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Listagem de teclas de atalho registadas</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para os resultados</system:String>
     <system:String x:Key="openResultModifiersToolTip">Selecione a tecla modificadora para abrir o resultado com o teclado</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar tecla de atalho</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Mostrar tecla de atalho perto dos resultados</system:String>
+    <system:String x:Key="autoCompleteHotkey">Conclusão automática</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Executa a conclusão automática para os itens selecionados.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Selecionar seguinte</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Selecionar anterior</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Página seguinte</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Página anterior</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Ir para consulta anterior</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Ir para consulta seguinte</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Abrir menu de contexto</system:String>
+    <system:String x:Key="SettingWindowHotkey">Abrir janela de definições</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copiar caminho do ficheiro</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Comutar modo de jogo</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Comutar histórico</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Abrir pasta do resultado</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Executar como administrador</system:String>
+    <system:String x:Key="RequeryHotkey">Recarregar resultados</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Recarregar dados dos plugins</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajuste rápido da largura da janela</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuste rápido da altura da janela</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Para utilizar quando pretende recarregar o plugin e os dados existentes.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Ainda pode adicionar mais uma tecla de atalho para esta função.</system:String>
     <system:String x:Key="customQueryHotkey">Teclas de atalho personalizadas</system:String>
     <system:String x:Key="customQueryShortcut">Atalhos de consultas personalizadas</system:String>
     <system:String x:Key="builtinShortcuts">Atalhos nativos</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">Eliminar</system:String>
     <system:String x:Key="edit">Editar</system:String>
     <system:String x:Key="add">Adicionar</system:String>
+    <system:String x:Key="none">Nenhuma</system:String>
     <system:String x:Key="pleaseSelectAnItem">Selecione um item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Tem a certeza de que deseja remover a tecla de atalho do plugin {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Tem a certeza de que deseja eliminar o atalho: {0} com expansão {1}?</system:String>
@@ -285,6 +310,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Tecla de atalho indisponível, por favor escolha outra</system:String>
     <system:String x:Key="invalidPluginHotkey">Tecla de atalho inválida</system:String>
     <system:String x:Key="update">Atualizar</system:String>
+    <system:String x:Key="hotkeyRegTitle">Associar tecla de atalho</system:String>
+    <system:String x:Key="hotkeyUnavailable">A tecla de atalho atual não está disponível.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Esta tecla de atalho está reservada para &quot;{0}&quot; e não pode ser usada. Por favor, escolha outra.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Esta tecla de atalho está a ser utilizada por &quot;{0}&quot;. Se escolher &quot;Substituir&quot;, será removida de &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Prima as teclas que pretende utilizar para esta função.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Atalho de consulta personalizada</system:String>
@@ -296,8 +326,12 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <system:String x:Key="duplicateShortcut">Este atallho já existe. Por favor escolha outro ou edite o existente.</system:String>
     <system:String x:Key="emptyShortcut">O atalho e/ou a expansão não estão preenchidos.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Tecla de atalho indisponível</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Guardar</system:String>
+    <system:String x:Key="commonOverwrite">Substituir</system:String>
+    <system:String x:Key="commonCancel">Cancelar</system:String>
+    <system:String x:Key="commonReset">Repor</system:String>
+    <system:String x:Key="commonDelete">Eliminar</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versão</system:String>
@@ -366,6 +400,12 @@ Queira por favor mover a pasta do seu perfil de {0} para {1}
     <system:String x:Key="HotkeyRunDesc">Abrir/Executar item selecionado</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Abrir janela de definições</system:String>
     <system:String x:Key="HotkeyF5Desc">Recarregar dados do plugin</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Selecionar primeiro resultado</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Selecionar último resultado</system:String>
+    <system:String x:Key="HotkeyRequery">Executar consulta novamente</system:String>
+    <system:String x:Key="HotkeyOpenResult">Abrir resultado</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Abrir resultado #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Meteorologia</system:String>
     <system:String x:Key="RecommendWeatherDesc">Meteorologia no Google</system:String>

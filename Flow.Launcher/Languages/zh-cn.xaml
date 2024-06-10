@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">启用激活音效</system:String>
     <system:String x:Key="SoundEffectVolume">音效音量</system:String>
     <system:String x:Key="SoundEffectVolumeTip">调整音效音量</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">动画</system:String>
     <system:String x:Key="AnimationTip">启用动画</system:String>
     <system:String x:Key="AnimationSpeed">动画速度</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
     <system:String x:Key="hotkeys">热键</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher 激活热键</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
-    <system:String x:Key="previewHotkey">预览快捷键</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">输入在搜索窗口中开启/关闭预览的快捷键。</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">打开菜单目录</system:String>
+    <system:String x:Key="SettingWindowHotkey">打开设置窗口</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">切换游戏模式</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">打开所在目录</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQueryShortcut">自定义查询捷径</system:String>
     <system:String x:Key="builtinShortcuts">内置捷径</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
     <system:String x:Key="add">添加</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
@@ -286,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
     <system:String x:Key="update">更新</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -297,8 +327,12 @@
     <system:String x:Key="duplicateShortcut">捷径已存在，请输入一个新的或者编辑已有的。</system:String>
     <system:String x:Key="emptyShortcut">捷径及其展开均不能为空。</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">热键不可用</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">保存</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">取消</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">删除</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -367,6 +401,12 @@
     <system:String x:Key="HotkeyRunDesc">打开/运行选中项目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">打开设置窗口</system:String>
     <system:String x:Key="HotkeyF5Desc">重新加载插件数据</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">天气</system:String>
     <system:String x:Key="RecommendWeatherDesc">谷歌天气结果</system:String>

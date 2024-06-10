@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">搜尋窗口打開時播放音效</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">動畫</system:String>
     <system:String x:Key="AnimationTip">使用介面動畫</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
     <system:String x:Key="hotkeys">快捷鍵</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher 快捷鍵</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">執行縮寫以顯示 / 隱藏 Flow Launcher。</system:String>
-    <system:String x:Key="previewHotkey">預覽快捷鍵</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">開放結果修飾符</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">顯示快捷鍵</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">打開選單</system:String>
+    <system:String x:Key="SettingWindowHotkey">打開視窗設定</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">開啟檔案位置</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">自定義查詢快捷鍵</system:String>
     <system:String x:Key="customQueryShortcut">自訂查詢縮寫</system:String>
     <system:String x:Key="builtinShortcuts">內建縮寫</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">刪除</system:String>
     <system:String x:Key="edit">編輯</system:String>
     <system:String x:Key="add">新增</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">請選擇一項</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">確定要刪除插件 {0} 的快捷鍵嗎？</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你確定你要刪除縮寫：{0} 展開為 {1}？</system:String>
@@ -286,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">快捷鍵不存在，請設定一個新的快捷鍵</system:String>
     <system:String x:Key="invalidPluginHotkey">擴充功能熱鍵無法使用</system:String>
     <system:String x:Key="update">更新</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
@@ -297,8 +327,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">快捷鍵無法使用</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">儲存</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">取消</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">刪除</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -367,6 +401,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyRunDesc">開啟／運行選擇項目</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">開啟視窗設定</system:String>
     <system:String x:Key="HotkeyF5Desc">重新載入插件資料</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">天氣</system:String>
     <system:String x:Key="RecommendWeatherDesc">Google 搜尋的天氣結果</system:String>

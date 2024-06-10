@@ -160,7 +160,7 @@
         <Setter Property="Foreground" Value="#c2c2c2" />
     </Style>
     <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#fa7941" />
+        <Setter Property="Foreground" Value="#c2c2c2" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="25" />
@@ -174,7 +174,7 @@
         x:Key="ClockPanel"
         BasedOn="{StaticResource ClockPanel}"
         TargetType="{x:Type StackPanel}">
-        <Setter Property="Margin" Value="0,0,54,0" />
+        <Setter Property="Margin" Value="0,0,54,2" />
     </Style>
     <Style
         x:Key="ClockBox"

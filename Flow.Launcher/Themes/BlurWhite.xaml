@@ -1,4 +1,9 @@
-﻿<ResourceDictionary
+﻿<!--
+    Name: Blur White
+    IsDark: False
+    HasBlur: True
+-->
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -96,7 +101,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#c6c6c6" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="12,0,12,8" />
+        <Setter Property="Margin" Value="12 0 12 8" />
     </Style>
     <!--  button style in the middle of the scrollbar  -->
     <Style
