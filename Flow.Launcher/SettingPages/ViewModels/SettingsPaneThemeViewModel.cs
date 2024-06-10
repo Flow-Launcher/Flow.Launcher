@@ -22,6 +22,7 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
+    private const string DefaultFont = "Segoe UI";
     public Settings Settings { get; }
 
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
@@ -82,6 +83,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.QueryBoxFontSize;
         set => Settings.QueryBoxFontSize = value;
     }
+
     public double ResultItemFontSize
     {
         get => Settings.ResultItemFontSize;
@@ -97,30 +99,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     private List<Theme.ThemeData> _themes;
     public List<Theme.ThemeData> Themes => _themes ??= ThemeManager.Instance.LoadAvailableThemes();
 
+    public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
-    public class ColorScheme
-    {
-        public string Display { get; set; }
-        public ColorSchemes Value { get; set; }
-    }
-
-    public List<ColorScheme> ColorSchemes
-    {
-        get
-        {
-            List<ColorScheme> modes = new List<ColorScheme>();
-            var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
-            foreach (var e in enums)
-            {
-                var key = $"ColorScheme{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new ColorScheme { Display = display, Value = e, };
-                modes.Add(m);
-            }
-
-            return modes;
-        }
-    }
+    public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
 
     public List<string> TimeFormatList { get; } = new()
     {
@@ -167,11 +148,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     }
 
     public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
+
     public bool KeepMaxResults
     {
         get => Settings.KeepMaxResults;
         set => Settings.KeepMaxResults = value;
     }
+
     public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
 
     public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
@@ -188,29 +171,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseAnimation = value;
     }
 
-    public class AnimationSpeed
-    {
-        public string Display { get; set; }
-        public AnimationSpeeds Value { get; set; }
-    }
+    public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
+    public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
 
-    public List<AnimationSpeed> AnimationSpeeds
-    {
-        get
-        {
-            List<AnimationSpeed> speeds = new List<AnimationSpeed>();
-            var enums = (AnimationSpeeds[])Enum.GetValues(typeof(AnimationSpeeds));
-            foreach (var e in enums)
-            {
-                var key = $"AnimationSpeed{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new AnimationSpeed { Display = display, Value = e, };
-                speeds.Add(m);
-            }
-
-            return speeds;
-        }
-    }
     public bool UseSound
     {
         get => Settings.UseSound;
@@ -329,7 +292,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.QueryBoxFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -373,7 +336,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.ResultFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -418,7 +381,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
             else
             {
-                var font = new FontFamily("Segoe UI");
+                var font = new FontFamily(DefaultFont);
                 return font;
             }
         }
@@ -449,6 +412,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             ThemeManager.Instance.ChangeTheme(Settings.Theme);
         }
     }
+
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
     [RelayCommand]
@@ -473,4 +437,22 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         Settings = settings;
     }
 
+    [RelayCommand]
+    public void Reset()
+    {
+        SelectedQueryBoxFont = new FontFamily(DefaultFont);
+        SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        QueryBoxFontSize = 20;
+
+        SelectedResultFont = new FontFamily(DefaultFont);
+        SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultItemFontSize = 16;
+
+        SelectedResultSubFont = new FontFamily(DefaultFont);
+        SelectedResultSubFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultSubItemFontSize = 13;
+
+        WindowHeightSize = 42;
+        ItemHeightSize = 58;
+    }
 }
