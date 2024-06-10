@@ -47,10 +47,6 @@ automations:
     if:
       - {{ not (has.screenshot_link or has.image_uploaded) }}
     run:
-      - action: add-label@v1
-        args:
-          label: 'no-screenshot'
-          color: '#FF000A'
       - action: add-comment@v1
         args:
           comment: |
