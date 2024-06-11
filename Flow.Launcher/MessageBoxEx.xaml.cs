@@ -30,6 +30,7 @@ namespace Flow.Launcher
         {
             ConfirmationWithYesNo = 0,
             ConfirmationWithYesNoCancel,
+            YesNo,
             Information,
             Error,
             Warning
@@ -66,6 +67,9 @@ namespace Flow.Launcher
             switch (type)
             {
                 case MessageBoxType.ConfirmationWithYesNo:
+                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+                case MessageBoxType.YesNo:
                     return Show(caption, msg, MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
                 case MessageBoxType.ConfirmationWithYesNoCancel:
@@ -168,7 +172,6 @@ namespace Flow.Launcher
         }
         private void SetImage(string imageName)
         {
-            //string uri = string.Format("/Resources/Images/{0}", imageName);
             string uri = Constant.ProgramDirectory + "/Images/" + imageName;
             var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
             Img.Source = new BitmapImage(uriSource);

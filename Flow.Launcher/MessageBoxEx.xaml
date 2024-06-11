@@ -8,6 +8,8 @@
     x:Name="MessageBoxWindow"
     Width="420"
     Height="Auto"
+    Background="{DynamicResource PopuBGColor}"
+    Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
     WindowStartupLocation="CenterScreen"
@@ -61,8 +63,8 @@
                 </Grid>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Margin="0,0,0,24">
-            <Grid Grid.Column="0" Margin="0,0,0,12">
+        <StackPanel Grid.Row="1" Margin="30 0 30 24">
+            <Grid Grid.Column="0" Margin="0 0 0 12">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -72,9 +74,9 @@
                     Grid.Column="0"
                     Width="18"
                     Height="18"
-                    Margin="30,10,0,0"
+                    Margin="0 0 0 0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
+                    VerticalAlignment="Center"
                     RenderOptions.BitmapScalingMode="Fant"
                     Stretch="UniformToFill"
                     Visibility="Collapsed" />
@@ -82,7 +84,8 @@
                     x:Name="TitleTextBlock"
                     Grid.Column="1"
                     MaxWidth="400"
-                    Margin="26,0,26,0"
+                    Margin="10 0 26 0"
+                    VerticalAlignment="Center"
                     FontFamily="Segoe UI"
                     FontSize="20"
                     FontWeight="SemiBold"
@@ -93,7 +96,7 @@
                 x:Name="DescTextBlock"
                 Grid.Column="1"
                 MaxWidth="400"
-                Margin="26,0,26,0"
+                Margin="0 0 26 0"
                 HorizontalAlignment="Stretch"
                 FontSize="14"
                 TextAlignment="Left"
@@ -101,10 +104,10 @@
         </StackPanel>
         <Border
             Grid.Row="2"
-            Margin="0,0,0,0"
+            Margin="0 0 0 0"
             Background="{DynamicResource PopupButtonAreaBGColor}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <WrapPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"
@@ -112,27 +115,27 @@
                 <Button
                     x:Name="btnCancel"
                     MinWidth="140"
-                    Margin="5,0,5,0"
+                    Margin="5 0 5 0"
                     Click="Button_Click"
-                    Content="{DynamicResource cancel}" />
+                    Content="{DynamicResource commonCancel}" />
                 <Button
                     x:Name="btnNo"
                     MinWidth="140"
-                    Margin="5,0,5,0"
+                    Margin="5 0 5 0"
                     Click="Button_Click"
-                    Content="No" />
+                    Content="{DynamicResource commonNo}" />
                 <Button
                     x:Name="btnOk"
                     MinWidth="140"
-                    Margin="5,0,5,0"
+                    Margin="5 0 5 0"
                     Click="Button_Click"
-                    Content="OK" />
+                    Content="{DynamicResource commonOK}" />
                 <Button
                     x:Name="btnYes"
                     MinWidth="140"
-                    Margin="5,0,5,0"
+                    Margin="5 0 5 0"
                     Click="Button_Click"
-                    Content="Yes" />
+                    Content="{DynamicResource commonYes}" />
             </WrapPanel>
         </Border>
     </Grid>
