@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -869,13 +869,20 @@ namespace Flow.Launcher.ViewModel
 
         public void ResetPreview()
         {
-            if (Settings.AlwaysPreview)
+            switch (Settings.AlwaysPreview)
             {
-                ShowInternalPreview();
-            }
-            else
-            {
-                HidePreview();
+                case true
+                    when PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path):
+                    OpenExternalPreview(path);
+                    break;
+
+                case true:
+                    ShowInternalPreview();
+                    break;
+
+                case false:
+                    HidePreview();
+                    break;
             }
         }
         

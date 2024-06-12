@@ -39,6 +39,8 @@ namespace Flow.Launcher.Plugin.QuickLook
 
         public async Task<List<Result>> QueryAsync(Query query, CancellationToken token) => new List<Result>();
 
+        public bool AllowAlwaysPreview() => false;
+
         public string GetTranslatedPluginTitle()
         {
             return Context.API.GetTranslation("plugin_name");
