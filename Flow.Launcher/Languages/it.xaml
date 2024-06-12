@@ -348,6 +348,9 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="commonCancel">Annulla</system:String>
     <system:String x:Key="commonReset">Resetta</system:String>
     <system:String x:Key="commonDelete">Cancella</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versione</system:String>
