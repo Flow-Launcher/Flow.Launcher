@@ -343,7 +343,7 @@ public static class ShellContextMenuDisplayHelper
                 var commandBuilder = new StringBuilder(256);
                 contextMenu.GetCommandString(
                     mii.wID - ContextMenuStartId,
-                    (uint)ContextMenuFlags.Explore,
+                    (uint)GetCommandStringFlags.Verb,
                     IntPtr.Zero,
                     commandBuilder,
                     commandBuilder.Capacity
