@@ -315,16 +315,6 @@ public static class ShellContextMenuDisplayHelper
 
         for (uint i = 0; i < menuCount; i++)
         {
-            var menuText = new StringBuilder(256);
-            uint result = GetMenuString(hMenu, i, menuText, menuText.Capacity, 0x400);
-
-            if (result == 0 || string.IsNullOrWhiteSpace(menuText.ToString()))
-            {
-                continue;
-            }
-
-            menuText.Replace("&", "");
-
             var mii = new MENUITEMINFO
             {
                 cbSize = (uint)Marshal.SizeOf(typeof(MENUITEMINFO)),
@@ -333,11 +323,15 @@ public static class ShellContextMenuDisplayHelper
             };
 
             GetMenuItemInfo(hMenu, i, true, ref mii);
+            var menuText = new StringBuilder(256);
+            uint result = GetMenuString(hMenu, mii.wID, menuText, menuText.Capacity, 0);
 
-            if ((mii.fType & (uint)MenuItemFtype.Separator) != 0)
+            if (result == 0 || string.IsNullOrWhiteSpace(menuText.ToString()))
             {
                 continue;
             }
+
+            menuText.Replace("&", "");
 
             IntPtr hSubMenu = GetSubMenu(hMenu, (int)i);
             if (hSubMenu != IntPtr.Zero)
