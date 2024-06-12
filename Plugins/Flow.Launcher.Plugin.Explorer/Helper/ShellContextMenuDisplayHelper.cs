@@ -146,6 +146,20 @@ public static class ShellContextMenuDisplayHelper
         String = 0x00000000,
     }
 
+    enum GetCommandStringFlags : uint
+    {
+        VerbA = 0x00000000,
+        HelpTextA = 0x00000001,
+        ValidateA = 0x00000002,
+        Unicode = VerbW,
+        Verb = VerbW,
+        VerbW = 0x00000004,
+        HelpText = HelpTextW,
+        HelpTextW = 0x00000005,
+        Validate = ValidateW,
+        ValidateW = 0x00000006,
+        VerbIconW = 0x00000014
+
     #endregion
 
     private static IMalloc GetMalloc()
@@ -185,7 +199,7 @@ public static class ShellContextMenuDisplayHelper
             contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
 
             hMenu = CreatePopupMenu();
-            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
+            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Explore);
 
             var directory = Path.GetDirectoryName(fileName);
             var invokeCommandInfo = new CMINVOKECOMMANDINFO
@@ -195,7 +209,7 @@ public static class ShellContextMenuDisplayHelper
                 hwnd = IntPtr.Zero,
                 lpVerb = (IntPtr)(menuItemId - ContextMenuStartId),
                 lpParameters = null,
-                lpDirectory = directory ?? "",
+                lpDirectory = null,
                 nShow = 1,
                 hIcon = IntPtr.Zero,
             };
@@ -236,10 +250,10 @@ public static class ShellContextMenuDisplayHelper
         IMalloc malloc = null;
         IntPtr originalPidl = IntPtr.Zero;
         IntPtr pShellFolder = IntPtr.Zero;
-        IShellFolder shellFolder = null;
         IntPtr pContextMenu = IntPtr.Zero;
-        IContextMenu contextMenu = null;
         IntPtr hMenu = IntPtr.Zero;
+        IShellFolder shellFolder = null;
+        IContextMenu contextMenu = null;
 
         try
         {
@@ -262,7 +276,7 @@ public static class ShellContextMenuDisplayHelper
             contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
 
             hMenu = CreatePopupMenu();
-            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Normal);
+            contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Explore);
 
             var menuItems = new List<ContextMenuItem>();
             ProcessMenuWithIcons(hMenu, contextMenu, menuItems);
