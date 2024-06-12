@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Grid
         x:Name="PreviewGrid"
-        Margin="20 0 10 0"
+        Margin="0 0 0 0"
         VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -23,7 +23,7 @@
             </Grid.RowDefinitions>
             <Image
                 Grid.Row="0"
-                Margin="0 12 0 0"
+                Margin="5 12 8 0"
                 Source="{Binding PreviewImage, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
                 <Image.Style>
                     <Style TargetType="Image">
@@ -38,7 +38,7 @@
             </Image>
             <Grid Grid.Row="1">
                 <TextBlock
-                    Margin="0 6 0 16"
+                    Margin="5 6 5 16"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Style="{DynamicResource PreviewItemTitleStyle}"
@@ -59,16 +59,18 @@
             </StackPanel.Style>
             <Rectangle
                 Width="Auto"
-                Margin="0 0 0 0"
+                Height="1"
+                Margin="0 0 5 0"
                 HorizontalAlignment="Stretch"
                 Style="{DynamicResource SeparatorStyle}" />
             <TextBlock
-                Margin="0 8 0 8"
+                Margin="5 8 8 8"
                 Style="{DynamicResource PreviewItemSubTitleStyle}"
                 Text="{Binding Result.SubTitle}" />
             <Rectangle
                 Width="Auto"
-                Margin="0 0 0 0"
+                Height="1"
+                Margin="0 0 5 0"
                 HorizontalAlignment="Stretch"
                 Style="{DynamicResource SeparatorStyle}" />
             <StackPanel Visibility="{Binding FileInfoVisibility, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}">
@@ -86,7 +88,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="0"
-                        Margin="0 0 0 0"
+                        Margin="5 0 0 0"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                         Text="{DynamicResource FileSize}"
@@ -95,7 +97,7 @@
                     <TextBlock
                         Grid.Row="0"
                         Grid.Column="1"
-                        Margin="0"
+                        Margin="0 0 13 0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
@@ -106,7 +108,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"
-                        Margin="0 0 8 0"
+                        Margin="5 0 8 0"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                         Text="{DynamicResource Created}"
@@ -115,7 +117,7 @@
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="1"
-                        Margin="0"
+                        Margin="0 0 13 0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
@@ -126,7 +128,7 @@
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="0"
-                        Margin="0 0 8 0"
+                        Margin="5 0 8 0"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"
                         Text="{DynamicResource LastModified}"
@@ -135,7 +137,7 @@
                     <TextBlock
                         Grid.Row="2"
                         Grid.Column="1"
-                        Margin="0"
+                        Margin="0 0 13 0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"
                         Style="{DynamicResource PreviewItemSubTitleStyle}"

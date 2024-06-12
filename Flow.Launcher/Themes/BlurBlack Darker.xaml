@@ -1,4 +1,9 @@
-﻿<ResourceDictionary
+﻿<!--
+    Name: Blur Black Darker
+    IsDark: False
+    HasBlur: True
+-->
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
@@ -53,7 +58,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#444444" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="12,0,12,8" />
+        <Setter Property="Margin" Value="12 0 12 8" />
     </Style>
 
     <Style

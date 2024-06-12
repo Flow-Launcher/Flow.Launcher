@@ -27,7 +27,7 @@
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#bbc1c3" />
+        <Setter Property="Foreground" Value="#eff2f2" />
     </Style>
     <Style
         x:Key="QueryBoxStyle"
@@ -139,7 +139,7 @@
         <Setter Property="Height" Value="24" />
     </Style>
     <Style x:Key="SearchIconPosition" TargetType="{x:Type Canvas}">
-        <Setter Property="Background" Value="#0f1f26" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
         <Setter Property="Margin" Value="0,8,8,0" />
@@ -155,7 +155,7 @@
         <Setter Property="Foreground" Value="#ffffff" />
     </Style>
     <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#58c2b4" />
+        <Setter Property="Foreground" Value="#eff2f2" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
         <Setter Property="Width" Value="25" />
