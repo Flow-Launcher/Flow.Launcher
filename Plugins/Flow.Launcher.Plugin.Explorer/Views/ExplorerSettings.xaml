@@ -358,17 +358,50 @@
                         Content="{DynamicResource plugin_explorer_native_context_menu_display_context_menu}"
                         IsChecked="{Binding ShowWindowsContextMenu}" />
 
-                    <TextBlock
-                        Margin="    0 10 20 10"
-                        Foreground="{DynamicResource Color05B}"
-                        Text="{DynamicResource plugin_explorer_native_context_menu_guide}"
-                        TextWrapping="Wrap" />
+                    <Grid Margin="0 10 20 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                    <TextBox
-                        Height="300"
-                        AcceptsReturn="True"
-                        Text="{Binding WindowsContextMenuIgnoredItems}"
-                        TextWrapping="Wrap" />
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0 0 6 6"
+                            Foreground="{DynamicResource Color05B}"
+                            Text="{DynamicResource plugin_explorer_native_context_menu_include_patterns_guide}"
+                            TextWrapping="Wrap" />
+
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Height="300"
+                            Margin="0 6 6 0"
+                            AcceptsReturn="True"
+                            Text="{Binding WindowsContextMenuIncludedItems}"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="6 0 0 6"
+                            Foreground="{DynamicResource Color05B}"
+                            Text="{DynamicResource plugin_explorer_native_context_menu_exclude_patterns_guide}"
+                            TextWrapping="Wrap" />
+
+                        <TextBox
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Height="300"
+                            Margin="6 6 0 0"
+                            AcceptsReturn="True"
+                            Text="{Binding WindowsContextMenuExcludedItems}"
+                            TextWrapping="Wrap" />
+                    </Grid>
                 </StackPanel>
             </TabItem>
             <TabItem

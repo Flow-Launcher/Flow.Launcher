@@ -114,12 +114,22 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
-        public string WindowsContextMenuIgnoredItems
+        public string WindowsContextMenuIncludedItems
         {
-            get => Settings.WindowsContextMenuIgnoredItems;
+            get => Settings.WindowsContextMenuIncludedItems;
             set
             {
-                Settings.WindowsContextMenuIgnoredItems = value;
+                Settings.WindowsContextMenuIncludedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuExcludedItems
+        {
+            get => Settings.WindowsContextMenuExcludedItems;
+            set
+            {
+                Settings.WindowsContextMenuExcludedItems = value;
                 OnPropertyChanged();
             }
         }

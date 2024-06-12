@@ -283,8 +283,14 @@ namespace Flow.Launcher.Plugin.Explorer
 
                 if (record.Type is ResultType.File or ResultType.Folder && Settings.ShowInlinedWindowsContextMenu)
                 {
-                    var filters = Settings
-                        .WindowsContextMenuIgnoredItems
+                    var includedItems = Settings
+                        .WindowsContextMenuIncludedItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var excludedItems = Settings
+                        .WindowsContextMenuExcludedItems
                         .Replace("\r", "")
                         .Split("\n")
                         .Where(v => !string.IsNullOrWhiteSpace(v))
@@ -292,9 +298,12 @@ namespace Flow.Launcher.Plugin.Explorer
                     var menuItems = ShellContextMenuDisplayHelper
                         .GetContextMenuWithIcons(record.FullPath)
                         .Where(contextMenuItem =>
-                            filters.Length == 0 || !filters.Any(filter =>
+                            (includedItems.Length == 0 || includedItems.Any(filter =>
                                 contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
-                            )
+                            )) &&
+                            (excludedItems.Length == 0 || !excludedItems.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            ))
                         );
                     foreach (var menuItem in menuItems)
                     {

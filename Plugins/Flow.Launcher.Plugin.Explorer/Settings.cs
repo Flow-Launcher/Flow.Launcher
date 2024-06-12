@@ -30,7 +30,9 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool ShowInlinedWindowsContextMenu { get; set; } = false;
 
-        public string WindowsContextMenuIgnoredItems { get; set; } = string.Empty;
+        public string WindowsContextMenuIncludedItems { get; set; } = string.Empty;
+
+        public string WindowsContextMenuExcludedItems { get; set; } = string.Empty;
 
         public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
