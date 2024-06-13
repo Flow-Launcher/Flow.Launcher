@@ -7,17 +7,14 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
-using YamlDotNet.Core.Tokens;
 
-namespace Flow.Launcher
+namespace Flow.Launcher.Infrastructure
 {
     public partial class MessageBoxEx : Window
     {
@@ -60,7 +57,7 @@ namespace Flow.Launcher
         }
 
         // 2 parameter
-        public static MessageBoxResult Show(string caption, string text)
+        public static MessageBoxResult Show(string caption, string text, MessageBoxButton yesNo)
         {
             return Show(caption, text, MessageBoxButton.OK, MessageBoxImage.None);
         }
