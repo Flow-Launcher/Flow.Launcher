@@ -202,6 +202,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">이전 쿼리로 전환</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">다음 쿼리로 전환</system:String>
     <system:String x:Key="OpenContextMenuHotkey">콘텍스트 메뉴 열기</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">설정창 열기</system:String>
     <system:String x:Key="CopyFilePathHotkey">파일 경로 복사</system:String>
     <system:String x:Key="ToggleGameModeHotkey">게임 모드 전환</system:String>
