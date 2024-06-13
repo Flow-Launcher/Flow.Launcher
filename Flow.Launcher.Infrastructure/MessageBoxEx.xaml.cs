@@ -53,7 +53,7 @@ namespace Flow.Launcher.Infrastructure
         /// 1 parameter
         public static MessageBoxResult Show(string msg)
         {
-            return Show(string.Empty, msg, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(msg, string.Empty, MessageBoxButton.OK, MessageBoxImage.None);
         }
 
         // 2 parameter

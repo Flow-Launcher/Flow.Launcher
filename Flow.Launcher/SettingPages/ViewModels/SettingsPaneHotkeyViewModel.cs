@@ -40,16 +40,16 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = MessageBoxEx.Show(
             string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"), item.Hotkey
             ),
             InternationalizationManager.Instance.GetTranslation("delete"),
-            MessageBoxButton.YesNo
+            MessageBoxEx.MessageBoxType.YesNo
         );
 
         if (result is MessageBoxResult.Yes)
@@ -65,7 +65,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
@@ -86,11 +86,11 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = MessageBoxEx.Show(
             string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"), item.Key, item.Value
             ),
@@ -110,7 +110,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
