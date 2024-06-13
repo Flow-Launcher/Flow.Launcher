@@ -202,6 +202,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra la consulta anterior</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra la siguiente consulta</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
