@@ -202,6 +202,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Ga naar vorige zoekopdracht</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Ga naar volgende zoekopdracht</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
