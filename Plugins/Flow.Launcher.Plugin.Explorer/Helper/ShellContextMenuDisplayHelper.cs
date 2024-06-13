@@ -159,7 +159,7 @@ public static class ShellContextMenuDisplayHelper
         Validate = ValidateW,
         ValidateW = 0x00000006,
         VerbIconW = 0x00000014
-
+    }
     #endregion
 
     private static IMalloc GetMalloc()
