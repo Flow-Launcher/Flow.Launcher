@@ -33,7 +33,9 @@ namespace Flow.Launcher
             YesNo,
             Information,
             Error,
-            Warning
+            Warning,
+            NodeJs,
+            Python
         }
 
         public enum MessageBoxImage
@@ -42,6 +44,8 @@ namespace Flow.Launcher
             Question,
             Information,
             Error,
+            NodeJs,
+            Python,
             None
         }
 
@@ -84,6 +88,12 @@ namespace Flow.Launcher
                 case MessageBoxType.Warning:
                     return Show(caption, msg, MessageBoxButton.OK,
                     MessageBoxImage.Warning);
+                case MessageBoxType.Python:
+                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    MessageBoxImage.Python);
+                case MessageBoxType.NodeJs:
+                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    MessageBoxImage.NodeJs);
                 default:
                     return MessageBoxResult.No;
             }
@@ -163,6 +173,14 @@ namespace Flow.Launcher
                     break;
                 case MessageBoxImage.Error:
                     msgBox.SetImage("Error.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxImage.Python:
+                    msgBox.SetImage("python.png");
+                    msgBox.Img.Visibility = Visibility.Visible;
+                    break;
+                case MessageBoxImage.NodeJs:
+                    msgBox.SetImage("nodejs.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 default:

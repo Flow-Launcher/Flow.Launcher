@@ -135,7 +135,8 @@
                     MinWidth="140"
                     Margin="5 0 5 0"
                     Click="Button_Click"
-                    Content="{DynamicResource commonYes}" />
+                    Content="{DynamicResource commonYes}"
+                    Style="{StaticResource AccentButtonStyle}" />
             </WrapPanel>
         </Border>
     </Grid>
