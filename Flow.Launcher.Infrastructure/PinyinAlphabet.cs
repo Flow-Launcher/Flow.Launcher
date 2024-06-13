@@ -1,131 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Flow.Launcher.Infrastructure
 {
-    public class TranslationMapping
-    {
-        private bool constructed;
-
-        private List<int> originalIndexs = new List<int>();
-        private List<int> translatedIndexs = new List<int>();
-        private int translatedLength = 0;
-
-        public string key { get; private set; }
-
-        public void setKey(string key)
-        {
-            this.key = key;
-        }
-
-        public void AddNewIndex(int originalIndex, int translatedIndex, int length)
-        {
-            if (constructed)
-                throw new InvalidOperationException("Mapping shouldn't be changed after constructed");
-
-            originalIndexs.Add(originalIndex);
-            translatedIndexs.Add(translatedIndex);
-            translatedIndexs.Add(translatedIndex + length);
-            translatedLength += length - 1;
-        }
-
-        public int MapToOriginalIndex(int translatedIndex)
-        {
-            if (translatedIndex > translatedIndexs.Last())
-                return translatedIndex - translatedLength - 1;
-
-            int lowerBound = 0;
-            int upperBound = originalIndexs.Count - 1;
-
-            int count = 0;
-
-            // Corner case handle
-            if (translatedIndex < translatedIndexs[0])
-                return translatedIndex;
-            if (translatedIndex > translatedIndexs.Last())
-            {
-                int indexDef = 0;
-                for (int k = 0; k < originalIndexs.Count; k++)
-                {
-                    indexDef += translatedIndexs[k * 2 + 1] - translatedIndexs[k * 2];
-                }
-
-                return translatedIndex - indexDef - 1;
-            }
-
-            // Binary Search with Range
-            for (int i = originalIndexs.Count / 2;; count++)
-            {
-                if (translatedIndex < translatedIndexs[i * 2])
-                {
-                    // move to lower middle
-                    upperBound = i;
-                    i = (i + lowerBound) / 2;
-                }
-                else if (translatedIndex > translatedIndexs[i * 2 + 1] - 1)
-                {
-                    lowerBound = i;
-                    // move to upper middle
-                    // due to floor of integer division, move one up on corner case
-                    i = (i + upperBound + 1) / 2;
-                }
-                else
-                    return originalIndexs[i];
-
-                if (upperBound - lowerBound <= 1 &&
-                    translatedIndex > translatedIndexs[lowerBound * 2 + 1] &&
-                    translatedIndex < translatedIndexs[upperBound * 2])
-                {
-                    int indexDef = 0;
-
-                    for (int j = 0; j < upperBound; j++)
-                    {
-                        indexDef += translatedIndexs[j * 2 + 1] - translatedIndexs[j * 2];
-                    }
-
-                    return translatedIndex - indexDef - 1;
-                }
-            }
-        }
-
-        public void endConstruct()
-        {
-            if (constructed)
-                throw new InvalidOperationException("Mapping has already been constructed");
-            constructed = true;
-        }
-    }
-
-    /// <summary>
-    /// Translate a language to English letters using a given rule.
-    /// </summary>
-    public interface IAlphabet
-    {
-        /// <summary>
-        /// Translate a string to English letters, using a given rule.
-        /// </summary>
-        /// <param name="stringToTranslate">String to translate.</param>
-        /// <returns></returns>
-        public (string translation, TranslationMapping map) Translate(string stringToTranslate);
-
-        /// <summary>
-        /// Determine if a string can be translated to English letter with this Alphabet.
-        /// </summary>
-        /// <param name="stringToTranslate">String to translate.</param>
-        /// <returns></returns>
-        public bool CanBeTranslated(string stringToTranslate);
-    }
-
     public class PinyinAlphabet : IAlphabet
     {
-        private ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
-            new ConcurrentDictionary<string, (string translation, TranslationMapping map)>();
+        private readonly ConcurrentDictionary<string, (string translation, TranslationMapping map)> _pinyinCache =
+            new();
 
         private Settings _settings;
 
@@ -134,22 +21,24 @@ namespace Flow.Launcher.Infrastructure
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public bool CanBeTranslated(string stringToTranslate)
+        public bool ShouldTranslate(string stringToTranslate)
         {
-            return WordsHelper.HasChinese(stringToTranslate);
+            return _settings.UseDoublePinyin ?
+                (!WordsHelper.HasChinese(stringToTranslate) && stringToTranslate.Length % 2 == 0) :
+                !WordsHelper.HasChinese(stringToTranslate);
         }
 
         public (string translation, TranslationMapping map) Translate(string content)
         {
             if (_settings.ShouldUsePinyin)
             {
-                if (!_pinyinCache.ContainsKey(content))
+                if (!_pinyinCache.TryGetValue(content, out var value))
                 {
                     return BuildCacheFromContent(content);
                 }
                 else
                 {
-                    return _pinyinCache[content];
+                    return value;
                 }
             }
             return (content, null);
@@ -157,47 +46,151 @@ namespace Flow.Launcher.Infrastructure
 
         private (string translation, TranslationMapping map) BuildCacheFromContent(string content)
         {
-            if (WordsHelper.HasChinese(content))
-            {
-                var resultList = WordsHelper.GetPinyinList(content);
-
-                StringBuilder resultBuilder = new StringBuilder();
-                TranslationMapping map = new TranslationMapping();
-
-                bool pre = false;
-
-                for (int i = 0; i < resultList.Length; i++)
-                {
-                    if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
-                    {
-                        map.AddNewIndex(i, resultBuilder.Length, resultList[i].Length + 1);
-                        resultBuilder.Append(' ');
-                        resultBuilder.Append(resultList[i]);
-                        pre = true;
-                    }
-                    else
-                    {
-                        if (pre)
-                        {
-                            pre = false;
-                            resultBuilder.Append(' ');
-                        }
-
-                        resultBuilder.Append(resultList[i]);
-                    }
-                }
-
-                map.endConstruct();
-
-                var key = resultBuilder.ToString();
-                map.setKey(key);
-
-                return _pinyinCache[content] = (key, map);
-            }
-            else
+            if (!WordsHelper.HasChinese(content))
             {
                 return (content, null);
             }
+
+            var resultList = WordsHelper.GetPinyinList(content);
+
+            StringBuilder resultBuilder = new StringBuilder();
+            TranslationMapping map = new TranslationMapping();
+
+            bool pre = false;
+
+            for (int i = 0; i < resultList.Length; i++)
+            {
+                if (content[i] >= 0x3400 && content[i] <= 0x9FD5)
+                {
+                    string dp = _settings.UseDoublePinyin ? ToDoublePin(resultList[i]) : resultList[i];
+                    map.AddNewIndex(i, resultBuilder.Length, dp.Length + 1);
+                    resultBuilder.Append(' ');
+                    resultBuilder.Append(dp);
+                    pre = true;
+                }
+                else
+                {
+                    if (pre)
+                    {
+                        pre = false;
+                        resultBuilder.Append(' ');
+                    }
+
+                    resultBuilder.Append(resultList[i]);
+                }
+            }
+
+            map.endConstruct();
+
+            var key = resultBuilder.ToString();
+
+            return _pinyinCache[content] = (key, map);
         }
+
+        #region Double Pinyin
+
+        private static readonly ReadOnlyDictionary<string, string> special = new(new Dictionary<string, string>(){
+            {"A", "aa"},
+            {"Ai", "ai"},
+            {"An", "an"},
+            {"Ang", "ah"},
+            {"Ao", "ao"},
+            {"E", "ee"},
+            {"Ei", "ei"},
+            {"En", "en"},
+            {"Er", "er"},
+            {"O", "oo"},
+            {"Ou", "ou"}
+        });
+
+
+        private static readonly ReadOnlyDictionary<string, string> first = new(new Dictionary<string, string>(){
+            {"Ch", "i"},
+            {"Sh", "u"},
+            {"Zh", "v"}
+        });
+
+
+        private static readonly ReadOnlyDictionary<string, string> second = new(new Dictionary<string, string>()
+        {
+            {"ua", "x"},
+            {"ei", "w"},
+            {"e", "e"},
+            {"ou", "z"},
+            {"iu", "q"},
+            {"ve", "t"},
+            {"ue", "t"},
+            {"u", "u"},
+            {"i", "i"},
+            {"o", "o"},
+            {"uo", "o"},
+            {"ie", "p"},
+            {"a", "a"},
+            {"ong", "s"},
+            {"iong", "s"},
+            {"ai", "d"},
+            {"ing", "k"},
+            {"uai", "k"},
+            {"ang", "h"},
+            {"uan", "r"},
+            {"an", "j"},
+            {"en", "f"},
+            {"ia", "x"},
+            {"iang", "l"},
+            {"uang", "l"},
+            {"eng", "g"},
+            {"in", "b"},
+            {"ao", "c"},
+            {"v", "v"},
+            {"ui", "v"},
+            {"un", "y"},
+            {"iao", "n"},
+            {"ian", "m"}
+        });
+
+        private static string ToDoublePin(string fullPinyin)
+        {
+            // Assuming s is valid
+            StringBuilder doublePin = new StringBuilder();
+
+            if (fullPinyin.Length <= 3 && (fullPinyin[0] == 'a' || fullPinyin[0] == 'e' || fullPinyin[0] == 'o'))
+            {
+                if (special.TryGetValue(fullPinyin, out var value))
+                {
+                    return value;
+                }
+            }
+
+            // zh, ch, sh
+            if (fullPinyin.Length >= 2 && first.ContainsKey(fullPinyin[..2]))
+            {
+                doublePin.Append(first[fullPinyin[..2]]);
+
+                if (second.TryGetValue(fullPinyin[2..], out string tmp))
+                {
+                    doublePin.Append(tmp);
+                }
+                else
+                {
+                    doublePin.Append(fullPinyin[2..]);
+                }
+            }
+            else
+            {
+                doublePin.Append(fullPinyin[0]);
+
+                if (second.TryGetValue(fullPinyin[1..], out string tmp))
+                {
+                    doublePin.Append(tmp);
+                }
+                else
+                {
+                    doublePin.Append(fullPinyin[1..]);
+                }
+            }
+
+            return doublePin.ToString();
+        }
+        #endregion
     }
 }

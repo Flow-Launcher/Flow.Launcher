@@ -61,7 +61,7 @@ namespace Flow.Launcher.Infrastructure
 
             query = query.Trim();
             TranslationMapping translationMapping = null;
-            if (_alphabet is not null && !_alphabet.CanBeTranslated(query))
+            if (_alphabet is not null && _alphabet.ShouldTranslate(query))
             {
                 // We assume that if a query can be translated (containing characters of a language, like Chinese)
                 // it actually means user doesn't want it to be translated to English letters.

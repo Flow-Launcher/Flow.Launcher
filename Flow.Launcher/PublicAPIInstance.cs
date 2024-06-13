@@ -32,15 +32,13 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM)
         {
             _settingsVM = settingsVM;
             _mainVM = mainVM;
-            _alphabet = alphabet;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
