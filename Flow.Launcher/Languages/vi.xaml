@@ -202,6 +202,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Chuyển đổi chế độ trò chơi</system:String>
