@@ -143,10 +143,10 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            MessageBoxButton.YesNo, MessageBoxEx.MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/s /t 0");
@@ -163,10 +163,10 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            MessageBoxButton.YesNo, MessageBoxEx.MessageBoxImage.Warning);
                         if (result == MessageBoxResult.Yes)
                         {
                             Process.Start("shutdown", "/r /t 0");
@@ -183,10 +183,10 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            MessageBoxButton.YesNo, MessageBoxEx.MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
                             Process.Start("shutdown", "/r /o /t 0");
@@ -202,10 +202,10 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
-                            MessageBoxButton.YesNo, MessageBoxImage.Warning);
+                            MessageBoxButton.YesNo, MessageBoxEx.MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
                             ExitWindowsEx(EWX_LOGOFF, 0);
@@ -279,10 +279,10 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
                         if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
-                            MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
+                            MessageBoxEx.Show($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
-                                MessageBoxButton.OK, MessageBoxImage.Error);
+                                MessageBoxButton.OK, MessageBoxEx.MessageBoxImage.Error);
                         }
 
                         return true;
