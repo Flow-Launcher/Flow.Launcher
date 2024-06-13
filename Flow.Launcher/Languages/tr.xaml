@@ -202,6 +202,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Bir Önceki Sorguya Geç</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Sonraki Sorguya Geç</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Bağlam Menüsünü Aç</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Ayarlar Penceresini Aç</system:String>
     <system:String x:Key="CopyFilePathHotkey">Dosya Yolunu Kopyala</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Oyun Modunu Aç/Kapat</system:String>
