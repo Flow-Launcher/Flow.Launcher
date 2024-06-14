@@ -54,7 +54,7 @@
     <system:String x:Key="LastQueryPreserved">Сохранение последнего запроса</system:String>
     <system:String x:Key="LastQuerySelected">Выбор последнего запроса</system:String>
     <system:String x:Key="LastQueryEmpty">Очистить последний запрос</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResults">Фиксированная высота окна</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Максимальное количество результатов</system:String>
     <system:String x:Key="maxShowResultsToolTip">Вы также можете быстро настроить это с помощью CTRL+плюс и CTRL+минус.</system:String>
