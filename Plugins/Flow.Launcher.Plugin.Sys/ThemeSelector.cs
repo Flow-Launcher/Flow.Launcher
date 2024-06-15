@@ -4,14 +4,16 @@ using System.IO;
 using System.Linq;
 using Flow.Launcher.Core.Resource;
 
-namespace Flow.Launcher.Plugin.FlowThemeSelector
+namespace Flow.Launcher.Plugin.Sys
 {
-    public class FlowThemeSelector : IPlugin, IReloadable, IDisposable
+    public class ThemeSelector : IReloadable, IDisposable
     {
-        private PluginInitContext context;
+        public const string Keyword = "fltheme";
+
+        private readonly PluginInitContext context;
         private IEnumerable<string> themes;
 
-        public void Init(PluginInitContext context)
+        public ThemeSelector(PluginInitContext context)
         {
             this.context = context;
             context.API.VisibilityChanged += OnVisibilityChanged;
@@ -24,14 +26,16 @@ namespace Flow.Launcher.Plugin.FlowThemeSelector
                 LoadThemes();
             }
 
-            if (string.IsNullOrWhiteSpace(query.Search))
+            string search = query.Search[(query.Search.IndexOf(Keyword, StringComparison.Ordinal) + Keyword.Length + 1)..];
+
+            if (string.IsNullOrWhiteSpace(search))
             {
                 return themes.Select(CreateThemeResult)
                              .OrderBy(x => x.Title)
                              .ToList();
             }
 
-            return themes.Select(theme => (theme, matchResult: context.API.FuzzySearch(query.Search, theme)))
+            return themes.Select(theme => (theme, matchResult: context.API.FuzzySearch(search, theme)))
                          .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
                          .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
                          .OrderBy(x => x.Title)
@@ -46,11 +50,12 @@ namespace Flow.Launcher.Plugin.FlowThemeSelector
             }
         }
 
-        public void LoadThemes() => themes = ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension);
+        private void LoadThemes() 
+            => themes = ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension);
 
-        public static Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
+        private static Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
 
-        public static Result CreateThemeResult(string theme, int score, IList<int> highlightData)
+        private static Result CreateThemeResult(string theme, int score, IList<int> highlightData)
         {
             string title;
             if (theme == ThemeManager.Instance.Settings.Theme)
@@ -86,6 +91,5 @@ namespace Flow.Launcher.Plugin.FlowThemeSelector
                 context.API.VisibilityChanged -= OnVisibilityChanged;
             }
         }
-
     }
 }
