@@ -185,11 +185,11 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
-    <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Abrir/Cerrar Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
-    <system:String x:Key="hotkeyPresets">Ajustes preestablecidos de atajos de teclado</system:String>
+    <system:String x:Key="hotkeyPresets">Atajos de teclado preestablecidos</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Mustra la lista de atajos de teclado actualmente registrados.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
@@ -207,7 +207,7 @@
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
@@ -229,7 +229,7 @@
     <system:String x:Key="add">Añadir</system:String>
     <system:String x:Key="none">Ninguno</system:String>
     <system:String x:Key="pleaseSelectAnItem">Por favor, seleccione un elemento</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">¿Está seguro de que desea eliminar el atajo de teclado de consulta personalizada {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">¿Está seguro de que desea eliminar el acceso directo: {0} con la expansión {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
