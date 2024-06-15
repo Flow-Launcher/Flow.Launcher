@@ -178,8 +178,8 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Este tema tem suporte a dois modos (claro/escuro).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Este tema tem suporte a fundo transparente desfocado.</system:String>
 
 
     <!--  Setting Hotkey  -->
@@ -204,7 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Ir para consulta anterior</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Ir para consulta seguinte</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menu de contexto</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menu de contexto nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir janela de definições</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar caminho do ficheiro</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Comutar modo de jogo</system:String>
@@ -351,8 +351,8 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <system:String x:Key="commonReset">Repor</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
     <system:String x:Key="commonOK">OK</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">Sim</system:String>
+    <system:String x:Key="commonNo">Não</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versão</system:String>
