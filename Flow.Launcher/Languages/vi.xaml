@@ -178,6 +178,8 @@
     <system:String x:Key="AnimationSpeedCustom">Tùy chỉnh</system:String>
     <system:String x:Key="Clock">Giờ</system:String>
     <system:String x:Key="Date">Ngày</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
 
 
     <!--  Setting Hotkey  -->
