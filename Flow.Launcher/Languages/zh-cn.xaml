@@ -178,6 +178,8 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
 
 
     <!--  Setting Hotkey  -->
