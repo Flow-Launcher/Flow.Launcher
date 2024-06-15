@@ -178,8 +178,8 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizada</system:String>
     <system:String x:Key="Clock">Reloj</system:String>
     <system:String x:Key="Date">Fecha</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Este tema soporta dos modos (claro/oscuro).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Este tema soporta fondo transparente desenfocado.</system:String>
 
 
     <!--  Setting Hotkey  -->
@@ -204,7 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Recuperar una tras otra la consulta anterior</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Recuperar una tras otra la siguiente consulta</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir menú contextual</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
@@ -352,7 +352,7 @@ Si añade un prefijo &quot;@&quot; al introducir un acceso directo, éste coinci
     <system:String x:Key="commonReset">Restablecer</system:String>
     <system:String x:Key="commonDelete">Eliminar</system:String>
     <system:String x:Key="commonOK">Aceptar</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonYes">Si</system:String>
     <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
