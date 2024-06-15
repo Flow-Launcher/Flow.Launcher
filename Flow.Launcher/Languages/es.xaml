@@ -188,13 +188,13 @@
     <system:String x:Key="flowlauncherHotkey">Abrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Introduzca el acceso directo para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Ajustes preestablecidos de atajos de teclado</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Mustra la lista de atajos de teclado actualmente registrados.</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de selección junto a los resultados.</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Muestra atajo de teclado de apertura junto a los resultados.</system:String>
     <system:String x:Key="autoCompleteHotkey">Completar automáticamente</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Ejecuta la función 'completar automáticamente' para los elementos seleccionados.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Seleccionar siguiente elemento</system:String>
