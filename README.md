@@ -62,7 +62,7 @@ scoop install Flow-Launcher
 choco install Flow-Launcher
 ```
 
-> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo then you are good to continue the set up.
+> When installing for the first time Windows may raise an issue about security due to code not being signed, if you downloaded from this repo, then you are good to continue the set up.
 
 Or download the [early access version](https://github.com/Flow-Launcher/Prereleases/releases).
 
@@ -122,7 +122,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 <img src="https://user-images.githubusercontent.com/6903107/207159486-1993510f-09f2-4e33-bba7-4ca59ca1bc5a.png" width="500">
 
 - Drag a file/folder to File Explorer, or even Discord.
-- Copy/move behavior can be change via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
+- Copy/move behavior can be changed via <kbd>Ctrl</kbd> or <kbd>Shift</kbd>, and the operation is displayed on the mouse cursor.
 
 ### Windows & Control Panel Settings
 
@@ -378,7 +378,7 @@ Each of the pull requests will be marked with a milestone indicating the planned
 
 ### Contributing
 
-Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise feel free to put in a pull request.
+Contributions are very welcome, in addition to the main project(C#) there are also [documentation](https://github.com/Flow-Launcher/docs)(md), [website](https://github.com/Flow-Launcher/flow-launcher.github.io)(html/css) and [others](https://github.com/Flow-Launcher) that can be contributed to. If you are unsure of a change you want to make, let us know in the [Discussions](https://github.com/Flow-Launcher/Flow.Launcher/discussions/categories/ideas), otherwise, please consider submitting a pull request.
 
 You will find the main goals of flow placed under the [Projects board](https://github.com/Flow-Launcher/Flow.Launcher/projects), so feel free to contribute on that. If you would like to make small incremental changes, feel free to do so as well.
 
