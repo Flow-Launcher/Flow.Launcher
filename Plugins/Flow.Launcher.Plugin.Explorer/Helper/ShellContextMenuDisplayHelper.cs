@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -274,6 +275,10 @@ public static class ShellContextMenuDisplayHelper
             if (hr != 0) throw new Exception("GetUIObjectOf failed");
 
             contextMenu = (IContextMenu)Marshal.GetTypedObjectForIUnknown(pContextMenu, typeof(IContextMenu));
+
+            // Without waiting, some items, such as "Send to > Documents", don't always appear, which shifts item ids
+            // even though it shouldn't. Please replace this if you find a better way to fix this bug.
+            Thread.Sleep(200);
 
             hMenu = CreatePopupMenu();
             contextMenu.QueryContextMenu(hMenu, 0, ContextMenuStartId, ContextMenuEndId, (uint)ContextMenuFlags.Explore);
