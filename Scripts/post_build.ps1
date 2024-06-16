@@ -125,7 +125,7 @@ function Pack-Velopack-Installer($path, $version, $output)
     # FIXME userdata should not be created in installer version
     # New-Item -ItemType Directory -Force -Path "$input\UserData"
 
-    vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel --outputDir $output --packTitle "Flow Launcher" --icon "$input\Images\app.ico"
+    vpk pack --packVersion $version --packDir $input --packId FlowLauncher --mainExe Flow.Launcher.exe --channel $channel --outputDir $output --packTitle "Flow Launcher" --icon "$input\Images\app.ico" --packAuthors "Flow-Launcher Team"
 }
 
 function Publish-Self-Contained($p)

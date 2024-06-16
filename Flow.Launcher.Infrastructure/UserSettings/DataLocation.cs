@@ -14,7 +14,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             // It is still possible to create the UserData folder for dev version manually but we want to keep the current behavior
             if (!Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
                     .PathContains(Constant.ProgramDirectory)
-                && Constant.Version != "1.0.0")
+                && !IsDevVersion)
             {
                 Directory.CreateDirectory(PortableDataPath);
             }
@@ -30,6 +30,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public static string RoamingDataPath =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "FlowLauncher");
 
+        public static bool IsDevVersion => Constant.Version == "1.0.0";
+        
         public static string DataDirectory()
         {
             if (PortableDataLocationInUse())
