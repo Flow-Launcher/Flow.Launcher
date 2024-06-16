@@ -57,7 +57,7 @@
     <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se puede ajustar arrastrando el ratón.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
-    <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más y Ctrl+Menos.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">También puede ajustarse rápidamente usando Ctrl+Más(+) y Ctrl+Menos(-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atajos de teclado en modo pantalla completa</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">No permite activar Flow Launcher con aplicaciones a pantalla completa (Recomendado para juegos).</system:String>
     <system:String x:Key="defaultFileManager">Administrador de archivos predeterminado</system:String>
@@ -190,7 +190,7 @@
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Atajos de teclado preestablecidos</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">Mustra la lista de atajos de teclado actualmente registrados.</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Lista de atajos de teclado actualmente registrados</system:String>
     <system:String x:Key="openResultModifiers">Tecla modificadora para abrir resultado</system:String>
     <system:String x:Key="openResultModifiersToolTip">Seleccione una tecla modificadora para abrir el resultado seleccionado con el teclado.</system:String>
     <system:String x:Key="showOpenResultHotkey">Mostrar atajo de teclado</system:String>
@@ -207,7 +207,7 @@
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
@@ -234,11 +234,11 @@
     <system:String x:Key="shortcut_clipboard_description">Obtiene el texto del portapapeles.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Obtiene la ruta del explorador activo.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Efecto de sombra de la ventana de consultas</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">El efecto de sombra hace un uso sustancial de la GPU. No se recomienda para ordenadores de rendimiento limitado.</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Este efecto hace un uso sustancial de la GPU. No se recomienda para ordenadores de bajo rendimiento.</system:String>
     <system:String x:Key="windowWidthSize">Tamaño del ancho de la ventana</system:String>
     <system:String x:Key="windowWidthSizeToolTip">También puede ajustarse rápidamente usando Ctrl+[ y Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Usar iconos Segoe Fluent</system:String>
-    <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent para los resultados de la consulta cuando sean compatibles</system:String>
+    <system:String x:Key="useGlyphUI">Iconos Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Usa iconos Segoe Fluent, cuando sean compatibles, para los resultados de la consulta</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Pulsar Tecla</system:String>
 
     <!--  Setting Proxy  -->
