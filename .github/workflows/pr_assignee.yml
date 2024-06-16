@@ -1,6 +1,6 @@
 name: Assign PR to creator
 
-# Due to GitHub token limitation, only able to assign org members not authos from forks.
+# Due to GitHub token limitation, only able to assign org members not authors from forks.
 # https://github.com/thomaseizinger/assign-pr-creator-action/issues/3
 
 on:
