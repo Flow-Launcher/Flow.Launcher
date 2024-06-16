@@ -116,10 +116,6 @@
     <None Update="Resources\dev.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <Version>1.0.0</Version>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWindowsForms>false</UseWindowsForms>
-    <PackageReference Include="Velopack" Version="0.0.359" />
   </ItemGroup>
 
   <ItemGroup>
