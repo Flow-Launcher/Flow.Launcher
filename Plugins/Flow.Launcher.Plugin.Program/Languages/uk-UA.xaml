@@ -71,6 +71,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Запустити від імені адміністратора</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Відкрити папку</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Вимкнути відображення цієї програми</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Відкрити цільову папку</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Програма</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Пошук програм у Flow Launcher</system:String>

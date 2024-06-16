@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows;
@@ -101,7 +102,107 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
 
         #endregion
 
+        #region Preview Panel
 
+        public bool ShowFileSizeInPreviewPanel
+        {
+            get => Settings.ShowFileSizeInPreviewPanel;
+            set
+            {
+                Settings.ShowFileSizeInPreviewPanel = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowCreatedDateInPreviewPanel
+        {
+            get => Settings.ShowCreatedDateInPreviewPanel;
+            set
+            {
+                Settings.ShowCreatedDateInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
+        public bool ShowModifiedDateInPreviewPanel
+        {
+            get => Settings.ShowModifiedDateInPreviewPanel;
+            set
+            {
+                Settings.ShowModifiedDateInPreviewPanel = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(ShowPreviewPanelDateTimeChoices));
+                OnPropertyChanged(nameof(PreviewPanelDateTimeChoicesVisibility));
+            }
+        }
+
+        public string PreviewPanelDateFormat
+        {
+            get => Settings.PreviewPanelDateFormat;
+            set
+            {
+                Settings.PreviewPanelDateFormat = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PreviewPanelDateFormatDemo));
+            }
+        }
+
+        public string PreviewPanelTimeFormat
+        {
+            get => Settings.PreviewPanelTimeFormat;
+            set
+            {
+                Settings.PreviewPanelTimeFormat = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PreviewPanelTimeFormatDemo));
+            }
+        }
+
+        public string PreviewPanelDateFormatDemo => DateTime.Now.ToString(PreviewPanelDateFormat, CultureInfo.CurrentCulture);
+        public string PreviewPanelTimeFormatDemo => DateTime.Now.ToString(PreviewPanelTimeFormat, CultureInfo.CurrentCulture);
+
+        public bool ShowPreviewPanelDateTimeChoices => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel;
+
+        public Visibility PreviewPanelDateTimeChoicesVisibility => ShowCreatedDateInPreviewPanel || ShowModifiedDateInPreviewPanel ? Visibility.Visible : Visibility.Collapsed;
+
+
+        public List<string> TimeFormatList { get; } = new()
+        {
+            "h:mm",
+            "hh:mm",
+            "H:mm",
+            "HH:mm",
+            "tt h:mm",
+            "tt hh:mm",
+            "h:mm tt",
+            "hh:mm tt",
+            "hh:mm:ss tt",
+            "HH:mm:ss"
+        };
+
+
+        public List<string> DateFormatList { get; } = new()
+        {
+            "dd/MM/yyyy",
+            "dd/MM/yyyy ddd",
+            "dd/MM/yyyy, dddd",
+            "dd-MM-yyyy",
+            "dd-MM-yyyy ddd",
+            "dd-MM-yyyy, dddd",
+            "dd.MM.yyyy",
+            "dd.MM.yyyy ddd",
+            "dd.MM.yyyy, dddd",
+            "MM/dd/yyyy",
+            "MM/dd/yyyy ddd",
+            "MM/dd/yyyy, dddd",
+            "yyyy-MM-dd",
+            "yyyy-MM-dd ddd",
+            "yyyy-MM-dd, dddd",
+        };
+
+        #endregion
 
         #region ActionKeyword
 

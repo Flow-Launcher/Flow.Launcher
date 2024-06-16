@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_openrecyclebin_cmd">Otvoriť kôš</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_exit_cmd">Ukončiť</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_save_all_settings_cmd">Uložiť nastavenia</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reštartovať Flow Launcher&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_cmd">Reštartovať Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_setting_cmd">Nastavenia</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reload_plugin_data_cmd">Znova načítať údaje pluginov</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_check_for_update_cmd">Skontrolovať aktualizácie</system:String>

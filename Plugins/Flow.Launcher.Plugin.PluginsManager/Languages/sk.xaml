@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} od {1} {2}{3}Chcete aktualizovať tento plugin? Po aktualizácii sa Flow automaticky reštartuje.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} od {1} {2}{2}Chcete aktualizovať tento plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Aktualizácia pluginu</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Aktualizácia pre tento plugin je k dispozícii, chcete ju zobraziť?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Tento plugin je už nainštalovaný</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Stiahnutie manifestu pluginu zlyhalo</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Skontrolujte, či sa môžete pripojiť ku github.com. Táto chyba znamená, že pravdepodobne nemôžete pluginy inštalovať alebo aktualizovať.</system:String>

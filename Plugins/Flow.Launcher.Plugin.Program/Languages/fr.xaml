@@ -71,6 +71,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Exécuter en tant qu'administrateur</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Ouvrir le répertoire</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Désactiver l'affichage de ce programme</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Ouvrir le répertoire cible</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programme</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Rechercher des programmes dans Flow Launcher</system:String>

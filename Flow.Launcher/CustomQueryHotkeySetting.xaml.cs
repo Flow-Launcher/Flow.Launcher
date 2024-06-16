@@ -6,6 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
+using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
@@ -14,13 +15,13 @@ namespace Flow.Launcher
         private SettingWindow _settingWidow;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
-        private Settings _settings;
+        public Settings Settings { get; }
 
         public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings)
         {
             _settingWidow = settingWidow;
+            Settings = settings;
             InitializeComponent();
-            _settings = settings;
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -32,36 +33,21 @@ namespace Flow.Launcher
         {
             if (!update)
             {
-                if (!ctlHotkey.CurrentHotkeyAvailable)
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
-                    return;
-                }
-
-                if (_settings.CustomPluginHotkeys == null)
-                {
-                    _settings.CustomPluginHotkeys = new ObservableCollection<CustomPluginHotkey>();
-                }
+                Settings.CustomPluginHotkeys ??= new ObservableCollection<CustomPluginHotkey>();
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
-                    Hotkey = ctlHotkey.CurrentHotkey.ToString(),
-                    ActionKeyword = tbAction.Text
+                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
                 };
-                _settings.CustomPluginHotkeys.Add(pluginHotkey);
+                Settings.CustomPluginHotkeys.Add(pluginHotkey);
 
                 HotKeyMapper.SetCustomQueryHotkey(pluginHotkey);
             }
             else
             {
-                if (updateCustomHotkey.Hotkey != ctlHotkey.CurrentHotkey.ToString() && !ctlHotkey.CurrentHotkeyAvailable)
-                {
-                    MessageBox.Show(InternationalizationManager.Instance.GetTranslation("hotkeyIsNotUnavailable"));
-                    return;
-                }
                 var oldHotkey = updateCustomHotkey.Hotkey;
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = ctlHotkey.CurrentHotkey.ToString();
+                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
                 //remove origin hotkey
                 HotKeyMapper.RemoveHotkey(oldHotkey);
                 HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
@@ -70,9 +56,11 @@ namespace Flow.Launcher
             Close();
         }
 
+
         public void UpdateItem(CustomPluginHotkey item)
         {
-            updateCustomHotkey = _settings.CustomPluginHotkeys.FirstOrDefault(o => o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
+            updateCustomHotkey = Settings.CustomPluginHotkeys.FirstOrDefault(o =>
+                o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
                 MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
@@ -81,7 +69,7 @@ namespace Flow.Launcher
             }
 
             tbAction.Text = updateCustomHotkey.ActionKeyword;
-            _ = ctlHotkey.SetHotkeyAsync(updateCustomHotkey.Hotkey, false);
+            HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
             update = true;
             lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
         }
@@ -101,12 +89,10 @@ namespace Flow.Launcher
 
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
-            TextBox textBox = Keyboard.FocusedElement as TextBox;
-            if (textBox != null)
-            {
-                TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
-                textBox.MoveFocus(tRequest);
-            }
+            if (Keyboard.FocusedElement is not TextBox textBox) return;
+
+            TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
+            textBox.MoveFocus(tRequest);
         }
     }
 }

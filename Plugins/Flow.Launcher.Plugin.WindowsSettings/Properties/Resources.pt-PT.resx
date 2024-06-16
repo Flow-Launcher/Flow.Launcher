@@ -2443,7 +2443,7 @@
     <value>Change search options for files and folders</value>
   </data>
   <data name="AdjustSettingsBeforeGivingAPresentation" xml:space="preserve">
-    <value>Adjust settings before giving a presentation</value>
+    <value>Ajustar definições antes de uma apresentação</value>
   </data>
   <data name="ScanADocumentOrPicture" xml:space="preserve">
     <value>Digitalizar um documento ou imagem</value>
@@ -2467,10 +2467,10 @@
     <value>Calibrate the screen for pen or touch input</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
-    <value>Manage user certificates</value>
+    <value>Gerir certificados do utilizador</value>
   </data>
   <data name="ScheduleTasks" xml:space="preserve">
-    <value>Schedule tasks</value>
+    <value>Agendar tarefas</value>
   </data>
   <data name="IgnoreRepeatedKeystrokesUsingFilterkeys" xml:space="preserve">
     <value>Ignore repeated keystrokes using FilterKeys</value>

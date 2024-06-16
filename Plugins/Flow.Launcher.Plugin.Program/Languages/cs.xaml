@@ -71,6 +71,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Spustit jako správce</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Otevřít umístění složky</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Zakázat zobrazování tohoto programu</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Program </system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Vyhledávání programů ve Flow Launcheru</system:String>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,10 @@ namespace Flow.Launcher.Core.Resource
 {
     public class Theme
     {
+        private const string ThemeMetadataNamePrefix = "Name:";
+        private const string ThemeMetadataIsDarkPrefix = "IsDark:";
+        private const string ThemeMetadataHasBlurPrefix = "HasBlur:";
+
         private const int ShadowExtraMargin = 32;
 
         private readonly List<string> _themeDirectories = new List<string>();
@@ -79,14 +84,14 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (string.IsNullOrEmpty(path))
                     throw new DirectoryNotFoundException("Theme path can't be found <{path}>");
-                
+
                 // reload all resources even if the theme itself hasn't changed in order to pickup changes
                 // to things like fonts
                 UpdateResourceDictionary(GetResourceDictionary(theme));
-                
+
                 Settings.Theme = theme;
 
-                
+
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
@@ -148,7 +153,7 @@ namespace Flow.Launcher.Core.Resource
         public ResourceDictionary GetResourceDictionary(string theme)
         {
             var dict = GetThemeResourceDictionary(theme);
-            
+
             if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
                 dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
@@ -176,8 +181,6 @@ namespace Flow.Launcher.Core.Resource
             }
 
             if (dict["ItemTitleStyle"] is Style resultItemStyle &&
-                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
-                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle &&
                 dict["ItemTitleSelectedStyle"] is Style resultItemSelectedStyle &&
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
                 dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
@@ -189,9 +192,25 @@ namespace Flow.Launcher.Core.Resource
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
-                    new[] { resultItemStyle, resultSubItemStyle, resultItemSelectedStyle, resultSubItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o 
+                    new[] { resultItemStyle, resultItemSelectedStyle, resultHotkeyItemStyle, resultHotkeyItemSelectedStyle }, o
                     => Array.ForEach(setters, p => o.Setters.Add(p)));
             }
+
+            if (
+                dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
+                dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
+            {
+                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultSubFont));
+                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultSubFontStyle));
+                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.ResultSubFontWeight));
+                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultSubFontStretch));
+
+                Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
+                Array.ForEach(
+                    new[] {  resultSubItemStyle,resultSubItemSelectedStyle}, o
+                    => Array.ForEach(setters, p => o.Setters.Add(p)));
+            }
+
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = Settings.WindowSize;
@@ -205,17 +224,53 @@ namespace Flow.Launcher.Core.Resource
             return  GetResourceDictionary(Settings.Theme);
         }
 
-        public List<string> LoadAvailableThemes()
+        public List<ThemeData> LoadAvailableThemes()
         {
-            List<string> themes = new List<string>();
+            List<ThemeData> themes = new List<ThemeData>();
             foreach (var themeDirectory in _themeDirectories)
             {
-                themes.AddRange(
-                    Directory.GetFiles(themeDirectory)
-                        .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
-                        .ToList());
+                var filePaths = Directory
+                    .GetFiles(themeDirectory)
+                    .Where(filePath => filePath.EndsWith(Extension) && !filePath.EndsWith("Base.xaml"))
+                    .Select(GetThemeDataFromPath);
+                themes.AddRange(filePaths);
             }
-            return themes.OrderBy(o => o).ToList();
+
+            return themes.OrderBy(o => o.Name).ToList();
+        }
+
+        private ThemeData GetThemeDataFromPath(string path)
+        {
+            using var reader = XmlReader.Create(path);
+            reader.Read();
+
+            var extensionlessName = Path.GetFileNameWithoutExtension(path);
+
+            if (reader.NodeType is not XmlNodeType.Comment)
+                return new ThemeData(extensionlessName, extensionlessName);
+
+            var commentLines = reader.Value.Trim().Split('\n').Select(v => v.Trim());
+
+            var name = extensionlessName;
+            bool? isDark = null;
+            bool? hasBlur = null;
+            foreach (var line in commentLines)
+            {
+                if (line.StartsWith(ThemeMetadataNamePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    name = line.Remove(0, ThemeMetadataNamePrefix.Length).Trim();
+                }
+                else if (line.StartsWith(ThemeMetadataIsDarkPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    isDark = bool.Parse(line.Remove(0, ThemeMetadataIsDarkPrefix.Length).Trim());
+                }
+                else if (line.StartsWith(ThemeMetadataHasBlurPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    hasBlur = bool.Parse(line.Remove(0, ThemeMetadataHasBlurPrefix.Length).Trim());
+                }
+            }
+
+            return new ThemeData(extensionlessName, name, isDark, hasBlur);
         }
 
         private string GetThemePath(string themeName)
@@ -393,5 +448,7 @@ namespace Flow.Launcher.Core.Resource
             Marshal.FreeHGlobal(accentPtr);
         }
         #endregion
+
+        public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
     }
 }

@@ -191,11 +191,15 @@ namespace Flow.Launcher.Test.Plugins
         [TestCase(@"\c:\", false)]
         [TestCase(@"cc:\", false)]
         [TestCase(@"\\\SomeNetworkLocation\", false)]
+        [TestCase(@"\\SomeNetworkLocation\", true)]
         [TestCase("RandomFile", false)]
         [TestCase(@"c:\>*", true)]
         [TestCase(@"c:\>", true)]
         [TestCase(@"c:\SomeLocation\SomeOtherLocation\>", true)]
         [TestCase(@"c:\SomeLocation\SomeOtherLocation", true)]
+        [TestCase(@"c:\SomeLocation\SomeOtherLocation\SomeFile.exe", true)]
+        [TestCase(@"\\SomeNetworkLocation\SomeFile.exe", true)]
+
         public void WhenGivenQuerySearchString_ThenShouldIndicateIfIsLocationPathString(string querySearchString, bool expectedResult)
         {
             // When, Given

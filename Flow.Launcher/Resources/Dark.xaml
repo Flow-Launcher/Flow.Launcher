@@ -7,16 +7,17 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="SystemThemeBorder" Color="#3f3f3f" />
-    <SolidColorBrush x:Key="QuerySuggestionBoxForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="QuerySuggestionBoxForeground" Color="#4d4d4d" />
     <SolidColorBrush x:Key="QuerySelectionBrush" Color="#4a5459" />
     <SolidColorBrush x:Key="SubTitleForeground" Color="#7b7b7b" />
     <SolidColorBrush x:Key="SubTitleSelectedForeground" Color="#7b7b7b" />
     <SolidColorBrush x:Key="SearchIconForeground" Color="#4d4d4d" />
-    <SolidColorBrush x:Key="SeparatorForeground" Color="#4d4d4d" />
+    <SolidColorBrush x:Key="SeparatorForeground" Color="#14ffffff" />
     <SolidColorBrush x:Key="ThumbColor" Color="#9a9a9a" />
     <SolidColorBrush x:Key="InlineHighlight" Color="#0078d7" />
     <SolidColorBrush x:Key="HotkeyForeground" Color="#7b7b7b" />
     <SolidColorBrush x:Key="HotkeySelectedForeground" Color="#7b7b7b" />
+    <SolidColorBrush x:Key="ClockDateForeground" Color="#4d4d4d" />
     <Color x:Key="ItemSelectedBackgroundColorBrush">#198F8F8F</Color>
 
 
@@ -104,6 +105,16 @@
     <Color x:Key="NumberBoxColor26">#ffffff</Color>
     <Color x:Key="HoverStoreGrid">#272727</Color>
 
+    <!--  Resources for HotkeyControl  -->
+    <SolidColorBrush x:Key="CustomHotkeyHover" Color="#323232" />
+    <!--  Resources for Expander  -->
+    <SolidColorBrush x:Key="CustomExpanderHover" Color="#323232" />
+    <!--  Resource for ContentDialog  -->
+    <SolidColorBrush x:Key="ContentDialogOverlayBG" Color="#4D000000" />
+    <!--  Infobar Warning  -->
+    <SolidColorBrush x:Key="InfoBarWarningIcon" Color="#FCE100" />
+    <SolidColorBrush x:Key="InfoBarWarningBG" Color="#433519" />
+    <SolidColorBrush x:Key="InfoBarBD" Color="#19000000" />
 
     <SolidColorBrush x:Key="ButtonOutBorder" Color="Transparent" />
     <SolidColorBrush x:Key="ButtonInsideBorder" Color="#3f3f3f" />
@@ -772,7 +783,7 @@
     <m:StaticResource x:Key="ContentDialogForeground" ResourceKey="SystemControlPageTextBaseHighBrush" />
     <m:StaticResource x:Key="ContentDialogBackground" ResourceKey="SystemControlPageBackgroundAltHighBrush" />
     <m:StaticResource x:Key="ContentDialogBorderBrush" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-    <m:StaticResource x:Key="ContentDialogLightDismissOverlayBackground" ResourceKey="SystemControlPageBackgroundMediumAltMediumBrush" />
+    <m:StaticResource x:Key="ContentDialogLightDismissOverlayBackground" ResourceKey="ContentDialogOverlayBG" />
 
     <!--  Resources for DataGrid  -->
     <sys:Double x:Key="ListAccentLowOpacity">0.6</sys:Double>
@@ -1023,7 +1034,8 @@
 
     <!--  Resources for NavigationView  -->
     <m:StaticResource x:Key="NavigationViewDefaultPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
-    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor SystemChromeMediumColor}" />
+    <!--<SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor SystemChromeMediumColor}" />-->
+    <SolidColorBrush x:Key="NavigationViewExpandedPaneBackground" Color="{m:StaticColor Color01}" />
     <m:StaticResource x:Key="NavigationViewTopPaneBackground" ResourceKey="AcrylicInAppFillColorDefaultBrush" />
 
     <m:StaticResource x:Key="NavigationViewItemBackground" ResourceKey="SystemControlTransparentRevealBackgroundBrush" />
@@ -1594,17 +1606,22 @@
 
     <!--  Resources for AccentButtonStyle  -->
     <m:StaticResource x:Key="AccentButtonBackground" ResourceKey="SystemAccentColorLight2Brush" />
-    <m:StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemAccentColorLight1Brush" />
-    <m:StaticResource x:Key="AccentButtonBackgroundPressed" ResourceKey="SystemAccentColorDark1Brush" />
+    <m:StaticResource x:Key="AccentButtonBackgroundPointerOver" ResourceKey="SystemAccentColorLight2Brush" />
+    <m:StaticResource x:Key="AccentButtonBackgroundPressed" ResourceKey="SystemAccentColorLight2Brush" />
     <m:StaticResource x:Key="AccentButtonBackgroundDisabled" ResourceKey="SystemControlBackgroundBaseLowBrush" />
-    <m:StaticResource x:Key="AccentButtonForeground" ResourceKey="Color01B" />
-    <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="Color01B" />
-    <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="Color23B" />
+    <m:StaticResource x:Key="AccentButtonForeground" ResourceKey="SystemControlForegroundAltHighBrush" />
+    <m:StaticResource x:Key="AccentButtonForegroundPointerOver" ResourceKey="SystemControlForegroundAltMediumHighBrush" />
+    <m:StaticResource x:Key="AccentButtonForegroundPressed" ResourceKey="SystemControlForegroundListLowBrush" />
     <m:StaticResource x:Key="AccentButtonForegroundDisabled" ResourceKey="SystemControlDisabledBaseMediumLowBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrush" ResourceKey="SystemControlForegroundTransparentBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushPointerOver" ResourceKey="SystemControlForegroundTransparentBrush" />
     <m:StaticResource x:Key="AccentButtonBorderBrushPressed" ResourceKey="SystemControlHighlightTransparentBrush" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPointerOver" ResourceKey="AccentButtonOverlayPointerOver" />
+    <m:StaticResource x:Key="AccentButtonBorderBGPressed" ResourceKey="AccentButtonOverlayPressed" />
     <m:StaticResource x:Key="AccentButtonBorderBrushDisabled" ResourceKey="SystemControlDisabledTransparentBrush" />
+
+    <SolidColorBrush x:Key="AccentButtonOverlayPointerOver" Color="#32555555" />
+    <SolidColorBrush x:Key="AccentButtonOverlayPressed" Color="#52555555" />
 
     <sys:Boolean x:Key="UseSystemFocusVisuals">True</sys:Boolean>
     <sys:Boolean x:Key="IsApplicationFocusVisualKindReveal">False</sys:Boolean>

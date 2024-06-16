@@ -10,8 +10,9 @@
     xmlns:vm="clr-namespace:Flow.Launcher.ViewModel"
     Name="FlowMainWindow"
     Title="Flow Launcher"
-    MinWidth="{Binding MainWindowWidth, Mode=OneWay}"
-    MaxWidth="{Binding MainWindowWidth, Mode=OneWay}"
+    Width="{Binding MainWindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+    MinWidth="400"
+    MinHeight="30"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
     AllowsTransparency="True"
@@ -20,19 +21,24 @@
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
     Initialized="OnInitialized"
+    Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
     LocationChanged="OnLocationChanged"
     Opacity="{Binding MainWindowOpacity, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
     PreviewKeyDown="OnKeyDown"
-    ResizeMode="NoResize"
+    PreviewKeyUp="OnKeyUp"
+    ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
-    Style="{DynamicResource WindowStyle}"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
     WindowStyle="None"
     mc:Ignorable="d">
+    <!--  WindowChrome  -->
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="9" ResizeBorderThickness="32 4 32 32" />
+    </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -45,47 +51,14 @@
     <Window.InputBindings>
         <KeyBinding Key="Escape" Command="{Binding EscCommand}" />
         <KeyBinding Key="F5" Command="{Binding ReloadPluginDataCommand}" />
-        <KeyBinding Key="Tab" Command="{Binding AutocompleteQueryCommand}" />
-        <KeyBinding
-            Key="Tab"
-            Command="{Binding AutocompleteQueryCommand}"
-            Modifiers="Shift" />
-        <KeyBinding
-            Key="I"
-            Command="{Binding OpenSettingCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="N"
-            Command="{Binding SelectNextItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="J"
-            Command="{Binding SelectNextItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="D"
-            Command="{Binding SelectNextPageCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="P"
-            Command="{Binding SelectPrevItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="K"
-            Command="{Binding SelectPrevItemCommand}"
-            Modifiers="Ctrl" />
-        <KeyBinding
-            Key="U"
-            Command="{Binding SelectPrevPageCommand}"
-            Modifiers="Ctrl" />
         <KeyBinding
             Key="Home"
             Command="{Binding SelectFirstResultCommand}"
             Modifiers="Alt" />
         <KeyBinding
-            Key="O"
-            Command="{Binding LoadContextMenuCommand}"
-            Modifiers="Ctrl" />
+            Key="End"
+            Command="{Binding SelectLastResultCommand}"
+            Modifiers="Alt" />
         <KeyBinding
             Key="R"
             Command="{Binding ReQueryCommand}"
@@ -110,10 +83,6 @@
             Key="OemMinus"
             Command="{Binding DecreaseMaxResultCommand}"
             Modifiers="Control" />
-        <KeyBinding
-            Key="H"
-            Command="{Binding LoadHistoryCommand}"
-            Modifiers="Ctrl" />
         <KeyBinding
             Key="Enter"
             Command="{Binding OpenResultCommand}"
@@ -187,163 +156,239 @@
             Modifiers="Ctrl" />
         <KeyBinding
             Key="C"
-            Modifiers="Ctrl+Shift"
-            Command="{Binding CopyAlternativeCommand}" />
+            Command="{Binding CopyAlternativeCommand}"
+            Modifiers="Ctrl+Shift" />
         <KeyBinding
             Key="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
             Command="{Binding TogglePreviewCommand}"
             Modifiers="{Binding PreviewHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding AutocompleteQueryCommand}"
+            Modifiers="{Binding AutoCompleteHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding AutoCompleteHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding AutocompleteQueryCommand}"
+            Modifiers="{Binding AutoCompleteHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextItemCommand}"
+            Modifiers="{Binding SelectNextItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevItemCommand}"
+            Modifiers="{Binding SelectPrevItemHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextItemCommand}"
+            Modifiers="{Binding SelectNextItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevItemCommand}"
+            Modifiers="{Binding SelectPrevItemHotkey2, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding OpenSettingCommand}"
+            Modifiers="{Binding SettingWindowHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding LoadContextMenuCommand}"
+            Modifiers="{Binding OpenContextMenuHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectNextPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectNextPageCommand}"
+            Modifiers="{Binding SelectNextPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding SelectPrevPageCommand}"
+            Modifiers="{Binding SelectPrevPageHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ReverseHistoryCommand}"
+            Modifiers="{Binding CycleHistoryUpHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
+        <KeyBinding
+            Key="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='key'}"
+            Command="{Binding ForwardHistoryCommand}"
+            Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
-    <Grid>
-        <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
-            <StackPanel Orientation="Vertical">
-                <Grid>
-                    <Border Style="{DynamicResource QueryBoxBgStyle}">
-                        <Grid>
-                            <TextBox
-                                x:Name="QueryTextSuggestionBox"
-                                IsEnabled="False"
-                                Style="{DynamicResource QuerySuggestionBoxStyle}">
-                                <TextBox.Text>
-                                    <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
-                                        <Binding ElementName="QueryTextBox" Mode="OneTime" />
-                                        <Binding ElementName="ResultListBox" Path="SelectedItem" />
-                                        <Binding ElementName="QueryTextBox" Path="Text" />
-                                    </MultiBinding>
-                                </TextBox.Text>
-                            </TextBox>
-                            <TextBox
-                                x:Name="QueryTextBox"
-                                AllowDrop="True"
-                                InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
-                                InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
-                                PreviewDragOver="OnPreviewDragOver"
-                                PreviewKeyUp="QueryTextBox_KeyUp"
-                                Style="{DynamicResource QueryBoxStyle}"
-                                Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                Visibility="Visible">
-                                <TextBox.CommandBindings>
-                                    <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
-                                </TextBox.CommandBindings>
-                                <TextBox.ContextMenu>
-                                    <ContextMenu MinWidth="160">
-                                        <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
-                                            <MenuItem.Icon>
-                                                <ui:FontIcon Glyph="&#xe8c6;" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}">
-                                            <MenuItem.Icon>
-                                                <ui:FontIcon Glyph="&#xe8c8;" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}">
-                                            <MenuItem.Icon>
-                                                <ui:FontIcon Glyph="&#xe77f;" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <Separator
-                                            Margin="0"
-                                            Padding="0,4,0,4"
-                                            Background="{DynamicResource ContextSeparator}" />
-                                        <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}">
-                                            <MenuItem.Icon>
-                                                <ui:FontIcon Glyph="&#xe713;" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
-                                            <MenuItem.Icon>
-                                                <ui:FontIcon Glyph="&#xe711;" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                    </ContextMenu>
-                                </TextBox.ContextMenu>
-                            </TextBox>
-                        </Grid>
-                    </Border>
 
-                    <StackPanel
-                        x:Name="ClockPanel"
-                        IsHitTestVisible="False"
-                        Style="{DynamicResource ClockPanel}">
-                        <TextBlock
-                            x:Name="ClockBox"
-                            Style="{DynamicResource ClockBox}"
-                            Text="{Binding ClockText}"
-                            Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        <TextBlock
-                            x:Name="DateBox"
-                            Style="{DynamicResource DateBox}"
-                            Text="{Binding DateText}"
-                            Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
-                    </StackPanel>
-                    <Border>
-                        <Grid>
-                            <Image
-                                x:Name="PluginActivationIcon"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Panel.ZIndex="2"
-                                RenderOptions.BitmapScalingMode="HighQuality"
-                                Source="{Binding PluginIconPath}"
-                                Stretch="Uniform"
-                                Style="{DynamicResource PluginActivationIcon}" />
-                            <Canvas Style="{DynamicResource SearchIconPosition}">
-                                <Path
-                                    Name="SearchIcon"
-                                    Margin="0"
-                                    Data="{DynamicResource SearchIconImg}"
-                                    Stretch="Fill"
-                                    Style="{DynamicResource SearchIconStyle}"
-                                    Visibility="{Binding SearchIconVisibility}" />
-                            </Canvas>
-                        </Grid>
-                    </Border>
-                    <Line
-                        x:Name="ProgressBar"
-                        Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
-                        Height="2"
-                        Margin="12,0,12,0"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Bottom"
-                        StrokeThickness="2"
-                        Style="{DynamicResource PendingLineStyle}"
-                        Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        X1="-100"
-                        X2="0"
-                        Y1="0"
-                        Y2="0" />
-                </Grid>
+    <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
+        <StackPanel Orientation="Vertical">
+            <Grid>
+                <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
+                    <Grid>
+                        <TextBox
+                            x:Name="QueryTextSuggestionBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            IsEnabled="False"
+                            Style="{DynamicResource QuerySuggestionBoxStyle}">
+                            <TextBox.Text>
+                                <MultiBinding Converter="{StaticResource QuerySuggestionBoxConverter}">
+                                    <Binding ElementName="QueryTextBox" Mode="OneTime" />
+                                    <Binding ElementName="ResultListBox" Path="SelectedItem" />
+                                    <Binding ElementName="QueryTextBox" Path="Text" />
+                                </MultiBinding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <TextBox
+                            x:Name="QueryTextBox"
+                            Height="{Binding MainWindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            AllowDrop="True"
+                            AutomationProperties.Name="{Binding Results.SelectedItem.Result.Title}"
+                            FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
+                            InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
+                            PreviewDragOver="OnPreviewDragOver"
+                            PreviewKeyUp="QueryTextBox_KeyUp"
+                            Style="{DynamicResource QueryBoxStyle}"
+                            Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Visibility="Visible"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
+                            <TextBox.CommandBindings>
+                                <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
+                            </TextBox.CommandBindings>
+                            <TextBox.ContextMenu>
+                                <ContextMenu MinWidth="160">
+                                    <MenuItem Command="ApplicationCommands.Cut" Header="{DynamicResource cut}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe8c6;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Command="ApplicationCommands.Copy" Header="{DynamicResource copy}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe8c8;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Command="ApplicationCommands.Paste" Header="{DynamicResource paste}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe77f;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <Separator
+                                        Margin="0"
+                                        Padding="0 4 0 4"
+                                        Background="{DynamicResource ContextSeparator}" />
+                                    <MenuItem Click="OnContextMenusForSettingsClick" Header="{DynamicResource flowlauncher_settings}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe713;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem Command="{Binding EscCommand}" Header="{DynamicResource closeWindow}">
+                                        <MenuItem.Icon>
+                                            <ui:FontIcon Glyph="&#xe711;" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                </ContextMenu>
+                            </TextBox.ContextMenu>
+                        </TextBox>
+                    </Grid>
+                </Border>
 
-                <Grid ClipToBounds="True">
-                    <ContentControl>
-                        <ContentControl.Style>
-                            <Style TargetType="ContentControl">
-                                <Setter Property="Visibility" Value="Collapsed" />
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
-                                        <Setter Property="Visibility" Value="Visible" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ContentControl.Style>
-                        <Rectangle
-                            Name="MiddleSeparator"
-                            Width="Auto"
-                            HorizontalAlignment="Stretch"
-                            Style="{DynamicResource SeparatorStyle}" />
-                    </ContentControl>
+                <StackPanel
+                    x:Name="ClockPanel"
+                    IsHitTestVisible="False"
+                    Style="{DynamicResource ClockPanel}">
+                    <TextBlock
+                        x:Name="ClockBox"
+                        Style="{DynamicResource ClockBox}"
+                        Text="{Binding ClockText}"
+                        Visibility="{Binding Settings.UseClock, Converter={StaticResource BoolToVisibilityConverter}}" />
+                    <TextBlock
+                        x:Name="DateBox"
+                        Style="{DynamicResource DateBox}"
+                        Text="{Binding DateText}"
+                        Visibility="{Binding Settings.UseDate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                </StackPanel>
+                <Border>
+                    <Grid WindowChrome.IsHitTestVisibleInChrome="True">
+                        <Image
+                            x:Name="PluginActivationIcon"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Panel.ZIndex="2"
+                            RenderOptions.BitmapScalingMode="HighQuality"
+                            Source="{Binding PluginIconPath}"
+                            Stretch="Uniform"
+                            Style="{DynamicResource PluginActivationIcon}" />
+                        <Canvas Style="{DynamicResource SearchIconPosition}">
+                            <Path
+                                Name="SearchIcon"
+                                Margin="0"
+                                Data="{DynamicResource SearchIconImg}"
+                                Stretch="Fill"
+                                Style="{DynamicResource SearchIconStyle}"
+                                Visibility="{Binding SearchIconVisibility}" />
+                        </Canvas>
+                    </Grid>
+                </Border>
+                <Line
+                    x:Name="ProgressBar"
+                    Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}, Path=ActualWidth}"
+                    Height="2"
+                    Margin="12 0 12 0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    StrokeThickness="2"
+                    Style="{DynamicResource PendingLineStyle}"
+                    Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    X1="-100"
+                    X2="0"
+                    Y1="0"
+                    Y2="0" />
+            </Grid>
 
-                </Grid>
+            <Grid ClipToBounds="True">
+                <ContentControl>
+                    <ContentControl.Style>
+                        <Style TargetType="ContentControl">
+                            <Setter Property="Visibility" Value="Visible" />
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
+                                        <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
+                                        <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
+                                    </MultiDataTrigger.Conditions>
+                                    <MultiDataTrigger.Setters>
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                        <Setter Property="Margin" Value="0" />
+                                        <Setter Property="Height" Value="0" />
+                                    </MultiDataTrigger.Setters>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                            <!--<Style.Triggers>
+                                <DataTrigger Binding="{Binding ElementName=ResultListBox, Path=Visibility}" Value="Visible">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Visible">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding ElementName=History, Path=Visibility}" Value="Visible">
+                                    <Setter Property="Visibility" Value="Visible" />
+                                </DataTrigger>
+                            </Style.Triggers>-->
+                        </Style>
+                    </ContentControl.Style>
+                    <Rectangle
+                        Name="MiddleSeparator"
+                        Width="Auto"
+                        HorizontalAlignment="Stretch"
+                        Style="{DynamicResource SeparatorStyle}" />
+                </ContentControl>
+
+            </Grid>
+            <Border Style="{DynamicResource WindowRadius}">
+                <Border.Clip>
+                    <MultiBinding Converter="{StaticResource BorderClipConverter}">
+                        <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
+                        <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
+                        <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
+                    </MultiBinding>
+                </Border.Clip>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" MinWidth="100" />
+                        <ColumnDefinition Width="*" MinWidth="80" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="0.85*" MinWidth="244" />
                     </Grid.ColumnDefinitions>
@@ -351,75 +396,55 @@
                         x:Name="ResultArea"
                         Grid.Column="0"
                         Grid.ColumnSpan="{Binding ResultAreaColumn}">
-                        <Border Style="{DynamicResource WindowRadius}">
-                            <Border.Clip>
-                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                </MultiBinding>
-                            </Border.Clip>
-                            <ContentControl>
-                                <flowlauncher:ResultListBox
-                                    x:Name="ResultListBox"
-                                    DataContext="{Binding Results}"
-                                    LeftClickResultCommand="{Binding LeftClickResultCommand}"
-                                    RightClickResultCommand="{Binding RightClickResultCommand}" />
-                            </ContentControl>
-                        </Border>
-                        <Border Style="{DynamicResource WindowRadius}">
-                            <Border.Clip>
-                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                </MultiBinding>
-                            </Border.Clip>
-                            <ContentControl>
-                                <flowlauncher:ResultListBox
-                                    x:Name="ContextMenu"
-                                    DataContext="{Binding ContextMenu}"
-                                    LeftClickResultCommand="{Binding LeftClickResultCommand}"
-                                    RightClickResultCommand="{Binding RightClickResultCommand}" />
-                            </ContentControl>
-                        </Border>
-                        <Border Style="{DynamicResource WindowRadius}">
-                            <Border.Clip>
-                                <MultiBinding Converter="{StaticResource BorderClipConverter}">
-                                    <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="ActualHeight" RelativeSource="{RelativeSource Self}" />
-                                    <Binding Path="CornerRadius" RelativeSource="{RelativeSource Self}" />
-                                </MultiBinding>
-                            </Border.Clip>
-                            <ContentControl>
-                                <flowlauncher:ResultListBox
-                                    x:Name="History"
-                                    DataContext="{Binding History}"
-                                    LeftClickResultCommand="{Binding LeftClickResultCommand}"
-                                    RightClickResultCommand="{Binding RightClickResultCommand}" />
-                            </ContentControl>
-                        </Border>
+                        <ContentControl>
+                            <flowlauncher:ResultListBox
+                                x:Name="ResultListBox"
+                                DataContext="{Binding Results}"
+                                LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                                RightClickResultCommand="{Binding RightClickResultCommand}" />
+                        </ContentControl>
+                        <ContentControl>
+                            <flowlauncher:ResultListBox
+                                x:Name="ContextMenu"
+                                DataContext="{Binding ContextMenu}"
+                                LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                                RightClickResultCommand="{Binding RightClickResultCommand}" />
+                        </ContentControl>
+                        <ContentControl>
+                            <flowlauncher:ResultListBox
+                                x:Name="History"
+                                DataContext="{Binding History}"
+                                LeftClickResultCommand="{Binding LeftClickResultCommand}"
+                                RightClickResultCommand="{Binding RightClickResultCommand}" />
+                        </ContentControl>
                     </StackPanel>
                     <GridSplitter
                         Grid.Column="1"
-                        Width="{Binding PreviewVisible, Converter={StaticResource SplitterConverter}}"
+                        Margin="0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Stretch"
                         Background="Transparent"
-                        ShowsPreview="True" />
+                        ShowsPreview="True"
+                        Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <GridSplitter.Template>
+                            <ControlTemplate TargetType="{x:Type GridSplitter}">
+                                <Border Style="{DynamicResource PreviewBorderStyle}" />
+                            </ControlTemplate>
+                        </GridSplitter.Template>
+                    </GridSplitter>
                     <Grid
                         x:Name="Preview"
                         Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
-                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Border
+                            MinHeight="380"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                             DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
-                            Style="{DynamicResource PreviewBorderStyle}"
                             Visibility="{Binding ShowDefaultPreview}">
                             <Grid
-                                Margin="20,0,10,0"
+                                Margin="0 0 10 5"
                                 VerticalAlignment="Stretch"
                                 Background="Transparent">
                                 <Grid.RowDefinitions>
@@ -435,7 +460,7 @@
                                         x:Name="PreviewGlyphIcon"
                                         Grid.Row="0"
                                         Height="Auto"
-                                        Margin="0,16,0,0"
+                                        Margin="0 16 0 0"
                                         FontFamily="{Binding Glyph.FontFamily}"
                                         Style="{DynamicResource PreviewGlyph}"
                                         Text="{Binding Glyph.Glyph}"
@@ -444,7 +469,7 @@
                                         x:Name="PreviewImageIcon"
                                         Grid.Row="0"
                                         MaxHeight="320"
-                                        Margin="0,16,0,0"
+                                        Margin="0 16 0 0"
                                         HorizontalAlignment="Center"
                                         Source="{Binding PreviewImage}"
                                         StretchDirection="DownOnly"
@@ -463,7 +488,7 @@
                                     <TextBlock
                                         x:Name="PreviewTitle"
                                         Grid.Row="1"
-                                        Margin="0,6,0,16"
+                                        Margin="0 6 0 16"
                                         HorizontalAlignment="Stretch"
                                         Style="{DynamicResource PreviewItemTitleStyle}"
                                         Text="{Binding Result.Title}"
@@ -489,15 +514,17 @@
                             </Grid>
                         </Border>
                         <Border
+                            MinHeight="380"
+                            MaxHeight="{Binding ElementName=ResultListBox, Path=ActualHeight}"
+                            Padding="0 0 10 10"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
                             DataContext="{Binding SelectedItem, ElementName=ResultListBox}"
-                            Style="{DynamicResource PreviewBorderStyle}"
                             Visibility="{Binding ShowCustomizedPreview}">
                             <ContentControl Content="{Binding Result.PreviewPanel.Value}" />
                         </Border>
                     </Grid>
                 </Grid>
-            </StackPanel>
-        </Border>
-    </Grid>
+            </Border>
+        </StackPanel>
+    </Border>
 </Window>

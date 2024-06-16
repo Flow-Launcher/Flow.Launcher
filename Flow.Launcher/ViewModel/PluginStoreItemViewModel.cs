@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Linq;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel
 {
-    public class PluginStoreItemViewModel : BaseModel
+    public partial class PluginStoreItemViewModel : BaseModel
     {
+        private PluginPair PluginManagerData => PluginManager.GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7");
         public PluginStoreItemViewModel(UserPlugin plugin)
         {
             _plugin = plugin;
@@ -26,18 +29,12 @@ namespace Flow.Launcher.ViewModel
         public string IcoPath => _plugin.IcoPath;
 
         public bool LabelInstalled => PluginManager.GetPluginForId(_plugin.ID) != null;
-        public bool LabelUpdate => LabelInstalled && VersionConvertor(_plugin.Version) > VersionConvertor(PluginManager.GetPluginForId(_plugin.ID).Metadata.Version);
+        public bool LabelUpdate => LabelInstalled && new Version(_plugin.Version) > new Version(PluginManager.GetPluginForId(_plugin.ID).Metadata.Version);
 
         internal const string None = "None";
         internal const string RecentlyUpdated = "RecentlyUpdated";
         internal const string NewRelease = "NewRelease";
         internal const string Installed = "Installed";
-
-        public Version VersionConvertor(string version)
-        {
-            Version ResultVersion = new Version(version);
-            return ResultVersion;
-        }
 
         public string Category
         {
@@ -59,6 +56,14 @@ namespace Flow.Launcher.ViewModel
 
                 return category;
             }
+        }
+
+        [RelayCommand]
+        private void ShowCommandQuery(string action)
+        {
+            var actionKeyword = PluginManagerData.Metadata.ActionKeywords.Any() ? PluginManagerData.Metadata.ActionKeywords[0] + " " : String.Empty;
+            App.API.ChangeQuery($"{actionKeyword}{action} {_plugin.Name}");
+            App.API.ShowMainWindow();
         }
     }
 }
