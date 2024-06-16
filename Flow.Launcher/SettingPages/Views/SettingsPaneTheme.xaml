@@ -390,17 +390,21 @@
                 Icon="&#xe790;">
                 <cc:ExCard.SideContent>
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                        <ui:FontIcon
-                            Margin="0 2 8 0"
+                        <ui:PathIcon
+                            Width="12"
+                            Margin="0 1 8 0"
                             VerticalAlignment="Center"
-                            FontSize="12"
-                            Glyph="&#xED66;"
+                            Data="{DynamicResource circle_half_stroke_solid}"
+                            ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                            ToolTipService.InitialShowDelay="0"
                             Visibility="{Binding SelectedTheme.IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <ui:FontIcon
                             Margin="0 2 8 0"
                             VerticalAlignment="Center"
                             FontSize="12"
                             Glyph="&#xEB42;"
+                            ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                            ToolTipService.InitialShowDelay="0"
                             Visibility="{Binding SelectedTheme.HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <TextBlock Text="{Binding SelectedTheme.Name}" />
                     </StackPanel>
@@ -433,17 +437,21 @@
                                         VerticalAlignment="Center"
                                         Text="{Binding Name}"
                                         TextWrapping="Wrap" />
-                                    <ui:FontIcon
+                                    <ui:PathIcon
+                                        Width="12"
                                         Margin="8 1 0 0"
                                         VerticalAlignment="Center"
-                                        FontSize="12"
-                                        Glyph="&#xED66;"
+                                        Data="{DynamicResource circle_half_stroke_solid}"
+                                        ToolTip="{DynamicResource TypeIsDarkToolTip}"
+                                        ToolTipService.InitialShowDelay="0"
                                         Visibility="{Binding IsDark, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     <ui:FontIcon
                                         Margin="8 1 0 0"
                                         VerticalAlignment="Center"
                                         FontSize="12"
                                         Glyph="&#xEB42;"
+                                        ToolTip="{DynamicResource TypeHasBlurToolTip}"
+                                        ToolTipService.InitialShowDelay="0"
                                         Visibility="{Binding HasBlur, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 </StackPanel>
                             </Grid>

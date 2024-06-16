@@ -275,12 +275,12 @@ namespace Flow.Launcher.Plugin
             /// <summary>
             /// Full image used for preview panel
             /// </summary>
-            public string PreviewImagePath { get; set; }
+            public string PreviewImagePath { get; set; } = null;
 
             /// <summary>
             /// Determines if the preview image should occupy the full width of the preview panel.
             /// </summary>
-            public bool IsMedia { get; set; }
+            public bool IsMedia { get; set; } = false;
 
             /// <summary>
             /// Result description text that is shown at the bottom of the preview panel.
@@ -288,12 +288,17 @@ namespace Flow.Launcher.Plugin
             /// <remarks>
             /// When a value is not set, the <see cref="SubTitle"/> will be used.
             /// </remarks>
-            public string Description { get; set; }
+            public string Description { get; set; } = null;
 
             /// <summary>
             /// Delegate to get the preview panel's image
             /// </summary>
-            public IconDelegate PreviewDelegate { get; set; }
+            public IconDelegate PreviewDelegate { get; set; } = null;
+
+            /// <summary>
+            /// File path of the result. For third-party programs providing external preview.
+            /// </summary>
+            public string FilePath { get; set; } = null;
 
             /// <summary>
             /// Default instance of <see cref="PreviewInfo"/>
@@ -304,6 +309,7 @@ namespace Flow.Launcher.Plugin
                 Description = null,
                 IsMedia = false,
                 PreviewDelegate = null,
+                FilePath = null,
             };
         }
     }
