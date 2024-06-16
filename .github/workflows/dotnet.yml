@@ -54,7 +54,10 @@ jobs:
       - name: Install vpk
          Install vpk tool (dotnet tool install will not reinstall if already installed)
          We will update the cli by removing cache
-        run: dotnet tool update -g vpk
+        run: |
+          if (!(Get-Command vpk -ErrorAction SilentlyContinue)) {
+            dotnet tool install -g vpk
+          }
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
