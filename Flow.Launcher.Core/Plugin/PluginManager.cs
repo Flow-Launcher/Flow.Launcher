@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
+using Flow.Launcher.Core.ExternalPlugins;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -89,6 +89,48 @@ namespace Flow.Launcher.Core.Plugin
                 IAsyncReloadable p => p.ReloadDataAsync(),
                 _ => Task.CompletedTask,
             }).ToArray());
+        }
+
+        public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.OpenPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task CloseExternalPreviewAsync()
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.ClosePreviewAsync(),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.SwitchPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static bool UseExternalPreview()
+        {
+            return GetPluginsForInterface<IAsyncExternalPreview>().Any(x => !x.Metadata.Disabled);
+        }
+
+        public static bool AllowAlwaysPreview()
+        {
+            var plugin = GetPluginsForInterface<IAsyncExternalPreview>().FirstOrDefault(x => !x.Metadata.Disabled);
+
+            if (plugin is null)
+                return false;
+
+            return ((IAsyncExternalPreview)plugin.Plugin).AllowAlwaysPreview();
         }
 
         static PluginManager()

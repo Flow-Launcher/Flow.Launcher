@@ -427,7 +427,7 @@
                         VerticalAlignment="Stretch"
                         Background="Transparent"
                         ShowsPreview="True"
-                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                         <GridSplitter.Template>
                             <ControlTemplate TargetType="{x:Type GridSplitter}">
                                 <Border Style="{DynamicResource PreviewBorderStyle}" />
@@ -439,7 +439,7 @@
                         Grid.Column="2"
                         VerticalAlignment="Stretch"
                         Style="{DynamicResource PreviewArea}"
-                        Visibility="{Binding PreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{Binding InternalPreviewVisible, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Border
                             MinHeight="380"
                             d:DataContext="{d:DesignInstance vm:ResultViewModel}"
