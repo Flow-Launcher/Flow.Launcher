@@ -96,13 +96,10 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            // Culture of this thread
-            // Use CreateSpecificCulture to preserve possible user-override settings in Windows
+            // Culture of main thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
             CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
-            // App domain
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture;
 
             // Raise event after culture is set
             Settings.Language = language.LanguageCode;
@@ -193,7 +190,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    pluginI18N.OnCultureInfoChanged(CultureInfo.DefaultThreadCurrentCulture);
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
                 {

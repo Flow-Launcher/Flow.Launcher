@@ -6,10 +6,10 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
-using Flow.Launcher.Plugin.Caculator.ViewModels;
-using Flow.Launcher.Plugin.Caculator.Views;
+using Flow.Launcher.Plugin.Calculator.ViewModels;
+using Flow.Launcher.Plugin.Calculator.Views;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     public class Main : IPlugin, IPluginI18n, ISettingProvider
     {
@@ -62,7 +62,7 @@ namespace Flow.Launcher.Plugin.Caculator
                 switch (_settings.DecimalSeparator)
                 {
                     case DecimalSeparator.Comma:
-                    case DecimalSeparator.UseSystemLocale when CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
+                    case DecimalSeparator.UseSystemLocale when CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == ",":
                         expression = query.Search.Replace(",", ".");
                         break;
                     default:
@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.Caculator
 
         private string GetDecimalSeparator()
         {
-            string systemDecimalSeperator = CultureInfo.DefaultThreadCurrentCulture.NumberFormat.NumberDecimalSeparator;
+            string systemDecimalSeperator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
             switch (_settings.DecimalSeparator)
             {
                 case DecimalSeparator.UseSystemLocale: return systemDecimalSeperator;

@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
@@ -21,19 +22,20 @@ namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneThemeViewModel : BaseModel
 {
-    private CultureInfo Culture => CultureInfo.DefaultThreadCurrentCulture;
-
+    private const string DefaultFont = "Segoe UI";
     public Settings Settings { get; }
 
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
 
-    public string SelectedTheme
+    private Theme.ThemeData _selectedTheme;
+    public Theme.ThemeData SelectedTheme
     {
-        get => Settings.Theme;
+        get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == Settings.Theme);
         set
         {
-            ThemeManager.Instance.ChangeTheme(value);
+            _selectedTheme = value;
+            ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
                 DropShadowEffect = false;
@@ -64,33 +66,42 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         }
     }
 
-    public List<string> Themes =>
-        ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension).ToList();
-
-
-    public class ColorScheme
+    public double WindowHeightSize
     {
-        public string Display { get; set; }
-        public ColorSchemes Value { get; set; }
+        get => Settings.WindowHeightSize;
+        set => Settings.WindowHeightSize = value;
     }
 
-    public List<ColorScheme> ColorSchemes
+    public double ItemHeightSize
     {
-        get
-        {
-            List<ColorScheme> modes = new List<ColorScheme>();
-            var enums = (ColorSchemes[])Enum.GetValues(typeof(ColorSchemes));
-            foreach (var e in enums)
-            {
-                var key = $"ColorScheme{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new ColorScheme { Display = display, Value = e, };
-                modes.Add(m);
-            }
-
-            return modes;
-        }
+        get => Settings.ItemHeightSize;
+        set => Settings.ItemHeightSize = value;
     }
+
+    public double QueryBoxFontSize
+    {
+        get => Settings.QueryBoxFontSize;
+        set => Settings.QueryBoxFontSize = value;
+    }
+
+    public double ResultItemFontSize
+    {
+        get => Settings.ResultItemFontSize;
+        set => Settings.ResultItemFontSize = value;
+    }
+
+    public double ResultSubItemFontSize
+    {
+        get => Settings.ResultSubItemFontSize;
+        set => Settings.ResultSubItemFontSize = value;
+    }
+
+    private List<Theme.ThemeData> _themes;
+    public List<Theme.ThemeData> Themes => _themes ??= ThemeManager.Instance.LoadAvailableThemes();
+
+    public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
+
+    public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
 
     public List<string> TimeFormatList { get; } = new()
     {
@@ -136,15 +147,17 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.DateFormat = value;
     }
 
-    public string ClockText => DateTime.Now.ToString(TimeFormat, Culture);
+    public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
-    public string DateText => DateTime.Now.ToString(DateFormat, Culture);
-
-    public double WindowWidthSize
+    public bool KeepMaxResults
     {
-        get => Settings.WindowSize;
-        set => Settings.WindowSize = value;
+        get => Settings.KeepMaxResults;
+        set => Settings.KeepMaxResults = value;
     }
+
+    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
+
+    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
 
     public bool UseGlyphIcons
     {
@@ -158,34 +171,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.UseAnimation = value;
     }
 
-    public class AnimationSpeed
-    {
-        public string Display { get; set; }
-        public AnimationSpeeds Value { get; set; }
-    }
-
-    public List<AnimationSpeed> AnimationSpeeds
-    {
-        get
-        {
-            List<AnimationSpeed> speeds = new List<AnimationSpeed>();
-            var enums = (AnimationSpeeds[])Enum.GetValues(typeof(AnimationSpeeds));
-            foreach (var e in enums)
-            {
-                var key = $"AnimationSpeed{e}";
-                var display = InternationalizationManager.Instance.GetTranslation(key);
-                var m = new AnimationSpeed { Display = display, Value = e, };
-                speeds.Add(m);
-            }
-
-            return speeds;
-        }
-    }
+    public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
+    public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
 
     public bool UseSound
     {
         get => Settings.UseSound;
         set => Settings.UseSound = value;
+    }
+
+    public bool ShowWMPWarning
+    {
+        get => !Settings.WMPInstalled && UseSound;
+    }
+
+    public bool EnableVolumeAdjustment
+    {
+        get => Settings.WMPInstalled;
     }
 
     public double SoundEffectVolume
@@ -290,7 +292,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.QueryBoxFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -334,7 +336,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             return fontExists switch
             {
                 true => new FontFamily(Settings.ResultFont),
-                _ => new FontFamily("Segoe UI")
+                _ => new FontFamily(DefaultFont)
             };
         }
         set
@@ -366,6 +368,51 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         }
     }
 
+    public FontFamily SelectedResultSubFont
+    {
+        get
+        {
+            if (Fonts.SystemFontFamilies.Count(o =>
+                    o.FamilyNames.Values != null &&
+                    o.FamilyNames.Values.Contains(Settings.ResultSubFont)) > 0)
+            {
+                var font = new FontFamily(Settings.ResultSubFont);
+                return font;
+            }
+            else
+            {
+                var font = new FontFamily(DefaultFont);
+                return font;
+            }
+        }
+        set
+        {
+            Settings.ResultSubFont = value.ToString();
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
+    public FamilyTypeface SelectedResultSubFontFaces
+    {
+        get
+        {
+            var typeface = SyntaxSugars.CallOrRescueDefault(
+                () => SelectedResultSubFont.ConvertFromInvariantStringsOrNormal(
+                    Settings.ResultSubFontStyle,
+                    Settings.ResultSubFontWeight,
+                    Settings.ResultSubFontStretch
+                ));
+            return typeface;
+        }
+        set
+        {
+            Settings.ResultSubFontStretch = value.Stretch.ToString();
+            Settings.ResultSubFontWeight = value.Weight.ToString();
+            Settings.ResultSubFontStyle = value.Style.ToString();
+            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+        }
+    }
+
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
     [RelayCommand]
@@ -388,5 +435,24 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public SettingsPaneThemeViewModel(Settings settings)
     {
         Settings = settings;
+    }
+
+    [RelayCommand]
+    public void Reset()
+    {
+        SelectedQueryBoxFont = new FontFamily(DefaultFont);
+        SelectedQueryBoxFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        QueryBoxFontSize = 20;
+
+        SelectedResultFont = new FontFamily(DefaultFont);
+        SelectedResultFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultItemFontSize = 16;
+
+        SelectedResultSubFont = new FontFamily(DefaultFont);
+        SelectedResultSubFontFaces = new FamilyTypeface { Stretch = FontStretches.Normal, Weight = FontWeights.Normal, Style = FontStyles.Normal };
+        ResultSubItemFontSize = 13;
+
+        WindowHeightSize = 42;
+        ItemHeightSize = 58;
     }
 }

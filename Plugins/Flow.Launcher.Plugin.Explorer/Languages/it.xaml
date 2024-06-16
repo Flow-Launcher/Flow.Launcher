@@ -100,8 +100,8 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Rimuovi da Accesso Rapido</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Rimuovi elemento corrente dall'Accesso Rapido</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Mostra Menu Contestuale di Windows</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_openwith">Apri Con</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Seleziona un programma con cui aprire</system:String>
 
     <!-- Special Results-->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} disponibili su {1}</system:String>

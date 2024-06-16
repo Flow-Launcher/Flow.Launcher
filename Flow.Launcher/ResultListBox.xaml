@@ -48,7 +48,6 @@
                         Margin="0"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
-                        Cursor="Hand"
                         UseLayoutRounding="False">
                         <Grid.Resources>
                             <converter:HighlightTextConverter x:Key="HighlightTextConverter" />
@@ -173,8 +172,10 @@
                             <TextBlock
                                 x:Name="Title"
                                 Grid.Row="0"
-                                VerticalAlignment="Center"
+                                Margin="0,0,0,1"
+                                VerticalAlignment="Bottom"
                                 DockPanel.Dock="Left"
+                                FontSize="{Binding Settings.ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemTitleStyle}"
                                 Text="{Binding Result.Title}"
@@ -191,6 +192,9 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
+                                Margin="0,1,0,0"
+                                VerticalAlignment="Top"
+                                FontSize="{Binding Settings.ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
                                 Style="{DynamicResource ItemSubTitleStyle}"
                                 Text="{Binding Result.SubTitle}"
@@ -219,7 +223,7 @@
         <Style TargetType="{x:Type ListBoxItem}">
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="{DynamicResource ResultItemHeight}" />
+            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />

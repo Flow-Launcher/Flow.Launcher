@@ -24,13 +24,13 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         Settings = settings;
         _updater = updater;
         _portable = portable;
-        UpdateLastQueryModeDisplay();
+        UpdateEnumDropdownLocalizations();
     }
 
-    public class SearchWindowScreen : DropdownDataGeneric<SearchWindowScreens> { }
-    public class SearchWindowAlign : DropdownDataGeneric<SearchWindowAligns> { }
-    // todo a better name?
-    public class LastQueryMode : DropdownDataGeneric<Infrastructure.UserSettings.LastQueryMode> { }
+    public class SearchWindowScreenData : DropdownDataGeneric<SearchWindowScreens> { }
+    public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
+    public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
+    public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -55,11 +55,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     }
 
 
-    public List<SearchWindowScreen> SearchWindowScreens =>
-        DropdownDataGeneric<SearchWindowScreens>.GetValues<SearchWindowScreen>("SearchWindowScreen");
+    public List<SearchWindowScreenData> SearchWindowScreens { get; } =
+        DropdownDataGeneric<SearchWindowScreens>.GetValues<SearchWindowScreenData>("SearchWindowScreen");
 
-    public List<SearchWindowAlign> SearchWindowAligns =>
-        DropdownDataGeneric<SearchWindowAligns>.GetValues<SearchWindowAlign>("SearchWindowAlign");
+    public List<SearchWindowAlignData> SearchWindowAligns { get; } =
+        DropdownDataGeneric<SearchWindowAligns>.GetValues<SearchWindowAlignData>("SearchWindowAlign");
+
+    public List<SearchPrecisionData> SearchPrecisionScores { get; } =
+        DropdownDataGeneric<SearchPrecisionScore>.GetValues<SearchPrecisionData>("SearchPrecision");
 
     public List<int> ScreenNumbers
     {
@@ -98,29 +101,15 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    private List<LastQueryMode> _lastQueryModes = new();
+    public List<LastQueryModeData> LastQueryModes { get; } =
+        DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
-    public List<LastQueryMode> LastQueryModes
+    private void UpdateEnumDropdownLocalizations()
     {
-        get
-        {
-            if (_lastQueryModes.Count == 0)
-            {
-                _lastQueryModes =
-                    DropdownDataGeneric<Infrastructure.UserSettings.LastQueryMode>
-                        .GetValues<LastQueryMode>("LastQuery");
-            }
-
-            return _lastQueryModes;
-        }
-    }
-
-    private void UpdateLastQueryModeDisplay()
-    {
-        foreach (var item in LastQueryModes)
-        {
-            item.Display = InternationalizationManager.Instance.GetTranslation($"LastQuery{item.Value}");
-        }
+        DropdownDataGeneric<SearchWindowScreens>.UpdateLabels(SearchWindowScreens);
+        DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
+        DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
+        DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
     }
 
     public string Language
@@ -133,7 +122,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
 
-            UpdateLastQueryModeDisplay();
+            UpdateEnumDropdownLocalizations();
         }
     }
 
@@ -143,14 +132,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         set => Settings.ShouldUsePinyin = value;
     }
 
-    public List<string> QuerySearchPrecisionStrings => Enum
-        .GetValues(typeof(SearchPrecisionScore))
-        .Cast<SearchPrecisionScore>()
-        .Select(v => v.ToString())
-        .ToList();
-
     public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
-    public IEnumerable<int> MaxResultsRange => Enumerable.Range(2, 16);
 
     public string AlwaysPreviewToolTip => string.Format(
         InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),

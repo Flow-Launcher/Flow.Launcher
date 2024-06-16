@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} de {1} {2}{3}Tem a certeza de que pretende atualizar este plugin? Após a atualização, Flow Launcher será reiniciado.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} de {1} {2}{2}Gostaria de atualizar este plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Atualização de plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Existe uma atualização para este plugin. Deseja ver?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Este plugin já está instalado</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Erro ao descarregar o manifesto do plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Verifique se consegue estabelecer ligação a github.com. Este erro significa que pode não ser possível instalar ou atualizar os plugins.</system:String>

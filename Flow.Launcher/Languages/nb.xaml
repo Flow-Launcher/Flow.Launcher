@@ -156,6 +156,7 @@
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Animation</system:String>
     <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
@@ -170,14 +171,37 @@
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
     <system:String x:Key="hotkeys">Hotkeys</system:String>
-    <system:String x:Key="flowlauncherHotkey">Flow Launcher Hotkey</system:String>
+    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Preview Hotkey</system:String>
+    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
+    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
     <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
+    <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
+    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
+    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
@@ -188,6 +212,7 @@
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="edit">Edit</system:String>
     <system:String x:Key="add">Add</system:String>
+    <system:String x:Key="none">None</system:String>
     <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
@@ -286,6 +311,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
     <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
@@ -297,8 +327,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Hotkey Unavailable</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Save</system:String>
+    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonCancel">Cancel</system:String>
+    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonDelete">Delete</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
@@ -367,6 +401,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
     <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+
+    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
+    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Weather</system:String>
     <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>

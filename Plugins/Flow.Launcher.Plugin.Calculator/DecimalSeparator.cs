@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Flow.Launcher.Core.Resource;
 
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     [TypeConverter(typeof(LocalizationConverter))]
     public enum DecimalSeparator

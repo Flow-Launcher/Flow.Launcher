@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Flow.Launcher.Plugin.Caculator.ViewModels
+namespace Flow.Launcher.Plugin.Calculator.ViewModels
 {
     public class SettingsViewModel : BaseModel
     {
