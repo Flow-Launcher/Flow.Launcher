@@ -6,7 +6,7 @@ using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Plugin.Sys
 {
-    public class ThemeSelector : IReloadable, IDisposable
+    public class ThemeSelector : IDisposable
     {
         public const string Keyword = "fltheme";
 
@@ -81,8 +81,6 @@ namespace Flow.Launcher.Plugin.Sys
                 }
             };
         }
-
-        public void ReloadData() => LoadThemes();
 
         public void Dispose()
         {
