@@ -180,8 +180,6 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool UseBigThumbnail => Result.Preview.IsMedia;
 
-        public double ItemTypeSmallSize => Settings.ItemHeightSize * 0.6;
-
         public GlyphInfo Glyph { get; set; }
 
         private async Task<ImageSource> LoadImageInternalAsync(string imagePath, Result.IconDelegate icon, bool loadFullImage)
