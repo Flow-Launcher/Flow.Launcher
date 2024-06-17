@@ -186,7 +186,7 @@
     <system:String x:Key="hotkey">Atajo de teclado</system:String>
     <system:String x:Key="hotkeys">Atajos de teclado</system:String>
     <system:String x:Key="flowlauncherHotkey">Abrir/Cerrar Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar Flow Launcher.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">Introduzca el atajo de teclado para abrir/cerrar Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Mostrar/Ocultar vista previa</system:String>
     <system:String x:Key="previewHotkeyToolTip">Introduzca el atajo de teclado para mostrar/ocultar la vista previa en la ventana de búsqueda.</system:String>
     <system:String x:Key="hotkeyPresets">Atajos de teclado preestablecidos</system:String>
