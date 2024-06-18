@@ -2482,7 +2482,7 @@
     <value>Hear a tone when keys are pressed</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
-    <value>Delete browsing history</value>
+    <value>Eliminar histórico de navegação</value>
   </data>
   <data name="ChangeWhatThePowerButtonsDo" xml:space="preserve">
     <value>Change what the power buttons do</value>
@@ -2494,7 +2494,7 @@
     <value>Take speech tutorials</value>
   </data>
   <data name="ViewSystemResourceUsageInTaskManager" xml:space="preserve">
-    <value>View system resource usage in Task Manager</value>
+    <value>Ver utilização de recursos no gestor de tarefas</value>
   </data>
   <data name="CreateAnAccount" xml:space="preserve">
     <value>Criar uma conta</value>
