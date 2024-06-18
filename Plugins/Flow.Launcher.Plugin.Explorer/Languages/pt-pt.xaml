@@ -27,7 +27,7 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palavras-chave</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Ligações de acesso rápido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Definições Everything</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Painel de visualização</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Painel de pré-visualização</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamanho</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Data de criação</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Data de modificação</system:String>
