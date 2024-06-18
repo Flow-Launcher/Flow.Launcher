@@ -150,4 +150,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Eveyrhing으로 내용 검색을 활성화하시겠습니까?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">인덱스가 없으면 매우 느릴 수 있습니다.(Everything v1.5+에서만 지원)</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
 </ResourceDictionary>
