@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
@@ -252,6 +253,45 @@ namespace Flow.Launcher.Plugin.Explorer
                         IcoPath = Constants.DifferentUserIconImagePath,
                         Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue748"),
                     });
+
+                if (record.Type is ResultType.File or ResultType.Folder && Settings.ShowInlinedWindowsContextMenu)
+                {
+                    var includedItems = Settings
+                        .WindowsContextMenuIncludedItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var excludedItems = Settings
+                        .WindowsContextMenuExcludedItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var menuItems = ShellContextMenuDisplayHelper
+                        .GetContextMenuWithIcons(record.FullPath)
+                        .Where(contextMenuItem =>
+                            (includedItems.Length == 0 || includedItems.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            )) &&
+                            (excludedItems.Length == 0 || !excludedItems.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            ))
+                        );
+                    foreach (var menuItem in menuItems)
+                    {
+                        contextMenus.Add(new Result
+                        {
+                            Title = menuItem.Label,
+                            Icon = () => menuItem.Icon,
+                            Action = _ =>
+                            {
+                                ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
+                                return true;
+                            }
+                        });
+                    }
+                }
             }
 
             return contextMenus;
