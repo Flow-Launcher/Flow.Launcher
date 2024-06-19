@@ -27,7 +27,6 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using System.Runtime.InteropServices;
-using System.Runtime.Intrinsics.Arm;
 
 namespace Flow.Launcher
 {
