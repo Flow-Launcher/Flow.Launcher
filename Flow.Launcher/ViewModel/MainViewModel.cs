@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -407,6 +407,10 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        #endregion
+
+        #region BasicCommands
+
         [RelayCommand]
         private void OpenSetting()
         {
@@ -579,56 +583,6 @@ namespace Flow.Launcher.ViewModel
                 return;
 
             Settings.MaxResultsToShow -= 1;
-        }
-
-        [RelayCommand]
-        public void TogglePreview()
-        {
-            if (!PreviewVisible)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-
-            ContextMenu.IsPreviewOn = PreviewVisible;
-            History.IsPreviewOn = PreviewVisible;
-            Results.IsPreviewOn = PreviewVisible;
-        }
-
-        private void ShowPreview()
-        {
-            ResultAreaColumn = 1;
-            PreviewVisible = true;
-            Results.SelectedItem?.LoadPreviewImage();
-        }
-
-        private void HidePreview()
-        {
-            ResultAreaColumn = 3;
-            PreviewVisible = false;
-        }
-
-        public void ResetPreview()
-        {
-            if (Settings.AlwaysPreview == true)
-            {
-                ShowPreview();
-            }
-            else
-            {
-                HidePreview();
-            }
-        }
-
-        private void UpdatePreview()
-        {
-            if (PreviewVisible)
-            {
-                Results.SelectedItem?.LoadPreviewImage();
-            }
         }
 
         /// <summary>
@@ -805,10 +759,186 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
+        
+        #endregion
 
-        public bool PreviewVisible { get; set; } = false;
+        #region Preview
 
-        public int ResultAreaColumn { get; set; } = 1;
+        public bool InternalPreviewVisible
+        {
+            get
+            {
+                if (ResultAreaColumn == ResultAreaColumnPreviewShown)
+                    return true;
+
+                if (ResultAreaColumn == ResultAreaColumnPreviewHidden)
+                    return false;
+#if DEBUG
+                throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
+#else
+                Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
+#endif
+                return false;
+            }
+        }
+
+        private static readonly int ResultAreaColumnPreviewShown = 1;
+
+        private static readonly int ResultAreaColumnPreviewHidden = 3;
+
+        public int ResultAreaColumn { get; set; } = ResultAreaColumnPreviewShown;
+
+        // This is not a reliable indicator of whether external preview is visible due to the
+        // ability of manually closing/exiting the external preview program which, does not inform flow that
+        // preview is no longer available.
+        public bool ExternalPreviewVisible { get; set; } = false;
+
+        private void ShowPreview()
+        {
+            var useExternalPreview = PluginManager.UseExternalPreview();
+
+            switch (useExternalPreview)
+            {
+                case true
+                    when CanExternalPreviewSelectedResult(out var path):
+                    // Internal preview may still be on when user switches to external
+                    if (InternalPreviewVisible)
+                        HideInternalPreview();
+                    OpenExternalPreview(path);
+                    break;
+
+                case true
+                    when !CanExternalPreviewSelectedResult(out var _):
+                    if (ExternalPreviewVisible)
+                        CloseExternalPreview();
+                    ShowInternalPreview();
+                    break;
+
+                case false:
+                    ShowInternalPreview();
+                    break;
+            }
+        }
+
+        private void HidePreview()
+        {            
+            if (PluginManager.UseExternalPreview())
+                CloseExternalPreview();
+
+            if (InternalPreviewVisible)
+                HideInternalPreview();
+        }
+
+        [RelayCommand]
+        private void TogglePreview()
+        {
+            if (InternalPreviewVisible || ExternalPreviewVisible)
+            {
+                HidePreview();
+            }
+            else
+            {
+                ShowPreview();
+            }
+        }
+
+        private void ToggleInternalPreview()
+        {
+            if (!InternalPreviewVisible)
+            {
+                ShowInternalPreview();
+            }
+            else
+            {
+                HideInternalPreview();
+            }
+        }
+
+        private void OpenExternalPreview(string path, bool sendFailToast = true)
+        {
+            _ = PluginManager.OpenExternalPreviewAsync(path, sendFailToast).ConfigureAwait(false);
+            ExternalPreviewVisible = true;
+        }
+
+        private void CloseExternalPreview()
+        {
+            _ = PluginManager.CloseExternalPreviewAsync().ConfigureAwait(false);
+            ExternalPreviewVisible = false;
+        }
+
+        private void SwitchExternalPreview(string path, bool sendFailToast = true)
+        {
+            _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
+        }
+
+        private void ShowInternalPreview()
+        {
+            ResultAreaColumn = ResultAreaColumnPreviewShown;
+            Results.SelectedItem?.LoadPreviewImage();
+        }
+
+        private void HideInternalPreview()
+        {
+            ResultAreaColumn = ResultAreaColumnPreviewHidden;
+        }
+
+        public void ResetPreview()
+        {
+            switch (Settings.AlwaysPreview)
+            {
+                case true
+                    when PluginManager.AllowAlwaysPreview() && CanExternalPreviewSelectedResult(out var path):
+                    OpenExternalPreview(path);
+                    break;
+
+                case true:
+                    ShowInternalPreview();
+                    break;
+
+                case false:
+                    HidePreview();
+                    break;
+            }
+        }
+        
+        private void UpdatePreview()
+        {
+            switch (PluginManager.UseExternalPreview())
+            {
+                case true
+                    when CanExternalPreviewSelectedResult(out var path):
+                    if (ExternalPreviewVisible)
+                    {
+                        SwitchExternalPreview(path, false);
+                    }
+                    else if (InternalPreviewVisible)
+                    {
+                        HideInternalPreview();
+                        OpenExternalPreview(path);
+                    }
+                    break;
+
+                case true
+                    when !CanExternalPreviewSelectedResult(out var _):
+                    if (ExternalPreviewVisible)
+                    {
+                        CloseExternalPreview();
+                        ShowInternalPreview();
+                    }
+                    break;
+
+                case false
+                    when InternalPreviewVisible:
+                    Results.SelectedItem?.LoadPreviewImage();
+                    break;
+            }
+        }
+
+        private bool CanExternalPreviewSelectedResult(out string path)
+        {
+            path = Results.SelectedItem?.Result?.Preview.FilePath;
+            return !string.IsNullOrEmpty(path);
+        }
 
         #endregion
 
@@ -1231,6 +1361,9 @@ namespace Flow.Launcher.ViewModel
             MainWindowOpacity = 0;
             lastContextMenuResult = new Result();
             lastContextMenuResults = new List<Result>();
+
+            if (ExternalPreviewVisible)
+                CloseExternalPreview();
 
             if (!SelectedIsFromQueryResults())
             {

@@ -11,6 +11,7 @@ using System.Windows.Input;
 using Path = System.IO.Path;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Views;
+using Peter;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -70,6 +71,27 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             };
         }
 
+        internal static void ShowNativeContextMenu(string path, ResultType type)
+        {
+            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+            var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
+            var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
+            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
+
+            switch (type)
+            {
+                case ResultType.File:
+                    var fileInfo = new FileInfo[] { new(path) };
+                    new ShellContextMenu().ShowContextMenu(fileInfo, showPosition);
+                    break;
+
+                case ResultType.Folder:
+                    var folderInfo = new System.IO.DirectoryInfo[] { new(path) };
+                    new ShellContextMenu().ShowContextMenu(folderInfo, showPosition);
+                    break;
+            }
+        }
+
         internal static Result CreateFolderResult(string title, string subtitle, string path, Query query, int score = 0, bool windowsIndexed = false)
         {
             return new Result
@@ -80,8 +102,17 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 AutoCompleteText = GetAutoCompleteText(title, query, path, ResultType.Folder),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 CopyText = path,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
                 Action = c =>
                 {
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(path, ResultType.Folder);
+                        return false;
+                    }
                     // open folder
                     if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))
                     {
@@ -165,6 +196,10 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Score = 500,
                 ProgressBar = progressValue,
                 ProgressBarColor = progressBarColor,
+                Preview = new Result.PreviewInfo
+                {
+                    FilePath = path,
+                },
                 Action = _ =>
                 {
                     OpenFolder(path);
@@ -218,8 +253,13 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 IcoPath = folderPath,
                 Score = 500,
                 CopyText = folderPath,
-                Action = _ =>
+                Action = c =>
                 {
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(folderPath, ResultType.Folder);
+                        return false;
+                    }
                     OpenFolder(folderPath);
                     return true;
                 },
@@ -229,10 +269,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal static Result CreateFileResult(string filePath, Query query, int score = 0, bool windowsIndexed = false)
         {
-            Result.PreviewInfo preview = IsMedia(Path.GetExtension(filePath))
-                ? new Result.PreviewInfo { IsMedia = true, PreviewImagePath = filePath, }
-                : Result.PreviewInfo.Default;
-
+            bool isMedia = IsMedia(Path.GetExtension(filePath));
             var title = Path.GetFileName(filePath);
 
 
@@ -243,7 +280,12 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 Title = title,
                 SubTitle = Path.GetDirectoryName(filePath),
                 IcoPath = filePath,
-                Preview = preview,
+                Preview = new Result.PreviewInfo
+                {
+                    IsMedia = isMedia,
+                    PreviewImagePath = isMedia ? filePath : null,
+                    FilePath = filePath,
+                },
                 AutoCompleteText = GetAutoCompleteText(title, query, filePath, ResultType.File),
                 TitleHighlightData = StringMatcher.FuzzySearch(query.Search, title).MatchData,
                 Score = score,
@@ -251,6 +293,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 PreviewPanel = new Lazy<UserControl>(() => new PreviewPanel(Settings, filePath)),
                 Action = c =>
                 {
+                    if (c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Alt)
+                    {
+                        ShowNativeContextMenu(filePath, ResultType.File);
+                        return false;
+                    }
                     try
                     {
                         if (c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift))

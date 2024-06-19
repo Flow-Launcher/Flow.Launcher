@@ -55,7 +55,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged(nameof(MaxResultsToShow));
             }
         }
-        public bool UseDropShadowEffect { get; set; } = false;
+        public bool UseDropShadowEffect { get; set; } = true;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -185,7 +185,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// when false Alphabet static service will always return empty results
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
+
         public bool AlwaysPreview { get; set; } = false;
+        
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
