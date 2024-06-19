@@ -360,15 +360,15 @@ namespace Flow.Launcher
 
             var ratio = screenBound / _settings.PreviousScreen;
 
-            var dpiXRatio = currentDpi / _settings.PreviousDpi;
+            var dpiRatio = currentDpi / _settings.PreviousDpi;
 
-            var newPosition = previousPosition * ratio * dpiXRatio;
+            var newPosition = previousPosition * ratio * dpiRatio;
 
-            Point2D screenPosition = (SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop);
+            Point2D minPosition = (SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop);
 
-            var maxPosition = screenPosition + screenBound - (ActualWidth, ActualHeight);
+            var maxPosition = minPosition + screenBound - (ActualWidth, ActualHeight);
 
-            (Left, Top) = newPosition.Clamp(screenPosition, maxPosition);
+            (Left, Top) = newPosition.Clamp(minPosition, maxPosition);
         }
 
         private Point2D GetDpi()
