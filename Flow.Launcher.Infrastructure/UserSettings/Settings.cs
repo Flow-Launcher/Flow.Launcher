@@ -203,12 +203,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 
         public bool AutoUpdates { get; set; } = false;
 
-        public double WindowLeft { get; set; }
-        public double WindowTop { get; set; }
-        public double PreviousScreenWidth { get; set; }
-        public double PreviousScreenHeight { get; set; }
-        public double PreviousDpiX { get; set; }
-        public double PreviousDpiY { get; set; }
+        
+        public Point2D WindowPosition { get; set; }
+        public Point2D PreviousScreen { get; set; }
+        public Point2D PreviousDpi { get; set; }
 
         /// <summary>
         /// Custom left position on selected monitor
