@@ -305,8 +305,8 @@ namespace Flow.Launcher
 
                 var currentDpi = GetDpi();
 
-                if (previousScreen != default ||
-                    previousDpi != default ||
+                if (previousScreen == default ||
+                    previousDpi == default ||
                     (previousScreen != (SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight) ||
                      previousDpi != currentDpi))
                 {
