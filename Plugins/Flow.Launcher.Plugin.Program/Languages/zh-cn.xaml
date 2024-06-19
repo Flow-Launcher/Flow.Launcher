@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">启用时搜索 PATH 环境变量中的程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">隐藏应用路径</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">隐藏诸如UWP，lnk 等可执行文件的路径</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow 将搜索程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">后缀</system:String>

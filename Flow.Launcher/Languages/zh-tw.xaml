@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">保留上一個查詢</system:String>
     <system:String x:Key="LastQuerySelected">選擇上一個查詢</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜尋關鍵字</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全螢幕模式下忽略快捷鍵</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">自動更新</system:String>
     <system:String x:Key="select">選擇</system:String>
     <system:String x:Key="hideOnStartup">啟動時不顯示主視窗</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">隱藏任務欄圖示</system:String>
     <system:String x:Key="hideNotifyIconToolTip">當圖示從系統列隱藏時，可以透過在搜尋視窗上按右鍵來開啟設定選單。</system:String>
     <system:String x:Key="querySearchPrecision">查詢搜尋精確度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改結果所需的最低匹配分數。</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">拼音搜尋</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允許使用拼音來搜尋。拼音是將中文轉換為羅馬字母拼寫的標準系統。</system:String>
     <system:String x:Key="AlwaysPreview">一律預覽</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">以系統管理員或其他使用者啟用應用程式</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">查詢框字體</system:String>
-    <system:String x:Key="resultItemFont">結果項字體</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">視窗模式</system:String>
     <system:String x:Key="opacity">透明度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">找不到主題 {0} ，將回到預設主題</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
     <system:String x:Key="Clock">時鐘</system:String>
     <system:String x:Key="Date">日期</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">快捷鍵</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">打開選單</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">打開視窗設定</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">清除日誌</system:String>
     <system:String x:Key="clearlogfolderMessage">請確認要刪除所有日誌嗎？</system:String>
     <system:String x:Key="welcomewindow">嚮導</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">選擇檔案管理器</system:String>
@@ -333,6 +351,9 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="commonCancel">取消</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">刪除</system:String>
+    <system:String x:Key="commonOK">更新</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -417,4 +438,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">便利貼</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>

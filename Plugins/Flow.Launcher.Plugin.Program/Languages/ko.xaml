@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">앱 경로 숨김</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">UWP나 Lnk 같이 실행 가능한 프로그램인 경우 경로를 표시하지 않습니다</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Uninstaller 숨기기</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Unins000처럼 일반적으로 사용되는 설치 삭제(Uninstaller) 프로그램의 이름을 숨깁니다.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">프로그램 설명 검색</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">확장자</system:String>

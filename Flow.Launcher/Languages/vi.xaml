@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Giữ lại truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQuerySelected">Chọn truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQueryEmpty">Trống truy vấn cuối cùng</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Số kết quả tối đa</system:String>
     <system:String x:Key="maxShowResultsToolTip">Có thể thiết lập nhanh chóng bằng CTRL+Plus và CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Bỏ qua phím nóng khi cửa sổ ở chế độ toàn màn hình</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Cập nhật tự động</system:String>
     <system:String x:Key="select">Chọn</system:String>
     <system:String x:Key="hideOnStartup">Ẩn Trình khởi chạy luồng khi khởi động</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Ẩn biểu tượng thanh trạng thái</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Khi biểu tượng bị ẩn khỏi khay, bạn có thể mở menu Cài đặt bằng cách nhấp chuột phải vào cửa sổ tìm kiếm.</system:String>
     <system:String x:Key="querySearchPrecision">Độ chính xác của tìm kiếm truy vấn</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Kết quả tìm kiếm bắt buộc.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Không</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Hoạt động bính âm</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Cho phép bạn sử dụng Bính âm để tìm kiếm. Bính âm là hệ thống ký hiệu La Mã tiêu chuẩn để dịch văn bản tiếng Trung.</system:String>
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Khởi chạy chương trình với tư cách quản trị viên hoặc người dùng khác</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Buộc Tắt Tiến Trình </system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Chấm dứt các tiến trình không mong muốn</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Phông chữ hộp truy vấn</system:String>
-    <system:String x:Key="resultItemFont">Phông chữ kết quả</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Đặt lại</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">chế độ cửa sổ</system:String>
     <system:String x:Key="opacity">độ mờ</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Chủ đề {0} không tồn tại nên mẫu mặc định được kích hoạt</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Tùy chỉnh</system:String>
     <system:String x:Key="Clock">Giờ</system:String>
     <system:String x:Key="Date">Ngày</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Phím tắt</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Mở menu ngữ cảnh</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="CopyFilePathHotkey">Chép đường dẫn tập tin</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Chuyển đổi chế độ trò chơi</system:String>
@@ -268,6 +283,9 @@
     <system:String x:Key="clearlogfolder">Xóa tệp nhật ký</system:String>
     <system:String x:Key="clearlogfolderMessage">Bạn có chắc chắn muốn xóa tất cả nhật ký không?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
@@ -337,6 +355,9 @@
     <system:String x:Key="commonCancel">Hủy</system:String>
     <system:String x:Key="commonReset">Đặt lại</system:String>
     <system:String x:Key="commonDelete">Xóa</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Phiên bản</system:String>
@@ -423,4 +444,8 @@
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Ghi chú </system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>

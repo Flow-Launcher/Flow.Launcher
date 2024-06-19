@@ -62,13 +62,13 @@
                         <StackPanel
                             x:Name="HotkeyArea"
                             Grid.Column="2"
-                            Margin="0,0,10,0"
+                            Margin="0 0 10 0"
                             VerticalAlignment="Center"
                             Visibility="{Binding ShowOpenResultHotkey}">
                             <TextBlock
                                 x:Name="Hotkey"
-                                Margin="12,0,12,0"
-                                Padding="0,0,0,0"
+                                Margin="12 0 12 0"
+                                Padding="0 0 0 0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Style="{DynamicResource ItemHotkeyStyle}">
@@ -97,17 +97,18 @@
 
                             <Border
                                 Grid.Column="1"
-                                Margin="9,0,0,0"
+                                Margin="9 0 0 0"
                                 BorderBrush="Transparent"
                                 BorderThickness="1">
                                 <Image
                                     x:Name="ImageIcon"
-                                    Margin="0,0,0,0"
+                                    Margin="0 0 0 0"
                                     HorizontalAlignment="Center"
                                     IsHitTestVisible="False"
                                     RenderOptions.BitmapScalingMode="Fant"
                                     Source="{Binding Image, TargetNullValue={x:Null}}"
                                     Stretch="Uniform"
+                                    StretchDirection="DownOnly"
                                     Style="{DynamicResource ImageIconStyle}"
                                     Visibility="{Binding ShowIcon}">
                                     <Image.Clip>
@@ -130,7 +131,7 @@
                             </Border>
                             <Border
                                 Grid.Column="1"
-                                Margin="9,0,0,0"
+                                Margin="9 0 0 0"
                                 BorderBrush="Transparent"
                                 BorderThickness="0">
                                 <TextBlock
@@ -146,7 +147,7 @@
 
                         <Grid
                             Grid.Column="1"
-                            Margin="6,0,10,0"
+                            Margin="6 0 10 0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Center">
                             <Grid.RowDefinitions>
@@ -172,7 +173,7 @@
                             <TextBlock
                                 x:Name="Title"
                                 Grid.Row="0"
-                                Margin="0,0,0,1"
+                                Margin="0 0 0 1"
                                 VerticalAlignment="Bottom"
                                 DockPanel.Dock="Left"
                                 FontSize="{Binding Settings.ResultItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
@@ -192,7 +193,7 @@
                             <TextBlock
                                 x:Name="SubTitle"
                                 Grid.Row="1"
-                                Margin="0,1,0,0"
+                                Margin="0 1 0 0"
                                 VerticalAlignment="Top"
                                 FontSize="{Binding Settings.ResultSubItemFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                 IsEnabled="False"
@@ -221,9 +222,10 @@
     <!--  http://stackoverflow.com/questions/16819577/setting-background-color-or-wpf-4-0-listbox-windows-8/#16820062  -->
     <ListBox.ItemContainerStyle>
         <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize}" />
+            <Setter Property="Visibility" Value="Visible" />
             <EventSetter Event="MouseEnter" Handler="OnMouseEnter" />
             <EventSetter Event="MouseMove" Handler="OnMouseMove" />
-            <Setter Property="Height" Value="{Binding Settings.ItemHeightSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <Setter Property="Margin" Value="0" />
             <Setter Property="Padding" Value="0" />
             <Setter Property="BorderThickness" Value="0" />
