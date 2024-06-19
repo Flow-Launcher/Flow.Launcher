@@ -96,7 +96,8 @@
     <PackageReference Include="NHotkey.Wpf" Version="2.1.1" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="Velopack" Version="0.0.359" />
-    <PackageReference Include="VirtualizingWrapPanel" Version="1.5.8" />
+    <PackageReference Include="SemanticVersioning" Version="3.0.0-beta2" />
+    <PackageReference Include="VirtualizingWrapPanel" Version="2.0.6" />
   </ItemGroup>
 
   <ItemGroup>
