@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Pokud je tato možnost povolena, Flow načte programy z proměnné prostředí PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Skrýt cestu k aplikaci</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">U spustitelných souborů, jako jsou UWP nebo odkazy, nezobrazujte cestu k souborům</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Povolit popis programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow bude vyhledávat v popisu programu</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Přípony</system:String>

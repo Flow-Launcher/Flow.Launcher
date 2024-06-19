@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovať klávesové skratky v režime na celú obrazovku</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Automatická aktualizácia</system:String>
     <system:String x:Key="select">Vybrať</system:String>
     <system:String x:Key="hideOnStartup">Schovať Flow Launcher po spustení</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Vyhľadávacie okno Flow launchera sa po spustení skryje v oblasti oznámení.</system:String>
     <system:String x:Key="hideNotifyIcon">Schovať ikonu z oblasti oznámení</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Keď je ikona skrytá z oblasti oznámení, nastavenia možno otvoriť kliknutím pravým tlačidlom myši na okno vyhľadávania.</system:String>
     <system:String x:Key="querySearchPrecision">Presnosť vyhľadávania</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Mení minimálne skóre zhody potrebné na zobrazenie výsledkov.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Žiadna</system:String>
+    <system:String x:Key="SearchPrecisionLow">Nízka</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normálna</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhľadávanie pomocou pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhľadávanie pomocou pchin-jin. Pchin-jin je systém zápisu čínskeho jazyka pomocou písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Spúšťanie programov ako správca alebo iný používateľ</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Ukončenie nežiaducich procesov</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
-    <system:String x:Key="resultItemFont">Písmo výsledkov</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Resetovať</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, použije sa predvolený motív</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastné</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Dátum</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Prejsť na predchádzajúci dopyt</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Prejsť na nasledujúci dopyt</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Otvoriť kontextovú ponuku</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Otvoriť natívnu kontextovú ponuku</system:String>
     <system:String x:Key="SettingWindowHotkey">Otvoriť okno s nastaveniami</system:String>
     <system:String x:Key="CopyFilePathHotkey">Kopírovať cestu k súboru</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Prepnúť herný režim</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">Vymazať logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Naozaj chcete odstrániť všetky logy?</system:String>
     <system:String x:Key="welcomewindow">Sprievodca</system:String>
+    <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
+    <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
+    <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
@@ -333,6 +351,9 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="commonCancel">Zrušiť</system:String>
     <system:String x:Key="commonReset">Resetovať</system:String>
     <system:String x:Key="commonDelete">Odstrániť</system:String>
+    <system:String x:Key="commonOK">Aktualizovať</system:String>
+    <system:String x:Key="commonYes">Áno</system:String>
+    <system:String x:Key="commonNo">Nie</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
@@ -417,4 +438,8 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">Veľkosť súboru</system:String>
+    <system:String x:Key="Created">Vytvorené</system:String>
+    <system:String x:Key="LastModified">Upravené</system:String>
 </ResourceDictionary>
