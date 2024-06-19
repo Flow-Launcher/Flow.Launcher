@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Zachowaj ostatnie zapytanie</system:String>
     <system:String x:Key="LastQuerySelected">Wybierz ostatnie zapytanie</system:String>
     <system:String x:Key="LastQueryEmpty">Puste ostatnie zapytanie</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
     <system:String x:Key="maxShowResultsToolTip">Możesz to również szybko dostosować używając CTRL+Plus i CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnego ekranu</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Automatyczne aktualizacje</system:String>
     <system:String x:Key="select">Wybierz</system:String>
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Ukryj ikonę zasobnika</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Gdy ikona jest ukryta w zasobniku, menu Ustawienia można otworzyć, klikając prawym przyciskiem myszy okno wyszukiwania.</system:String>
     <system:String x:Key="querySearchPrecision">Precyzja wyszukiwania zapytań</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Zmienia minimalny wynik dopasowania wymagany do uzyskania wyników.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Szukaj z Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umożliwia wyszukiwanie przy użyciu Pinyin. Pinyin to standardowy system pisowni zromanizowanej służący do tłumaczenia języka chińskiego.</system:String>
     <system:String x:Key="AlwaysPreview">Zawsze Podgląd</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Uruchamiaj programy jako administrator lub inny użytkownik</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ZabijProces</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Zakończ niechciane procesy</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Czcionka okna zapytania</system:String>
-    <system:String x:Key="resultItemFont">Czcionka okna wyników</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Tryb w oknie</system:String>
     <system:String x:Key="opacity">Przeźroczystość</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motyw {0} nie istnieje, powróć do domyślnego motywu</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Niestandardowa</system:String>
     <system:String x:Key="Clock">Zegar</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
@@ -333,6 +351,9 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="commonCancel">Anuluj</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Usu</system:String>
+    <system:String x:Key="commonOK">Aktualizuj</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Wersja</system:String>
@@ -417,4 +438,8 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>

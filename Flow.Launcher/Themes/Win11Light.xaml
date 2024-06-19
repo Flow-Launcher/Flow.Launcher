@@ -169,7 +169,7 @@
         <Setter Property="FontSize" Value="25" />
     </Style>
     <CornerRadius x:Key="ItemRadius">5</CornerRadius>
-    <Thickness x:Key="ItemMargin">10 0 5 0</Thickness>
+    <Thickness x:Key="ItemMargin">10 0 10 0</Thickness>
     <Thickness x:Key="ResultMargin">0 10 0 10</Thickness>
     <Style
         x:Key="ClockPanel"

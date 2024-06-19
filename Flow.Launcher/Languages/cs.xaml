@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Zachovat poslední dotaz</system:String>
     <system:String x:Key="LastQuerySelected">Vybrat poslední dotaz</system:String>
     <system:String x:Key="LastQueryEmpty">Smazat poslední dotaz</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Počet zobrazených výsledků</system:String>
     <system:String x:Key="maxShowResultsToolTip">Toto nastavení můžete také rychle upravit pomocí CTRL + Plus a CTRL + Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorovat klávesové zkratky v režimu celé obrazovky</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Automatické aktualizace</system:String>
     <system:String x:Key="select">Vybrat</system:String>
     <system:String x:Key="hideOnStartup">Skrýt Flow Launcher při spuštění</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Skrýt ikonu v systémové liště</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Pokud je ikona v oznamovací oblasti skrytá, nastavení lze otevřít kliknutím pravým tlačítkem myši na okno vyhledávání.</system:String>
     <system:String x:Key="querySearchPrecision">Přesnost vyhledávání</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Změní minimální skóre shody, které je nutné pro zobrazení výsledků.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Vyhledávání pomocí pchin-jin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umožňuje vyhledávání pomocí pchin-jin. Pchin-jin je systém zápisu čínského jazyka pomocí písmen latinky.</system:String>
     <system:String x:Key="AlwaysPreview">Vždy zobrazit náhled</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Spustit programy jako administrátor nebo jiný uživatel</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Ukončit nežádoucí procesy</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhledávacího pole</system:String>
-    <system:String x:Key="resultItemFont">Písmo výsledků</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Režim okna</system:String>
     <system:String x:Key="opacity">Neprůhlednost</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motiv {0} neexistuje, použije se výchozí motiv</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Vlastní</system:String>
     <system:String x:Key="Clock">Hodiny</system:String>
     <system:String x:Key="Date">Datum</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesová zkratka</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Otevřít kontextovou nabídku</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Otevřít okno s nastavením</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">Vymazat logy</system:String>
     <system:String x:Key="clearlogfolderMessage">Opravdu chcete odstranit všechny logy?</system:String>
     <system:String x:Key="welcomewindow">Průvodce</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vybrat správce souborů</system:String>
@@ -333,6 +351,9 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="commonCancel">Zrušit</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Smazat</system:String>
+    <system:String x:Key="commonOK">Dobře</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verze</system:String>
@@ -417,4 +438,8 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Označené poznámky</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>

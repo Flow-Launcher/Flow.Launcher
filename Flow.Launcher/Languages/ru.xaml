@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Сохранение последнего запроса</system:String>
     <system:String x:Key="LastQuerySelected">Выбор последнего запроса</system:String>
     <system:String x:Key="LastQueryEmpty">Очистить последний запрос</system:String>
+    <system:String x:Key="KeepMaxResults">Фиксированная высота окна</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Максимальное количество результатов</system:String>
     <system:String x:Key="maxShowResultsToolTip">Вы также можете быстро настроить это с помощью CTRL+плюс и CTRL+минус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Игнорировать горячие клавиши в полноэкранном режиме</system:String>
@@ -82,6 +84,7 @@
     <system:String x:Key="autoUpdates">Автообновление</system:String>
     <system:String x:Key="select">Выбор</system:String>
     <system:String x:Key="hideOnStartup">Скрыть Flow Launcher при запуске</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Скрыть значок в трее</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Когда значок скрыт в трее, меню настройки можно открыть, щёлкнув правой кнопкой мыши на окне поиска.</system:String>
     <system:String x:Key="querySearchPrecision">Точность поиска запросов</system:String>
@@ -154,8 +157,13 @@
     <system:String x:Key="SampleSubTitleProgram">Запуск программ от имени администратора или другого пользователя</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Удалятор процессов</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Завершение нежелательных процессов</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запросов</system:String>
-    <system:String x:Key="resultItemFont">Шрифт результатов</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Оконный режим</system:String>
     <system:String x:Key="opacity">Прозрачность</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Тема «{0}» не существует, откат к теме по умолчанию</system:String>
@@ -181,6 +189,9 @@
     <system:String x:Key="AnimationSpeedCustom">Своя</system:String>
     <system:String x:Key="Clock">Часы</system:String>
     <system:String x:Key="Date">Дата</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Горячая клавиша</system:String>
@@ -204,6 +215,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Открыть контекстное меню</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Открыть окно настроек</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
@@ -280,6 +292,9 @@
     <system:String x:Key="clearlogfolder">Очистить журнал</system:String>
     <system:String x:Key="clearlogfolderMessage">Вы уверены, что хотите удалить все журналы?</system:String>
     <system:String x:Key="welcomewindow">Мастер</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Выбор менеджера файлов</system:String>
@@ -347,6 +362,9 @@
     <system:String x:Key="commonCancel">Отменить</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Удалить</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Версия</system:String>
@@ -431,4 +449,8 @@
     <system:String x:Key="RecommendAcronyms">Команда sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Заметки</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>
