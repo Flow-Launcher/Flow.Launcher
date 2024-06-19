@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Preservar Última Consulta</system:String>
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Máximo de resultados mostrados</system:String>
     <system:String x:Key="maxShowResultsToolTip">Você também pode ajustar isso rapidamente usando CTRL+Mais e CTRL+Menos.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorar atalhos em tela cheia</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Atualizar Automaticamente</system:String>
     <system:String x:Key="select">Selecionar</system:String>
     <system:String x:Key="hideOnStartup">Esconder Flow Launcher na inicialização</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Ocultar ícone da bandeja</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Quando o ícone não está na bandeja, o menu de Configurações pode ser aberto ao clicar na janela de busca com o botão direito do mouse.</system:String>
     <system:String x:Key="querySearchPrecision">Precisão de Busca da Consulta</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Altera a pontuação de match mínima exigida para resultados.</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Buscar com Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permite o uso de Pinyin para busca. Pinyin é o sistema padrão de escrita romanizada para traduzir chinês.</system:String>
     <system:String x:Key="AlwaysPreview">Sempre Pré-visualizar</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Inicie programas como administrador ou como um usuário diferente</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Matador de Processos</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Termine processos indesejados</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Fonte da caixa de Consulta</system:String>
-    <system:String x:Key="resultItemFont">Fonte do Resultado</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Modo Janela</system:String>
     <system:String x:Key="opacity">Opacidade</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Tema {0} não existe, retorne para o tema padrão</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizado</system:String>
     <system:String x:Key="Clock">Relógio</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atalho</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Abrir Menu de Contexto</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir Janela de Configurações</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">Limpar Registros</system:String>
     <system:String x:Key="clearlogfolderMessage">Tem certeza que quer excluir todos os registros?</system:String>
     <system:String x:Key="welcomewindow">Assistente</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o Gerenciador de Arquivos</system:String>
@@ -333,6 +351,9 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="commonCancel">Cancelar</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Apagar</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versão</system:String>
@@ -417,4 +438,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Notas Autoadesivas</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>
