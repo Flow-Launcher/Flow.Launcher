@@ -222,34 +222,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             if (record.Type is ResultType.Volume)
                                 return false;
 
-                            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                            var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
-                            var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
-                            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
-
-                            switch (record.Type)
-                            {
-                                case ResultType.File:
-                                {
-                                    var fileInfos = new FileInfo[]
-                                    {
-                                        new(record.FullPath)
-                                    };
-
-                                    new Peter.ShellContextMenu().ShowContextMenu(fileInfos, showPosition);
-                                    break;
-                                }
-                                case ResultType.Folder:
-                                {
-                                    var directoryInfos = new DirectoryInfo[]
-                                    {
-                                        new(record.FullPath)
-                                    };
-
-                                    new Peter.ShellContextMenu().ShowContextMenu(directoryInfos, showPosition);
-                                    break;
-                                }
-                            }
+                            ResultManager.ShowNativeContextMenu(record.FullPath, record.Type);
 
                             return false;
                         },
@@ -276,7 +249,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                             return true;
                         },
-                        IcoPath = Constants.DifferentUserIconImagePath
+                        IcoPath = Constants.DifferentUserIconImagePath,
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue748"),
                     });
             }
 
@@ -403,7 +377,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     return false;
                 },
-                IcoPath = Constants.ExcludeFromIndexImagePath
+                IcoPath = Constants.ExcludeFromIndexImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf140"),
             };
         }
 
@@ -435,7 +410,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                IcoPath = Constants.IndexingOptionsIconImagePath
+                IcoPath = Constants.IndexingOptionsIconImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue773"),
             };
         }
 

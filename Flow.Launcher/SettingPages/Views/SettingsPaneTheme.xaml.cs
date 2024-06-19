@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using Flow.Launcher.SettingPages.ViewModels;
 using Page = ModernWpf.Controls.Page;

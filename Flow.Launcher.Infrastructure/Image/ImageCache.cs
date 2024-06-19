@@ -3,33 +3,23 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Media;
-using FastCache;
-using FastCache.Services;
+using BitFaster.Caching.Lfu;
 
 namespace Flow.Launcher.Infrastructure.Image
 {
-    public class ImageUsage
-    {
-        public int usage;
-        public ImageSource imageSource;
-
-        public ImageUsage(int usage, ImageSource image)
-        {
-            this.usage = usage;
-            imageSource = image;
-        }
-    }
-
     public class ImageCache
     {
         private const int MaxCached = 150;
 
-        public void Initialize(Dictionary<(string, bool), int> usage)
+        private ConcurrentLfu<(string, bool), ImageSource> CacheManager { get; set; } = new(MaxCached);
+
+        public void Initialize(IEnumerable<(string, bool)> usage)
         {
-            foreach (var key in usage.Keys)
+            foreach (var key in usage)
             {
-                Cached<ImageUsage>.Save(key, new ImageUsage(usage[key], null), TimeSpan.MaxValue, MaxCached);
+                CacheManager.AddOrUpdate(key, null);
             }
         }
 
@@ -37,40 +27,34 @@ namespace Flow.Launcher.Infrastructure.Image
         {
             get
             {
-                if (!Cached<ImageUsage>.TryGet((path, isFullImage), out var value))
-                {
-                    return null;
-                }
-
-                value.Value.usage++;
-                return value.Value.imageSource;
+                return CacheManager.TryGet((path, isFullImage), out var value) ? value : null;
             }
             set
             {
-                if (Cached<ImageUsage>.TryGet((path, isFullImage), out var cached))
-                {
-                    cached.Value.imageSource = value;
-                    cached.Value.usage++;
-                }
-
-                Cached<ImageUsage>.Save((path, isFullImage), new ImageUsage(0, value), TimeSpan.MaxValue,
-                    MaxCached);
+                CacheManager.AddOrUpdate((path, isFullImage), value);
             }
+        }
+
+        public async ValueTask<ImageSource> GetOrAddAsync(string key,
+            Func<(string, bool), Task<ImageSource>> valueFactory,
+            bool isFullImage = false)
+        {
+            return await CacheManager.GetOrAddAsync((key, isFullImage), valueFactory);
         }
 
         public bool ContainsKey(string key, bool isFullImage)
         {
-            return Cached<ImageUsage>.TryGet((key, isFullImage), out _);
+            return CacheManager.TryGet((key, isFullImage), out _);
         }
 
         public bool TryGetValue(string key, bool isFullImage, out ImageSource image)
         {
-            if (Cached<ImageUsage>.TryGet((key, isFullImage), out var value))
+            if (CacheManager.TryGet((key, isFullImage), out var value))
             {
-                image = value.Value.imageSource;
-                value.Value.usage++;
+                image = value;
                 return image != null;
             }
+
 
             image = null;
             return false;
@@ -78,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public int CacheSize()
         {
-            return CacheManager.TotalCount<(string, bool), ImageUsage>();
+            return CacheManager.Count;
         }
 
         /// <summary>
@@ -86,14 +70,14 @@ namespace Flow.Launcher.Infrastructure.Image
         /// </summary>
         public int UniqueImagesInCache()
         {
-            return CacheManager.EnumerateEntries<(string, bool), ImageUsage>().Select(x => x.Value.imageSource)
+            return CacheManager.Select(x => x.Value)
                 .Distinct()
                 .Count();
         }
 
-        public IEnumerable<Cached<(string, bool), ImageUsage>> EnumerateEntries()
+        public IEnumerable<KeyValuePair<(string, bool), ImageSource>> EnumerateEntries()
         {
-            return CacheManager.EnumerateEntries<(string, bool), ImageUsage>();
+            return CacheManager;
         }
     }
 }
