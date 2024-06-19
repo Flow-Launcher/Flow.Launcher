@@ -185,7 +185,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         /// when false Alphabet static service will always return empty results
         /// </summary>
         public bool ShouldUsePinyin { get; set; } = false;
+
         public bool AlwaysPreview { get; set; } = false;
+        
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
