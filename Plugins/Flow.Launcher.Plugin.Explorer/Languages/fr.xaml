@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personnaliser les mots-clés d'action</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liens d'accès rapide</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Paramètres Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panneau d'aperçu</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Taille</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date de création</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date de modification</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Afficher les informations du fichier</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Format de la date et de l'heure</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Option de tri :</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Chemin vers Everything :</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Démarrer minimisé</system:String>
@@ -103,10 +109,12 @@
     <system:String x:Key="plugin_explorer_openwith">Ouvrir avec</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Sélectionnez un programme à ouvrir avec</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libres sur {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Ouvrir dans le gestionnaire de fichiers par défaut</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Utilisez '&gt;' pour effectuer une recherche dans ce répertoire, '*' pour rechercher les extensions de fichiers ou '&gt;*' pour combiner les deux recherches.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Utilisez '&gt;' pour effectuer une recherche dans ce répertoire, '*' pour rechercher les extensions de fichiers ou '&gt;*' pour combiner les deux recherches.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Échec du chargement du SDK Everything</system:String>
@@ -131,7 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Avertissement : Il ne s'agit pas d'une option de tri rapide, les recherches peuvent être lentes.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Recherche du chemin complet</system:String>
-    
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Cliquez pour lancer ou installer Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installation d'Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installation du service Everything. Veuillez patienter...</system:String>
@@ -142,4 +150,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Voulez-vous activer la recherche de contenu pour Everything ?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Il peut être très lent sans index (qui n'est supporté que dans Everything v1.5+).</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
 </ResourceDictionary>

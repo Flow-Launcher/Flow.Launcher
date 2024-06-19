@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">保留上次搜索关键字</system:String>
     <system:String x:Key="LastQuerySelected">选择上次搜索关键字</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜索关键字</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">最大结果显示个数</system:String>
     <system:String x:Key="maxShowResultsToolTip">您也可以通过使用 CTRL+ &quot;+&quot; 和 CTRL+ &quot;-&quot; 来快速调整它。</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">全屏模式下忽略热键</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">自动更新</system:String>
     <system:String x:Key="select">选择</system:String>
     <system:String x:Key="hideOnStartup">系统启动时不显示主窗口</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">隐藏任务栏图标</system:String>
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
+    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">允许使用拼音进行搜索。</system:String>
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">以管理员或其他用户身份启动程序</system:String>
     <system:String x:Key="SampleTitleProcessKiller">进程杀手</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">终止不需要的进程</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
-    <system:String x:Key="resultItemFont">结果项字体</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>
     <system:String x:Key="opacity">透明度</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">无法找到主题 {0} ，切换为默认主题</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">自定义</system:String>
     <system:String x:Key="Clock">时钟</system:String>
     <system:String x:Key="Date">日期</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">打开菜单目录</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">打开设置窗口</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">切换游戏模式</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
@@ -333,6 +351,9 @@
     <system:String x:Key="commonCancel">取消</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">删除</system:String>
+    <system:String x:Key="commonOK">更新</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -417,4 +438,8 @@
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">便笺</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>

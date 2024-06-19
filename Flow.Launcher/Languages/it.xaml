@@ -54,6 +54,8 @@
     <system:String x:Key="LastQueryPreserved">Conserva ultima ricerca</system:String>
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
+    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
     <system:String x:Key="maxShowResultsToolTip">È anche possibile regolarlo rapidamente utilizzando CTRL+Più e CTRL+Meno.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignora i tasti di scelta rapida in applicazione a schermo pieno</system:String>
@@ -71,10 +73,14 @@
     <system:String x:Key="autoUpdates">Aggiornamento automatico</system:String>
     <system:String x:Key="select">Seleziona</system:String>
     <system:String x:Key="hideOnStartup">Nascondi Flow Launcher all'avvio</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Nascondi Icona nell'Area di Notifica</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Quando l'icona è nascosta dal menu delle icone nascoste, il menu Impostazioni può essere aperto facendo clic con il tasto destro del mouse sulla finestra di ricerca.</system:String>
     <system:String x:Key="querySearchPrecision">Precisione di ricerca delle query</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifica il punteggio minimo richiesto per i risultati.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Vuoto</system:String>
+    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Dovrebbe usare il Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Consente di utilizzare il Pinyin per la ricerca. Il Pinyin è il sistema standard di ortografia romanizzata per la traduzione del cinese.</system:String>
     <system:String x:Key="AlwaysPreview">Mostra Sempre Anteprima</system:String>
@@ -140,8 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Avvia programmi come amministratore o un altro utente</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Termina i processi indesiderati</system:String>
+    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Font campo di ricerca</system:String>
-    <system:String x:Key="resultItemFont">Font campo risultati</system:String>
+    <system:String x:Key="resultItemFont">Result Title Font</system:String>
+    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resetCustomize">Resetta</system:String>
+    <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Modalità finestra</system:String>
     <system:String x:Key="opacity">Opacità</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Il tema {0} non esiste, si ritorna al tema predefinito</system:String>
@@ -167,6 +178,9 @@
     <system:String x:Key="AnimationSpeedCustom">Personalizzato</system:String>
     <system:String x:Key="Clock">Orologio</system:String>
     <system:String x:Key="Date">Data</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Tasti scelta rapida</system:String>
@@ -190,6 +204,7 @@
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Apri il menu di scelta rapida</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Aprire la finestra delle impostazioni</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copia Percorso File</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Attiva/Disattiva Modalità Di Gioco</system:String>
@@ -266,6 +281,9 @@
     <system:String x:Key="clearlogfolder">Cancella i log</system:String>
     <system:String x:Key="clearlogfolderMessage">Sei sicuro di voler cancellare tutti i log?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
+    <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleziona Gestore File</system:String>
@@ -333,6 +351,9 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="commonCancel">Annulla</system:String>
     <system:String x:Key="commonReset">Resetta</system:String>
     <system:String x:Key="commonDelete">Cancella</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
+    <system:String x:Key="commonYes">Yes</system:String>
+    <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versione</system:String>
@@ -417,4 +438,8 @@ Se si aggiunge un prefisso '@' mentre si inserisce una scorciatoia, corrisponde 
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">File Size</system:String>
+    <system:String x:Key="Created">Created</system:String>
+    <system:String x:Key="LastModified">Last Modified</system:String>
 </ResourceDictionary>
