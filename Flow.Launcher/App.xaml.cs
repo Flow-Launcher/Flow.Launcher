@@ -64,6 +64,20 @@ namespace Flow.Launcher
                 _settings = _settingsVM.Settings;
                 _settings.WMPInstalled =  WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
+                switch (_settings.LogLevel)
+                {
+                    case "debug":
+                        Log.UseDebugLogLevel();
+                        break;
+                    case "info":
+                        Log.UseInfoLogLevel();
+                        break;
+                    default:
+                        Log.Error(nameof(Flow.Launcher.App), "Unrecognized log level");
+                        Log.UseDebugLogLevel();
+                        break;
+                }
+
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
                 _alphabet.Initialize(_settings);

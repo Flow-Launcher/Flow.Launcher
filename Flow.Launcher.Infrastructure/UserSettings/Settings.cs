@@ -180,6 +180,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
+        public string LogLevel = "info";
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
