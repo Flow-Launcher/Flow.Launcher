@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <UseWpf>true</UseWpf>
     <UseWindowsForms>true</UseWindowsForms>
     <OutputType>Library</OutputType>
@@ -54,6 +54,8 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
+    <PackageReference Include="FSharp.Core" Version="8.0.100" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
     <PackageReference Include="FSharp.Core" Version="7.0.401" />
     <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.2.1" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
