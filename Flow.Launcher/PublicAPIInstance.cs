@@ -233,7 +233,7 @@ namespace Flow.Launcher
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
 
             var qttabbarIndex = customExplorerList.FindIndex(e => e.Name.Equals("QTTABBAR", StringComparison.OrdinalIgnoreCase));
-            var isQttabbarSelected = qttabbarIndex >= 0 && _settingsVM.Settings.CustomExplorerIndex == qttabbarIndex;
+            var isQttabbarSelected = qttabbarIndex == _settingsVM.Settings.CustomExplorerIndex;
 
             if (isQttabbarSelected)
             {
