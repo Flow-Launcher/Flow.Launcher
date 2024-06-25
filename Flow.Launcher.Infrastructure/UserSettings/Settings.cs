@@ -91,7 +91,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
         public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
-
         public int CustomExplorerIndex { get; set; } = 0;
 
         [JsonIgnore]
@@ -132,6 +131,14 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 Path = "Files",
                 DirectoryArgument = "-select \"%d\"",
                 FileArgument = "-select \"%f\""
+            },
+            new()
+            {
+                Name = "QTTabBar",
+                Path = "Explorer",
+                DirectoryArgument = "\"%d\"",
+                FileArgument = "\"%f\"",
+                Editable = false
             }
         };
 
