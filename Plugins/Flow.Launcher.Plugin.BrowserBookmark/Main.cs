@@ -15,7 +15,7 @@ namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContextMenu, IDisposable
 {
-    private static PluginInitContext _context;
+    internal static PluginInitContext _context { get; private set; } = null!;
 
     private static List<Bookmark> _cachedBookmarks = new List<Bookmark>();
 
