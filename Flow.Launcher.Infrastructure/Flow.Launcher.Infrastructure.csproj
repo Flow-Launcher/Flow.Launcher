@@ -61,7 +61,7 @@
     <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
     <!--ToolGood.Words.Pinyin v3.0.2.6 results in high memory usage when search with pinyin is enabled-->
     <!--Bumping to it or higher needs to test and ensure this is no longer a problem-->
-    <PackageReference Include="ToolGood.Words.Pinyin" Version="3.0.1.4" />
+    <PackageReference Include="ToolGood.Words.Pinyin" Version="3.1.0" />
   </ItemGroup>
 
   
