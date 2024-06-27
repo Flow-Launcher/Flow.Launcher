@@ -9,8 +9,8 @@
         {2}{2}
         Кликните нет, если он уже установлен, и вам будет предложено выбрать папку, где находится исполняемый файл {1}
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Пожалуйста, выберите исполняемый файл {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не удалось установить путь к исполняемому файлу {0}, пожалуйста, попробуйте через настройки Flow (прокрутите вниз).</system:String>
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не удалось зарегистрировать сочетание клавиш &quot;{0}&quot;. Возможно, оно используется другой программой. Измените сочетание клавиш или закройте другую программу.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
