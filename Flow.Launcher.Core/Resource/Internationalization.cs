@@ -25,9 +25,6 @@ namespace Flow.Launcher.Core.Resource
 
         public Internationalization()
         {
-            LoadDefaultLanguage();
-            // we don't want to load /Languages/en.xaml twice
-            // so add flowlauncher language directory after load plugin language files
             AddFlowLauncherLanguageDirectory();
         }
 
@@ -39,9 +36,9 @@ namespace Flow.Launcher.Core.Resource
         }
 
 
-        internal void AddPluginLanguageDirectories()
+        internal void AddPluginLanguageDirectories(IEnumerable<PluginPair> plugins)
         {
-            foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
+            foreach (var plugin in plugins)
             {
                 var location = Assembly.GetAssembly(plugin.Plugin.GetType()).Location;
                 var dir = Path.GetDirectoryName(location);
@@ -55,6 +52,8 @@ namespace Flow.Launcher.Core.Resource
                     Log.Error($"|Internationalization.AddPluginLanguageDirectories|Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
                 }
             }
+
+            LoadDefaultLanguage();
         }
 
         private void LoadDefaultLanguage()
@@ -139,11 +138,14 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadLanguage(Language language)
         {
+            var flowEnglishFile = Path.Combine(Constant.ProgramDirectory, Folder, DefaultFile);
             var dicts = Application.Current.Resources.MergedDictionaries;
             var filename = $"{language.LanguageCode}{Extension}";
             var files = _languageDirectories
                 .Select(d => LanguageFile(d, filename))
-                .Where(f => !string.IsNullOrEmpty(f))
+                // Exclude Flow's English language file since it's built into the binary, and there's no need to load
+                // it again from the file system.
+                .Where(f => !string.IsNullOrEmpty(f) && f != flowEnglishFile)
                 .ToArray();
 
             if (files.Length > 0)
