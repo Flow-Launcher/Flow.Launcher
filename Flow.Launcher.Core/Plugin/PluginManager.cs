@@ -209,9 +209,15 @@ namespace Flow.Launcher.Core.Plugin
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg($"Fail to Init Plugins",
-                    $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help",
-                    "", false);
+                API.ShowMsg(
+                    InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsTitle"),
+                    string.Format(
+                        InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsMessage"),
+                        failed
+                    ),
+                    "",
+                    false
+                );
             }
         }
 
