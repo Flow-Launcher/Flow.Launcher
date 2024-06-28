@@ -32,12 +32,12 @@ automations:
         args:
           comment: |
             This PR is {{ changes.ratio }}% new code.
-  # Post a comment that request changes for a PR that contains a TODO statement.
+  # Post a comment notifying that the PR contains a TODO statement.
   review_todo_comments:
     if:
-      - {{ source.diff.files | matchDiffLines(regex=r/^[+].*(TODO)|(todo)/) | some }}
+      - {{ source.diff.files | matchDiffLines(regex=r/^[+].*\b(TODO|todo)\b/) | some }}
     run:
-      - action: request-changes@v1
+      - action: add-comment@v1
         args:
           comment: |
             This PR contains a TODO statement. Please check to see if they should be removed.
