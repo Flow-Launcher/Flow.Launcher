@@ -54,7 +54,7 @@
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
+    <system:String x:Key="KeepMaxResults">Pevná výška okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
     <system:String x:Key="maxShowResultsToolTip">Túto hodnotu môžete rýchlo upraviť aj pomocou klávesových skratiek CTRL + znamienko plus (+) a CTRL + znamienko mínus (-).</system:String>
@@ -146,13 +146,13 @@
     <system:String x:Key="SampleSubTitleProgram">Spúšťanie programov ako správca alebo iný používateľ</system:String>
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Ukončenie nežiaducich procesov</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SearchBarHeight">Výška vyhľadávacieho panela</system:String>
+    <system:String x:Key="ItemHeight">Výška položky</system:String>
     <system:String x:Key="queryBoxFont">Písmo vyhľadávacieho poľa</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
+    <system:String x:Key="resultItemFont">Písmo nadpisu výsledku</system:String>
+    <system:String x:Key="resultSubItemFont">Písmo podnadpisu výsledku</system:String>
     <system:String x:Key="resetCustomize">Resetovať</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="CustomizeToolTip">Prispôsobiť</system:String>
     <system:String x:Key="windowMode">Režim okno</system:String>
     <system:String x:Key="opacity">Nepriehľadnosť</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motív {0} neexistuje, použije sa predvolený motív</system:String>

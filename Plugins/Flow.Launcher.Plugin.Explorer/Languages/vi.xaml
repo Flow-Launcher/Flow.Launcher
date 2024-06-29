@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Tùy chỉnh từ khóa hành động</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Liên kết truy cập nhanh</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Cài đặt mọi thứ</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Bảng xem trước</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Kích thước</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Hiển thị thông tin tệp</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Định dạng ngày và giờ</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Tùy Chọn Sắp Xếp</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Đường dẫn mọi thứ:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Khởi chạy ẩn</system:String>
@@ -53,29 +53,29 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Đã bật</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Khi bị tắt, Flow sẽ không thực thi tùy chọn tìm kiếm này và sẽ hoàn nguyên về '*' để giải phóng từ khóa hành động</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Tất cả mọi thứ</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
-    <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Chỉ mục Windows</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Đếm trực tiếp</system:String>
+    <system:String x:Key="plugin_explorer_file_editor_path">Đường dẫn trình soạn thảo tệp</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Công cụ tìm kiếm nội dung</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Công cụ tìm kiếm chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Mở tùy chọn lập chỉ mục Windows</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Thư mục </system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Tìm và quản lý tệp và thư mục thông qua Windows Search hoặc Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter để mở thư mục</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter để mở thư mục chứa</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Copy đường dẫn</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Sao chép đường dẫn của mục hiện tại vào clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Sao chép</system:String>
-    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyfile_subtitle">Sao chép tập tin hiện tại vào clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Xóa</system:String>
     <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
@@ -88,7 +88,7 @@
     <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Mở bằng trình chỉnh sửa:</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Mở bằng Shell:</system:String>
     <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Loại trừ các thư mục hiện tại và thư mục con khỏi Tìm kiếm chỉ mục</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Bị loại trừ khỏi Tìm kiếm chỉ mục</system:String>
