@@ -330,13 +330,15 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Sponsors
-
 <p align="center">
   <a href="https://appwrite.io">
-    <img src='https://appwrite.io/assets/logotype/black.svg' width="40%"/>
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" />
   </a>
-  <br />
-
+        <br />
+        <br />
+  <a href="https://coderabbit.ai/">
+    <img src="https://github.com/Flow-Launcher/Flow.Launcher/assets/6903107/7c996d74-0c69-4011-922f-a95ca7e874b0" width="30%" style="padding:10px;" />
+  </a>
 </p>
 
 <p align="center">
