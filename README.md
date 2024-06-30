@@ -332,7 +332,7 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 ## Sponsors
 <p align="center">
   <a href="https://appwrite.io">
-    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" />
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
   </a>
         <br />
         <br />
