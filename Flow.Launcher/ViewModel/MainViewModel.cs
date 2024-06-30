@@ -547,20 +547,20 @@ namespace Flow.Launcher.ViewModel
         private void IncreaseWidth()
         {
             Settings.WindowSize += 100;
-            Settings.WindowPosition -= (50, 0);
+            Settings.WindowLeft -= 50;
             OnPropertyChanged(nameof(MainWindowWidth));
         }
 
         [RelayCommand]
         private void DecreaseWidth()
         {
-            if (MainWindowWidth - 100 < 400 || Math.Abs(Settings.WindowSize - 400) < 0.01)
+            if (MainWindowWidth - 100 < 400 || Settings.WindowSize == 400)
             {
                 Settings.WindowSize = 400;
             }
             else
             {
-                Settings.WindowPosition += (50, 0);
+                Settings.WindowLeft += 50;
                 Settings.WindowSize -= 100;
             }
 
