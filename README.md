@@ -336,13 +336,13 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   </a>
         <br />
         <br />
-  <a href="https://appwrite.io">
-    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
+  <a href="https://github.com/TheBestPessimist">
+    <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
   </a>
 </p>
 <p align="center">
-  <a href="https://github.com/TheBestPessimist">
-    <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
   </a>
   <br />
 </p>
