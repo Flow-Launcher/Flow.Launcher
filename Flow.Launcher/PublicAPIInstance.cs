@@ -25,7 +25,6 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
@@ -229,39 +228,22 @@ namespace Flow.Launcher
 
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
-            var customExplorerList = _settingsVM.Settings.CustomExplorerList;
+            using var explorer = new Process();
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
 
-            var qttabbarIndex = customExplorerList.FindIndex(e => e.Name.Equals("QTTABBAR", StringComparison.OrdinalIgnoreCase));
-            var isQttabbarSelected = qttabbarIndex == _settingsVM.Settings.CustomExplorerIndex;
-
-            if (isQttabbarSelected)
+            explorer.StartInfo = new ProcessStartInfo
             {
-                Process.Start(new ProcessStartInfo
-                {
-                    FileName = DirectoryPath,
-                    UseShellExecute = true,
-                    Verb = "open",
-                    Arguments = FileNameOrFilePath
-                });
-            }
-            else
-            {
-                using var explorer = new Process();
-                explorer.StartInfo = new ProcessStartInfo
-                {
-                    FileName = explorerInfo.Path,
-                    UseShellExecute = true,
-                    Arguments = FileNameOrFilePath is null
-                        ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
-                        : explorerInfo.FileArgument
-                            .Replace("%d", DirectoryPath)
-                            .Replace("%f",
-                                Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
-                            )
-                };
-                explorer.Start();
-            }
+                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                UseShellExecute = true,
+                Arguments = FileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                    : explorerInfo.FileArgument
+                        .Replace("%d", DirectoryPath)
+                        .Replace("%f",
+                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
+                        )
+            };
+            explorer.Start();
         }
 
         private void OpenUri(Uri uri, bool? inPrivate = null)
