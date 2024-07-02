@@ -230,9 +230,10 @@ namespace Flow.Launcher
         {
             using var explorer = new Process();
             var explorerInfo = _settingsVM.Settings.CustomExplorer;
+
             explorer.StartInfo = new ProcessStartInfo
             {
-                FileName = explorerInfo.Path,
+                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
                 UseShellExecute = true,
                 Arguments = FileNameOrFilePath is null
                     ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
