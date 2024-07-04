@@ -213,10 +213,10 @@
     <system:String x:Key="RunAsAdminHotkey">Chạy với quyền admin</system:String>
     <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Dữ liệu plugin không tải</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="QuickWidthHotkey">Điều chỉnh nhanh độ rộng cửa sổ</system:String>
+    <system:String x:Key="QuickHeightHotkey">Điều chỉnh nhanh chiều cao cửa sổ</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Sử dụng khi yêu cầu plugin tải lại và cập nhật dữ liệu hiện có của chúng.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Bạn có thể thêm một phím nóng nữa cho chức năng này.</system:String>
     <system:String x:Key="customQueryHotkey">Phím tắt truy vấn tùy chỉnh</system:String>
     <system:String x:Key="customQueryShortcut">Lối tắt truy vấn tùy chỉnh</system:String>
     <system:String x:Key="builtinShortcuts">Phím tắt tích hợp</system:String>
@@ -283,9 +283,9 @@
     <system:String x:Key="clearlogfolder">Xóa tệp nhật ký</system:String>
     <system:String x:Key="clearlogfolderMessage">Bạn có chắc chắn muốn xóa tất cả nhật ký không?</system:String>
     <system:String x:Key="welcomewindow">Wizard</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
+    <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
+    <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
@@ -332,7 +332,7 @@
     <system:String x:Key="invalidPluginHotkey">Tổ hợp phím plugin không hợp lệ</system:String>
     <system:String x:Key="update">Cập nhật</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
+    <system:String x:Key="hotkeyUnavailable">Phím nóng hiện tại không có sẵn.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
@@ -429,10 +429,10 @@
     <system:String x:Key="HotkeyCtrlIDesc">Mở cửa sổ cài đặt</system:String>
     <system:String x:Key="HotkeyF5Desc">Dữ liệu plugin không tải</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Chọn kết quả đầu tiên</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Chọn kết quả cuối cùng</system:String>
+    <system:String x:Key="HotkeyRequery">Chạy lại truy vấn hiện tại</system:String>
+    <system:String x:Key="HotkeyOpenResult">Mở kết quả</system:String>
     <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Thời Tiết</system:String>
@@ -445,7 +445,7 @@
     <system:String x:Key="RecommendAcronymsDesc">Ghi chú </system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Kích thước tệp</system:String>
+    <system:String x:Key="Created">Đã tạo</system:String>
+    <system:String x:Key="LastModified">Sửa đổi lần cuối</system:String>
 </ResourceDictionary>

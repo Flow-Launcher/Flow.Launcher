@@ -72,11 +72,7 @@ namespace Flow.Launcher
             };
         }
 
-        DispatcherTimer timer = new DispatcherTimer
-        {
-            Interval = new TimeSpan(0, 0, 0, 0, 500),
-            IsEnabled = false
-        };
+        DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };
 
         public MainWindow()
         {
@@ -87,6 +83,7 @@ namespace Flow.Launcher
         private const int WM_EXITSIZEMOVE = 0x0232;
         private int _initialWidth;
         private int _initialHeight;
+
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == WM_ENTERSIZEMOVE)
@@ -95,18 +92,22 @@ namespace Flow.Launcher
                 _initialHeight = (int)Height;
                 handled = true;
             }
+
             if (msg == WM_EXITSIZEMOVE)
             {
-                if ( _initialHeight != (int)Height)
+                if (_initialHeight != (int)Height)
                 {
                     OnResizeEnd();
                 }
+
                 if (_initialWidth != (int)Width)
                 {
                     FlowMainWindow.SizeToContent = SizeToContent.Height;
                 }
+
                 handled = true;
             }
+
             return IntPtr.Zero;
         }
 
@@ -131,6 +132,7 @@ namespace Flow.Launcher
                     _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
                 }
             }
+
             FlowMainWindow.SizeToContent = SizeToContent.Height;
             _viewModel.MainWindowWidth = Width;
         }
@@ -175,6 +177,7 @@ namespace Flow.Launcher
         private void OnInitialized(object sender, EventArgs e)
         {
         }
+
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
             // MouseEventHandler
@@ -206,6 +209,7 @@ namespace Flow.Launcher
                                 {
                                     SoundPlay();
                                 }
+
                                 UpdatePosition();
                                 PreviewReset();
                                 Activate();
@@ -217,7 +221,8 @@ namespace Flow.Launcher
                                     _viewModel.LastQuerySelected = true;
                                 }
 
-                                if (_viewModel.ProgressBarVisibility == Visibility.Visible && isProgressBarStoryboardPaused)
+                                if (_viewModel.ProgressBarVisibility == Visibility.Visible &&
+                                    isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
@@ -258,9 +263,12 @@ namespace Flow.Launcher
                             MoveQueryTextToEnd();
                             _viewModel.QueryTextCursorMovedToEnd = false;
                         }
+
                         break;
                     case nameof(MainViewModel.GameModeStatus):
-                        _notifyIcon.Icon = _viewModel.GameModeStatus ? Properties.Resources.gamemode : Properties.Resources.app;
+                        _notifyIcon.Icon = _viewModel.GameModeStatus
+                            ? Properties.Resources.gamemode
+                            : Properties.Resources.app;
                         break;
                 }
             };
@@ -278,11 +286,8 @@ namespace Flow.Launcher
                     case nameof(Settings.Hotkey):
                         UpdateNotifyIconText();
                         break;
-                    case nameof(Settings.WindowLeft):
-                        Left = _settings.WindowLeft;
-                        break;
-                    case nameof(Settings.WindowTop):
-                        Top = _settings.WindowTop;
+                    case nameof(Settings.WindowPosition):
+                        (Left, Top) = _settings.WindowPosition;
                         break;
                 }
             };
@@ -292,8 +297,24 @@ namespace Flow.Launcher
         {
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                Top = _settings.WindowTop;
-                Left = _settings.WindowLeft;
+                var previousScreen = _settings.PreviousScreen;
+
+                var previousDpi = _settings.PreviousDpi;
+
+                _settings.PreviousScreen = (SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight);
+
+                var currentDpi = GetDpi();
+
+                if (previousScreen == default ||
+                    previousDpi == default ||
+                    (previousScreen != (SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight) ||
+                     previousDpi != currentDpi))
+                {
+                    AdjustPositionForResolutionChange();
+                    return;
+                }
+
+                (Left, Top) = _settings.WindowPosition;
             }
             else
             {
@@ -306,34 +327,72 @@ namespace Flow.Launcher
                         break;
                     case SearchWindowAligns.CenterTop:
                         Left = HorizonCenter(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.LeftTop:
                         Left = HorizonLeft(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.RightTop:
                         Left = HorizonRight(screen);
-                        Top = 10;
+                        Top = VerticalTop(screen);
                         break;
                     case SearchWindowAligns.Custom:
-                        Left = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                        Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
+                        var customLeft = WindowsInteropHelper.TransformPixelsToDIP(this,
+                            screen.WorkingArea.X + _settings.CustomWindowLeft, 0);
+                        var customTop = WindowsInteropHelper.TransformPixelsToDIP(this, 0,
+                            screen.WorkingArea.Y + _settings.CustomWindowTop);
+                        Left = customLeft.X;
+                        Top = customTop.Y;
                         break;
                 }
             }
+        }
 
+        private void AdjustPositionForResolutionChange()
+        {
+            Point2D screenBound = (SystemParameters.VirtualScreenWidth, SystemParameters.VirtualScreenHeight);
+
+            var currentDpi = GetDpi();
+
+            var previousPosition = _settings.WindowPosition;
+
+            var ratio = screenBound / _settings.PreviousScreen;
+
+            var dpiRatio = currentDpi / _settings.PreviousDpi;
+
+            var newPosition = previousPosition * ratio * dpiRatio;
+
+            Point2D minPosition = (SystemParameters.VirtualScreenLeft, SystemParameters.VirtualScreenTop);
+
+            var maxPosition = minPosition + screenBound - (ActualWidth, ActualHeight);
+
+            (Left, Top) = newPosition.Clamp(minPosition, maxPosition);
+        }
+
+        private Point2D GetDpi()
+        {
+            PresentationSource source = PresentationSource.FromVisual(this);
+            Point2D point = (96, 96);
+            if (source is { CompositionTarget: not null })
+            {
+                Matrix m = source.CompositionTarget.TransformToDevice;
+                point.X = 96 * m.M11;
+                point.Y = 96 * m.M22;
+            }
+
+            return point;
         }
 
         private void UpdateNotifyIconText()
         {
             var menu = contextMenu;
-            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")";
+            ((MenuItem)menu.Items[0]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") +
+                                               " (" + _settings.Hotkey + ")";
             ((MenuItem)menu.Items[1]).Header = InternationalizationManager.Instance.GetTranslation("GameMode");
             ((MenuItem)menu.Items[2]).Header = InternationalizationManager.Instance.GetTranslation("PositionReset");
             ((MenuItem)menu.Items[3]).Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings");
             ((MenuItem)menu.Items[4]).Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit");
-
         }
 
         private void InitializeNotifyIcon()
@@ -345,50 +404,34 @@ namespace Flow.Launcher
                 Visible = !_settings.HideNotifyIcon
             };
 
-            var openIcon = new FontIcon
-            {
-                Glyph = "\ue71e"
-            };
+            var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" + _settings.Hotkey + ")",
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayOpen") + " (" +
+                         _settings.Hotkey + ")",
                 Icon = openIcon
             };
-            var gamemodeIcon = new FontIcon
-            {
-                Glyph = "\ue7fc"
-            };
+            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
-                Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
             };
-            var positionresetIcon = new FontIcon
-            {
-                Glyph = "\ue73f"
-            };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
                 Icon = positionresetIcon
             };
-            var settingsIcon = new FontIcon
-            {
-                Glyph = "\ue713"
-            };
+            var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
                 Icon = settingsIcon
             };
-            var exitIcon = new FontIcon
-            {
-                Glyph = "\ue7e8"
-            };
+            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
-                Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -421,6 +464,7 @@ namespace Flow.Launcher
                         {
                             _ = SetForegroundWindow(hwndSource.Handle);
                         }
+
                         contextMenu.Focus();
                         break;
                 }
@@ -454,8 +498,10 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
-            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
-            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 0, new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
+                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
+            var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 0,
+                new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
             _progressBarStoryboard.Children.Add(da);
@@ -557,14 +603,14 @@ namespace Flow.Launcher
             iconsb.Children.Add(IconOpacity);
 
             windowsb.Completed += (_, _) => _animating = false;
-            _settings.WindowLeft = Left;
-            _settings.WindowTop = Top;
+            _settings.WindowPosition = (Left, Top);
             isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
             {
                 clocksb.Begin(ClockPanel);
             }
+
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
         }
@@ -618,8 +664,7 @@ namespace Flow.Launcher
 
         private async void OnDeactivated(object sender, EventArgs e)
         {
-            _settings.WindowLeft = Left;
-            _settings.WindowTop = Top;
+            _settings.WindowPosition = (Left, Top);
             //This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -650,8 +695,7 @@ namespace Flow.Launcher
                 return;
             if (_settings.SearchWindowScreen == SearchWindowScreens.RememberLastLaunchLocation)
             {
-                _settings.WindowLeft = Left;
-                _settings.WindowTop = Top;
+                _settings.WindowPosition = (Left, Top);
             }
         }
 
@@ -671,7 +715,7 @@ namespace Flow.Launcher
         public Screen SelectedScreen()
         {
             Screen screen = null;
-            switch(_settings.SearchWindowScreen)
+            switch (_settings.SearchWindowScreen)
             {
                 case SearchWindowScreens.Cursor:
                     screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
@@ -693,6 +737,7 @@ namespace Flow.Launcher
                     screen = Screen.AllScreens[0];
                     break;
             }
+
             return screen ?? Screen.AllScreens[0];
         }
 
@@ -725,6 +770,13 @@ namespace Flow.Launcher
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
+        }
+
+        public double VerticalTop(Screen screen)
+        {
+            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var top = dip1.Y + 10;
+            return top;
         }
 
         /// <summary>
@@ -762,6 +814,7 @@ namespace Flow.Launcher
                         _viewModel.LoadContextMenuCommand.Execute(null);
                         e.Handled = true;
                     }
+
                     break;
                 case Key.Left:
                     if (!_viewModel.SelectedIsFromQueryResults() && QueryTextBox.CaretIndex == 0)
@@ -769,6 +822,7 @@ namespace Flow.Launcher
                         _viewModel.EscCommand.Execute(null);
                         e.Handled = true;
                     }
+
                     break;
                 case Key.Back:
                     if (specialKeyState.CtrlPressed)
@@ -787,12 +841,13 @@ namespace Flow.Launcher
                             }
                         }
                     }
+
                     break;
                 default:
                     break;
-
             }
         }
+
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Up || e.Key == Key.Down)
@@ -808,6 +863,7 @@ namespace Flow.Launcher
                 e.Handled = true; // Ignore Mouse Hover when press Arrowkeys
             }
         }
+
         public void PreviewReset()
         {
             _viewModel.ResetPreview();

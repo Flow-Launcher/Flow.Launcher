@@ -330,23 +330,22 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
 <img src="https://user-images.githubusercontent.com/6903107/144858082-8b654daf-60fb-4ee6-89b2-6183b73510d1.png" width="100%">
 
 ## Sponsors
-
 <p align="center">
-  <a href="https://appwrite.io">
-    <img src='https://appwrite.io/assets/logotype/black.svg' width="40%"/>
+  <a href="https://coderabbit.ai/">
+    <img src="https://github.com/Flow-Launcher/Flow.Launcher/assets/6903107/7c996d74-0c69-4011-922f-a95ca7e874b0" width="30%" alt="Coderabbit Logo" />
   </a>
-  <br />
-
-</p>
-
-<p align="center">
+        <br />
+        <br />
   <a href="https://github.com/TheBestPessimist">
     <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
   </a>
-  <br />
-
 </p>
-
+<p align="center">
+  <a href="https://appwrite.io">
+    <img src='https://appwrite.io/assets/logotype/white.svg' width="30%" alt="Appwrite Logo" />
+  </a>
+  <br />
+</p>
 <p align="center">
   <a href="https://github.com/itsonlyfrans"><img src="https://avatars.githubusercontent.com/u/46535667?v=4" width="10%" /></a>
   <a href="https://github.com/andreqramos"><img src="https://avatars.githubusercontent.com/u/49326063?v=4" width="10%" /></a>
