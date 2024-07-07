@@ -289,8 +289,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
-    <system:String x:Key="fileManager_tips">Vui lòng chỉ định vị trí tệp của trình quản lý tệp mà bạn đang sử dụng và thêm đối số nếu cần. Đối số mặc định là &quot;%d&quot; và một đường dẫn được nhập tại vị trí đó. Ví dụ: Nếu một lệnh được yêu cầu như &quot;totalcmd.exe /A c:\windows&quot;, đối số là /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; là một đối số đại diện cho đường dẫn tệp. Nó được sử dụng để nhấn mạnh tên tệp/thư mục khi mở một vị trí tệp cụ thể trong trình quản lý tệp của bên thứ 3. Đối số này chỉ có sẵn trong phần &quot;Arg for File&quot; mục. Nếu trình quản lý tệp không có chức năng đó, bạn có thể sử dụng &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Trình quản lý ngày tháng</system:String>
     <system:String x:Key="fileManager_profile_name">Tên hồ sơ</system:String>
     <system:String x:Key="fileManager_path">Đường dẫn quản lý tệp</system:String>
