@@ -287,8 +287,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg. pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
