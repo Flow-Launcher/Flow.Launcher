@@ -286,8 +286,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
-    <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier du gestionnaire de fichiers que vous utilisez et ajouter des arguments si nécessaire. Les arguments par défaut sont &quot;%d&quot;, et un chemin est entré à cet endroit. Par exemple, si une commande est requise comme &quot;totalcmd.exe /A c:\windows&quot;, l'argument est /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; est un argument qui représente le chemin du fichier. Il est utilisé pour souligner le nom du fichier/dossier lors de l'ouverture d'un emplacement de fichier spécifique dans le gestionnaire de fichiers tiers. Cet argument n'est disponible que dans l'élément &quot;Arguments pour le fichier&quot;. Si le gestionnaire de fichiers n'a pas cette fonction, vous pouvez utiliser &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_profile_name">Nom du profil</system:String>
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>
