@@ -287,8 +287,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Bestandsbeheerder selecteren</system:String>
-    <system:String x:Key="fileManager_tips">Geef de bestandslocatie op van de bestandsbeheerder die u gebruikt en voeg indien nodig argumenten toe. De standaard argumenten zijn &quot;%d&quot;, en er is een pad op die locatie ingevoerd. Bijvoorbeeld, als een commando vereist is zoals &quot;totalcmd.exe /A c:\windows&quot;, dan is het argument /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; is een argument dat het bestandspad representeerd. Het wordt gebruikt om de bestand/mapnaam te benadrukken bij het openen van een specifieke bestandslocatie in bestandsbeheer van derden. Dit argument is alleen beschikbaar in het item &quot;Arg for File&quot;. Als de bestandsbeheerder die functie niet heeft, kan je &quot;%d&quot; gebruiken.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Bestandsbeheerder</system:String>
     <system:String x:Key="fileManager_profile_name">Profielnaam</system:String>
     <system:String x:Key="fileManager_path">Bestandsbeheerder pad</system:String>
