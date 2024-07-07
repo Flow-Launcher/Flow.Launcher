@@ -5,6 +5,13 @@ manifest:
   version: 1.0
 
 
+triggers:
+  exclude:
+    branch:
+      - l10n_dev
+      - dev
+
+
 automations:
   # Add a label that indicates how many minutes it will take to review the PR.
   estimated_time_to_review:
@@ -23,15 +30,6 @@ automations:
       - action: explain-code-experts@v1
         args:
           gt: 10
-  # Post a comment that indicates what percentage of the PR is new code.
-  percent_new_code:
-    if:
-      - true
-    run:
-      - action: add-comment@v1
-        args:
-          comment: |
-            This PR is {{ changes.ratio }}% new code.
   # Post a comment notifying that the PR contains a TODO statement.
   review_todo_comments:
     if:
