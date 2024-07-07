@@ -286,8 +286,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
-    <system:String x:Key="fileManager_tips">Especifique a localização do executável do gestor de ficheiros e, eventualmente, alguns argumentos. Os argumentos padrão são &quot;%d&quot; e o caminho é introduzido nesse local. Por exemplo, se necessitar de um comando como &quot;totalcmd.exe /A c:\windows&quot;, o argumento é /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; é o argumento que representa o caminho do ficheiro. É utilizado para dar ênfase ao nome do ficheiro ou da pasta se utilizar um gestor de ficheiros não nativo. Este argumento apenas está disponível para o item &quot;Argumento para ficheiro&quot;. Se o seu gestor de ficheiros não possuir esta funcionalidade, pode utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_profile_name">Nome do perfil</system:String>
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>
