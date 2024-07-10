@@ -16,6 +16,7 @@ using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
+using Velopack;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -36,6 +37,12 @@ namespace Flow.Launcher
         [STAThread]
         public static void Main()
         {
+            VelopackApp.Build()
+                .WithAfterUpdateFastCallback(x =>
+                {
+                    Updater.RecoverPortableData();
+                }).Run();
+            
             if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
             {
                 using (var application = new App())
@@ -58,7 +65,7 @@ namespace Flow.Launcher
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
-                var imageLoadertask = ImageLoader.InitializeAsync();
+                var imageLoaderTask = ImageLoader.InitializeAsync();
 
                 _settingsVM = new SettingWindowViewModel(_updater, _portable);
                 _settings = _settingsVM.Settings;
@@ -80,8 +87,7 @@ namespace Flow.Launcher
                 Http.Proxy = _settings.Proxy;
 
                 await PluginManager.InitializePluginsAsync(API);
-                await imageLoadertask;
-
+                await imageLoaderTask;
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -179,8 +185,8 @@ namespace Flow.Launcher
 
         public void Dispose()
         {
-            // if sessionending is called, exit proverbially be called when log off / shutdown
-            // but if sessionending is not called, exit won't be called when log off / shutdown
+            // if session-ending is called, exit proverbially be called when log off / shutdown
+            // but if session-ending is not called, exit won't be called when log off / shutdown
             if (!_disposed)
             {
                 API.SaveAppAllSettings();

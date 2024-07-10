@@ -71,3 +71,4 @@ ignore$
 \.csproj$
 \.DotSettings$
 \.targets$
+.*Test.cs$

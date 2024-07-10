@@ -1,6 +1,4 @@
 ﻿using Flow.Launcher.Core.ExternalPlugins;
-using Flow.Launcher.Infrastructure.UserSettings;
-using ICSharpCode.SharpZipLib.Zip;
 using Newtonsoft.Json;
 using System.IO;
 using System.IO.Compression;
@@ -18,29 +16,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
         /// <param name="overwrite">overwrite</param>
         internal static void UnZip(string zipFilePath, string strDirectory, bool overwrite)
         {
-            if (strDirectory == "")
-                strDirectory = Directory.GetCurrentDirectory();
-
-            using var zipStream = new ZipInputStream(File.OpenRead(zipFilePath));
-
-            ZipEntry theEntry;
-
-            while ((theEntry = zipStream.GetNextEntry()) != null)
-            {
-                var pathToZip = theEntry.Name;
-                var directoryName = string.IsNullOrEmpty(pathToZip) ? "" : Path.GetDirectoryName(pathToZip);
-                var fileName = Path.GetFileName(pathToZip);
-                var destinationDir = Path.Combine(strDirectory, directoryName);
-                var destinationFile = Path.Combine(destinationDir, fileName);
-
-                Directory.CreateDirectory(destinationDir);
-
-                if (string.IsNullOrEmpty(fileName) || (File.Exists(destinationFile) && !overwrite))
-                    continue;
-
-                using var streamWriter = File.Create(destinationFile);
-                zipStream.CopyTo(streamWriter);
-            }
+            ZipFile.ExtractToDirectory(zipFilePath, strDirectory, overwrite);
         }
 
         internal static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)

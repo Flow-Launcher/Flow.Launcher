@@ -27,7 +27,14 @@
 # Automatically suggested patterns
 # hit-count: 360 file-count: 108
 # IServiceProvider
-\bI(?=(?:[A-Z][a-z]{2,})+\b)
+# IPublicAPI
+\bI(?=(?:[A-Z][a-z]{2,}[A-Z]*)+\b)
+
+# KListener
+\bK(?=(?:[A-Z][a-z]{2,})+\b)
+
+# TApplication
+\bT(?=(?:[A-Z][a-z]{2,})+\b)
 
 # hit-count: 297 file-count: 18
 # uuid:

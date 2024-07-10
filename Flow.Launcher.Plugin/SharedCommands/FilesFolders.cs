@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 #pragma warning disable IDE0005
 using System.Windows;
+
 #pragma warning restore IDE0005
 
 namespace Flow.Launcher.Plugin.SharedCommands
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 
         /// <summary>
         /// Copies the folder and all of its files and folders 
-        /// including subfolders to the target location
+        /// including subFolders to the target location
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
@@ -46,15 +47,15 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 FileInfo[] files = dir.GetFiles();
                 foreach (FileInfo file in files)
                 {
-                    string temppath = Path.Combine(targetPath, file.Name);
-                    file.CopyTo(temppath, false);
+                    string tempPath = Path.Combine(targetPath, file.Name);
+                    file.CopyTo(tempPath, false);
                 }
 
                 // Recursively copy subdirectories by calling itself on each subdirectory until there are no more to copy
-                foreach (DirectoryInfo subdir in dirs)
+                foreach (DirectoryInfo subDir in dirs)
                 {
-                    string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    string tempPath = Path.Combine(targetPath, subDir.Name);
+                    CopyAll(subDir.FullName, tempPath);
                 }
             }
             catch (Exception)
@@ -66,7 +67,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 RemoveFolderIfExists(targetPath);
 #endif
             }
-
         }
 
         /// <summary>
@@ -83,10 +83,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 var fromDir = new DirectoryInfo(fromPath);
                 var toDir = new DirectoryInfo(toPath);
 
-                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length != toDir.GetFiles("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetFiles("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetFiles("*", SearchOption.AllDirectories).Length)
                     return false;
 
-                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length != toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
+                if (fromDir.GetDirectories("*", SearchOption.AllDirectories).Length !=
+                    toDir.GetDirectories("*", SearchOption.AllDirectories).Length)
                     return false;
 
                 return true;
@@ -100,7 +102,6 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 return false;
 #endif
             }
-
         }
 
         /// <summary>
@@ -152,9 +153,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             var psi = new ProcessStartInfo
             {
-                FileName = FileExplorerProgramName,
-                UseShellExecute = true,
-                Arguments = '"' + fileOrFolderPath + '"'
+                FileName = FileExplorerProgramName, UseShellExecute = true, Arguments = '"' + fileOrFolderPath + '"'
             };
             try
             {
@@ -289,7 +288,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="subPath">Sub path</param>
         /// <param name="allowEqual">If <see langword="true"/>, when <paramref name="parentPath"/> and <paramref name="subPath"/> are equal, returns <see langword="true"/></param>
         /// <returns></returns>
-        public static bool PathContains(string parentPath, string subPath, bool allowEqual = false)
+        public static bool PathContains(this string parentPath, string subPath, bool allowEqual = false)
         {
             var rel = Path.GetRelativePath(parentPath.EnsureTrailingSlash(), subPath);
             return (rel != "." || allowEqual)
@@ -298,7 +297,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                    && !rel.StartsWith(@"..\")
                    && !Path.IsPathRooted(rel);
         }
-        
+
         /// <summary>
         /// Returns path ended with "\"
         /// </summary>

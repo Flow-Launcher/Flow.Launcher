@@ -3,6 +3,24 @@ https
 ssh
 ubuntu
 runcount
+nunit
+velopack
+vpk
+vsc
+appveyor
+appwrite
+IME
+hotkey
+prioritise
+runas
+softpedia
+sourcelink
+TRAYMOUSEMESSAGE
+uninstaller
+vkcode
+winget
+workaround
+nupkg
 Firefox
 Português
 Português (Brasil)

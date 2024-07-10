@@ -161,6 +161,7 @@
                 Sub="{DynamicResource portableModeToolTIp}">
                 <ui:ToggleSwitch
                     IsOn="{Binding PortableMode}"
+                    IsEnabled="False"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
             </cc:Card>

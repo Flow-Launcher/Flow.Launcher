@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Reflection;
+using System.Windows;
 
 [assembly: ThemeInfo(
     ResourceDictionaryLocation.None,
