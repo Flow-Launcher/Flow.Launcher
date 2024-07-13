@@ -247,12 +247,5 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
         }
-
-        internal static bool IsEnvironmentVariableSearch(string search)
-        {
-            return search.StartsWith("%")
-                   && search != "%%"
-                   && !search.Contains('\\');
-        }
     }
 }
