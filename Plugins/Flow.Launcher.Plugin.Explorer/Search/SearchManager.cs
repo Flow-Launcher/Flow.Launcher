@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
+using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using Flow.Launcher.Plugin.SharedCommands;
@@ -68,7 +68,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString() || IsEnvironmentVariableSearch(query.Search);
+            bool isPathSearch = query.Search.IsLocationPathString() 
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             string engineName;
 
