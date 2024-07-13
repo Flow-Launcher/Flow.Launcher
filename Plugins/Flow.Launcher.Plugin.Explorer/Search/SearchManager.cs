@@ -68,7 +68,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IAsyncEnumerable<SearchResult> searchResults;
 
-            bool isPathSearch = query.Search.IsLocationPathString() || IsEnvironmentVariableSearch(query.Search);
+            bool isPathSearch = query.Search.IsLocationPathString() 
+                || EnvironmentVariables.IsEnvironmentVariableSearch(query.Search)
+                || EnvironmentVariables.HasEnvironmentVar(query.Search);
 
             string engineName;
 
@@ -178,16 +180,16 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             // Query is a location path with a full environment variable, eg. %appdata%\somefolder\, c:\users\%USERNAME%\downloads
             var needToExpand = EnvironmentVariables.HasEnvironmentVar(querySearch);
-            var locationPath = needToExpand ? Environment.ExpandEnvironmentVariables(querySearch) : querySearch;
+            var path = needToExpand ? Environment.ExpandEnvironmentVariables(querySearch) : querySearch;
 
             // Check that actual location exists, otherwise directory search will throw directory not found exception
-            if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath).LocationExists())
+            if (!FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path).LocationExists())
                 return results.ToList();
 
             var useIndexSearch = Settings.IndexSearchEngine is Settings.IndexSearchEngineOption.WindowsIndex
-                                 && UseWindowsIndexForDirectorySearch(locationPath);
+                                 && UseWindowsIndexForDirectorySearch(path);
 
-            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(locationPath);
+            var retrievedDirectoryPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
             results.Add(retrievedDirectoryPath.EndsWith(":\\")
                 ? ResultManager.CreateDriveSpaceDisplayResult(retrievedDirectoryPath, query.ActionKeyword, useIndexSearch)
@@ -198,21 +200,21 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
             IAsyncEnumerable<SearchResult> directoryResult;
 
-            var recursiveIndicatorIndex = query.Search.IndexOf('>');
+            var recursiveIndicatorIndex = path.IndexOf('>');
 
             if (recursiveIndicatorIndex > 0 && Settings.PathEnumerationEngine != Settings.PathEnumerationEngineOption.DirectEnumeration)
             {
                 directoryResult =
                     Settings.PathEnumerator.EnumerateAsync(
-                        query.Search[..recursiveIndicatorIndex].Trim(),
-                        query.Search[(recursiveIndicatorIndex + 1)..],
+                        path[..recursiveIndicatorIndex].Trim(),
+                        path[(recursiveIndicatorIndex + 1)..],
                         true,
                         token);
 
             }
             else
             {
-                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, query.Search, token).ToAsyncEnumerable();
+                directoryResult = DirectoryInfoSearch.TopLevelDirectorySearch(query, path, token).ToAsyncEnumerable();
             }
 
             if (token.IsCancellationRequested)
@@ -244,13 +246,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return !Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
-        }
-
-        internal static bool IsEnvironmentVariableSearch(string search)
-        {
-            return search.StartsWith("%")
-                   && search != "%%"
-                   && !search.Contains('\\');
         }
     }
 }
