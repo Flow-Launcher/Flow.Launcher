@@ -465,6 +465,11 @@
                         HorizontalAlignment="Left"
                         Content="{DynamicResource flowlauncher_plugin_everything_search_fullpath}"
                         IsChecked="{Binding Settings.EverythingSearchFullPath}" />
+                    <CheckBox
+                        Margin="20 10 0 0"
+                        HorizontalAlignment="Left"
+                        Content="{DynamicResource flowlauncher_plugin_everything_enable_run_count}"
+                        IsChecked="{Binding Settings.EverythingEnableRunCount}" />
                     <StackPanel Orientation="Horizontal">
                         <Grid Margin="20 10 0 10">
                             <Grid.ColumnDefinitions>

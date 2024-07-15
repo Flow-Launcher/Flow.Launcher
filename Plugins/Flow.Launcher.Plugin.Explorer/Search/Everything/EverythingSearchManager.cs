@@ -64,7 +64,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(search, Settings.SortOption, IsFullPathSearch: Settings.EverythingSearchFullPath);
+            var option = new EverythingSearchOption(search, Settings.SortOption, IsFullPathSearch: Settings.EverythingSearchFullPath, IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;
@@ -96,7 +96,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 Settings.SortOption,
                 IsContentSearch: true,
                 ContentSearchKeyword: contentSearch,
-                IsFullPathSearch: Settings.EverythingSearchFullPath);
+                IsFullPathSearch: Settings.EverythingSearchFullPath,
+                IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
             {
@@ -115,7 +116,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
                 Settings.SortOption,
                 ParentPath: path,
                 IsRecursive: recursive,
-                IsFullPathSearch: Settings.EverythingSearchFullPath);
+                IsFullPathSearch: Settings.EverythingSearchFullPath,
+                IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
                 yield return result;
