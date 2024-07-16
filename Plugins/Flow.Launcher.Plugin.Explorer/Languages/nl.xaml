@@ -139,6 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Waarschuwing: Dit is geen snelle sorteeroptie, zoekopdrachten kunnen traag zijn</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything geïnstalleerd</system:String>
