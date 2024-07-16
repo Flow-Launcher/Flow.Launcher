@@ -151,6 +151,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
         public bool EverythingSearchFullPath { get; set; } = false;
+        public bool EverythingEnableRunCount { get; set; } = true;
 
         #endregion
 

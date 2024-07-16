@@ -348,7 +348,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         private static void IncrementEverythingRunCounterIfNeeded(string fileOrFolder)
         {
-            if (Settings.EverythingEnabled)
+            if (Settings.EverythingEnabled && Settings.EverythingEnableRunCount)
                 _ = Task.Run(() => EverythingApi.IncrementRunCounterAsync(fileOrFolder));
         }
 
