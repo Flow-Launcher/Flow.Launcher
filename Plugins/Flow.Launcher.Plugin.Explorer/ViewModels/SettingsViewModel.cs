@@ -518,7 +518,8 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             get => Settings.ExcludedFileTypes;
             set
             {
-                string sanitized = string.IsNullOrEmpty(value) ? value : value.Replace(" ", "").Replace(".", "");
+                // remove spaces and dots from the string before saving
+                string sanitized = string.IsNullOrEmpty(value) ? "" : value.Replace(" ", "").Replace(".", "");
                 Settings.ExcludedFileTypes = sanitized;
                 OnPropertyChanged();
             }
