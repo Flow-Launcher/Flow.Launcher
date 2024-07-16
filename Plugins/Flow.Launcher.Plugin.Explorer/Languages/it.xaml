@@ -139,6 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Attenzione: Questa non è un'opzione di ordinamento rapido, le ricerche potrebbero essere lente</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Cerca Percorso Completo</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Clicca per avviare o installare Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installazione di Everything</system:String>
