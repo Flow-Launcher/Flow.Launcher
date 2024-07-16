@@ -139,6 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything을 실행 또는 설치하려면 클릭</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 설치</system:String>
