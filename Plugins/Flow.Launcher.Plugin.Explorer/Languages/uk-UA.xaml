@@ -139,6 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Попередження: Це не швидке сортування, пошук може бути повільним</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Шукати повний шлях</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Натисніть, щоб запустити або встановити Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Встановлення програми Everything</system:String>
