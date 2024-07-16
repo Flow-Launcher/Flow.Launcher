@@ -139,6 +139,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Tam Yolu Ara</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Everything'i yükle veya başlat</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Kurulumu</system:String>
