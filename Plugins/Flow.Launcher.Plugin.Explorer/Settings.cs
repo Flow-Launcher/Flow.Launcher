@@ -25,6 +25,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ShellPath { get; set; } = "cmd";
 
+        public string ExcludedFileTypes { get; set; } = "";
+
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 

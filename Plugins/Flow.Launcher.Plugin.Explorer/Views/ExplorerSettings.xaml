@@ -281,6 +281,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <TextBlock
                                         Grid.Row="0"
@@ -333,6 +334,20 @@
                                         DisplayMemberPath="Description"
                                         ItemsSource="{Binding PathEnumerationEngines}"
                                         SelectedItem="{Binding SelectedPathEnumerationEngine}" />
+                                    <TextBlock
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Margin="0 15 20 0"
+                                        VerticalAlignment="Center"
+                                        Text="{DynamicResource plugin_explorer_Excluded_File_Types}"
+                                        TextBlock.Foreground="{DynamicResource Color05B}" />
+                                    <TextBox
+                                        Grid.Row="3"
+                                        Grid.Column="1"
+                                        MinWidth="350"
+                                        Margin="0,9,0,6"
+                                        ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}"
+                                        Text="{Binding ExcludedFileTypes}" />
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">

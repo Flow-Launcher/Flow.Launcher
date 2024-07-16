@@ -513,6 +513,17 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public string ExcludedFileTypes
+        {
+            get => Settings.ExcludedFileTypes;
+            set
+            {
+                string sanitized = string.IsNullOrEmpty(value) ? value : value.Replace(" ", "").Replace(".", "");
+                Settings.ExcludedFileTypes = sanitized;
+                OnPropertyChanged();
+            }
+        }
+
 
         #region Everything FastSortWarning
 
