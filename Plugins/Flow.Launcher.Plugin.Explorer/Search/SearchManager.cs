@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Plugin.Explorer.Exceptions;
+using Path = System.IO.Path;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -109,7 +110,11 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             try
             {
                 await foreach (var search in searchResults.WithCancellation(token).ConfigureAwait(false))
-                    results.Add(ResultManager.CreateResult(query, search));
+                    if (search.Type == ResultType.File && IsExcludedFile(search)) {
+                        continue;
+                    } else {
+                        results.Add(ResultManager.CreateResult(query, search));
+                    }
             }
             catch (OperationCanceledException)
             {
@@ -246,6 +251,14 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             return !Settings.IndexSearchExcludedSubdirectoryPaths.Any(
                        x => FilesFolders.ReturnPreviousDirectoryIfIncompleteString(pathToDirectory).StartsWith(x.Path, StringComparison.OrdinalIgnoreCase))
                    && WindowsIndex.WindowsIndex.PathIsIndexed(pathToDirectory);
+        }
+
+        private bool IsExcludedFile(SearchResult result)
+        {
+            string[] excludedFileTypes = Settings.ExcludedFileTypes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
+
+            return excludedFileTypes.Contains(fileExtension);
         }
     }
 }
