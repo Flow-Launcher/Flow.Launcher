@@ -258,7 +258,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
             string[] excludedFileTypes = Settings.ExcludedFileTypes.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             string fileExtension = Path.GetExtension(result.FullPath).TrimStart('.');
 
-            return excludedFileTypes.Contains(fileExtension);
+            return excludedFileTypes.Contains(fileExtension, StringComparer.OrdinalIgnoreCase);
         }
     }
 }
