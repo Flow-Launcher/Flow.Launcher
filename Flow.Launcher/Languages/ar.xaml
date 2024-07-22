@@ -14,39 +14,39 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
-    <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Cancel topmost in this query</system:String>
-    <system:String x:Key="executeQuery">Execute query: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Last execution time: {0}</system:String>
-    <system:String x:Key="iconTrayOpen">Open</system:String>
-    <system:String x:Key="iconTraySettings">Settings</system:String>
-    <system:String x:Key="iconTrayAbout">About</system:String>
-    <system:String x:Key="iconTrayExit">Exit</system:String>
-    <system:String x:Key="closeWindow">Close</system:String>
+    <system:String x:Key="couldnotStartCmd">تعذر بدء {0}</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">تنسيق ملف إضافة Flow Launcher غير صالح</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">تعيين كأعلى أولوية في هذا الاستعلا</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">إلغاء أعلى أولوية في هذا الاستعلا</system:String>
+    <system:String x:Key="executeQuery">تنفيذ الاستعلام: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">آخر وقت تنفيذ: {0}</system:String>
+    <system:String x:Key="iconTrayOpen">فتح</system:String>
+    <system:String x:Key="iconTraySettings">الإعدادات</system:String>
+    <system:String x:Key="iconTrayAbout">حو</system:String>
+    <system:String x:Key="iconTrayExit">خروج</system:String>
+    <system:String x:Key="closeWindow">إغلا</system:String>
     <system:String x:Key="copy">Copy</system:String>
-    <system:String x:Key="cut">Cut</system:String>
-    <system:String x:Key="paste">Paste</system:String>
+    <system:String x:Key="cut">قص</system:String>
+    <system:String x:Key="paste">لص</system:String>
     <system:String x:Key="undo">Undo</system:String>
     <system:String x:Key="selectAll">Select All</system:String>
     <system:String x:Key="fileTitle">File</system:String>
     <system:String x:Key="folderTitle">Folder</system:String>
     <system:String x:Key="textTitle">Text</system:String>
-    <system:String x:Key="GameMode">Game Mode</system:String>
-    <system:String x:Key="GameModeToolTip">Suspend the use of Hotkeys.</system:String>
+    <system:String x:Key="GameMode">وضع اللعب</system:String>
+    <system:String x:Key="GameModeToolTip">تعليق استخدام مفاتيح التشغيل السريع.</system:String>
     <system:String x:Key="PositionReset">Position Reset</system:String>
     <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
 
     <!--  Setting General  -->
-    <system:String x:Key="flowlauncher_settings">Settings</system:String>
-    <system:String x:Key="general">General</system:String>
-    <system:String x:Key="portableMode">Portable Mode</system:String>
-    <system:String x:Key="portableModeToolTIp">Store all settings and user data in one folder (Useful when used with removable drives or cloud services).</system:String>
-    <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher on system startup</system:String>
+    <system:String x:Key="flowlauncher_settings">الإعدادات</system:String>
+    <system:String x:Key="general">عا</system:String>
+    <system:String x:Key="portableMode">وضع المحمو</system:String>
+    <system:String x:Key="portableModeToolTIp">تخزين جميع الإعدادات وبيانات المستخدم في مجلد واحد (مفيد عند استخدام الأقراص القابلة للإزالة أو الخدمات السحابية).</system:String>
+    <system:String x:Key="startFlowLauncherOnSystemStartup">تشغيل Flow Launcher عند بدء تشغيل النظا</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
-    <system:String x:Key="hideFlowLauncherWhenLoseFocus">Hide Flow Launcher when focus is lost</system:String>
-    <system:String x:Key="dontPromptUpdateMsg">Do not show new version notifications</system:String>
+    <system:String x:Key="hideFlowLauncherWhenLoseFocus">إخفاء Flow Launcher عند فقدان التركيز</system:String>
+    <system:String x:Key="dontPromptUpdateMsg">عدم عرض إشعارات الإصدار الجدي</system:String>
     <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
@@ -59,36 +59,36 @@
     <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
-    <system:String x:Key="language">Language</system:String>
-    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
-    <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
-    <system:String x:Key="LastQuerySelected">Select last Query</system:String>
-    <system:String x:Key="LastQueryEmpty">Empty last Query</system:String>
+    <system:String x:Key="language">اللغ</system:String>
+    <system:String x:Key="lastQueryMode">نمط الاستعلام الأخير</system:String>
+    <system:String x:Key="lastQueryModeToolTip">عرض/إخفاء النتائج السابقة عند إعادة تنشيط Flow Launcher.</system:String>
+    <system:String x:Key="LastQueryPreserved">حفظ الاستعلام الأخير</system:String>
+    <system:String x:Key="LastQuerySelected">اختيار الاستعلام الأخير</system:String>
+    <system:String x:Key="LastQueryEmpty">تفريغ الاستعلام الأخير</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
-    <system:String x:Key="maxShowResults">Maximum results shown</system:String>
+    <system:String x:Key="maxShowResults">الحد الأقصى للنتائج المعروض</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
-    <system:String x:Key="defaultFileManager">Default File Manager</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
-    <system:String x:Key="defaultBrowser">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">تجاهل مفاتيح التشغيل السريع في وضع ملء الشاش</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">تعطيل تنشيط Flow Launcher عند تشغيل تطبيق بملء الشاشة (موصى به للألعاب).</system:String>
+    <system:String x:Key="defaultFileManager">مدير الملفات الافتراض</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">اختيار مدير الملفات لاستخدامه عند فتح المجلد.</system:String>
+    <system:String x:Key="defaultBrowser">متصفح الويب الافتراض</system:String>
+    <system:String x:Key="defaultBrowserToolTip">إعدادات لعلامة تبويب جديدة، نافذة جديدة، وضع الخصوصية.</system:String>
     <system:String x:Key="pythonFilePath">Python Path</system:String>
     <system:String x:Key="nodeFilePath">Node.js Path</system:String>
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
-    <system:String x:Key="autoUpdates">Auto Update</system:String>
-    <system:String x:Key="select">Select</system:String>
-    <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
+    <system:String x:Key="autoUpdates">التحديث التلقائ</system:String>
+    <system:String x:Key="select">اختر</system:String>
+    <system:String x:Key="hideOnStartup">إخفاء Flow Launcher عند بدء التشغي</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
-    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
+    <system:String x:Key="hideNotifyIcon">إخفاء أيقونة العلب</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
-    <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+    <system:String x:Key="querySearchPrecision">دقة البحث في الاستعلا</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">تغيير الحد الأدنى لدرجة التطابق المطلوبة للنتائج.</system:String>
     <system:String x:Key="SearchPrecisionNone">None</system:String>
     <system:String x:Key="SearchPrecisionLow">Low</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
@@ -96,7 +96,7 @@
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
-    <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectNotAllowed">تأثير الظل غير مسموح به بينما يتم تمكين تأثير التمويه في السمة الحالي</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
@@ -104,38 +104,38 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugins</system:String>
-    <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
-    <system:String x:Key="enable">On</system:String>
-    <system:String x:Key="disable">Off</system:String>
-    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
-    <system:String x:Key="actionKeywords">Action keyword</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="plugins">الإضافات</system:String>
+    <system:String x:Key="browserMorePlugins">البحث عن المزيد من الإضافات</system:String>
+    <system:String x:Key="enable">تشغي</system:String>
+    <system:String x:Key="disable">إيقا</system:String>
+    <system:String x:Key="actionKeywordsTitle">إعداد كلمة الفع</system:String>
+    <system:String x:Key="actionKeywords">كلمة الفع</system:String>
+    <system:String x:Key="currentActionKeywords">كلمة الفعل الحالي</system:String>
+    <system:String x:Key="newActionKeyword">كلمة فعل جديد</system:String>
+    <system:String x:Key="actionKeywordsTooltip">تغيير كلمات الفع</system:String>
+    <system:String x:Key="currentPriority">الأولوية الحالي</system:String>
+    <system:String x:Key="newPriority">أولوية جديد</system:String>
+    <system:String x:Key="priority">الأولوي</system:String>
     <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
-    <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
-    <system:String x:Key="author">by</system:String>
-    <system:String x:Key="plugin_init_time">Init time:</system:String>
-    <system:String x:Key="plugin_query_time">Query time:</system:String>
-    <system:String x:Key="plugin_query_version">Version</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="pluginDirectory">دليل الإضافات</system:String>
+    <system:String x:Key="author">بواسط</system:String>
+    <system:String x:Key="plugin_init_time">وقت التهيئة:</system:String>
+    <system:String x:Key="plugin_query_time">وقت الاستعلام:</system:String>
+    <system:String x:Key="plugin_query_version">الإصدار</system:String>
+    <system:String x:Key="plugin_query_web">الموقع الإلكترون</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">متجر الإضافات</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugins</system:String>
+    <system:String x:Key="pluginStore_None">الإضافات</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
-    <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="refresh">تحديث</system:String>
+    <system:String x:Key="installbtn">تثبيت</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
-    <system:String x:Key="updatebtn">Update</system:String>
+    <system:String x:Key="updatebtn">تحديث</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
     <system:String x:Key="LabelNew">New Version</system:String>
     <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
@@ -144,11 +144,11 @@
 
 
     <!--  Setting Theme  -->
-    <system:String x:Key="theme">Theme</system:String>
+    <system:String x:Key="theme">السم</system:String>
     <system:String x:Key="appearance">Appearance</system:String>
-    <system:String x:Key="browserMoreThemes">Theme Gallery</system:String>
-    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
-    <system:String x:Key="hiThere">Hi There</system:String>
+    <system:String x:Key="browserMoreThemes">معرض السمات</system:String>
+    <system:String x:Key="howToCreateTheme">كيفية إنشاء سم</system:String>
+    <system:String x:Key="hiThere">مرحباً</system:String>
     <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
     <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
@@ -159,28 +159,28 @@
     <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
     <system:String x:Key="ItemHeight">Item Height</system:String>
-    <system:String x:Key="queryBoxFont">Query Box Font</system:String>
+    <system:String x:Key="queryBoxFont">خط صندوق الاستعلا</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
     <system:String x:Key="resetCustomize">Reset</system:String>
     <system:String x:Key="CustomizeToolTip">Customize</system:String>
-    <system:String x:Key="windowMode">Window Mode</system:String>
-    <system:String x:Key="opacity">Opacity</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} not exists, fallback to default theme</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Fail to load theme {0}, fallback to default theme</system:String>
-    <system:String x:Key="ThemeFolder">Theme Folder</system:String>
-    <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
-    <system:String x:Key="ColorScheme">Color Scheme</system:String>
-    <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
-    <system:String x:Key="SoundEffect">Sound Effect</system:String>
-    <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
+    <system:String x:Key="windowMode">وضع النافذ</system:String>
+    <system:String x:Key="opacity">الشفافي</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">السمة {0} غير موجودة، العودة إلى السمة الافتراضي</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">فشل في تحميل السمة {0}، العودة إلى السمة الافتراضي</system:String>
+    <system:String x:Key="ThemeFolder">مجلد السم</system:String>
+    <system:String x:Key="OpenThemeFolder">فتح مجلد السم</system:String>
+    <system:String x:Key="ColorScheme">نظام الألوا</system:String>
+    <system:String x:Key="ColorSchemeSystem">الافتراضي للنظا</system:String>
+    <system:String x:Key="ColorSchemeLight">فاتح</system:String>
+    <system:String x:Key="ColorSchemeDark">داك</system:String>
+    <system:String x:Key="SoundEffect">تأثير الصوت</system:String>
+    <system:String x:Key="SoundEffectTip">تشغيل صوت صغير عند فتح نافذة البحث</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
     <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
-    <system:String x:Key="Animation">Animation</system:String>
-    <system:String x:Key="AnimationTip">Use Animation in UI</system:String>
+    <system:String x:Key="Animation">الرسوم المتحرك</system:String>
+    <system:String x:Key="AnimationTip">استخدام الرسوم المتحركة في واجهة المستخد</system:String>
     <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
     <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
     <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
@@ -194,18 +194,18 @@
 
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Hotkey</system:String>
-    <system:String x:Key="hotkeys">Hotkeys</system:String>
+    <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
+    <system:String x:Key="hotkeys">مفاتيح الاختصار</system:String>
     <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
-    <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
+    <system:String x:Key="flowlauncherHotkeyToolTip">أدخل اختصارًا لإظهار/إخفاء Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
     <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
-    <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
-    <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
+    <system:String x:Key="openResultModifiers">مفتاح تعديل فتح النتيج</system:String>
+    <system:String x:Key="openResultModifiersToolTip">اختر مفتاح تعديل لفتح النتيجة المحددة عبر لوحة المفاتيح.</system:String>
+    <system:String x:Key="showOpenResultHotkey">عرض مفتاح الاختصار</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">عرض مفتاح اختصار تحديد النتائج مع النتائج.</system:String>
     <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
@@ -214,9 +214,9 @@
     <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
-    <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">فتح قائمة السيا</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
-    <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
+    <system:String x:Key="SettingWindowHotkey">فتح نافذة الإعدادات</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
@@ -231,115 +231,115 @@
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customQuery">استعلا</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
     <system:String x:Key="builtinShortcutDescription">Description</system:String>
-    <system:String x:Key="delete">Delete</system:String>
-    <system:String x:Key="edit">Edit</system:String>
-    <system:String x:Key="add">Add</system:String>
+    <system:String x:Key="delete">حذ</system:String>
+    <system:String x:Key="edit">تعدي</system:String>
+    <system:String x:Key="add">إضاف</system:String>
     <system:String x:Key="none">None</system:String>
-    <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
+    <system:String x:Key="pleaseSelectAnItem">يرجى اختيار عنصر</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">هل أنت متأكد أنك تريد حذف مفتاح اختصار الإضافة {0}</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="queryWindowShadowEffect">تأثير ظل نافذة الاستعلا</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">تأثير الظل يستهلك كمية كبيرة من وحدة المعالجة الرسومية (GPU). لا يوصى به إذا كانت أداء الكمبيوتر محدودًا.</system:String>
+    <system:String x:Key="windowWidthSize">عرض النافذ</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">استخدام أيقونات Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">استخدام أيقونات Segoe Fluent لنتائج الاستعلام حيثما كان مدعومًا</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP Proxy</system:String>
-    <system:String x:Key="enableProxy">Enable HTTP Proxy</system:String>
-    <system:String x:Key="server">HTTP Server</system:String>
-    <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">User Name</system:String>
-    <system:String x:Key="password">Password</system:String>
-    <system:String x:Key="testProxy">Test Proxy</system:String>
-    <system:String x:Key="save">Save</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
-    <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
-    <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
-    <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
-    <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
-    <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
+    <system:String x:Key="proxy">بروكسي HTTP</system:String>
+    <system:String x:Key="enableProxy">تمكين بروكسي HTTP</system:String>
+    <system:String x:Key="server">خادم HTTP</system:String>
+    <system:String x:Key="port">المنفذ</system:String>
+    <system:String x:Key="userName">اسم المستخد</system:String>
+    <system:String x:Key="password">كلمة المرور</system:String>
+    <system:String x:Key="testProxy">اختبار البروكس</system:String>
+    <system:String x:Key="save">حفظ</system:String>
+    <system:String x:Key="serverCantBeEmpty">حقل الخادم لا يمكن أن يكون فارغًا</system:String>
+    <system:String x:Key="portCantBeEmpty">حقل المنفذ لا يمكن أن يكون فارغًا</system:String>
+    <system:String x:Key="invalidPortFormat">تنسيق المنفذ غير صحيح</system:String>
+    <system:String x:Key="saveProxySuccessfully">تم حفظ إعدادات البروكسي بنجاح</system:String>
+    <system:String x:Key="proxyIsCorrect">تم تكوين البروكسي بشكل صحيح</system:String>
+    <system:String x:Key="proxyConnectFailed">فشل الاتصال بالبروكس</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="about">حو</system:String>
+    <system:String x:Key="website">الموقع الإلكترون</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
-    <system:String x:Key="version">Version</system:String>
+    <system:String x:Key="docs">الوثائ</system:String>
+    <system:String x:Key="version">الإصدار</system:String>
     <system:String x:Key="icons">Icons</system:String>
-    <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
-    <system:String x:Key="checkUpdates">Check for Updates</system:String>
+    <system:String x:Key="about_activate_times">لقد قمت بتفعيل Flow Launcher {0} مرات</system:String>
+    <system:String x:Key="checkUpdates">التحقق من التحديثات</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
-    <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="newVersionTips">الإصدار الجديد {0} متاح، هل ترغب في إعادة تشغيل Flow Launcher لاستخدام التحديث</system:String>
+    <system:String x:Key="checkUpdatesFailed">فشل التحقق من التحديثات، يرجى التحقق من الاتصال وإعدادات البروكسي لـ api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        فشل تنزيل التحديثات، يرجى التحقق من الاتصال وإعدادات البروكسي لـ github-cloud.s3.amazonaws.com،
+    أو الذهاب إلى https://github.com/Flow-Launcher/Flow.Launcher/releases لتنزيل التحديثات يدويًا.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="releaseNotes">ملاحظات الإصدار</system:String>
+    <system:String x:Key="documentation">نصائح الاستخدا</system:String>
+    <system:String x:Key="devtool">أدوات المطوري</system:String>
+    <system:String x:Key="settingfolder">مجلد الإعدادات</system:String>
+    <system:String x:Key="logfolder">مجلد السجلات</system:String>
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="welcomewindow">معالج الترحي</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
+    <system:String x:Key="fileManagerWindow">اختر مدير الملفات</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_name">مدير الملفات</system:String>
+    <system:String x:Key="fileManager_profile_name">اسم الملف الشخص</system:String>
+    <system:String x:Key="fileManager_path">مسار مدير الملفات</system:String>
+    <system:String x:Key="fileManager_directory_arg">حجة للمجل</system:String>
+    <system:String x:Key="fileManager_file_arg">حجة للمل</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">متصفح الويب الافتراض</system:String>
+    <system:String x:Key="defaultBrowser_tips">الإعداد الافتراضي يتبع إعداد متصفح النظام الافتراضي. إذا تم تحديده بشكل منفصل، يستخدم Flow ذلك المتصفح.</system:String>
+    <system:String x:Key="defaultBrowser_name">المتصفح</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">مسار المتصفح</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_parameter">الوضع الخاص</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">تغيير الأولوي</system:String>
+    <system:String x:Key="priority_tips">كلما كان الرقم أكبر، كلما كانت النتيجة مرتبة أعلى. جرب تعيينها على 5. إذا كنت تريد أن تكون النتائج أقل من نتائج أي إضافة أخرى، قدم رقمًا سالبًا.</system:String>
+    <system:String x:Key="invalidPriority">يرجى تقديم عدد صحيح صالح للأولوية!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
-    <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
-    <system:String x:Key="cancel">Cancel</system:String>
-    <system:String x:Key="done">Done</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
-    <system:String x:Key="success">Success</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="oldActionKeywords">كلمة المفتاح القديم</system:String>
+    <system:String x:Key="newActionKeywords">كلمة المفتاح الجديد</system:String>
+    <system:String x:Key="cancel">إلغاء</system:String>
+    <system:String x:Key="done">ت</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">لا يمكن العثور على الإضافة المحدد</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">كلمة المفتاح الجديدة لا يمكن أن تكون فارغ</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">تم تعيين كلمة المفتاح الجديدة هذه إلى إضافة أخرى، يرجى اختيار كلمة أخر</system:String>
+    <system:String x:Key="success">نجاح</system:String>
+    <system:String x:Key="completedSuccessfully">اكتمل بنجاح</system:String>
+    <system:String x:Key="actionkeyword_tips">أدخل كلمة المفتاح التي ترغب في استخدامها لبدء الإضافة. استخدم * إذا كنت لا ترغب في تحديد أي كلمة، وسيتم تشغيل الإضافة بدون كلمات مفتاحية.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
-    <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
+    <system:String x:Key="customeQueryHotkeyTitle">مفتاح اختصار الاستعلام المخصص</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
-    <system:String x:Key="preview">Preview</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
-    <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
-    <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="preview">معاين</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">مفتاح الاختصار غير متاح، يرجى اختيار مفتاح اختصار جدي</system:String>
+    <system:String x:Key="invalidPluginHotkey">مفتاح اختصار غير صالح للإضاف</system:String>
+    <system:String x:Key="update">تحديث</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
@@ -357,82 +357,82 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Common Action  -->
-    <system:String x:Key="commonSave">Save</system:String>
+    <system:String x:Key="commonSave">حفظ</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
-    <system:String x:Key="commonCancel">Cancel</system:String>
+    <system:String x:Key="commonCancel">إلغاء</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
-    <system:String x:Key="commonDelete">Delete</system:String>
+    <system:String x:Key="commonDelete">حذ</system:String>
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version">Version</system:String>
-    <system:String x:Key="reportWindow_time">Time</system:String>
-    <system:String x:Key="reportWindow_reproduce">Please tell us how application crashed so we can fix it</system:String>
-    <system:String x:Key="reportWindow_send_report">Send Report</system:String>
-    <system:String x:Key="reportWindow_cancel">Cancel</system:String>
-    <system:String x:Key="reportWindow_general">General</system:String>
-    <system:String x:Key="reportWindow_exceptions">Exceptions</system:String>
-    <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
-    <system:String x:Key="reportWindow_source">Source</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
-    <system:String x:Key="reportWindow_sending">Sending</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Report sent successfully</system:String>
-    <system:String x:Key="reportWindow_report_failed">Failed to send report</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher got an error</system:String>
+    <system:String x:Key="reportWindow_version">الإصدار</system:String>
+    <system:String x:Key="reportWindow_time">الوقت</system:String>
+    <system:String x:Key="reportWindow_reproduce">يرجى إخبارنا بكيفية تعطل التطبيق حتى نتمكن من إصلاح</system:String>
+    <system:String x:Key="reportWindow_send_report">إرسال التقرير</system:String>
+    <system:String x:Key="reportWindow_cancel">إلغاء</system:String>
+    <system:String x:Key="reportWindow_general">عا</system:String>
+    <system:String x:Key="reportWindow_exceptions">الاستثناءات</system:String>
+    <system:String x:Key="reportWindow_exception_type">نوع الاستثناء</system:String>
+    <system:String x:Key="reportWindow_source">المصدر</system:String>
+    <system:String x:Key="reportWindow_stack_trace">تتبع المكدس</system:String>
+    <system:String x:Key="reportWindow_sending">جارٍ الإرسا</system:String>
+    <system:String x:Key="reportWindow_report_succeed">تم إرسال التقرير بنجاح</system:String>
+    <system:String x:Key="reportWindow_report_failed">فشل في إرسال التقرير</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">حدث خطأ في Flow Launcher</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">يرجى الانتظار...</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">التحقق من التحديث الجدي</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">أنت بالفعل تستخدم أحدث إصدار من Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">تم العثور على تحديث</system:String>
+    <system:String x:Key="update_flowlauncher_updating">جارٍ التحديث...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher was not able to move your user profile data to the new update version.
-        Please manually move your profile data folder from {0} to {1}
+        لم يتمكن Flow Launcher من نقل بيانات ملف المستخدم الشخصي إلى إصدار التحديث الجديد.
+    يرجى نقل مجلد بيانات ملفك الشخصي يدويًا من {0} إلى {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">New Flow Launcher release {0} is now available</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">An error occurred while trying to install software updates</system:String>
-    <system:String x:Key="update_flowlauncher_update">Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Cancel</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
-    <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">تحديث جدي</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">الإصدار الجديد من Flow Launcher {0} متاح الآ</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">حدث خطأ أثناء محاولة تثبيت تحديثات البرامج</system:String>
+    <system:String x:Key="update_flowlauncher_update">تحديث</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">إلغاء</system:String>
+    <system:String x:Key="update_flowlauncher_fail">فشل التحديث</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">تحقق من اتصالك وجرب تحديث إعدادات الوكيل إلى github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">سيقوم هذا التحديث بإعادة تشغيل Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">الملفات التالية سيتم تحديثها</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">تحديث الملفات</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">وصف التحديث</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Skip">تخط</system:String>
+    <system:String x:Key="Welcome_Page1_Title">مرحبًا بك في Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">مرحبًا، هذه هي المرة الأولى التي تشغل فيها Flow Launcher!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">قبل البدء، سيساعدك هذا المعالج في إعداد Flow Launcher. يمكنك تخطي هذه الخطوة إذا أردت. يرجى اختيار اللغ</system:String>
+    <system:String x:Key="Welcome_Page2_Title">ابحث وشغل جميع الملفات والتطبيقات على جهاز الكمبيوتر الخاص ب</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">ابحث عن كل شيء من التطبيقات، الملفات، الإشارات المرجعية، YouTube، Twitter والمزيد. كل ذلك من خلال لوحة المفاتيح الخاصة بك دون لمس الفأرة.</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">يبدأ Flow Launcher بمفتاح الاختصار أدناه، جربه الآن. لتغييره، انقر على الإدخال واضغط على مفتاح الاختصار المطلوب على لوحة المفاتيح.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">مفاتيح الاختصار</system:String>
+    <system:String x:Key="Welcome_Page4_Title">كلمات المفتاح والأوامر</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">ابحث في الويب، شغل التطبيقات أو نفذ وظائف مختلفة من خلال إضافات Flow Launcher. تبدأ بعض الوظائف بكلمة مفتاح، وإذا لزم الأمر، يمكن استخدامها بدون كلمات مفتاح. جرب الاستعلامات أدناه في Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">لنبدأ مع Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">تم الانتهاء. استمتع باستخدام Flow Launcher. لا تنسَ مفتاح الاختصار لبدء الاستخدام :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">الرجوع / قائمة السيا</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">التنقل بين العناصر</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">فتح قائمة السيا</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">سجل الاستعلامات</system:String>
+    <system:String x:Key="HotkeyESCDesc">الرجوع إلى النتائج في قائمة السيا</system:String>
+    <system:String x:Key="HotkeyTabDesc">الإكمال التلقائ</system:String>
+    <system:String x:Key="HotkeyRunDesc">فتح / تشغيل العنصر المحد</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">فتح نافذة الإعدادات</system:String>
+    <system:String x:Key="HotkeyF5Desc">إعادة تحميل بيانات الإضاف</system:String>
 
     <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
     <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
@@ -440,14 +440,14 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyOpenResult">Open result</system:String>
     <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">الطقس</system:String>
+    <system:String x:Key="RecommendWeatherDesc">الطقس في نتائج Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">أمر Shell</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">الملاحظات اللاصق</system:String>
 
     <!--  Preview Area  -->
     <system:String x:Key="FileSize">File Size</system:String>
