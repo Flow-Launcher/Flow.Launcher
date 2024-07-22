@@ -13,6 +13,7 @@ using Flow.Launcher.Plugin;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -51,7 +52,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Save json and ISavable 
+        /// Save json and ISavable
         /// </summary>
         public static void Save()
         {
@@ -202,12 +203,21 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
+            InternationalizationManager.Instance.AddPluginLanguageDirectories(GetPluginsForInterface<IPluginI18n>());
+            InternationalizationManager.Instance.ChangeLanguage(InternationalizationManager.Instance.Settings.Language);
+
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg($"Fail to Init Plugins",
-                    $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help",
-                    "", false);
+                API.ShowMsg(
+                    InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsTitle"),
+                    string.Format(
+                        InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsMessage"),
+                        failed
+                    ),
+                    "",
+                    false
+                );
             }
         }
 
@@ -215,11 +225,11 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
-            
+
             if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
-            
-            
+
+
             var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
             {
@@ -279,8 +289,8 @@ namespace Flow.Launcher.Core.Plugin
                 r.PluginID = metadata.ID;
                 r.OriginQuery = query;
 
-                // ActionKeywordAssigned is used for constructing MainViewModel's query text auto-complete suggestions 
-                // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level 
+                // ActionKeywordAssigned is used for constructing MainViewModel's query text auto-complete suggestions
+                // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
             }
@@ -463,7 +473,7 @@ namespace Flow.Launcher.Core.Plugin
             // Unzip plugin files to temp folder
             var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
-            
+
             if(!plugin.IsFromLocalInstallPath)
                 File.Delete(zipFilePath);
 

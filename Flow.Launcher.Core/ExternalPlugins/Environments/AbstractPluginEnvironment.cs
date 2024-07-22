@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -50,14 +51,15 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
             }
 
-            if (MessageBox.Show($"Flow detected you have installed {Language} plugins, which " +
-                                $"will require {EnvName} to run. Would you like to download {EnvName}? " +
-                                Environment.NewLine + Environment.NewLine +
-                                "Click no if it's already installed, " +
-                                $"and you will be prompted to select the folder that contains the {EnvName} executable",
-                    string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
+            var noRuntimeMessage = string.Format(
+                InternationalizationManager.Instance.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
+                Language,
+                EnvName,
+                Environment.NewLine
+            );
+            if (MessageBox.Show(noRuntimeMessage, string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
             {
-                var msg = $"Please select the {EnvName} executable";
+                var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
                 string selectedFile;
 
                 selectedFile = GetFileFromDialog(msg, FileDialogFilter);
@@ -80,8 +82,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                MessageBox.Show(
-                    $"Unable to set {Language} executable path, please try from Flow's settings (scroll down to the bottom).");
+                MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
                 Log.Error("PluginsLoader",
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
