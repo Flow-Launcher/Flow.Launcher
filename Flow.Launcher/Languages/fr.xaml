@@ -2,14 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow a détecté que vous avez installé {0} plugins, qui nécessiteront {1} pour fonctionner. Souhaitez-vous télécharger {1} ?
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        Cliquez sur non s'il est déjà installé, et vous serez invité à sélectionner le dossier qui contient l'exécutable {1}
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
