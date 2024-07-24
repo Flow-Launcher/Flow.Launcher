@@ -62,8 +62,8 @@
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Mecanismo de pesquisa recursiva de diretórios</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Mecanismo de pesquisa do índice</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opções de índice do Windows</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Tipos de ficheiros excluídos (separados por vírgula)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Exemplo: exe,jpg,png</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
