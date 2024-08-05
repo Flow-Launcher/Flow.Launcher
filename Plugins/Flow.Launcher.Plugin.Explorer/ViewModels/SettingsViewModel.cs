@@ -525,6 +525,16 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             }
         }
 
+        public int MaxResult
+        {
+            get => Settings.MaxResult;
+            set
+            {
+                Settings.MaxResult = Math.Clamp(value, 0, 10000);
+                OnPropertyChanged();
+            }
+        }
+
 
         #region Everything FastSortWarning
 
