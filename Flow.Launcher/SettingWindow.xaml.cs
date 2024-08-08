@@ -110,39 +110,35 @@ public partial class SettingWindow
 
     public void InitializePosition()
     {
-        if (_settings.SettingWindowTop == null || _settings.SettingWindowLeft == null)
+        var previousTop = _settings.SettingWindowTop;
+        var previousLeft = _settings.SettingWindowLeft;
+
+        if (previousTop == null || previousLeft == null || !IsPositionValid(previousTop.Value, previousLeft.Value))
         {
-            SetWindowPosition(WindowTop(), WindowLeft());
+            Top = WindowTop();
+            Left = WindowLeft();
         }
         else
         {
-            double left = _settings.SettingWindowLeft.Value;
-            double top = _settings.SettingWindowTop.Value;
-            AdjustWindowPosition(ref top, ref left);
-            SetWindowPosition(top, left);
+            Top = previousTop.Value;
+            Left = previousLeft.Value;
         }
         WindowState = _settings.SettingWindowState;
     }
 
-    private void SetWindowPosition(double top, double left)
+    private bool IsPositionValid(double top, double left)
     {
-        // Ensure window does not exceed screen boundaries
-        top = Math.Max(top, SystemParameters.VirtualScreenTop);
-        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
-        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
-        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+        foreach (var screen in Screen.AllScreens)
+        {
+            var workingArea = screen.WorkingArea;
 
-        Top = top;
-        Left = left;
-    }
-
-    private void AdjustWindowPosition(ref double top, ref double left)
-    {
-        // Adjust window position if it exceeds screen boundaries
-        top = Math.Max(top, SystemParameters.VirtualScreenTop);
-        left = Math.Max(left, SystemParameters.VirtualScreenLeft);
-        top = Math.Min(top, SystemParameters.VirtualScreenHeight - ActualHeight);
-        left = Math.Min(left, SystemParameters.VirtualScreenWidth - ActualWidth);
+            if (left >= workingArea.Left && left < workingArea.Right &&
+                top >= workingArea.Top && top < workingArea.Bottom)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private double WindowLeft()
@@ -150,7 +146,7 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
-        var left = (dip2.X - ActualWidth) / 2 + dip1.X;
+        var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
         return left;
     }
 
@@ -159,7 +155,7 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
-        var top = (dip2.Y - ActualHeight) / 2 + dip1.Y;
+        var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
 

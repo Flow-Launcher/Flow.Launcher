@@ -25,6 +25,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ShellPath { get; set; } = "cmd";
 
+        public string ExcludedFileTypes { get; set; } = "";
+
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
@@ -151,6 +153,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
         public bool EverythingSearchFullPath { get; set; } = false;
+        public bool EverythingEnableRunCount { get; set; } = true;
 
         #endregion
 
