@@ -360,15 +360,13 @@
                                         Grid.Row="4"
                                         Grid.Column="1"
                                         MinWidth="350"
-                                        Maximum="10000"
-                                        Minimum="0"
                                         Margin="0,9,0,6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
                                         CornerRadius="4"
                                         SmallChange="10"
                                         SpinButtonPlacementMode="Inline"
-                                        Value="{Binding MaxResult}"
+                                        Value="{Binding MaxResult, Delay=100}"
                                         ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}"/>
                                 </Grid>
                             </StackPanel>

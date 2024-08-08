@@ -530,7 +530,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             get => Settings.MaxResult;
             set
             {
-                Settings.MaxResult = Math.Clamp(value, 0, 10000);
+                Settings.MaxResult = Math.Clamp(value, 100, 10000);
                 OnPropertyChanged();
             }
         }
