@@ -363,6 +363,7 @@
                                         Margin="0,9,0,6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
+                                        PreviewTextInput="AllowOnlyNumericInput"
                                         Text="{Binding MaxResult}"
                                         ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}"/>
                                 </Grid>
