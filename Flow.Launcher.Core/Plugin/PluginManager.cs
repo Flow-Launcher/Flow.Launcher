@@ -1,4 +1,4 @@
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -308,7 +308,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
-            return AllPlugins.Where(p => p.Plugin is T);
+            return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
         }
 
         public static List<Result> GetContextMenusForPlugin(Result result)

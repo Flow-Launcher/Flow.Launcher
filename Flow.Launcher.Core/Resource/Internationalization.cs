@@ -58,6 +58,7 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadDefaultLanguage()
         {
+            RemoveOldLanguageFiles();
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
         }
