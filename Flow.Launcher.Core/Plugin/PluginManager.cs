@@ -308,6 +308,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
+            // Handle scenario where this is called before all plugins are instantiated, e.g. language change on startup
             return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
         }
 
