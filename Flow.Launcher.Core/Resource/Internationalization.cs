@@ -58,6 +58,8 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadDefaultLanguage()
         {
+            // Removes language files loaded before any plugins were loaded.
+            // Prevents the language Flow started in from overwriting English if the user switches back to English
             RemoveOldLanguageFiles();
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
