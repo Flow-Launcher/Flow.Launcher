@@ -155,9 +155,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set => Settings.KeepMaxResults = value;
     }
 
-    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentCulture);
+    public string ClockText => DateTime.Now.ToString(TimeFormat, CultureInfo.CurrentUICulture);
 
-    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentCulture);
+    public string DateText => DateTime.Now.ToString(DateFormat, CultureInfo.CurrentUICulture);
 
     public bool UseGlyphIcons
     {
