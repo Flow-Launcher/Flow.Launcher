@@ -282,6 +282,7 @@
                                         <RowDefinition />
                                         <RowDefinition />
                                         <RowDefinition />
+                                        <RowDefinition />
                                     </Grid.RowDefinitions>
                                     <TextBlock
                                         Grid.Row="0"
@@ -348,6 +349,24 @@
                                         Margin="0,9,0,6"
                                         ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}"
                                         Text="{Binding ExcludedFileTypes}" />
+                                    <TextBlock
+                                        Grid.Row="4"
+                                        Grid.Column="0"
+                                        Margin="0 15 20 0"
+                                        VerticalAlignment="Center"
+                                        Text="{DynamicResource plugin_explorer_Maximum_Results}"
+                                        TextBlock.Foreground="{DynamicResource Color05B}" />
+                                    <TextBox
+                                        Grid.Row="4"
+                                        Grid.Column="1"
+                                        MinWidth="350"
+                                        Margin="0,9,0,6"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Center"
+                                        PreviewTextInput="AllowOnlyNumericInput"
+                                        MaxLength="6"
+                                        Text="{Binding MaxResult}"
+                                        ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}"/>
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
