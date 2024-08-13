@@ -64,8 +64,8 @@
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opções de índice do Windows</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types">Tipos de ficheiros excluídos (separados por vírgula)</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Exemplo: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Número máximo de resultados</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">O número máximo de resultados solicitados ao motor de pesquisa ativo</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
