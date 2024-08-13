@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow ha detectado que tiene instalados {0} complementos, que necesitan {1} para funcionar. ¿Desea descargar {1}?
+        {2}{2}
+        Haga clic en no si ya está instalado, y seleccione la carpeta que contiene el ejecutable {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, seleccione el ejecutable {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">No se puede establecer la ruta del ejecutable {0}, por favor inténtelo desde la configuración de Flow (desplácese hacia abajo).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Fallo al iniciar los complementos</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Complemento: {0} - no se pudo cargar y se desactivará, póngase en contacto con el creador del complemento para obtener ayuda</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado &quot;{0}&quot;. El atajo de teclado puede estar siendo utilizado por otro programa. Seleccione un atajo de teclado diferente o salga del otro programa.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -287,8 +298,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Seleccionar administrador de archivos</system:String>
-    <system:String x:Key="fileManager_tips">Por favor, especifique la ubicación del administrador de archivos que desea utilizar y añada argumentos si es necesario. El argumento por defecto es &quot;%d&quot;, introduciendo una ruta en esa ubicación. Por ejemplo, si se requiere un comando como &quot;totalcmd.exe /A c:\windows&quot;, el argumento es /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; es un argumento que representa la ruta del archivo. Se utiliza para especificar el nombre de archivo/carpeta al abrir una ubicación específica con administradores de archivos de terceros. Este argumento sólo está disponible en el elemento &quot;Argumentos del archivo&quot;. Si el administrador de archivos no tiene esa función, puede utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Especifique la ubicación del archivo del administrador de archivos que está utilizando y añada los argumentos necesarios. El argumento &quot;%d&quot; representa la ruta del directorio a abrir, utilizada por el campo Argumentos de la carpeta y por comandos que abren directorios específicos. El &quot;%f&quot; representa la ruta del archivo a abrir, utilizada por el campo Argumentos del archivo y por comandos que abren archivos específicos.</system:String>
+    <system:String x:Key="fileManager_tips2">Por ejemplo, si el administrador de archivos utiliza un comando como &quot;totalcmd.exe /A c:\windows&quot; para abrir el directorio c:\windows, la ruta del administrador de archivos será totalcmd.exe, y los Argumentos de la carpeta serán /A &quot;%d&quot;. Ciertos administradores de archivos como QTTabBar pueden requerir solo la ruta, en este caso utilice &quot;%d&quot; como la ruta del administrador de archivos y deje el resto de los campos en blanco.</system:String>
     <system:String x:Key="fileManager_name">Administrador de archivos</system:String>
     <system:String x:Key="fileManager_profile_name">Nombre del perfil</system:String>
     <system:String x:Key="fileManager_path">Ruta del administrador de archivos</system:String>

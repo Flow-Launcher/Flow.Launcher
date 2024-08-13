@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow Launcher detetou que tem instalados {0} plugins e que necessitam de {1} para serem executados. Gostaria de descarregar {1}?
+{2}{2}
+Clique &quot;Não&quot; se já tiver instalado e, de seguida, ser-lhe-á solicitada a pasta que contém o executável {1}.
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - não foi possível iniciar e serão desativados. Contacte o criador dos plugins para obter ajuda.</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registar a tecla de atalho &quot;{0}&quot;. A tecla de atalho pode estar a ser usada por outra aplicação. Utilize uma tecla de atalho diferente ou feche o outro programa.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -286,8 +297,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o gestor de ficheiros</system:String>
-    <system:String x:Key="fileManager_tips">Especifique a localização do executável do gestor de ficheiros e, eventualmente, alguns argumentos. Os argumentos padrão são &quot;%d&quot; e o caminho é introduzido nesse local. Por exemplo, se necessitar de um comando como &quot;totalcmd.exe /A c:\windows&quot;, o argumento é /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; é o argumento que representa o caminho do ficheiro. É utilizado para dar ênfase ao nome do ficheiro ou da pasta se utilizar um gestor de ficheiros não nativo. Este argumento apenas está disponível para o item &quot;Argumento para ficheiro&quot;. Se o seu gestor de ficheiros não possuir esta funcionalidade, pode utilizar &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Por favor, especifique a localização do executável do seu gestor de ficheiros e adicione os argumentos necessários. &quot;%d&quot; representa o caminho do diretório a abrir, usado pelo argumento do campo Pasta e para comandos que abrem diretórios específicos. &quot;%f&quot; representa o caminho do ficheiro a abrir, usado pelo argumento do campo Ficheiro e para comandos que abrem ficheiros específicos.</system:String>
+    <system:String x:Key="fileManager_tips2">Por exemplo, se o gestor de ficheiros utilizar o comando &quot;totalcmd.exe /A c:\windows&quot; para abrir o diretório c:\windows , o caminho para o gestor de ficheiros será totalcmd. exe e os argumentos para a Pasta serão /A &quot;%d&quot;. Alguns gestores de ficheiros, como QTTabBar podem apenas exigir que especifique o caminho. Para estes, deve utilizar &quot;%d&quot; como caminho para o gestor de ficheiros e deixar o resto dos campos em branco.</system:String>
     <system:String x:Key="fileManager_name">Gestor de ficheiros</system:String>
     <system:String x:Key="fileManager_profile_name">Nome do perfil</system:String>
     <system:String x:Key="fileManager_path">Caminho do gestor de ficheiros</system:String>

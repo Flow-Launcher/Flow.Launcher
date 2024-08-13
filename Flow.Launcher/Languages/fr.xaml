@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow a détecté que vous avez installé {0} plugins, qui nécessiteront {1} pour fonctionner. Souhaitez-vous télécharger {1} ?
+        {2}{2}
+        Cliquez sur non s'il est déjà installé, et vous serez invité à sélectionner le dossier qui contient l'exécutable {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -286,8 +297,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
-    <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier du gestionnaire de fichiers que vous utilisez et ajouter des arguments si nécessaire. Les arguments par défaut sont &quot;%d&quot;, et un chemin est entré à cet endroit. Par exemple, si une commande est requise comme &quot;totalcmd.exe /A c:\windows&quot;, l'argument est /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; est un argument qui représente le chemin du fichier. Il est utilisé pour souligner le nom du fichier/dossier lors de l'ouverture d'un emplacement de fichier spécifique dans le gestionnaire de fichiers tiers. Cet argument n'est disponible que dans l'élément &quot;Arguments pour le fichier&quot;. Si le gestionnaire de fichiers n'a pas cette fonction, vous pouvez utiliser &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier de l'explorateur de fichiers que vous utilisez et ajouter des arguments si nécessaire. Le &quot;%d&quot; représente le chemin du répertoire à ouvrir, utilisé par le champ Arg for Folder et pour les commandes ouvrant des répertoires spécifiques. Le &quot;%f&quot; représente le chemin du fichier à ouvrir, utilisé par le champ Arg for File et pour les commandes ouvrant des fichiers spécifiques.</system:String>
+    <system:String x:Key="fileManager_tips2">Par exemple, si l'explorateur de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin de l'explorateur de fichiers sera totalcmd.exe et l'argument Arg For Folder sera /A &quot;%d&quot;&quot;. Certains explorateurs de fichiers comme QTTabBar peuvent simplement nécessiter qu'un chemin soit fourni, dans ce cas, utilisez &quot;%d&quot; comme chemin de l'explorateur de fichiers et laissez le reste des fichiers vides.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_profile_name">Nom du profil</system:String>
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>

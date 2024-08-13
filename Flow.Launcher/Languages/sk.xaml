@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow zistil, že máte nainštalované {0} pluginy, ktoré vyžadujú na spustenie {1}. Chcete stiahnuť {1}?
+        {2}{2}
+        Ak už ho máte nainštalovaný, kliknite na nie, a budete vyzvaný na zadanie cesty k priečinku spustiteľného súboru {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Vyberte spustiteľný súbor {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie je možné nastaviť cestu ku spustiteľnému súboru {0}, skúste to v nastaveniach Flowu (prejdite nadol).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Nepodarilo sa inicializovať pluginy</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Pluginy: {0} – nepodarilo sa načítať a mal by bať zakázaný, na pomoc kontaktujte autora pluginu</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -287,8 +298,8 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
-    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a v prípade potreby pridajte argumenty. Predvolené argumenty sú &quot;%d&quot; a cesta sa zadáva na tomto mieste. Napríklad, ak sa vyžaduje príkaz, ako napríklad &quot;totalcmd.exe /A c:\windows&quot;, argument je /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; je argument, ktorý predstavuje cestu k súboru.  Používa sa na zvýraznenie názvu súboru/priečinka pri otváraní konkrétneho umiestnenia súboru v správcovi súborov tretej strany. Tento argument je k dispozícii len v položke &quot;Arg. pre súbor&quot;. Ak správca súborov nemá túto funkciu, môžete použiť &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Zadajte umiestnenie súboru správcu súborov, ktorý používate, a podľa potreby pridajte argumenty. &quot;%d&quot; predstavuje cestu k priečinku, ktorý sa má otvoriť, používa sa v poli Arg pre priečinok a pri príkazoch na otvorenie konkrétnych priečinkov. &quot;%f&quot; predstavuje cestu k súboru, ktorá sa má otvoriť a používa sa v poli Arg pre súbor a pri príkazoch na otvorenie konkrétnych súborov.</system:String>
+    <system:String x:Key="fileManager_tips2">Napríklad, ak správca súborov používa príkaz ako &quot;totalcmd.exe /A c:\windows&quot; na otvorenie priečinka c:\windows, cesta správcu súborov bude totalcmd.exe a Arg pre priečinok bude /A &quot;%d&quot;. Niektorí správcovia súborov, ako napríklad QTTabBar, môžu vyžadovať len zadanie cesty, v tomto prípade použite &quot;%d&quot; ako cestu správcu súborov a zvyšok súborov nechajte prázdny.</system:String>
     <system:String x:Key="fileManager_name">Správca súborov</system:String>
     <system:String x:Key="fileManager_profile_name">Názov profilu</system:String>
     <system:String x:Key="fileManager_path">Cesta k správcovi súborov</system:String>
