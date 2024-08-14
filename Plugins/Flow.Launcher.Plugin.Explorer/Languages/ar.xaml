@@ -64,8 +64,8 @@
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">فتح خيار فهرس Windows</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types">أنواع الملفات المستبعدة (مفصولة بفاصلة)</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">على سبيل المثال: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">الحد الأقصى للنتائج</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">الحد الأقصى لعدد النتائج المطلوبة من محرك البحث النشط</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">المستكشف</system:String>
