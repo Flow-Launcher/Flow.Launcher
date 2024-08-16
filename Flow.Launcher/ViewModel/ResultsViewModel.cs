@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Infrastructure.UserSettings;
+﻿using System;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -32,9 +33,15 @@ namespace Flow.Launcher.ViewModel
             _settings = settings;
             _settings.PropertyChanged += (s, e) =>
             {
-                if (e.PropertyName == nameof(_settings.MaxResultsToShow))
+                switch (e.PropertyName)
                 {
-                    OnPropertyChanged(nameof(MaxHeight));
+                    case nameof(_settings.MaxResultsToShow):
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
+                    case nameof(_settings.ItemHeightSize):
+                        OnPropertyChanged(nameof(ItemHeightSize));
+                        OnPropertyChanged(nameof(MaxHeight));
+                        break;
                 }
             };
         }
@@ -43,14 +50,37 @@ namespace Flow.Launcher.ViewModel
 
         #region Properties
 
-        public double MaxHeight => MaxResults * (double)Application.Current.FindResource("ResultItemHeight")!;
+        public bool IsPreviewOn { get; set; }
+
+        public double MaxHeight
+        {
+            get
+            {
+                var newResultsCount = MaxResults;
+                if (IsPreviewOn)
+                {
+                    newResultsCount = (int)Math.Ceiling(380 / _settings.ItemHeightSize);
+                    if (newResultsCount < MaxResults)
+                    {
+                        newResultsCount = MaxResults;
+                    }
+                }
+                return newResultsCount * _settings.ItemHeightSize;
+            }
+        }
+
+        public double ItemHeightSize
+        {
+            get => _settings.ItemHeightSize;
+            set => _settings.ItemHeightSize = value;
+        }
 
         public int SelectedIndex { get; set; }
 
         public ResultViewModel SelectedItem { get; set; }
         public Thickness Margin { get; set; }
         public Visibility Visibility { get; set; } = Visibility.Collapsed;
-        
+
         public ICommand RightClickResultCommand { get; init; }
         public ICommand LeftClickResultCommand { get; init; }
 
@@ -115,6 +145,11 @@ namespace Flow.Launcher.ViewModel
         public void SelectFirstResult()
         {
             SelectedIndex = NewIndex(0);
+        }
+
+        public void SelectLastResult()
+        {
+            SelectedIndex = NewIndex(Results.Count - 1);
         }
 
         public void Clear()

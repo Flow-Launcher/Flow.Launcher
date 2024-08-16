@@ -86,6 +86,11 @@
                         IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
+                        Margin="12 0 12 0"
+                        Content="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers}"
+                        IsChecked="{Binding HideUninstallers}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers_tooltip}" />
+                    <CheckBox
                         Name="DescriptionEnabled"
                         Margin="12,0,12,0"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"

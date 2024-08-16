@@ -44,7 +44,7 @@ public class QuerySuggestionBoxConverter : IMultiValueConverter
             // Check if Text will be larger than our QueryTextBox
             Typeface typeface = new Typeface(queryTextBox.FontFamily, queryTextBox.FontStyle, queryTextBox.FontWeight, queryTextBox.FontStretch);
             // TODO: Obsolete warning?
-            var ft = new FormattedText(queryTextBox.Text, CultureInfo.DefaultThreadCurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, queryTextBox.FontSize, Brushes.Black);
+            var ft = new FormattedText(queryTextBox.Text, CultureInfo.CurrentCulture, System.Windows.FlowDirection.LeftToRight, typeface, queryTextBox.FontSize, Brushes.Black);
 
             var offset = queryTextBox.Padding.Right;
 

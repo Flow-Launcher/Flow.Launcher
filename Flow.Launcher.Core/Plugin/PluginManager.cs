@@ -13,6 +13,7 @@ using Flow.Launcher.Plugin;
 using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
+using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -51,7 +52,7 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Save json and ISavable 
+        /// Save json and ISavable
         /// </summary>
         public static void Save()
         {
@@ -88,6 +89,48 @@ namespace Flow.Launcher.Core.Plugin
                 IAsyncReloadable p => p.ReloadDataAsync(),
                 _ => Task.CompletedTask,
             }).ToArray());
+        }
+
+        public static async Task OpenExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.OpenPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task CloseExternalPreviewAsync()
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.ClosePreviewAsync(),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static async Task SwitchExternalPreviewAsync(string path, bool sendFailToast = true)
+        {
+            await Task.WhenAll(AllPlugins.Select(plugin => plugin.Plugin switch
+            {
+                IAsyncExternalPreview p => p.SwitchPreviewAsync(path, sendFailToast),
+                _ => Task.CompletedTask,
+            }).ToArray());
+        }
+
+        public static bool UseExternalPreview()
+        {
+            return GetPluginsForInterface<IAsyncExternalPreview>().Any(x => !x.Metadata.Disabled);
+        }
+
+        public static bool AllowAlwaysPreview()
+        {
+            var plugin = GetPluginsForInterface<IAsyncExternalPreview>().FirstOrDefault(x => !x.Metadata.Disabled);
+
+            if (plugin is null)
+                return false;
+
+            return ((IAsyncExternalPreview)plugin.Plugin).AllowAlwaysPreview();
         }
 
         static PluginManager()
@@ -160,12 +203,21 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
+            InternationalizationManager.Instance.AddPluginLanguageDirectories(GetPluginsForInterface<IPluginI18n>());
+            InternationalizationManager.Instance.ChangeLanguage(InternationalizationManager.Instance.Settings.Language);
+
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg($"Fail to Init Plugins",
-                    $"Plugins: {failed} - fail to load and would be disabled, please contact plugin creator for help",
-                    "", false);
+                API.ShowMsg(
+                    InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsTitle"),
+                    string.Format(
+                        InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsMessage"),
+                        failed
+                    ),
+                    "",
+                    false
+                );
             }
         }
 
@@ -173,11 +225,11 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (query is null)
                 return Array.Empty<PluginPair>();
-            
+
             if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
-            
-            
+
+
             var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
             {
@@ -237,8 +289,8 @@ namespace Flow.Launcher.Core.Plugin
                 r.PluginID = metadata.ID;
                 r.OriginQuery = query;
 
-                // ActionKeywordAssigned is used for constructing MainViewModel's query text auto-complete suggestions 
-                // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level 
+                // ActionKeywordAssigned is used for constructing MainViewModel's query text auto-complete suggestions
+                // Plugins may have multi-actionkeywords eg. WebSearches. In this scenario it needs to be overriden on the plugin level
                 if (metadata.ActionKeywords.Count == 1)
                     r.ActionKeywordAssigned = query.ActionKeyword;
             }
@@ -256,7 +308,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public static IEnumerable<PluginPair> GetPluginsForInterface<T>() where T : IFeatures
         {
-            return AllPlugins.Where(p => p.Plugin is T);
+            // Handle scenario where this is called before all plugins are instantiated, e.g. language change on startup
+            return AllPlugins?.Where(p => p.Plugin is T) ?? Array.Empty<PluginPair>();
         }
 
         public static List<Result> GetContextMenusForPlugin(Result result)
@@ -380,7 +433,8 @@ namespace Flow.Launcher.Core.Plugin
 
 
         /// <summary>
-        /// Update a plugin to new version, from a zip file. Will Delete zip after updating.
+        /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
+        /// unless it's a local path installation
         /// </summary>
         public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
@@ -390,11 +444,11 @@ namespace Flow.Launcher.Core.Plugin
         }
 
         /// <summary>
-        /// Install a plugin. Will Delete zip after updating.
+        /// Install a plugin. By default will remove the zip file if installation is from url, unless it's a local path installation
         /// </summary>
         public static void InstallPlugin(UserPlugin plugin, string zipFilePath)
         {
-            InstallPlugin(plugin, zipFilePath, true);
+            InstallPlugin(plugin, zipFilePath, checkModified: true);
         }
 
         /// <summary>
@@ -420,7 +474,9 @@ namespace Flow.Launcher.Core.Plugin
             // Unzip plugin files to temp folder
             var tempFolderPluginPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             System.IO.Compression.ZipFile.ExtractToDirectory(zipFilePath, tempFolderPluginPath);
-            File.Delete(zipFilePath);
+
+            if(!plugin.IsFromLocalInstallPath)
+                File.Delete(zipFilePath);
 
             var pluginFolderPath = GetContainingFolderPathAfterUnzip(tempFolderPluginPath);
 

@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} від {1} {2}{3}Бажаєте оновити цей плагін? Після оновлення Flow буде автоматично перезапущено.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} від {1} {2}{2}Бажаєте оновити цей плагін?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Оновлення плагіна</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Цей плагін має оновлення, бажаєте його переглянути?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Цей плагін вже встановлено</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Не вдалося завантажити маніфест плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Будь ласка, перевірте, чи можете ви підключитися до github.com. Ця помилка означає, що ви не можете встановлювати або оновлювати плагіни.</system:String>

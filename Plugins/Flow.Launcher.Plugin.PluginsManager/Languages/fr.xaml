@@ -24,7 +24,6 @@
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} par {1} {2}{3}Voulez-vous mettre à jour ce plugin ? Après la mise à jour Flow redémarrera automatiquement.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} par {1} {2}{2}Voulez-vous mettre à jour ce plugin ?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Mise à jour du Plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_exists">Ce plugin a une mise à jour, voulez-vous le voir ?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Ce plugin est déjà installé</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Échec du téléchargement du Plugin Manifest</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Veuillez vérifier si vous pouvez vous connecter à github.com. Cette erreur signifie que vous ne serez pas en mesure d'installer ou de mettre à jour des plugins.</system:String>

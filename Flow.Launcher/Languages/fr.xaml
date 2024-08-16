@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow a détecté que vous avez installé {0} plugins, qui nécessiteront {1} pour fonctionner. Souhaitez-vous télécharger {1} ?
+        {2}{2}
+        Cliquez sur non s'il est déjà installé, et vous serez invité à sélectionner le dossier qui contient l'exécutable {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Veuillez sélectionner l'exécutable {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Impossible de définir {0} comme chemin d'accès vers l'exécutable. Veuillez essayer à partir des paramètres de Flow (défiler vers le bas).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Échec de l'initialisation des plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins : {0} - n'ont pas pu être chargés et doivent être désactivés, veuillez contacter le créateur du plugin pour obtenir de l'aide</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -54,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Conserver la dernière recherche</system:String>
     <system:String x:Key="LastQuerySelected">Sélectionner la dernière recherche</system:String>
     <system:String x:Key="LastQueryEmpty">Ne pas afficher la dernière recherche</system:String>
+    <system:String x:Key="KeepMaxResults">Hauteur de fenêtre fixe</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">La hauteur de la fenêtre n'est pas réglable par glissement.</system:String>
     <system:String x:Key="maxShowResults">Résultats maximums à afficher</system:String>
     <system:String x:Key="maxShowResultsToolTip">Vous pouvez également ajuster ce paramètre en utilisant CTRL+Plus ou CTRL+Moins.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore les raccourcis lorsqu'une application est en plein écran</system:String>
@@ -71,10 +84,14 @@
     <system:String x:Key="autoUpdates">Mettre à jour automatiquement</system:String>
     <system:String x:Key="select">Sélectionner</system:String>
     <system:String x:Key="hideOnStartup">Cacher Flow Launcher au démarrage</system:String>
+    <system:String x:Key="hideOnStartupToolTip">La fenêtre de recherche de Flow Launcher est cachée dans la barre d’état après le démarrage.</system:String>
     <system:String x:Key="hideNotifyIcon">Masquer l'icône de la barre des tâches</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Lorsque l'icône est cachée dans la barre de tâches, le menu Paramètres peut être ouvert en faisant un clic droit sur la barre de recherche.</system:String>
     <system:String x:Key="querySearchPrecision">Précision de la recherche</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Modifie le score de correspondance minimum requis pour les résultats.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Aucun</system:String>
+    <system:String x:Key="SearchPrecisionLow">Faible</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Devrait utiliser Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Permet d'utiliser Pinyin pour la recherche. Pinyin est le système standard d'orthographe romanisée pour la traduction du chinois</system:String>
     <system:String x:Key="AlwaysPreview">Toujours prévisualiser</system:String>
@@ -136,12 +153,17 @@
     <system:String x:Key="SampleSubTitleExplorer">Rechercher des fichiers, dossiers et contenus de fichiers</system:String>
     <system:String x:Key="SampleTitleWebSearch">Recherche Web</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Recherchez sur le Web avec la prise en charge de moteurs de recherche différents</system:String>
-    <system:String x:Key="SampleTitleProgram">Programme</system:String>
+    <system:String x:Key="SampleTitleProgram">Programmes</system:String>
     <system:String x:Key="SampleSubTitleProgram">Lancez des programmes en tant qu'administrateur ou un utilisateur différent</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Tueur de processus</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminer les processus non désirés</system:String>
+    <system:String x:Key="SearchBarHeight">Hauteur de la barre de recherche</system:String>
+    <system:String x:Key="ItemHeight">Hauteur de l'objet</system:String>
     <system:String x:Key="queryBoxFont">Police (barre de recherche)</system:String>
-    <system:String x:Key="resultItemFont">Police (liste des résultats)</system:String>
+    <system:String x:Key="resultItemFont">Police du titre du résultat</system:String>
+    <system:String x:Key="resultSubItemFont">Police des sous-titres du résultat</system:String>
+    <system:String x:Key="resetCustomize">Réinitialiser</system:String>
+    <system:String x:Key="CustomizeToolTip">Personnaliser</system:String>
     <system:String x:Key="windowMode">Mode fenêtré</system:String>
     <system:String x:Key="opacity">Opacité</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Le thème {0} n'existe pas, retour au thème par défaut</system:String>
@@ -156,6 +178,7 @@
     <system:String x:Key="SoundEffectTip">Jouer un petit son lorsque la fenêtre de recherche s'ouvre</system:String>
     <system:String x:Key="SoundEffectVolume">Volume de l'effet sonore</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Ajuster le volume de l'effet sonore</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player n'est pas disponible et est requis pour le réglage du volume de Flow. Veuillez vérifier votre installation si vous avez besoin de régler le volume.</system:String>
     <system:String x:Key="Animation">Animation</system:String>
     <system:String x:Key="AnimationTip">Utiliser l'animation dans l'interface</system:String>
     <system:String x:Key="AnimationSpeed">Vitesse d'animation</system:String>
@@ -166,18 +189,45 @@
     <system:String x:Key="AnimationSpeedCustom">Personnalisé</system:String>
     <system:String x:Key="Clock">Heure</system:String>
     <system:String x:Key="Date">Date</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
     <system:String x:Key="hotkeys">Raccourcis</system:String>
     <system:String x:Key="flowlauncherHotkey">Ouvrir Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Entrez le raccourci pour afficher/masquer Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Prévisualiser le raccourci</system:String>
+    <system:String x:Key="previewHotkey">Afficher/masquer l'aperçu</system:String>
     <system:String x:Key="previewHotkeyToolTip">Entrez le raccourci pour afficher/masquer l'aperçu dans la fenêtre de recherche.</system:String>
+    <system:String x:Key="hotkeyPresets">Préréglages des raccourcis clavier</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Liste des raccourcis clavier actuellement enregistrés</system:String>
     <system:String x:Key="openResultModifiers">Modificateurs de résultats ouverts</system:String>
     <system:String x:Key="openResultModifiersToolTip">Sélectionnez une touche de modification pour ouvrir le résultat sélectionné via le clavier.</system:String>
     <system:String x:Key="showOpenResultHotkey">Afficher le raccourci clavier</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Afficher le raccourci de sélection des résultats avec les résultats.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Saisie automatique</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Exécute la saisie automatique pour les éléments sélectionnés.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Sélectionner l'objet suivant</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Sélectionner l'élément précédent</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Page suivante</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Page précédente</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Cycle de requête précédente</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Cycle de requête suivante</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Ouvrir le Menu Contextuel</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Ouvrir le menu contextuel natif</system:String>
+    <system:String x:Key="SettingWindowHotkey">Ouvrir la Fenêtre des Réglages</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Copier le chemin du fichier</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Basculer le mode de jeu</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Basculer l'historique</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Ouvrir le répertoire</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Exécuter en tant qu'Administrateur</system:String>
+    <system:String x:Key="RequeryHotkey">Rafraîchir les résultats de recherche</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Recharger les données des plugins</system:String>
+    <system:String x:Key="QuickWidthHotkey">Ajuster rapidement la largeur de la fenêtre</system:String>
+    <system:String x:Key="QuickHeightHotkey">Ajuster rapidement la hauteur de la fenêtre</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Utiliser lorsque vous avez besoin de recharger et mettre à jour les données existantes de vos plugins.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Vous pouvez ajouter un raccourci clavier supplémentaire pour cette fonction.</system:String>
     <system:String x:Key="customQueryHotkey">Requêtes personnalisées</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
@@ -188,6 +238,7 @@
     <system:String x:Key="delete">Supprimer</system:String>
     <system:String x:Key="edit">Modifier</system:String>
     <system:String x:Key="add">Ajouter</system:String>
+    <system:String x:Key="none">Aucun</system:String>
     <system:String x:Key="pleaseSelectAnItem">Veuillez sélectionner un élément</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Voulez-vous vraiment supprimer {0} raccourci(s) ?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Êtes-vous sûr de vouloir supprimer le raccourci : {0} avec l'expansion {1} ?</system:String>
@@ -240,11 +291,14 @@
     <system:String x:Key="clearlogfolder">Effacer le journal</system:String>
     <system:String x:Key="clearlogfolderMessage">Êtes-vous sûr de vouloir supprimer tous les journaux ?</system:String>
     <system:String x:Key="welcomewindow">Assistant</system:String>
+    <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
+    <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
+    <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
-    <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier du gestionnaire de fichiers que vous utilisez et ajouter des arguments si nécessaire. Les arguments par défaut sont &quot;%d&quot;, et un chemin est entré à cet endroit. Par exemple, si une commande est requise comme &quot;totalcmd.exe /A c:\windows&quot;, l'argument est /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; est un argument qui représente le chemin du fichier. Il est utilisé pour souligner le nom du fichier/dossier lors de l'ouverture d'un emplacement de fichier spécifique dans le gestionnaire de fichiers tiers. Cet argument n'est disponible que dans l'élément &quot;Arguments pour le fichier&quot;. Si le gestionnaire de fichiers n'a pas cette fonction, vous pouvez utiliser &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Veuillez spécifier l'emplacement du fichier de l'explorateur de fichiers que vous utilisez et ajouter des arguments si nécessaire. Le &quot;%d&quot; représente le chemin du répertoire à ouvrir, utilisé par le champ Arg for Folder et pour les commandes ouvrant des répertoires spécifiques. Le &quot;%f&quot; représente le chemin du fichier à ouvrir, utilisé par le champ Arg for File et pour les commandes ouvrant des fichiers spécifiques.</system:String>
+    <system:String x:Key="fileManager_tips2">Par exemple, si l'explorateur de fichiers utilise une commande telle que &quot;totalcmd.exe /A c:\windows&quot; pour ouvrir le répertoire c:\windows, le chemin de l'explorateur de fichiers sera totalcmd.exe et l'argument Arg For Folder sera /A &quot;%d&quot;&quot;. Certains explorateurs de fichiers comme QTTabBar peuvent simplement nécessiter qu'un chemin soit fourni, dans ce cas, utilisez &quot;%d&quot; comme chemin de l'explorateur de fichiers et laissez le reste des fichiers vides.</system:String>
     <system:String x:Key="fileManager_name">Gestionnaire de fichiers</system:String>
     <system:String x:Key="fileManager_profile_name">Nom du profil</system:String>
     <system:String x:Key="fileManager_path">Chemin du gestionnaire de fichiers</system:String>
@@ -285,6 +339,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Raccourci indisponible. Veuillez en choisir un autre.</system:String>
     <system:String x:Key="invalidPluginHotkey">Raccourci invalide</system:String>
     <system:String x:Key="update">Actualiser</system:String>
+    <system:String x:Key="hotkeyRegTitle">Raccourci de liaison</system:String>
+    <system:String x:Key="hotkeyUnavailable">Le raccourci clavier actuel n'est pas disponible.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Ce raccourci est réservé à &quot;{0}&quot; et ne peut pas être utilisé. Veuillez choisir un autre raccourci clavier.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Ce raccourci est déjà utilisé par &quot;{0}&quot;. Si vous appuyez sur &quot;Écraser&quot;, il sera supprimé de &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Appuyez sur les touches que vous voulez utiliser pour cette fonction.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Raccourci de requête personnalisée</system:String>
@@ -296,8 +355,15 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="duplicateShortcut">Le raccourci existe déjà, veuillez entrer un nouveau raccourci ou modifier le raccourci existant.</system:String>
     <system:String x:Key="emptyShortcut">Raccourci et/ou son expansion est vide.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Raccourci indisponible</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Sauvegarder</system:String>
+    <system:String x:Key="commonOverwrite">Écraser</system:String>
+    <system:String x:Key="commonCancel">Annuler</system:String>
+    <system:String x:Key="commonReset">Réinitialiser</system:String>
+    <system:String x:Key="commonDelete">Supprimer</system:String>
+    <system:String x:Key="commonOK">Ok</system:String>
+    <system:String x:Key="commonYes">Oui</system:String>
+    <system:String x:Key="commonNo">Non</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
@@ -367,6 +433,12 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="HotkeyCtrlIDesc">Ouvrir la Fenêtre des Réglages</system:String>
     <system:String x:Key="HotkeyF5Desc">Recharger les Données des Plugins</system:String>
 
+    <system:String x:Key="HotkeySelectFirstResult">Sélectionner le premier résultat</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Sélectionner le dernier résultat</system:String>
+    <system:String x:Key="HotkeyRequery">Exécuter à nouveau la requête actuelle</system:String>
+    <system:String x:Key="HotkeyOpenResult">Ouvrir le résultat</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Ouvrir le résultat #{0}</system:String>
+
     <system:String x:Key="RecommendWeather">Météo</system:String>
     <system:String x:Key="RecommendWeatherDesc">Météo dans les résultats Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
@@ -376,4 +448,8 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Pense-bêtes</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">Taille du fichier</system:String>
+    <system:String x:Key="Created">Créé</system:String>
+    <system:String x:Key="LastModified">Dernière modification</system:String>
 </ResourceDictionary>

@@ -1,0 +1,355 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.SettingsPanePluginStore"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
+    Title="PluginStore"
+    d:DataContext="{d:DesignInstance viewModels:SettingsPanePluginStoreViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    FocusManager.FocusedElement="{Binding ElementName=PluginStoreFilterTextbox}"
+    KeyDown="SettingsPanePlugins_OnKeyDown"
+    mc:Ignorable="d">
+    <ui:Page.Resources>
+        <CollectionViewSource
+            x:Key="PluginStoreCollectionView"
+            Filter="PluginStoreCollectionView_OnFilter"
+            Source="{Binding ExternalPlugins}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="Category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </ui:Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="72" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            Padding="5,18,0,0">
+            <TextBlock
+                Margin="0,5"
+                FontSize="30"
+                Style="{StaticResource PageTitle}"
+                Text="{DynamicResource pluginStore}"
+                TextAlignment="Left" />
+        </Border>
+
+        <DockPanel
+            Grid.Row="0"
+            Grid.Column="1"
+            Margin="5,24,0,0">
+
+            <TextBox
+                Name="PluginStoreFilterTextbox"
+                Width="150"
+                Height="34"
+                Margin="0,0,26,0"
+                HorizontalAlignment="Right"
+                ContextMenu="{StaticResource TextBoxContextMenu}"
+                DockPanel.Dock="Right"
+                FontSize="14"
+                Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
+                TextAlignment="Left"
+                ToolTip="{DynamicResource searchpluginToolTip}"
+                ToolTipService.InitialShowDelay="200"
+                ToolTipService.Placement="Top">
+                <TextBox.Style>
+                    <Style BasedOn="{StaticResource DefaultTextBoxStyle}" TargetType="TextBox">
+                        <Style.Resources>
+                            <VisualBrush
+                                x:Key="CueBannerBrush"
+                                AlignmentX="Left"
+                                AlignmentY="Center"
+                                Stretch="None">
+                                <VisualBrush.Visual>
+                                    <Label
+                                        Padding="10,0,0,0"
+                                        Content="{DynamicResource searchplugin}"
+                                        Foreground="{DynamicResource CustomContextDisabled}" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Style.Resources>
+                        <Style.Triggers>
+                            <Trigger Property="Text" Value="{x:Static sys:String.Empty}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="Text" Value="{x:Null}">
+                                <Setter Property="Background" Value="{StaticResource CueBannerBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter Property="Background" Value="{DynamicResource Color02B}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <Button
+                Height="34"
+                Margin="0,5,10,5"
+                Padding="12,4"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Command="{Binding RefreshExternalPluginsCommand}"
+                Content="{DynamicResource refresh}"
+                DockPanel.Dock="Right"
+                FontSize="13" />
+        </DockPanel>
+        <ListView
+            x:Name="StoreListBox"
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="4,0,0,0"
+            Padding="0,0,18,0"
+            FontSize="14"
+            ItemContainerStyle="{StaticResource StoreList}"
+            ItemsSource="{Binding Source={StaticResource PluginStoreCollectionView}}"
+            ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+            SelectionMode="Single"
+            Style="{DynamicResource StoreListStyle}"
+            VirtualizingPanel.IsVirtualizingWhenGrouping="True"
+            VirtualizingPanel.ScrollUnit="Pixel">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <wpftk:VirtualizingWrapPanel
+                        x:Name="ItemWrapPanel"
+                        Margin="0,0,0,10"
+                        ItemSize="216,184"
+                        MouseWheelDelta="48"
+                        ScrollLineDelta="16"
+                        SpacingMode="None"
+                        StretchItems="True" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.GroupStyle>
+                <GroupStyle HidesIfEmpty="True">
+                    <GroupStyle.ContainerStyle>
+                        <Style TargetType="{x:Type GroupItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate>
+                                        <Grid>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock
+                                                    Margin="2,0,0,10"
+                                                    VerticalAlignment="Top"
+                                                    FontSize="16"
+                                                    FontWeight="Bold"
+                                                    Foreground="{DynamicResource Color05B}"
+                                                    Text="{Binding Name, Converter={StaticResource TextConverter}}" />
+                                                <ItemsPresenter />
+                                            </StackPanel>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </GroupStyle.ContainerStyle>
+                    <GroupStyle.Panel>
+                        <ItemsPanelTemplate>
+                            <VirtualizingStackPanel />
+                        </ItemsPanelTemplate>
+                    </GroupStyle.Panel>
+                </GroupStyle>
+            </ListView.GroupStyle>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style x:Key="StoreListItemBtnStyle" TargetType="Button">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                            x:Name="Background"
+                                            Background="{DynamicResource Color00B}"
+                                            BorderBrush="{DynamicResource Color03B}"
+                                            BorderThickness="1"
+                                            CornerRadius="4"
+                                            SnapsToDevicePixels="True">
+                                            <Border
+                                                x:Name="Border"
+                                                Padding="{TemplateBinding Padding}"
+                                                BorderThickness="1"
+                                                CornerRadius="4">
+                                                <ContentPresenter
+                                                    x:Name="ContentPresenter"
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    Focusable="False"
+                                                    RecognizesAccessKey="True"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            </Border>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                            </Trigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="Background" Property="Background" Value="{DynamicResource Color07B}" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </DataTemplate.Resources>
+                    <Button
+                        Name="StoreListItem"
+                        Margin="0"
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        BorderThickness="0"
+                        FocusVisualStyle="{StaticResource StoreItemFocusVisualStyleKey}"
+                        Style="{DynamicResource StoreListItemBtnStyle}">
+                        <ui:FlyoutService.Flyout>
+                            <ui:Flyout x:Name="InstallFlyout" Placement="Bottom">
+                                <Grid MinWidth="200">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition />
+                                        <RowDefinition />
+                                    </Grid.RowDefinitions>
+                                    <VirtualizingStackPanel
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        Margin="5,0,0,0"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            Margin="0,0,5,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            FontWeight="Bold"
+                                            Foreground="{DynamicResource Color05B}"
+                                            Text="{Binding Name}"
+                                            TextWrapping="Wrap"
+                                            ToolTip="{Binding Name}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Foreground="{DynamicResource Color05B}"
+                                            Text="{Binding Version}"
+                                            TextWrapping="Wrap"
+                                            ToolTip="{Binding Version}" />
+                                    </VirtualizingStackPanel>
+                                    <TextBlock
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Margin="5,4,0,0"
+                                        TextWrapping="Wrap">
+                                        <Hyperlink
+                                            Foreground="{DynamicResource Color04B}"
+                                            NavigateUri="{Binding Website}"
+                                            RequestNavigate="Hyperlink_OnRequestNavigate">
+                                            <Run FontSize="12" Text="{Binding Author, Mode=OneWay}" />
+                                        </Hyperlink>
+                                    </TextBlock>
+
+                                    <VirtualizingStackPanel
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        Margin="20,0,0,0"
+                                        HorizontalAlignment="Right"
+                                        Orientation="Horizontal">
+                                        <Button
+                                            MinHeight="42"
+                                            Margin="5,0"
+                                            Padding="15,5"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding ShowCommandQueryCommand}"
+                                            CommandParameter="install"
+                                            Content="{DynamicResource installbtn}"
+                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}, ConverterParameter='!'}" />
+                                        <Button
+                                            MinHeight="42"
+                                            Margin="5,0"
+                                            Padding="15,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding ShowCommandQueryCommand}"
+                                            CommandParameter="uninstall"
+                                            Content="{DynamicResource uninstallbtn}"
+                                            Visibility="{Binding LabelInstalled, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                        <Button
+                                            MinHeight="42"
+                                            Margin="5,0"
+                                            Padding="15,5"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Command="{Binding ShowCommandQueryCommand}"
+                                            CommandParameter="update"
+                                            Content="{DynamicResource updatebtn}"
+                                            Style="{DynamicResource AccentButtonStyle}"
+                                            Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    </VirtualizingStackPanel>
+                                </Grid>
+                            </ui:Flyout>
+                        </ui:FlyoutService.Flyout>
+                        <Grid>
+                            <StackPanel Width="200">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image
+                                        Width="32"
+                                        Height="32"
+                                        Margin="18,24,0,0"
+                                        HorizontalAlignment="Left"
+                                        RenderOptions.BitmapScalingMode="Fant"
+                                        Source="{Binding IcoPath, IsAsync=True}" />
+                                    <Border
+                                        x:Name="LabelUpdate"
+                                        Height="12"
+                                        Margin="10,24,0,0"
+                                        Padding="6,2"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        Background="#45BD59"
+                                        CornerRadius="36"
+                                        ToolTip="{DynamicResource LabelUpdateToolTip}"
+                                        Visibility="{Binding LabelUpdate, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                </StackPanel>
+                                <TextBlock
+                                    Margin="18,10,18,0"
+                                    FontWeight="SemiBold"
+                                    Foreground="{DynamicResource Color05B}"
+                                    Text="{Binding Name}"
+                                    TextWrapping="Wrap"
+                                    ToolTip="{Binding Version}" />
+                                <TextBlock
+                                    Height="60"
+                                    Margin="18,6,18,0"
+                                    Padding="0,0,0,10"
+                                    FontSize="12"
+                                    Foreground="{DynamicResource Color04B}"
+                                    Text="{Binding Description, Mode=OneWay}"
+                                    TextTrimming="WordEllipsis"
+                                    TextWrapping="Wrap" />
+
+                            </StackPanel>
+
+                        </Grid>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ui:Page>

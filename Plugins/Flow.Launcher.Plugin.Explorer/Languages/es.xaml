@@ -5,7 +5,7 @@
     <system:String x:Key="plugin_explorer_make_selection_warning">Por favor haga una selección primero</system:String>
     <system:String x:Key="plugin_explorer_select_folder_link_warning">Por favor, seleccione un enlace de carpeta</system:String>
     <system:String x:Key="plugin_explorer_delete_folder_link">¿Está seguro de que desea eliminar {0}?</system:String>
-    <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro que desea eliminar permanentemente este archivo?</system:String>
+    <system:String x:Key="plugin_explorer_deletefileconfirm">¿Está seguro de que desea eliminar permanentemente este archivo?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">¿Está seguro de que desea eliminar permanentemente este/esta archivo/carpeta?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Eliminación correcta</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">{0} se ha eliminado correctamente</system:String>
@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Personalizar palabras clave de acción</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Enlaces de acceso rápido</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Configuración Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panel de vista previa</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Tamaño</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Fecha de creación</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Fecha de modificación</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Mostrar información del archivo</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formato de fecha y hora</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Ordenar por:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Ruta de Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Iniciar oculto</system:String>
@@ -56,6 +62,10 @@
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Motor de búsqueda recursiva de directorio</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Motor de búsqueda del Índice</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Abrir opciones de indexación de Windows</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Tipos de archivo excluidos (separados por comas)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Por ejemplo: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorador</system:String>
@@ -103,10 +113,12 @@
     <system:String x:Key="plugin_explorer_openwith">Abrir con</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Seleccione un programa para abrir con</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} libre de {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Abrir en administrador de archivos predeterminado</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Use '&gt;' para buscar en este directorio, '*' para buscar extensiones de archivo o '&gt;*' para combinar ambas búsquedas.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Use '&gt;' para buscar en este directorio, '*' para buscar extensiones de archivo o '&gt;*' para combinar ambas búsquedas.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">No se ha podido cargar Everything SDK</system:String>
@@ -131,7 +143,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Advertencia: Esta no es una opción de clasificación rápida, las búsquedas pueden ser lentas</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Buscar ruta completa</system:String>
-    
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Activar número de ejecuciones de archivos/carpetas</system:String>
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Hacer clic para lanzar o instalar Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalación de Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Instalando el servicio de Everything. Por favor, espere...</system:String>
@@ -142,4 +155,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">¿Desea activar la búsqueda de contenidos de Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Puede ser muy lento sin índice (solo se admite en Everything v1.5+)</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Menú contextual nativo</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Mostrar menú contextual nativo (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea incluir en el menú contextual, puede describirlos de forma parcial o completa (p. ej., 'ejecutar' o 'Abrir con').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea excluir del menú contextual, puede describirlos de forma parcial o completa (p. ej., 'ejecutar' o 'Abrir con').</system:String>
 </ResourceDictionary>

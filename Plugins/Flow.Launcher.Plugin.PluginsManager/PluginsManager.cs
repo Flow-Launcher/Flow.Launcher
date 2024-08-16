@@ -3,11 +3,9 @@ using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -99,13 +97,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 if (Context.API.GetAllPlugins()
                     .Any(x => x.Metadata.ID == plugin.ID && x.Metadata.Version.CompareTo(plugin.Version) < 0))
                 {
-                    if (MessageBox.Show(Context.API.GetTranslation("plugin_pluginsmanager_update_exists"),
-                            Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                            MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                        Context
-                            .API
-                            .ChangeQuery(
-                                $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {plugin.Name}");
+                    var updateDetail = !plugin.IsFromLocalInstallPath ? plugin.Name : plugin.LocalInstallPath;
+
+                    Context
+                        .API
+                        .ChangeQuery(
+                            $"{Context.CurrentPluginMetadata.ActionKeywords.FirstOrDefault()} {Settings.UpdateCommand} {updateDetail}");
 
                     var mainWindow = Application.Current.MainWindow;
                     mainWindow.Show();
@@ -147,12 +144,17 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             try
             {
-                if (File.Exists(filePath))
+                if (!plugin.IsFromLocalInstallPath)
                 {
-                    File.Delete(filePath);
-                }
+                    if (File.Exists(filePath))
+                        File.Delete(filePath);
 
-                await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                    await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                }
+                else
+                {
+                    filePath = plugin.LocalInstallPath;
+                }
 
                 Install(plugin, filePath);
             }
@@ -193,24 +195,38 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
 
+            var pluginFromLocalPath = null as UserPlugin;
+            var updateFromLocalPath = false;
+
+            if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
+            {
+                pluginFromLocalPath = Utilities.GetPluginInfoFromZip(search);
+                pluginFromLocalPath.LocalInstallPath = search;
+                updateFromLocalPath = true;
+            }                
+
+            var updateSource = !updateFromLocalPath
+                                ? PluginsManifest.UserPlugins 
+                                : new List<UserPlugin> { pluginFromLocalPath };
+
             var resultsForUpdate = (
                 from existingPlugin in Context.API.GetAllPlugins()
-                join pluginFromManifest in PluginsManifest.UserPlugins
-                    on existingPlugin.Metadata.ID equals pluginFromManifest.ID
-                where String.Compare(existingPlugin.Metadata.Version, pluginFromManifest.Version,
+                join pluginUpdateSource in updateSource
+                    on existingPlugin.Metadata.ID equals pluginUpdateSource.ID
+                where string.Compare(existingPlugin.Metadata.Version, pluginUpdateSource.Version,
                           StringComparison.InvariantCulture) <
-                      0 // if current version precedes manifest version
+                      0 // if current version precedes version of the plugin from update source (e.g. PluginsManifest)
                       && !PluginManager.PluginModified(existingPlugin.Metadata.ID)
                 select
                     new
                     {
-                        pluginFromManifest.Name,
-                        pluginFromManifest.Author,
+                        pluginUpdateSource.Name,
+                        pluginUpdateSource.Author,
                         CurrentVersion = existingPlugin.Metadata.Version,
-                        NewVersion = pluginFromManifest.Version,
+                        NewVersion = pluginUpdateSource.Version,
                         existingPlugin.Metadata.IcoPath,
                         PluginExistingMetadata = existingPlugin.Metadata,
-                        PluginNewUserPlugin = pluginFromManifest
+                        PluginNewUserPlugin = pluginUpdateSource
                     }).ToList();
 
             if (!resultsForUpdate.Any())
@@ -261,13 +277,21 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                             _ = Task.Run(async delegate
                             {
-                                if (File.Exists(downloadToFilePath))
+                                if (!x.PluginNewUserPlugin.IsFromLocalInstallPath)
                                 {
-                                    File.Delete(downloadToFilePath);
-                                }
+                                    if (File.Exists(downloadToFilePath))
+                                    {
+                                        File.Delete(downloadToFilePath);
+                                    }
 
-                                await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
-                                    .ConfigureAwait(false);
+                                    await Http.DownloadAsync(x.PluginNewUserPlugin.UrlDownload, downloadToFilePath)
+                                        .ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    downloadToFilePath = x.PluginNewUserPlugin.LocalInstallPath;
+                                }
+                                
 
                                 PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin,
                                     downloadToFilePath);
@@ -396,7 +420,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 results = results.Prepend(updateAllResult);
             }
 
-            return Search(results, search);
+            return !updateFromLocalPath ? Search(results, search) : results.ToList();
         }
 
         internal bool PluginExists(string id)
@@ -470,6 +494,42 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return new List<Result> { result };
         }
 
+        internal List<Result> InstallFromLocalPath(string localPath)
+        {
+            var plugin = Utilities.GetPluginInfoFromZip(localPath);
+
+            plugin.LocalInstallPath = localPath;
+
+            return new List<Result>
+            {
+                new Result
+                {
+                    Title = $"{plugin.Name} by {plugin.Author}",
+                    SubTitle = plugin.Description,
+                    IcoPath = plugin.IcoPath,
+                    Action = e =>
+                    {
+                        if (Settings.WarnFromUnknownSource)
+                        {
+                            if (!InstallSourceKnown(plugin.Website)
+                                && MessageBox.Show(string.Format(
+                                        Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
+                                        Environment.NewLine),
+                                    Context.API.GetTranslation(
+                                        "plugin_pluginsmanager_install_unknown_source_warning_title"),
+                                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                                return false;
+                        }
+
+                        Application.Current.MainWindow.Hide();
+                        _ = InstallOrUpdateAsync(plugin);
+
+                        return ShouldHideWindow;
+                    }
+                }
+            };
+        }
+
         private bool InstallSourceKnown(string url)
         {
             var author = url.Split('/')[3];
@@ -488,6 +548,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (Uri.IsWellFormedUriString(search, UriKind.Absolute)
                 && search.Split('.').Last() == zip)
                 return InstallFromWeb(search);
+
+            if (FilesFolders.IsZipFilePath(search, checkFileExists: true))
+                return InstallFromLocalPath(search);
 
             var results =
                 PluginsManifest
@@ -522,10 +585,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
             if (!File.Exists(downloadedFilePath))
                 throw new FileNotFoundException($"Plugin {plugin.ID} zip file not found at {downloadedFilePath}",
                     downloadedFilePath);
+
             try
             {
                 PluginManager.InstallPlugin(plugin, downloadedFilePath);
-                File.Delete(downloadedFilePath);
+                
+                if (!plugin.IsFromLocalInstallPath)
+                    File.Delete(downloadedFilePath);
             }
             catch (FileNotFoundException e)
             {
