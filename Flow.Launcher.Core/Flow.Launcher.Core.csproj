@@ -54,7 +54,7 @@
   
   <ItemGroup>
     <PackageReference Include="Droplex" Version="1.7.0" />
-    <PackageReference Include="FSharp.Core" Version="8.0.301" />
+    <PackageReference Include="FSharp.Core" Version="8.0.400" />
     <PackageReference Include="Meziantou.Framework.Win32.Jobs" Version="3.4.0" />
     <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
     <PackageReference Include="squirrel.windows" Version="1.5.2" NoWarn="NU1701" />
