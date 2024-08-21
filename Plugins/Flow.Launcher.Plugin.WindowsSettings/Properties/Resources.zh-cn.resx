@@ -1974,19 +1974,19 @@
     <value>显示计算机上安装的程序</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>允许远程访问你的计算机</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
-    <value>View advanced system settings</value>
+    <value>查看高级系统设置</value>
   </data>
   <data name="HowToInstallAProgram" xml:space="preserve">
     <value>如何安装程序</value>
   </data>
   <data name="ChangeHowYourKeyboardWorks" xml:space="preserve">
-    <value>Change how your keyboard works</value>
+    <value>更改键盘的工作方式</value>
   </data>
   <data name="AutomaticallyAdjustForDaylightSavingTime" xml:space="preserve">
-    <value>Automatically adjust for daylight saving time</value>
+    <value>自动调整夏令时</value>
   </data>
   <data name="ChangeTheOrderOfWindowsSideshowGadgets" xml:space="preserve">
     <value>Change the order of Windows SideShow gadgets</value>
