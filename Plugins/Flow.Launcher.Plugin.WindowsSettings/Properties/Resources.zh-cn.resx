@@ -1995,97 +1995,97 @@
     <value>检查键盘状态</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>不使用鼠标或键盘控制计算机</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>更改或删除程序</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Change multi-touch gesture settings</value>
+    <value>更改多点触控手势设置</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (64-bit)</value>
+    <value>设置 ODBC 数据源（64 位）</value>
   </data>
   <data name="ConfigureProxyServer" xml:space="preserve">
     <value>设置代理服务器</value>
   </data>
   <data name="ChangeYourHomepage" xml:space="preserve">
-    <value>Change your homepage</value>
+    <value>更改主页</value>
   </data>
   <data name="GroupSimilarWindowsOnTheTaskbar" xml:space="preserve">
-    <value>Group similar windows on the taskbar</value>
+    <value>在任务栏上对相似的窗口进行分组</value>
   </data>
   <data name="ChangeWindowsSideshowSettings" xml:space="preserve">
     <value>Change Windows SideShow settings</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>使用视频的音频描述</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>更改工作组名称</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>查找并修复打印问题</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>更改计算机何时睡眠</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
-    <value>Set up a virtual private network (VPN) connection</value>
+    <value>设置虚拟专用网络 (VPN) 连接</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Accommodate learning abilities</value>
+    <value>适应学习能力</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Set up a dial-up connection</value>
+    <value>设置拨号连接</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Set up a connection or network</value>
+    <value>设置连接或网络</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
-    <value>How to change your Windows password</value>
+    <value>如何更改 Windows 密码</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
-    <value>Make it easier to see the mouse pointer</value>
+    <value>让鼠标指针更容易看到</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
-    <value>Set up iSCSI initiator</value>
+    <value>设置 iSCSI 发起程序</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
-    <value>Accommodate low vision</value>
+    <value>适应低视力</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Manage offline files</value>
+    <value>管理脱机文件</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
-    <value>Review your computer's status and resolve issues</value>
+    <value>检查计算机状态并解决问题</value>
   </data>
   <data name="MicrosoftChangjieSettings" xml:space="preserve">
-    <value>Microsoft ChangJie Settings</value>
+    <value>微软仓颉设置</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>用视觉提示代替声音</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
-    <value>Change temporary Internet file settings</value>
+    <value>更改 Internet 临时文件设置</value>
   </data>
   <data name="ConnectToTheInternet" xml:space="preserve">
     <value>连接互联网</value>
   </data>
   <data name="FindAndFixAudioPlaybackProblems" xml:space="preserve">
-    <value>Find and fix audio playback problems</value>
+    <value>查找并修复音频播放问题</value>
   </data>
   <data name="ChangeTheMousePointerDisplayOrSpeed" xml:space="preserve">
-    <value>Change the mouse pointer display or speed</value>
+    <value>更改鼠标指针显示或速度</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>备份恢复密钥</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
-    <value>Save backup copies of your files with File History</value>
+    <value>使用文件历史记录保存文件的备份副本</value>
   </data>
   <data name="ViewCurrentAccessibilitySettings" xml:space="preserve">
-    <value>View current accessibility settings</value>
+    <value>查看当前辅助功能设置</value>
   </data>
   <data name="ChangeTabletPenSettings" xml:space="preserve">
     <value>Change tablet pen settings</value>
@@ -2094,7 +2094,7 @@
     <value>Change how your mouse works</value>
   </data>
   <data name="ShowHowMuchRAMIsOnThisComputer" xml:space="preserve">
-    <value>Show how much RAM is on this computer</value>
+    <value>显示这台计算机有多少内存</value>
   </data>
   <data name="EditPowerPlan" xml:space="preserve">
     <value>编辑电源计划</value>
@@ -2103,10 +2103,10 @@
     <value>调整音量</value>
   </data>
   <data name="DefragmentAndOptimiseYourDrives" xml:space="preserve">
-    <value>Defragment and optimise your drives</value>
+    <value>对驱动器进行碎片整理和优化</value>
   </data>
   <data name="SetUpODBCDataSources32Bit" xml:space="preserve">
-    <value>Set up ODBC data sources (32-bit)</value>
+    <value>设置 ODBC 数据源（32 位）</value>
   </data>
   <data name="ChangeFontSettings" xml:space="preserve">
     <value>更改字体设置</value>
@@ -2152,7 +2152,7 @@
     <value>Manage Work Folders</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
-    <value>加密离线文件</value>
+    <value>加密脱机文件</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
     <value>训练计算机识别你的声音</value>
