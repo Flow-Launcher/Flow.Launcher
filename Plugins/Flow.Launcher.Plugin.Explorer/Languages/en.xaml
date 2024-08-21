@@ -26,7 +26,7 @@
     <system:String x:Key="plugin_explorer_edit">Edit</system:String>
     <system:String x:Key="plugin_explorer_add">Add</system:String>
     <system:String x:Key="plugin_explorer_generalsetting_header">General Setting</system:String>
-    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customise Action Keywords</system:String>
+    <system:String x:Key="plugin_explorer_manageactionkeywords_header">Customize Action Keywords</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Quick Access Links</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
@@ -59,6 +59,8 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">File Editor Path</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Folder Editor Path</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Enabled</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
