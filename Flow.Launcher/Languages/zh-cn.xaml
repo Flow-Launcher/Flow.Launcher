@@ -89,7 +89,7 @@
     <system:String x:Key="hideNotifyIconToolTip">任务栏图标被隐藏时，右键点击搜索窗口即可打开设置菜单。</system:String>
     <system:String x:Key="querySearchPrecision">查询搜索精度</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">更改匹配成功所需的最低分数。</system:String>
-    <system:String x:Key="SearchPrecisionNone">None</system:String>
+    <system:String x:Key="SearchPrecisionNone">无</system:String>
     <system:String x:Key="SearchPrecisionLow">低</system:String>
     <system:String x:Key="SearchPrecisionRegular">常规</system:String>
     <system:String x:Key="ShouldUsePinyin">使用拼音搜索</system:String>
@@ -162,7 +162,7 @@
     <system:String x:Key="queryBoxFont">查询框字体</system:String>
     <system:String x:Key="resultItemFont">结果标题字体</system:String>
     <system:String x:Key="resultSubItemFont">结果字幕字体</system:String>
-    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="resetCustomize">重置</system:String>
     <system:String x:Key="CustomizeToolTip">自定义</system:String>
     <system:String x:Key="windowMode">窗口模式</system:String>
     <system:String x:Key="opacity">透明度</system:String>
@@ -200,8 +200,8 @@
     <system:String x:Key="flowlauncherHotkeyToolTip">输入显示/隐藏 Flow Launcher 的快捷键。</system:String>
     <system:String x:Key="previewHotkey">切换预览</system:String>
     <system:String x:Key="previewHotkeyToolTip">输入在搜索窗口中开启/关闭预览的快捷键。</system:String>
-    <system:String x:Key="hotkeyPresets">快捷键预设</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">当前注册的快捷键列表</system:String>
+    <system:String x:Key="hotkeyPresets">热键预设</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">当前注册的热键列表</system:String>
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
@@ -227,7 +227,7 @@
     <system:String x:Key="QuickWidthHotkey">快速调整窗口宽度</system:String>
     <system:String x:Key="QuickHeightHotkey">快速调整窗口高度</system:String>
     <system:String x:Key="ReloadPluginHotkeyToolTip">当需要插件重新加载并更新其现有数据时使用。</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">您可以为此功能添加一个热键。</system:String>
     <system:String x:Key="customQueryHotkey">自定义查询热键</system:String>
     <system:String x:Key="customQueryShortcut">自定义查询捷径</system:String>
     <system:String x:Key="builtinShortcuts">内置捷径</system:String>
@@ -238,7 +238,7 @@
     <system:String x:Key="delete">删除</system:String>
     <system:String x:Key="edit">编辑</system:String>
     <system:String x:Key="add">添加</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">无</system:String>
     <system:String x:Key="pleaseSelectAnItem">请选择一项</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">你确定要删除插件 {0} 的热键吗?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">你确定要删除捷径 {0} （展开为 {1}）？</system:String>
@@ -292,14 +292,14 @@
     <system:String x:Key="clearlogfolder">清除日志</system:String>
     <system:String x:Key="clearlogfolderMessage">你确定要删除所有的日志吗？</system:String>
     <system:String x:Key="welcomewindow">向导</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">用户数据位置</system:String>
+    <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
+    <system:String x:Key="userdatapathButton">打开文件夹</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips">请指定您使用的文件管理器的文件位置并根据需要添加参数。“%d”表示要打开的目录路径，由文件夹字段的参数和打开特定目录的命令使用。“%f”表示要打开的文件路径，由文件字段的参数和打开特定文件的命令使用。</system:String>
+    <system:String x:Key="fileManager_tips2">例如，如果文件管理器使用诸如“totalcmd.exe /A c:\windows”之类的命令来打开 c:\windows 目录，则文件管理器路径将为 totalcmd.exe，文件夹参数将为 /A &quot;%d&quot;。某些文件管理器（如 QTTabBar）可能只需要提供路径，在本例中，使用“%d”作为文件管理器路径，其余字段留空。</system:String>
     <system:String x:Key="fileManager_name">文件管理器</system:String>
     <system:String x:Key="fileManager_profile_name">档案名称</system:String>
     <system:String x:Key="fileManager_path">文件管理器路径</system:String>
@@ -340,11 +340,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">热键不可用，请选择一个新的热键</system:String>
     <system:String x:Key="invalidPluginHotkey">插件热键不合法</system:String>
     <system:String x:Key="update">更新</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegTitle">绑定热键</system:String>
+    <system:String x:Key="hotkeyUnavailable">当前热键不可用。</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">此热键为“{0}”保留，无法使用。请选择其他热键。</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">此热键已被“{0}”使用。如果按“覆盖”，则会将其从“{0}”中删除。</system:String>
+    <system:String x:Key="hotkeyRegGuide">按下您想要用于此功能的键。</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">自定义查询捷径</system:String>
@@ -358,13 +358,13 @@
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">保存</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">覆盖</system:String>
     <system:String x:Key="commonCancel">取消</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">重置</system:String>
     <system:String x:Key="commonDelete">删除</system:String>
     <system:String x:Key="commonOK">更新</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">是</system:String>
+    <system:String x:Key="commonNo">否</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -434,11 +434,11 @@
     <system:String x:Key="HotkeyCtrlIDesc">打开设置窗口</system:String>
     <system:String x:Key="HotkeyF5Desc">重新加载插件数据</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">选择第一个结果</system:String>
+    <system:String x:Key="HotkeySelectLastResult">选择最后一个结果</system:String>
+    <system:String x:Key="HotkeyRequery">再次运行当前查询</system:String>
+    <system:String x:Key="HotkeyOpenResult">打开结果</system:String>
+    <system:String x:Key="HotkeyOpenResultN">打开结果 #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">天气</system:String>
     <system:String x:Key="RecommendWeatherDesc">谷歌天气结果</system:String>
@@ -450,7 +450,7 @@
     <system:String x:Key="RecommendAcronymsDesc">便笺</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">文件大小</system:String>
+    <system:String x:Key="Created">创建于</system:String>
+    <system:String x:Key="LastModified">最后修改于</system:String>
 </ResourceDictionary>
