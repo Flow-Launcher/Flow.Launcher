@@ -2112,22 +2112,22 @@
     <value>更改字体设置</value>
   </data>
   <data name="MagnifyPortionsOfTheScreenUsingMagnifier" xml:space="preserve">
-    <value>Magnify portions of the screen using Magnifier</value>
+    <value>使用“放大镜”放大屏幕的某些部分</value>
   </data>
   <data name="ChangeTheFileTypeAssociatedWithAFileExtension" xml:space="preserve">
-    <value>Change the file type associated with a file extension</value>
+    <value>更改与文件扩展名关联的文件类型</value>
   </data>
   <data name="ViewEventLogs" xml:space="preserve">
-    <value>View event logs</value>
+    <value>查看事件日志</value>
   </data>
   <data name="ManageWindowsCredentials" xml:space="preserve">
-    <value>Manage Windows Credentials</value>
+    <value>管理 Windows 凭据</value>
   </data>
   <data name="SetUpAMicrophone" xml:space="preserve">
     <value>设置麦克风</value>
   </data>
   <data name="ChangeHowTheMousePointerLooks" xml:space="preserve">
-    <value>Change how the mouse pointer looks</value>
+    <value>更改鼠标指针的外观</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
     <value>Change power-saving settings</value>
@@ -2140,16 +2140,16 @@
     </value>
   </data>
   <data name="TurnWindowsFeaturesOnOrOff" xml:space="preserve">
-    <value>Turn Windows features on or off</value>
+    <value>打开或关闭 Windows 功能</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>显示计算机正在运行的操作系统</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
-    <value>View local services</value>
+    <value>查看本地服务</value>
   </data>
   <data name="ManageWorkFolders" xml:space="preserve">
-    <value>Manage Work Folders</value>
+    <value>管理工作文件夹</value>
   </data>
   <data name="EncryptYourOfflineFiles" xml:space="preserve">
     <value>加密脱机文件</value>
@@ -2200,31 +2200,31 @@
     <value>邀请某人连接到你的电脑进行协助，或主动协助他人</value>
   </data>
   <data name="RunProgramsMadeForPreviousVersionsOfWindows" xml:space="preserve">
-    <value>Run programs made for previous versions of Windows</value>
+    <value>运行为以前版本的 Windows 制作的程序</value>
   </data>
   <data name="ChooseTheOrderOfHowYourScreenRotates" xml:space="preserve">
-    <value>Choose the order of how your screen rotates</value>
+    <value>选择屏幕旋转的顺序</value>
   </data>
   <data name="ChangeHowWindowsSearches" xml:space="preserve">
-    <value>Change how Windows searches</value>
+    <value>更改 Windows 搜索方式</value>
   </data>
   <data name="SetFlicksToPerformCertainTasks" xml:space="preserve">
-    <value>Set flicks to perform certain tasks</value>
+    <value>设置滑动来执行特定任务</value>
   </data>
   <data name="ChangeAccountType" xml:space="preserve">
     <value>更改账户类型</value>
   </data>
   <data name="ChangeScreenSaver" xml:space="preserve">
-    <value>Change screen saver</value>
+    <value>更改屏幕保护程序</value>
   </data>
   <data name="ChangeUserAccountControlSettings" xml:space="preserve">
     <value>更改用户帐户控制设置</value>
   </data>
   <data name="TurnOnEasyAccessKeys" xml:space="preserve">
-    <value>Turn on easy access keys</value>
+    <value>开启轻松使用键</value>
   </data>
   <data name="IdentifyAndRepairNetworkProblems" xml:space="preserve">
-    <value>Identify and repair network problems</value>
+    <value>识别并修复网络问题</value>
   </data>
   <data name="FindAndFixNetworkingAndConnectionProblems" xml:space="preserve">
     <value>Find and fix networking and connection problems</value>
