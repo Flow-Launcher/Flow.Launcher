@@ -34,7 +34,7 @@
     <system:String x:Key="folderTitle">目录</system:String>
     <system:String x:Key="textTitle">文本</system:String>
     <system:String x:Key="GameMode">游戏模式</system:String>
-    <system:String x:Key="GameModeToolTip">暂停使用快捷键。</system:String>
+    <system:String x:Key="GameModeToolTip">暂停使用热键。</system:String>
     <system:String x:Key="PositionReset">重置位置</system:String>
     <system:String x:Key="PositionResetToolTip">重置搜索窗口位置</system:String>
 
@@ -205,7 +205,7 @@
     <system:String x:Key="openResultModifiers">打开结果快捷键修饰符</system:String>
     <system:String x:Key="openResultModifiersToolTip">选择一个用以打开搜索结果的按键修饰符。</system:String>
     <system:String x:Key="showOpenResultHotkey">显示热键</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的快捷键。</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">显示用于打开结果的热键。</system:String>
     <system:String x:Key="autoCompleteHotkey">自动完成</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">对所选项目运行自动完成功能。</system:String>
     <system:String x:Key="SelectNextItemHotkey">选择下一个项目</system:String>
@@ -414,11 +414,11 @@
     <system:String x:Key="Welcome_Page2_Title">搜索并运行您PC上的文件和应用程序</system:String>
     <system:String x:Key="Welcome_Page2_Text01">搜索所有应用程序、 文件、 书签、 YouTube、 Twitter等。所有都只需要键盘而不需要鼠标。</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher 默认使用下面的快捷键激活。 要更改它，请点击输入并按键盘上所需的热键。</system:String>
-    <system:String x:Key="Welcome_Page3_Title">快捷键</system:String>
+    <system:String x:Key="Welcome_Page3_Title">热键</system:String>
     <system:String x:Key="Welcome_Page4_Title">动作关键词和命令</system:String>
     <system:String x:Key="Welcome_Page4_Text01">通过 Flow Launcher 插件搜索网站、启动应用程序或运行各种功能。某些功能使用一个动作关键词激活，如有必要，它们也可以在没有动作关键词的情况下使用。欢迎尝试以下的查询语句。</system:String>
     <system:String x:Key="Welcome_Page5_Title">开始使用 Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">完成了！享受 Flow Launcher。不要忘记激活快捷键 :)</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">大功告成。尽情使用 Flow Launcher 吧。别忘了用热键启动 :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
