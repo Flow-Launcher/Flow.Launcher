@@ -226,7 +226,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>应用卷和设备首选项</value>
+    <value>应用音量和设备首选项</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -2296,7 +2296,7 @@
     <value>左右手使用习惯</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Change touch input settings</value>
+    <value>更改触摸输入设置</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
     <value>如何更改虚拟内存的大小</value>
@@ -2308,7 +2308,7 @@
     <value>设置 USB 游戏控制器</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>显示计算机所在的域</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
     <value>查看所有问题报告</value>
@@ -2338,19 +2338,19 @@
     <value>Adjust commonly used mobility settings</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
-    <value>Change text-to-speech settings</value>
+    <value>更改文本转语音设置</value>
   </data>
   <data name="SetTheTimeAndDate" xml:space="preserve">
     <value>设置时间和日期</value>
   </data>
   <data name="ChangeLocationSettings" xml:space="preserve">
-    <value>更改位置设定</value>
+    <value>更改位置设置</value>
   </data>
   <data name="ChangeMouseSettings" xml:space="preserve">
     <value>更改鼠标设置</value>
   </data>
   <data name="ManageStorageSpaces" xml:space="preserve">
-    <value>Manage Storage Spaces</value>
+    <value>管理存储空间</value>
   </data>
   <data name="ShowOrHideFileExtensions" xml:space="preserve">
     <value>是否显示文件扩展名</value>
@@ -2368,49 +2368,49 @@
     <value>打开或关闭屏幕保护程序</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
-    <value>Find and fix windows update problems</value>
+    <value>查找并修复 Windows 更新问题</value>
   </data>
   <data name="ChangeBluetoothSettings" xml:space="preserve">
     <value>更改蓝牙设备</value>
   </data>
   <data name="ConnectToANetwork" xml:space="preserve">
-    <value>Connect to a network</value>
+    <value>连接到网络</value>
   </data>
   <data name="ChangeTheSearchProviderInInternetExplorer" xml:space="preserve">
-    <value>Change the search provider in Internet Explorer</value>
+    <value>在 Internet Explorer 中更改搜索提供商</value>
   </data>
   <data name="JoinADomain" xml:space="preserve">
-    <value>Join a domain</value>
+    <value>加入域</value>
   </data>
   <data name="AddADevice" xml:space="preserve">
     <value>添加设备</value>
   </data>
   <data name="FindAndFixProblemsWithWindowsSearch" xml:space="preserve">
-    <value>Find and fix problems with Windows Search</value>
+    <value>查找并修复 Windows 搜索问题</value>
   </data>
   <data name="ChooseAPowerPlan" xml:space="preserve">
     <value>选择电源计划</value>
   </data>
   <data name="ChangeHowTheMousePointerLooksWhenItSMoving" xml:space="preserve">
-    <value>Change how the mouse pointer looks when it’s moving</value>
+    <value>更改鼠标指针移动时的外观</value>
   </data>
   <data name="UninstallAProgram" xml:space="preserve">
     <value>卸载程序</value>
   </data>
   <data name="CreateAndFormatHardDiskPartitions" xml:space="preserve">
-    <value>Create and format hard disk partitions</value>
+    <value>创建和格式化硬盘分区</value>
   </data>
   <data name="ChangeDateTimeOrNumberFormats" xml:space="preserve">
     <value>更改日期、时间或数字格式</value>
   </data>
   <data name="ChangePCWakeUpSettings" xml:space="preserve">
-    <value>Change PC wake-up settings</value>
+    <value>更改 PC 唤醒设置</value>
   </data>
   <data name="ManageNetworkPasswords" xml:space="preserve">
-    <value>Manage network passwords</value>
+    <value>管理网络密码</value>
   </data>
   <data name="ChangeInputMethods" xml:space="preserve">
-    <value>Change input methods</value>
+    <value>更改输入法</value>
   </data>
   <data name="ManageAdvancedSharingSettings" xml:space="preserve">
     <value>管理高级共享设置</value>
@@ -2452,7 +2452,7 @@
     <value>更改日期、时间或数字格式</value>
   </data>
   <data name="PressKeyCombinationsOneAtATime" xml:space="preserve">
-    <value>Press key combinations one at a time</value>
+    <value>一次按下一组按键</value>
   </data>
   <data name="RestoreDataFilesOrComputerFromBackupWindows7" xml:space="preserve">
     <value>从备份中还原数据、文件或计算机(Windows 7)</value>
@@ -2464,7 +2464,7 @@
     <value>设置宽带连接</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>校准屏幕以进行笔或触摸输入</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
     <value>管理用户证书</value>
@@ -2479,7 +2479,7 @@
     <value>查找并修复蓝屏问题</value>
   </data>
   <data name="HearAToneWhenKeysArePressed" xml:space="preserve">
-    <value>Hear a tone when keys are pressed</value>
+    <value>按下按键时听到提示音</value>
   </data>
   <data name="DeleteBrowsingHistory" xml:space="preserve">
     <value>删除浏览的历史记录</value>
@@ -2500,7 +2500,7 @@
     <value>创建账户</value>
   </data>
   <data name="GetMoreFeaturesWithANewEditionOfWindows" xml:space="preserve">
-    <value>Get more features with a new edition of Windows</value>
+    <value>通过新版本的 Windows 获取更多功能</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
     <value>控制面板</value>
