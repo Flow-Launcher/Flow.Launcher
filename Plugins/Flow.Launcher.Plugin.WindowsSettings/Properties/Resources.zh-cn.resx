@@ -2233,13 +2233,13 @@
     <value>自动播放 CD 或其他媒体</value>
   </data>
   <data name="ViewBasicInformationAboutYourComputer" xml:space="preserve">
-    <value>View basic information about your computer</value>
+    <value>查看计算机的基本信息</value>
   </data>
   <data name="ChooseHowYouOpenLinks" xml:space="preserve">
-    <value>Choose how you open links</value>
+    <value>选择链接打开方式</value>
   </data>
   <data name="AllowRemoteAssistanceInvitationsToBeSentFromThisComputer" xml:space="preserve">
-    <value>Allow Remote Assistance invitations to be sent from this computer</value>
+    <value>允许从这台计算机发送远程协助邀请</value>
   </data>
   <data name="TaskManager" xml:space="preserve">
     <value>任务管理器</value>
@@ -2251,7 +2251,7 @@
     <value>添加语言</value>
   </data>
   <data name="ViewNetworkStatusAndTasks" xml:space="preserve">
-    <value>View network status and tasks</value>
+    <value>查看网络状态和任务</value>
   </data>
   <data name="TurnMagnifierOnOrOff" xml:space="preserve">
     <value>启用或关闭放大镜</value>
@@ -2314,22 +2314,22 @@
     <value>查看所有问题报告</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>16 位应用程序支持</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
     <value>设置拨号规则</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
-    <value>Enable or disable session cookies</value>
+    <value>启用或禁用会话 Cookie</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Give administrative rights to a domain user</value>
+    <value>授予域用户管理员权限</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
-    <value>Choose when to turn off display</value>
+    <value>选择关闭显示器的时机</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
-    <value>Move the pointer with the keypad using MouseKeys</value>
+    <value>使用鼠标键通过键盘移动指针</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
     <value>Change Windows SideShow-compatible device settings</value>
@@ -2362,10 +2362,10 @@
     <value>更改系统声音</value>
   </data>
   <data name="AdjustCleartypeText" xml:space="preserve">
-    <value>Adjust ClearType text</value>
+    <value>调整 ClearType 文本</value>
   </data>
   <data name="TurnScreenSaverOnOrOff" xml:space="preserve">
-    <value>Turn screen saver on or off</value>
+    <value>打开或关闭屏幕保护程序</value>
   </data>
   <data name="FindAndFixWindowsUpdateProblems" xml:space="preserve">
     <value>Find and fix windows update problems</value>
