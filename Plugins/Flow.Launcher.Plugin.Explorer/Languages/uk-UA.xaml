@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Налаштувати ключові слова дії</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Посилання швидкого доступу</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Налаштування Everything</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Панель поперегляду</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Розмір</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Дата створення</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Дата останньої зміни</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Показати інформацію про файл</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Формат дати й часу</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Варіант сортування:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Шлях до Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Запустити приховано</system:String>
@@ -64,10 +64,10 @@
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Рекурсивна пошукова система за каталогом</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Пошукова система індексів</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Відкрити параметри індексування Windows</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Виключені типи файлів (через кому)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Наприклад: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Максимум результатів</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Максимальна кількість результатів, отриманих від активної пошукової системи</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Провідник</system:String>
@@ -158,8 +158,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Без індексу (який підтримується лише у версії Everything v1.5+) воно може працювати дуже повільно</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Рідне контекстне меню</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Відображати рідне контекстне меню (експериментально)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Нижче ви можете вказати елементи, які хочете включити до контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»).</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Нижче ви можете вказати елементи, які хочете виключити з контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»)</system:String>
 </ResourceDictionary>
