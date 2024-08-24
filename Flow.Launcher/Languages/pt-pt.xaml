@@ -9,7 +9,7 @@ Clique &quot;Não&quot; se já tiver instalado e, de seguida, ser-lhe-á solicit
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Por favor, selecione o executável {0}</system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Não foi possível definir o caminho do executável {0}. Experimente definir o caminho nas definições (desloque até ao fundo).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Falha ao iniciar os plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - não foi possível iniciar e serão desativados. Contacte o criador dos plugins para obter ajuda.</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - não foi possível iniciar e serão desativados. Contacte o criador dos plugin para obter ajuda.</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Falha ao registar a tecla de atalho &quot;{0}&quot;. A tecla de atalho pode estar a ser usada por outra aplicação. Utilize uma tecla de atalho diferente ou feche o outro programa.</system:String>
