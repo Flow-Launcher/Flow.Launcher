@@ -194,7 +194,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     {
         var selectedFile = GetFileFromDialog(
             InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"),
-            "*.exe"
+            "node|*.exe"
         );
 
         if (!string.IsNullOrEmpty(selectedFile))
