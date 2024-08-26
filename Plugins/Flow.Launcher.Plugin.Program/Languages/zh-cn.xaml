@@ -30,8 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">启用时搜索 PATH 环境变量中的程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">隐藏应用路径</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">隐藏诸如UWP，lnk 等可执行文件的路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">隐藏卸载程序</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">隐藏具有常见卸载程序名称的程序，例如 unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">启用程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow 将搜索程序描述</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">后缀</system:String>
@@ -73,7 +73,7 @@
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">以管理员身份运行</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">打开文件所在文件夹</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_program">禁止显示该程序</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">打开目标文件夹</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">程序</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">在 Flow Launcher 中搜索程序</system:String>

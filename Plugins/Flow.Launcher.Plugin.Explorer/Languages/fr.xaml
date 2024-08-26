@@ -57,6 +57,8 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Énumération directe</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Chemin de l'éditeur de fichiers</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Chemin de l'éditeur de dossier</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Activé</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Désactivé</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Moteur de recherche de contenu</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Moteur de recherche récursif du répertoire</system:String>
@@ -64,8 +66,8 @@
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Ouvrir l'option d'index de Windows</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types">Types de fichiers exclus (séparés par des virgules)</system:String>
     <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Par exemple : exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Résultats maximums</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Le nombre maximum de résultats demandés au moteur de recherche actif</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorateur</system:String>

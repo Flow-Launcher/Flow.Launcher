@@ -57,6 +57,8 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">تعداد مباشر</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">مسار محرر الملفات</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">مسار محرر المجلدات</system:String>
+    <system:String x:Key="plugin_explorer_enabled">مفع</system:String>
+    <system:String x:Key="plugin_explorer_disabled">مُعطّل</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">محرك البحث في المحتوى</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">محرك البحث التكراري في المجلدات</system:String>
