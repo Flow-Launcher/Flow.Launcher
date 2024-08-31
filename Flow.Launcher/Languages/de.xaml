@@ -6,9 +6,9 @@
         {2}{2}
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Bitte wählen Sie das Programm {0} aus</system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Fehler beim Initialisieren der Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
     <!--  MainWindow  -->
@@ -65,8 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Letzte Abfrage beibehalten</system:String>
     <system:String x:Key="LastQuerySelected">Letzte Abfrage auswählen</system:String>
     <system:String x:Key="LastQueryEmpty">Letzte Abfrage leeren</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResults">Feste Fensterhöhe</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Die Fensterhöhe lässt sich durch Ziehen nicht einstellen.</system:String>
     <system:String x:Key="maxShowResults">Maximale Anzahl Ergebnissen</system:String>
     <system:String x:Key="maxShowResultsToolTip">Kann mit CTRL+Plus und CTRL+Minus schnell festgelegt werden.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoriere Tastenkombination wenn Fenster im Vollbildmodus ist</system:String>
@@ -84,24 +84,24 @@
     <system:String x:Key="autoUpdates">Automatische Aktualisierung</system:String>
     <system:String x:Key="select">Auswählen</system:String>
     <system:String x:Key="hideOnStartup">Verstecke Flow Launcher bei Systemstart</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Das Flow-Launcher-Suchfenster wird nach dem Start in der Taskleiste versteckt.</system:String>
     <system:String x:Key="hideNotifyIcon">Statusleistensymbol ausblenden</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Wenn das Icon in der Taskleiste nicht sichtbar ist, kann das Einstellungen-Menü durch Rechtsklick auf das Suchfenster geöffnet werden.</system:String>
     <system:String x:Key="querySearchPrecision">Suchgenauigkeit abfragen</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Erforderliche Suchergebnisse.</system:String>
-    <system:String x:Key="SearchPrecisionNone">None</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionNone">Keine</system:String>
+    <system:String x:Key="SearchPrecisionLow">Gering</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Normal</system:String>
     <system:String x:Key="ShouldUsePinyin">Pinyin aktivieren</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Ermöglicht die Verwendung von Pinyin für die Suche. Pinyin ist das Standardsystem der romanisierten Schreibweise für die Übersetzung von chinesischen Texten.</system:String>
-    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreview">Immer Vorschau anzeigen</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Der Schatteneffekt ist nicht zulässig, wenn das aktuelle Thema den Weichzeichneffekt aktiviert hat</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
-    <system:String x:Key="searchpluginToolTip">Ctrl+F to search plugins</system:String>
-    <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
+    <system:String x:Key="searchpluginToolTip">Strg+F um Plugins zu suchen</system:String>
+    <system:String x:Key="searchplugin_Noresult_Title">Keine Ergebnisse</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Erweiterung</system:String>
     <system:String x:Key="plugins">Erweiterung</system:String>
@@ -116,7 +116,7 @@
     <system:String x:Key="currentPriority">Aktuelle Priorität</system:String>
     <system:String x:Key="newPriority">Neue Priorität</system:String>
     <system:String x:Key="priority">Priorität</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="priorityToolTip">Ändere die Priorität der Plugin-Ergebnisse</system:String>
     <system:String x:Key="pluginDirectory">Pluginordner</system:String>
     <system:String x:Key="author">von</system:String>
     <system:String x:Key="plugin_init_time">Initialisierungszeit:</system:String>
@@ -128,34 +128,34 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Erweiterungen laden</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Neue Version</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Vor kurzem aktualisiert</system:String>
     <system:String x:Key="pluginStore_None">Erweiterungen</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">Installiert</system:String>
     <system:String x:Key="refresh">Aktualisieren</system:String>
     <system:String x:Key="installbtn">Installieren</system:String>
     <system:String x:Key="uninstallbtn">Deinstallieren</system:String>
     <system:String x:Key="updatebtn">Aktualisieren</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin ist bereits installiert</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNew">Neue Version</system:String>
     <system:String x:Key="LabelNewToolTip">Dieses Plugin wurde innerhalb der letzten 7 Tage aktualisiert</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Neue Aktualisierung verfügbar</system:String>
 
 
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Design</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Aussehen</system:String>
     <system:String x:Key="browserMoreThemes">Suche nach weiteren Themes</system:String>
     <system:String x:Key="howToCreateTheme">Wie man ein Design erstellt</system:String>
     <system:String x:Key="hiThere">Hallo!</system:String>
     <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Suche nach Dateien, Ordnern und Dateiinhalten</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Web-Suche</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Suche im Web mit verschiedenen Suchmaschinen</system:String>
     <system:String x:Key="SampleTitleProgram">Programm</system:String>
-    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Starte Programme als Admin oder anderer Benutzer</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">Prozess-Killer</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
     <system:String x:Key="ItemHeight">Item Height</system:String>
