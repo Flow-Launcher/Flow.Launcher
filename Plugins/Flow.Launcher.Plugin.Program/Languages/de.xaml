@@ -25,15 +25,15 @@
     <system:String x:Key="flowlauncher_plugin_program_index_start">Startmenü</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_start_tooltip">Wenn aktiviert, wird Flow Programme aus dem Startmenü laden</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_registry">Registry</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">When enabled, Flow will load programs from the registry</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_registry_tooltip">Wenn aktiviert, wird Flow Programme aus der Registry laden</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">When enabled, Flow will load programs from the PATH environment variable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Wenn aktiviert, wird Flow Programme aus der PATH-Umgebungsvariable laden</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">App-Pfad verstecken</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">For executable files such as UWP or lnk, hide the file path from being visible</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Hide uninstallers</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description">Search in Program Description</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow will search program's description</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Für ausführbare Dateien wie UWP oder lnk Dateipfad ausblenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Deinstallationsprogramme ausblenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Versteckt Programme mit gängigen Deinstallationsprogramm-Namen, wie unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description">In Programmbeschreibung suchen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow wird die Programmbeschreibung durchsuchen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Endungen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Maximale Tiefe</system:String>
 
@@ -61,35 +61,35 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_http">Http/Https</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_urls">Custom URL Protocols</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Custom File Suffixes</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_custom_file_types">Benutzerdefinierte Dateiendungen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_tooltip">
-        Insert file suffixes you want to index. Suffixes should be separated by ';'. (ex&gt;bat;py)
+        Fügen Sie Dateiendungen ein, die Sie indizieren möchten, ein. Die Dateiendungen sollten durch ';' getrennt werden. (z.B.&gt;bat;py)
     </system:String>
     <system:String x:Key="flowlauncher_plugin_program_protocol_tooltip">
         Insert protocols of .url files you want to index. Protocols should be separated by ';', and should end with &quot;://&quot;. (ex&gt;ftp://;mailto://)
     </system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Run As Different User</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_different_user">Als anderer Benutzer ausführen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator">Als Administrator ausführen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_containing_folder">Enthaltenden Ordner öffnen</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_program">Disable this program from displaying</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Open target folder</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_program">Dieses Programm nicht anzeigen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Öffne Zielverzeichnis</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programm</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Suche Programme mit Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Ungültiger Pfad</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Customized Explorer</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Benutzerdefinierter Explorer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Argumente</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Enter the customized args you want to add for your customized explorer. %s for parent directory, %f for full path (which only works for win32). Check the explorer's website for details.</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Erfolgreich</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Error</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Fehler</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Successfully disabled this program from displaying in your query</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">This app is not intended to be run as administrator</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_run_failed">Unable to run {0}</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Diese App ist nicht zur Ausführung als Administrator gedacht</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_run_failed">{0} kann nicht ausgeführt werden</system:String>
 
 </ResourceDictionary>
