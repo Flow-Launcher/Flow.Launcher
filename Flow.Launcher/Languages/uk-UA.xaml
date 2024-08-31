@@ -1,5 +1,16 @@
 ﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <!--  Startup  -->
+    <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
+        Flow виявив, що ви встановили плагіни {0}, для запуску яких потрібно {1}. Бажаєте завантажити {1}?
+        {2}{2}
+        Клацніть Ні, якщо воно вже встановлене, і вам буде запропоновано вибрати теку, яка містить виконуваник {1}
+    </system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Будласка оберіть виконуваник {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не вдається встановити шлях до виконуваника {0}, будласка спробуйте в налаштуваннях Flow (прокрутіть вниз до кінця).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Невдача ініціалізації плагінів</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Плагіни: {0} - не вдалося підвантажити і буде вимкнено, зверніться за допомогою до автора плагіна</system:String>
+
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
@@ -54,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Зберегти останній запит</system:String>
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
+    <system:String x:Key="KeepMaxResults">Фіксована висота вікна</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Висота вікна не регулюється перетягуванням.</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
     <system:String x:Key="maxShowResultsToolTip">Ви також можете швидко налаштувати цей параметр за допомогою клавіш CTRL+Плюс чи CTRL+Мінус.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ігнорувати гарячі клавіші в повноекранному режимі</system:String>
@@ -71,10 +84,14 @@
     <system:String x:Key="autoUpdates">Автоматичне оновлення</system:String>
     <system:String x:Key="select">Вибрати</system:String>
     <system:String x:Key="hideOnStartup">Сховати Flow Launcher при запуску системи</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Вікно пошуку Flow Launcher після запуску ховається в треї.</system:String>
     <system:String x:Key="hideNotifyIcon">Приховати значок в системному лотку</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Коли піктограму приховано з трею, меню налаштувань можна відкрити, клацнувши правою кнопкою миші у вікні пошуку.</system:String>
     <system:String x:Key="querySearchPrecision">Точність пошуку запитів</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Змінює мінімальний бал збігів, необхідних для результатів.</system:String>
+    <system:String x:Key="SearchPrecisionNone">Нема</system:String>
+    <system:String x:Key="SearchPrecisionLow">Мало</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Звичайно</system:String>
     <system:String x:Key="ShouldUsePinyin">Використовувати піньїнь</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Дозволяє використовувати пінїнь для пошуку. Піньїнь - це стандартна система написання для перекладу китайської.</system:String>
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
@@ -140,8 +157,13 @@
     <system:String x:Key="SampleSubTitleProgram">Запуск програм від імені адміністратора або іншого користувача</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Процес-кілер</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Припинення небажаних процесів</system:String>
+    <system:String x:Key="SearchBarHeight">Висота рядка пошуку</system:String>
+    <system:String x:Key="ItemHeight">Висота елемента</system:String>
     <system:String x:Key="queryBoxFont">Шрифт запитів</system:String>
-    <system:String x:Key="resultItemFont">Шрифт результатів</system:String>
+    <system:String x:Key="resultItemFont">Шрифт заголовка результату</system:String>
+    <system:String x:Key="resultSubItemFont">Шрифт підзаголовка результату</system:String>
+    <system:String x:Key="resetCustomize">Скинути</system:String>
+    <system:String x:Key="CustomizeToolTip">Підлаштувати</system:String>
     <system:String x:Key="windowMode">Віконний режим</system:String>
     <system:String x:Key="opacity">Прозорість</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Тема {0} не існує, повернення до теми за замовчуванням</system:String>
@@ -156,6 +178,7 @@
     <system:String x:Key="SoundEffectTip">Відтворювати невеликий звук при відкритті вікна пошуку</system:String>
     <system:String x:Key="SoundEffectVolume">Гучність звукового ефекту</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Налаштуйте гучність звукового ефекту</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player недоступний та необхідний для регулювання гучності Flow. Будласка перевірте вашу інсталяцію, якщо вам потрібно відрегулювати гучність.</system:String>
     <system:String x:Key="Animation">Анімація</system:String>
     <system:String x:Key="AnimationTip">Використовувати анімацію в інтерфейсі</system:String>
     <system:String x:Key="AnimationSpeed">Швидкість анімації</system:String>
@@ -166,18 +189,45 @@
     <system:String x:Key="AnimationSpeedCustom">Користувацька</system:String>
     <system:String x:Key="Clock">Годинник</system:String>
     <system:String x:Key="Date">Дата</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Ця тема підтримує розмитий прозорий фон.</system:String>
+
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Гаряча клавіша</system:String>
-    <system:String x:Key="hotkeys">Гаряча клавіша</system:String>
-    <system:String x:Key="flowlauncherHotkey">Гаряча клавіша Flow Launcher</system:String>
+    <system:String x:Key="hotkeys">Гарячі клавіші</system:String>
+    <system:String x:Key="flowlauncherHotkey">Відкрити Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Введіть скорочення, щоб показати/приховати Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Гаряча клавіша попереднього перегляду</system:String>
+    <system:String x:Key="previewHotkey">Перемкнути поперегляд</system:String>
     <system:String x:Key="previewHotkeyToolTip">Введіть скорочення, щоб показати/приховати попередній перегляд у вікні пошуку.</system:String>
+    <system:String x:Key="hotkeyPresets">Пресети галавіш</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Список поточних зареєстрованих галавіш</system:String>
     <system:String x:Key="openResultModifiers">Відкрити ключ зміни результатів</system:String>
     <system:String x:Key="openResultModifiersToolTip">Виберіть ключ модифікатора для відкриття вибраних результатів за допомогою клавіатури.</system:String>
     <system:String x:Key="showOpenResultHotkey">Показати гарячу клавішу</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Показати гарячу клавішу вибору результату з результатами.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Автозавершення</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Запускає автозавершення для вибраних елементів.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Виберіть наступний елемент</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Виберіть наступний елемент</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Наступна сторінка</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Попередня сторінка</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Циклувати попередній запит</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Циклувати наступний запит</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Відкрити контекстне меню</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Відкрити рідне контекстне меню</system:String>
+    <system:String x:Key="SettingWindowHotkey">Відкрити вікно налаштувань</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Копіювати шлях файлу</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Перемкнути режим гри</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Перемкнути історію</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Відкрийте папку, що містить файл</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Запустити від імені адміністратора</system:String>
+    <system:String x:Key="RequeryHotkey">Оновити результати пошуку</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Перезавантажити дані плагінів</system:String>
+    <system:String x:Key="QuickWidthHotkey">Швидке регулювання ширини вікна</system:String>
+    <system:String x:Key="QuickHeightHotkey">Швидке регулювання висоти вікна</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Використовуйте, коли плагінам потрібно перезавантажити та оновити наявні дані.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Ви можете додати ще одну галавішу для цієї функції.</system:String>
     <system:String x:Key="customQueryHotkey">Задані гарячі клавіші для запитів</system:String>
     <system:String x:Key="customQueryShortcut">Користувацькі скорочення запитів</system:String>
     <system:String x:Key="builtinShortcuts">Вбудовані скорочення</system:String>
@@ -188,6 +238,7 @@
     <system:String x:Key="delete">Видалити</system:String>
     <system:String x:Key="edit">Редагувати</system:String>
     <system:String x:Key="add">Додати</system:String>
+    <system:String x:Key="none">Нема</system:String>
     <system:String x:Key="pleaseSelectAnItem">Спочатку виберіть елемент</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Ви впевнені, що хочете видалити гарячу клавішу ({0}) плагіну?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Ви впевнені, що хочете видалити скорочення: {0} з розширенням {1}?</system:String>
@@ -241,11 +292,14 @@
     <system:String x:Key="clearlogfolder">Очистити журнали</system:String>
     <system:String x:Key="clearlogfolderMessage">Ви впевнені, що хочете видалити всі журнали?</system:String>
     <system:String x:Key="welcomewindow">Чаклун</system:String>
+    <system:String x:Key="userdatapath">Розташування даних користувача</system:String>
+    <system:String x:Key="userdatapathToolTip">Налаштування користувача та встановлені плагіни зберігаються у теці даних користувача. Це місце може змінюватися залежно від того, чи перебуває програма в портативному режимі, чи ні.</system:String>
+    <system:String x:Key="userdatapathButton">Відкрити теку</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Виберіть файловий менеджер</system:String>
-    <system:String x:Key="fileManager_tips">Будь ласка, вкажіть розташування файлу у файловому менеджері, який ви використовуєте, і додайте аргументи, якщо це необхідно. За замовчуванням аргументами є &quot;%d&quot;, і шлях вводиться у вказаному місці. Наприклад, якщо потрібно виконати команду типу &quot;totalcmd.exe /A c:\windows&quot;, аргументом буде /A &quot;%d&quot;.</system:String>
-    <system:String x:Key="fileManager_tips2">&quot;%f&quot; - це аргумент, який представляє шлях до файлу.  Він використовується для виділення імені файлу/теки при відкритті певного місця розташування файлу у сторонньому файловому менеджері. Цей аргумент доступний лише у пункті &quot;Аргумент для файлу&quot;. Якщо файловий менеджер не має такої функції, ви можете використовувати &quot;%d&quot;.</system:String>
+    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
+    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">Файловий менеджер</system:String>
     <system:String x:Key="fileManager_profile_name">Ім'я профілю</system:String>
     <system:String x:Key="fileManager_path">Шлях до файлового менеджера</system:String>
@@ -286,6 +340,11 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Гаряча клавіша недоступна. Будь ласка, вкажіть нову</system:String>
     <system:String x:Key="invalidPluginHotkey">Недійсна гаряча клавіша плагіна</system:String>
     <system:String x:Key="update">Оновити</system:String>
+    <system:String x:Key="hotkeyRegTitle">Прив'язка галавіші</system:String>
+    <system:String x:Key="hotkeyUnavailable">Поточна галавіша недоступна.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Ця галавіша зарезервована для «{0}» і не може бути використана. Будласка, виберіть іншу галавішу.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Ця галавіша вже використовується «{0}». Якщо ви натиснете «Перезаписати», її буде вилучено з «{0}».</system:String>
+    <system:String x:Key="hotkeyRegGuide">Натисніть клавіші, які ви хочете використовувати для цієї функції.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Власне скорочення запиту</system:String>
@@ -297,8 +356,15 @@
     <system:String x:Key="duplicateShortcut">Скорочення вже існує, будь ласка, введіть нове або відредагуйте існуюче.</system:String>
     <system:String x:Key="emptyShortcut">Скорочення та/або його розширення є порожнім.</system:String>
 
-    <!--  Hotkey Control  -->
-    <system:String x:Key="hotkeyUnavailable">Гаряча клавіша недоступна</system:String>
+    <!--  Common Action  -->
+    <system:String x:Key="commonSave">Зберегти</system:String>
+    <system:String x:Key="commonOverwrite">Перезаписати</system:String>
+    <system:String x:Key="commonCancel">Скасувати</system:String>
+    <system:String x:Key="commonReset">Скинути</system:String>
+    <system:String x:Key="commonDelete">Видалити</system:String>
+    <system:String x:Key="commonOK">Добре</system:String>
+    <system:String x:Key="commonYes">Так</system:String>
+    <system:String x:Key="commonNo">Ні</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Версія</system:String>
@@ -348,7 +414,7 @@
     <system:String x:Key="Welcome_Page2_Title">Пошук та запуск усіх файлів і програм на вашому комп'ютері</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Шукайте все: програми, файли, закладки, YouTube, Twitter тощо. І все це за допомогою клавіатури, навіть не торкаючись миші.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher запускається за допомогою наведеної нижче гарячої клавіші, спробуйте натиснути її зараз. Щоб її змінити, клацніть на ввід і натисніть потрібну гарячу клавішу на клавіатурі.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Гаряча клавіша</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Гарячі клавіші</system:String>
     <system:String x:Key="Welcome_Page4_Title">Ключове слово дії та команди</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Шукайте в Інтернеті, запускайте програми або виконуйте різноманітні функції за допомогою плагінів Flow Launcher. Деякі функції починаються з ключового слова дії, але за потреби їх можна використовувати і без нього. Спробуйте наведені нижче запити у Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Давайте запустимо Flow Launcher</system:String>
@@ -368,6 +434,12 @@
     <system:String x:Key="HotkeyCtrlIDesc">Відкрити вікно налаштувань</system:String>
     <system:String x:Key="HotkeyF5Desc">Перезавантажити дані плагінів</system:String>
 
+    <system:String x:Key="HotkeySelectFirstResult">Вибрати перший результат</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Вибрати останній результат</system:String>
+    <system:String x:Key="HotkeyRequery">Виконати поточний запит знову</system:String>
+    <system:String x:Key="HotkeyOpenResult">Відкрити результат</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Відкрити результат #{0}</system:String>
+
     <system:String x:Key="RecommendWeather">Погода</system:String>
     <system:String x:Key="RecommendWeatherDesc">Погода в результатах Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
@@ -377,4 +449,8 @@
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Липкі нотатки</system:String>
 
+    <!--  Preview Area  -->
+    <system:String x:Key="FileSize">Розмір файлу</system:String>
+    <system:String x:Key="Created">Створено</system:String>
+    <system:String x:Key="LastModified">Востаннє змінено</system:String>
 </ResourceDictionary>

@@ -27,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upravit aktivační příkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy rychlého přístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavení Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Velikost</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Datum vytvoření</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Datum změny</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Možnosti řazení:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Umístění Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Spustit skryté</system:String>
@@ -51,11 +57,17 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Seznam složek</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Cesta k editoru souborů</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Cesta k editoru složek</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Povoleno</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Vypnuto</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Vyhledávač obsahu</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Rekurzivní vyhledávač ve složce</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Indexový vyhledávač</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Otevření možností vyhledávání v systému Windows</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Průzkumník</system:String>
@@ -103,10 +115,12 @@
     <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
     <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
 
-    <!-- Special Results-->
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">Volných {0} z {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Otevřít ve výchozím správci souborů</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Použijte &quot;&gt;&quot; pro vyhledávání v této složce, &quot;*&quot; pro vyhledávání přípon souborů nebo &quot;&gt;*&quot; pro kombinaci obou vyhledávání.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Použijte &quot;&gt;&quot; pro vyhledávání v této složce, &quot;*&quot; pro vyhledávání přípon souborů nebo &quot;&gt;*&quot; pro kombinaci obou vyhledávání.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodařilo se načíst SDK Everything</system:String>
@@ -131,7 +145,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Poznámka: Toto není možnost Fast Sort, vyhledávání může být pomalé</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Hledat celou cestu</system:String>
-    
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte nebo nainstalujete aplikaci Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalace Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Služba Everything se nainstaluje. Počkejte prosím...</system:String>
@@ -142,4 +157,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povolit vyhledávání obsahu prostřednictvím služby Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (který je podporován pouze ve verzi Everything v1.5+) může být velmi pomalý</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
 </ResourceDictionary>

@@ -30,6 +30,8 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Se ativa, Flow Launcher irá carregar os programas da variável de ambiente PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">Ocultar caminho da aplicação</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Para ficheiros executáveis, tais como UWP ou lnk, ocultar o caminho do ficheiro</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Ocultar desinstaladores</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Ocultar programas com nomes de desinstalador como, por exemplo, unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Pesquisar na descrição dos programas</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow irá pesquisar na descrição do programa</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Sufixos</system:String>

@@ -25,10 +25,6 @@ namespace Flow.Launcher.Core.Resource
 
         public Internationalization()
         {
-            AddPluginLanguageDirectories();
-            LoadDefaultLanguage();
-            // we don't want to load /Languages/en.xaml twice
-            // so add flowlauncher language directory after load plugin language files
             AddFlowLauncherLanguageDirectory();
         }
 
@@ -40,9 +36,9 @@ namespace Flow.Launcher.Core.Resource
         }
 
 
-        private void AddPluginLanguageDirectories()
+        internal void AddPluginLanguageDirectories(IEnumerable<PluginPair> plugins)
         {
-            foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
+            foreach (var plugin in plugins)
             {
                 var location = Assembly.GetAssembly(plugin.Plugin.GetType()).Location;
                 var dir = Path.GetDirectoryName(location);
@@ -56,10 +52,15 @@ namespace Flow.Launcher.Core.Resource
                     Log.Error($"|Internationalization.AddPluginLanguageDirectories|Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
                 }
             }
+
+            LoadDefaultLanguage();
         }
 
         private void LoadDefaultLanguage()
         {
+            // Removes language files loaded before any plugins were loaded.
+            // Prevents the language Flow started in from overwriting English if the user switches back to English
+            RemoveOldLanguageFiles();
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
         }
@@ -96,13 +97,10 @@ namespace Flow.Launcher.Core.Resource
             {
                 LoadLanguage(language);
             }
-            // Culture of this thread
-            // Use CreateSpecificCulture to preserve possible user-override settings in Windows
+            // Culture of main thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
             CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
-            // App domain
-            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
-            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.DefaultThreadCurrentCulture;
 
             // Raise event after culture is set
             Settings.Language = language.LanguageCode;
@@ -143,11 +141,14 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadLanguage(Language language)
         {
+            var flowEnglishFile = Path.Combine(Constant.ProgramDirectory, Folder, DefaultFile);
             var dicts = Application.Current.Resources.MergedDictionaries;
             var filename = $"{language.LanguageCode}{Extension}";
             var files = _languageDirectories
                 .Select(d => LanguageFile(d, filename))
-                .Where(f => !string.IsNullOrEmpty(f))
+                // Exclude Flow's English language file since it's built into the binary, and there's no need to load
+                // it again from the file system.
+                .Where(f => !string.IsNullOrEmpty(f) && f != flowEnglishFile)
                 .ToArray();
 
             if (files.Length > 0)
@@ -193,7 +194,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     p.Metadata.Name = pluginI18N.GetTranslatedPluginTitle();
                     p.Metadata.Description = pluginI18N.GetTranslatedPluginDescription();
-                    pluginI18N.OnCultureInfoChanged(CultureInfo.DefaultThreadCurrentCulture);
+                    pluginI18N.OnCultureInfoChanged(CultureInfo.CurrentCulture);
                 }
                 catch (Exception e)
                 {

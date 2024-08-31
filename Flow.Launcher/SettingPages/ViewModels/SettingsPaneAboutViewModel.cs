@@ -11,6 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using static Flow.Launcher.MessageBoxEx;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -62,10 +63,10 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
-        var confirmResult = MessageBox.Show(
+        var confirmResult = MessageBoxEx.Show(
             InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
             InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
-            MessageBoxButton.YesNo
+            MessageBoxType.YesNo
         );
 
         if (confirmResult == MessageBoxResult.Yes)
@@ -79,6 +80,15 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
     }
+
+    [RelayCommand]
+    private void OpenParentOfSettingsFolder(object parameter)
+    {
+        string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
+        string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
+        PluginManager.API.OpenDirectory(parentFolderPath);
+    }
+
 
     [RelayCommand]
     private void OpenLogsFolder()

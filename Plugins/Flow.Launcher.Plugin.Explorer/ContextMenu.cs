@@ -9,6 +9,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
+using Flow.Launcher.Plugin.Explorer.Helper;
 using MessageBox = System.Windows.Forms.MessageBox;
 using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
 using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
@@ -222,34 +223,7 @@ namespace Flow.Launcher.Plugin.Explorer
                             if (record.Type is ResultType.Volume)
                                 return false;
 
-                            var screenWithMouseCursor = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
-                            var xOfScreenCenter = screenWithMouseCursor.WorkingArea.Left + screenWithMouseCursor.WorkingArea.Width / 2;
-                            var yOfScreenCenter = screenWithMouseCursor.WorkingArea.Top + screenWithMouseCursor.WorkingArea.Height / 2;
-                            var showPosition = new System.Drawing.Point(xOfScreenCenter, yOfScreenCenter);
-
-                            switch (record.Type)
-                            {
-                                case ResultType.File:
-                                {
-                                    var fileInfos = new FileInfo[]
-                                    {
-                                        new(record.FullPath)
-                                    };
-
-                                    new Peter.ShellContextMenu().ShowContextMenu(fileInfos, showPosition);
-                                    break;
-                                }
-                                case ResultType.Folder:
-                                {
-                                    var directoryInfos = new DirectoryInfo[]
-                                    {
-                                        new(record.FullPath)
-                                    };
-
-                                    new Peter.ShellContextMenu().ShowContextMenu(directoryInfos, showPosition);
-                                    break;
-                                }
-                            }
+                            ResultManager.ShowNativeContextMenu(record.FullPath, record.Type);
 
                             return false;
                         },
@@ -276,8 +250,48 @@ namespace Flow.Launcher.Plugin.Explorer
 
                             return true;
                         },
-                        IcoPath = Constants.DifferentUserIconImagePath
+                        IcoPath = Constants.DifferentUserIconImagePath,
+                        Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue748"),
                     });
+
+                if (record.Type is ResultType.File or ResultType.Folder && Settings.ShowInlinedWindowsContextMenu)
+                {
+                    var includedItems = Settings
+                        .WindowsContextMenuIncludedItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var excludedItems = Settings
+                        .WindowsContextMenuExcludedItems
+                        .Replace("\r", "")
+                        .Split("\n")
+                        .Where(v => !string.IsNullOrWhiteSpace(v))
+                        .ToArray();
+                    var menuItems = ShellContextMenuDisplayHelper
+                        .GetContextMenuWithIcons(record.FullPath)
+                        .Where(contextMenuItem =>
+                            (includedItems.Length == 0 || includedItems.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            )) &&
+                            (excludedItems.Length == 0 || !excludedItems.Any(filter =>
+                                contextMenuItem.Label.Contains(filter, StringComparison.OrdinalIgnoreCase)
+                            ))
+                        );
+                    foreach (var menuItem in menuItems)
+                    {
+                        contextMenus.Add(new Result
+                        {
+                            Title = menuItem.Label,
+                            Icon = () => menuItem.Icon,
+                            Action = _ =>
+                            {
+                                ShellContextMenuDisplayHelper.ExecuteContextMenuItem(record.FullPath, menuItem.CommandId);
+                                return true;
+                            }
+                        });
+                    }
+                }
             }
 
             return contextMenus;
@@ -403,7 +417,8 @@ namespace Flow.Launcher.Plugin.Explorer
 
                     return false;
                 },
-                IcoPath = Constants.ExcludeFromIndexImagePath
+                IcoPath = Constants.ExcludeFromIndexImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\uf140"),
             };
         }
 
@@ -435,7 +450,8 @@ namespace Flow.Launcher.Plugin.Explorer
                         return false;
                     }
                 },
-                IcoPath = Constants.IndexingOptionsIconImagePath
+                IcoPath = Constants.IndexingOptionsIconImagePath,
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\ue773"),
             };
         }
 

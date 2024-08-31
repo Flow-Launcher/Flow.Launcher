@@ -63,11 +63,76 @@ namespace Flow.Launcher
             InitSoundEffects();
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
+
+            this.Loaded += (_, _) =>
+            {
+                var handle = new WindowInteropHelper(this).Handle;
+                var win = HwndSource.FromHwnd(handle);
+                win.AddHook(WndProc);
+            };
         }
+
+        DispatcherTimer timer = new DispatcherTimer
+        {
+            Interval = new TimeSpan(0, 0, 0, 0, 500),
+            IsEnabled = false
+        };
 
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private const int WM_ENTERSIZEMOVE = 0x0231;
+        private const int WM_EXITSIZEMOVE = 0x0232;
+        private int _initialWidth;
+        private int _initialHeight;
+        private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WM_ENTERSIZEMOVE)
+            {
+                _initialWidth = (int)Width;
+                _initialHeight = (int)Height;
+                handled = true;
+            }
+            if (msg == WM_EXITSIZEMOVE)
+            {
+                if ( _initialHeight != (int)Height)
+                {
+                    OnResizeEnd();
+                }
+                if (_initialWidth != (int)Width)
+                {
+                    FlowMainWindow.SizeToContent = SizeToContent.Height;
+                }
+                handled = true;
+            }
+            return IntPtr.Zero;
+        }
+
+        private void OnResizeEnd()
+        {
+            int shadowMargin = 0;
+            if (_settings.UseDropShadowEffect)
+            {
+                shadowMargin = 32;
+            }
+
+            if (!_settings.KeepMaxResults)
+            {
+                var itemCount = (Height - (_settings.WindowHeightSize + 14) - shadowMargin) / _settings.ItemHeightSize;
+
+                if (itemCount < 2)
+                {
+                    _settings.MaxResultsToShow = 2;
+                }
+                else
+                {
+                    _settings.MaxResultsToShow = Convert.ToInt32(Math.Truncate(itemCount));
+                }
+            }
+            FlowMainWindow.SizeToContent = SizeToContent.Height;
+            _viewModel.MainWindowWidth = Width;
         }
 
         private void OnCopy(object sender, ExecutedRoutedEventArgs e)
@@ -96,7 +161,7 @@ namespace Flow.Launcher
                 e.DataObject = data;
             }
         }
-        
+
         private async void OnClosing(object sender, CancelEventArgs e)
         {
             _notifyIcon.Visible = false;
@@ -114,7 +179,6 @@ namespace Flow.Launcher
         {
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
-
             CheckFirstLaunch();
             HideStartup();
             // show notify icon when flowlauncher is hidden
@@ -277,10 +341,9 @@ namespace Flow.Launcher
             _notifyIcon = new NotifyIcon
             {
                 Text = Infrastructure.Constant.FlowLauncherFullName,
-                Icon = Properties.Resources.app,
+                Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-
 
             var openIcon = new FontIcon
             {
@@ -557,17 +620,17 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
-            //This condition stops extra hide call when animator is on, 
+            //This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
             {
-                // Need time to initialize the main query window animation. 
+                // Need time to initialize the main query window animation.
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
                     await Task.Delay(100);
 
-                if (_settings.HideWhenDeactivated)
+                if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
                     _viewModel.Hide();
                 }
@@ -632,7 +695,7 @@ namespace Flow.Launcher
             }
             return screen ?? Screen.AllScreens[0];
         }
-        
+
         public double HorizonCenter(Screen screen)
         {
             var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);

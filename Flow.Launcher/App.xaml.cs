@@ -71,6 +71,9 @@ namespace Flow.Launcher
                 StringMatcher.Instance = _stringMatcher;
                 _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
 
+                InternationalizationManager.Instance.Settings = _settings;
+                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+
                 PluginManager.LoadPlugins(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
@@ -81,7 +84,7 @@ namespace Flow.Launcher
 
                 await PluginManager.InitializePluginsAsync(API);
                 await imageLoadertask;
-                
+
                 var window = new MainWindow(_settings, _mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
@@ -91,10 +94,6 @@ namespace Flow.Launcher
 
                 HotKeyMapper.Initialize(_mainVM);
 
-                // todo temp fix for instance code logic
-                // load plugin before change language, because plugin language also needs be changed
-                InternationalizationManager.Instance.Settings = _settings;
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
                 // main windows needs initialized before theme change because of blur settings
                 ThemeManager.Instance.Settings = _settings;
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);

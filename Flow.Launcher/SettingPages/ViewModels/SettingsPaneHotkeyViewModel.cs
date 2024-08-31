@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -114,7 +115,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomShortcutSetting(item.Key, item.Value);
+        var window = new CustomShortcutSetting(item.Key, item.Value, this);
         if (window.ShowDialog() is not true) return;
 
         var index = Settings.CustomShortcuts.IndexOf(item);
@@ -124,11 +125,17 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void CustomShortcutAdd()
     {
-        var window = new CustomShortcutSetting(null);
+        var window = new CustomShortcutSetting(this);
         if (window.ShowDialog() is true)
         {
             var shortcut = new CustomShortcutModel(window.Key, window.Value);
             Settings.CustomShortcuts.Add(shortcut);
         }
+    }
+
+    internal bool DoesShortcutExist(string key)
+    {
+        return Settings.CustomShortcuts.Any(v => v.Key == key) ||
+               Settings.BuiltinShortcuts.Any(v => v.Key == key);
     }
 }

@@ -110,17 +110,35 @@ public partial class SettingWindow
 
     public void InitializePosition()
     {
-        if (_settings.SettingWindowTop == null)
+        var previousTop = _settings.SettingWindowTop;
+        var previousLeft = _settings.SettingWindowLeft;
+
+        if (previousTop == null || previousLeft == null || !IsPositionValid(previousTop.Value, previousLeft.Value))
         {
             Top = WindowTop();
             Left = WindowLeft();
         }
         else
         {
-            Top = _settings.SettingWindowTop;
-            Left = _settings.SettingWindowLeft;
+            Top = previousTop.Value;
+            Left = previousLeft.Value;
         }
         WindowState = _settings.SettingWindowState;
+    }
+
+    private bool IsPositionValid(double top, double left)
+    {
+        foreach (var screen in Screen.AllScreens)
+        {
+            var workingArea = screen.WorkingArea;
+
+            if (left >= workingArea.Left && left < workingArea.Right &&
+                top >= workingArea.Top && top < workingArea.Bottom)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     private double WindowLeft()
