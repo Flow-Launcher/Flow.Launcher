@@ -19,7 +19,7 @@
     <system:String x:Key="plugin_pluginsmanager_install_error_title">Error installing plugin</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_subtitle">Error occurred while trying to install {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Error uninstalling plugin</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">No update available</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Нет доступных обновлений</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">All plugins are up to date</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
@@ -33,7 +33,7 @@
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Would you like to update {0} plugins?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installing from an unknown source</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Установка из неизвестного источника</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">You are installing this plugin from an unknown source and it may contain potential risks!{0}{0}Please ensure you understand where this plugin is from and that it is safe.{0}{0}Would you like to continue still?{0}{0}(You can switch off this warning via settings)</system:String>
     
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
@@ -45,10 +45,10 @@
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins Manager</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Management of installing, uninstalling or updating Flow Launcher plugins</system:String>
-    <system:String x:Key="plugin_pluginsmanager_unknown_author">Unknown Author</system:String>
+    <system:String x:Key="plugin_pluginsmanager_unknown_author">Автор неизвестен</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Open website</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Перейти на сайт</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Visit the plugin's website</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">See source code</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">See the plugin's source code</system:String>
