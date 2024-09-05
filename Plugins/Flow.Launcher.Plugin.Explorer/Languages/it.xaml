@@ -161,5 +161,5 @@
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menu Contestuale Nativo</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Visualizza il menu contestuale nativo (sperimentale)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Sotto si può specificare elementi che si vuole includere nel menu contestuale, che possono essere parziali (es 'pri co') o completi ('Apri con').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Sotto si può specificare elementi che si vuole escludere dal menu contestuale, che possono essere parziali (es 'pri co') o completi ('Apri con')</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
 </ResourceDictionary>
