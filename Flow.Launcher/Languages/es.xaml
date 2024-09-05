@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow ha detectado que tiene instalados {0} complementos, que necesitan {1} para funcionar. ¿Desea descargar {1}?
+        Flow ha detectado que tiene instalado(s) {0} complemento(s), que necesita(n) {1} para funcionar. ¿Desea descargar {1}?
         {2}{2}
         Haga clic en no si ya está instalado, y seleccione la carpeta que contiene el ejecutable {1}
     </system:String>
