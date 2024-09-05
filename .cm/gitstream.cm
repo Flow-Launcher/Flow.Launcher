@@ -10,11 +10,14 @@ triggers:
     branch:
       - l10n_dev
       - dev
+      - r/(Dependabot|dependabot|Renovate|renovate)/
 
 
 automations:
   # Add a label that indicates how many minutes it will take to review the PR.
   estimated_time_to_review:
+    on:
+      - commit
     if:
       - true
     run:
