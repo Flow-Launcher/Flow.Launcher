@@ -82,7 +82,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Explorateur personnalisé</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Arguments</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Vous pouvez personnaliser l'explorateur utilisé pour ouvrir le dossier conteneur en saisissant la variable d'environnement de l'explorateur que vous souhaitez utiliser. Il sera utile d'utiliser CMD pour vérifier si la variable environnementale est disponible.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Entrez les args personnalisés que vous voulez ajouter pour votre explorateur personnalisé. %s pour le répertoire parent, %f pour le chemin complet (qui ne fonctionne que pour win32). Consultez le site web de l'explorateur pour plus de détails.</system:String>
 
     <!--  Dialogs  -->
