@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Program setting  -->
-    <system:String x:Key="flowlauncher_plugin_program_reset">إعادة الضبط الافتراضي</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_reset">إعادة الوضع الإفتراضي</system:String>
     <system:String x:Key="flowlauncher_plugin_program_delete">حذف</system:String>
     <system:String x:Key="flowlauncher_plugin_program_edit">تعديل</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">إضافة</system:String>
@@ -82,7 +82,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">مستكشف مخصص</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">وسيطات</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">يمكنك تخصيص المستكشف المستخدم لفتح مجلد الحاوية عن طريق إدخال المتغير البيئي للمستكشف الذي تريد استخدامه. سيكون من المفيد استخدام CMD لاختبار ما إذا كان المتغير البيئي متاحًا.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">أدخل الوسيطات المخصصة التي تريد إضافتها لمستكشفك المخصص. %s للدليل الأصل، %f للمسار الكامل (الذي يعمل فقط مع win32). راجع موقع المستكشف الإلكتروني للحصول على التفاصيل.</system:String>
 
     <!--  Dialogs  -->
