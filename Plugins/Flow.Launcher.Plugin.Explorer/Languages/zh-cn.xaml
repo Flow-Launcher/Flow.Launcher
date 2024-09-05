@@ -27,12 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">自定义动作关键字</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">快速访问链接</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything 设置</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">预览面板</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">大小</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">创建日期</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">修改日期</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">显示文件信息</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">日期和时间格式</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">排序选项</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything 路径</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">隐藏启动</system:String>
@@ -57,15 +57,17 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">直接枚举</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">编辑器路径（文件）</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">编辑器路径（文件夹）</system:String>
+    <system:String x:Key="plugin_explorer_enabled">启用</system:String>
+    <system:String x:Key="plugin_explorer_disabled">已禁用</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">文件内容搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">目录递归搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">索引搜索引擎</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">打开 Windows 索引选项</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">排除的文件类型（以半角逗号分隔）</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">例如：exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">最大结果数</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">从活跃搜索引擎请求的最大结果数</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">文件管理器</system:String>
@@ -110,8 +112,8 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">从快速访问中删除</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">从快速访问中移除当前结果</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">显示 Windows 上下文菜单</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_openwith">打开方式</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">选择要打开的程序</system:String>
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} 可用，共 {1}</system:String>
@@ -143,7 +145,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">警告：这不是一个快速排序选项，搜索可能较慢。</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">搜索完整路径</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">启用文件/文件夹运行计数</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">单击启动或安装 Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything 安装</system:String>
@@ -156,8 +158,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">如果没有索引，它可能会非常慢（索引仅在 Everything v1.5+ 中支持）</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with')</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">本机上下文菜单</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">显示本机上下文菜单（实验性）</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">您可以在下面指定想要包含在上下文菜单中的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">您可以在下面指定要从上下文菜单中排除的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
 </ResourceDictionary>

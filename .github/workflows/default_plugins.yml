@@ -2,7 +2,7 @@ name: Publish Default Plugins
 
 on:
   push:
-    branches: ['dev']
+    branches: ['master']
     paths: ['Plugins/**']
   workflow_dispatch:
 

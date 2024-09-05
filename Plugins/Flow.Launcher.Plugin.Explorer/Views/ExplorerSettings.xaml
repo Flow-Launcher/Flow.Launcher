@@ -127,6 +127,7 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+
                 <TextBlock
                     Margin="250 5 0 0"
                     IsEnabled="{Binding Enabled}"
@@ -144,8 +145,26 @@
                         </Style>
                     </TextBlock.Style>
                 </TextBlock>
+
+                <TextBlock Margin="500 5 0 0">
+                    <TextBlock.Style>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Enabled}" Value="True">
+                                    <Setter Property="Text" Value="{DynamicResource plugin_explorer_enabled}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource Color05B}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Enabled}" Value="False">
+                                    <Setter Property="Text" Value="{DynamicResource plugin_explorer_disabled}" />
+                                    <Setter Property="Foreground" Value="{DynamicResource Color18B}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
             </Grid>
         </DataTemplate>
+
         <converters:EnumNameConverter x:Key="EnumNameConverter" />
     </UserControl.Resources>
     <Grid Margin="0">
@@ -346,9 +365,9 @@
                                         Grid.Row="3"
                                         Grid.Column="1"
                                         MinWidth="350"
-                                        Margin="0,9,0,6"
-                                        ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}"
-                                        Text="{Binding ExcludedFileTypes}" />
+                                        Margin="0 9 0 6"
+                                        Text="{Binding ExcludedFileTypes}"
+                                        ToolTip="{DynamicResource plugin_explorer_Excluded_File_Types_Tooltip}" />
                                     <TextBlock
                                         Grid.Row="4"
                                         Grid.Column="0"
@@ -360,13 +379,13 @@
                                         Grid.Row="4"
                                         Grid.Column="1"
                                         MinWidth="350"
-                                        Margin="0,9,0,6"
+                                        Margin="0 9 0 6"
                                         HorizontalAlignment="Left"
                                         VerticalAlignment="Center"
-                                        PreviewTextInput="AllowOnlyNumericInput"
                                         MaxLength="6"
+                                        PreviewTextInput="AllowOnlyNumericInput"
                                         Text="{Binding MaxResult}"
-                                        ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}"/>
+                                        ToolTip="{DynamicResource plugin_explorer_Maximum_Results_Tooltip}" />
                                 </Grid>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">

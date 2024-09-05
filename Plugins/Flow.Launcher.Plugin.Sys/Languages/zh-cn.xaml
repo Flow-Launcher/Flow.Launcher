@@ -5,12 +5,12 @@
     <system:String x:Key="flowlauncher_plugin_sys_command">命令</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">描述</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">Restart With Advanced Boot Options</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">Log Off/Sign Out</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">Lock</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">Sleep</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">关机</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">重启</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_restart_advanced_cmd">使用高级启动选项重启</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_log_off_cmd">注销/登出</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_lock_cmd">锁定</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_sleep_cmd">睡眠</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_hibernate_cmd">休眠</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_indexoption_cmd">索引选项</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_emptyrecyclebin_cmd">清空回收站</system:String>
