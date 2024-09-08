@@ -203,54 +203,54 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="hotkeyPresets">Szablony skrótów</system:String>
     <system:String x:Key="hotkeyPresetsToolTip">Lista zarejestrowanych skrótów klawiszowych</system:String>
     <system:String x:Key="openResultModifiers">Modyfikatory klawiszów otwierających wyniki</system:String>
-    <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
+    <system:String x:Key="openResultModifiersToolTip">Wybierz klawisz modyfikujący, aby otworzyć wybrany wynik za pomocą klawiatury.</system:String>
     <system:String x:Key="showOpenResultHotkey">Pokaż skrót klawiszowy</system:String>
-    <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
-    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
-    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
-    <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
-    <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
-    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
+    <system:String x:Key="showOpenResultHotkeyToolTip">Pokaż skrót wyboru wyniku wraz z wynikami.</system:String>
+    <system:String x:Key="autoCompleteHotkey">Autouzupełnienie</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Uruchamia autouzupełnianie dla wybranych elementów.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Wybierz następny element</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Wybierz poprzedni element</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Następna Strona</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Poprzednia strona</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Przejdź do poprzedniego zapytania</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Przejdź do następnego zapytania</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Otwórz menu kontekstowe</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Otwórz natywne menu kontekstowe</system:String>
+    <system:String x:Key="SettingWindowHotkey">Otwórz okno ustawień</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Kopiuj ścieżkę pliku</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Przełącz tryb gry</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Przełącz historię</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Otwórz folder zawierający</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
-    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
-    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Uruchom jako Administrator</system:String>
+    <system:String x:Key="RequeryHotkey">Odśwież wyniki wyszukiwania</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Odśwież dane wtyczek</system:String>
+    <system:String x:Key="QuickWidthHotkey">Szybka regulacja szerokości okna</system:String>
+    <system:String x:Key="QuickHeightHotkey">Szybka regulacja szerokości okna</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Używaj, gdy wymagane jest odświeżenie wtyczek i zaktualizowanie ich istniejących danych.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Możesz dodać jeszcze jeden skrót klawiszowy dla tej funkcji.</system:String>
     <system:String x:Key="customQueryHotkey">Skrót klawiszowy niestandardowych zapytań</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcut</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="customQuery">Zapytanie</system:String>
+    <system:String x:Key="customShortcut">Skrót</system:String>
+    <system:String x:Key="customShortcutExpansion">Rozwinięcie</system:String>
     <system:String x:Key="builtinShortcutDescription">Opis</system:String>
     <system:String x:Key="delete">Usuń</system:String>
     <system:String x:Key="edit">Edytuj</system:String>
     <system:String x:Key="add">Dodaj</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">Brak</system:String>
     <system:String x:Key="pleaseSelectAnItem">Musisz coś wybrać</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Czy jesteś pewien że chcesz usunąć skrót klawiszowy {0} wtyczki?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Czy na pewno chcesz usunąć skrót: {0} z rozszerzeniem {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Pobierz tekst ze schowka.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Pobierz ścieżkę z aktywnego eksploratora.</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Efekt cienia okna zapytania</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Efekt cienia znacząco obciąża GPU. Niezalecane, jeśli wydajność twojego komputera jest ograniczona.</system:String>
+    <system:String x:Key="windowWidthSize">Szerokość okna</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Możesz to również szybko dostosować, używając Ctrl+[ i Ctrl+].</system:String>
+    <system:String x:Key="useGlyphUI">Użyj ikon Segoe Fluent</system:String>
+    <system:String x:Key="useGlyphUIEffect">Użyj ikon Segoe Fluent dla wyników wyszukiwania, gdzie jest to obsługiwane</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Naciśnij klawisz</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">Serwer proxy HTTP</system:String>
@@ -270,36 +270,36 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
 
     <!--  Setting About  -->
     <system:String x:Key="about">O programie</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Strona internetowa</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
+    <system:String x:Key="docs">Dokumentacja</system:String>
     <system:String x:Key="version">Wersja</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">Ikony</system:String>
     <system:String x:Key="about_activate_times">Uaktywniłeś Flow Launcher {0} razy</system:String>
     <system:String x:Key="checkUpdates">Szukaj aktualizacji</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Zostań sponsorem</system:String>
     <system:String x:Key="newVersionTips">Nowa wersja {0} jest dostępna, uruchom ponownie Flow Launcher</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="checkUpdatesFailed">Sprawdzenie aktualizacji nie powiodło się. Sprawdź swoje połączenie i ustawienia proxy dla api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Pobieranie aktualizacji nie powiodło się. Sprawdź połączenie internetowe i ustawienia proxy dla github-cloud.s3.amazonaws.com
+         lub przejdź do https://github.com/Flow-Launcher/Flow.Launcher/releases, aby pobrać aktualizacje ręcznie.
     </system:String>
     <system:String x:Key="releaseNotes">Zmiany</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
-    <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
-    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="documentation">Wskazówki użycia</system:String>
+    <system:String x:Key="devtool">Narzędzia deweloperskie</system:String>
+    <system:String x:Key="settingfolder">Folder ustawień</system:String>
+    <system:String x:Key="logfolder">Folder dziennika</system:String>
+    <system:String x:Key="clearlogfolder">Wyczyść logi</system:String>
+    <system:String x:Key="clearlogfolderMessage">Czy na pewno chcesz usunąć wszystkie logi?</system:String>
+    <system:String x:Key="welcomewindow">Kreator</system:String>
+    <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
+    <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
+    <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
+    <system:String x:Key="fileManager_tips">Proszę określić lokalizację pliku menedżera plików, którego używasz i dodać argumenty według potrzeb. Symbol &quot;%d&quot; reprezentuje ścieżkę katalogu do otwarcia, używaną w polu Arg dla Folderu oraz dla poleceń otwierających konkretne katalogi. Symbol &quot;%f&quot; reprezentuje ścieżkę pliku do otwarcia, używaną w polu Arg dla Pliku oraz dla poleceń otwierających konkretne pliki.</system:String>
+    <system:String x:Key="fileManager_tips2">Na przykład, jeśli menedżer plików używa polecenia takiego jak „totalcmd.exe /A c:\windows&quot; do otwarcia katalogu c:\windows, Ścieżka Menedżera Plików będzie totalcmd.exe, a Argument dla Folderu będzie /A &quot;%d&quot;. Niektóre menedżery plików, takie jak QTTabBar, mogą wymagać jedynie podania ścieżki; w takim przypadku użyj &quot;%d&quot; jako Ścieżki Menedżera Plików, a pozostałe pola pozostaw puste.</system:String>
     <system:String x:Key="fileManager_name">Menadżer plików</system:String>
     <system:String x:Key="fileManager_profile_name">Nazwa profilu</system:String>
     <system:String x:Key="fileManager_path">Ścieżka menedżera plików</system:String>
@@ -340,11 +340,11 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="hotkeyIsNotUnavailable">Skrót klawiszowy jest niedostępny, musisz podać inny skrót klawiszowy</system:String>
     <system:String x:Key="invalidPluginHotkey">Niepoprawny skrót klawiszowy</system:String>
     <system:String x:Key="update">Aktualizuj</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegTitle">Przypisywanie skrótów</system:String>
+    <system:String x:Key="hotkeyUnavailable">Bieżący skrót klawiszowy jest niedostępny.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Ten skrót klawiszowy jest zarezerwowany dla &quot;{0}&quot; i nie może być użyty. Proszę wybrać inny skrót.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Ten skrót klawiszowy jest już używany przez &quot;{0}&quot;. Jeśli naciśniesz &quot;Nadpisz&quot;, zostanie on usunięty z &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Naciśnij klawisze, których chcesz użyć dla tej funkcji.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Niestandardowy skrót zapytania</system:String>
@@ -358,13 +358,13 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Zapisz</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Nadpisz</system:String>
     <system:String x:Key="commonCancel">Anuluj</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">Zresetuj</system:String>
     <system:String x:Key="commonDelete">Usu</system:String>
     <system:String x:Key="commonOK">Aktualizuj</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">Tak</system:String>
+    <system:String x:Key="commonNo">Nie</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Wersja</system:String>
@@ -428,29 +428,29 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="HotkeyCtrlEnterDesc">Otwórz folder zawierający</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Uruchom jako administrator / Otwórz folder w domyślnym menedżerze plików</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historia zapytań</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyESCDesc">Powrót do wyniku w menu kontekstowym</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autouzupełnianie</system:String>
+    <system:String x:Key="HotkeyRunDesc">Otwórz / Uruchom zaznaczony element</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Otwórz okno ustawień</system:String>
+    <system:String x:Key="HotkeyF5Desc">Odśwież dane wtyczek</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Wybierz pierwszy wynik</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Wybierz ostatni wynik</system:String>
+    <system:String x:Key="HotkeyRequery">Uruchom ponownie bieżące zapytanie</system:String>
+    <system:String x:Key="HotkeyOpenResult">Otwórz wynik</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Otwórz wynik #{0}</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Pogoda</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Pogoda w wynikach Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">Polecenie powłoki</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth w ustawieniach Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Podręczne notatki</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Rozmiar pliku</system:String>
+    <system:String x:Key="Created">Utworzono</system:String>
+    <system:String x:Key="LastModified">Ostatnia modyfikacja</system:String>
 </ResourceDictionary>
