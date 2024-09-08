@@ -254,7 +254,7 @@
     <value>Zegar i region</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Panel sterowania</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Panel sterowania</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -627,7 +627,7 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Exploit Protection</value>
+    <value>Ochrona przed exploitami</value>
   </data>
   <data name="Extras" xml:space="preserve">
     <value>Dodatki</value>
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Poczta Microsoft Mail</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Panel sterowania</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
