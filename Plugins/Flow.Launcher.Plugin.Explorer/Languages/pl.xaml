@@ -127,7 +127,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Everything Service nie jest uruchomiony</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Wystąpił błąd podczas pobierania wyników z Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Nazwa</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Rozmiar</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
