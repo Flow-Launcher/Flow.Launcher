@@ -10,7 +10,7 @@ triggers:
     branch:
       - l10n_dev
       - dev
-      - r/(Dependabot|dependabot|Renovate|renovate)/
+      - r/(?i)(Dependabot|Renovate)/
 
 
 automations:
