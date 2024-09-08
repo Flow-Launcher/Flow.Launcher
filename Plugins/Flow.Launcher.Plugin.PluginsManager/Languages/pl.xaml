@@ -50,14 +50,14 @@
     <!--  Context menu items  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Otwórz stronę</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Odwiedź stronę wtyczki</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">See source code</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">See the plugin's source code</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Suggest an enhancement or submit an issue</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Suggest an enhancement or submit an issue to the plugin developer</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Go to Flow's plugins repository</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Visit the PluginsManifest repository to see community-made plugin submissions</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Zobacz kod źródłowy</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Zobacz kod źródłowy wtyczki</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Zaproponuj ulepszenie lub zgłoś problem</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Zaproponuj ulepszenie lub zgłoś problem do twórcy wtyczki</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Przejdź do repozytorium wtyczek Flow</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Odwiedź repozytorium PluginsManifest, aby zobaczyć wtyczki społeczności</system:String>
 
     <!--  Settings menu items  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Install from unknown source warning</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_settings_unknown_source">Ostrzeżenie o instalacji z nieznanego źródła</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_settings_auto_restart">Automatically restart Flow Launcher after installing/uninstalling/updating plugins</system:String>
 </ResourceDictionary>
