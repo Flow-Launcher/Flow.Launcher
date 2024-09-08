@@ -58,51 +58,51 @@
     <system:String x:Key="plugin_explorer_file_editor_path">Ścieżka edytora plików</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Ścieżka edytora folderów</system:String>
     <system:String x:Key="plugin_explorer_enabled">Aktywny</system:String>
-    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Wyłączony</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Wyszukiwarka zawartości</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Rekurencyjna wyszukiwarka katalogów</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Wyszukiwarka zawartości</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Otwórz opcje indeksowania Windows</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Wykluczone typy plików (oddzielone przecinkami)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Na przykład: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maksymalna liczba wyników</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Maksymalna liczba wyników żądanych przez aktywną wyszukiwarkę</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Explorer</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Wyszukaj i zarządzaj plikami oraz folderami za pomocą Windows Search lub Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter, aby otworzyć folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter, aby otworzyć folder zawierający</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Skopiuj Ścieżkę</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Kopiuj ścieżkę bieżącego elementu do schowka</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopiuj</system:String>
-    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopiuj bieżący plik do schowka</system:String>
+    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopiuj bieżący folder do schowka</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Usu</system:String>
-    <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
-    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
+    <system:String x:Key="plugin_explorer_deletefile_subtitle">Trwale usuń bieżący plik</system:String>
+    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Trwale usuń bieżący folder</system:String>
     <system:String x:Key="plugin_explorer_path">Ścieżka:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Usuń zaznaczone</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Uruchom jako inny użytkownik</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Uruchom wybrane używając innego konta użytkownika</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Otwórz folder nadrzędny</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Otwórz lokalizację zawierającą bieżący element</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Otwórz w edytorze:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Nie udało się otworzyć pliku {0} w edytorze {1} pod ścieżką {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Otwórz za pomocą powłoki:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Nie udało się otworzyć folderu {0} za pomocą powłoki {1} w {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Wyklucz bieżący i podkatalogi z wyszukiwania indeksowego</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Wykluczone z wyszukiwania indeksowego</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Otwórz opcje indeksowania Windows</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Zarządzaj zindeksowanymi plikami i folderami</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Nie udało się otworzyć opcji indeksowania Windows</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Dodaj do szybkiego dostępu</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Dodaj bieżący element do szybkiego dostępu</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Pomyślnie dodano</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Pomyślnie dodano do szybkiego dostępu</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Pomyślnie usunięto</system:String>
@@ -110,46 +110,46 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Dodaj do szybkiego dostępu, aby można było otworzyć za pomocą słowa kluczowego akcji aktywacji wyszukiwania Eksploratora</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Usunieto z szybkiego dostępu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Usunieto z szybkiego dostępu</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Usuń bieżący element z szybkiego dostępu</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">Pokaż menu kontekstowe Windows</system:String>
+    <system:String x:Key="plugin_explorer_openwith">Otwórz za pomocą</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Wybierz program do otwarcia</system:String>
 
     <!--  Special Results  -->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} wolne z {1}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">Otwórz w domyślnym menedżerze plików</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
+        Użyj '&gt;' aby przeszukać ten folder, '' aby wyszukać rozszerzenia plików lub '&gt;' aby połączyć oba wyszukiwania.
     </system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nie udało się załadować wszystkich SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Everything Service nie jest uruchomiony</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">Wystąpił błąd podczas pobierania wyników z Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sortuj wg</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Nazwa</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Ścieżka</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Rozmiar</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date Created</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Date Modified</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributes</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date Recently Changed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Date Accessed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date Run</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Rozszerzenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Nazwa typu</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Data utworzenia</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Data modyfikacji</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Atrybuty</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Nazwa pliku na liście plików</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Liczba uruchomień</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Data ostatniej zmiany</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Data dostępu</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Data uruchomienia</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Uwaga: To nie jest opcja Szybkiego sortowania, wyszukiwania mogą być wolne</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Wyszukaj pełną ścieżkę</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Włącz licznik uruchomień plików/folderów</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknij, aby uruchomić lub zainstalować Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalacja Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Trwa instalacja usługi Everything. Proszę czekać...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
