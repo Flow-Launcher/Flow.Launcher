@@ -47,13 +47,13 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="setAutoStartFailed">Błąd uruchamiania ustawień przy starcie</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
-    <system:String x:Key="SearchWindowPosition">Pozycja Okna Wyszukiwania</system:String>
+    <system:String x:Key="SearchWindowPosition">Pozycja okna wyszukiwania</system:String>
     <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Zapamiętaj Ostatnią Pozycję</system:String>
     <system:String x:Key="SearchWindowScreenCursor">Monitoruj kursorem myszy</system:String>
     <system:String x:Key="SearchWindowScreenFocus">Monitor z Dostosowanym Oknem</system:String>
     <system:String x:Key="SearchWindowScreenPrimary">Monitor główny</system:String>
     <system:String x:Key="SearchWindowScreenCustom">Monitor Niestandardowy </system:String>
-    <system:String x:Key="SearchWindowAlign">Pozycja Okna Wyszukiwania na Monitorze</system:String>
+    <system:String x:Key="SearchWindowAlign">Pozycja okna wyszukiwania na monitorze</system:String>
     <system:String x:Key="SearchWindowAlignCenter">Wyśrodkowane</system:String>
     <system:String x:Key="SearchWindowAlignCenterTop">Środek Góra</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">Lewa Góra</system:String>
@@ -69,13 +69,13 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="KeepMaxResultsToolTip">Wysokość okna nie jest regulowana poprzez przeciąganie.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
     <system:String x:Key="maxShowResultsToolTip">Możesz to również szybko dostosować używając CTRL+Plus i CTRL+Minus.</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnego ekranu</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Wyłącz aktywowanie Flow Launcher, gdy uruchomiona jest aplikacja pełnoekranowa (Zalecane dla gier).</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreen">Ignoruj skróty klawiszowe w trybie pełnoekranowym</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Wyłącz aktywację Flow Launcher, gdy aktywna jest aplikacja pełnoekranowa (zalecane dla gier).</system:String>
     <system:String x:Key="defaultFileManager">Domyślny menedżer plików</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Wybierz menedżer plików używany do otwierania folderów.</system:String>
     <system:String x:Key="defaultBrowser">Domyślna przeglądarka</system:String>
     <system:String x:Key="defaultBrowserToolTip">Ustawienie dla nowej karty, nowego okna i trybu prywatnego.</system:String>
-    <system:String x:Key="pythonFilePath">Python Path</system:String>
+    <system:String x:Key="pythonFilePath">Ścieżka Python</system:String>
     <system:String x:Key="nodeFilePath">Ścieżka Node.js</system:String>
     <system:String x:Key="selectNodeExecutable">Wybierz plik wykonywalny Node.js</system:String>
     <system:String x:Key="selectPythonExecutable">Wybierz pythonw.exe</system:String>
@@ -86,7 +86,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="hideOnStartup">Uruchamiaj Flow Launcher zminimalizowany</system:String>
     <system:String x:Key="hideOnStartupToolTip">Okno wyszukiwania Flow Launcher jest ukryte w zasobniku systemowym po uruchomieniu.</system:String>
     <system:String x:Key="hideNotifyIcon">Ukryj ikonę zasobnika</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">Gdy ikona jest ukryta w zasobniku, menu Ustawienia można otworzyć, klikając prawym przyciskiem myszy okno wyszukiwania.</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">Gdy ikona jest ukryta w zasobniku systemowym, menu Ustawienia można otworzyć, klikając prawym przyciskiem myszy na oknie wyszukiwania.</system:String>
     <system:String x:Key="querySearchPrecision">Precyzja wyszukiwania zapytań</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Zmienia minimalny wynik dopasowania wymagany do uzyskania wyników.</system:String>
     <system:String x:Key="SearchPrecisionNone">Brak</system:String>
@@ -94,7 +94,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="SearchPrecisionRegular">Standardowa</system:String>
     <system:String x:Key="ShouldUsePinyin">Szukaj z Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Umożliwia wyszukiwanie przy użyciu Pinyin. Pinyin to standardowy system pisowni zromanizowanej służący do tłumaczenia języka chińskiego.</system:String>
-    <system:String x:Key="AlwaysPreview">Zawsze Podgląd</system:String>
+    <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
 
@@ -168,8 +168,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="opacity">Przeźroczystość</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Motyw {0} nie istnieje, powróć do domyślnego motywu</system:String>
     <system:String x:Key="theme_load_failure_parse_error">Nie można załadować motywu {0}, wróć do motywu domyślnego</system:String>
-    <system:String x:Key="ThemeFolder">Folder Motywu</system:String>
-    <system:String x:Key="OpenThemeFolder">Otwórz folder motywu</system:String>
+    <system:String x:Key="ThemeFolder">Folder motywów</system:String>
+    <system:String x:Key="OpenThemeFolder">Otwórz folder motywów</system:String>
     <system:String x:Key="ColorScheme">Schemat kolorów</system:String>
     <system:String x:Key="ColorSchemeSystem">Domyślne ustawienie systemowe</system:String>
     <system:String x:Key="ColorSchemeLight">Jasny</system:String>
