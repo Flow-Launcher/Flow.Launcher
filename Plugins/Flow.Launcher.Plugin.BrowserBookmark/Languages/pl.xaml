@@ -24,5 +24,5 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Inne</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Silnik przeglądarki</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Jeśli nie używasz Chrome, Firefox lub Edge, lub używasz ich wersji przenośnej, musisz dodać katalog danych zakładek i wybrać poprawny silnik przeglądarki, aby wtyczka działała.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">Na przykład: silnikiem przeglądarki Brave jest Chromium, a domyślna lokalizacja danych zakładek to: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. W przypadku silnika Firefoksa, katalog zakładek to folder danych użytkownika zawierający plik places.sqlite.</system:String>
 </ResourceDictionary>
