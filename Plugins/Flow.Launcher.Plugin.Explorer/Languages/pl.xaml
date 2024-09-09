@@ -151,15 +151,15 @@
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Instalacja Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Trwa instalacja usługi Everything. Proszę czekać...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Pomyślnie zainstalowano usługę Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Nie udało się automatycznie zainstalować usługi Everything. Proszę zainstalować ją ręcznie z https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">Kliknij tutaj, aby rozpocząć</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Nie można znaleźć instalacji programu Everything. Czy chcesz ręcznie wybrać lokalizację?{0}{0}Kliknij &quot;Nie&quot;, a program Everything zostanie automatycznie zainstalowany</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Czy chcesz włączyć wyszukiwanie zawartości dla programu Everything?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Może działać bardzo wolno bez indeksu (który jest obsługiwany tylko w Everything w wersji 1.5 i nowszych)</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Natywne menu kontekstowe</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Wyświetl natywne menu kontekstowe (eksperymentalne)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Poniżej możesz określić elementy, które chcesz uwzględnić w menu kontekstowym. Mogą być one częściowe (np. &quot;otw w&quot;) lub pełne (&quot;Otwórz za pomocą&quot;).</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Poniżej możesz określić elementy, które chcesz wykluczyć z menu kontekstowego. Mogą być one częściowe (np. &quot;otw w&quot;) lub pełne (&quot;Otwórz za pomocą&quot;).</system:String>
 </ResourceDictionary>
