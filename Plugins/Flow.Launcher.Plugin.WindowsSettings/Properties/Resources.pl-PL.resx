@@ -1639,7 +1639,7 @@
     <value>Obramowanie okna</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Windows Anytime Upgrade</value>
+    <value>Aktualizacja systemu Windows w dowolnym momencie</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
