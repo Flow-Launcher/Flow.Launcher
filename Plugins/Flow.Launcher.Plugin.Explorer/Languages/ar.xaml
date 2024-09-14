@@ -161,5 +161,5 @@
     <system:String x:Key="plugin_explorer_native_context_menu_header">قائمة السياق الأصلية</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">عرض قائمة السياق الأصلية (تجريبي)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">أدناه يمكنك تحديد العناصر التي تريد تضمينها في قائمة السياق، يمكن أن تكون جزئية (على سبيل المثال 'pen wit') أو كاملة ('فتح بواسطة').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">يمكنك أدناه تحديد العناصر التي تريد استبعادها من قائمة الضغط الأيمن، يمكن أن تكون جزئية (على سبيل المثال، 'pen wit') أو كاملة ('Open with').</system:String>
 </ResourceDictionary>
