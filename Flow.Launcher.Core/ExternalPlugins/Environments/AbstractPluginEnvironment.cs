@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Resource;
+using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -37,10 +38,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             PluginSettings = pluginSettings;
         }
 
-        internal IEnumerable<PluginPair> Setup()
+        internal IEnumerable<Task> Setup()
         {
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
-                return new List<PluginPair>();
+                return new List<Task>();
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
@@ -87,7 +88,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
-                return new List<PluginPair>();
+                return new List<Task>();
             }
         }
 
@@ -106,17 +107,17 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
 
-        private IEnumerable<PluginPair> SetPathForPluginPairs(string filePath, string languageToSet)
+        private IEnumerable<Task> SetPathForPluginPairs(string filePath, string languageToSet)
         {
-            var pluginPairs = new List<PluginPair>();
+            var tasks = new List<Task>();
 
             foreach (var metadata in PluginMetadataList)
             {
                 if (metadata.Language.Equals(languageToSet, StringComparison.OrdinalIgnoreCase))
-                    pluginPairs.Add(CreatePluginPair(filePath, metadata));
+                    tasks.Add(Task.Run(() => CreatePluginPair(filePath, metadata)));
             }
 
-            return pluginPairs;
+            return tasks;
         }
 
         private string GetFileFromDialog(string title, string filter = "")

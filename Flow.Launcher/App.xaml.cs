@@ -74,7 +74,7 @@ namespace Flow.Launcher
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
-                PluginManager.LoadPlugins(_settings.PluginSettings);
+                await PluginManager.LoadPluginsAsync(_settings.PluginSettings);
                 _mainVM = new MainViewModel(_settings);
 
                 API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);

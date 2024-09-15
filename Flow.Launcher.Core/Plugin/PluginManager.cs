@@ -146,12 +146,12 @@ namespace Flow.Launcher.Core.Plugin
         /// todo happlebao The API should be removed
         /// </summary>
         /// <param name="settings"></param>
-        public static void LoadPlugins(PluginsSettings settings)
+        public static async Task LoadPluginsAsync(PluginsSettings settings)
         {
             _metadatas = PluginConfig.Parse(Directories);
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
-            AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
+            AllPlugins = await PluginsLoader.PluginsAsync(_metadatas, Settings);
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,11 @@ namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
-        public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
+        private static readonly ConcurrentQueue<PluginPair> Plugins = new();
+
+        private static readonly ConcurrentQueue<string> ErroredPlugins = new();
+
+        public static async Task<List<PluginPair>> PluginsAsync(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
 
@@ -46,17 +51,34 @@ namespace Flow.Launcher.Core.Plugin
                 .Concat(executablePlugins)
                 .Concat(executableV2Plugins)
                 .ToList();
-            return plugins;
+
+            await Task.WhenAll(plugins);
+
+            if (!ErroredPlugins.IsEmpty)
+            {
+                var errorPluginString = String.Join(Environment.NewLine, ErroredPlugins);
+
+                var errorMessage = "The following "
+                                   + (ErroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
+                                   + "errored and cannot be loaded:";
+
+                _ = Task.Run(() =>
+                {
+                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                                    $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
+                                    $"Please refer to the logs for more information", "",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                });
+            }
+
+            return Plugins.ToList();
         }
 
-        public static IEnumerable<PluginPair> DotNetPlugins(List<PluginMetadata> source)
+        public static IEnumerable<Task> DotNetPlugins(List<PluginMetadata> source)
         {
-            var erroredPlugins = new List<string>();
-
-            var plugins = new List<PluginPair>();
             var metadatas = source.Where(o => AllowedLanguage.IsDotNet(o.Language));
 
-            foreach (var metadata in metadatas)
+            return metadatas.Select(metadata => Task.Run(() =>
             {
                 var milliseconds = Stopwatch.Debug(
                     $"|PluginsLoader.DotNetPlugins|Constructor init cost for {metadata.Name}", () =>
@@ -100,53 +122,42 @@ namespace Flow.Launcher.Core.Plugin
 
                         if (plugin == null)
                         {
-                            erroredPlugins.Add(metadata.Name);
+                            ErroredPlugins.Enqueue(metadata.Name);
                             return;
                         }
 
-                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
+                        Plugins.Enqueue(new PluginPair { Plugin = plugin, Metadata = metadata });
                     });
                 metadata.InitTime += milliseconds;
-            }
-
-            if (erroredPlugins.Count > 0)
-            {
-                var errorPluginString = String.Join(Environment.NewLine, erroredPlugins);
-
-                var errorMessage = "The following "
-                                   + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
-                                   + "errored and cannot be loaded:";
-
-                _ = Task.Run(() =>
-                {
-                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
-                                    $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
-                                    $"Please refer to the logs for more information", "",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                });
-            }
-
-            return plugins;
+            }));
         }
 
-        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<Task> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata => Task.Run(() => 
                 {
-                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
-                });
+                    return new PluginPair
+                    {
+                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
+                }));
         }
 
-        public static IEnumerable<PluginPair> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<Task> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata => Task.Run(() => 
                 {
-                    Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath), Metadata = metadata
-                });
+                    return new PluginPair
+                    {
+                        Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
+                }));
         }
     }
 }
