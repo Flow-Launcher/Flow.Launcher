@@ -38,10 +38,10 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             PluginSettings = pluginSettings;
         }
 
-        internal IEnumerable<Task> Setup()
+        internal IEnumerable<Task<PluginPair>> Setup()
         {
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
-                return new List<Task>();
+                return new List<Task<PluginPair>>();
 
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
@@ -88,7 +88,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
 
-                return new List<Task>();
+                return new List<Task<PluginPair>>();
             }
         }
 
@@ -107,9 +107,9 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal abstract PluginPair CreatePluginPair(string filePath, PluginMetadata metadata);
 
-        private IEnumerable<Task> SetPathForPluginPairs(string filePath, string languageToSet)
+        private IEnumerable<Task<PluginPair>> SetPathForPluginPairs(string filePath, string languageToSet)
         {
-            var tasks = new List<Task>();
+            var tasks = new List<Task<PluginPair>>();
 
             foreach (var metadata in PluginMetadataList)
             {
