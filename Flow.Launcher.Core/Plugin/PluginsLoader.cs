@@ -21,11 +21,43 @@ namespace Flow.Launcher.Core.Plugin
 
         private static readonly ConcurrentQueue<string> ErroredPlugins = new();
 
+        public static void AddPlugin(PluginPair plugin)
+        {
+            Plugins.Enqueue(plugin);
+        }
+
         public static async Task<List<PluginPair>> PluginsAsync(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
 
-            await Task.WhenAll(dotnetPlugins);
+            var pythonEnv = new PythonEnvironment(metadatas, settings);
+            var pythonV2Env = new PythonV2Environment(metadatas, settings);
+            var tsEnv = new TypeScriptEnvironment(metadatas, settings);
+            var jsEnv = new JavaScriptEnvironment(metadatas, settings);
+            var tsV2Env = new TypeScriptV2Environment(metadatas, settings);
+            var jsV2Env = new JavaScriptV2Environment(metadatas, settings);
+            var pythonPlugins = pythonEnv.Setup();
+            var pythonV2Plugins = pythonV2Env.Setup();
+            var tsPlugins = tsEnv.Setup();
+            var jsPlugins = jsEnv.Setup();
+            var tsV2Plugins = tsV2Env.Setup();
+            var jsV2Plugins = jsV2Env.Setup();
+
+            var executablePlugins = ExecutablePlugins(metadatas);
+            var executableV2Plugins = ExecutableV2Plugins(metadatas);
+
+            var plugins = dotnetPlugins
+                .Concat(pythonPlugins)
+                .Concat(pythonV2Plugins)
+                .Concat(tsPlugins)
+                .Concat(jsPlugins)
+                .Concat(tsV2Plugins)
+                .Concat(jsV2Plugins)
+                .Concat(executablePlugins)
+                .Concat(executableV2Plugins)
+                .ToList();
+
+            await Task.WhenAll(plugins);
 
             if (!ErroredPlugins.IsEmpty)
             {
@@ -44,35 +76,7 @@ namespace Flow.Launcher.Core.Plugin
                 });
             }
 
-            var pythonEnv = new PythonEnvironment(metadatas, settings);
-            var pythonV2Env = new PythonV2Environment(metadatas, settings);
-            var tsEnv = new TypeScriptEnvironment(metadatas, settings);
-            var jsEnv = new JavaScriptEnvironment(metadatas, settings);
-            var tsV2Env = new TypeScriptV2Environment(metadatas, settings);
-            var jsV2Env = new JavaScriptV2Environment(metadatas, settings);
-            var pythonPlugins = pythonEnv.Setup();
-            var pythonV2Plugins = pythonV2Env.Setup();
-            var tsPlugins = tsEnv.Setup();
-            var jsPlugins = jsEnv.Setup();
-            var tsV2Plugins = tsV2Env.Setup();
-            var jsV2Plugins = jsV2Env.Setup();
-
-            var executablePlugins = ExecutablePlugins(metadatas);
-            var executableV2Plugins = ExecutableV2Plugins(metadatas);
-
-            var plugins = pythonPlugins
-                .Concat(pythonV2Plugins)
-                .Concat(tsPlugins)
-                .Concat(jsPlugins)
-                .Concat(tsV2Plugins)
-                .Concat(jsV2Plugins)
-                .Concat(executablePlugins)
-                .Concat(executableV2Plugins)
-                .ToList();
-
-            var pluginPairs = await Task.WhenAll(plugins);
-
-            return Plugins.Concat(pluginPairs).ToList();
+            return Plugins.ToList();
         }
 
         public static IEnumerable<Task> DotNetPlugins(List<PluginMetadata> source)
@@ -133,31 +137,31 @@ namespace Flow.Launcher.Core.Plugin
             }));
         }
 
-        public static IEnumerable<Task<PluginPair>> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<Task> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => Task.Run(() => 
                 {
-                    return new PluginPair
+                    Plugins.Enqueue(new PluginPair
                     {
                         Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
                         Metadata = metadata
-                    };
+                    });
                 }));
         }
 
-        public static IEnumerable<Task<PluginPair>> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<Task> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => Task.Run(() => 
                 {
-                    return new PluginPair
+                    Plugins.Enqueue(new PluginPair
                     {
                         Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath),
                         Metadata = metadata
-                    };
+                    });
                 }));
         }
     }
