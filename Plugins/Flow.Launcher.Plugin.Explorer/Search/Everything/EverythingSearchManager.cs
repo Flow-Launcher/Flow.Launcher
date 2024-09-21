@@ -20,6 +20,15 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async ValueTask ThrowIfEverythingNotAvailableAsync(CancellationToken token = default)
         {
+#if ARM64
+            throw new EngineNotAvailableException(
+                Enum.GetName(Settings.IndexSearchEngineOption.Everything)!,
+                "ARM64 is not supported",
+                Main.Context.API.GetTranslation("flowlauncher_plugin_everything_not_support_arm64"),
+                Constants.EverythingErrorImagePath,
+                _ => ValueTask.FromResult(false));
+#endif
+
             try
             {
                 if (!await EverythingApi.IsEverythingRunningAsync(token))
@@ -42,7 +51,9 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 
         private async ValueTask<bool> ClickToInstallEverythingAsync(ActionContext _)
         {
-            var installedPath = await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath, Main.Context.API);
+            var installedPath =
+                await EverythingDownloadHelper.PromptDownloadIfNotInstallAsync(Settings.EverythingInstalledPath,
+                    Main.Context.API);
 
             if (installedPath == null)
             {
@@ -57,17 +68,18 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             return true;
         }
 
-        public async IAsyncEnumerable<SearchResult> SearchAsync(string search, [EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<SearchResult> SearchAsync(string search,
+            [EnumeratorCancellation] CancellationToken token)
         {
             await ThrowIfEverythingNotAvailableAsync(token);
 
             if (token.IsCancellationRequested)
                 yield break;
 
-            var option = new EverythingSearchOption(search, 
-                Settings.SortOption, 
-                MaxCount: Settings.MaxResult, 
-                IsFullPathSearch: Settings.EverythingSearchFullPath, 
+            var option = new EverythingSearchOption(search,
+                Settings.SortOption,
+                MaxCount: Settings.MaxResult,
+                IsFullPathSearch: Settings.EverythingSearchFullPath,
                 IsRunCounterEnabled: Settings.EverythingEnableRunCount);
 
             await foreach (var result in EverythingApi.SearchAsync(option, token))
@@ -110,7 +122,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
             }
         }
 
-        public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive, [EnumeratorCancellation] CancellationToken token)
+        public async IAsyncEnumerable<SearchResult> EnumerateAsync(string path, string search, bool recursive,
+            [EnumeratorCancellation] CancellationToken token)
         {
             await ThrowIfEverythingNotAvailableAsync(token);
 
