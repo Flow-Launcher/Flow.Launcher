@@ -59,6 +59,7 @@ namespace Flow.Launcher
 
             InitializeComponent();
             InitializePosition();
+            InitializePosition();
 
             InitSoundEffects();
 
@@ -186,6 +187,7 @@ namespace Flow.Launcher
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            InitializePosition();
             InitializePosition();
             PreviewReset();
             // since the default main window visibility is visible
@@ -641,6 +643,7 @@ namespace Flow.Launcher
         {
             if (_animating)
                 return;
+            InitializePosition();
             InitializePosition();
         }
 
