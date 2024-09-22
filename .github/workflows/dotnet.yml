@@ -61,7 +61,7 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
       - name: Build
-        run: dotnet build --no-restore -c Release -r win-arm64
+        run: dotnet build --no-restore -c Release -p:FlowRuntimeIdentifier=win-arm64
       - name: Initialize Service
         run: |
           sc config WSearch start= auto # Starts Windows Search service- Needed for running ExplorerTest
