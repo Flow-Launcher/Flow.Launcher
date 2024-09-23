@@ -59,7 +59,7 @@ jobs:
             dotnet tool install -g vpk
           }
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore -r win-arm64
       - name: Build
         run: dotnet build --no-restore -c Release -p:FlowRuntimeIdentifier=win-arm64
       - name: Initialize Service
