@@ -82,7 +82,8 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Кастомізований провідник</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Аргументи</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Ви можете налаштувати провідник, який використовується для відкриття теки контейнера, ввівши змінну середовища провідника, який ви хочете використовувати. Буде корисно скористатися командою CMD для перевірки доступності змінної середовища.</system:String>
+
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Введіть спеціальні аргументи, які ви хочете додати до вашого провідника. %s для батьківського каталогу, %f для повного шляху (працює лише для win32). Докладнішу інформацію можна знайти на веб-сайті провідника.</system:String>
 
     <!--  Dialogs  -->
