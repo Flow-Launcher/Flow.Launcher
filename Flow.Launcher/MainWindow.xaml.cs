@@ -191,6 +191,7 @@ namespace Flow.Launcher
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
             PreviewReset();
