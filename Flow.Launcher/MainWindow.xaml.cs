@@ -302,6 +302,7 @@ namespace Flow.Launcher
 
         private void InitializePosition()
         {
+            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePositionInner();
             InitializePositionInner();
             return;
