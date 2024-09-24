@@ -162,4 +162,5 @@
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">显示本机上下文菜单（实验性）</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">您可以在下面指定想要包含在上下文菜单中的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">您可以在下面指定要从上下文菜单中排除的项目，它们可以是部分的（例如“pen wit”）或完整的（“打开方式”）。</system:String>
+
 </ResourceDictionary>

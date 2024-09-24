@@ -82,7 +82,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Esplora Risorse personalizzato</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Parametri</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customized the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Inserisci i parametri personalizzati che vuoi aggiungere per il tuo Esplora Risorse personalizzato. %s per la cartella superiore, %f per il percorso completo (che funziona solo per win32). Controlla il sito dell'Esplora Risorse per i dettagli.</system:String>
 
     <!--  Dialogs  -->
