@@ -54,7 +54,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="MemoryPack" Version="1.21.1" />
+    <PackageReference Include="MemoryPack" Version="1.21.3" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="17.10.48" />
     <PackageReference Include="NLog" Version="4.7.10" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
