@@ -83,6 +83,7 @@
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Настраиваемый проводник</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Аргументы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Вы можете настроить проводник, используемый для открытия папки контейнера, введя переменную окружения проводника, который вы хотите использовать. Будет полезно использовать командную строку для проверки доступности переменной среды.</system:String>
+
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Введите настраиваемые аргументы, которые вы хотите добавить для вашего настраиваемого проводника. %s для родительского каталога, %f для полного пути (работает только для win32). Подробности смотрите на сайте проводника.</system:String>
 
     <!--  Dialogs  -->

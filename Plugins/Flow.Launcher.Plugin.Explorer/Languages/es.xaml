@@ -160,6 +160,6 @@
     <!--  Native Context Menu  -->
     <system:String x:Key="plugin_explorer_native_context_menu_header">Menú contextual nativo</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Mostrar menú contextual nativo (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea incluir en el menú contextual, puede describirlos de forma parcial o completa (p. ej., 'ejecutar' o 'Abrir con').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea excluir del menú contextual, puede describirlos de forma parcial o completa (p. ej., 'ejecutar' o 'Abrir con').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea incluir en el menú contextual, puede describirlos de forma parcial (p. ej., 'brir co') o completa ('Abrir con').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">En el siguiente cuadro puede especificar los elementos que desea excluir en el menú contextual, puede describirlos de forma parcial (p. ej., 'brir co') o completa ('Abrir con').</system:String>
 </ResourceDictionary>

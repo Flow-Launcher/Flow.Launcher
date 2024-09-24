@@ -83,6 +83,7 @@
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Vlastní Průzkumník</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Arg</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Umístění úvodní složky můžete upravit vložením proměnných prostředí, které chcete použít. Dostupnost proměnných prostředí můžete otestovat pomocí příkazového řádku.</system:String>
+
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Zadejte argumenty, které chcete přidat pro správce souborů. %s pro nadřazenou složku, %f pro úplnou cestu (funguje pouze pro win32). Podrobnosti naleznete na webové stránce správce souborů.</system:String>
 
     <!--  Dialogs  -->
