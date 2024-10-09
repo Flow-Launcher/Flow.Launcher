@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="About" xml:space="preserve">
-    <value>About</value>
+    <value>Om</value>
     <comment>Area System</comment>
   </data>
   <data name="access.cpl" xml:space="preserve">
@@ -701,7 +701,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
-    <value>Game Mode</value>
+    <value>Spillmodus</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
@@ -709,7 +709,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
-    <value>General</value>
+    <value>Generelt</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
@@ -827,7 +827,7 @@
     <value>Keys</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Språk</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
