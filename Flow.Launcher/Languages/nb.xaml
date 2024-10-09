@@ -14,12 +14,12 @@
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
-    <system:String x:Key="couldnotStartCmd">Could not start {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Invalid Flow Launcher plugin file format</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">Set as topmost in this query</system:String>
-    <system:String x:Key="cancelTopMostInThisQuery">Cancel topmost in this query</system:String>
-    <system:String x:Key="executeQuery">Execute query: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Last execution time: {0}</system:String>
+    <system:String x:Key="couldnotStartCmd">Kunne ikke starte {0}</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ugyldig Flow Launcher programtillegg filformat</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Sett som høyest i denne spørringen</system:String>
+    <system:String x:Key="cancelTopMostInThisQuery">Kanseller høyest i denne spørringen</system:String>
+    <system:String x:Key="executeQuery">Kjør spørring: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">Siste utførelsestid: {0}</system:String>
     <system:String x:Key="iconTrayOpen">Open</system:String>
     <system:String x:Key="iconTraySettings">Settings</system:String>
     <system:String x:Key="iconTrayAbout">About</system:String>
