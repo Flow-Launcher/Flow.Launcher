@@ -245,25 +245,25 @@
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Vindusskyggeeffekt for spørringer</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
-    <system:String x:Key="windowWidthSize">Window Width Size</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">Skyggeeffekt har en betydelig bruk av GPU. Anbefales ikke hvis datamaskinens ytelse er begrenset.</system:String>
+    <system:String x:Key="windowWidthSize">Vindusbredde størrelse</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
-    <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
-    <system:String x:Key="useGlyphUIEffect">Use Segoe Fluent Icons for query results where supported</system:String>
+    <system:String x:Key="useGlyphUI">Bruk Segoe Fluent ikoner</system:String>
+    <system:String x:Key="useGlyphUIEffect">Bruk Segoe Fluent Icons for spørreresultater der det støttes</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
 
     <!--  Setting Proxy  -->
-    <system:String x:Key="proxy">HTTP Proxy</system:String>
-    <system:String x:Key="enableProxy">Enable HTTP Proxy</system:String>
-    <system:String x:Key="server">HTTP Server</system:String>
+    <system:String x:Key="proxy">HTTP proxy</system:String>
+    <system:String x:Key="enableProxy">Aktiver HTTP proxy</system:String>
+    <system:String x:Key="server">HTTP-tjener</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">User Name</system:String>
-    <system:String x:Key="password">Password</system:String>
-    <system:String x:Key="testProxy">Test Proxy</system:String>
-    <system:String x:Key="save">Save</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
-    <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
-    <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
+    <system:String x:Key="userName">Brukernavn</system:String>
+    <system:String x:Key="password">Passord</system:String>
+    <system:String x:Key="testProxy">Test-proxy</system:String>
+    <system:String x:Key="save">Lagre</system:String>
+    <system:String x:Key="serverCantBeEmpty">Tjenerfelt kan ikke være tomt</system:String>
+    <system:String x:Key="portCantBeEmpty">Portfelt kan ikke være tomt</system:String>
+    <system:String x:Key="invalidPortFormat">Ugyldig portformat</system:String>
     <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
     <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
     <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
@@ -357,7 +357,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Common Action  -->
-    <system:String x:Key="commonSave">Save</system:String>
+    <system:String x:Key="commonSave">Lagre</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
     <system:String x:Key="commonCancel">Cancel</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
