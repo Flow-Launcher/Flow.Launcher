@@ -1746,7 +1746,7 @@
     <value>Navigation properties</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
-    <value>Media streaming options</value>
+    <value>Medien-Streaming-Optionen</value>
   </data>
   <data name="MakeAFileTypeAlwaysOpenInASpecificProgram" xml:space="preserve">
     <value>Make a file type always open in a specific program</value>
@@ -1758,7 +1758,7 @@
     <value>Find and fix keyboard problems</value>
   </data>
   <data name="UseScreenReader" xml:space="preserve">
-    <value>Use screen reader</value>
+    <value>Screenreader verwenden</value>
   </data>
   <data name="ShowWhichWorkgroupThisComputerIsOn" xml:space="preserve">
     <value>Show which workgroup this computer is on</value>
@@ -1809,7 +1809,7 @@
     <value>Add clocks for different time zones</value>
   </data>
   <data name="AddABluetoothDevice" xml:space="preserve">
-    <value>Add a Bluetooth device</value>
+    <value>Ein Bluetooth-Gerät hinzufügen</value>
   </data>
   <data name="CustomiseTheMouseButtons" xml:space="preserve">
     <value>Customise the mouse buttons</value>
