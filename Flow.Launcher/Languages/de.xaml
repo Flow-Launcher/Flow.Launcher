@@ -130,7 +130,7 @@
     <system:String x:Key="pluginStore">Erweiterungen laden</system:String>
     <system:String x:Key="pluginStore_NewRelease">Neue Version</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Vor kurzem aktualisiert</system:String>
-    <system:String x:Key="pluginStore_None">Erweiterungen</system:String>
+    <system:String x:Key="pluginStore_None">Plug-ins</system:String>
     <system:String x:Key="pluginStore_Installed">Installiert</system:String>
     <system:String x:Key="refresh">Refresh</system:String>
     <system:String x:Key="installbtn">Installieren</system:String>
@@ -220,7 +220,7 @@
     <system:String x:Key="CopyFilePathHotkey">Dateipfad kopieren</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Gott Modus</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Historie umschalten</system:String>
-    <system:String x:Key="OpenContainFolderHotkey">Öffne beinhaltenden Ordner</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Enthaltenden Ordner öffnen</system:String>
     <system:String x:Key="RunAsAdminHotkey">Als Admin ausführen</system:String>
     <system:String x:Key="RequeryHotkey">Suchergebnisse neu laden</system:String>
     <system:String x:Key="ReloadPluginHotkey">Plugin-Daten neu laden</system:String>
@@ -254,14 +254,14 @@
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP-Proxy</system:String>
-    <system:String x:Key="enableProxy">Aktiviere HTTP Proxy</system:String>
+    <system:String x:Key="enableProxy">HTTP Proxy akttivieren</system:String>
     <system:String x:Key="server">HTTP-Server</system:String>
     <system:String x:Key="port">Port</system:String>
     <system:String x:Key="userName">Benutzername</system:String>
     <system:String x:Key="password">Passwort</system:String>
     <system:String x:Key="testProxy">Teste Proxy</system:String>
     <system:String x:Key="save">Speichern</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server darf nicht leer sein</system:String>
+    <system:String x:Key="serverCantBeEmpty">Serverfeld darf nicht leer sein</system:String>
     <system:String x:Key="portCantBeEmpty">Server Port darf nicht leer sein</system:String>
     <system:String x:Key="invalidPortFormat">Falsches Port Format</system:String>
     <system:String x:Key="saveProxySuccessfully">Proxy wurde erfolgreich gespeichert</system:String>
@@ -270,13 +270,13 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Über</system:String>
-    <system:String x:Key="website">Webseite</system:String>
+    <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Dokumentation</system:String>
+    <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
-    <system:String x:Key="checkUpdates">Nach Aktuallisierungen Suchen</system:String>
+    <system:String x:Key="checkUpdates">Nach Updates suchen</system:String>
     <system:String x:Key="BecomeASponsor">Sponsor werden</system:String>
     <system:String x:Key="newVersionTips">Eine neue Version ({0}) ist vorhanden. Bitte starten Sie Flow Launcher neu.</system:String>
     <system:String x:Key="checkUpdatesFailed">Überprüfung der Updates fehlgeschlagen. Bitte überprüfen Sie Ihre Verbindungs- und Proxy-Einstellungen zu api.github.com.</system:String>
@@ -288,8 +288,8 @@
     <system:String x:Key="documentation">Verwendungshinweise</system:String>
     <system:String x:Key="devtool">Entwicklerwerkzeuge</system:String>
     <system:String x:Key="settingfolder">Einstellungsordner</system:String>
-    <system:String x:Key="logfolder">Protokoll-Verzeichnis</system:String>
-    <system:String x:Key="clearlogfolder">Protokolldateien leeren</system:String>
+    <system:String x:Key="logfolder">Log-Ordner</system:String>
+    <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Protokolle löschen möchten?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
     <system:String x:Key="userdatapath">Speicherort der Nutzerdaten</system:String>
@@ -326,10 +326,10 @@
     <system:String x:Key="newActionKeywords">Neues Aktionsschlüsselwort</system:String>
     <system:String x:Key="cancel">Abbrechen</system:String>
     <system:String x:Key="done">Fertig</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Kann das angegebene Plugin nicht finden</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">Das angegebene Plug-in kann nicht gefunden werden</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Neues Aktionsschlüsselwort darf nicht leer sein</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Aktionsschlüsselwort ist schon bei einem anderen Plugin in verwendung. Bitte stellen Sie ein anderes Aktionsschlüsselwort ein.</system:String>
-    <system:String x:Key="success">Erfolgreich</system:String>
+    <system:String x:Key="success">Erfolg</system:String>
     <system:String x:Key="completedSuccessfully">Erfolgreich abgeschlossen</system:String>
     <system:String x:Key="actionkeyword_tips">Benutzen Sie * wenn Sie ein Aktionsschlüsselwort definieren wollen.</system:String>
 
@@ -347,14 +347,14 @@
     <system:String x:Key="hotkeyRegGuide">Drücken Sie die Tasten, die Sie für diese Funktion verwenden möchten.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Benutzerdefinierte Abfragen-Abkürzungen</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Benutzerdefinierter Abfrage-Shortcut</system:String>
     <system:String x:Key="customeQueryShortcutTips">Geben Sie eine Abkürzung ein, die sich automatisch auf die angegebene Abfrage erweitert.</system:String>
     <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
 
 If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
     </system:String>
-    <system:String x:Key="duplicateShortcut">Abkürzung existiert bereits, bitte geben Sie eine neue Abkürzung ein oder bearbeiten Sie die vorhandene Abkürzung.</system:String>
-    <system:String x:Key="emptyShortcut">Abkürzung und/oder ihre Erweiterung sind leer.</system:String>
+    <system:String x:Key="duplicateShortcut">Shortcut ist bereits vorhanden, bitte geben Sie einen neuen Shortcut ein oder bearbeiten Sie den vorhandenen.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut und/oder ihre Erweiterung sind leer.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Speichern</system:String>
@@ -374,11 +374,11 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_cancel">Abbrechen</system:String>
     <system:String x:Key="reportWindow_general">Allgemein</system:String>
     <system:String x:Key="reportWindow_exceptions">Fehler</system:String>
-    <system:String x:Key="reportWindow_exception_type">Fehlertypen</system:String>
+    <system:String x:Key="reportWindow_exception_type">Ausnahme-Typ</system:String>
     <system:String x:Key="reportWindow_source">Quelle</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stapelüberwachung</system:String>
     <system:String x:Key="reportWindow_sending">Sende</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Report erfolgreich</system:String>
+    <system:String x:Key="reportWindow_report_succeed">Bericht erfolgreich gesendet</system:String>
     <system:String x:Key="reportWindow_report_failed">Report fehlgeschlagen</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher hat einen Fehler</system:String>
 
@@ -386,46 +386,46 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="pleaseWait">Bitte warten...</system:String>
 
     <!--  Update  -->
-    <system:String x:Key="update_flowlauncher_update_check">Nach Updates suchen!</system:String>
-    <system:String x:Key="update_flowlauncher_already_on_latest">Sie haben bereits die neuste Version</system:String>
+    <system:String x:Key="update_flowlauncher_update_check">Prüfung auf neues Update</system:String>
+    <system:String x:Key="update_flowlauncher_already_on_latest">Sie haben bereits die neueste Version von Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_found">Update gefunden</system:String>
     <system:String x:Key="update_flowlauncher_updating">Wird aktualisiert ...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
-        Flow Launcher konnte deine Profildaten nicht in die neue Updateversion verschieben.
+        Flow Launcher war nicht in der Lage, Ihre Benutzerprofildaten auf die neue Update-Version zu übertragen.
         Bitte verschieben Sie Ihren Profildatenordner manuell von {0} nach {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">Neues Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">V{0} von Flow Launcher ist verfügbar</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">Neues Release {0} von Flow Launcher ist jetzt verfügbar</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Es ist ein Fehler während der Installation der Aktualisierung aufgetreten.</system:String>
     <system:String x:Key="update_flowlauncher_update">Aktualisieren</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">Abbrechen</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Aktualisierung fehlgeschlagen</system:String>
+    <system:String x:Key="update_flowlauncher_fail">Update fehlgeschlagen</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Überprüfen Sie Ihre Internetverbindung und aktualisieren Sie die Proxy-Einstellungen um auf github-cloud.s3.amazonaws.com zugreifen zu können.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Diese Aktualisierung wird Flow Launcher neu starten</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Folgende Dateien werden aktualisiert</system:String>
-    <system:String x:Key="update_flowlauncher_update_files">Aktualisiere Dateien</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_description">Aktualisierungbeschreibung</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">Daten aktualisieren</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_description">Update-Beschreibung</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">Überspringen</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Willkommen im Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page1_Text01">Hallo, dies ist das erste Mal, dass Sie den Flow Launcher verwenden!</system:String>
-    <system:String x:Key="Welcome_Page1_Text02">Vor dem Start hilft dieser Assistent beim Einrichten des Flow Launchers. Sie können dies überspringen, wenn Sie möchten. Bitte wählen Sie eine Sprache aus</system:String>
+    <system:String x:Key="Welcome_Page1_Title">Willkommen bei Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Text01">Hallo, dies ist das erste Mal, dass Sie Flow Launcher ausführen!</system:String>
+    <system:String x:Key="Welcome_Page1_Text02">Bevor Sie beginnen, hilft dieser Assistent bei der Einrichtung von Flow Launcher. Sie können dies überspringen, wenn Sie möchten. Bitte wählen Sie eine Sprache</system:String>
     <system:String x:Key="Welcome_Page2_Title">Suchen und starten Sie alle Dateien sowie Anwendungen auf Ihrem PC</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Durchsuchen Sie alles von Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und mehr. Und das alles bequem von Ihrer Tastatur aus, ohne die Maus berühren zu müssen.</system:String>
-    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit der unten angegebenen Tastenkombination; probieren Sie es aus. Um diese zu ändern, klicken Sie auf die Eingabe und drücken die gewünschte Tastenkombination auf der Tastatur.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Tastenkombination</system:String>
+    <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit der unten angegebenen Hotkey; probieren Sie es aus. Um diese zu ändern, klicken Sie auf die Eingabe und drücken die gewünschte Tastenkombination auf der Tastatur.</system:String>
+    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Durchsuchen Sie das Web, starten Sie Anwendungen oder führen Sie verschiedene Abläufe durch die Flow Launcher Plugins aus. Einige Funktionen beginnen mit einem Aktions-Schlüsselwort und können bei Bedarf auch ohne Aktions-Schlüsselwörter verwendet werden. Probieren Sie die untenstehenden Abfragen in Flow Launcher aus.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Starte Flow-Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Fertig. Genießen Sie Flow Launcher. Die Tastenkombination nicht vergessen, um Flow Launcher zu starten :)</system:String>
+    <system:String x:Key="Welcome_Page5_Title">Lassen Sie uns Flow Launcher starten</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Beendet. Viel Spaß mit Flow Launcher. Vergessen Sie nicht den Hotkey zum Starten :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
     <system:String x:Key="HotkeyUpDownDesc">Zurück / Kontextmenü</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Element Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Kontextmenü öffnen</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Öffne beinhaltenden Ordner</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Enthaltenden Ordner öffnen</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Als Admin ausführen / Ordner im Standard-Dateimanager öffnen</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Verlauf durchsuchen</system:String>
     <system:String x:Key="HotkeyESCDesc">Zurück zum Resultat im Kontextmenü</system:String>
@@ -447,7 +447,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows-Einstellungen</system:String>
     <system:String x:Key="RecommendAcronyms">nt</system:String>
-    <system:String x:Key="RecommendAcronymsDesc">Notizen</system:String>
+    <system:String x:Key="RecommendAcronymsDesc">Hatfnotizen</system:String>
 
     <!--  Preview Area  -->
     <system:String x:Key="FileSize">Dateigröße</system:String>
