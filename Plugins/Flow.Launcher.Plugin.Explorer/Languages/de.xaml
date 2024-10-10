@@ -16,7 +16,7 @@
     <system:String x:Key="plugin_explorer_alternative">Die Warnmeldung wurde ausgeschaltet. Möchten Sie als Alternative für die Suche nach Dateien und Ordnern das Plugin Everything installieren?{0}{0}Wählen Sie 'Ja', um das Plugin Everything zu installieren, oder 'Nein', um zurückzukehren</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Explorer Alternative</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Error occurred during search: {0}</system:String>
-    <system:String x:Key="plugin_explorer_opendir_error">Could not open folder</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Ordner konnte nicht geöffnet werden</system:String>
     <system:String x:Key="plugin_explorer_openfile_error">Could not open file</system:String>
 
     <!--  Controls  -->
