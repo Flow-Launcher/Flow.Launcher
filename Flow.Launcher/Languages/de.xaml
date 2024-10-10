@@ -156,7 +156,7 @@
     <system:String x:Key="SampleTitleProgram">Programm</system:String>
     <system:String x:Key="SampleSubTitleProgram">Starte Programme als Admin oder anderer Benutzer</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Prozess-Killer</system:String>
-    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Unerwünschte Prozesse beenden</system:String>
     <system:String x:Key="SearchBarHeight">Suchleistenhöhe</system:String>
     <system:String x:Key="ItemHeight">Elementhöhe</system:String>
     <system:String x:Key="queryBoxFont">Abfragebox Schriftart</system:String>
