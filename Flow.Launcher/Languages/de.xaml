@@ -7,18 +7,18 @@
         Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Bitte wählen Sie das Programm {0} aus</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fehler beim Initialisieren der Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Der Pfad zur ausführbaren Datei {0} kann nicht festgelegt werden. Bitte versuchen Sie es in den Einstellungen von Flow (scrollen Sie nach unten).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Fehler beim Initialisieren der Plug-ins</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Plug-ins: {0} - nicht geladen werden und wird deaktiviert, bitte kontaktiere Sie den Ersteller des Plug-ins für Hilfe</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Fehler beim Registrieren des Hotkeys &quot;{0}&quot;. Der Hotkey wird möglicherweise von einem anderen Programm verwendet. Wechseln Sie zu einem anderen Hotkey oder beenden Sie das andere Programm.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Konnte nicht gestartet werden {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ungültiges Flow Launcher Plug-in-Dateiformat</system:String>
-    <system:String x:Key="setAsTopMostInThisQuery">In dieser Abfrage als oberstes setzen</system:String>
+    <system:String x:Key="setAsTopMostInThisQuery">Als oberstes in dieser Anfrage festlegen</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">In dieser Abfrage oberstes abbrechen</system:String>
-    <system:String x:Key="executeQuery">Abfrage ausführen:{0}</system:String>
+    <system:String x:Key="executeQuery">Abfrage ausführen: {0}</system:String>
     <system:String x:Key="lastExecuteTime">Letzte Ausführungszeit:{0}</system:String>
     <system:String x:Key="iconTrayOpen">Öffnen</system:String>
     <system:String x:Key="iconTraySettings">Einstellungen</system:String>
@@ -34,7 +34,7 @@
     <system:String x:Key="folderTitle">Ordner</system:String>
     <system:String x:Key="textTitle">Text</system:String>
     <system:String x:Key="GameMode">Spielmodus</system:String>
-    <system:String x:Key="GameModeToolTip">Hotkeys deaktivieren.</system:String>
+    <system:String x:Key="GameModeToolTip">Die Verwendung von Hotkeys aussetzen.</system:String>
     <system:String x:Key="PositionReset">Position zurücksetzen</system:String>
     <system:String x:Key="PositionResetToolTip">Position des Suchfensters zurücksetzen</system:String>
 
@@ -226,7 +226,7 @@
     <system:String x:Key="ReloadPluginHotkey">Plug-in-Daten neu laden</system:String>
     <system:String x:Key="QuickWidthHotkey">Fensterbreite schnell anpassen</system:String>
     <system:String x:Key="QuickHeightHotkey">Schnelleinstellung Fensterhöhe</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Verwenden, wenn Plug-ins ihre vorhandenen Daten neu laden und aktualisieren müssen.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Du kannst eine weitere Tastenkombination für diese Funktion hinzufügen.</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage Tastenkombination</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcut</system:String>
@@ -340,7 +340,7 @@
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey ist nicht verfügbar, bitte wählen Sie einen neuen Hotkey aus</system:String>
     <system:String x:Key="invalidPluginHotkey">Ungültiger Plug-in-Hotkey</system:String>
     <system:String x:Key="update">Aktualisieren</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
+    <system:String x:Key="hotkeyRegTitle">Bindung Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Aktueller Hotkey ist nicht verfügbar.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">Dieser Hotkey ist für &quot;{0}&quot; reserviert und kann nicht verwendet werden. Bitte wählen Sie einen anderen Hotkey.</system:String>
     <system:String x:Key="hotkeyUnavailableEditable">Dieser Hotkey ist bereits in Verwendung von &quot;{0}&quot;. Wenn Sie &quot;Überschreiben&quot; drücken, wird dieser aus &quot;{0}&quot; entfernt.</system:String>
@@ -349,9 +349,9 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Benutzerdefinierter Abfrage-Shortcut</system:String>
     <system:String x:Key="customeQueryShortcutTips">Geben Sie eine Abkürzung ein, die sich automatisch auf die angegebene Abfrage erweitert.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">Ein Shortcut wird erweitert, wenn dieser  genau mit der Abfrage übereinstimmt. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, passt der Shortcut auf jede beliebige Position in der Abfrage. Eingebaute Shortcuts passen zu jeder Position in einer Abfrage.
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut ist bereits vorhanden, bitte geben Sie einen neuen Shortcut ein oder bearbeiten Sie den vorhandenen.</system:String>
     <system:String x:Key="emptyShortcut">Shortcut und/oder ihre Erweiterung sind leer.</system:String>
