@@ -106,34 +106,34 @@
     <system:String x:Key="plugin">Plugin</system:String>
     <system:String x:Key="plugins">Programtillegg</system:String>
     <system:String x:Key="browserMorePlugins">Finn flere programtillegg</system:String>
-    <system:String x:Key="enable">On</system:String>
-    <system:String x:Key="disable">Off</system:String>
-    <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
-    <system:String x:Key="actionKeywords">Action keyword</system:String>
-    <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
-    <system:String x:Key="newActionKeyword">New action keyword</system:String>
-    <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>
-    <system:String x:Key="currentPriority">Current Priority</system:String>
-    <system:String x:Key="newPriority">New Priority</system:String>
-    <system:String x:Key="priority">Priority</system:String>
+    <system:String x:Key="enable">På</system:String>
+    <system:String x:Key="disable">Av</system:String>
+    <system:String x:Key="actionKeywordsTitle">Innstilling av handlingsnøkkelord</system:String>
+    <system:String x:Key="actionKeywords">Handlingsnøkkelord</system:String>
+    <system:String x:Key="currentActionKeywords">Nåværende handlingsnøkkelord</system:String>
+    <system:String x:Key="newActionKeyword">Nytt handlingsnøkkelord</system:String>
+    <system:String x:Key="actionKeywordsTooltip">Endre handlingsnøkkelord</system:String>
+    <system:String x:Key="currentPriority">Gjeldende prioritet</system:String>
+    <system:String x:Key="newPriority">Ny prioritet</system:String>
+    <system:String x:Key="priority">Prioritet</system:String>
     <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
-    <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
-    <system:String x:Key="author">by</system:String>
-    <system:String x:Key="plugin_init_time">Init time:</system:String>
-    <system:String x:Key="plugin_query_time">Query time:</system:String>
+    <system:String x:Key="pluginDirectory">Mappe for programtillegg</system:String>
+    <system:String x:Key="author">av</system:String>
+    <system:String x:Key="plugin_init_time">Innbygd tid:</system:String>
+    <system:String x:Key="plugin_query_time">Spørringstid:</system:String>
     <system:String x:Key="plugin_query_version">Version</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
+    <system:String x:Key="plugin_query_web">Nettsted</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">Programtillegg</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
-    <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="refresh">Oppfrisk</system:String>
+    <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
     <system:String x:Key="updatebtn">Update</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
@@ -144,11 +144,11 @@
 
 
     <!--  Setting Theme  -->
-    <system:String x:Key="theme">Theme</system:String>
+    <system:String x:Key="theme">Drakt</system:String>
     <system:String x:Key="appearance">Appearance</system:String>
-    <system:String x:Key="browserMoreThemes">Theme Gallery</system:String>
-    <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
-    <system:String x:Key="hiThere">Hi There</system:String>
+    <system:String x:Key="browserMoreThemes">Tema Galleri</system:String>
+    <system:String x:Key="howToCreateTheme">Hvordan lage et tema</system:String>
+    <system:String x:Key="hiThere">Hei der</system:String>
     <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
     <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
@@ -159,7 +159,7 @@
     <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
     <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
     <system:String x:Key="ItemHeight">Item Height</system:String>
-    <system:String x:Key="queryBoxFont">Query Box Font</system:String>
+    <system:String x:Key="queryBoxFont">Spørreboks skrift</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
     <system:String x:Key="resetCustomize">Reset</system:String>
@@ -270,7 +270,7 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">Om</system:String>
-    <system:String x:Key="website">Website</system:String>
+    <system:String x:Key="website">Nettsted</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
