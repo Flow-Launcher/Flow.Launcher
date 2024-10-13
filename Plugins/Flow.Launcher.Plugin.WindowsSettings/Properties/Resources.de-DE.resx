@@ -254,7 +254,7 @@
     <value>Uhr und Region</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -1366,7 +1366,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Sicherheitscenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
@@ -1683,7 +1683,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
-    <value>Windows Update</value>
+    <value>Windows-Updates</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Systemsteuerung</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
