@@ -18,8 +18,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser Name</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Data Directory Path</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Legg til</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Edit</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Delete</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Rediger</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Slett</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Browse</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
