@@ -60,7 +60,7 @@
   
   <ItemGroup>
     <PackageReference Include="ini-parser" Version="2.5.2" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
   </ItemGroup>
 
 </Project>
