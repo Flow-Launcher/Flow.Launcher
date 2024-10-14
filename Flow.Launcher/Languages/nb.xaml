@@ -234,7 +234,7 @@
     <system:String x:Key="customQuery">Spørring</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="builtinShortcutDescription">Beskrivelse</system:String>
     <system:String x:Key="delete">Slett</system:String>
     <system:String x:Key="edit">Rediger</system:String>
     <system:String x:Key="add">Legg til</system:String>
