@@ -214,9 +214,9 @@
     <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
-    <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
+    <system:String x:Key="OpenContextMenuHotkey">Åpne hurtigmeny</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
-    <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
+    <system:String x:Key="SettingWindowHotkey">Åpne innstillingsvindu</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
@@ -310,7 +310,7 @@
     <system:String x:Key="defaultBrowserTitle">Standard nettleser</system:String>
     <system:String x:Key="defaultBrowser_tips">Standardinnstillingen følger operativsystemets standard nettleserinnstilling. Hvis det er angitt separat, bruker Flow denne nettleseren.</system:String>
     <system:String x:Key="defaultBrowser_name">Nettleser</system:String>
-    <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
+    <system:String x:Key="defaultBrowser_profile_name">Nettlesernavn</system:String>
     <system:String x:Key="defaultBrowser_path">Sti til nettleser</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
@@ -422,17 +422,17 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">Tilbake / Hurtigmeny</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Elementnavigering</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">Åpne hurtigmeny</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
-    <system:String x:Key="HotkeyCtrlIDesc">Open Setting Window</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">Spørrehistorikk</system:String>
+    <system:String x:Key="HotkeyESCDesc">Tilbake til resultat i hurtigmenyen</system:String>
+    <system:String x:Key="HotkeyTabDesc">Autofullfør</system:String>
+    <system:String x:Key="HotkeyRunDesc">Åpne / Kjør valgte element</system:String>
+    <system:String x:Key="HotkeyCtrlIDesc">Åpne innstillingsvindu</system:String>
+    <system:String x:Key="HotkeyF5Desc">Last programtilleggdata på nytt</system:String>
 
     <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
     <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
@@ -440,10 +440,10 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyOpenResult">Open result</system:String>
     <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
 
-    <system:String x:Key="RecommendWeather">Weather</system:String>
-    <system:String x:Key="RecommendWeatherDesc">Weather in Google Result</system:String>
+    <system:String x:Key="RecommendWeather">Vær</system:String>
+    <system:String x:Key="RecommendWeatherDesc">Været i Google Resultat</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">Skallkommando</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
