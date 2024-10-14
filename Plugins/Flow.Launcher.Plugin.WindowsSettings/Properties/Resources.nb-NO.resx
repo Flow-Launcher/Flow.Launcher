@@ -378,7 +378,7 @@
     <value>Blue light</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
-    <value>Bluetooth</value>
+    <value>Blåtann</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
