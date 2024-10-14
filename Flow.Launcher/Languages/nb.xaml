@@ -121,7 +121,7 @@
     <system:String x:Key="author">av</system:String>
     <system:String x:Key="plugin_init_time">Innbygd tid:</system:String>
     <system:String x:Key="plugin_query_time">Spørringstid:</system:String>
-    <system:String x:Key="plugin_query_version">Version</system:String>
+    <system:String x:Key="plugin_query_version">Versjon</system:String>
     <system:String x:Key="plugin_query_web">Nettsted</system:String>
     <system:String x:Key="plugin_uninstall">Uninstall</system:String>
 
@@ -135,7 +135,7 @@
     <system:String x:Key="refresh">Oppfrisk</system:String>
     <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
-    <system:String x:Key="updatebtn">Update</system:String>
+    <system:String x:Key="updatebtn">Oppdater</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
     <system:String x:Key="LabelNew">New Version</system:String>
     <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
@@ -264,82 +264,82 @@
     <system:String x:Key="serverCantBeEmpty">Tjenerfelt kan ikke være tomt</system:String>
     <system:String x:Key="portCantBeEmpty">Portfelt kan ikke være tomt</system:String>
     <system:String x:Key="invalidPortFormat">Ugyldig portformat</system:String>
-    <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
-    <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
-    <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
+    <system:String x:Key="saveProxySuccessfully">Proxy-konfigurasjonen ble lagret</system:String>
+    <system:String x:Key="proxyIsCorrect">Proxy konfigurert riktig</system:String>
+    <system:String x:Key="proxyConnectFailed">Proxy-tilkobling mislyktes</system:String>
 
     <!--  Setting About  -->
     <system:String x:Key="about">Om</system:String>
     <system:String x:Key="website">Nettsted</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
-    <system:String x:Key="version">Version</system:String>
+    <system:String x:Key="docs">Dokumenter</system:String>
+    <system:String x:Key="version">Versjon</system:String>
     <system:String x:Key="icons">Icons</system:String>
-    <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
-    <system:String x:Key="checkUpdates">Check for Updates</system:String>
+    <system:String x:Key="about_activate_times">Du har aktivert Flow Launcher {0} ganger</system:String>
+    <system:String x:Key="checkUpdates">Se etter oppdateringer</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
-    <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vil du starte Flow Launcher på nytt for å bruke oppdateringen?</system:String>
+    <system:String x:Key="checkUpdatesFailed">Sjekk oppdateringer mislyktes, vennligst sjekk tilkoblingen og proxy-innstillingene til api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        Nedlasting av oppdateringer mislyktes, vennligst sjekk tilkoblings- og mellomtjenerinnstillingene til github-cloud.s3.amazonaws.com,
+        eller gå til https://github.com/Flow-Launcher/Flow.Launcher/releases for å laste ned manuelt.
     </system:String>
-    <system:String x:Key="releaseNotes">Release Notes</system:String>
-    <system:String x:Key="documentation">Usage Tips</system:String>
+    <system:String x:Key="releaseNotes">Versjonsmerknader</system:String>
+    <system:String x:Key="documentation">Tips om bruk</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Setting Folder</system:String>
-    <system:String x:Key="logfolder">Log Folder</system:String>
+    <system:String x:Key="settingfolder">Innstillingsmappe</system:String>
+    <system:String x:Key="logfolder">Loggmappe</system:String>
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="welcomewindow">Veiviser</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
+    <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
-    <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
-    <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
+    <system:String x:Key="fileManager_name">Filbehandler</system:String>
+    <system:String x:Key="fileManager_profile_name">Profilnavn</system:String>
+    <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
+    <system:String x:Key="fileManager_directory_arg">Arg for mappe</system:String>
+    <system:String x:Key="fileManager_file_arg">Arg for fil</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
     <system:String x:Key="defaultBrowserTitle">Standard nettleser</system:String>
-    <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
-    <system:String x:Key="defaultBrowser_name">Browser</system:String>
+    <system:String x:Key="defaultBrowser_tips">Standardinnstillingen følger operativsystemets standard nettleserinnstilling. Hvis det er angitt separat, bruker Flow denne nettleseren.</system:String>
+    <system:String x:Key="defaultBrowser_name">Nettleser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
-    <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
+    <system:String x:Key="defaultBrowser_path">Sti til nettleser</system:String>
     <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
     <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Privat modus</system:String>
 
     <!--  Priority Setting Dialog  -->
-    <system:String x:Key="changePriorityWindow">Change Priority</system:String>
-    <system:String x:Key="priority_tips">Greater the number, the higher the result will be ranked. Try setting it as 5. If you want the results to be lower than any other plugin's, provide a negative number</system:String>
-    <system:String x:Key="invalidPriority">Please provide an valid integer for Priority!</system:String>
+    <system:String x:Key="changePriorityWindow">Endre prioritet</system:String>
+    <system:String x:Key="priority_tips">Større nummer, jo høyere vil resultatet bli rangert. Prøv å sette det som 5. Ønsker du at resultatene skal være lavere enn noen andre programtillegg, gi et negativt tall</system:String>
+    <system:String x:Key="invalidPriority">Angi et gyldig heltall for prioritet!</system:String>
 
     <!--  Action Keyword Setting Dialog  -->
-    <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
-    <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
-    <system:String x:Key="cancel">Cancel</system:String>
-    <system:String x:Key="done">Done</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
-    <system:String x:Key="success">Success</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="oldActionKeywords">Gammelt nøkkelord for handling</system:String>
+    <system:String x:Key="newActionKeywords">Nytt nøkkelord for handling</system:String>
+    <system:String x:Key="cancel">Avbryt</system:String>
+    <system:String x:Key="done">Utført</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">Kan ikke finne spesifisert programtillegg</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">Nytt handlingsnøkkelord kan ikke være tom</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">Det nye nøkkelordet for handling er allerede tilordnet et annet programtillegg, velg et annet</system:String>
+    <system:String x:Key="success">Vellykket</system:String>
+    <system:String x:Key="completedSuccessfully">Fullført vellykket</system:String>
+    <system:String x:Key="actionkeyword_tips">Skriv inn handlingsnøkkelord du vil bruke for å starte programtillegget. Bruk * hvis du ikke ønsker å spesifisere noen, og utvidelsen vil bli utløst uten noen handlingsord.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Hurtigtast for egendefinert spørring</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
-    <system:String x:Key="preview">Preview</system:String>
-    <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
-    <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
-    <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="preview">Forhåndsvis</system:String>
+    <system:String x:Key="hotkeyIsNotUnavailable">Hurtigtast er utilgjengelig, vennligst velg en ny hurtigtast</system:String>
+    <system:String x:Key="invalidPluginHotkey">Ugyldig hurtigtast for programtillegg</system:String>
+    <system:String x:Key="update">Oppdater</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
@@ -359,7 +359,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lagre</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
-    <system:String x:Key="commonCancel">Cancel</system:String>
+    <system:String x:Key="commonCancel">Avbryt</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
     <system:String x:Key="commonDelete">Slett</system:String>
     <system:String x:Key="commonOK">OK</system:String>
@@ -367,11 +367,11 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version">Version</system:String>
+    <system:String x:Key="reportWindow_version">Versjon</system:String>
     <system:String x:Key="reportWindow_time">Tid</system:String>
     <system:String x:Key="reportWindow_reproduce">Fortell oss hvordan programmet krasjet slik at vi kan fikse det</system:String>
     <system:String x:Key="reportWindow_send_report">Send rapport</system:String>
-    <system:String x:Key="reportWindow_cancel">Cancel</system:String>
+    <system:String x:Key="reportWindow_cancel">Avbryt</system:String>
     <system:String x:Key="reportWindow_general">Generelt</system:String>
     <system:String x:Key="reportWindow_exceptions">Unntak</system:String>
     <system:String x:Key="reportWindow_exception_type">Type unntak</system:String>
@@ -397,8 +397,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="update_flowlauncher_new_update">Ny oppdatering</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">Ny versjon av Flow Launcher {0} er nå tilgjengelig</system:String>
     <system:String x:Key="update_flowlauncher_update_error">Det oppstod en feil under forsøket på å installere programvareoppdateringer</system:String>
-    <system:String x:Key="update_flowlauncher_update">Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Cancel</system:String>
+    <system:String x:Key="update_flowlauncher_update">Oppdater</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">Avbryt</system:String>
     <system:String x:Key="update_flowlauncher_fail">Oppdatering mislyktes</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Sjekk din tilkobling og prøv å oppdatere proxy-innstillingene til github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">Denne oppgraderingen vil starte Flow Launcher på nytt</system:String>
