@@ -25,7 +25,7 @@
     <system:String x:Key="iconTrayAbout">Om</system:String>
     <system:String x:Key="iconTrayExit">Avslutt</system:String>
     <system:String x:Key="closeWindow">Lukk</system:String>
-    <system:String x:Key="copy">Copy</system:String>
+    <system:String x:Key="copy">Kopier</system:String>
     <system:String x:Key="cut">Klipp ut</system:String>
     <system:String x:Key="paste">Lim inn</system:String>
     <system:String x:Key="undo">Undo</system:String>
@@ -149,7 +149,7 @@
     <system:String x:Key="browserMoreThemes">Tema Galleri</system:String>
     <system:String x:Key="howToCreateTheme">Hvordan lage et tema</system:String>
     <system:String x:Key="hiThere">Hei der</system:String>
-    <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
+    <system:String x:Key="SampleTitleExplorer">Utforsker</system:String>
     <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
     <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
     <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
