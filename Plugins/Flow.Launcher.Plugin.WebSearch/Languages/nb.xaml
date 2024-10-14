@@ -5,8 +5,8 @@
     <system:String x:Key="flowlauncher_plugin_websearch_open_search_in">Open search in:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_window">New Window</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_new_tab">New Tab</system:String>
-    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Set browser from path:</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_choose">Choose</system:String>
+    <system:String x:Key="flowlaucnher_plugin_websearch_set_browser_path">Angi nettleser fra banen:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_choose">Velg</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Slett</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Rediger</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Legg til</system:String>
@@ -20,7 +20,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Er du sikker på at du ønsker å slette {0}?</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
