@@ -415,10 +415,10 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="Welcome_Page2_Text01">Søk alt fra programmer, filer, bokmerker, YouTube, Twitter og mer. Alt fra komforten til tastaturet uten å røre musen.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starter med hurtigtasten nedenfor, fortsett og prøv den nå. For å endre det, klikk på inndata og trykk på ønsket hurtigtast på tastaturet.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hurtigtaster</system:String>
-    <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
-    <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
-    <system:String x:Key="Welcome_Page5_Text01">Finished. Enjoy Flow Launcher. Don't forget the hotkey to start :)</system:String>
+    <system:String x:Key="Welcome_Page4_Title">Nøkkelord og kommandoer for handling</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Søk på nett, starte programmer eller kjør forskjellige funksjoner gjennom programtillegg for Flow Launcher. Enkelte funksjoner begynner med et handlings-nøkkelord, og kan om nødvendig brukes uten handlings-søkeord. Prøv spørringene under i Flow Launcher.</system:String>
+    <system:String x:Key="Welcome_Page5_Title">La oss starte Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page5_Text01">Fullført. Nyt Flow Launcher. Ikke glem hurtigtasten for å starte :)</system:String>
 
     <!--  General Guide & Hotkey  -->
 
