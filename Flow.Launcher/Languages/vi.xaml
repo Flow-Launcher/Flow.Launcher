@@ -2,9 +2,9 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow phát hiện bạn đã cài plugin {0}, plugin này cần {1} để chạy. Bạn có muốn tải {1}?
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        Hãy chọn không nếu nó đã được cài đặt, và bạn sẽ được hỏi chọn thư mục chứa chương trình thực thi {1}
     </system:String>
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
@@ -13,7 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Không thể đăng ký phím nóng &quot;{0}&quot;. Phím nóng có thể được sử dụng bởi một chương trình khác. Chuyển sang phím nóng khác hoặc thoát khỏi chương trình khác.</system:String>
-    <system:String x:Key="MessageBoxTitle">Trình khởi chạy luồng</system:String>
+    <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Không thể khởi động {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Định dạng tệp plugin Flow Launcher không chính xác</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">Đặt ở vị trí trên cùng trong truy vấn này</system:String>
@@ -65,8 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Giữ lại truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQuerySelected">Chọn truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQueryEmpty">Trống truy vấn cuối cùng</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResults">Giữ nguyên chiều cao cửa sổ</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Chiều cao cửa sổ không thể thay đổi bằng cách kéo.</system:String>
     <system:String x:Key="maxShowResults">Số kết quả tối đa</system:String>
     <system:String x:Key="maxShowResultsToolTip">Có thể thiết lập nhanh chóng bằng CTRL+Plus và CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Bỏ qua phím nóng khi cửa sổ ở chế độ toàn màn hình</system:String>
@@ -83,15 +83,15 @@
     <system:String x:Key="typingStartEnTooltip">Tạm thời chuyển phương thức nhập sang tiếng Anh khi kích hoạt Flow.</system:String>
     <system:String x:Key="autoUpdates">Cập nhật tự động</system:String>
     <system:String x:Key="select">Chọn</system:String>
-    <system:String x:Key="hideOnStartup">Ẩn Trình khởi chạy luồng khi khởi động</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
+    <system:String x:Key="hideOnStartup">Ẩn Flow Launcher khi khởi động</system:String>
+    <system:String x:Key="hideOnStartupToolTip">Flow Launcher sẽ ẩn trong khay hệ thống sau khi khởi động.</system:String>
     <system:String x:Key="hideNotifyIcon">Ẩn biểu tượng thanh trạng thái</system:String>
     <system:String x:Key="hideNotifyIconToolTip">Khi biểu tượng bị ẩn khỏi khay, bạn có thể mở menu Cài đặt bằng cách nhấp chuột phải vào cửa sổ tìm kiếm.</system:String>
     <system:String x:Key="querySearchPrecision">Độ chính xác của tìm kiếm truy vấn</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Kết quả tìm kiếm bắt buộc.</system:String>
     <system:String x:Key="SearchPrecisionNone">Không</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
-    <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
+    <system:String x:Key="SearchPrecisionLow">Thấp</system:String>
+    <system:String x:Key="SearchPrecisionRegular">Bình thường</system:String>
     <system:String x:Key="ShouldUsePinyin">Hoạt động bính âm</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Cho phép bạn sử dụng Bính âm để tìm kiếm. Bính âm là hệ thống ký hiệu La Mã tiêu chuẩn để dịch văn bản tiếng Trung.</system:String>
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
@@ -157,7 +157,7 @@
     <system:String x:Key="SampleSubTitleProgram">Khởi chạy chương trình với tư cách quản trị viên hoặc người dùng khác</system:String>
     <system:String x:Key="SampleTitleProcessKiller">Buộc Tắt Tiến Trình </system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">Chấm dứt các tiến trình không mong muốn</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
+    <system:String x:Key="SearchBarHeight">Chiều cao thanh tìm kiếm</system:String>
     <system:String x:Key="ItemHeight">Item Height</system:String>
     <system:String x:Key="queryBoxFont">Phông chữ hộp truy vấn</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
@@ -222,7 +222,7 @@
     <system:String x:Key="ToggleHistoryHotkey">Chuyển đổi lịch sử</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Mở thư mục chứa</system:String>
     <system:String x:Key="RunAsAdminHotkey">Chạy với quyền admin</system:String>
-    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
+    <system:String x:Key="RequeryHotkey">Làm mới kết quả tìm kiếm</system:String>
     <system:String x:Key="ReloadPluginHotkey">Dữ liệu plugin không tải</system:String>
     <system:String x:Key="QuickWidthHotkey">Điều chỉnh nhanh độ rộng cửa sổ</system:String>
     <system:String x:Key="QuickHeightHotkey">Điều chỉnh nhanh chiều cao cửa sổ</system:String>
@@ -367,8 +367,8 @@
     <system:String x:Key="commonReset">Đặt lại</system:String>
     <system:String x:Key="commonDelete">Xóa</system:String>
     <system:String x:Key="commonOK">OK</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">Có</system:String>
+    <system:String x:Key="commonNo">Không</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Phiên bản</system:String>
@@ -444,7 +444,7 @@
     <system:String x:Key="HotkeySelectLastResult">Chọn kết quả cuối cùng</system:String>
     <system:String x:Key="HotkeyRequery">Chạy lại truy vấn hiện tại</system:String>
     <system:String x:Key="HotkeyOpenResult">Mở kết quả</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Mở kết quả #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Thời Tiết</system:String>
     <system:String x:Key="RecommendWeatherDesc">Thời tiết từ kết quả của Google</system:String>
