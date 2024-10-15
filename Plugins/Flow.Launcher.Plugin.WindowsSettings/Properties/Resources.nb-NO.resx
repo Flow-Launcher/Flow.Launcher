@@ -992,16 +992,16 @@
     <value>Notat</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Bare tilgjengelig når du har koblet en mobilenhet til enheten din.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Bare tilgjengelig på enheter som støtter avanserte grafikkalternativer.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Bare tilgjengelig på enheter som har batteri, for eksempel nettbrett.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Avviklet i Windows 10, versjon 1809 (bygg 17763) og senere.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
     <value>Only available if Dial is paired.</value>
