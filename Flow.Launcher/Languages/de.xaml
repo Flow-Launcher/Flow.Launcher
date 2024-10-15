@@ -298,7 +298,7 @@
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dateimanager auswählen</system:String>
-    <system:String x:Key="fileManager_tips">Bitte geben Sie den Dateispeicherort des von Ihnen verwendeten Dateimanagers an und fügen Sie nach Wunsch Argumente hinzu. Das „%d“ repräsentiert den dafür zu öffnenden Verzeichnispfad, der vom Feld Arg for Folder und für Befehle zum Öffnen bestimmter Verzeichnisse verwendet wird. Das „%f“ repräsentiert den dafür zu öffnenden Dateipfad, der vom Feld Arg for File und für Befehle zum Öffnen bestimmter Dateien verwendet wird.</system:String>
+    <system:String x:Key="fileManager_tips">Bitte geben Sie den Dateiort des von Ihnen verwendeten Dateimanagers an und fügen Sie bei Bedarf Argumente hinzu. Das „%d“ repräsentiert den dafür zu öffnenden Verzeichnispfad, der vom Feld Arg for Folder und für Befehle zum Öffnen bestimmter Verzeichnisse verwendet wird. Das „%f“ repräsentiert den dafür zu öffnenden Dateipfad, der vom Feld Arg for File und für Befehle zum Öffnen bestimmter Dateien verwendet wird.</system:String>
     <system:String x:Key="fileManager_tips2">Zum Beispiel, wenn der Dateimanager einen Befehl wie „totalcmd.exe /A c:\windows“ verwendet, um das Verzeichnis c:\windows zu öffnen, lautet der Dateimanager-Pfad „totalcmd.exe“ und der Arg for Folder „/A %d“. Bestimmte Dateimanager wie QTTabBar kann nur die Angabe eines Pfades erfordern, in diesem Fall verwenden Sie „%d“ als den Dateimanager-Pfad und lassen den Rest der Felder blank.</system:String>
     <system:String x:Key="fileManager_name">Dateimanager</system:String>
     <system:String x:Key="fileManager_profile_name">Profilname</system:String>
@@ -362,7 +362,7 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="commonCancel">Abbrechen</system:String>
     <system:String x:Key="commonReset">Zurücksetzen</system:String>
     <system:String x:Key="commonDelete">Löschen</system:String>
-    <system:String x:Key="commonOK">Aktualisieren</system:String>
+    <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Ja</system:String>
     <system:String x:Key="commonNo">Nein</system:String>
 
@@ -412,11 +412,11 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="Welcome_Page1_Text01">Hallo, dies ist das erste Mal, dass Sie Flow Launcher ausführen!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Bevor Sie beginnen, hilft dieser Assistent bei der Einrichtung von Flow Launcher. Sie können dies überspringen, wenn Sie möchten. Bitte wählen Sie eine Sprache</system:String>
     <system:String x:Key="Welcome_Page2_Title">Suchen und führen Sie alle Dateien und Anwendungen auf Ihrem PC aus</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Suchen Sie in Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Suchen Sie alles in Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit dem unten stehenden Hotkey, probieren Sie ihn gleich aus. Um ihn zu ändern, klicken Sie auf die Eingabe und drücken Sie den gewünschten Hotkey auf der Tastatur.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Suchen Sie im Web, starten Sie Anwendungen oder führen Sie verschiedene Funktionen über Flow Launcher-Plug-ins aus. Bestimmte Funktionen beginnen mit einem Aktions-Schlüsselwort und können bei Bedarf auch ohne Aktions-Schlüsselwort verwendet werden. Probieren Sie die folgenden Abfragen in Flow Launcher aus.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Suchen Sie im Web, starten Sie Anwendungen oder führen Sie verschiedene Funktionen über Flow Launcher-Plug-ins aus. Bestimmte Funktionen beginnen mit einem Aktions-Schlüsselwort und diese können bei Bedarf auch ohne Aktions-Schlüsselwörter verwendet werden. Probieren Sie die Abfragen unterhalb in Flow Launcher aus.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Lassen Sie uns Flow Launcher starten</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Beendet. Viel Spaß mit Flow Launcher. Vergessen Sie nicht den Hotkey zum Starten :)</system:String>
 
