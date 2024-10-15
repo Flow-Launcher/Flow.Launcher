@@ -5,11 +5,11 @@
     <system:String x:Key="plugin_pluginsmanager_downloading_plugin">Plug-in wird heruntergeladen</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_success">Erfolgreich heruntergeladen {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_download_error">Fehler: Das Plug-in kann nicht heruntergeladen werden</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} by {1} {2}{3}Would you like to uninstall this plugin? After the uninstallation Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_prompt">{0} von {1} {2}{3}Möchten Sie dieses Plug-in deinstallieren? Nach der Deinstallation wird Flow automatisch neu gestartet.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_prompt_no_restart">{0} by {1} {2}{2}Would you like to uninstall this plugin?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} by {1} {2}{3}Would you like to install this plugin? After the installation Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_prompt">{0} von {1} {2}{3}Möchten Sie dieses Plug-in installieren? Nach der Installation wird Flow automatisch neu gestartet.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_prompt_no_restart">{0} by {1} {2}{2}Would you like to install this plugin?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_install_title">Plugin-Installation</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_title">Plug-in-Installation</system:String>
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Plugin wird installiert</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">{0} herunterladen und installieren</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Plug-in-Deinstallation</system:String>
@@ -21,10 +21,10 @@
     <system:String x:Key="plugin_pluginsmanager_uninstall_error_title">Fehler bei Deinstallation des Plug-ins</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_title">Kein Update verfügbar</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_noresult_subtitle">Alle Plug-ins sind auf dem neuesten Stand</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} by {1} {2}{3}Would you like to update this plugin? After the update Flow will automatically restart.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_prompt">{0} von {1} {2}{3}Möchten Sie dieses Plug-in aktualisieren? Nach dem Update wird Flow automatisch neu gestartet.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_prompt_no_restart">{0} by {1} {2}{2}Would you like to update this plugin?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_title">Plug-in-Update</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Dieses Plugin ist bereits installiert</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_alreadyexists">Dieses Plug-in ist bereits installiert</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_title">Download des Plug-in-Manifests fehlgeschlagen</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_failed_subtitle">Bitte überprüfen Sie, ob Sie eine Verbindung zu github.com herstellen können. Dieser Fehler bedeutet, dass Sie möglicherweise nicht in der Lage sind, Plug-ins zu installieren oder zu aktualisieren.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_title">Alle Plug-ins aktualisieren</system:String>
@@ -43,7 +43,7 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Plug-in {0} ist bereits modifiziert worden. Bitte starten Sie Flow neu, bevor Sie irgendwelche weitere Änderungen vornehmen.</system:String>
    
     <!--  Plugin Infos  -->
-    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plugins verwalten</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_name">Plug-ins-Manager</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Verwaltung der Installation, Deinstallation oder Aktualisierung der Plug-ins von Flow Launcher</system:String>
     <system:String x:Key="plugin_pluginsmanager_unknown_author">Unbekannter Autor</system:String>
 
@@ -51,9 +51,9 @@
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_title">Website öffnen</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_openwebsite_subtitle">Besuchen Sie die Website des Plug-ins</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_title">Siehe Quellcode</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Quellcode des Plugins ansehen</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Verbesserung vorschlagen oder Fehler melden</system:String>
-    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Dem Plugin-Entwickler eine Verbesserung vorschlagen oder einen Fehler melden</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_gotosourcecode_subtitle">Quellcode des Plug-ins ansehen</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_title">Eine Verbesserung/ Erweiterung vorschlagen oder ein Problem einreichen</system:String>
+    <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_newissue_subtitle">Eine Verbesserung/ Erweiterung vorschlagen oder ein Problem an den Plug-in-Entwickler einreichen</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_title">Gehe zu Plug-ins-Repository von Flow</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_contextmenu_pluginsmanifest_subtitle">Besuchen Sie das PluginsManifest-Repository, um die von der Community eingereichten Plug-ins zu sehen</system:String>
 
