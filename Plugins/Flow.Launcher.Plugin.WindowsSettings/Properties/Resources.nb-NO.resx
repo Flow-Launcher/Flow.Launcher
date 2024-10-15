@@ -178,14 +178,14 @@
     <comment>Area System, only available on devices that support advanced display options</comment>
   </data>
   <data name="AdvancedGraphics" xml:space="preserve">
-    <value>Advanced graphics</value>
+    <value>Avansert grafikk</value>
   </data>
   <data name="AdvertisingId" xml:space="preserve">
-    <value>Advertising ID</value>
+    <value>Annonsering ID</value>
     <comment>Area Privacy, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="AirplaneMode" xml:space="preserve">
-    <value>Airplane mode</value>
+    <value>Flymodus</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="AltAndTab" xml:space="preserve">
@@ -193,20 +193,20 @@
     <comment>Means the key  combination "Tabulator+Alt" on the keyboard</comment>
   </data>
   <data name="AlternativeName" xml:space="preserve">
-    <value>Alternative names</value>
+    <value>Alternative navn</value>
   </data>
   <data name="Animations" xml:space="preserve">
-    <value>Animations</value>
+    <value>Animasjoner</value>
   </data>
   <data name="AppColor" xml:space="preserve">
-    <value>App color</value>
+    <value>Appfarge</value>
   </data>
   <data name="AppDiagnostics" xml:space="preserve">
-    <value>App diagnostics</value>
+    <value>Appdiagnostikk</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AppFeatures" xml:space="preserve">
-    <value>App features</value>
+    <value>Appfunksjoner</value>
     <comment>Area Apps</comment>
   </data>
   <data name="Application" xml:space="preserve">
@@ -214,19 +214,19 @@
     <comment>Short/modern name for application</comment>
   </data>
   <data name="AppsAndFeatures" xml:space="preserve">
-    <value>Apps and Features</value>
+    <value>Apper og funksjoner</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppSettingsApp" xml:space="preserve">
-    <value>System settings</value>
+    <value>Systeminnstillinger</value>
     <comment>Type of the setting is a "Modern Windows settings". We use the same term as used in start menu search at the moment. </comment>
   </data>
   <data name="AppsForWebsites" xml:space="preserve">
-    <value>Apps for websites</value>
+    <value>Apper for nettsteder</value>
     <comment>Area Apps</comment>
   </data>
   <data name="AppVolumeAndDevicePreferences" xml:space="preserve">
-    <value>App volume and device preferences</value>
+    <value>Appvolum og enhetsinnstillinger</value>
     <comment>Area System, Added in Windows 10, version 1903</comment>
   </data>
   <data name="appwiz.cpl" xml:space="preserve">
@@ -234,7 +234,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Area" xml:space="preserve">
-    <value>Area</value>
+    <value>Område</value>
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
@@ -245,55 +245,55 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AreaAppearanceAndPersonalization" xml:space="preserve">
-    <value>Appearance and Personalization</value>
+    <value>Utseende og personalisering</value>
   </data>
   <data name="AreaApps" xml:space="preserve">
-    <value>Apps</value>
+    <value>Apper</value>
   </data>
   <data name="AreaClockAndRegion" xml:space="preserve">
-    <value>Clock and Region</value>
+    <value>Klokke og region</value>
   </data>
   <data name="AreaControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Kontrollpanel</value>
   </data>
   <data name="AreaCortana" xml:space="preserve">
     <value>Cortana</value>
   </data>
   <data name="AreaDevices" xml:space="preserve">
-    <value>Devices</value>
+    <value>Enheter</value>
   </data>
   <data name="AreaEaseOfAccess" xml:space="preserve">
-    <value>Ease of access</value>
+    <value>Enkel tilgang</value>
   </data>
   <data name="AreaExtras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Ekstra</value>
   </data>
   <data name="AreaGaming" xml:space="preserve">
-    <value>Gaming</value>
+    <value>Spilling</value>
   </data>
   <data name="AreaHardwareAndSound" xml:space="preserve">
-    <value>Hardware and Sound</value>
+    <value>Maskinvare og lyd</value>
   </data>
   <data name="AreaHomePage" xml:space="preserve">
-    <value>Home page</value>
+    <value>Hjemmeside</value>
   </data>
   <data name="AreaMixedReality" xml:space="preserve">
-    <value>Mixed reality</value>
+    <value>Blandet virkelighet</value>
   </data>
   <data name="AreaNetworkAndInternet" xml:space="preserve">
-    <value>Network and Internet</value>
+    <value>Nettverk og Internett</value>
   </data>
   <data name="AreaPersonalization" xml:space="preserve">
-    <value>Personalization</value>
+    <value>Personalisering</value>
   </data>
   <data name="AreaPhone" xml:space="preserve">
-    <value>Phone</value>
+    <value>Telefon</value>
   </data>
   <data name="AreaPrivacy" xml:space="preserve">
-    <value>Privacy</value>
+    <value>Personvern</value>
   </data>
   <data name="AreaPrograms" xml:space="preserve">
-    <value>Programs</value>
+    <value>Programmer</value>
   </data>
   <data name="AreaSurfaceHub" xml:space="preserve">
     <value>SurfaceHub</value>
@@ -302,37 +302,37 @@
     <value>System</value>
   </data>
   <data name="AreaSystemAndSecurity" xml:space="preserve">
-    <value>System and Security</value>
+    <value>System og sikkerhet</value>
   </data>
   <data name="AreaTimeAndLanguage" xml:space="preserve">
-    <value>Time and language</value>
+    <value>Tid og språk</value>
   </data>
   <data name="AreaUpdateAndSecurity" xml:space="preserve">
-    <value>Update and security</value>
+    <value>Oppdatering og sikkerhet</value>
   </data>
   <data name="AreaUserAccounts" xml:space="preserve">
-    <value>User accounts</value>
+    <value>Brukerkontoer</value>
   </data>
   <data name="AssignedAccess" xml:space="preserve">
-    <value>Assigned access</value>
+    <value>Tildelt tilgang</value>
   </data>
   <data name="Audio" xml:space="preserve">
-    <value>Audio</value>
+    <value>Lyd</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="AudioAlerts" xml:space="preserve">
-    <value>Audio alerts</value>
+    <value>Lydvarsler</value>
   </data>
   <data name="AudioAndSpeech" xml:space="preserve">
-    <value>Audio and speech</value>
+    <value>Lyd og tale</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="AutomaticFileDownloads" xml:space="preserve">
-    <value>Automatic file downloads</value>
+    <value>Automatiske filnedlastinger</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AutoPlay" xml:space="preserve">
-    <value>AutoPlay</value>
+    <value>Autostart</value>
     <comment>Area Device</comment>
   </data>
   <data name="Background" xml:space="preserve">
@@ -468,7 +468,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Kontrollpanel</value>
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
@@ -543,19 +543,19 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="DesktopThemes" xml:space="preserve">
-    <value>Desktop themes</value>
+    <value>Skrivebordstemaer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
-    <value>deuteranopia</value>
+    <value>deuteranopi</value>
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
-    <value>Device manager</value>
+    <value>Enhetsbehandler</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DevicesAndPrinters" xml:space="preserve">
-    <value>Devices and printers</value>
+    <value>Enheter og skrivere</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Dhcp" xml:space="preserve">
@@ -563,23 +563,23 @@
     <comment>Should not translated</comment>
   </data>
   <data name="DialUp" xml:space="preserve">
-    <value>Dial-up</value>
+    <value>Modem</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DirectAccess" xml:space="preserve">
-    <value>Direct access</value>
+    <value>Direkte tilgang</value>
     <comment>Area NetworkAndInternet, only available if DirectAccess is enabled</comment>
   </data>
   <data name="DirectOpenYourPhone" xml:space="preserve">
-    <value>Direct open your phone</value>
+    <value>Direkte åpne telefonen</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Display" xml:space="preserve">
-    <value>Display</value>
+    <value>Skjerm</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="DisplayProperties" xml:space="preserve">
-    <value>Display properties</value>
+    <value>Skjermegenskaper</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DNS" xml:space="preserve">
@@ -587,39 +587,39 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Documents" xml:space="preserve">
-    <value>Documents</value>
+    <value>Dokumenter</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="DuplicatingMyDisplay" xml:space="preserve">
-    <value>Duplicating my display</value>
+    <value>Duplisere skjermen min</value>
     <comment>Area System</comment>
   </data>
   <data name="DuringTheseHours" xml:space="preserve">
-    <value>During these hours</value>
+    <value>I løpet av disse timene</value>
     <comment>Area System</comment>
   </data>
   <data name="EaseOfAccessCenter" xml:space="preserve">
-    <value>Ease of access center</value>
+    <value>Enkel tilgangssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Edition" xml:space="preserve">
-    <value>Edition</value>
+    <value>Utgave</value>
     <comment>Means the "Windows Edition"</comment>
   </data>
   <data name="Email" xml:space="preserve">
-    <value>Email</value>
+    <value>E-post</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="EmailAndAppAccounts" xml:space="preserve">
-    <value>Email and app accounts</value>
+    <value>E-post- og appkontoer</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Encryption" xml:space="preserve">
-    <value>Encryption</value>
+    <value>Kryptering</value>
     <comment>Area System</comment>
   </data>
   <data name="Environment" xml:space="preserve">
-    <value>Environment</value>
+    <value>Miljø</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="Ethernet" xml:space="preserve">
@@ -627,34 +627,34 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ExploitProtection" xml:space="preserve">
-    <value>Exploit Protection</value>
+    <value>Beskyttelse mot utnyttelse</value>
   </data>
   <data name="Extras" xml:space="preserve">
-    <value>Extras</value>
+    <value>Ekstra</value>
     <comment>Area Extra, , only used for setting of 3rd-Party tools</comment>
   </data>
   <data name="EyeControl" xml:space="preserve">
-    <value>Eye control</value>
+    <value>Øyekontroll</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="EyeTracker" xml:space="preserve">
-    <value>Eye tracker</value>
+    <value>Øyesporer</value>
     <comment>Area Privacy, requires eyetracker hardware</comment>
   </data>
   <data name="FamilyAndOtherPeople" xml:space="preserve">
-    <value>Family and other people</value>
+    <value>Familie og andre</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="FeedbackAndDiagnostics" xml:space="preserve">
-    <value>Feedback and diagnostics</value>
+    <value>Tilbakemelding og diagnostikk</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FileSystem" xml:space="preserve">
-    <value>File system</value>
+    <value>Filsystem</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value>Finn raskt</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -662,42 +662,42 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="FindMyDevice" xml:space="preserve">
-    <value>Find My Device</value>
+    <value>Finn min enhet</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Firewall" xml:space="preserve">
-    <value>Firewall</value>
+    <value>Brannmur</value>
   </data>
   <data name="FocusAssistQuietHours" xml:space="preserve">
-    <value>Focus assist - Quiet hours</value>
+    <value>Fokus assistanse - Stilletid</value>
     <comment>Area System</comment>
   </data>
   <data name="FocusAssistQuietMoments" xml:space="preserve">
-    <value>Focus assist - Quiet moments</value>
+    <value>Fokus assistanse - Stille øyeblikk</value>
     <comment>Area System</comment>
   </data>
   <data name="FolderOptions" xml:space="preserve">
-    <value>Folder options</value>
+    <value>Mappealternativer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Fonts" xml:space="preserve">
-    <value>Fonts</value>
+    <value>Skrifttyper</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ForDevelopers" xml:space="preserve">
-    <value>For developers</value>
+    <value>For utviklere</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="GameBar" xml:space="preserve">
-    <value>Game bar</value>
+    <value>Spillinje</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameControllers" xml:space="preserve">
-    <value>Game controllers</value>
+    <value>Spillkontrollere</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Game DVR</value>
+    <value>Spill DVR</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
@@ -705,7 +705,7 @@
     <comment>Area Gaming</comment>
   </data>
   <data name="Gateway" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Mellomtjener</value>
     <comment>Should not translated</comment>
   </data>
   <data name="General" xml:space="preserve">
@@ -713,41 +713,41 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="GetPrograms" xml:space="preserve">
-    <value>Get programs</value>
+    <value>Hent programmer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GettingStarted" xml:space="preserve">
-    <value>Getting started</value>
+    <value>Kom igang</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Glance" xml:space="preserve">
-    <value>Glance</value>
+    <value>Blikk</value>
     <comment>Area Personalization, Deprecated in Windows 10, version 1809 and later</comment>
   </data>
   <data name="GraphicsSettings" xml:space="preserve">
-    <value>Graphics settings</value>
+    <value>Grafikkinnstillinger</value>
     <comment>Area System</comment>
   </data>
   <data name="Grayscale" xml:space="preserve">
-    <value>Grayscale</value>
+    <value>Gråtoner</value>
   </data>
   <data name="GreenWeek" xml:space="preserve">
-    <value>Green week</value>
+    <value>Grønn uke</value>
     <comment>Mean you don't can see green colors</comment>
   </data>
   <data name="HeadsetDisplay" xml:space="preserve">
-    <value>Headset display</value>
+    <value>Hodesettvisning</value>
     <comment>Area MixedReality, only available if the Mixed Reality Portal app is installed.</comment>
   </data>
   <data name="HighContrast" xml:space="preserve">
-    <value>High contrast</value>
+    <value>Høy kontrast</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="HolographicAudio" xml:space="preserve">
-    <value>Holographic audio</value>
+    <value>Holografisk lyd</value>
   </data>
   <data name="HolographicEnvironment" xml:space="preserve">
-    <value>Holographic Environment</value>
+    <value>Holografisk miljø</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
     <value>Holographic Headset</value>
@@ -950,27 +950,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Network" xml:space="preserve">
-    <value>Network</value>
+    <value>Nettverk</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NetworkAndSharingCenter" xml:space="preserve">
-    <value>Network and sharing center</value>
+    <value>Nettverk og delingssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkConnection" xml:space="preserve">
-    <value>Network connection</value>
+    <value>Nettverkstilkobling</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkProperties" xml:space="preserve">
-    <value>Network properties</value>
+    <value>Egenskaper for nettverk</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkSetupWizard" xml:space="preserve">
-    <value>Network Setup Wizard</value>
+    <value>Veiviser for nettverksoppsett</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="NetworkStatus" xml:space="preserve">
-    <value>Network status</value>
+    <value>Nettverksstatus</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFC" xml:space="preserve">
@@ -978,18 +978,18 @@
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="NFCTransactions" xml:space="preserve">
-    <value>NFC Transactions</value>
+    <value>NFC-transaksjoner</value>
     <comment>"NFC should not translated"</comment>
   </data>
   <data name="NightLight" xml:space="preserve">
-    <value>Night light</value>
+    <value>Nattlys</value>
   </data>
   <data name="NightLightSettings" xml:space="preserve">
-    <value>Night light settings</value>
+    <value>Innstillinger for nattlys</value>
     <comment>Area System</comment>
   </data>
   <data name="Note" xml:space="preserve">
-    <value>Note</value>
+    <value>Notat</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
     <value>Only available when you have connected a mobile device to your device.</value>
@@ -1156,7 +1156,7 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="Phone" xml:space="preserve">
-    <value>Phone</value>
+    <value>Telefon</value>
     <comment>Area Phone</comment>
   </data>
   <data name="PhoneAndModem" xml:space="preserve">
@@ -1568,7 +1568,7 @@
     <comment>Area Device</comment>
   </data>
   <data name="UserAccounts" xml:space="preserve">
-    <value>User accounts</value>
+    <value>Brukerkontoer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Version" xml:space="preserve">
@@ -2503,7 +2503,7 @@
     <value>Get more features with a new edition of Windows</value>
   </data>
   <data name="AppControlPanel" xml:space="preserve">
-    <value>Control Panel</value>
+    <value>Kontrollpanel</value>
   </data>
   <data name="TaskLink" xml:space="preserve">
     <value>TaskLink</value>
