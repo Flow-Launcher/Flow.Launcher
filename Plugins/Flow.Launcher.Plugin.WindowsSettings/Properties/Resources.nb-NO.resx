@@ -1019,47 +1019,47 @@
     <value>Krever maskinvare for øyesporing.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Japan-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Pinyin-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Wubi-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>Bare tilgjengelig hvis Mixed Reality-portal-appen er installert.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>Kun tilgjengelig på mobil og hvis bedriften har distribuert en klargjøringspakke.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Added in Windows 10, version 1903 (build 18362).</value>
+    <value>Lagt til i Windows 10, versjon 1903 (bygg 18362).</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Added in Windows 10, version 2004 (build 19041).</value>
+    <value>Lagt til i Windows 10, versjon 2004 (bygg 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>Kun tilgjengelig hvis "innstillingsapper" er installert, for eksempel av tredjepart.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Only available if touchpad hardware is present.</value>
+    <value>Bare tilgjengelig hvis touchpad-maskinvare er tilstede.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Only available if the device has a Wi-Fi adapter.</value>
+    <value>Bare tilgjengelig dersom enheten har et Wi-Fi-adapter.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Device must be Windows Anywhere-capable.</value>
+    <value>Enheten må være Windows Anywhere-kompatibel.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value>Kun tilgjengelig hvis bedriften har distribuert en klargjøringspakke.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Varsler</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notifications and actions</value>
+    <value>Varsler og handlinger</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
@@ -1075,45 +1075,45 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (32-bit)</value>
+    <value>ODBC Datakilde Administrator (32-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (64-bit)</value>
+    <value>ODBC Datakilde Administrator (64-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
+    <value>Frakoblede filer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Frakoblede kart</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Maps - Download maps</value>
+    <value>Frakoblede kart – Last ned kart</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>On-Screen</value>
+    <value>På-skjermen</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>OS</value>
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
-    <value>Other devices</value>
+    <value>Andre enheter</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Other options</value>
+    <value>Andre alternativer</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
-    <value>Other users</value>
+    <value>Andre brukere</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Parental controls</value>
+    <value>Foreldrekontroll</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
