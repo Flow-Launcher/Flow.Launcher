@@ -1004,19 +1004,19 @@
     <value>Avviklet i Windows 10, versjon 1809 (bygg 17763) og senere.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>Bare tilgjengelig dersom Dial er paret.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Bare tilgjengelig dersom DirectAccess er aktivert.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>Bare tilgjengelig på enheter som støtter avanserte skjerminnstillinger.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Finnes bare hvis brukeren er registrert i WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Krever maskinvare for øyesporing.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
     <value>Available if the Microsoft Japan input method editor is installed.</value>
