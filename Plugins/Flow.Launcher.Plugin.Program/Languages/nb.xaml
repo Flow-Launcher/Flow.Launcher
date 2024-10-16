@@ -7,7 +7,7 @@
     <system:String x:Key="flowlauncher_plugin_program_edit">Rediger</system:String>
     <system:String x:Key="flowlauncher_plugin_program_add">Legg til</system:String>
     <system:String x:Key="flowlauncher_plugin_program_name">Navn</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable">Enable</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable">Aktiver</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enabled">Aktivert</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable">Deaktiver</system:String>
     <system:String x:Key="flowlauncher_plugin_program_status">Status</system:String>
