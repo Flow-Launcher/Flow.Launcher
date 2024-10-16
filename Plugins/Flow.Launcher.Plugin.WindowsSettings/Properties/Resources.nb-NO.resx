@@ -1639,7 +1639,7 @@
     <value>Kantlinje for vindu</value>
   </data>
   <data name="WindowsAnytimeUpgrade" xml:space="preserve">
-    <value>Windows Anytime Upgrade</value>
+    <value>Windows Anytime-oppgradering</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsAnywhere" xml:space="preserve">
@@ -1655,15 +1655,15 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsFirewall" xml:space="preserve">
-    <value>Windows Firewall</value>
+    <value>Windows Defender Brannmur</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsHelloSetupFace" xml:space="preserve">
-    <value>Windows Hello setup - Face</value>
+    <value>Oppsett av Windows Hello – ansikt</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsHelloSetupFingerprint" xml:space="preserve">
-    <value>Windows Hello setup - Fingerprint</value>
+    <value>Oppsett av Windows Hello – fingeravtrykk</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
@@ -1671,15 +1671,15 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
-    <value>Windows Mobility Center</value>
+    <value>Windows-mobilitetssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="WindowsSearch" xml:space="preserve">
-    <value>Windows search</value>
+    <value>Windows søk</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="WindowsSecurity" xml:space="preserve">
-    <value>Windows Security</value>
+    <value>Windows sikkerhet</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdate" xml:space="preserve">
@@ -1687,7 +1687,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateAdvancedOptions" xml:space="preserve">
-    <value>Windows Update - Advanced options</value>
+    <value>Windows Update - avanserte alternativer</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
