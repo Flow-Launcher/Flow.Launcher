@@ -39,7 +39,7 @@
     <system:String x:Key="plugin_explorer_editor_path">Editor-Pfad</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell-Pfad</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Indexsuche ausgeschlossene Pfade</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Verwenden Suchergebnis Standort als ausführbare Arbeitsverzeichnis</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Ort des Suchergebnisses als Arbeitsverzeichnis der ausführbaren Datei verwenden</system:String>
     <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexierungsoptionen</system:String>
