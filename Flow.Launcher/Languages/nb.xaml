@@ -123,7 +123,7 @@
     <system:String x:Key="plugin_query_time">Spørringstid:</system:String>
     <system:String x:Key="plugin_query_version">Versjon</system:String>
     <system:String x:Key="plugin_query_web">Nettsted</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
+    <system:String x:Key="plugin_uninstall">Avinstaller</system:String>
 
 
     <!--  Setting Plugin Store  -->
@@ -134,7 +134,7 @@
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
     <system:String x:Key="refresh">Oppfrisk</system:String>
     <system:String x:Key="installbtn">Installer</system:String>
-    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="uninstallbtn">Avinstaller</system:String>
     <system:String x:Key="updatebtn">Oppdater</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
     <system:String x:Key="LabelNew">New Version</system:String>
