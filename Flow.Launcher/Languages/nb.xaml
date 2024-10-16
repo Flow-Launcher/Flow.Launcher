@@ -116,7 +116,7 @@
     <system:String x:Key="currentPriority">Gjeldende prioritet</system:String>
     <system:String x:Key="newPriority">Ny prioritet</system:String>
     <system:String x:Key="priority">Prioritet</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
+    <system:String x:Key="priorityToolTip">Endre prioritet for programtilleggresultater</system:String>
     <system:String x:Key="pluginDirectory">Mappe for programtillegg</system:String>
     <system:String x:Key="author">av</system:String>
     <system:String x:Key="plugin_init_time">Innbygd tid:</system:String>
@@ -128,42 +128,42 @@
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
-    <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
+    <system:String x:Key="pluginStore_NewRelease">Ny utgivelse</system:String>
+    <system:String x:Key="pluginStore_RecentlyUpdated">Nylig oppdatert</system:String>
     <system:String x:Key="pluginStore_None">Programtillegg</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">Installert</system:String>
     <system:String x:Key="refresh">Oppfrisk</system:String>
     <system:String x:Key="installbtn">Installer</system:String>
     <system:String x:Key="uninstallbtn">Avinstaller</system:String>
     <system:String x:Key="updatebtn">Oppdater</system:String>
-    <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
-    <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
-    <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
+    <system:String x:Key="LabelInstalledToolTip">Programtillegg er allerede installert</system:String>
+    <system:String x:Key="LabelNew">Ny versjon</system:String>
+    <system:String x:Key="LabelNewToolTip">Dette programtillegget er oppdatert i løpet av de siste 7 dagene</system:String>
+    <system:String x:Key="LabelUpdateToolTip">Ny oppdatering er tilgjengelig</system:String>
 
 
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Drakt</system:String>
-    <system:String x:Key="appearance">Appearance</system:String>
+    <system:String x:Key="appearance">Utseende</system:String>
     <system:String x:Key="browserMoreThemes">Tema Galleri</system:String>
     <system:String x:Key="howToCreateTheme">Hvordan lage et tema</system:String>
     <system:String x:Key="hiThere">Hei der</system:String>
     <system:String x:Key="SampleTitleExplorer">Utforsker</system:String>
-    <system:String x:Key="SampleSubTitleExplorer">Search for files, folders and file contents</system:String>
-    <system:String x:Key="SampleTitleWebSearch">WebSearch</system:String>
-    <system:String x:Key="SampleSubTitleWebSearch">Search the web with different search engine support</system:String>
+    <system:String x:Key="SampleSubTitleExplorer">Søk etter filer, mapper og filinnhold</system:String>
+    <system:String x:Key="SampleTitleWebSearch">Nettsøk</system:String>
+    <system:String x:Key="SampleSubTitleWebSearch">Søk på nettet med forskjellig støtte for søkemotorer</system:String>
     <system:String x:Key="SampleTitleProgram">Program</system:String>
-    <system:String x:Key="SampleSubTitleProgram">Launch programs as admin or a different user</system:String>
-    <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
-    <system:String x:Key="SampleSubTitleProcessKiller">Terminate unwanted processes</system:String>
-    <system:String x:Key="SearchBarHeight">Search Bar Height</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
+    <system:String x:Key="SampleSubTitleProgram">Start programmer som administrator eller en annen bruker</system:String>
+    <system:String x:Key="SampleTitleProcessKiller">ProsessTerminerer</system:String>
+    <system:String x:Key="SampleSubTitleProcessKiller">Avslutt uønskede prosesser</system:String>
+    <system:String x:Key="SearchBarHeight">Søkefeltets høyde</system:String>
+    <system:String x:Key="ItemHeight">Elementhøyde</system:String>
     <system:String x:Key="queryBoxFont">Spørreboks skrift</system:String>
-    <system:String x:Key="resultItemFont">Result Title Font</system:String>
-    <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
-    <system:String x:Key="resetCustomize">Reset</system:String>
-    <system:String x:Key="CustomizeToolTip">Customize</system:String>
+    <system:String x:Key="resultItemFont">Skrift for resultattittel</system:String>
+    <system:String x:Key="resultSubItemFont">Skrift for resultatundertittel</system:String>
+    <system:String x:Key="resetCustomize">Tilbakestill</system:String>
+    <system:String x:Key="CustomizeToolTip">Tilpass</system:String>
     <system:String x:Key="windowMode">Vindumodus</system:String>
     <system:String x:Key="opacity">Ugjennomsiktighet</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">Tema {0} finnes ikke, tilbakestilling til standardtema</system:String>
@@ -176,8 +176,8 @@
     <system:String x:Key="ColorSchemeDark">Mørk</system:String>
     <system:String x:Key="SoundEffect">Lydeeffekt</system:String>
     <system:String x:Key="SoundEffectTip">Spill av en liten lyd når søkevinduet åpnes</system:String>
-    <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
-    <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
+    <system:String x:Key="SoundEffectVolume">Lydeffektvolum</system:String>
+    <system:String x:Key="SoundEffectVolumeTip">Juster volumet til lydeffekten</system:String>
     <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
     <system:String x:Key="Animation">Animasjon</system:String>
     <system:String x:Key="AnimationTip">Bruk animasjon i brukergrensesnitt</system:String>
