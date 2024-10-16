@@ -126,43 +126,43 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Accessibility Options</value>
+    <value>Alternativer for tilgjengelighet</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
-    <value>Accessory apps</value>
+    <value>Apper for tilbehør</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AccessWorkOrSchool" xml:space="preserve">
-    <value>Access work or school</value>
+    <value>Tilgang til arbeid eller skole</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="AccountInfo" xml:space="preserve">
-    <value>Account info</value>
+    <value>Kontoinformasjon</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Accounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Kontoer</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="ActionCenter" xml:space="preserve">
-    <value>Action Center</value>
+    <value>Handlingssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Activation" xml:space="preserve">
-    <value>Activation</value>
+    <value>Aktivering</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="ActivityHistory" xml:space="preserve">
-    <value>Activity history</value>
+    <value>Aktivitetslogg</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="AddHardware" xml:space="preserve">
-    <value>Add Hardware</value>
+    <value>Legg til maskinvare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddRemovePrograms" xml:space="preserve">
-    <value>Add/Remove Programs</value>
+    <value>Legg til/fjern programmer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AddYourPhone" xml:space="preserve">
@@ -238,7 +238,7 @@
     <comment>Mean the settings area or settings category</comment>
   </data>
   <data name="AreaAccounts" xml:space="preserve">
-    <value>Accounts</value>
+    <value>Kontoer</value>
   </data>
   <data name="AreaAdministrativeTools" xml:space="preserve">
     <value>Administrative verktøy</value>
@@ -750,13 +750,13 @@
     <value>Holografisk miljø</value>
   </data>
   <data name="HolographicHeadset" xml:space="preserve">
-    <value>Holographic Headset</value>
+    <value>Holografisk hodetelefoner</value>
   </data>
   <data name="HolographicManagement" xml:space="preserve">
-    <value>Holographic Management</value>
+    <value>Holografisk administrasjon</value>
   </data>
   <data name="HomeGroup" xml:space="preserve">
-    <value>Home group</value>
+    <value>Hjemmegruppe</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Id" xml:space="preserve">
@@ -764,10 +764,10 @@
     <comment>MEans The "Windows Identifier"</comment>
   </data>
   <data name="Image" xml:space="preserve">
-    <value>Image</value>
+    <value>Bilde</value>
   </data>
   <data name="IndexingOptions" xml:space="preserve">
-    <value>Indexing options</value>
+    <value>Alternativer for indeksering</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="inetcpl.cpl" xml:space="preserve">
@@ -775,15 +775,15 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Infrared" xml:space="preserve">
-    <value>Infrared</value>
+    <value>Infrarød</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="InkingAndTyping" xml:space="preserve">
-    <value>Inking and typing</value>
+    <value>Håndskrift og skriving</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="InternetOptions" xml:space="preserve">
-    <value>Internet options</value>
+    <value>Alternativer for Internett</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="intl.cpl" xml:space="preserve">
@@ -791,17 +791,17 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="InvertedColors" xml:space="preserve">
-    <value>Inverted colors</value>
+    <value>Inverterte farger</value>
   </data>
   <data name="Ip" xml:space="preserve">
     <value>IP</value>
     <comment>Should not translated</comment>
   </data>
   <data name="IsolatedBrowsing" xml:space="preserve">
-    <value>Isolated Browsing</value>
+    <value>Isolert surfing</value>
   </data>
   <data name="JapanImeSettings" xml:space="preserve">
-    <value>Japan IME settings</value>
+    <value>Japanske IME-innstillinger</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Japan input method editor is installed</comment>
   </data>
   <data name="joy.cpl" xml:space="preserve">
@@ -809,7 +809,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="JoystickProperties" xml:space="preserve">
-    <value>Joystick properties</value>
+    <value>Egenskaper for styrespak</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="jpnime" xml:space="preserve">
@@ -817,39 +817,39 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Keyboard" xml:space="preserve">
-    <value>Keyboard</value>
+    <value>Tastatur</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="Keypad" xml:space="preserve">
     <value>Keypad</value>
   </data>
   <data name="Keys" xml:space="preserve">
-    <value>Keys</value>
+    <value>Taster</value>
   </data>
   <data name="Language" xml:space="preserve">
     <value>Språk</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="LightColor" xml:space="preserve">
-    <value>Light color</value>
+    <value>Lys farge</value>
   </data>
   <data name="LightMode" xml:space="preserve">
-    <value>Light mode</value>
+    <value>Lys modus</value>
   </data>
   <data name="Location" xml:space="preserve">
     <value>Plassering</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="LockScreen" xml:space="preserve">
-    <value>Lock screen</value>
+    <value>Låseskjerm</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Magnifier" xml:space="preserve">
-    <value>Magnifier</value>
+    <value>Forstørrer</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="MailMicrosoftExchangeOrWindowsMessaging" xml:space="preserve">
-    <value>Mail - Microsoft Exchange or Windows Messaging</value>
+    <value>E-post - Microsoft Exchange eller Windows Messaging</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="main.cpl" xml:space="preserve">
