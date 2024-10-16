@@ -53,11 +53,11 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Alle innstillinger for Flow Launcher er lagret</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Lastet inn alle gjeldende programtilleggdata på nytt</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_shutdown_computer">Er du sikker på at du vil slå av datamaskinen?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Are you sure you want to restart the computer?</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Are you sure you want to restart the computer with Advanced Boot Options?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer">Er du sikker på at du vil starte datamaskinen på nytt?</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Er du sikker på at du vil starte datamaskinen på nytt med avanserte oppstartsalternativer?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Are you sure you want to log off?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">System Commands</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Provides System related commands. e.g. shutdown, lock, settings etc.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systemkommandoer</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Gir systemrelaterte kommandoer, f.eks. slå av, lås, innstillinger osv.</system:String>
 
 </ResourceDictionary>
