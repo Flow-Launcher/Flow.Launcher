@@ -992,74 +992,74 @@
     <value>Notat</value>
   </data>
   <data name="NoteAddYourPhone" xml:space="preserve">
-    <value>Only available when you have connected a mobile device to your device.</value>
+    <value>Bare tilgjengelig når du har koblet en mobilenhet til enheten din.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>Bare tilgjengelig på enheter som støtter avanserte grafikkalternativer.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
-    <value>Only available on devices that have a battery, such as a tablet.</value>
+    <value>Bare tilgjengelig på enheter som har batteri, for eksempel nettbrett.</value>
   </data>
   <data name="NoteDeprecated17763" xml:space="preserve">
-    <value>Deprecated in Windows 10, version 1809 (build 17763) and later.</value>
+    <value>Avviklet i Windows 10, versjon 1809 (bygg 17763) og senere.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>Bare tilgjengelig dersom Dial er paret.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
-    <value>Only available if DirectAccess is enabled.</value>
+    <value>Bare tilgjengelig dersom DirectAccess er aktivert.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>Bare tilgjengelig på enheter som støtter avanserte skjerminnstillinger.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>Finnes bare hvis brukeren er registrert i WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>Krever maskinvare for øyesporing.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Japan-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Pinyin-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
-    <value>Available if the Microsoft Wubi input method editor is installed.</value>
+    <value>Tilgjengelig hvis Microsoft Wubi-redigeringsmetoden for inndata er installert.</value>
   </data>
   <data name="NoteMixedReality" xml:space="preserve">
-    <value>Only available if the Mixed Reality Portal app is installed.</value>
+    <value>Bare tilgjengelig hvis Mixed Reality-portal-appen er installert.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>Kun tilgjengelig på mobil og hvis bedriften har distribuert en klargjøringspakke.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
-    <value>Added in Windows 10, version 1903 (build 18362).</value>
+    <value>Lagt til i Windows 10, versjon 1903 (bygg 18362).</value>
   </data>
   <data name="NoteSince19041" xml:space="preserve">
-    <value>Added in Windows 10, version 2004 (build 19041).</value>
+    <value>Lagt til i Windows 10, versjon 2004 (bygg 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>Kun tilgjengelig hvis "innstillingsapper" er installert, for eksempel av tredjepart.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
-    <value>Only available if touchpad hardware is present.</value>
+    <value>Bare tilgjengelig hvis touchpad-maskinvare er tilstede.</value>
   </data>
   <data name="NoteWiFiAdapter" xml:space="preserve">
-    <value>Only available if the device has a Wi-Fi adapter.</value>
+    <value>Bare tilgjengelig dersom enheten har et Wi-Fi-adapter.</value>
   </data>
   <data name="NoteWindowsAnywhere" xml:space="preserve">
-    <value>Device must be Windows Anywhere-capable.</value>
+    <value>Enheten må være Windows Anywhere-kompatibel.</value>
   </data>
   <data name="NoteWorkplaceProvisioning" xml:space="preserve">
-    <value>Only available if enterprise has deployed a provisioning package.</value>
+    <value>Kun tilgjengelig hvis bedriften har distribuert en klargjøringspakke.</value>
   </data>
   <data name="Notifications" xml:space="preserve">
-    <value>Notifications</value>
+    <value>Varsler</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="NotificationsAndActions" xml:space="preserve">
-    <value>Notifications and actions</value>
+    <value>Varsler og handlinger</value>
     <comment>Area System</comment>
   </data>
   <data name="NumLock" xml:space="preserve">
@@ -1075,45 +1075,45 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="OdbcDataSourceAdministrator32Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (32-bit)</value>
+    <value>ODBC Datakilde Administrator (32-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OdbcDataSourceAdministrator64Bit" xml:space="preserve">
-    <value>ODBC Data Source Administrator (64-bit)</value>
+    <value>ODBC Datakilde Administrator (64-bit)</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineFiles" xml:space="preserve">
-    <value>Offline files</value>
+    <value>Frakoblede filer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="OfflineMaps" xml:space="preserve">
-    <value>Offline Maps</value>
+    <value>Frakoblede kart</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OfflineMapsDownloadMaps" xml:space="preserve">
-    <value>Offline Maps - Download maps</value>
+    <value>Frakoblede kart – Last ned kart</value>
     <comment>Area Apps</comment>
   </data>
   <data name="OnScreen" xml:space="preserve">
-    <value>On-Screen</value>
+    <value>På-skjermen</value>
   </data>
   <data name="Os" xml:space="preserve">
     <value>OS</value>
     <comment>Means the "Operating System"</comment>
   </data>
   <data name="OtherDevices" xml:space="preserve">
-    <value>Other devices</value>
+    <value>Andre enheter</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="OtherOptions" xml:space="preserve">
-    <value>Other options</value>
+    <value>Andre alternativer</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="OtherUsers" xml:space="preserve">
-    <value>Other users</value>
+    <value>Andre brukere</value>
   </data>
   <data name="ParentalControls" xml:space="preserve">
-    <value>Parental controls</value>
+    <value>Foreldrekontroll</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Password" xml:space="preserve">
@@ -1320,15 +1320,15 @@
     <value>Region formatting</value>
   </data>
   <data name="RemoteAppAndDesktopConnections" xml:space="preserve">
-    <value>RemoteApp and desktop connections</value>
+    <value>RemoteApp og skrivebordstilkoblinger</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="RemoteDesktop" xml:space="preserve">
-    <value>Remote Desktop</value>
+    <value>Eksternt skrivebord</value>
     <comment>Area System</comment>
   </data>
   <data name="ScannersAndCameras" xml:space="preserve">
-    <value>Scanners and cameras</value>
+    <value>Skannere og kameraer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
@@ -1336,18 +1336,18 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
-    <value>Scheduled</value>
+    <value>Planlagt</value>
   </data>
   <data name="ScheduledTasks" xml:space="preserve">
-    <value>Scheduled tasks</value>
+    <value>Planlagte oppgaver</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Screen rotation</value>
+    <value>Skjermrotasjon</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
-    <value>Scroll bars</value>
+    <value>Rullefelt</value>
   </data>
   <data name="ScrollLock" xml:space="preserve">
     <value>Scroll Lock</value>
@@ -1358,7 +1358,7 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SearchingWindows" xml:space="preserve">
-    <value>Searching Windows</value>
+    <value>Søker i Windows</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="SecureDNS" xml:space="preserve">
@@ -1366,71 +1366,71 @@
     <comment>Should not translated</comment>
   </data>
   <data name="SecurityCenter" xml:space="preserve">
-    <value>Security Center</value>
+    <value>Sikkerhetssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SecurityProcessor" xml:space="preserve">
-    <value>Security Processor</value>
+    <value>Sikkerhetsbehandler</value>
   </data>
   <data name="SessionCleanup" xml:space="preserve">
-    <value>Session cleanup</value>
+    <value>Opprydding i økter</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="SettingsHomePage" xml:space="preserve">
-    <value>Settings home page</value>
+    <value>Hjemmesiden for innstillinger</value>
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Set up a kiosk</value>
+    <value>Sett opp en kiosk</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
-    <value>Shared experiences</value>
+    <value>Delte erfaringer</value>
     <comment>Area System</comment>
   </data>
   <data name="Shortcuts" xml:space="preserve">
-    <value>Shortcuts</value>
+    <value>Snarveier</value>
   </data>
   <data name="ShortNameWiFi" xml:space="preserve">
     <value>wifi</value>
     <comment>dont translate this, is a short term to find entries</comment>
   </data>
   <data name="SignInOptions" xml:space="preserve">
-    <value>Sign-in options</value>
+    <value>Alternativer for pålogging</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Sign-in options - Dynamic lock</value>
+    <value>Alternativer for pålogging - Dynamisk lås</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
-    <value>Size</value>
+    <value>Størrelse</value>
     <comment>Size for text and symbols</comment>
   </data>
   <data name="Sound" xml:space="preserve">
-    <value>Sound</value>
+    <value>Lyd</value>
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Tale</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
-    <value>Speech recognition</value>
+    <value>Talegjenkjenning</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SpeechTyping" xml:space="preserve">
-    <value>Speech typing</value>
+    <value>Taleskriving</value>
   </data>
   <data name="Start" xml:space="preserve">
     <value>Start</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="StartPlaces" xml:space="preserve">
-    <value>Start places</value>
+    <value>Startsteder</value>
   </data>
   <data name="StartupApps" xml:space="preserve">
-    <value>Startup apps</value>
+    <value>Oppstartsprogrammer</value>
     <comment>Area Apps</comment>
   </data>
   <data name="sticpl.cpl" xml:space="preserve">
@@ -1438,27 +1438,27 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Storage" xml:space="preserve">
-    <value>Storage</value>
+    <value>Lagring</value>
     <comment>Area System</comment>
   </data>
   <data name="StoragePolicies" xml:space="preserve">
-    <value>Storage policies</value>
+    <value>Retningslinjer for lagring</value>
     <comment>Area System</comment>
   </data>
   <data name="StorageSense" xml:space="preserve">
-    <value>Storage Sense</value>
+    <value>Lagringssensor</value>
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
-    <value>in</value>
+    <value>i</value>
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
-    <value>Sync center</value>
+    <value>Synkroniseringssenter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
-    <value>Sync your settings</value>
+    <value>Synkroniser innstillingene dine</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="sysdm.cpl" xml:space="preserve">
@@ -1470,49 +1470,49 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SystemPropertiesAndAddNewHardwareWizard" xml:space="preserve">
-    <value>System properties and Add New Hardware wizard</value>
+    <value>Systemegenskaper og veiviser for å legge til ny maskinvare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Tab" xml:space="preserve">
-    <value>Tab</value>
+    <value>TAB</value>
     <comment>Means the key "Tabulator" on the keyboard</comment>
   </data>
   <data name="TabletMode" xml:space="preserve">
-    <value>Tablet mode</value>
+    <value>Nettbrettmodus</value>
     <comment>Area System</comment>
   </data>
   <data name="TabletPcSettings" xml:space="preserve">
-    <value>Tablet PC settings</value>
+    <value>Innstillinger for nettbrett</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Talk" xml:space="preserve">
-    <value>Talk</value>
+    <value>Snakk</value>
   </data>
   <data name="TalkToCortana" xml:space="preserve">
-    <value>Talk to Cortana</value>
+    <value>Snakk med Cortana</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="Taskbar" xml:space="preserve">
-    <value>Taskbar</value>
+    <value>Oppgavelinje</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
-    <value>Taskbar color</value>
+    <value>Farge på oppgavelinje</value>
   </data>
   <data name="Tasks" xml:space="preserve">
-    <value>Tasks</value>
+    <value>Oppgaver</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Team Conferencing</value>
+    <value>Gruppekonferanser</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Team device management</value>
+    <value>Administrasjon av teamenheter</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
-    <value>Text to speech</value>
+    <value>Tekst til tale</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Themes" xml:space="preserve">
@@ -1713,27 +1713,27 @@
     <value>Workplace</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
-    <value>Workplace provisioning</value>
+    <value>Klargjøring på arbeidsplassen</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WubiImeSettings" xml:space="preserve">
-    <value>Wubi IME settings</value>
+    <value>Wubi IME innstillinger</value>
     <comment>Area TimeAndLanguage, available if the Microsoft Wubi input method editor is installed</comment>
   </data>
   <data name="WubiImeSettingsUdp" xml:space="preserve">
-    <value>Wubi IME settings - UDP</value>
+    <value>Wubi IME innstillinger - UDP</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="XboxNetworking" xml:space="preserve">
-    <value>Xbox Networking</value>
+    <value>Xbox-nettverk</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="YourInfo" xml:space="preserve">
-    <value>Your info</value>
+    <value>Din informasjon</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Zoom" xml:space="preserve">
-    <value>Zoom</value>
+    <value>Forstørre</value>
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">

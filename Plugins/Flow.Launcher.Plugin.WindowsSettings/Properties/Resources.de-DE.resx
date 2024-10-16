@@ -1839,7 +1839,7 @@
     <value>Eine Datei senden oder empfangen</value>
   </data>
   <data name="AddOrRemoveUserAccounts" xml:space="preserve">
-    <value>Add or remove user accounts</value>
+    <value>Benutzerkonten hinzufügen oder entfernen</value>
   </data>
   <data name="EditTheSystemEnvironmentVariables" xml:space="preserve">
     <value>Edit the system environment variables</value>
@@ -2061,7 +2061,7 @@
     <value>Review your computer's status and resolve issues</value>
   </data>
   <data name="MicrosoftChangjieSettings" xml:space="preserve">
-    <value>Microsoft ChangJie Settings</value>
+    <value>Microsoft-ChangJie-Einstellungen</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
     <value>Replace sounds with visual cues</value>

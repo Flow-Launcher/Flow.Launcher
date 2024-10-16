@@ -28,7 +28,7 @@
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Koblinger for hurtigtilgang</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Size</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Størrelse</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
@@ -129,7 +129,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Navn</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Size</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Størrelse</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date Created</system:String>
