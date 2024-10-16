@@ -178,47 +178,47 @@
     <system:String x:Key="SoundEffectTip">Spill av en liten lyd når søkevinduet åpnes</system:String>
     <system:String x:Key="SoundEffectVolume">Lydeffektvolum</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Juster volumet til lydeffekten</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player er ikke tilgjengelig og er nødvendig for Flows volumjustering. Vennligst sjekk installasjonen din hvis du trenger å justere volumet.</system:String>
     <system:String x:Key="Animation">Animasjon</system:String>
     <system:String x:Key="AnimationTip">Bruk animasjon i brukergrensesnitt</system:String>
-    <system:String x:Key="AnimationSpeed">Animation Speed</system:String>
+    <system:String x:Key="AnimationSpeed">Animasjonshastighet</system:String>
     <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
-    <system:String x:Key="AnimationSpeedSlow">Slow</system:String>
-    <system:String x:Key="AnimationSpeedMedium">Medium</system:String>
-    <system:String x:Key="AnimationSpeedFast">Fast</system:String>
-    <system:String x:Key="AnimationSpeedCustom">Custom</system:String>
-    <system:String x:Key="Clock">Clock</system:String>
-    <system:String x:Key="Date">Date</system:String>
-    <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="AnimationSpeedSlow">Sakte</system:String>
+    <system:String x:Key="AnimationSpeedMedium">Middels</system:String>
+    <system:String x:Key="AnimationSpeedFast">Rask</system:String>
+    <system:String x:Key="AnimationSpeedCustom">Egendefinert</system:String>
+    <system:String x:Key="Clock">Klokke</system:String>
+    <system:String x:Key="Date">Dato</system:String>
+    <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
 
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
     <system:String x:Key="hotkeys">Hurtigtaster</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="flowlauncherHotkey">Åpne Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Skriv inn snarvei til å vise/skjule Flow Launcher.</system:String>
-    <system:String x:Key="previewHotkey">Toggle Preview</system:String>
-    <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
-    <system:String x:Key="hotkeyPresets">Hotkey Presets</system:String>
-    <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
+    <system:String x:Key="previewHotkey">Vis/skjul forhåndsvisning</system:String>
+    <system:String x:Key="previewHotkeyToolTip">Skriv inn snarvei til å vise/skjule forhåndsvisning i søkevinduet.</system:String>
+    <system:String x:Key="hotkeyPresets">Hurtigtast forhåndsinnstillinger</system:String>
+    <system:String x:Key="hotkeyPresetsToolTip">Liste over registrerte hurtigtaster</system:String>
     <system:String x:Key="openResultModifiers">Åpne resultatendringstast</system:String>
     <system:String x:Key="openResultModifiersToolTip">Velg en modifikasjonstast for å åpne valgt resultat via tastatur.</system:String>
     <system:String x:Key="showOpenResultHotkey">Vis hurtigtast</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Vis resultatvalg hurtigtast med resultater.</system:String>
-    <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
-    <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
-    <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
-    <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
-    <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
-    <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
+    <system:String x:Key="autoCompleteHotkey">Automatisk fullføring</system:String>
+    <system:String x:Key="autoCompleteHotkeyToolTip">Kjører autofullføring for de valgte elementene.</system:String>
+    <system:String x:Key="SelectNextItemHotkey">Velg neste element</system:String>
+    <system:String x:Key="SelectPrevItemHotkey">Velg forrige element</system:String>
+    <system:String x:Key="SelectNextPageHotkey">Neste side</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">Forrige side</system:String>
+    <system:String x:Key="CycleHistoryUpHotkey">Bla gjennom forrige spørring</system:String>
+    <system:String x:Key="CycleHistoryDownHotkey">Bla gjennom neste spørring</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Åpne hurtigmeny</system:String>
-    <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
+    <system:String x:Key="OpenNativeContextMenuHotkey">Åpne innebygd hurtigmeny</system:String>
     <system:String x:Key="SettingWindowHotkey">Åpne innstillingsvindu</system:String>
-    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
+    <system:String x:Key="CopyFilePathHotkey">Kopier filbane</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Vis/Skjul spillmodus</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
     <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
@@ -436,21 +436,21 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
 
     <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
     <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeyRequery">Kjør gjeldende spørring på nytt</system:String>
+    <system:String x:Key="HotkeyOpenResult">Åpne resultat</system:String>
+    <system:String x:Key="HotkeyOpenResultN">Åpne resultat #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">Vær</system:String>
     <system:String x:Key="RecommendWeatherDesc">Været i Google Resultat</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
     <system:String x:Key="RecommendShellDesc">Skallkommando</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
-    <system:String x:Key="RecommendBluetoothDesc">Bluetooth in Windows Settings</system:String>
+    <system:String x:Key="RecommendBluetoothDesc">Bluetooth i Windows innstillinger</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
     <system:String x:Key="RecommendAcronymsDesc">Sticky Notes</system:String>
 
     <!--  Preview Area  -->
-    <system:String x:Key="FileSize">File Size</system:String>
-    <system:String x:Key="Created">Created</system:String>
-    <system:String x:Key="LastModified">Last Modified</system:String>
+    <system:String x:Key="FileSize">Filstørrelse</system:String>
+    <system:String x:Key="Created">Opprettet</system:String>
+    <system:String x:Key="LastModified">Sist endret</system:String>
 </ResourceDictionary>
