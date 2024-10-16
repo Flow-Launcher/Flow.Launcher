@@ -1691,26 +1691,26 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update - Check for updates</value>
+    <value>Windows Update - se etter oppdateringer</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
-    <value>Windows Update - Restart options</value>
+    <value>Windows Update - alternativer for omstart</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update - View optional updates</value>
+    <value>Windows Update - se valgfrie oppdateringer</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update - View update history</value>
+    <value>Windows Update - se oppdateringshistorikk</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
-    <value>Wireless</value>
+    <value>Trådløs</value>
   </data>
   <data name="Workplace" xml:space="preserve">
-    <value>Workplace</value>
+    <value>Arbeidsområde</value>
   </data>
   <data name="WorkplaceProvisioning" xml:space="preserve">
     <value>Klargjøring på arbeidsplassen</value>
