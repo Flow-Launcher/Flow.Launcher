@@ -68,12 +68,12 @@
     <system:String x:Key="KeepMaxResults">Feste Fensterhöhe</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Die Fensterhöhe ist durch Ziehen nicht anpassbar.</system:String>
     <system:String x:Key="maxShowResults">Maximal gezeigte Ergebnisse</system:String>
-    <system:String x:Key="maxShowResultsToolTip">Sie können dies auch mit STRG+Plus und STRG+Minus schnell anpassen.</system:String>
+    <system:String x:Key="maxShowResultsToolTip">Sie können dies auch unter Verwendung von STRG+Plus und STRG+Minus schnell anpassen.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Hotkeys im Vollbildmodus ignorieren</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Aktivierung von Flow Launcher deaktivieren, wenn eine Vollbildanwendung aktiv ist (empfohlen für Spiele).</system:String>
-    <system:String x:Key="defaultFileManager">Default-Dateimanager</system:String>
+    <system:String x:Key="defaultFileManager">Dateimanager per Default</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Wählen Sie den Dateimanager aus, der beim Öffnen des Ordners verwendet werden soll.</system:String>
-    <system:String x:Key="defaultBrowser">Defaut-Webbrowser</system:String>
+    <system:String x:Key="defaultBrowser">Webbrowser per Default</system:String>
     <system:String x:Key="defaultBrowserToolTip">Einstellung für neuen Tab, neues Fenster, Privatmodus.</system:String>
     <system:String x:Key="pythonFilePath">Python-Pfad</system:String>
     <system:String x:Key="nodeFilePath">Node.js-Pfad</system:String>
@@ -229,7 +229,7 @@
     <system:String x:Key="ReloadPluginHotkeyToolTip">Verwenden, wenn Plug-ins ihre vorhandenen Daten neu laden und aktualisieren müssen.</system:String>
     <system:String x:Key="AdditionalHotkeyToolTip">Sie können einen weiteren Hotkey für diese Funktion hinzufügen.</system:String>
     <system:String x:Key="customQueryHotkey">Benutzerdefinierte Abfrage-Hotkeys</system:String>
-    <system:String x:Key="customQueryShortcut">Benutzerdefinierter Abfrage-Hotkeys</system:String>
+    <system:String x:Key="customQueryShortcut">Benutzerdefinierte Abfrage-Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Integrierte Shortcuts</system:String>
     <system:String x:Key="customQuery">Abfrage</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
@@ -240,7 +240,7 @@
     <system:String x:Key="add">Hinzufügen</system:String>
     <system:String x:Key="none">Keine</system:String>
     <system:String x:Key="pleaseSelectAnItem">Bitte wählen Sie ein Element aus</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">Sind Sie sicher, dass Sie {0} Plug-in-Hotkey löschen wollen?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">Sind Sie sicher, dass Sie den {0} Plug-in-Hotkey löschen wollen?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Sind Sie sicher, dass Sie den Shortcut {0} mit der Erweiterung {1} löschen wollen?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Text aus Zwischenablage abrufen.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Pfad aus aktivem Explorer abrufen.</system:String>
@@ -263,7 +263,7 @@
     <system:String x:Key="save">Speichern</system:String>
     <system:String x:Key="serverCantBeEmpty">Feld Server darf nicht leer sein</system:String>
     <system:String x:Key="portCantBeEmpty">Feld Port darf nicht leer sein</system:String>
-    <system:String x:Key="invalidPortFormat">Ungültiges Port-Format</system:String>
+    <system:String x:Key="invalidPortFormat">Port-Format ungültig</system:String>
     <system:String x:Key="saveProxySuccessfully">Proxy-Konfiguration erfolgreich gespeichert</system:String>
     <system:String x:Key="proxyIsCorrect">Proxy korrekt konfiguriert</system:String>
     <system:String x:Key="proxyConnectFailed">Proxy-Verbindung fehlgeschlagen</system:String>
