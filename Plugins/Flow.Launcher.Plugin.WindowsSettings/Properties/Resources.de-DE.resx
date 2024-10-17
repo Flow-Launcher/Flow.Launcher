@@ -1343,7 +1343,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="ScreenRotation" xml:space="preserve">
-    <value>Automatische Ausrichtung</value>
+    <value>Bildschirmrotation</value>
     <comment>Area System</comment>
   </data>
   <data name="ScrollBars" xml:space="preserve">
@@ -1381,7 +1381,7 @@
     <comment>Area Home, Overview-page for all areas of settings </comment>
   </data>
   <data name="SetUpKiosk" xml:space="preserve">
-    <value>Kiosk einrichten</value>
+    <value>Einen Kiosk einrichten</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SharedExperiences" xml:space="preserve">
@@ -1400,7 +1400,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="SignInOptionsDynamicLock" xml:space="preserve">
-    <value>Anmeldeoptionen – dynamische Sperre</value>
+    <value>Anmeldeoptionen – Dynamische Sperre</value>
     <comment>Area UserAccounts</comment>
   </data>
   <data name="Size" xml:space="preserve">
@@ -1446,7 +1446,7 @@
     <comment>Area System</comment>
   </data>
   <data name="StorageSense" xml:space="preserve">
-    <value>Speicheroptimierung</value>
+    <value>Speicherbedeutung</value>
     <comment>Area System</comment>
   </data>
   <data name="SubtitlePreposition" xml:space="preserve">
@@ -1454,7 +1454,7 @@
     <comment>Example: Area "System" in System settings</comment>
   </data>
   <data name="SyncCenter" xml:space="preserve">
-    <value>Synchronisierungscenter</value>
+    <value>Sync-Center</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="SyncYourSettings" xml:space="preserve">
@@ -1497,18 +1497,18 @@
     <comment>Area Personalization</comment>
   </data>
   <data name="TaskbarColor" xml:space="preserve">
-    <value>Taskleistenfarbe</value>
+    <value>Farbe der Taskleiste</value>
   </data>
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="TeamConferencing" xml:space="preserve">
-    <value>Teamkonferenzen</value>
+    <value>Team-Konferenzen</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TeamDeviceManagement" xml:space="preserve">
-    <value>Teamgeräteverwaltung</value>
+    <value>Team-Geräteverwaltung</value>
     <comment>Area SurfaceHub</comment>
   </data>
   <data name="TextToSpeech" xml:space="preserve">
@@ -1667,7 +1667,7 @@
     <comment>Area UserAccounts</comment>
   </data>
   <data name="WindowsInsiderProgram" xml:space="preserve">
-    <value>Windows-Insider-Programm</value>
+    <value>Windows Insider-Programm</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsMobilityCenter" xml:space="preserve">
@@ -1691,7 +1691,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateCheckForUpdates" xml:space="preserve">
-    <value>Windows Update – nach Updates suchen</value>
+    <value>Windows Update – Nach Updates suchen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateRestartOptions" xml:space="preserve">
@@ -1699,11 +1699,11 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewOptionalUpdates" xml:space="preserve">
-    <value>Windows Update – optionale Updates anzeigen</value>
+    <value>Windows Update – Optionale Updates ansehen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="WindowsUpdateViewUpdateHistory" xml:space="preserve">
-    <value>Windows Update – Updateverlauf anzeigen</value>
+    <value>Windows Update – Update-Historie ansehen</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="Wireless" xml:space="preserve">
@@ -2061,7 +2061,7 @@
     <value>Review your computer's status and resolve issues</value>
   </data>
   <data name="MicrosoftChangjieSettings" xml:space="preserve">
-    <value>Microsoft-ChangJie-Einstellungen</value>
+    <value>Microsoft ChangJie-Einstellungen</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
     <value>Replace sounds with visual cues</value>
@@ -2269,7 +2269,7 @@
     <value>Manage disk space used by your offline files</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Hoher Kontrast ein- oder ausschalten</value>
+    <value>Hochkontrast ein- oder ausschalten</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
     <value>Change the way time is displayed</value>
@@ -2323,7 +2323,7 @@
     <value>Session-Cookies aktivieren oder deaktivieren</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
-    <value>Administrative Rechte an einen Domänenbenutzer geben</value>
+    <value>Einem Domänenbenutzer administrative Rechte geben</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
     <value>Choose when to turn off display</value>
