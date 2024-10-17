@@ -71,38 +71,38 @@
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Utforsker</system:String>
-    <system:String x:Key="plugin_explorer_plugin_description">Find and manage files and folders via Windows Search or Everything</system:String>
+    <system:String x:Key="plugin_explorer_plugin_description">Finn og administrer filer og mapper via Windows Søk eller Everything</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter to open the directory</system:String>
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Ctrl + Enter for å åpne katalogen</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter for å åpne mappen som inneholder</system:String>
 
     <!--  Context menu items  -->
     <system:String x:Key="plugin_explorer_copypath">Kopier sti</system:String>
-    <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copypath_subtitle">Kopier sti til gjeldende element til utklippstavlen</system:String>
     <system:String x:Key="plugin_explorer_copyfilefolder">Kopier</system:String>
-    <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
+    <system:String x:Key="plugin_explorer_copyfile_subtitle">Kopier gjeldende fil til utklippstavlen</system:String>
+    <system:String x:Key="plugin_explorer_copyfolder_subtitle">Kopier gjeldende mappe til utklippstavlen</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Slett</system:String>
-    <system:String x:Key="plugin_explorer_deletefile_subtitle">Permanently delete current file</system:String>
-    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Permanently delete current folder</system:String>
+    <system:String x:Key="plugin_explorer_deletefile_subtitle">Slett gjeldende fil permanent</system:String>
+    <system:String x:Key="plugin_explorer_deletefolder_subtitle">Slett gjeldende mappe permanent</system:String>
     <system:String x:Key="plugin_explorer_path">Sti:</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder_subtitle">Slett valgte</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser">Kjør som annen bruker</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Kjør valgte med en annen brukerkonto</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Åpne inneholdende mappe</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Åpne plasseringen som inneholder gjeldende element</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Åpne med redigeringsprogram:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell">Open With Shell:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Kunne ikke åpne filen på {0} med redigeringsprogram {1} ved {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell">Åpne med Skall:</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Kunne ikke å åpne mappe {0} med Skall {1} ved {2}</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Utelukk gjeldende og underkataloger fra Indekssøk</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Ekskludert fra indekssøk</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Åpne Windows indekseringsalternativer</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Behandle indekserte filer og mapper</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Kunne ikke åpne Windows indekseringsalternativer</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Legg til hurtigtilgang</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Legg gjeldende element til hurtigtilgang</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Lagt til</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Vellykket lagt til hurtigtilgang</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Fjernet</system:String>
@@ -110,14 +110,14 @@
     <system:String x:Key="plugin_explorer_contextmenu_titletooltip">Legg til i hurtigtilgang, slik at den kan åpnes med handlingsnøkkelordet Søkeaktivering i Utforsker</system:String>
     <system:String x:Key="plugin_explorer_contextmenu_remove_titletooltip">Fjern fra hurtigtilgang</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Fjern fra hurtigtilgang</system:String>
-    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Remove current item from Quick Access</system:String>
-    <system:String x:Key="plugin_explorer_show_contextmenu_title">Show Windows Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_openwith">Open With</system:String>
-    <system:String x:Key="plugin_explorer_openwith_subtitle">Select a program to open with</system:String>
+    <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Fjern gjeldende element fra hurtigtilgang</system:String>
+    <system:String x:Key="plugin_explorer_show_contextmenu_title">Vis Windows-hurtigmeny</system:String>
+    <system:String x:Key="plugin_explorer_openwith">Åpne med</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Velg et program for å åpne med</system:String>
 
     <!--  Special Results  -->
-    <system:String x:Key="plugin_explorer_diskfreespace">{0} free of {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_diskfreespace">{0} ledig av {1}</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">Åpne i standard filbehandler</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
         Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
     </system:String>
