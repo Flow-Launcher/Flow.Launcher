@@ -58,7 +58,7 @@
     <system:String x:Key="SearchWindowAlignCenterTop">Oben zentriert</system:String>
     <system:String x:Key="SearchWindowAlignLeftTop">Links oben</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Rechts oben</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Benutzerdef. Position</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Benutzerdefinierte Position</system:String>
     <system:String x:Key="language">Sprache</system:String>
     <system:String x:Key="lastQueryMode">Letzter Abfragestil</system:String>
     <system:String x:Key="lastQueryModeToolTip">Vorherige Ergebnisse anzeigen/ausblenden, wenn Flow Launcher reaktiviert wird.</system:String>
@@ -249,7 +249,7 @@
     <system:String x:Key="windowWidthSize">Fensterbreite Größe</system:String>
     <system:String x:Key="windowWidthSizeToolTip">Sie können dies auch schnell durch die Verwendung von StRG+[ und Strg+] anpassen.</system:String>
     <system:String x:Key="useGlyphUI">Segoe Fluent-Icons verwenden</system:String>
-    <system:String x:Key="useGlyphUIEffect">Segoe Fluent-Icons für Abfrageergebnisse verwenden, sofern unterstützt</system:String>
+    <system:String x:Key="useGlyphUIEffect">Segoe Fluent-Icons für Abfrageergebnisse verwenden, wo unterstützt</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Taste drücken</system:String>
 
     <!--  Setting Proxy  -->
@@ -272,7 +272,7 @@
     <system:String x:Key="about">Über</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Dokumente</system:String>
+    <system:String x:Key="docs">Docs</system:String>
     <system:String x:Key="version">Version</system:String>
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
@@ -293,7 +293,7 @@
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
-    <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plugins werden im Nutzerdatenordner gespeichert. Dieser Speicherort kann variieren, je nachdem, ob er im portablen Modus ist oder nicht.</system:String>
+    <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
 
     <!--  FileManager Setting Dialog  -->
@@ -307,8 +307,8 @@
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Defaut-Webbrowser</system:String>
-    <system:String x:Key="defaultBrowser_tips">Die Defaulteinstellung folgt der Standard-Browsereinstellung des Betriebssystems. Wenn sie separat angegeben wird, verwendet Flow diesen Browser.</system:String>
+    <system:String x:Key="defaultBrowserTitle">Webbrowser per Default</system:String>
+    <system:String x:Key="defaultBrowser_tips">Die Defaulteinstellung folgt der Default-Browsereinstellung des Betriebssystems. Wenn separat angegeben, verwendet Flow diesen Browser.</system:String>
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser-Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browser-Pfad</system:String>
@@ -354,7 +354,7 @@
 Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt dieser mit jeder beliebigen Position in der Abfrage überein. Integrierte Shortcuts stimmen mit jeder Position in einer Abfrage überein.
     </system:String>
     <system:String x:Key="duplicateShortcut">Shortcut ist bereits vorhanden, bitte geben Sie einen neuen Shortcut ein oder bearbeiten Sie den vorhandenen.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut und/oder ihre Erweiterung sind leer.</system:String>
+    <system:String x:Key="emptyShortcut">Shortcut und/oder dessen Erweiterung ist leer.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Speichern</system:String>
@@ -426,9 +426,9 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="HotkeyLeftRightDesc">Element-Navigation</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Kontextmenü öffnen</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Enthaltenden Ordner öffnen</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Als Admin ausführen / Ordner im Standard-Dateimanager öffnen</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Als Admin ausführen / Ordner im Default-Dateimanager öffnen</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Historie abfragen</system:String>
-    <system:String x:Key="HotkeyESCDesc">Zurück zum Ergebnis im Kontextmenü</system:String>
+    <system:String x:Key="HotkeyESCDesc">Zurück zu Ergebnis in Kontextmenü</system:String>
     <system:String x:Key="HotkeyTabDesc">Autovervollständigung</system:String>
     <system:String x:Key="HotkeyRunDesc">Ausgewähltes Element öffnen / ausführen</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">Einstellungsfenster öffnen</system:String>
