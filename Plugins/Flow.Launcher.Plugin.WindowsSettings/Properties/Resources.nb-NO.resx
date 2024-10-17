@@ -336,57 +336,57 @@
     <comment>Area Device</comment>
   </data>
   <data name="Background" xml:space="preserve">
-    <value>Background</value>
+    <value>Bakgrunn</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="BackgroundApps" xml:space="preserve">
-    <value>Background Apps</value>
+    <value>Bakgrunnsapper</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="Backup" xml:space="preserve">
-    <value>Backup</value>
+    <value>Sikkerhetskopi</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="BackupAndRestore" xml:space="preserve">
-    <value>Backup and Restore</value>
+    <value>Sikkerhetskopiering og gjenoppretting</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BatterySaver" xml:space="preserve">
-    <value>Battery Saver</value>
+    <value>Batterisparer</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverSettings" xml:space="preserve">
-    <value>Battery Saver settings</value>
+    <value>Innstillinger for batterisparing</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BatterySaverUsageDetails" xml:space="preserve">
-    <value>Battery saver usage details</value>
+    <value>Detaljer om bruk av batterisparing</value>
   </data>
   <data name="BatteryUse" xml:space="preserve">
-    <value>Battery use</value>
+    <value>Batteribruk</value>
     <comment>Area System, only available on devices that have a battery, such as a tablet</comment>
   </data>
   <data name="BiometricDevices" xml:space="preserve">
-    <value>Biometric Devices</value>
+    <value>Biometriske enheter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BitLockerDriveEncryption" xml:space="preserve">
-    <value>BitLocker Drive Encryption</value>
+    <value>BitLocker-stasjonskryptering</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueLight" xml:space="preserve">
-    <value>Blue light</value>
+    <value>Blått lys</value>
   </data>
   <data name="Bluetooth" xml:space="preserve">
     <value>Blåtann</value>
     <comment>Area Device</comment>
   </data>
   <data name="BluetoothDevices" xml:space="preserve">
-    <value>Bluetooth devices</value>
+    <value>Bluetooth-enheter</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="BlueYellow" xml:space="preserve">
-    <value>Blue-yellow</value>
+    <value>Blå-gul</value>
   </data>
   <data name="BopomofoIme" xml:space="preserve">
     <value>Bopomofo IME</value>
@@ -397,22 +397,22 @@
     <comment>Should not translated</comment>
   </data>
   <data name="Broadcasting" xml:space="preserve">
-    <value>Broadcasting</value>
+    <value>Kringkasting</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Calendar" xml:space="preserve">
-    <value>Calendar</value>
+    <value>Kalender</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CallHistory" xml:space="preserve">
-    <value>Call history</value>
+    <value>Anropslogg</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="calling" xml:space="preserve">
-    <value>calling</value>
+    <value>ringer</value>
   </data>
   <data name="Camera" xml:space="preserve">
-    <value>Camera</value>
+    <value>Kamera</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="CangjieIme" xml:space="preserve">
@@ -424,35 +424,35 @@
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Cellular and SIM</value>
+    <value>Mobil og SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Choose which folders appear on Start</value>
+    <value>Velge hvilke mapper som skal vises ved start</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
-    <value>Client service for NetWare</value>
+    <value>Klienttjeneste for NetWare</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Clipboard" xml:space="preserve">
-    <value>Clipboard</value>
+    <value>Utklippstavle</value>
     <comment>Area System</comment>
   </data>
   <data name="ClosedCaptions" xml:space="preserve">
-    <value>Closed captions</value>
+    <value>Lukkede undertekster</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorFilters" xml:space="preserve">
-    <value>Color filters</value>
+    <value>Fargefiltre</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="ColorManagement" xml:space="preserve">
-    <value>Color management</value>
+    <value>Fargebehandling</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Colors" xml:space="preserve">
-    <value>Colors</value>
+    <value>Farger</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="Command" xml:space="preserve">
@@ -460,11 +460,11 @@
     <comment>The command to direct start a setting</comment>
   </data>
   <data name="ConnectedDevices" xml:space="preserve">
-    <value>Connected Devices</value>
+    <value>Tilkoblede enheter</value>
     <comment>Area Device</comment>
   </data>
   <data name="Contacts" xml:space="preserve">
-    <value>Contacts</value>
+    <value>Kontakter</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="ControlPanel" xml:space="preserve">
@@ -472,10 +472,10 @@
     <comment>Type of the setting is a "(legacy) Control Panel setting"</comment>
   </data>
   <data name="CopyCommand" xml:space="preserve">
-    <value>Copy command</value>
+    <value>Kopier kommando</value>
   </data>
   <data name="CoreIsolation" xml:space="preserve">
-    <value>Core Isolation</value>
+    <value>Kjerneisolering</value>
     <comment>Means the protection of the system core</comment>
   </data>
   <data name="Cortana" xml:space="preserve">
@@ -483,59 +483,59 @@
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaAcrossMyDevices" xml:space="preserve">
-    <value>Cortana across my devices</value>
+    <value>Cortana på tvers av enheter</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CortanaLanguage" xml:space="preserve">
-    <value>Cortana - Language</value>
+    <value>Cortana – Språk</value>
     <comment>Area Cortana</comment>
   </data>
   <data name="CredentialManager" xml:space="preserve">
-    <value>Credential manager</value>
+    <value>Behandling av legitimasjon</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="Crossdevice" xml:space="preserve">
-    <value>Crossdevice</value>
+    <value>På tvers av enheter</value>
   </data>
   <data name="CustomDevices" xml:space="preserve">
-    <value>Custom devices</value>
+    <value>Egendefinerte enheter</value>
   </data>
   <data name="DarkColor" xml:space="preserve">
-    <value>Dark color</value>
+    <value>Mørk farge</value>
   </data>
   <data name="DarkMode" xml:space="preserve">
-    <value>Dark mode</value>
+    <value>Mørk modus</value>
   </data>
   <data name="DataUsage" xml:space="preserve">
-    <value>Data usage</value>
+    <value>Databruk</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="DateAndTime" xml:space="preserve">
-    <value>Date and time</value>
+    <value>Dato og klokkeslett</value>
     <comment>Area TimeAndLanguage</comment>
   </data>
   <data name="DefaultApps" xml:space="preserve">
-    <value>Default apps</value>
+    <value>Standard apper</value>
     <comment>Area Apps</comment>
   </data>
   <data name="DefaultCamera" xml:space="preserve">
-    <value>Default camera</value>
+    <value>Standard kamera</value>
     <comment>Area Device</comment>
   </data>
   <data name="DefaultLocation" xml:space="preserve">
-    <value>Default location</value>
+    <value>Standard plassering</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultPrograms" xml:space="preserve">
-    <value>Default programs</value>
+    <value>Standard programmer</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="DefaultSaveLocations" xml:space="preserve">
-    <value>Default Save Locations</value>
+    <value>Standard lagringssteder</value>
     <comment>Area System</comment>
   </data>
   <data name="DeliveryOptimization" xml:space="preserve">
-    <value>Delivery Optimization</value>
+    <value>Optimalisering av levering</value>
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="desk.cpl" xml:space="preserve">
