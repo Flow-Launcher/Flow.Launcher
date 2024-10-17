@@ -36,12 +36,12 @@
     <system:String x:Key="plugin_explorer_everything_sort_option">Alternativ for sortering:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything-sti:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Start skjult</system:String>
-    <system:String x:Key="plugin_explorer_editor_path">Editor Path</system:String>
-    <system:String x:Key="plugin_explorer_shell_path">Shell Path</system:String>
+    <system:String x:Key="plugin_explorer_editor_path">Sti til redigeringsprogram</system:String>
+    <system:String x:Key="plugin_explorer_shell_path">Skall-sti</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Søk i indekser ekskluderte baner</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Use search result's location as the working directory of the executable</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
-    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Bruk søkeresultatets plassering som arbeidskatalogen til den kjørbare filen</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Trykk Enter for å åpne mappen i standard filbehandler</system:String>
+    <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Bruk indekssøk for banesøk</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Alternativer for indeksering</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Søk:</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_pathsearch">Søk etter filbane:</system:String>
@@ -53,14 +53,14 @@
     <system:String x:Key="plugin_explorer_actionkeyword_enabled">Aktivert</system:String>
     <system:String x:Key="plugin_explorer_actionkeyword_enabled_tooltip">Når deaktivert vil Flow ikke utføre dette søkealternativet, og vil i tillegg gå tilbake til '*' for å frigjøre handlingsnøkkelordet</system:String>
     <system:String x:Key="plugin_explorer_engine_everything">Everything</system:String>
-    <system:String x:Key="plugin_explorer_engine_windows_index">Windows Index</system:String>
-    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direct Enumeration</system:String>
+    <system:String x:Key="plugin_explorer_engine_windows_index">Windows-indeks</system:String>
+    <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Direkte oppregning</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Filredigeringsbane</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Mapperedigeringsbane</system:String>
     <system:String x:Key="plugin_explorer_enabled">Aktivert</system:String>
-    <system:String x:Key="plugin_explorer_disabled">Disabled</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Deaktivert</system:String>
 
-    <system:String x:Key="plugin_explorer_Content_Search_Engine">Content Search Engine</system:String>
+    <system:String x:Key="plugin_explorer_Content_Search_Engine">Søkemotor for innhold</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
