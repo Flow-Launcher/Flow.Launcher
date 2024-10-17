@@ -61,13 +61,13 @@
     <system:String x:Key="plugin_explorer_disabled">Deaktivert</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Søkemotor for innhold</system:String>
-    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Directory Recursive Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Index_Search_Engine">Index Search Engine</system:String>
-    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Open Windows Index Option</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types">Excluded File Types (comma seperated)</system:String>
-    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For example: exe,jpg,png</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum results</system:String>
-    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">The maximum number of results requested from active search engine</system:String>
+    <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Rekursiv søkemotor for katalog</system:String>
+    <system:String x:Key="plugin_explorer_Index_Search_Engine">Indeks-søkemotor</system:String>
+    <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Åpne Windows-indeksalternativet</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Ekskluderte filtyper (kommaseparert)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">For eksempel: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maksimalt antall resultater</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Maksimalt antall forespurte resultater fra aktiv søkemotor</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Utforsker</system:String>
