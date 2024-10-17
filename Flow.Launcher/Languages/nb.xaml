@@ -2,17 +2,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
+        Flow oppdaget at du har installert {0} programtillegg, noe som krever {1} for å kjøre. Vil du laste ned {1}?
         {2}{2}
-        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
+        Klikk nei hvis det allerede er installert, og du vil bli bedt om å velge mappen som inneholder {1} kjørbar fil
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
-    <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Velg den kjørbare filen for {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Kan ikke angi {0} kjørbar bane, prøv fra Flows innstillinger (bla ned til bunnen).</system:String>
+    <system:String x:Key="failedToInitializePluginsTitle">Mislykkes i å initialisere programtillegg</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Programtillegg: {0} - mislykkes å lastes inn og vil bli deaktivert, vennligst kontakt utvikleren av programtillegget for hjelp</system:String>
 
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="registerHotkeyFailed">Kan ikke registrere hurtigtasten &quot;{0}&quot;. Hurtigtasten kan være i bruk av et annet program. Endre til en annen hurtigtast, eller avslutt et annet program.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Kunne ikke starte {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ugyldig Flow Launcher programtillegg filformat</system:String>
@@ -28,15 +28,15 @@
     <system:String x:Key="copy">Kopier</system:String>
     <system:String x:Key="cut">Klipp ut</system:String>
     <system:String x:Key="paste">Lim inn</system:String>
-    <system:String x:Key="undo">Undo</system:String>
-    <system:String x:Key="selectAll">Select All</system:String>
-    <system:String x:Key="fileTitle">File</system:String>
-    <system:String x:Key="folderTitle">Folder</system:String>
-    <system:String x:Key="textTitle">Text</system:String>
+    <system:String x:Key="undo">Angre</system:String>
+    <system:String x:Key="selectAll">Velg alle</system:String>
+    <system:String x:Key="fileTitle">Fil</system:String>
+    <system:String x:Key="folderTitle">Mappe</system:String>
+    <system:String x:Key="textTitle">Tekst</system:String>
     <system:String x:Key="GameMode">Spillmodus</system:String>
     <system:String x:Key="GameModeToolTip">Stopp bruken av hurtigtaster.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionReset">Tilbakestilling av posisjon</system:String>
+    <system:String x:Key="PositionResetToolTip">Tilbakestill posisjonen til søkevinduet</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">Innstillinger</system:String>
@@ -44,29 +44,29 @@
     <system:String x:Key="portableMode">Portabel modus</system:String>
     <system:String x:Key="portableModeToolTIp">Lagre alle innstillinger og brukerdata i en mappe (nyttig når man bruker flyttbare stasjoner eller skytjenester).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher ved systemoppstart</system:String>
-    <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
+    <system:String x:Key="setAutoStartFailed">Feil ved å sette kjør ved oppstart</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher når fokus forsvinner</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsler om nye versjoner</system:String>
-    <system:String x:Key="SearchWindowPosition">Search Window Position</system:String>
-    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Remember Last Position</system:String>
-    <system:String x:Key="SearchWindowScreenCursor">Monitor with Mouse Cursor</system:String>
-    <system:String x:Key="SearchWindowScreenFocus">Monitor with Focused Window</system:String>
-    <system:String x:Key="SearchWindowScreenPrimary">Primary Monitor</system:String>
-    <system:String x:Key="SearchWindowScreenCustom">Custom Monitor</system:String>
-    <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
-    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
-    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
-    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
-    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
-    <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
+    <system:String x:Key="SearchWindowPosition">Posisjon til søkevindu</system:String>
+    <system:String x:Key="SearchWindowScreenRememberLastLaunchLocation">Husk siste posisjon</system:String>
+    <system:String x:Key="SearchWindowScreenCursor">Skjerm med musepekeren</system:String>
+    <system:String x:Key="SearchWindowScreenFocus">Skjerm med fokusert vindu</system:String>
+    <system:String x:Key="SearchWindowScreenPrimary">Primær skjerm</system:String>
+    <system:String x:Key="SearchWindowScreenCustom">Tilpasset skjerm</system:String>
+    <system:String x:Key="SearchWindowAlign">Søkevindusposisjon på skjermen</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">Midten</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">Midtstill toppen</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">Øverst til venstre</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">Øverst til høyre</system:String>
+    <system:String x:Key="SearchWindowAlignCustom">Egendefinert posisjon</system:String>
     <system:String x:Key="language">Språk</system:String>
     <system:String x:Key="lastQueryMode">Siste stil for spørring</system:String>
     <system:String x:Key="lastQueryModeToolTip">Vis/Skjul forrige resultater når Flow Launcher aktiveres på nytt.</system:String>
     <system:String x:Key="LastQueryPreserved">Bevar siste spørring</system:String>
     <system:String x:Key="LastQuerySelected">Velg siste spørring</system:String>
     <system:String x:Key="LastQueryEmpty">Tøm siste spørring</system:String>
-    <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
-    <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
+    <system:String x:Key="KeepMaxResults">Fast vindushøyde</system:String>
+    <system:String x:Key="KeepMaxResultsToolTip">Vindushøyden kan ikke justeres ved å dra.</system:String>
     <system:String x:Key="maxShowResults">Maksimalt antall resultater vist</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignorer hurtigtaster i fullskjermmodus</system:String>
