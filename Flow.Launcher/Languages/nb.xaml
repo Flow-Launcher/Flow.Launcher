@@ -349,22 +349,22 @@
     <!--  Custom Query Shortcut Dialog  -->
     <system:String x:Key="customeQueryShortcutTitle">Snarvei for egendefinert spørring</system:String>
     <system:String x:Key="customeQueryShortcutTips">Skriv inn en snarvei som automatisk utvides til den angitte spørringen.</system:String>
-    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
+    <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">En snarvei utvides når den samsvarer nøyaktig med spørringen. 
 
-If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
+Hvis du legger til et @-prefiks mens du legger inn en snarvei, samsvarer det med en hvilken som helst posisjon i spørringen. Innebygde snarveier samsvarer med alle posisjoner i en spørring.
     </system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="duplicateShortcut">Snarveien eksisterer allerede, skriv inn en ny snarvei eller rediger den eksisterende.</system:String>
+    <system:String x:Key="emptyShortcut">Snarvei og/eller utvidelsen er tom.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">Lagre</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">Overskriv</system:String>
     <system:String x:Key="commonCancel">Avbryt</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">Tilbakestill</system:String>
     <system:String x:Key="commonDelete">Slett</system:String>
     <system:String x:Key="commonOK">OK</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonYes">Ja</system:String>
+    <system:String x:Key="commonNo">Nei</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versjon</system:String>
@@ -425,8 +425,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyUpDownDesc">Tilbake / Hurtigmeny</system:String>
     <system:String x:Key="HotkeyLeftRightDesc">Elementnavigering</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Åpne hurtigmeny</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">Åpne innholdsmappen</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Kjør som admin / åpne mappe i standard filbehandling</system:String>
     <system:String x:Key="HotkeyCtrlHDesc">Spørrehistorikk</system:String>
     <system:String x:Key="HotkeyESCDesc">Tilbake til resultat i hurtigmenyen</system:String>
     <system:String x:Key="HotkeyTabDesc">Autofullfør</system:String>
@@ -434,8 +434,8 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="HotkeyCtrlIDesc">Åpne innstillingsvindu</system:String>
     <system:String x:Key="HotkeyF5Desc">Last programtilleggdata på nytt</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">Velg første resultat</system:String>
+    <system:String x:Key="HotkeySelectLastResult">Velg siste resultat</system:String>
     <system:String x:Key="HotkeyRequery">Kjør gjeldende spørring på nytt</system:String>
     <system:String x:Key="HotkeyOpenResult">Åpne resultat</system:String>
     <system:String x:Key="HotkeyOpenResultN">Åpne resultat #{0}</system:String>
