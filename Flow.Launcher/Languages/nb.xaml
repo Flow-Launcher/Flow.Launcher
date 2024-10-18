@@ -219,38 +219,38 @@
     <system:String x:Key="SettingWindowHotkey">Åpne innstillingsvindu</system:String>
     <system:String x:Key="CopyFilePathHotkey">Kopier filbane</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Vis/Skjul spillmodus</system:String>
-    <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
-    <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
-    <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
-    <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
-    <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
-    <system:String x:Key="QuickHeightHotkey">Quick Adjust Window Height</system:String>
-    <system:String x:Key="ReloadPluginHotkeyToolTip">Use when require plugins to reload and update their existing data.</system:String>
-    <system:String x:Key="AdditionalHotkeyToolTip">You can add one more hotkey for this function.</system:String>
-    <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
-    <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
-    <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
+    <system:String x:Key="ToggleHistoryHotkey">Veksle historikk</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">Åpne innholdsmappen</system:String>
+    <system:String x:Key="RunAsAdminHotkey">Kjør som administrator</system:String>
+    <system:String x:Key="RequeryHotkey">Oppdater søkeresultater</system:String>
+    <system:String x:Key="ReloadPluginHotkey">Last programtilleggdata på nytt</system:String>
+    <system:String x:Key="QuickWidthHotkey">Hurtigjuster vindusbredden</system:String>
+    <system:String x:Key="QuickHeightHotkey">Hurtigjuster vindushøyden</system:String>
+    <system:String x:Key="ReloadPluginHotkeyToolTip">Bruk når du krever programtillegg for å laste inn og oppdatere eksisterende data på nytt.</system:String>
+    <system:String x:Key="AdditionalHotkeyToolTip">Du kan legge til en hurtigtast til for denne funksjonen.</system:String>
+    <system:String x:Key="customQueryHotkey">Egendefinerte hurtigtaster for spørring</system:String>
+    <system:String x:Key="customQueryShortcut">Egendefinerte snarveier for spørring</system:String>
+    <system:String x:Key="builtinShortcuts">Innebygde snarveier</system:String>
     <system:String x:Key="customQuery">Spørring</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
+    <system:String x:Key="customShortcut">Snarvei</system:String>
+    <system:String x:Key="customShortcutExpansion">Utvidelse</system:String>
     <system:String x:Key="builtinShortcutDescription">Beskrivelse</system:String>
     <system:String x:Key="delete">Slett</system:String>
     <system:String x:Key="edit">Rediger</system:String>
     <system:String x:Key="add">Legg til</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">Ingen</system:String>
     <system:String x:Key="pleaseSelectAnItem">Velg et element</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Er du sikker på at du vil slette {0} programtillegg hurtigtast?</system:String>
-    <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
-    <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
-    <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
+    <system:String x:Key="deleteCustomShortcutWarning">Er du sikker på at du vil slette snarvei: {0} med utvidelse {1}?</system:String>
+    <system:String x:Key="shortcut_clipboard_description">Hent tekst fra utklippstavlen.</system:String>
+    <system:String x:Key="shortcut_active_explorer_path">Hent sti fra aktiv utforsker.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Vindusskyggeeffekt for spørringer</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Skyggeeffekt har en betydelig bruk av GPU. Anbefales ikke hvis datamaskinens ytelse er begrenset.</system:String>
     <system:String x:Key="windowWidthSize">Vindusbredde størrelse</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Du kan også raskt justere dette ved å bruke Ctrl+[ og Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Bruk Segoe Fluent ikoner</system:String>
     <system:String x:Key="useGlyphUIEffect">Bruk Segoe Fluent Icons for spørreresultater der det støttes</system:String>
-    <system:String x:Key="flowlauncherPressHotkey">Press Key</system:String>
+    <system:String x:Key="flowlauncherPressHotkey">Trykk tast</system:String>
 
     <!--  Setting Proxy  -->
     <system:String x:Key="proxy">HTTP proxy</system:String>
@@ -274,10 +274,10 @@
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Dokumenter</system:String>
     <system:String x:Key="version">Versjon</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="icons">Ikoner</system:String>
     <system:String x:Key="about_activate_times">Du har aktivert Flow Launcher {0} ganger</system:String>
     <system:String x:Key="checkUpdates">Se etter oppdateringer</system:String>
-    <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
+    <system:String x:Key="BecomeASponsor">Bli en sponsor</system:String>
     <system:String x:Key="newVersionTips">Ny versjon {0} er tilgjengelig, vil du starte Flow Launcher på nytt for å bruke oppdateringen?</system:String>
     <system:String x:Key="checkUpdatesFailed">Sjekk oppdateringer mislyktes, vennligst sjekk tilkoblingen og proxy-innstillingene til api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -289,17 +289,17 @@
     <system:String x:Key="devtool">DevTools</system:String>
     <system:String x:Key="settingfolder">Innstillingsmappe</system:String>
     <system:String x:Key="logfolder">Loggmappe</system:String>
-    <system:String x:Key="clearlogfolder">Clear Logs</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
+    <system:String x:Key="clearlogfolder">Tøm logger</system:String>
+    <system:String x:Key="clearlogfolderMessage">Er du sikker på at du vil slette alle loggene?</system:String>
     <system:String x:Key="welcomewindow">Veiviser</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapath">Plassering av brukerdata</system:String>
+    <system:String x:Key="userdatapathToolTip">Brukerinnstillinger og installerte programtillegg lagres i brukerens datamappe. Denne plasseringen kan variere avhengig av om den er i portabel modus eller ikke.</system:String>
+    <system:String x:Key="userdatapathButton">Åpne mappe</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Velg filbehandler</system:String>
-    <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
-    <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
+    <system:String x:Key="fileManager_tips">Vennligst spesifiser filplasseringen til filbehandleren du bruker, og legg til argumenter etter behov. &quot;%d&quot; representerer katalogbanen som skal åpnes for, brukt av Arg for mappe-feltet og for kommandoer som åpner spesifikke kataloger. &quot;%f&quot; representerer filbanen som skal åpnes for, brukt av Arg for fil-feltet og for kommandoer som åpner spesifikke filer.</system:String>
+    <system:String x:Key="fileManager_tips2">For eksempel, hvis filbehandleren bruker en kommando som &quot;totalcmd.exe /A c:windows&quot; for å åpne c:windows-katalogen, vil filbehandlingsbanen bli totalcmd.exe, og Arg For Folder vil være /A &quot;%d&quot;. Enkelte filbehandlere som QTTabBar kan bare kreve at en bane oppgis, i dette tilfellet bruker du &quot;%d&quot; som filbehandlingsbane og lar resten av feltene stå tomme.</system:String>
     <system:String x:Key="fileManager_name">Filbehandler</system:String>
     <system:String x:Key="fileManager_profile_name">Profilnavn</system:String>
     <system:String x:Key="fileManager_path">Filbehandler sti</system:String>
@@ -335,20 +335,20 @@
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Hurtigtast for egendefinert spørring</system:String>
-    <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
+    <system:String x:Key="customeQueryHotkeyTips">Trykk på en egendefinert hurtigtast for å åpne Flow Launcher og skrive inn den angitte spørringen automatisk.</system:String>
     <system:String x:Key="preview">Forhåndsvis</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hurtigtast er utilgjengelig, vennligst velg en ny hurtigtast</system:String>
     <system:String x:Key="invalidPluginHotkey">Ugyldig hurtigtast for programtillegg</system:String>
     <system:String x:Key="update">Oppdater</system:String>
-    <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
-    <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
-    <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
-    <system:String x:Key="hotkeyUnavailableEditable">This hotkey is already in use by &quot;{0}&quot;. If you press &quot;Overwrite&quot;, it will be removed from &quot;{0}&quot;.</system:String>
-    <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
+    <system:String x:Key="hotkeyRegTitle">Binding av hurtigtast</system:String>
+    <system:String x:Key="hotkeyUnavailable">Nåværende hurtigtast er utilgjengelig.</system:String>
+    <system:String x:Key="hotkeyUnavailableUneditable">Denne hurtigtasten er reservert for &quot;{0}&quot; og kan ikke brukes. Velg en annen hurtigtast.</system:String>
+    <system:String x:Key="hotkeyUnavailableEditable">Denne hurtigtasten er allerede i bruk av &quot;{0}&quot;. Hvis du trykker &quot;Overskriv&quot; vil den bli fjernet fra &quot;{0}&quot;.</system:String>
+    <system:String x:Key="hotkeyRegGuide">Trykk på tastene du vil bruke for denne funksjonen.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
-    <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">Snarvei for egendefinert spørring</system:String>
+    <system:String x:Key="customeQueryShortcutTips">Skriv inn en snarvei som automatisk utvides til den angitte spørringen.</system:String>
     <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
 
 If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
