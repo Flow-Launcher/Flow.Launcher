@@ -182,7 +182,7 @@
     <system:String x:Key="Animation">Animasjon</system:String>
     <system:String x:Key="AnimationTip">Bruk animasjon i brukergrensesnitt</system:String>
     <system:String x:Key="AnimationSpeed">Animasjonshastighet</system:String>
-    <system:String x:Key="AnimationSpeedTip">The speed of the UI animation</system:String>
+    <system:String x:Key="AnimationSpeedTip">Hastigheten på grensesnittanimasjonen</system:String>
     <system:String x:Key="AnimationSpeedSlow">Sakte</system:String>
     <system:String x:Key="AnimationSpeedMedium">Middels</system:String>
     <system:String x:Key="AnimationSpeedFast">Rask</system:String>
