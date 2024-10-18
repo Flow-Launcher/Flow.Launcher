@@ -1848,10 +1848,10 @@
     <value>Manage BitLocker</value>
   </data>
   <data name="AutoHideTheTaskbar" xml:space="preserve">
-    <value>Auto-hide the taskbar</value>
+    <value>Skjul oppgavelinjen automatisk</value>
   </data>
   <data name="ChangeSoundCardSettings" xml:space="preserve">
-    <value>Change sound card settings</value>
+    <value>Endre innstillinger for lydkort</value>
   </data>
   <data name="MakeChangesToAccounts" xml:space="preserve">
     <value>Make changes to accounts</value>
