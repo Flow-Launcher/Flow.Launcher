@@ -12,10 +12,10 @@
     <system:String x:Key="failedToInitializePluginsMessage">Plug-ins: {0} - nicht geladen werden und wird deaktiviert, bitte kontaktiere Sie den Ersteller des Plug-ins für Hilfe</system:String>
 
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Fehler beim Registrieren des Hotkeys &quot;{0}&quot;. Der Hotkey wird möglicherweise von einem anderen Programm verwendet. Wechseln Sie zu einem anderen Hotkey oder beenden Sie das andere Programm.</system:String>
+    <system:String x:Key="registerHotkeyFailed">Hotkey &quot;{0}&quot; konnte nicht registriert werden. Der Hotkey ist möglicherweise von einem anderen Programm in Verwendung. Wechseln Sie zu einem anderen Hotkey oder beenden Sie das andere Programm.</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Konnte nicht gestartet werden {0}</system:String>
-    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ungültiges Flow Launcher Plug-in-Dateiformat</system:String>
+    <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher Plug-in-Dateiformat ungültig</system:String>
     <system:String x:Key="setAsTopMostInThisQuery">In dieser Abfrage als oberstes festlegen</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">In dieser Abfrage oberstes abbrechen</system:String>
     <system:String x:Key="executeQuery">Abfrage ausführen: {0}</system:String>
@@ -61,7 +61,7 @@
     <system:String x:Key="SearchWindowAlignCustom">Benutzerdefinierte Position</system:String>
     <system:String x:Key="language">Sprache</system:String>
     <system:String x:Key="lastQueryMode">Letzter Abfragestil</system:String>
-    <system:String x:Key="lastQueryModeToolTip">Vorherige Ergebnisse anzeigen/ausblenden, wenn Flow Launcher reaktiviert wird.</system:String>
+    <system:String x:Key="lastQueryModeToolTip">Vorherige Ergebnisse zeigen/ausblenden, wenn Flow Launcher reaktiviert wird.</system:String>
     <system:String x:Key="LastQueryPreserved">Letzte Abfrage beibehalten</system:String>
     <system:String x:Key="LastQuerySelected">Letzte Abfrage auswählen</system:String>
     <system:String x:Key="LastQueryEmpty">Letzte Abfrage leeren</system:String>
@@ -74,7 +74,7 @@
     <system:String x:Key="defaultFileManager">Dateimanager per Default</system:String>
     <system:String x:Key="defaultFileManagerToolTip">Wählen Sie den Dateimanager aus, der beim Öffnen des Ordners verwendet werden soll.</system:String>
     <system:String x:Key="defaultBrowser">Webbrowser per Default</system:String>
-    <system:String x:Key="defaultBrowserToolTip">Einstellung für neuen Tab, neues Fenster, Privatmodus.</system:String>
+    <system:String x:Key="defaultBrowserToolTip">Einstellung für Neuer Tab, Neues Fenster, Privater Modus.</system:String>
     <system:String x:Key="pythonFilePath">Python-Pfad</system:String>
     <system:String x:Key="nodeFilePath">Node.js-Pfad</system:String>
     <system:String x:Key="selectNodeExecutable">Bitte wählen Sie das Programm Node.js aus</system:String>
@@ -244,10 +244,10 @@
     <system:String x:Key="deleteCustomShortcutWarning">Sind Sie sicher, dass Sie den Shortcut {0} mit der Erweiterung {1} löschen wollen?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Text aus Zwischenablage abrufen.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Pfad aus aktivem Explorer abrufen.</system:String>
-    <system:String x:Key="queryWindowShadowEffect">Schatteneffekt im Abfragefenster</system:String>
+    <system:String x:Key="queryWindowShadowEffect">Schatteneffekt in Abfragefenster</system:String>
     <system:String x:Key="shadowEffectCPUUsage">Der Schatteneffekt beansprucht die GPU stark. Nicht empfohlen, wenn die Performance Ihres Computers begrenzt ist.</system:String>
     <system:String x:Key="windowWidthSize">Fensterbreite Größe</system:String>
-    <system:String x:Key="windowWidthSizeToolTip">Sie können dies auch schnell durch die Verwendung von StRG+[ und Strg+] anpassen.</system:String>
+    <system:String x:Key="windowWidthSizeToolTip">Sie können dies auch schnell durch die Verwendung von Strg+[ und Strg+] anpassen.</system:String>
     <system:String x:Key="useGlyphUI">Segoe Fluent-Icons verwenden</system:String>
     <system:String x:Key="useGlyphUIEffect">Segoe Fluent-Icons für Abfrageergebnisse verwenden, wo unterstützt</system:String>
     <system:String x:Key="flowlauncherPressHotkey">Taste drücken</system:String>
@@ -277,7 +277,7 @@
     <system:String x:Key="icons">Icons</system:String>
     <system:String x:Key="about_activate_times">Sie haben Flow Launcher {0} mal aktiviert</system:String>
     <system:String x:Key="checkUpdates">Nach Updates suchen</system:String>
-    <system:String x:Key="BecomeASponsor">Sponsor werden</system:String>
+    <system:String x:Key="BecomeASponsor">Ein Sponsor werden</system:String>
     <system:String x:Key="newVersionTips">Neue Version {0} ist verfügbar. Möchten Sie Flow Launcher neu starten, um das Update zu verwenden?</system:String>
     <system:String x:Key="checkUpdatesFailed">Überprüfung der Updates fehlgeschlagen. Bitte überprüfen Sie Ihre Verbindungs- und Proxy-Einstellungen zu api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
@@ -285,10 +285,10 @@
         oder gehen Sie zu https://github.com/Flow-Launcher/Flow.Launcher/releases, um Updates manuell herunterzuladen.
     </system:String>
     <system:String x:Key="releaseNotes">Versionshinweise</system:String>
-    <system:String x:Key="documentation">Tipps zu Nutzung</system:String>
+    <system:String x:Key="documentation">Tipps zur Nutzung</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Einstellungsordner</system:String>
-    <system:String x:Key="logfolder">Log-Ordner</system:String>
+    <system:String x:Key="settingfolder">Ordner Einstellungen</system:String>
+    <system:String x:Key="logfolder">Ordner Logs</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
@@ -314,7 +314,7 @@
     <system:String x:Key="defaultBrowser_path">Browser-Pfad</system:String>
     <system:String x:Key="defaultBrowser_newWindow">Neues Fenster</system:String>
     <system:String x:Key="defaultBrowser_newTab">Neuer Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Privatmodus</system:String>
+    <system:String x:Key="defaultBrowser_parameter">Privater Modus</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Priorität ändern</system:String>
@@ -416,7 +416,7 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit dem unten stehenden Hotkey, probieren Sie ihn gleich aus. Um ihn zu ändern, klicken Sie auf die Eingabe und drücken Sie den gewünschten Hotkey auf der Tastatur.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>
-    <system:String x:Key="Welcome_Page4_Text01">Suchen Sie im Web, starten Sie Anwendungen oder führen Sie verschiedene Funktionen über Flow Launcher-Plug-ins aus. Bestimmte Funktionen beginnen mit einem Aktions-Schlüsselwort und diese können bei Bedarf auch ohne Aktions-Schlüsselwörter verwendet werden. Probieren Sie die Abfragen unterhalb in Flow Launcher aus.</system:String>
+    <system:String x:Key="Welcome_Page4_Text01">Suchen Sie im Web, starten Sie Anwendungen oder führen Sie verschiedene Funktionen über Flow Launcher-Plug-ins aus. Bestimmte Funktionen beginnen mit einem Aktions-Schlüsselwort und diese können bei Bedarf auch ohne Aktions-Schlüsselwörter verwendet werden. Probieren Sie die Abfragen unten in Flow Launcher aus.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Lassen Sie uns Flow Launcher starten</system:String>
     <system:String x:Key="Welcome_Page5_Text01">Beendet. Viel Spaß mit Flow Launcher. Vergessen Sie nicht den Hotkey zum Starten :)</system:String>
 
