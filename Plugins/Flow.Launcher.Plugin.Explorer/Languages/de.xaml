@@ -9,7 +9,7 @@
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Sind Sie sicher, dass Sie diese(n) Datei/Ordner dauerhaft löschen wollen?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Löschung erfolgreich</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Erfolgreich gelöscht {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Die Zuweisung des globalen Aktions-Schlüsselwortes könnte zu viele Ergebnisse bei der Suche hervorrufen. Bitte wählen Sie ein spezielles Aktionswort</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Die Zuweisung des globalen Aktions-Schlüsselwortes könnte zu viele Ergebnisse bei der Suche hervorrufen. Bitte wählen Sie ein spezifisches Aktions-Schlüsselwort</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Schnellzugriff kann nicht auf das globale Aktions-Schlüsselwort gesetzt werden, wenn aktiviert. Bitte wählen Sie ein spezifisches Aktions-Schlüsselwort</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Der erforderliche Dienst für Windows-Indexsuche scheint nicht ausgeführt zu werden</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Um dies zu beheben, starten Sie den Windows-Suchdienst. Wählen Sie hier aus, um diese Warnung zu entfernen</system:String>
@@ -74,7 +74,7 @@
     <system:String x:Key="plugin_explorer_plugin_description">Dateien und Ordner via Windows-Suche oder Everything finden und verwalten</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Strg+Enter um das Verzeichnis zu öffnen</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Strg+Enter, um das Verzeichnis zu öffnen</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Strg+Enter, um den enthaltenden Ordner zu öffnen</system:String>
 
     <!--  Context menu items  -->
