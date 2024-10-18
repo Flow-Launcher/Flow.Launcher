@@ -119,47 +119,47 @@
     <system:String x:Key="plugin_explorer_diskfreespace">{0} ledig av {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Åpne i standard filbehandler</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
-        Use '&gt;' to search in this directory, '*' to search for file extensions or '&gt;*' to combine both searches.
+        Bruk '&gt;' for å søke i denne katalogen, '*' for å søke etter filendelser eller '&gt;*' for å kombinere begge søkene.
     </system:String>
 
     <!--  Everything  -->
-    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Warning: Everything service is not running</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_query_error">Error while querying Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Kan ikke laste inn Everything-SDK</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_is_not_running">Advarsel: Everything-tjenesten kjører ikke</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_query_error">Feil under spørring av Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sorter etter</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Navn</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Sti</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Størrelse</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date Created</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Date Modified</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributes</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date Recently Changed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Date Accessed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date Run</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Utvidelse</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Typenavn</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Dato opprettet</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Dato endret</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributter</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">Filliste Filnavn</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Antall kjøringer</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Dato nylig endret</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Dato for tilgang</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Dato for kjøring</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Advarsel: dette er ikke et hurtigsorteringsalternativ, søk kan være trege</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Søk i hele banen</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Aktiver antall fil-/mappekjøringer</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Klikk for å starte eller installere Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Installasjon av Everything</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installerer Everything-tjenesten. Vennligst vent...</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Everything-tjenesten vellykket installert</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Kunne ikke installere Everything-tjenesten automatisk. Installer den manuelt fra https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">Klikk her for å starte den</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Kunne ikke finne en Everything-installasjon, vil du manuelt velge en plassering?{0}{0}Klikk nei, og Everything vil bli automatisk installert for deg</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Vil du aktivere innholdssøk for Everything?</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Det kan være veldig tregt uten indeks (som bare støttes i Everything v1.5+)</system:String>
 
     <!--  Native Context Menu  -->
-    <system:String x:Key="plugin_explorer_native_context_menu_header">Native Context Menu</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Display native context menu (experimental)</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Below you can specify items you want to include in the context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Below you can specify items you want to exclude from context menu, they can be partial (e.g. 'pen wit') or complete ('Open with').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Opprinnelig hurtigmeny</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Vis opprinnelig hurtigmeny (eksperimentell)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Nedenfor kan du spesifisere elementer du vil inkludere i hurtigtmenyen, de kan være delvise (f.eks. 'pne me') eller komplette ('Åpne med').</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nedenfor kan du spesifisere elementer du vil ekskludere fra hurtigtmenyen, de kan være delvise (f.eks. 'pne me') eller komplette ('Åpne med').</system:String>
 </ResourceDictionary>
