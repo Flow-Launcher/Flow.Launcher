@@ -31,13 +31,13 @@
     <system:String x:Key="plugin_pluginsmanager_update_all_subtitle">Ønsker du å oppdatere alle programtillegg?</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt">Ønsker du å oppdatere {0} programtillegg?{1}Flow Launcher vil starte på nytt etter å ha oppdatert alle programtillegg.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_prompt_no_restart">Ønsker du å oppdatere {0} programtillegg?</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} plugins successfully updated. Restarting Flow, please wait...</system:String>
-    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Plugin {0} successfully updated. Restarting Flow, please wait...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_all_success_restart">{0} programtillegg er oppdatert. Starter Flow på nytt, vennligst vent...</system:String>
+    <system:String x:Key="plugin_pluginsmanager_update_success_restart">Programtillegg {0} oppdatert. Starter Flow på nytt, vennligst vent...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installerer fra en ukjent kilde</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Du installerer dette tillegget fra en ukjent kilde og det kan inneholde potensielle risikoer!{0}{0}Forsikre deg om at du forstår hvor denne utvidelsen er fra og at den er sikker.{0}{0}Vil du fortsette å gjøre?{0}{0}(Du kan slå av denne advarselen via innstillinger)</system:String>
     
-    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Plugin {0} successfully installed. Please restart Flow.</system:String>
-    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Plugin {0} successfully uninstalled. Please restart Flow.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Programtillegg {0} installert. Vennligst start Flow på nytt.</system:String>
+    <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Programtillegg {0} avinstallert. Vennligst start Flow på nytt.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Programtillegg {0} oppdatert. Vennligst restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} programtillegg oppdatert. Start Flow på nytt.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Programtillegg {0} er allerede endret. Start Flow på nytt før nye endringer foretas.</system:String>
