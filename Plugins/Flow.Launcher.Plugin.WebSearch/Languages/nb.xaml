@@ -21,12 +21,12 @@
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autofullfør data fra:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Vennligst velg et websøk</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Er du sikker på at du ønsker å slette {0}?</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">If you want to add a search for a particular website to Flow, first enter a dummy text string in the search bar of that website, and launch the search. Now copy the contents of the browser's address bar, and paste it in the URL field below. Replace your test string with {q}. For example, if you search for casino on Netflix, its address bar reads</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_guide_1">Hvis du vil legge til et søk etter en bestemt nettside til Flow, først skriv inn en plassholder tekststreng i søkefeltet i denne nettsiden og start søket. Kopier nå innholdet i nettleserens adresselinje, og lim inn innholdet i URL-feltet nedenfor. Erstatt teststrengen din med {q}. For eksempel, hvis du søker etter casino på Netflix, leser dets adresselinje</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_2">https://www.netflix.com/search?q=Casino</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_guide_3">
-        Now copy this entire string and paste it in the URL field below.
-        Then replace casino with {q}.
-        Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
+        Kopier nå hele strengen og lim den inn i URL-feltet nedenfor.
+        Bytte deretter kasino med {q}.
+        dvs. den generiske formelen for et søk på Netflix er https://www.netflix.com/search?q={q}
     </system:String>
 
 
