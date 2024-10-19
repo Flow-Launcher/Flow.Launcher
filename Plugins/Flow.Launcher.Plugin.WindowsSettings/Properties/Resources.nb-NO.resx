@@ -2034,19 +2034,19 @@
     <value>Sett opp en VPN-tilkobling (virtuelt privat nettverk)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Accommodate learning abilities</value>
+    <value>Tilrettelegge for læringsevner</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Set up a dial-up connection</value>
+    <value>Sett opp en oppringt tilkobling</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
-    <value>Set up a connection or network</value>
+    <value>Sett opp en tilkobling eller nettverk</value>
   </data>
   <data name="HowToChangeYourWindowsPassword" xml:space="preserve">
-    <value>How to change your Windows password</value>
+    <value>Hvordan endre Windows-passordet ditt</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
-    <value>Make it easier to see the mouse pointer</value>
+    <value>Gjør det enklere å se musepekeren</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
     <value>Set up iSCSI initiator</value>
