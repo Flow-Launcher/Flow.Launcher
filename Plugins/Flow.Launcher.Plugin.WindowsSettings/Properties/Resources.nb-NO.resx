@@ -1206,7 +1206,7 @@
     <value>Programtillegg for å søke etter Windows-innstillinger</value>
   </data>
   <data name="PluginTitle" xml:space="preserve">
-    <value>Windows Settings</value>
+    <value>Innstillinger for Windows</value>
   </data>
   <data name="PowerAndSleep" xml:space="preserve">
     <value>Strøm og hvilemodus</value>
@@ -1737,13 +1737,13 @@
     <comment>Mean zooming of things via a magnifier</comment>
   </data>
   <data name="ChangeDeviceInstallationSettings" xml:space="preserve">
-    <value>Change device installation settings</value>
+    <value>Endre innstillingene for installasjon av enheten</value>
   </data>
   <data name="TurnOffBackgroundImages" xml:space="preserve">
-    <value>Turn off background images</value>
+    <value>Slå av bakgrunnsbilder</value>
   </data>
   <data name="NavigationProperties" xml:space="preserve">
-    <value>Navigation properties</value>
+    <value>Egenskaper for navigering</value>
   </data>
   <data name="MediaStreamingOptions" xml:space="preserve">
     <value>Media streaming options</value>
