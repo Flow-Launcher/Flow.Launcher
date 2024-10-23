@@ -99,7 +99,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                 case false
                     when ActionKeywordMatch(query, Settings.ActionKeyword.IndexSearchActionKeyword)
                          || ActionKeywordMatch(query, Settings.ActionKeyword.SearchActionKeyword):
-
+                    
                     searchResults = Settings.IndexProvider.SearchAsync(query.Search, token);
                     engineName = Enum.GetName(Settings.IndexSearchEngine);
                     break;
