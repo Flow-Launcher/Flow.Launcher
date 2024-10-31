@@ -203,11 +203,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 pluginFromLocalPath = Utilities.GetPluginInfoFromZip(search);
                 pluginFromLocalPath.LocalInstallPath = search;
                 updateFromLocalPath = true;
-            }                
+            }
 
             var updateSource = !updateFromLocalPath
-                                ? PluginsManifest.UserPlugins 
-                                : new List<UserPlugin> { pluginFromLocalPath };
+                ? PluginsManifest.UserPlugins
+                : new List<UserPlugin> { pluginFromLocalPath };
 
             var resultsForUpdate = (
                 from existingPlugin in Context.API.GetAllPlugins()
@@ -291,7 +291,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 {
                                     downloadToFilePath = x.PluginNewUserPlugin.LocalInstallPath;
                                 }
-                                
+
 
                                 PluginManager.UpdatePlugin(x.PluginExistingMetadata, x.PluginNewUserPlugin,
                                     downloadToFilePath);
@@ -327,7 +327,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             }, TaskContinuationOptions.OnlyOnFaulted);
 
                             return true;
-
                         },
                         ContextData =
                             new UserPlugin
@@ -513,7 +512,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             if (!InstallSourceKnown(plugin.Website)
                                 && MessageBox.Show(string.Format(
-                                        Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
+                                        Context.API.GetTranslation(
+                                            "plugin_pluginsmanager_install_unknown_source_warning"),
                                         Environment.NewLine),
                                     Context.API.GetTranslation(
                                         "plugin_pluginsmanager_install_unknown_source_warning_title"),
@@ -532,7 +532,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
         private bool InstallSourceKnown(string url)
         {
-            var author = url.Split('/')[3];
+            var pieces = url.Split('/');
+
+            if (pieces.Length < 4)
+                return false;
+
+            var author = pieces[3];
             var acceptedSource = "https://github.com";
             var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
@@ -589,7 +594,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             try
             {
                 PluginManager.InstallPlugin(plugin, downloadedFilePath);
-                
+
                 if (!plugin.IsFromLocalInstallPath)
                     File.Delete(downloadedFilePath);
             }
