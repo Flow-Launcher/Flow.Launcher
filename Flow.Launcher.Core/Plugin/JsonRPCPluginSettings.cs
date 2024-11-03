@@ -253,7 +253,7 @@ namespace Flow.Launcher.Core.Plugin
 
                         Btn.Click += (_, _) =>
                         {
-                            CommonDialog dialog = type switch
+                            using CommonDialog dialog = type switch
                             {
                                 "inputWithFolderBtn" => new FolderBrowserDialog(),
                                 _ => new OpenFileDialog(),
