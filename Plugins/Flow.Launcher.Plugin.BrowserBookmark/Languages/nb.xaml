@@ -21,8 +21,8 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Rediger</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Slett</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browseBrowserBookmark">Bla</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Others</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Browser Engine</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">If you are not using Chrome, Firefox or Edge, or you are using their portable version, you need to add bookmarks data directory and select correct browser engine to make this plugin work.</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For example: Brave's engine is Chromium; and its default bookmarks data location is: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox engine, the bookmarks directory is the userdata folder contains the places.sqlite file.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_others">Andre</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserEngine">Nettlesermotor</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage01">Hvis du ikke bruker Chrome, Firefox eller Edge, eller hvis du bruker den bærbare versjonen, må du legge til bokmerkedatakatalog og velge riktig nettlesermotor for å få dette programtillegget til å fungere.</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_guideMessage02">For eksempel: Brave's motor er Chromium; og standardplasseringen av bokmerker er: &quot;%LOCALAPPDATA%\BraveSoftware\Brave-Browser\UserData&quot;. For Firefox-motoren er bokmerkekatalogen brukerdatamappen som inneholder places.sqlite-filen.</system:String>
 </ResourceDictionary>

@@ -9,7 +9,7 @@
     <system:String x:Key="plugin_explorer_deletefilefolderconfirm">Sind Sie sicher, dass Sie diese(n) Datei/Ordner dauerhaft löschen wollen?</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess">Löschung erfolgreich</system:String>
     <system:String x:Key="plugin_explorer_deletefilefoldersuccess_detail">Erfolgreich gelöscht {0}</system:String>
-    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Die Zuweisung des globalen Aktions-Schlüsselwortes könnte zu viele Ergebnisse bei der Suche hervorrufen. Bitte wählen Sie ein spezielles Aktionswort</system:String>
+    <system:String x:Key="plugin_explorer_globalActionKeywordInvalid">Die Zuweisung des globalen Aktions-Schlüsselwortes könnte zu viele Ergebnisse bei der Suche hervorrufen. Bitte wählen Sie ein spezifisches Aktions-Schlüsselwort</system:String>
     <system:String x:Key="plugin_explorer_quickaccess_globalActionKeywordInvalid">Schnellzugriff kann nicht auf das globale Aktions-Schlüsselwort gesetzt werden, wenn aktiviert. Bitte wählen Sie ein spezifisches Aktions-Schlüsselwort</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceNotRunning">Der erforderliche Dienst für Windows-Indexsuche scheint nicht ausgeführt zu werden</system:String>
     <system:String x:Key="plugin_explorer_windowsSearchServiceFix">Um dies zu beheben, starten Sie den Windows-Suchdienst. Wählen Sie hier aus, um diese Warnung zu entfernen</system:String>
@@ -33,14 +33,14 @@
     <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Änderungsdatum</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Datei-Info anzeigen</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Datums- und Zeitformat</system:String>
-    <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
+    <system:String x:Key="plugin_explorer_everything_sort_option">Sortieroption:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Everything-Pfad:</system:String>
-    <system:String x:Key="plugin_explorer_launch_hidden">Launch Hidden</system:String>
+    <system:String x:Key="plugin_explorer_launch_hidden">Ausgeblendet starten</system:String>
     <system:String x:Key="plugin_explorer_editor_path">Editor-Pfad</system:String>
     <system:String x:Key="plugin_explorer_shell_path">Shell-Pfad</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Indexsuche ausgeschlossene Pfade</system:String>
-    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Verwenden Suchergebnis Standort als ausführbare Arbeitsverzeichnis</system:String>
-    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Hit Enter to open folder in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_use_location_as_working_dir">Ort des Suchergebnisses als Arbeitsverzeichnis der ausführbaren Datei verwenden</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Drücken Sie die Enter, um den Ordner im Default-Dateimanager zu öffnen</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Use Index Search For Path Search</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Indexierungsoptionen</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Suche:</system:String>
@@ -74,7 +74,7 @@
     <system:String x:Key="plugin_explorer_plugin_description">Dateien und Ordner via Windows-Suche oder Everything finden und verwalten</system:String>
 
     <!--  Plugin Tooltip  -->
-    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Strg+Enter um das Verzeichnis zu öffnen</system:String>
+    <system:String x:Key="plugin_explorer_plugin_ToolTipOpenDirectory">Strg+Enter, um das Verzeichnis zu öffnen</system:String>
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Strg+Enter, um den enthaltenden Ordner zu öffnen</system:String>
 
     <!--  Context menu items  -->
@@ -91,18 +91,18 @@
     <system:String x:Key="plugin_explorer_runasdifferentuser">Als anderer Benutzer ausführen</system:String>
     <system:String x:Key="plugin_explorer_runasdifferentuser_subtitle">Ausgewähltes unter Verwendung eines anderen Benutzerkontos ausführen</system:String>
     <system:String x:Key="plugin_explorer_opencontainingfolder">Enthaltenden Ordner öffnen</system:String>
-    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Open the location that contains current item</system:String>
+    <system:String x:Key="plugin_explorer_opencontainingfolder_subtitle">Den Ort öffnen, der aktuelles Element enthält</system:String>
     <system:String x:Key="plugin_explorer_openwitheditor">Öffnen mit Editor:</system:String>
-    <system:String x:Key="plugin_explorer_openwitheditor_error">Failed to open file at {0} with Editor {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwitheditor_error">Datei bei {0} konnte nicht mit Editor {1} bei {2} geöffnet werden</system:String>
     <system:String x:Key="plugin_explorer_openwithshell">Öffnen mit Shell:</system:String>
-    <system:String x:Key="plugin_explorer_openwithshell_error">Failed to open folder {0} with Shell {1} at {2}</system:String>
+    <system:String x:Key="plugin_explorer_openwithshell_error">Ordner {0} konnte nicht mit Shell {1} bei {2} geöffnet werden</system:String>
     <system:String x:Key="plugin_explorer_excludefromindexsearch">Aktuelles und Unterverzeichnisse aus Indexsuche ausschließen</system:String>
     <system:String x:Key="plugin_explorer_excludedfromindexsearch_msg">Aus Indexsuche ausgeschlossen</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions">Windows-Indexierungsoptionen öffnen</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_subtitle">Indexierte Dateien und Ordner verwalten</system:String>
     <system:String x:Key="plugin_explorer_openindexingoptions_errormsg">Windows-Indexierungsoptionen konnten nicht geöffnet werden</system:String>
     <system:String x:Key="plugin_explorer_add_to_quickaccess_title">Zu Schnellzugriff hinzufügen</system:String>
-    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Add current item to Quick Access</system:String>
+    <system:String x:Key="plugin_explorer_add_to_quickaccess_subtitle">Aktuelles Element zu Schnellzugriff hinzufügen</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess">Erfolgreich hinzugefügt</system:String>
     <system:String x:Key="plugin_explorer_addfilefoldersuccess_detail">Erfolgreich zum Schnellzugriff hinzugefügt</system:String>
     <system:String x:Key="plugin_explorer_removefilefoldersuccess">Erfolgreich entfernt</system:String>
@@ -117,7 +117,7 @@
 
     <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">{0} frei von {1}</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder">Open in Default File Manager</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder">In Default-Dateimanager öffnen</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
         Verwenden Sie '&gt;', um in diesem Verzeichnis zu suchen, '*', um nach Dateierweiterungen zu suchen, oder '&gt;*', um beide Suchen zu kombinieren.
     </system:String>
@@ -142,7 +142,7 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Ausführungsdatum</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warnung: Dies ist keine Schnellsortieroption, Suchen können langsam sein</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Vollständigen Pfad suchen</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>

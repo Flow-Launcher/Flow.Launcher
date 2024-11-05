@@ -2,13 +2,13 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Erstatt Win+R</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Close Command Prompt after pressing any key</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Press any key to close this window...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Lukk ledetekst etter å ha trykket på en hvilken som helst tast</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Trykk på en tast for å lukke dette vinduet...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Ikke lukk ledeteksten etter utførelse av kommandoen</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Kjør alltid som administrator</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Kjør som annen bruker</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Skall</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Allows to execute system commands from Flow Launcher</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Lar deg utføre systemkommandoer fra Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">denne kommandoen har blitt utført {0} ganger</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">utfør kommando via kommandoskall</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Kjør som administrator</system:String>
