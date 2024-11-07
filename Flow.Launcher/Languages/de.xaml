@@ -77,7 +77,7 @@
     <system:String x:Key="defaultBrowserToolTip">Einstellung für Neuer Tab, Neues Fenster, Privater Modus.</system:String>
     <system:String x:Key="pythonFilePath">Python-Pfad</system:String>
     <system:String x:Key="nodeFilePath">Node.js-Pfad</system:String>
-    <system:String x:Key="selectNodeExecutable">Bitte wählen Sie das Programm Node.js aus</system:String>
+    <system:String x:Key="selectNodeExecutable">Bitte wählen Sie die ausführbare Datei Node.js aus</system:String>
     <system:String x:Key="selectPythonExecutable">Bitte wählen Sie pythonw.exe aus</system:String>
     <system:String x:Key="typingStartEn">Tippen immer im englischen Modus starten</system:String>
     <system:String x:Key="typingStartEnTooltip">Ändern Sie Ihre Eingabemethode temporär in den englischen Modus, wenn Sie Flow aktivieren.</system:String>
@@ -411,8 +411,8 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="Welcome_Page1_Title">Willkommen bei Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hallo, dies ist das erste Mal, dass Sie Flow Launcher ausführen!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Bevor Sie beginnen, hilft dieser Assistent bei der Einrichtung von Flow Launcher. Sie können dies überspringen, wenn Sie möchten. Bitte wählen Sie eine Sprache</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Suchen und führen Sie alle Dateien und Anwendungen auf Ihrem PC aus</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Suchen Sie alles in Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Alle Dateien und Anwendungen auf Ihrem PC suchen und ausführen</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Durchsuchen Sie alles von Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit dem unten stehenden Hotkey, probieren Sie ihn gleich aus. Um ihn zu ändern, klicken Sie auf die Eingabe und drücken Sie den gewünschten Hotkey auf der Tastatur.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>
