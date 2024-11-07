@@ -175,7 +175,7 @@
     <system:String x:Key="ColorSchemeLight">Hell</system:String>
     <system:String x:Key="ColorSchemeDark">Dunkel</system:String>
     <system:String x:Key="SoundEffect">Soundeffekt</system:String>
-    <system:String x:Key="SoundEffectTip">Einen kleinen Sound abspielen, wenn das Suchfenster geöffnet wird</system:String>
+    <system:String x:Key="SoundEffectTip">Einen kurzen Sound abspielen, wenn das Suchfenster geöffnet wird</system:String>
     <system:String x:Key="SoundEffectVolume">Lautstärke der Soundeffekte</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Lautstärke des Soundeffekts anpassen</system:String>
     <system:String x:Key="SoundEffectWarning">Windows Media Player ist nicht verfügbar und ist für die Lautstärkeregelung von Flow erforderlich. Bitte überprüfen Sie Ihre Installation, wenn Sie die Lautstärke anpassen müssen.</system:String>
@@ -287,8 +287,8 @@
     <system:String x:Key="releaseNotes">Versionshinweise</system:String>
     <system:String x:Key="documentation">Tipps zur Nutzung</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Ordner Einstellungen</system:String>
-    <system:String x:Key="logfolder">Ordner Logs</system:String>
+    <system:String x:Key="settingfolder">Ordner &quot;Einstellungen&quot;</system:String>
+    <system:String x:Key="logfolder">Ordner &quot;Logs&quot;</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
