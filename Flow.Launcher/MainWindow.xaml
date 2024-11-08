@@ -244,7 +244,8 @@
                             Style="{DynamicResource QueryBoxStyle}"
                             Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Visible"
-                            WindowChrome.IsHitTestVisibleInChrome="True">
+                            WindowChrome.IsHitTestVisibleInChrome="True"
+                            Loaded="SelectAllQueryText">
                             <TextBox.CommandBindings>
                                 <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
                             </TextBox.CommandBindings>
