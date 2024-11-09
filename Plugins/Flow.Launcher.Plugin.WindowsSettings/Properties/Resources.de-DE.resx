@@ -424,11 +424,11 @@
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Mobilfunknetz und SIM-Karte</value>
+    <value>Mobilfunk und SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Wählen Sie aus, welche Ordner im Startmenü angezeigt werden</value>
+    <value>Wählen Sie, welche Ordner im Start erscheinen</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
@@ -2133,7 +2133,7 @@
     <value>Change power-saving settings</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimise for blindness</value>
+    <value>Optimieren für Blindheit</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
@@ -2155,7 +2155,7 @@
     <value>Ihre Offline-Dateien verschlüsseln</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Train the computer to recognise your voice</value>
+    <value>Trainieren Sie den Computer, Ihre Stimme zu erkennen</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
     <value>Erweiterte Druckereinrichtung</value>
@@ -2464,7 +2464,7 @@
     <value>Eine Breitbandverbindung einrichten</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>Kalibrieren des Screens für Stift- oder Toucheingabe</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
     <value>Benutzerzertifikate verwalten</value>
