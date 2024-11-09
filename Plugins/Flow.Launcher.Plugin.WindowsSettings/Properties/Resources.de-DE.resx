@@ -126,7 +126,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Barrierefreiheitsoptionen</value>
+    <value>Optionen für Barrierefreiheit</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
@@ -2064,7 +2064,7 @@
     <value>Microsoft ChangJie-Einstellungen</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>Sounds durch visuelle Hinweise ersetzen</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
     <value>Temporäre Internet-Dateieinstellungen ändern</value>
@@ -2079,7 +2079,7 @@
     <value>Change the mouse pointer display or speed</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>Ihren Wiederherstellungsschlüssel sichern</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
     <value>Save backup copies of your files with File History</value>
@@ -2461,7 +2461,7 @@
     <value>Set your default programs</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>Eine Breitbandverbindung einrichten</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
     <value>Calibrate the screen for pen or touch input</value>
