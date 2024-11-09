@@ -166,8 +166,8 @@
     <system:String x:Key="CustomizeToolTip">Individuell anpassen</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
     <system:String x:Key="opacity">Opazität</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} ist nicht vorhanden, Fallback auf Standard-Theme</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Theme {0} konnte nicht geladen werden, Fallback auf Standard-Theme</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} ist nicht vorhanden, Fallback auf Default-Theme</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Theme {0} konnte nicht geladen werden, Fallback auf Default-Theme</system:String>
     <system:String x:Key="ThemeFolder">Theme-Ordner</system:String>
     <system:String x:Key="OpenThemeFolder">Theme-Ordner öffnen</system:String>
     <system:String x:Key="ColorScheme">Farbschema</system:String>
@@ -287,8 +287,8 @@
     <system:String x:Key="releaseNotes">Versionshinweise</system:String>
     <system:String x:Key="documentation">Tipps zur Nutzung</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Ordner &quot;Einstellungen&quot;</system:String>
-    <system:String x:Key="logfolder">Ordner &quot;Logs&quot;</system:String>
+    <system:String x:Key="settingfolder">Ordner »Settings«</system:String>
+    <system:String x:Key="logfolder">Ordner »Logs«</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
