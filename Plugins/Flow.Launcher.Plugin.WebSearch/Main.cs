@@ -148,6 +148,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
         public List<Result> LoadContextMenus(Result selected)
         {
+            if (selected?.ContextData == null || selected.ContextData is not string) return new List<Result>();
             return new List<Result>() {
                 new Result
                 {
