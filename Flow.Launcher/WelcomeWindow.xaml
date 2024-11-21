@@ -43,12 +43,12 @@
                         Grid.Column="0"
                         Width="16"
                         Height="16"
-                        Margin="10,4,4,4"
+                        Margin="10 4 4 4"
                         RenderOptions.BitmapScalingMode="HighQuality"
                         Source="/Images/app.png" />
                     <TextBlock
                         Grid.Column="1"
-                        Margin="4,0,0,0"
+                        Margin="4 0 0 0"
                         VerticalAlignment="Center"
                         FontSize="12"
                         Foreground="{DynamicResource Color05B}"
@@ -82,6 +82,7 @@
                 <ui:Frame
                     x:Name="ContentFrame"
                     HorizontalAlignment="Stretch"
+                    Loaded="ContentFrame_Loaded"
                     ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
                     ScrollViewer.VerticalScrollBarVisibility="Visible">
@@ -97,7 +98,7 @@
             Grid.Row="1"
             Background="{DynamicResource Color00B}"
             BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
-            BorderThickness="0,1,0,0">
+            BorderThickness="0 1 0 0">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="130" />
@@ -111,7 +112,7 @@
                     VerticalAlignment="Center">
                     <TextBlock
                         Name="PageNavigation"
-                        Margin="0,2,0,0"
+                        Margin="0 2 0 0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         FontSize="14"
@@ -124,20 +125,20 @@
                     Grid.Column="0"
                     Width="100"
                     Height="40"
-                    Margin="20,5,0,5"
+                    Margin="20 5 0 5"
                     Click="BtnCancel_OnClick"
                     Content="{DynamicResource Skip}"
                     DockPanel.Dock="Right"
                     FontSize="14" />
                 <DockPanel
                     Grid.Column="2"
-                    Margin="0,0,20,0"
+                    Margin="0 0 20 0"
                     VerticalAlignment="Stretch">
                     <Button
                         x:Name="NextButton"
                         Width="40"
                         Height="40"
-                        Margin="8,5,0,5"
+                        Margin="8 5 0 5"
                         Click="ForwardButton_Click"
                         Content="&#xe76c;"
                         DockPanel.Dock="Right"
