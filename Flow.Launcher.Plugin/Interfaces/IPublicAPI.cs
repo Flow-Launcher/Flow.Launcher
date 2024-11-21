@@ -298,5 +298,11 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
+
+        /// <summary>
+        /// Back to the query results.
+        /// This method should run when selected item is from context menu or history.
+        /// </summary>
+        public void BackToQueryResults();
     }
 }

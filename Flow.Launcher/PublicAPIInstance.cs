@@ -318,6 +318,8 @@ namespace Flow.Launcher
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
+        public void BackToQueryResults() => _mainVM.BackToQueryResults();
+
         #endregion
 
         #region Private Methods
