@@ -75,11 +75,11 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        // Fix #3091: System.OperationCanceledException Issue
+                        Log.Warn("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
                         return emptyResults;
                     }
                    
-                });
+                }, token);
 
                 resultList = resultList.Any() ? resultList : emptyResults;
 
