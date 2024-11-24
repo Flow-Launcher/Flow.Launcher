@@ -11,7 +11,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using static Flow.Launcher.MessageBoxEx;
+using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
