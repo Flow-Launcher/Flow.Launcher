@@ -39,7 +39,7 @@ namespace Flow.Launcher.Core
         /// 1 parameter
         public static MessageBoxResult Show(string messageBoxText)
         {
-            return Show(string.Empty, messageBoxText, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None);
         }
 
         // 2 parameter
@@ -80,11 +80,19 @@ namespace Flow.Launcher.Core
         public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton button, MessageBoxImage image)
         {
             msgBox = new MessageBoxEx();
-            msgBox.TitleTextBlock.Text = title;
-            msgBox.DescTextBlock.Text = messageBoxText;
-            msgBox.Title = title;
+            if (title == string.Empty && button == MessageBoxButton.OK && image == MessageBoxImage.None)
+            {
+                msgBox.DescOnlyTextBlock.Text = messageBoxText;
+                msgBox.Title = messageBoxText;
+            }
+            else
+            {
+                msgBox.TitleTextBlock.Text = title;
+                msgBox.DescTextBlock.Text = messageBoxText;
+                msgBox.Title = title;
+                SetImageOfMessageBox(image);
+            }
             SetVisibilityOfButtons(button);
-            SetImageOfMessageBox(image);
             msgBox.ShowDialog();
             return _result;
         }
