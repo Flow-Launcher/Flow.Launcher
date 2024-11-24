@@ -33,14 +33,11 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Grid.Column="4"
+                        Grid.Column="1"
                         Click="Button_Cancel"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
