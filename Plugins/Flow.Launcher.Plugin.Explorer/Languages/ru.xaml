@@ -78,9 +78,9 @@
     <system:String x:Key="plugin_explorer_plugin_ToolTipOpenContainingFolder">Ctrl + Enter to open the containing folder</system:String>
 
     <!--  Context menu items  -->
-    <system:String x:Key="plugin_explorer_copypath">Copy path</system:String>
+    <system:String x:Key="plugin_explorer_copypath">Скопировать путь</system:String>
     <system:String x:Key="plugin_explorer_copypath_subtitle">Copy path of current item to clipboard</system:String>
-    <system:String x:Key="plugin_explorer_copyfilefolder">Copy</system:String>
+    <system:String x:Key="plugin_explorer_copyfilefolder">Скопировать</system:String>
     <system:String x:Key="plugin_explorer_copyfile_subtitle">Copy current file to clipboard</system:String>
     <system:String x:Key="plugin_explorer_copyfolder_subtitle">Copy current folder to clipboard</system:String>
     <system:String x:Key="plugin_explorer_deletefilefolder">Удалить</system:String>
