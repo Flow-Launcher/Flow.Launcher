@@ -37,39 +37,39 @@ namespace Flow.Launcher.Core
 
 
         /// 1 parameter
-        public static MessageBoxResult Show(string msg)
+        public static MessageBoxResult Show(string messageBoxText)
         {
-            return Show(string.Empty, msg, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(string.Empty, messageBoxText, MessageBoxButton.OK, MessageBoxImage.None);
         }
 
         // 2 parameter
-        public static MessageBoxResult Show(string caption, string text)
+        public static MessageBoxResult Show(string messageBoxText, string title)
         {
-            return Show(caption, text, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(messageBoxText, title, MessageBoxButton.OK, MessageBoxImage.None);
         }
 
         /// 3 parameter
-        public static MessageBoxResult Show(string caption, string msg, MessageBoxType type) 
+        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxType type) 
         {
             switch (type)
             {
                 case MessageBoxType.ConfirmationWithYesNo:
-                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    return Show(messageBoxText, title, MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
                 case MessageBoxType.YesNo:
-                    return Show(caption, msg, MessageBoxButton.YesNo,
+                    return Show(messageBoxText, title, MessageBoxButton.YesNo,
                     MessageBoxImage.Question);
                 case MessageBoxType.ConfirmationWithYesNoCancel:
-                    return Show(caption, msg, MessageBoxButton.YesNoCancel,
+                    return Show(messageBoxText, title, MessageBoxButton.YesNoCancel,
                     MessageBoxImage.Question);
                 case MessageBoxType.Information:
-                    return Show(caption, msg, MessageBoxButton.OK,
+                    return Show(messageBoxText, title, MessageBoxButton.OK,
                     MessageBoxImage.Information);
                 case MessageBoxType.Error:
-                    return Show(caption, msg, MessageBoxButton.OK,
+                    return Show(messageBoxText, title, MessageBoxButton.OK,
                     MessageBoxImage.Error);
                 case MessageBoxType.Warning:
-                    return Show(caption, msg, MessageBoxButton.OK,
+                    return Show(messageBoxText, title, MessageBoxButton.OK,
                     MessageBoxImage.Warning);
                 default:
                     return MessageBoxResult.No;
@@ -77,12 +77,12 @@ namespace Flow.Launcher.Core
         }
 
         // 4 parameter, Final Display Message. 
-        public static MessageBoxResult Show(string caption, string text, MessageBoxButton button, MessageBoxImage image)
+        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton button, MessageBoxImage image)
         {
             msgBox = new MessageBoxEx();
-            msgBox.TitleTextBlock.Text = text;
-            msgBox.DescTextBlock.Text = caption;
-            msgBox.Title = text;
+            msgBox.TitleTextBlock.Text = title;
+            msgBox.DescTextBlock.Text = messageBoxText;
+            msgBox.Title = title;
             SetVisibilityOfButtons(button);
             SetImageOfMessageBox(image);
             msgBox.ShowDialog();
