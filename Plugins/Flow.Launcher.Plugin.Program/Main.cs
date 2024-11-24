@@ -60,15 +60,26 @@ namespace Flow.Launcher.Plugin.Program
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
                 var resultList = await Task.Run(() =>
-                    _win32s.Cast<IProgram>()
-                        .Concat(_uwps)
-                        .AsParallel()
-                        .WithCancellation(token)
-                        .Where(HideUninstallersFilter)
-                        .Where(p => p.Enabled)
-                        .Select(p => p.Result(query.Search, Context.API))
-                        .Where(r => r?.Score > 0)
-                        .ToList());
+                {
+                    try
+                    {
+                        return _win32s.Cast<IProgram>()
+                            .Concat(_uwps)
+                            .AsParallel()
+                            .WithCancellation(token)
+                            .Where(HideUninstallersFilter)
+                            .Where(p => p.Enabled)
+                            .Select(p => p.Result(query.Search, Context.API))
+                            .Where(r => r?.Score > 0)
+                            .ToList();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        return emptyResults;
+                    }
+                   
+                }, token);
 
                 resultList = resultList.Any() ? resultList : emptyResults;
 
