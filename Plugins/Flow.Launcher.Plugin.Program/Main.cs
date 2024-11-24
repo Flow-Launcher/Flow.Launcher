@@ -75,7 +75,7 @@ namespace Flow.Launcher.Plugin.Program
                     }
                     catch (OperationCanceledException)
                     {
-                        Log.Warn("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
                         return emptyResults;
                     }
                    
