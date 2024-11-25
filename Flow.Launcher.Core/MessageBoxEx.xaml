@@ -125,18 +125,6 @@
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
-                    x:Name="btnCancel"
-                    MinWidth="140"
-                    Margin="5 0 5 0"
-                    Click="Button_Click"
-                    Content="{DynamicResource commonCancel}" />
-                <Button
-                    x:Name="btnNo"
-                    MinWidth="140"
-                    Margin="5 0 5 0"
-                    Click="Button_Click"
-                    Content="{DynamicResource commonNo}" />
-                <Button
                     x:Name="btnOk"
                     MinWidth="140"
                     Margin="5 0 5 0"
@@ -148,6 +136,18 @@
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonYes}" />
+                <Button
+                    x:Name="btnNo"
+                    MinWidth="140"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonNo}" />
+                <Button
+                    x:Name="btnCancel"
+                    MinWidth="140"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonCancel}" />
             </WrapPanel>
         </Border>
     </Grid>

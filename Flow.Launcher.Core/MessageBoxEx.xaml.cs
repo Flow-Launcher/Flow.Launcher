@@ -125,16 +125,16 @@ namespace Flow.Launcher.Core
                 case MessageBoxButton.OKCancel:
                     msgBox.btnNo.Visibility = Visibility.Collapsed;
                     msgBox.btnYes.Visibility = Visibility.Collapsed;
-                    msgBox.btnCancel.Focus();
+                    msgBox.btnOk.Focus();
                     break;
                 case MessageBoxButton.YesNo:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
                     msgBox.btnCancel.Visibility = Visibility.Collapsed;
-                    msgBox.btnNo.Focus();
+                    msgBox.btnYes.Focus();
                     break;
                 case MessageBoxButton.YesNoCancel:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
-                    msgBox.btnCancel.Focus();
+                    msgBox.btnYes.Focus();
                     break;
                 default:
                     break;
