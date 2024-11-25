@@ -2,6 +2,7 @@
 using System.Windows;
 using Microsoft.Win32;
 using Flow.Launcher.Core.Plugin;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -55,17 +56,17 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (string.IsNullOrEmpty(_searchSource.Title))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_title");
-                MessageBox.Show(warning);
+                MessageBoxEx.Show(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.Url))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_url");
-                MessageBox.Show(warning);
+                MessageBoxEx.Show(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.ActionKeyword))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_action_keyword");
-                MessageBox.Show(warning);
+                MessageBoxEx.Show(warning);
             }
             else if (_action == Action.Add)
             {
@@ -92,7 +93,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                MessageBoxEx.Show(warning);
             }
         }
 
@@ -113,7 +114,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                MessageBoxEx.Show(warning);
             }
 
             if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
@@ -138,7 +139,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
-                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                        MessageBoxEx.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
                     imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }

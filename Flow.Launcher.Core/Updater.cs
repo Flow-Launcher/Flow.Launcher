@@ -69,8 +69,8 @@ namespace Flow.Launcher.Core
                 if (DataLocation.PortableDataLocationInUse())
                 {
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination);
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination))
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show);
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show))
                         MessageBoxEx.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));

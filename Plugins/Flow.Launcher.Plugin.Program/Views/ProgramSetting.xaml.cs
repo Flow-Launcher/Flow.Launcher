@@ -10,6 +10,8 @@ using Flow.Launcher.Plugin.Program.Programs;
 using System.ComponentModel;
 using System.Windows.Data;
 using Flow.Launcher.Plugin.Program.ViewModels;
+using Flow.Launcher.Core;
+using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Plugin.Program.Views
 {
@@ -178,7 +180,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedProgramSource == null)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                MessageBoxEx.Show(msg);
             }
             else
             {
@@ -283,7 +285,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedItems.Count == 0)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                MessageBoxEx.Show(msg);
                 return;
             }
 
@@ -292,7 +294,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 var msg = string.Format(
                     context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
-                if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (MessageBoxEx.Show(msg, string.Empty, MessageBoxType.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }

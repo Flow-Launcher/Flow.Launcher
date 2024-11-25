@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -12,6 +13,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Plugin.PluginsManager
 {
@@ -131,8 +133,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Environment.NewLine);
             }
 
-            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
-                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (MessageBoxEx.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
+                    MessageBoxType.YesNo) == MessageBoxResult.No)
                 return;
 
             // at minimum should provide a name, but handle plugin that is not downloaded from plugins manifest and is a url download
@@ -265,9 +267,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Environment.NewLine);
                             }
 
-                            if (MessageBox.Show(message,
+                            if (MessageBoxEx.Show(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                    MessageBoxButton.YesNo) != MessageBoxResult.Yes)
+                                    MessageBoxType.YesNo) != MessageBoxResult.Yes)
                             {
                                 return false;
                             }
@@ -360,9 +362,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 resultsForUpdate.Count());
                         }
 
-                        if (MessageBox.Show(message,
+                        if (MessageBoxEx.Show(message,
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
-                                MessageBoxButton.YesNo) == MessageBoxResult.No)
+                                MessageBoxType.YesNo) == MessageBoxResult.No)
                         {
                             return false;
                         }
@@ -474,12 +476,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (Settings.WarnFromUnknownSource)
                     {
                         if (!InstallSourceKnown(plugin.UrlDownload)
-                            && MessageBox.Show(string.Format(
+                            && MessageBoxEx.Show(string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
                                     Environment.NewLine),
                                 Context.API.GetTranslation(
                                     "plugin_pluginsmanager_install_unknown_source_warning_title"),
-                                MessageBoxButton.YesNo) == MessageBoxResult.No)
+                                MessageBoxType.YesNo) == MessageBoxResult.No)
                             return false;
                     }
 
@@ -511,13 +513,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         if (Settings.WarnFromUnknownSource)
                         {
                             if (!InstallSourceKnown(plugin.Website)
-                                && MessageBox.Show(string.Format(
+                                && MessageBoxEx.Show(string.Format(
                                         Context.API.GetTranslation(
                                             "plugin_pluginsmanager_install_unknown_source_warning"),
                                         Environment.NewLine),
                                     Context.API.GetTranslation(
                                         "plugin_pluginsmanager_install_unknown_source_warning_title"),
-                                    MessageBoxButton.YesNo) == MessageBoxResult.No)
+                                    MessageBoxType.YesNo) == MessageBoxResult.No)
                                 return false;
                         }
 
@@ -648,9 +650,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Environment.NewLine);
                             }
 
-                            if (MessageBox.Show(message,
+                            if (MessageBoxEx.Show(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
-                                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                                    MessageBoxType.YesNo) == MessageBoxResult.Yes)
                             {
                                 Application.Current.MainWindow.Hide();
                                 Uninstall(x.Metadata);

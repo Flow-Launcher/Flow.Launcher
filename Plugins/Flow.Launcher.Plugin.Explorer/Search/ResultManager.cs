@@ -12,6 +12,7 @@ using Path = System.IO.Path;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Peter;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -123,7 +124,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -137,7 +138,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -152,7 +153,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -315,7 +316,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
+                        MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
                     }
 
                     return true;
@@ -337,7 +338,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
             IncrementEverythingRunCounterIfNeeded(filePath);
-            FilesFolders.OpenFile(filePath, workingDir, asAdmin);
+            FilesFolders.OpenFile(filePath, MessageBoxEx.Show, workingDir, asAdmin);
         }
 
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)

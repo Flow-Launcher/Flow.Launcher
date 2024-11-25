@@ -1,4 +1,5 @@
 ﻿#nullable enable
+using Flow.Launcher.Core;
 using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.Everything.Exceptions;
@@ -14,7 +15,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
@@ -358,7 +358,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         private void ShowUnselectedMessage()
         {
             var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
-            MessageBox.Show(warning);
+            MessageBoxEx.Show(warning);
         }
 
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using System.Windows;
 using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -101,7 +101,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    MessageBox.Show("Copy failed, please try later");
+                                    MessageBoxEx.Show("Copy failed, please try later");
                                     return false;
                                 }
                             }

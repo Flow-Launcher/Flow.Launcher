@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
 #pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
@@ -11,6 +11,7 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
+using MessageBoxImage = Flow.Launcher.Core.MessageBoxEx.MessageBoxImage;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -119,10 +120,10 @@ namespace Flow.Launcher.Core.Plugin
 
                 _ = Task.Run(() =>
                 {
-                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    MessageBoxEx.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                     $"Please refer to the logs for more information", "",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
                 });
             }
 

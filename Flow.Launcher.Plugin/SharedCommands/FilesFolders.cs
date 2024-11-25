@@ -21,7 +21,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        public static void CopyAll(this string sourcePath, string targetPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void CopyAll(this string sourcePath, string targetPath, Func<string, MessageBoxResult> messageBoxExShow)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -54,7 +55,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath, messageBoxExShow);
                 }
             }
             catch (Exception)
@@ -62,7 +63,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
+                messageBoxExShow(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
                 RemoveFolderIfExists(targetPath);
 #endif
             }
@@ -75,8 +76,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="fromPath"></param>
         /// <param name="toPath"></param>
+        /// <param name="messageBoxExShow"></param>
         /// <returns></returns>
-        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath)
+        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath, Func<string, MessageBoxResult> messageBoxExShow)
         {
             try
             {
@@ -96,7 +98,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
+                messageBoxExShow(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
 #endif
             }
@@ -107,7 +109,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Deletes a folder if it exists
         /// </summary>
         /// <param name="path"></param>
-        public static void RemoveFolderIfExists(this string path)
+        /// <param name="messageBoxExShow"></param>
+        public static void RemoveFolderIfExists(this string path, Func<string, MessageBoxResult> messageBoxExShow)
         {
             try
             {
@@ -119,7 +122,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
+                messageBoxExShow(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
         }
@@ -148,7 +151,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
         /// <param name="fileOrFolderPath"></param>
-        public static void OpenPath(string fileOrFolderPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void OpenPath(string fileOrFolderPath, Func<string, MessageBoxResult> messageBoxExShow)
         {
             var psi = new ProcessStartInfo
             {
@@ -166,7 +170,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
@@ -175,9 +179,10 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Open a file with associated application
         /// </summary>
         /// <param name="filePath">File path</param>
+        /// <param name="messageBoxExShow"></param>
         /// <param name="workingDir">Working directory</param>
         /// <param name="asAdmin">Open as Administrator</param>
-        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
+        public static void OpenFile(string filePath, Func<string, MessageBoxResult> messageBoxExShow, string workingDir = "", bool asAdmin = false)
         {
             var psi = new ProcessStartInfo
             {
@@ -196,7 +201,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", filePath));
 #endif
             }
         }

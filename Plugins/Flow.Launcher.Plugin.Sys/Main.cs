@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using Flow.Launcher.Core;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -14,7 +15,7 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
-using MessageBox = System.Windows.MessageBox;
+using MessageBoxImage = Flow.Launcher.Core.MessageBoxEx.MessageBoxImage;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -143,7 +144,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -163,7 +164,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -183,7 +184,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -202,7 +203,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = MessageBoxEx.Show(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -279,7 +280,7 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
                         if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
-                            MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
+                            MessageBoxEx.Show($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);

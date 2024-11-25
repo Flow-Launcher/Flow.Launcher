@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Flow.Launcher.Core;
 using Flow.Launcher.Plugin.Program.ViewModels;
 
 namespace Flow.Launcher.Plugin.Program
@@ -32,7 +33,7 @@ namespace Flow.Launcher.Plugin.Program
             var (modified, msg) = ViewModel.AddOrUpdate();
             if (modified == false && msg != null)
             {
-                MessageBox.Show(msg);  // Invalid
+                MessageBoxEx.Show(msg);  // Invalid
                 return;
             }
             DialogResult = modified;

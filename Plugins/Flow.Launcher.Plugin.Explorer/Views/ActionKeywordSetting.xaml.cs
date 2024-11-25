@@ -1,8 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Explorer.Views
 {
@@ -62,10 +63,10 @@ namespace Flow.Launcher.Plugin.Explorer.Views
                 switch (CurrentActionKeyword.KeywordProperty, KeywordEnabled)
                 {
                     case (Settings.ActionKeyword.FileContentSearchActionKeyword, true):
-                        MessageBox.Show(api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
+                        MessageBoxEx.Show(api.GetTranslation("plugin_explorer_globalActionKeywordInvalid"));
                         return;
                     case (Settings.ActionKeyword.QuickAccessActionKeyword, true):
-                        MessageBox.Show(api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
+                        MessageBoxEx.Show(api.GetTranslation("plugin_explorer_quickaccess_globalActionKeywordInvalid"));
                         return;
                 }
 
@@ -77,7 +78,7 @@ namespace Flow.Launcher.Plugin.Explorer.Views
             }
 
             // The keyword is not valid, so show message
-            MessageBox.Show(api.GetTranslation("newActionKeywordsHasBeenAssigned"));
+            MessageBoxEx.Show(api.GetTranslation("newActionKeywordsHasBeenAssigned"));
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)

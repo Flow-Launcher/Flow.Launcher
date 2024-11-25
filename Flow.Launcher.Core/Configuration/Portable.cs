@@ -96,13 +96,13 @@ namespace Flow.Launcher.Core.Configuration
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
         {
-            FilesFolders.CopyAll(fromLocation, toLocation);
+            FilesFolders.CopyAll(fromLocation, toLocation, MessageBoxEx.Show);
             VerifyUserDataAfterMove(fromLocation, toLocation);
         }
 
         public void VerifyUserDataAfterMove(string fromLocation, string toLocation)
         {
-            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation);
+            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, MessageBoxEx.Show);
         }
 
         public void CreateShortcuts()
@@ -158,13 +158,13 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(roamingDataDir);
+                FilesFolders.RemoveFolderIfExists(roamingDataDir, MessageBoxEx.Show);
 
                 if (MessageBoxEx.Show("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxType.YesNo) == MessageBoxResult.Yes)
                 {
-                    FilesFolders.OpenPath(Constant.RootDirectory);
+                    FilesFolders.OpenPath(Constant.RootDirectory, MessageBoxEx.Show);
 
                     Environment.Exit(0);
                 }
@@ -173,7 +173,7 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and notify the user about it.
             else if (File.Exists(portableDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(portableDataDir);
+                FilesFolders.RemoveFolderIfExists(portableDataDir, MessageBoxEx.Show);
 
                 MessageBoxEx.Show("Flow Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
