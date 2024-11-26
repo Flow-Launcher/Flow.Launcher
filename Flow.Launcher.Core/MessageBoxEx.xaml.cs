@@ -16,62 +16,52 @@ namespace Flow.Launcher.Core
         static MessageBoxEx msgBox;
         static MessageBoxResult _result = MessageBoxResult.No;
 
-
         /// 1 parameter
         public static MessageBoxResult Show(string messageBoxText)
         {
-            return Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
         }
 
         // 2 parameter
-        public static MessageBoxResult Show(string messageBoxText, string title)
+        public static MessageBoxResult Show(string messageBoxText, string caption)
         {
-            return Show(messageBoxText, title, MessageBoxButton.OK, MessageBoxImage.None);
+            return Show(messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
         }
 
         /// 3 parameter
-        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton type) 
+        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button) 
         {
-            return Show(messageBoxText, title, type, MessageBoxImage.None);
+            return Show(messageBoxText, caption, button, MessageBoxImage.None, MessageBoxResult.OK);
         }
 
-        // 4 parameter, Final Display Message. 
-        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton button, MessageBoxImage image)
+        // 4 parameter
+        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon)
+        {
+            return Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
+        }
+
+        // 5 parameter, Final Display Message. 
+        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
         {
             msgBox = new MessageBoxEx();
-            if (title == string.Empty && button == MessageBoxButton.OK && image == MessageBoxImage.None)
+            if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
             {
                 msgBox.DescOnlyTextBlock.Text = messageBoxText;
                 msgBox.Title = messageBoxText;
             }
             else
             {
-                msgBox.TitleTextBlock.Text = title;
+                msgBox.TitleTextBlock.Text = caption;
                 msgBox.DescTextBlock.Text = messageBoxText;
-                msgBox.Title = title;
-                SetImageOfMessageBox(image);
+                msgBox.Title = caption;
+                SetImageOfMessageBox(icon);
             }
-            SetVisibilityOfButtons(button);
+            SetVisibilityOfButtons(button, defaultResult);
             msgBox.ShowDialog();
             return _result;
         }
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender == btnOk)
-                _result = MessageBoxResult.OK;
-            else if (sender == btnYes)
-                _result = MessageBoxResult.Yes;
-            else if (sender == btnNo)
-                _result = MessageBoxResult.No;
-            else if (sender == btnCancel)
-                _result = MessageBoxResult.Cancel;
-            else
-                _result = MessageBoxResult.None;
-            msgBox.Close();
-            msgBox = null;
-        }
 
-        private static void SetVisibilityOfButtons(MessageBoxButton button)
+        private static void SetVisibilityOfButtons(MessageBoxButton button, MessageBoxResult defaultResult)
         {
             switch (button)
             {
@@ -84,24 +74,36 @@ namespace Flow.Launcher.Core
                 case MessageBoxButton.OKCancel:
                     msgBox.btnNo.Visibility = Visibility.Collapsed;
                     msgBox.btnYes.Visibility = Visibility.Collapsed;
-                    msgBox.btnOk.Focus();
+                    if (defaultResult == MessageBoxResult.Cancel)
+                        msgBox.btnCancel.Focus();
+                    else
+                        msgBox.btnOk.Focus();
                     break;
                 case MessageBoxButton.YesNo:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
                     msgBox.btnCancel.Visibility = Visibility.Collapsed;
-                    msgBox.btnYes.Focus();
+                    if (defaultResult == MessageBoxResult.No)
+                        msgBox.btnNo.Focus();
+                    else
+                        msgBox.btnYes.Focus();
                     break;
                 case MessageBoxButton.YesNoCancel:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
-                    msgBox.btnYes.Focus();
+                    if (defaultResult == MessageBoxResult.No)
+                        msgBox.btnNo.Focus();
+                    else if (defaultResult == MessageBoxResult.Cancel)
+                        msgBox.btnCancel.Focus();
+                    else
+                        msgBox.btnYes.Focus();
                     break;
                 default:
                     break;
             }
         }
-        private static void SetImageOfMessageBox(MessageBoxImage image)
+
+        private static void SetImageOfMessageBox(MessageBoxImage icon)
         {
-            switch (image)
+            switch (icon)
             {
                 case MessageBoxImage.Exclamation:
                     msgBox.SetImage("Exclamation.png");
@@ -124,16 +126,34 @@ namespace Flow.Launcher.Core
                     break;
             }
         }
+
         private void SetImage(string imageName)
         {
             string uri = Constant.ProgramDirectory + "/Images/" + imageName;
             var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
             Img.Source = new BitmapImage(uriSource);
         }
-        private void cmdEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
+
+        private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             DialogResult = false;
             Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender == btnOk)
+                _result = MessageBoxResult.OK;
+            else if (sender == btnYes)
+                _result = MessageBoxResult.Yes;
+            else if (sender == btnNo)
+                _result = MessageBoxResult.No;
+            else if (sender == btnCancel)
+                _result = MessageBoxResult.Cancel;
+            else
+                _result = MessageBoxResult.None;
+            msgBox.Close();
+            msgBox = null;
         }
 
         private void Button_Cancel(object sender, RoutedEventArgs e)
@@ -141,6 +161,5 @@ namespace Flow.Launcher.Core
             msgBox.Close();
             msgBox = null;
         }
-
     }
 }
