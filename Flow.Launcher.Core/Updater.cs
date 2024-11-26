@@ -17,7 +17,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Core
 {
@@ -84,7 +83,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (MessageBoxEx.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxType.YesNo) == MessageBoxResult.Yes)
+                if (MessageBoxEx.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }

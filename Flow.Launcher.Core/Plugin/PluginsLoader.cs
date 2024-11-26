@@ -11,7 +11,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
-using MessageBoxImage = Flow.Launcher.Core.MessageBoxEx.MessageBoxImage;
 
 namespace Flow.Launcher.Core.Plugin
 {

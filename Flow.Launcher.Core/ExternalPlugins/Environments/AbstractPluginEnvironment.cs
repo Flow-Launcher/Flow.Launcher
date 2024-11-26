@@ -4,12 +4,10 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Resource;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
@@ -59,7 +57,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 EnvName,
                 Environment.NewLine
             );
-            if (MessageBoxEx.Show(noRuntimeMessage, string.Empty, MessageBoxType.YesNo) == MessageBoxResult.No)
+            if (MessageBoxEx.Show(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
                 string selectedFile;

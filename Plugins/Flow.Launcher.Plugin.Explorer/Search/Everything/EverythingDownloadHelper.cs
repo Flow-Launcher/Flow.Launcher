@@ -7,7 +7,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything;
 
@@ -25,7 +24,7 @@ public static class EverythingDownloadHelper
             if (MessageBoxEx.Show(
                         string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
                         api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
-                        MessageBoxType.YesNo) == MessageBoxResult.Yes)
+                        MessageBoxButton.YesNo) == MessageBoxResult.Yes)
             {
                 var dlg = new System.Windows.Forms.OpenFileDialog
                 {

@@ -9,7 +9,6 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Linq;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Core.Configuration
 {
@@ -162,7 +161,7 @@ namespace Flow.Launcher.Core.Configuration
 
                 if (MessageBoxEx.Show("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
-                                    MessageBoxType.YesNo) == MessageBoxResult.Yes)
+                                    MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     FilesFolders.OpenPath(Constant.RootDirectory, MessageBoxEx.Show);
 

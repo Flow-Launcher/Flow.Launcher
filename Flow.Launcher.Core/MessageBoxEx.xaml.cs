@@ -13,25 +13,6 @@ namespace Flow.Launcher.Core
             InitializeComponent();
         }
 
-        public enum MessageBoxType
-        {
-            ConfirmationWithYesNo = 0,
-            ConfirmationWithYesNoCancel,
-            YesNo,
-            Information,
-            Error,
-            Warning
-        }
-
-        public enum MessageBoxImage
-        {
-            Warning = 0,
-            Question,
-            Information,
-            Error,
-            None
-        }
-
         static MessageBoxEx msgBox;
         static MessageBoxResult _result = MessageBoxResult.No;
 
@@ -49,31 +30,9 @@ namespace Flow.Launcher.Core
         }
 
         /// 3 parameter
-        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxType type) 
+        public static MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton type) 
         {
-            switch (type)
-            {
-                case MessageBoxType.ConfirmationWithYesNo:
-                    return Show(messageBoxText, title, MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                case MessageBoxType.YesNo:
-                    return Show(messageBoxText, title, MessageBoxButton.YesNo,
-                    MessageBoxImage.Question);
-                case MessageBoxType.ConfirmationWithYesNoCancel:
-                    return Show(messageBoxText, title, MessageBoxButton.YesNoCancel,
-                    MessageBoxImage.Question);
-                case MessageBoxType.Information:
-                    return Show(messageBoxText, title, MessageBoxButton.OK,
-                    MessageBoxImage.Information);
-                case MessageBoxType.Error:
-                    return Show(messageBoxText, title, MessageBoxButton.OK,
-                    MessageBoxImage.Error);
-                case MessageBoxType.Warning:
-                    return Show(messageBoxText, title, MessageBoxButton.OK,
-                    MessageBoxImage.Warning);
-                default:
-                    return MessageBoxResult.No;
-            }
+            return Show(messageBoxText, title, type, MessageBoxImage.None);
         }
 
         // 4 parameter, Final Display Message. 
@@ -144,8 +103,8 @@ namespace Flow.Launcher.Core
         {
             switch (image)
             {
-                case MessageBoxImage.Warning:
-                    msgBox.SetImage("Warning.png");
+                case MessageBoxImage.Exclamation:
+                    msgBox.SetImage("Exclamation.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Question:

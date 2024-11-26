@@ -15,7 +15,6 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
-using MessageBoxImage = Flow.Launcher.Core.MessageBoxEx.MessageBoxImage;
 
 namespace Flow.Launcher.Plugin.Sys
 {

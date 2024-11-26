@@ -11,7 +11,6 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -66,7 +65,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         var confirmResult = MessageBoxEx.Show(
             InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
             InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
-            MessageBoxType.YesNo
+            MessageBoxButton.YesNo
         );
 
         if (confirmResult == MessageBoxResult.Yes)

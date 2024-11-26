@@ -8,7 +8,6 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Core;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -52,7 +51,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
                 InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"), item.Hotkey
             ),
             InternationalizationManager.Instance.GetTranslation("delete"),
-            MessageBoxType.YesNo
+            MessageBoxButton.YesNo
         );
 
         if (result is MessageBoxResult.Yes)
@@ -98,7 +97,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
                 InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"), item.Key, item.Value
             ),
             InternationalizationManager.Instance.GetTranslation("delete"),
-            MessageBoxType.YesNo
+            MessageBoxButton.YesNo
         );
 
         if (result is MessageBoxResult.Yes)

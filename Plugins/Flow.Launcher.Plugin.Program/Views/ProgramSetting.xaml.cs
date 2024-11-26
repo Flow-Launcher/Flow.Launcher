@@ -11,7 +11,6 @@ using System.ComponentModel;
 using System.Windows.Data;
 using Flow.Launcher.Plugin.Program.ViewModels;
 using Flow.Launcher.Core;
-using static Flow.Launcher.Core.MessageBoxEx;
 
 namespace Flow.Launcher.Plugin.Program.Views
 {
@@ -294,7 +293,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 var msg = string.Format(
                     context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
-                if (MessageBoxEx.Show(msg, string.Empty, MessageBoxType.YesNo) == MessageBoxResult.No)
+                if (MessageBoxEx.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }

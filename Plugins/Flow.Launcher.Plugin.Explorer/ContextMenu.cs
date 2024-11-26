@@ -12,7 +12,6 @@ using System.Linq;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 using Flow.Launcher.Core;
-using MessageBoxImage = Flow.Launcher.Core.MessageBoxEx.MessageBoxImage;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
