@@ -75,7 +75,7 @@
                     Grid.Column="0"
                     Width="18"
                     Height="18"
-                    Margin="0 0 0 0"
+                    Margin="0 0 10 0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
                     RenderOptions.BitmapScalingMode="Fant"
@@ -85,7 +85,7 @@
                     x:Name="TitleTextBlock"
                     Grid.Column="1"
                     MaxWidth="400"
-                    Margin="10 0 26 0"
+                    Margin="0 0 26 0"
                     VerticalAlignment="Center"
                     FontFamily="Segoe UI"
                     FontSize="20"
@@ -112,7 +112,8 @@
                 VerticalAlignment="Center"
                 FontSize="14"
                 TextAlignment="Left"
-                TextWrapping="Wrap" />
+                TextWrapping="Wrap"
+                Visibility="Collapsed" />
         </Grid>
         <Border
             Grid.Row="2"
@@ -126,25 +127,25 @@
                 Orientation="Horizontal">
                 <Button
                     x:Name="btnOk"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonOK}" />
                 <Button
                     x:Name="btnYes"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonYes}" />
                 <Button
                     x:Name="btnNo"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonNo}" />
                 <Button
                     x:Name="btnCancel"
-                    MinWidth="140"
+                    MinWidth="120"
                     Margin="5 0 5 0"
                     Click="Button_Click"
                     Content="{DynamicResource commonCancel}" />

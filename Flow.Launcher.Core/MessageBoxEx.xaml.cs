@@ -8,13 +8,15 @@ namespace Flow.Launcher.Core
 {
     public partial class MessageBoxEx : Window
     {
-        public MessageBoxEx()
+        private static MessageBoxEx msgBox;
+        private static MessageBoxResult _result = MessageBoxResult.None;
+        private static MessageBoxButton _button;
+
+        private MessageBoxEx(MessageBoxButton button)
         {
+            _button = button;
             InitializeComponent();
         }
-
-        static MessageBoxEx msgBox;
-        static MessageBoxResult _result = MessageBoxResult.No;
 
         /// 1 parameter
         public static MessageBoxResult Show(string messageBoxText)
@@ -43,17 +45,18 @@ namespace Flow.Launcher.Core
         // 5 parameter, Final Display Message. 
         public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
         {
-            msgBox = new MessageBoxEx();
+            msgBox = new MessageBoxEx(button);
             if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
             {
-                msgBox.DescOnlyTextBlock.Text = messageBoxText;
                 msgBox.Title = messageBoxText;
+                msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
+                msgBox.DescOnlyTextBlock.Text = messageBoxText;
             }
             else
             {
+                msgBox.Title = caption;
                 msgBox.TitleTextBlock.Text = caption;
                 msgBox.DescTextBlock.Text = messageBoxText;
-                msgBox.Title = caption;
                 SetImageOfMessageBox(icon);
             }
             SetVisibilityOfButtons(button, defaultResult);
@@ -136,6 +139,12 @@ namespace Flow.Launcher.Core
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
+            if (_button == MessageBoxButton.YesNo)
+                return;
+            else if (_button == MessageBoxButton.OK)
+                _result = MessageBoxResult.OK;
+            else
+                _result = MessageBoxResult.Cancel;
             DialogResult = false;
             Close();
         }
@@ -158,6 +167,12 @@ namespace Flow.Launcher.Core
 
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
+            if (_button == MessageBoxButton.YesNo)
+                return;
+            else if (_button == MessageBoxButton.OK)
+                _result = MessageBoxResult.OK;
+            else
+                _result = MessageBoxResult.Cancel;
             msgBox.Close();
             msgBox = null;
         }
