@@ -64,7 +64,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 throw;
 #else
                 messageBoxExShow(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
-                RemoveFolderIfExists(targetPath);
+                RemoveFolderIfExists(targetPath, messageBoxExShow);
 #endif
             }
 
