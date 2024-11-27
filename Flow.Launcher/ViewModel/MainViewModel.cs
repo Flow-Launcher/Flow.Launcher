@@ -23,6 +23,8 @@ using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
 using System.ComponentModel;
+using Flow.Launcher.Infrastructure.Image;
+using System.Windows.Media;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -722,6 +724,8 @@ namespace Flow.Launcher.ViewModel
             set => Settings.ResultSubItemFontSize = value;
         }
 
+        public ImageSource PluginIconSource { get; private set; } = null;
+
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
@@ -1066,6 +1070,7 @@ namespace Flow.Launcher.ViewModel
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
                 PluginIconPath = null;
+                PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;
             }
@@ -1099,11 +1104,13 @@ namespace Flow.Launcher.ViewModel
             if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
+                PluginIconSource = await ImageLoader.LoadAsync(PluginIconPath);
                 SearchIconVisibility = Visibility.Hidden;
             }
             else
             {
                 PluginIconPath = null;
+                PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
             }
 
@@ -1467,6 +1474,8 @@ namespace Flow.Launcher.ViewModel
             {
                 Log.Debug("MainViewModel", $"Error in UpdateResultView: {ex.Message}");
             }
+
+            
         }
 
         #endregion
