@@ -215,8 +215,15 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        image = LoadFullImage(path);
-                        type = ImageType.FullImageFile;
+                        try
+                        {
+                            image = LoadFullImage(path);
+                            type = ImageType.FullImageFile;
+                        }
+                        catch (NotSupportedException)
+                        {
+                            image = null;
+                        }
                     }
                     else
                     {
@@ -242,7 +249,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             if (type != ImageType.Error)
             {
-                image.Freeze();
+                image?.Freeze();
             }
 
             return new ImageResult(image, type);
