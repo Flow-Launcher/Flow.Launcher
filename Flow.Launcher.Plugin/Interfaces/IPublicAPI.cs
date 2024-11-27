@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin
 {
@@ -298,5 +299,81 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
+        
+        /// <summary>
+        /// Displays a message box that has a message and that returns a result.
+        /// </summary>
+        /// <param name="messageBoxText">A System.String that specifies the text to display.</param>
+        /// <returns>
+        /// A System.Windows.MessageBoxResult value that specifies which message box button
+        /// is clicked by the user.
+        /// </returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText);
+
+        /// <summary>
+        /// Displays a message box that has a message and title bar caption; and that returns
+        /// a result.
+        /// </summary>
+        /// <param name="messageBoxText">A System.String that specifies the text to display.</param>
+        /// <param name="caption">A System.String that specifies the title bar caption to display.</param>
+        /// <returns>
+        /// A System.Windows.MessageBoxResult value that specifies which message box button
+        /// is clicked by the user.
+        /// </returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption);
+
+        /// <summary>
+        /// Displays a message box that has a message, title bar caption, and button; and
+        /// that returns a result.
+        /// </summary>
+        /// <param name="messageBoxText">A System.String that specifies the text to display.</param>
+        /// <param name="caption">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button">
+        /// A System.Windows.MessageBoxButton value that specifies which button or buttons
+        /// to display.
+        /// </param>
+        /// <returns>
+        /// A System.Windows.MessageBoxResult value that specifies which message box button
+        /// is clicked by the user.
+        /// </returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button); 
+
+        /// <summary>
+        /// Displays a message box that has a message, title bar caption, button, and icon;
+        /// and that returns a result.
+        /// </summary>
+        /// <param name="messageBoxText">A System.String that specifies the text to display.</param>
+        /// <param name="caption">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button">
+        /// A System.Windows.MessageBoxButton value that specifies which button or buttons
+        /// to display.
+        /// </param>
+        /// <param name="icon">A System.Windows.MessageBoxImage value that specifies the icon to display.</param>
+        /// <returns>
+        /// A System.Windows.MessageBoxResult value that specifies which message box button
+        /// is clicked by the user.
+        /// </returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon);
+
+        /// <summary>
+        /// Displays a message box that has a message, title bar caption, button, and icon;
+        /// and that accepts a default message box result and returns a result.
+        /// </summary>
+        /// <param name="messageBoxText">A System.String that specifies the text to display.</param>
+        /// <param name="caption">A System.String that specifies the title bar caption to display.</param>
+        /// <param name="button">
+        /// A System.Windows.MessageBoxButton value that specifies which button or buttons
+        /// to display.
+        /// </param>
+        /// <param name="icon">A System.Windows.MessageBoxImage value that specifies the icon to display.</param>
+        /// <param name="defaultResult">
+        /// A System.Windows.MessageBoxResult value that specifies the default result of
+        /// the message box.
+        /// </param>
+        /// <returns>
+        /// A System.Windows.MessageBoxResult value that specifies which message box button
+        /// is clicked by the user.
+        /// </returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult);
     }
 }

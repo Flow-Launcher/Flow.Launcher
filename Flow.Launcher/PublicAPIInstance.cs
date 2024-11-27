@@ -25,6 +25,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -317,6 +318,19 @@ namespace Flow.Launcher
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText) => MessageBoxEx.Show(messageBoxText);
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption) => MessageBoxEx.Show(messageBoxText, caption);
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button) => 
+            MessageBoxEx.Show(messageBoxText, caption, button);
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon) =>
+            MessageBoxEx.Show(messageBoxText, caption, button, icon);
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult) =>
+            MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         #endregion
 
