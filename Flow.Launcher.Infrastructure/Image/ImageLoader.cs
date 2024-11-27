@@ -223,6 +223,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         catch (NotSupportedException)
                         {
                             image = null;
+                            type = ImageType.Error;
                         }
                     }
                     else
@@ -249,7 +250,7 @@ namespace Flow.Launcher.Infrastructure.Image
 
             if (type != ImageType.Error)
             {
-                image?.Freeze();
+                image.Freeze();
             }
 
             return new ImageResult(image, type);
