@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Core
 {
@@ -10,7 +11,8 @@ namespace Flow.Launcher.Core
     {
         private static MessageBoxEx msgBox;
         private static MessageBoxResult _result = MessageBoxResult.None;
-        private static MessageBoxButton _button;
+
+        private readonly MessageBoxButton _button;
 
         private MessageBoxEx(MessageBoxButton button)
         {
@@ -45,26 +47,40 @@ namespace Flow.Launcher.Core
         // 5 parameter, Final Display Message. 
         public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
         {
-            msgBox = new MessageBoxEx(button);
-            if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
+            if (!Application.Current.Dispatcher.CheckAccess())
             {
-                msgBox.Title = messageBoxText;
-                msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
-                msgBox.DescOnlyTextBlock.Text = messageBoxText;
+                return Application.Current.Dispatcher.Invoke(() => Show(messageBoxText, caption, button, icon, defaultResult));
             }
-            else
+
+            try
             {
-                msgBox.Title = caption;
-                msgBox.TitleTextBlock.Text = caption;
-                msgBox.DescTextBlock.Text = messageBoxText;
-                SetImageOfMessageBox(icon);
+                msgBox = new MessageBoxEx(button);
+                if (caption == string.Empty && button == MessageBoxButton.OK && icon == MessageBoxImage.None)
+                {
+                    msgBox.Title = messageBoxText;
+                    msgBox.DescOnlyTextBlock.Visibility = Visibility.Visible;
+                    msgBox.DescOnlyTextBlock.Text = messageBoxText;
+                }
+                else
+                {
+                    msgBox.Title = caption;
+                    msgBox.TitleTextBlock.Text = caption;
+                    msgBox.DescTextBlock.Text = messageBoxText;
+                    SetImageOfMessageBox(icon);
+                }
+                SetButtonVisibilityFocusAndResult(button, defaultResult);
+                msgBox.ShowDialog();
+                return _result;
             }
-            SetVisibilityOfButtons(button, defaultResult);
-            msgBox.ShowDialog();
-            return _result;
+            catch (Exception e)
+            {
+                Log.Error($"|MessageBoxEx.Show|An error occurred: {e.Message}");
+                msgBox = null;
+                return MessageBoxResult.None;
+            }
         }
 
-        private static void SetVisibilityOfButtons(MessageBoxButton button, MessageBoxResult defaultResult)
+        private static void SetButtonVisibilityFocusAndResult(MessageBoxButton button, MessageBoxResult defaultResult)
         {
             switch (button)
             {
@@ -73,31 +89,53 @@ namespace Flow.Launcher.Core
                     msgBox.btnNo.Visibility = Visibility.Collapsed;
                     msgBox.btnYes.Visibility = Visibility.Collapsed;
                     msgBox.btnOk.Focus();
+                    _result = MessageBoxResult.OK;
                     break;
                 case MessageBoxButton.OKCancel:
                     msgBox.btnNo.Visibility = Visibility.Collapsed;
                     msgBox.btnYes.Visibility = Visibility.Collapsed;
                     if (defaultResult == MessageBoxResult.Cancel)
+                    {
                         msgBox.btnCancel.Focus();
+                        _result = MessageBoxResult.Cancel;
+                    }
                     else
+                    {
                         msgBox.btnOk.Focus();
+                        _result = MessageBoxResult.OK;
+                    }
                     break;
                 case MessageBoxButton.YesNo:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
                     msgBox.btnCancel.Visibility = Visibility.Collapsed;
                     if (defaultResult == MessageBoxResult.No)
+                    {
                         msgBox.btnNo.Focus();
+                        _result = MessageBoxResult.No;
+                    }
                     else
+                    {
                         msgBox.btnYes.Focus();
+                        _result = MessageBoxResult.Yes;
+                    }
                     break;
                 case MessageBoxButton.YesNoCancel:
                     msgBox.btnOk.Visibility = Visibility.Collapsed;
                     if (defaultResult == MessageBoxResult.No)
+                    {
                         msgBox.btnNo.Focus();
+                        _result = MessageBoxResult.No;
+                    }
                     else if (defaultResult == MessageBoxResult.Cancel)
+                    {
                         msgBox.btnCancel.Focus();
+                        _result = MessageBoxResult.Cancel;
+                    }
                     else
+                    {
                         msgBox.btnYes.Focus();
+                        _result = MessageBoxResult.Yes;
+                    }
                     break;
                 default:
                     break;
