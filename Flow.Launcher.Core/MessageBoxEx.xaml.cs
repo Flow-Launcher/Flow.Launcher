@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure;
@@ -67,7 +68,7 @@ namespace Flow.Launcher.Core
                     msgBox.Title = caption;
                     msgBox.TitleTextBlock.Text = caption;
                     msgBox.DescTextBlock.Text = messageBoxText;
-                    SetImageOfMessageBox(icon);
+                    _ = SetImageOfMessageBoxAsync(icon);
                 }
                 SetButtonVisibilityFocusAndResult(button, defaultResult);
                 msgBox.ShowDialog();
@@ -143,24 +144,24 @@ namespace Flow.Launcher.Core
             }
         }
 
-        private static async void SetImageOfMessageBox(MessageBoxImage icon)
+        private static async Task SetImageOfMessageBoxAsync(MessageBoxImage icon)
         {
             switch (icon)
             {
                 case MessageBoxImage.Exclamation:
-                    msgBox.SetImage("Exclamation.png");
+                    await msgBox.SetImageAsync("Exclamation.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Question:
-                    msgBox.SetImage("Question.png");
+                    await msgBox.SetImageAsync("Question.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Information:
-                    msgBox.SetImage("Information.png");
+                    await msgBox.SetImageAsync("Information.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 case MessageBoxImage.Error:
-                    msgBox.SetImage("Error.png");
+                    await msgBox.SetImageAsync("Error.png");
                     msgBox.Img.Visibility = Visibility.Visible;
                     break;
                 default:
@@ -169,7 +170,7 @@ namespace Flow.Launcher.Core
             }
         }
 
-        private async void SetImage(string imageName)
+        private async Task SetImageAsync(string imageName)
         {
             var imagePath = Path.Combine(Constant.ProgramDirectory, "Images", imageName);
             var imageSource = await ImageLoader.LoadAsync(imagePath);
