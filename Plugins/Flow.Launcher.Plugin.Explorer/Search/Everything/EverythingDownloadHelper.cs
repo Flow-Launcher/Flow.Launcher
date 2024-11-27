@@ -1,5 +1,4 @@
 ﻿using Droplex;
-using Flow.Launcher.Core;
 using Flow.Launcher.Plugin.SharedCommands;
 using Microsoft.Win32;
 using System;
@@ -21,7 +20,7 @@ public static class EverythingDownloadHelper
 
         if (string.IsNullOrEmpty(installedLocation))
         {
-            if (MessageBoxEx.Show(
+            if (api.ShowMsgBox(
                         string.Format(api.GetTranslation("flowlauncher_plugin_everything_installing_select"), Environment.NewLine),
                         api.GetTranslation("flowlauncher_plugin_everything_installing_title"),
                         MessageBoxButton.YesNo) == MessageBoxResult.Yes)
@@ -52,7 +51,7 @@ public static class EverythingDownloadHelper
 
         installedLocation = "C:\\Program Files\\Everything\\Everything.exe";
 
-        FilesFolders.OpenPath(installedLocation, MessageBoxEx.Show);
+        FilesFolders.OpenPath(installedLocation, api.ShowMsgBox);
 
         return installedLocation;
 

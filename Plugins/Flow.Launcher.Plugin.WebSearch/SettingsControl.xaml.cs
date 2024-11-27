@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using Flow.Launcher.Core.Plugin;
 using System.ComponentModel;
 using System.Windows.Data;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -37,7 +36,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 var warning = _context.API.GetTranslation("flowlauncher_plugin_websearch_delete_warning");
                 var formated = string.Format(warning, selected.Title);
 
-                var result = MessageBoxEx.Show(formated, string.Empty, MessageBoxButton.YesNo);
+                var result = _context.API.ShowMsgBox(formated, string.Empty, MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
                     var id = _context.CurrentPluginMetadata.ID;

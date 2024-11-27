@@ -5,14 +5,12 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using System.Windows.Input;
 using Path = System.IO.Path;
 using System.Windows.Controls;
 using Flow.Launcher.Plugin.Explorer.Views;
 using Peter;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
 {
@@ -124,7 +122,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -138,7 +136,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -153,7 +151,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                         }
                         catch (Exception ex)
                         {
-                            MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
+                            Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_opendir_error"));
                             return false;
                         }
                     }
@@ -316,7 +314,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     }
                     catch (Exception ex)
                     {
-                        MessageBoxEx.Show(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
+                        Context.API.ShowMsgBox(ex.Message, Context.API.GetTranslation("plugin_explorer_openfile_error"));
                     }
 
                     return true;
@@ -338,7 +336,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
             IncrementEverythingRunCounterIfNeeded(filePath);
-            FilesFolders.OpenFile(filePath, MessageBoxEx.Show, workingDir, asAdmin);
+            FilesFolders.OpenFile(filePath, Context.API.ShowMsgBox, workingDir, asAdmin);
         }
 
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)

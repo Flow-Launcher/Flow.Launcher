@@ -11,7 +11,6 @@ using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
 using Flow.Launcher.Plugin.Explorer.Helper;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -174,7 +173,7 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                if (MessageBoxEx.Show(
+                                if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
                                         string.Empty,
                                         MessageBoxButton.YesNo,

@@ -7,7 +7,6 @@ using System.Windows.Controls;
 using Mages.Core;
 using Flow.Launcher.Plugin.Calculator.ViewModels;
 using Flow.Launcher.Plugin.Calculator.Views;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Plugin.Calculator
 {
@@ -101,7 +100,7 @@ namespace Flow.Launcher.Plugin.Calculator
                                 }
                                 catch (ExternalException)
                                 {
-                                    MessageBoxEx.Show("Copy failed, please try later");
+                                    Context.API.ShowMsgBox("Copy failed, please try later");
                                     return false;
                                 }
                             }
