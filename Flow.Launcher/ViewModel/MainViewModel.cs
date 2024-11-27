@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -1440,26 +1440,33 @@ namespace Flow.Launcher.ViewModel
             }
 #endif
 
-            foreach (var metaResults in resultsForUpdates)
+            try
             {
-                foreach (var result in metaResults.Results)
+                foreach (var metaResults in resultsForUpdates)
                 {
-                    if (_topMostRecord.IsTopMost(result))
+                    foreach (var result in metaResults.Results)
                     {
-                        result.Score = int.MaxValue;
-                    }
-                    else
-                    {
-                        var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        if (_topMostRecord.IsTopMost(result))
+                        {
+                            result.Score = int.MaxValue;
+                        }
+                        else
+                        {
+                            var priorityScore = metaResults.Metadata.Priority * 150;
+                            result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        }
                     }
                 }
+
+                // it should be the same for all results
+                bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+                Results.AddResults(resultsForUpdates, token, reSelect);
             }
-
-            // it should be the same for all results
-            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
-
-            Results.AddResults(resultsForUpdates, token, reSelect);
+            catch (Exception ex)
+            {
+                Log.Debug("MainViewModel", $"Error in UpdateResultView: {ex.Message}");
+            }
         }
 
         #endregion
