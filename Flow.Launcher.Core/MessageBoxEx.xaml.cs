@@ -1,8 +1,9 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Core
@@ -142,7 +143,7 @@ namespace Flow.Launcher.Core
             }
         }
 
-        private static void SetImageOfMessageBox(MessageBoxImage icon)
+        private static async void SetImageOfMessageBox(MessageBoxImage icon)
         {
             switch (icon)
             {
@@ -168,11 +169,11 @@ namespace Flow.Launcher.Core
             }
         }
 
-        private void SetImage(string imageName)
+        private async void SetImage(string imageName)
         {
-            string uri = Constant.ProgramDirectory + "/Images/" + imageName;
-            var uriSource = new Uri(uri, UriKind.RelativeOrAbsolute);
-            Img.Source = new BitmapImage(uriSource);
+            var imagePath = Path.Combine(Constant.ProgramDirectory, "Images", imageName);
+            var imageSource = await ImageLoader.LoadAsync(imagePath);
+            Img.Source = imageSource;
         }
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
