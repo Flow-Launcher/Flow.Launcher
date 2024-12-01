@@ -319,17 +319,7 @@ namespace Flow.Launcher
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
-        public MessageBoxResult ShowMsgBox(string messageBoxText) => MessageBoxEx.Show(messageBoxText);
-
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption) => MessageBoxEx.Show(messageBoxText, caption);
-
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button) => 
-            MessageBoxEx.Show(messageBoxText, caption, button);
-
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon) =>
-            MessageBoxEx.Show(messageBoxText, caption, button, icon);
-
-        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult) =>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         #endregion
