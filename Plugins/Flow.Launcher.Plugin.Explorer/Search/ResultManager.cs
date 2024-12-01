@@ -336,7 +336,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         private static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
         {
             IncrementEverythingRunCounterIfNeeded(filePath);
-            FilesFolders.OpenFile(filePath, Context.API.ShowMsgBox, workingDir, asAdmin);
+            FilesFolders.OpenFile(filePath, workingDir, asAdmin, (string str) => Context.API.ShowMsgBox(str));
         }
 
         private static void OpenFolder(string folderPath, string fileNameOrFilePath = null)

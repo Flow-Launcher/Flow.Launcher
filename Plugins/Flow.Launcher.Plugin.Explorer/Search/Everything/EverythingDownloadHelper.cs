@@ -51,7 +51,7 @@ public static class EverythingDownloadHelper
 
         installedLocation = "C:\\Program Files\\Everything\\Everything.exe";
 
-        FilesFolders.OpenPath(installedLocation, api.ShowMsgBox);
+        FilesFolders.OpenPath(installedLocation, (string str) => api.ShowMsgBox(str));
 
         return installedLocation;
 
