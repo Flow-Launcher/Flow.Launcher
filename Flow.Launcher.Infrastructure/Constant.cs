@@ -31,6 +31,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
         public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
+        public static readonly string NoImageIcon = Path.Combine(ImagesDirectory, "no_image.png");
 
         public static string PythonPath;
         public static string NodePath;

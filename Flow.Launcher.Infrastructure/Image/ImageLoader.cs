@@ -22,6 +22,7 @@ namespace Flow.Launcher.Infrastructure.Image
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
+        public static ImageSource NoImage { get; } = new BitmapImage(new Uri(Constant.NoImageIcon));
         public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
         public const int SmallIconSize = 64;
@@ -222,7 +223,7 @@ namespace Flow.Launcher.Infrastructure.Image
                         }
                         catch (NotSupportedException)
                         {
-                            image = null;
+                            image = NoImage;
                             type = ImageType.Error;
                         }
                     }
