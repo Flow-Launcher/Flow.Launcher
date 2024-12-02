@@ -161,5 +161,6 @@
     <system:String x:Key="plugin_explorer_native_context_menu_header">Рідне контекстне меню</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Відображати рідне контекстне меню (експериментально)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Нижче ви можете вказати елементи, які хочете включити до контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»).</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Нижче ви можете вказати елементи, які хочете виключити з контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Нижче ви можете вказати елементи, які хочете виключити з контекстного меню, вони можуть бути частковими (наприклад, «шир пера») або повними («Відкрити за допомогою»).</system:String>
+
 </ResourceDictionary>
