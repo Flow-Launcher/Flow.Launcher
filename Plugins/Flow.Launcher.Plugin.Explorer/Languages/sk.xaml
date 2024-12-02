@@ -161,5 +161,5 @@
     <system:String x:Key="plugin_explorer_native_context_menu_header">Natívna kontextová ponuka</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Zobraziť natívnu kontextovú ponuku (experimentálne)</system:String>
     <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Nižšie môžete určiť položky, ktoré chcete zahrnúť do kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
-    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nižšie môžete určiť položky, ktoré chcete vylúčiť z kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nižšie môžete určiť položky, ktoré chcete vylúčiť z kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
 </ResourceDictionary>
