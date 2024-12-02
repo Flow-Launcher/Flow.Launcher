@@ -12,13 +12,14 @@ namespace Flow.Launcher.Storage
 
         internal bool IsTopMost(Result result)
         {
-            if (records.IsEmpty || (result.OriginQuery != null && !records.ContainsKey(result.OriginQuery.RawQuery)))
+            if (records.IsEmpty || result.OriginQuery == null ||
+                !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {
                 return false;
             }
 
             // since this dictionary should be very small (or empty) going over it should be pretty fast.
-            return result.OriginQuery != null && records[result.OriginQuery.RawQuery].Equals(result);
+            return value.Equals(result);
         }
 
         internal void Remove(Result result)
