@@ -1447,35 +1447,26 @@ namespace Flow.Launcher.ViewModel
             }
 #endif
 
-            try
+            foreach (var metaResults in resultsForUpdates)
             {
-                foreach (var metaResults in resultsForUpdates)
+                foreach (var result in metaResults.Results)
                 {
-                    foreach (var result in metaResults.Results)
+                    if (_topMostRecord.IsTopMost(result))
                     {
-                        if (_topMostRecord.IsTopMost(result))
-                        {
-                            result.Score = int.MaxValue;
-                        }
-                        else
-                        {
-                            var priorityScore = metaResults.Metadata.Priority * 150;
-                            result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
-                        }
+                        result.Score = int.MaxValue;
+                    }
+                    else
+                    {
+                        var priorityScore = metaResults.Metadata.Priority * 150;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
                     }
                 }
-
-                // it should be the same for all results
-                bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
-
-                Results.AddResults(resultsForUpdates, token, reSelect);
-            }
-            catch (Exception ex)
-            {
-                Log.Debug("MainViewModel", $"Error in UpdateResultView: {ex.Message}");
             }
 
-            
+            // it should be the same for all results
+            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+            Results.AddResults(resultsForUpdates, token, reSelect);
         }
 
         #endregion
