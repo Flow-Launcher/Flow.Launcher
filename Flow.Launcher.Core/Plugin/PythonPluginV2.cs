@@ -26,9 +26,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var path = Path.Combine(Constant.ProgramDirectory, JsonRpc);
             StartInfo.EnvironmentVariables["PYTHONPATH"] = path;
-
-            //Add -B flag to tell python don't write .py[co] files. Because .pyc contains location infos which will prevent python portable
-            StartInfo.ArgumentList.Add("-B");
+            StartInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
         }
 
         public override async Task InitAsync(PluginInitContext context)

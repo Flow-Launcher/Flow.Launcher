@@ -26,6 +26,9 @@ namespace Flow.Launcher.Core.Plugin
 
             var path = Path.Combine(Constant.ProgramDirectory, JsonRPC);
             _startInfo.EnvironmentVariables["PYTHONPATH"] = path;
+            // Prevent Python from writing .py[co] files.
+            // Because .pyc contains location infos which will prevent python portable.
+            _startInfo.EnvironmentVariables["PYTHONDONTWRITEBYTECODE"] = "1";
 
             _startInfo.EnvironmentVariables["FLOW_VERSION"] = Constant.Version;
             _startInfo.EnvironmentVariables["FLOW_PROGRAM_DIRECTORY"] = Constant.ProgramDirectory;
@@ -76,15 +79,13 @@ namespace Flow.Launcher.Core.Plugin
                 // Plugins always expect the JSON data to be in the third argument
                 // (we're always setting it as _startInfo.ArgumentList[2] = ...).
                 _startInfo.ArgumentList.Add("");
-                // Because plugins always expect the JSON data to be in the third argument, and specifying -c <code>
-                // takes up two arguments, we have to move `-B` to the end.
-                _startInfo.ArgumentList.Add("-B");
             }
             // Run .pyz files as is
             else
             {
-                // -B flag is needed to tell python not to write .py[co] files.
-                // Because .pyc contains location infos which will prevent python portable
+                // No need for -B flag because we're using PYTHONDONTWRITEBYTECODE env variable now,
+                // but the plugins still expect data to be sent as the third argument, so we're keeping
+                // the flag here, even though it's not necessary anymore.
                 _startInfo.ArgumentList.Add("-B");
                 _startInfo.ArgumentList.Add(context.CurrentPluginMetadata.ExecuteFilePath);
                 // Plugins always expect the JSON data to be in the third argument
