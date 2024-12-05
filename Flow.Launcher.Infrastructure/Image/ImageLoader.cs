@@ -139,7 +139,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     return new ImageResult(image, ImageType.ImageFile);
                 }
 
-                if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+                if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
                     imageSource.Freeze();
