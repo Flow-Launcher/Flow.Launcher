@@ -22,32 +22,15 @@ namespace Flow.Launcher.Core
             InitializeComponent();
         }
 
-        /// 1 parameter
         public static MessageBoxResult Show(string messageBoxText)
-        {
-            return Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
-        }
+            => Show(messageBoxText, string.Empty, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
 
-        // 2 parameter
-        public static MessageBoxResult Show(string messageBoxText, string caption)
-        {
-            return Show(messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, MessageBoxResult.OK);
-        }
-
-        /// 3 parameter
-        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button) 
-        {
-            return Show(messageBoxText, caption, button, MessageBoxImage.None, MessageBoxResult.OK);
-        }
-
-        // 4 parameter
-        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon)
-        {
-            return Show(messageBoxText, caption, button, icon, MessageBoxResult.OK);
-        }
-
-        // 5 parameter, Final Display Message. 
-        public static MessageBoxResult Show(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon, MessageBoxResult defaultResult)
+        public static MessageBoxResult Show(
+            string messageBoxText,
+            string caption = "",
+            MessageBoxButton button = MessageBoxButton.OK,
+            MessageBoxImage icon = MessageBoxImage.None,
+            MessageBoxResult defaultResult = MessageBoxResult.OK)
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {

@@ -301,7 +301,7 @@ namespace Flow.Launcher.Plugin
         public void ReQuery(bool reselect = true);
 
         /// <summary>
-        /// Displays a message box like <see cref="System.Windows.MessageBox"/>
+        /// Displays a standardised Flow message box.
         /// </summary>
         /// <param name="messageBoxText">The message of the message box.</param>
         /// <param name="caption">The caption of the message box.</param>

@@ -13,7 +13,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 {
     public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
     {
-        private PluginInitContext _context;
+        internal static PluginInitContext _context;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
