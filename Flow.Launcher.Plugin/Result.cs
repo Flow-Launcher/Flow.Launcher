@@ -157,27 +157,6 @@ namespace Flow.Launcher.Plugin
         }
 
         /// <inheritdoc />
-        public override bool Equals(object obj)
-        {
-            var r = obj as Result;
-
-            var equality = string.Equals(r?.Title, Title) &&
-                           string.Equals(r?.SubTitle, SubTitle) &&
-                           string.Equals(r?.AutoCompleteText, AutoCompleteText) &&
-                           string.Equals(r?.CopyText, CopyText) &&
-                           string.Equals(r?.IcoPath, IcoPath) &&
-                           TitleHighlightData == r.TitleHighlightData;
-
-            return equality;
-        }
-
-        /// <inheritdoc />
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Title, SubTitle, AutoCompleteText, CopyText, IcoPath);
-        }
-
-        /// <inheritdoc />
         public override string ToString()
         {
             return Title + SubTitle + Score;
