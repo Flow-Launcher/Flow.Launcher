@@ -182,7 +182,7 @@ namespace Flow.Launcher.ViewModel
         /// <summary>
         /// To avoid deadlock, this method should not called from main thread
         /// </summary>
-        public void AddResults(IEnumerable<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
+        public void AddResults(ICollection<ResultsForUpdate> resultsForUpdates, CancellationToken token, bool reselect = true)
         {
             var newResults = NewResults(resultsForUpdates);
 
@@ -228,12 +228,12 @@ namespace Flow.Launcher.ViewModel
                 .ToList();
         }
 
-        private List<ResultViewModel> NewResults(IEnumerable<ResultsForUpdate> resultsForUpdates)
+        private List<ResultViewModel> NewResults(ICollection<ResultsForUpdate> resultsForUpdates)
         {
             if (!resultsForUpdates.Any())
                 return Results;
 
-            return Results.Where(r => r != null && !resultsForUpdates.Any(u => u.ID == r.Result.PluginID))
+            return Results.Where(r => r != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                           .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();
