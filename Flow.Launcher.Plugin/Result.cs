@@ -70,7 +70,8 @@ namespace Flow.Launcher.Plugin
                     && !string.IsNullOrEmpty(PluginDirectory)
                     && !Path.IsPathRooted(value)
                     && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     _icoPath = Path.Combine(PluginDirectory, value);
                 }
