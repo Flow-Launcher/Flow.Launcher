@@ -45,8 +45,8 @@ namespace Flow.Launcher.Core
                 // UpdateApp CheckForUpdate will return value only if the app is squirrel installed
                 var newUpdateInfo = await updateManager.CheckForUpdate().NonNull().ConfigureAwait(false);
 
-                var newReleaseVersion = Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
-                var currentVersion = Version.Parse(Constant.Version);
+                var newReleaseVersion = SemanticVersioning.Version.Parse(newUpdateInfo.FutureReleaseEntry.Version.ToString());
+                var currentVersion = SemanticVersioning.Version.Parse(Constant.Version);
 
                 Log.Info($"|Updater.UpdateApp|Future Release <{newUpdateInfo.FutureReleaseEntry.Formatted()}>");
 
@@ -127,7 +127,7 @@ namespace Flow.Launcher.Core
             await using var jsonStream = await Http.GetStreamAsync(api).ConfigureAwait(false);
 
             var releases = await System.Text.Json.JsonSerializer.DeserializeAsync<List<GithubRelease>>(jsonStream).ConfigureAwait(false);
-            var latest = releases.Where(r => !r.Prerelease).OrderByDescending(r => r.PublishedAt).First();
+            var latest = releases.OrderByDescending(r => r.PublishedAt).First();
             var latestUrl = latest.HtmlUrl.Replace("/tag/", "/download/");
 
             var client = new WebClient
