@@ -48,15 +48,29 @@ namespace Flow.Launcher.Infrastructure.Logger
             configuration.AddTarget("file", fileTargetASyncWrapper);
             configuration.AddTarget("debug", debugTarget);
 
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper)
+            {
+                RuleName = "file"
+            };
 #if DEBUG
-            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
-            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget);
+            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget)
+            {
+                RuleName = "debug"
+            };
             configuration.LoggingRules.Add(debugRule);
-#else
-            var fileRule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(fileRule);
             LogManager.Configuration = configuration;
+        }
+
+        public static void UseDebugLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
+        }
+
+        public static void UseInfoLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
         }
 
         private static void LogFaultyFormat(string message)
