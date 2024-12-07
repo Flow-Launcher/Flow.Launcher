@@ -110,7 +110,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
-                    MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    MessageBoxEx.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -120,7 +120,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
-                    MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
+                    MessageBoxEx.Show(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;

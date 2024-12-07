@@ -25,7 +25,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override void InstallEnvironment()
         {
-            FilesFolders.RemoveFolderIfExists(InstallPath);
+            FilesFolders.RemoveFolderIfExists(InstallPath, MessageBoxEx.Show);
 
             DroplexPackage.Drop(App.nodejs_16_18_0, InstallPath).Wait();
 
