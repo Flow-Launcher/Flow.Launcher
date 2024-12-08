@@ -31,7 +31,7 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">App-Pfad ausblenden</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Für ausführbare Dateien wie UWP oder lnk den Dateipfad nicht mehr sichtbar machen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Uninstaller ausblenden</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Versteckt Programme mit gängigen Uninstaller-Namen, wie unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Blendet Programme mit gängigen Uninstaller-Namen aus, wie unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">In Programmbeschreibung suchen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow wird in Programmbeschreibung suchen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixe</system:String>

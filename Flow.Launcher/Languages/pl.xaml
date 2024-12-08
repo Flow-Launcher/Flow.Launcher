@@ -361,7 +361,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="commonOverwrite">Nadpisz</system:String>
     <system:String x:Key="commonCancel">Anuluj</system:String>
     <system:String x:Key="commonReset">Zresetuj</system:String>
-    <system:String x:Key="commonDelete">Usu</system:String>
+    <system:String x:Key="commonDelete">Usuń</system:String>
     <system:String x:Key="commonOK">Aktualizuj</system:String>
     <system:String x:Key="commonYes">Tak</system:String>
     <system:String x:Key="commonNo">Nie</system:String>

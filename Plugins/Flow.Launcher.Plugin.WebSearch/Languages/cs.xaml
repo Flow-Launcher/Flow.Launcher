@@ -29,7 +29,8 @@
         Obecný vzorec pro vyhledávání Netflixu je tedy https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Název</system:String>
