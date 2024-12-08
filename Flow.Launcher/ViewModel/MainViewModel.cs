@@ -1447,26 +1447,35 @@ namespace Flow.Launcher.ViewModel
             }
 #endif
 
-            foreach (var metaResults in resultsForUpdates)
+            try
             {
-                foreach (var result in metaResults.Results)
+                foreach (var metaResults in resultsForUpdates)
                 {
-                    if (_topMostRecord.IsTopMost(result))
+                    foreach (var result in metaResults.Results)
                     {
-                        result.Score = int.MaxValue;
-                    }
-                    else
-                    {
-                        var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        if (_topMostRecord.IsTopMost(result))
+                        {
+                            result.Score = int.MaxValue;
+                        }
+                        else
+                        {
+                            var priorityScore = metaResults.Metadata.Priority * 150;
+                            result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        }
                     }
                 }
+
+                // it should be the same for all results
+                bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+                Results.AddResults(resultsForUpdates, token, reSelect);
             }
-
-            // it should be the same for all results
-            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
-
-            Results.AddResults(resultsForUpdates, token, reSelect);
+            catch (InvalidOperationException e)
+            {
+                // Plugin with IResultUpdate interface can somtimes throw this exception
+                // Collection was modified; enumeration operation may not execute
+                Log.Exception($"{nameof(MainViewModel)}.{nameof(UpdateResultView)}|UpdateResultView failed", e);
+            }
         }
 
         #endregion
