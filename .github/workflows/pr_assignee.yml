@@ -9,11 +9,14 @@ on:
     branches-ignore:
       - l10n_dev
 
+permissions:
+  pull-requests: write
+
 jobs:
   automation:
     runs-on: ubuntu-latest
     steps:
     - name: Assign PR to creator
-      uses: thomaseizinger/assign-pr-creator-action@v1.0.0
+      uses: toshimaru/auto-author-assign@v2.1.1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
