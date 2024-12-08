@@ -771,7 +771,7 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
-        
+
         #endregion
 
         #region Preview
@@ -833,7 +833,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         private void HidePreview()
-        {            
+        {
             if (PluginManager.UseExternalPreview())
                 CloseExternalPreview();
 
@@ -912,7 +912,7 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
         }
-        
+
         private void UpdatePreview()
         {
             switch (PluginManager.UseExternalPreview())
@@ -1400,6 +1400,16 @@ namespace Flow.Launcher.ViewModel
                     if (Settings.UseAnimation)
                         await Task.Delay(100);
                     LastQuerySelected = false;
+                    break;
+                case LastQueryMode.ActionKeywordPreserved or LastQueryMode.ActionKeywordSelected:
+                    var newQuery = _lastQuery.ActionKeyword;
+                    if (!string.IsNullOrEmpty(newQuery))
+                        newQuery += " ";
+                    ChangeQueryText(newQuery);
+                    if (Settings.UseAnimation)
+                        await Task.Delay(100);
+                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                        LastQuerySelected = false;
                     break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
