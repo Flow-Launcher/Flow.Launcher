@@ -85,7 +85,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 
                 ResultsUpdated?.Invoke(this, new ResultUpdatedEventArgs
                 {
-                    Results = results.ToList(),
+                    Results = results,
                     Query = query
                 });
 
