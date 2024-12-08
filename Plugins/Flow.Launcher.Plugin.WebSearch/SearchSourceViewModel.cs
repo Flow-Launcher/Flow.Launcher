@@ -41,7 +41,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 #if DEBUG
                     throw;
 #else
-                MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
+                Main._context.API.ShowMsgBox(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
                 UpdateIconAttributes(selectedSearchSource, fullPathToOriginalImage);
 #endif
                 }

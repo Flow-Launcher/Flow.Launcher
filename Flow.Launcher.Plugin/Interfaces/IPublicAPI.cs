@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin
 {
@@ -304,5 +305,16 @@ namespace Flow.Launcher.Plugin
         /// This method should run when selected item is from context menu or history.
         /// </summary>
         public void BackToQueryResults();
+
+        /// <summary>
+        /// Displays a standardised Flow message box.
+        /// </summary>
+        /// <param name="messageBoxText">The message of the message box.</param>
+        /// <param name="caption">The caption of the message box.</param>
+        /// <param name="button">Specifies which button or buttons to display.</param>
+        /// <param name="icon">Specifies the icon to display.</param>
+        /// <param name="defaultResult">Specifies the default result of the message box.</param>
+        /// <returns>Specifies which message box button is clicked by the user.</returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
     }
 }

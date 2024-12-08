@@ -7,6 +7,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -41,11 +42,11 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = MessageBoxEx.Show(
             string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomHotkeyWarning"), item.Hotkey
             ),
@@ -66,7 +67,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomPluginHotkey;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
@@ -87,11 +88,11 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 
-        var result = MessageBox.Show(
+        var result = MessageBoxEx.Show(
             string.Format(
                 InternationalizationManager.Instance.GetTranslation("deleteCustomShortcutWarning"), item.Key, item.Value
             ),
@@ -111,7 +112,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         var item = SelectedCustomShortcut;
         if (item is null)
         {
-            MessageBox.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
+            MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("pleaseSelectAnItem"));
             return;
         }
 

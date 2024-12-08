@@ -39,14 +39,14 @@ namespace Flow.Launcher.Plugin.Program
             if (suffixes.Length == 0 && UseCustomSuffixes)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_program_suffixes_cannot_empty");
-                MessageBox.Show(warning);
+                context.API.ShowMsgBox(warning);
                 return;
             }
 
             if (protocols.Length == 0 && UseCustomProtocols)
             {
                 string warning = context.API.GetTranslation("flowlauncher_plugin_protocols_cannot_empty");
-                MessageBox.Show(warning);
+                context.API.ShowMsgBox(warning);
                 return;
             }
 
