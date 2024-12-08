@@ -1447,35 +1447,26 @@ namespace Flow.Launcher.ViewModel
             }
 #endif
 
-            try
+            foreach (var metaResults in resultsForUpdates)
             {
-                foreach (var metaResults in resultsForUpdates)
+                foreach (var result in metaResults.Results)
                 {
-                    foreach (var result in metaResults.Results)
+                    if (_topMostRecord.IsTopMost(result))
                     {
-                        if (_topMostRecord.IsTopMost(result))
-                        {
-                            result.Score = int.MaxValue;
-                        }
-                        else
-                        {
-                            var priorityScore = metaResults.Metadata.Priority * 150;
-                            result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
-                        }
+                        result.Score = int.MaxValue;
+                    }
+                    else
+                    {
+                        var priorityScore = metaResults.Metadata.Priority * 150;
+                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
                     }
                 }
-
-                // it should be the same for all results
-                bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
-
-                Results.AddResults(resultsForUpdates, token, reSelect);
             }
-            catch (InvalidOperationException e)
-            {
-                // Plugin with IResultUpdate interface can somtimes throw this exception
-                // Collection was modified; enumeration operation may not execute
-                Log.Exception($"{nameof(MainViewModel)}.{nameof(UpdateResultView)}|UpdateResultView failed", e);
-            }
+
+            // it should be the same for all results
+            bool reSelect = resultsForUpdates.First().ReSelectFirstResult;
+
+            Results.AddResults(resultsForUpdates, token, reSelect);
         }
 
         #endregion
