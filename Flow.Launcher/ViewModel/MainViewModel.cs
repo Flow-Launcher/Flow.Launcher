@@ -486,6 +486,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void BackToQueryResults()
+        {
+            if (!SelectedIsFromQueryResults())
+            {
+                SelectedResults = Results;
+            }
+        }
+
         [RelayCommand]
         public void ToggleGameMode()
         {

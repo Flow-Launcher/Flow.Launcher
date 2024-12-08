@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
+using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -295,10 +295,16 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// This method should run
+        /// This method should run when selected item is from query results.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
+
+        /// <summary>
+        /// Back to the query results.
+        /// This method should run when selected item is from context menu or history.
+        /// </summary>
+        public void BackToQueryResults();
 
         /// <summary>
         /// Displays a standardised Flow message box.
