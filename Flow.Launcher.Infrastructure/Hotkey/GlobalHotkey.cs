@@ -1,6 +1,11 @@
-using System;
+﻿using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Flow.Launcher.Plugin;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.Input.KeyboardAndMouse;
+using Windows.Win32.UI.WindowsAndMessaging;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -10,44 +15,41 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// </summary>
     public unsafe class GlobalHotkey : IDisposable
     {
-        private static readonly IntPtr hookId;
-        
-        
-        
-        public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
-        internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
+        private static readonly UnhookWindowsHookExSafeHandle hookId;
 
-        //Modifier key constants
-        private const int VK_SHIFT = 0x10;
-        private const int VK_CONTROL = 0x11;
-        private const int VK_ALT = 0x12;
-        private const int VK_WIN = 91;
+        public delegate bool KeyboardCallback(int keyEvent, int vkCode, SpecialKeyState state);
+        internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
 
         static GlobalHotkey()
         {
             // Set the hook
-            hookId = InterceptKeys.SetHook(& LowLevelKeyboardProc);
+            using Process curProcess = Process.GetCurrentProcess();
+            using ProcessModule curModule = curProcess.MainModule;
+            hookId = PInvoke.SetWindowsHookEx(
+                WINDOWS_HOOK_ID.WH_KEYBOARD_LL, 
+                LowLevelKeyboardProc, 
+                PInvoke.GetModuleHandle(curModule.ModuleName), 0);
         }
 
         public static SpecialKeyState CheckModifiers()
         {
             SpecialKeyState state = new SpecialKeyState();
-            if ((InterceptKeys.GetKeyState(VK_SHIFT) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_SHIFT) & 0x8000) != 0)
             {
                 //SHIFT is pressed
                 state.ShiftPressed = true;
             }
-            if ((InterceptKeys.GetKeyState(VK_CONTROL) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_CONTROL) & 0x8000) != 0)
             {
                 //CONTROL is pressed
                 state.CtrlPressed = true;
             }
-            if ((InterceptKeys.GetKeyState(VK_ALT) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_MENU) & 0x8000) != 0)
             {
                 //ALT is pressed
                 state.AltPressed = true;
             }
-            if ((InterceptKeys.GetKeyState(VK_WIN) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LWIN) & 0x8000) != 0)
             {
                 //WIN is pressed
                 state.WinPressed = true;
@@ -56,33 +58,33 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return state;
         }
 
-        [UnmanagedCallersOnly]
-        private static IntPtr LowLevelKeyboardProc(int nCode, UIntPtr wParam, IntPtr lParam)
+        private static LRESULT LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
         {
             bool continues = true;
 
             if (nCode >= 0)
             {
-                if (wParam.ToUInt32() == (int)KeyEvent.WM_KEYDOWN ||
-                    wParam.ToUInt32() == (int)KeyEvent.WM_KEYUP ||
-                    wParam.ToUInt32() == (int)KeyEvent.WM_SYSKEYDOWN ||
-                    wParam.ToUInt32() == (int)KeyEvent.WM_SYSKEYUP)
+                var wParamValue = (int)wParam.Value;
+                if (wParamValue == (int)KeyEvent.WM_KEYDOWN ||
+                    wParamValue == (int)KeyEvent.WM_KEYUP ||
+                    wParamValue == (int)KeyEvent.WM_SYSKEYDOWN ||
+                    wParamValue == (int)KeyEvent.WM_SYSKEYUP)
                 {
                     if (hookedKeyboardCallback != null)
-                        continues = hookedKeyboardCallback((KeyEvent)wParam.ToUInt32(), Marshal.ReadInt32(lParam), CheckModifiers());
+                        continues = hookedKeyboardCallback((KeyEvent)wParamValue, Marshal.ReadInt32(lParam), CheckModifiers());
                 }
             }
 
             if (continues)
             {
-                return InterceptKeys.CallNextHookEx(hookId, nCode, wParam, lParam);
+                return PInvoke.CallNextHookEx(hookId, nCode, wParam, lParam);
             }
-            return (IntPtr)(-1);
+            return new LRESULT(-1);
         }
 
         public void Dispose()
         {
-            InterceptKeys.UnhookWindowsHookEx(hookId);
+            PInvoke.UnhookWindowsHookEx(new HHOOK(hookId.DangerousGetHandle()));
         }
 
         ~GlobalHotkey()

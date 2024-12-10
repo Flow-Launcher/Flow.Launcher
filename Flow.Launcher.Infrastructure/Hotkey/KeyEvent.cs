@@ -1,3 +1,5 @@
+﻿using Windows.Win32;
+
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
     public enum KeyEvent
@@ -5,21 +7,21 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         /// <summary>
         /// Key down
         /// </summary>
-        WM_KEYDOWN = 256,
+        WM_KEYDOWN = (int)PInvoke.WM_KEYDOWN,
 
         /// <summary>
         /// Key up
         /// </summary>
-        WM_KEYUP = 257,
+        WM_KEYUP = (int)PInvoke.WM_KEYUP,
 
         /// <summary>
         /// System key up
         /// </summary>
-        WM_SYSKEYUP = 261,
+        WM_SYSKEYUP = (int)PInvoke.WM_SYSKEYUP,
 
         /// <summary>
         /// System key down
         /// </summary>
-        WM_SYSKEYDOWN = 260
+        WM_SYSKEYDOWN = (int)PInvoke.WM_SYSKEYDOWN
     }
 }
