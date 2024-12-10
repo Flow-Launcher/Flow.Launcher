@@ -1,0 +1,14 @@
+﻿DwmSetWindowAttribute
+DwmExtendFrameIntoClientArea
+SystemParametersInfo
+SetForegroundWindow
+
+GetWindowLong
+SetWindowLong
+GetForegroundWindow
+GetDesktopWindow
+GetShellWindow
+GetWindowRect
+GetClassName
+FindWindowEx
+WINDOW_STYLE
