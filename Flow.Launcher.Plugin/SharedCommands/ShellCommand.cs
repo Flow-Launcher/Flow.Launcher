@@ -2,18 +2,15 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Threading;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace Flow.Launcher.Plugin.SharedCommands
 {
     public static class ShellCommand
     {
         public delegate bool EnumThreadDelegate(IntPtr hwnd, IntPtr lParam);
-        [DllImport("user32.dll")] static extern bool EnumThreadWindows(uint threadId, EnumThreadDelegate lpfn, IntPtr lParam);
-        [DllImport("user32.dll")] static extern int GetWindowText(IntPtr hwnd, StringBuilder lpString, int nMaxCount);
-        [DllImport("user32.dll")] static extern int GetWindowTextLength(IntPtr hwnd);
 
         private static bool containsSecurityWindow;
 
@@ -42,21 +39,33 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             ProcessThreadCollection ptc = Process.GetCurrentProcess().Threads;
             for (int i = 0; i < ptc.Count; i++)
-                EnumThreadWindows((uint)ptc[i].Id, CheckSecurityThread, IntPtr.Zero);
+                PInvoke.EnumThreadWindows((uint)ptc[i].Id, CheckSecurityThread, IntPtr.Zero);
         }
 
-        private static bool CheckSecurityThread(IntPtr hwnd, IntPtr lParam)
+        private static BOOL CheckSecurityThread(HWND hwnd, LPARAM lParam)
         {
             if (GetWindowTitle(hwnd) == "Windows Security")
                 containsSecurityWindow = true;
             return true;
         }
 
-        private static string GetWindowTitle(IntPtr hwnd)
+        private static unsafe string GetWindowTitle(HWND hwnd)
         {
-            StringBuilder sb = new StringBuilder(GetWindowTextLength(hwnd) + 1);
-            GetWindowText(hwnd, sb, sb.Capacity);
-            return sb.ToString();
+            var capacity = PInvoke.GetWindowTextLength(hwnd) + 1;
+            char[] buffer = new char[capacity];
+            fixed (char* pBuffer = buffer)
+            {
+                // If the window has no title bar or text, if the title bar is empty,
+                // or if the window or control handle is invalid, the return value is zero.
+                if (PInvoke.GetWindowText(hwnd, (PWSTR)pBuffer, capacity) == 0)
+                {
+                    return string.Empty;
+                }
+
+                int validLength = Array.IndexOf(buffer, '\0');
+                if (validLength < 0) validLength = capacity;
+                return new string(buffer, 0, validLength);
+            }
         }
 
         public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "", string arguments = "", string verb = "", bool createNoWindow = false)
