@@ -1,75 +1,50 @@
 ﻿using System;
 using System.Drawing;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 
 namespace Flow.Launcher.Helper;
 
 public class WindowsInteropHelper
 {
-    private const int GWL_STYLE = -16; //WPF's Message code for Title Bar's Style
-    private const int WS_SYSMENU = 0x80000; //WPF's Message code for System Menu
-    private static IntPtr _hwnd_shell;
-    private static IntPtr _hwnd_desktop;
+    private static HWND _hwnd_shell;
+    private static HWND _hwnd_desktop;
 
     //Accessors for shell and desktop handlers
     //Will set the variables once and then will return them
-    private static IntPtr HWND_SHELL
+    private static HWND HWND_SHELL
     {
         get
         {
-            return _hwnd_shell != IntPtr.Zero ? _hwnd_shell : _hwnd_shell = GetShellWindow();
+            return _hwnd_shell != HWND.Null ? _hwnd_shell : _hwnd_shell = PInvoke.GetShellWindow();
         }
     }
-    private static IntPtr HWND_DESKTOP
+
+    private static HWND HWND_DESKTOP
     {
         get
         {
-            return _hwnd_desktop != IntPtr.Zero ? _hwnd_desktop : _hwnd_desktop = GetDesktopWindow();
+            return _hwnd_desktop != HWND.Null ? _hwnd_desktop : _hwnd_desktop = PInvoke.GetDesktopWindow();
         }
     }
-
-    [DllImport("user32.dll", SetLastError = true)]
-    internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-    [DllImport("user32.dll")]
-    internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetDesktopWindow();
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetShellWindow();
-
-    [DllImport("user32.dll", SetLastError = true)]
-    internal static extern int GetWindowRect(IntPtr hwnd, out RECT rc);
-
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    internal static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
-    [DllImport("user32.DLL")]
-    public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
 
     const string WINDOW_CLASS_CONSOLE = "ConsoleWindowClass";
     const string WINDOW_CLASS_WINTAB = "Flip3D";
     const string WINDOW_CLASS_PROGMAN = "Progman";
     const string WINDOW_CLASS_WORKERW = "WorkerW";
 
-    public static bool IsWindowFullscreen()
+    public unsafe static bool IsWindowFullscreen()
     {
         //get current active window
-        IntPtr hWnd = GetForegroundWindow();
+        var hWnd = PInvoke.GetForegroundWindow();
 
-        if (hWnd.Equals(IntPtr.Zero))
+        if (hWnd.Equals(HWND.Null))
         {
             return false;
         }
@@ -80,9 +55,16 @@ public class WindowsInteropHelper
             return false;
         }
 
-        StringBuilder sb = new StringBuilder(256);
-        GetClassName(hWnd, sb, sb.Capacity);
-        string windowClass = sb.ToString();
+        string windowClass;
+        int capacity = 256;
+        char[] buffer = new char[capacity];
+        fixed (char* pBuffer = buffer)
+        {
+            PInvoke.GetClassName(hWnd, pBuffer, capacity);
+            int validLength = Array.IndexOf(buffer, '\0');
+            if (validLength < 0) validLength = capacity;
+            windowClass = new string(buffer, 0, validLength);
+        }
 
         //for Win+Tab (Flip3D)
         if (windowClass == WINDOW_CLASS_WINTAB)
@@ -90,20 +72,19 @@ public class WindowsInteropHelper
             return false;
         }
 
-        RECT appBounds;
-        GetWindowRect(hWnd, out appBounds);
+        PInvoke.GetWindowRect(hWnd, out var appBounds);
 
         //for console (ConsoleWindowClass), we have to check for negative dimensions
         if (windowClass == WINDOW_CLASS_CONSOLE)
         {
-            return appBounds.Top < 0 && appBounds.Bottom < 0;
+            return appBounds.top < 0 && appBounds.bottom < 0;
         }
 
         //for desktop (Progman or WorkerW, depends on the system), we have to check
         if (windowClass is WINDOW_CLASS_PROGMAN or WINDOW_CLASS_WORKERW)
         {
-            IntPtr hWndDesktop = FindWindowEx(hWnd, IntPtr.Zero, "SHELLDLL_DefView", null);
-            hWndDesktop = FindWindowEx(hWndDesktop, IntPtr.Zero, "SysListView32", "FolderView");
+            var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
+            hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
             if (!hWndDesktop.Equals(IntPtr.Zero))
             {
                 return false;
@@ -111,7 +92,7 @@ public class WindowsInteropHelper
         }
 
         Rectangle screenBounds = Screen.FromHandle(hWnd).Bounds;
-        return (appBounds.Bottom - appBounds.Top) == screenBounds.Height && (appBounds.Right - appBounds.Left) == screenBounds.Width;
+        return (appBounds.bottom - appBounds.top) == screenBounds.Height && (appBounds.right - appBounds.left) == screenBounds.Width;
     }
 
     /// <summary>
@@ -120,8 +101,8 @@ public class WindowsInteropHelper
     /// </summary>
     public static void DisableControlBox(Window win)
     {
-        var hwnd = new WindowInteropHelper(win).Handle;
-        SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        var hwnd = new HWND(new WindowInteropHelper(win).Handle);
+        PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, PInvoke.GetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE) & ~(int)WINDOW_STYLE.WS_SYSMENU);
     }
 
     /// <summary>
@@ -145,15 +126,5 @@ public class WindowsInteropHelper
             matrix = src.CompositionTarget.TransformFromDevice;
         }
         return new Point((int)(matrix.M11 * unitX), (int)(matrix.M22 * unitY));
-    }
-
-
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
-    {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
     }
 }

@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Shutdown;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
-using FormsApplication = System.Windows.Forms.Application;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -20,33 +19,6 @@ namespace Flow.Launcher.Plugin.Sys
     {
         private PluginInitContext context;
         private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
-
-        #region DllImport
-
-        internal const int EWX_LOGOFF = 0x00000000;
-        internal const int EWX_SHUTDOWN = 0x00000001;
-        internal const int EWX_REBOOT = 0x00000002;
-        internal const int EWX_FORCE = 0x00000004;
-        internal const int EWX_POWEROFF = 0x00000008;
-        internal const int EWX_FORCEIFHUNG = 0x00000010;
-
-        [DllImport("user32")]
-        private static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
-
-        [DllImport("user32")]
-        private static extern void LockWorkStation();
-
-        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
-        private static extern uint SHEmptyRecycleBin(IntPtr hWnd, uint dwFlags);
-
-        // http://www.pinvoke.net/default.aspx/Enums/HRESULT.html
-        private enum HRESULT : uint
-        {
-            S_FALSE = 0x0001,
-            S_OK = 0x0000
-        }
-
-        #endregion
 
         public Control CreateSettingPanel()
         {
@@ -206,7 +178,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            ExitWindowsEx(EWX_LOGOFF, 0);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, 0);
 
                         return true;
                     }
@@ -219,7 +191,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\lock.png",
                     Action = c =>
                     {
-                        LockWorkStation();
+                        PInvoke.LockWorkStation();
                         return true;
                     }
                 },
@@ -229,7 +201,7 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
-                    Action = c => FormsApplication.SetSuspendState(PowerState.Suspend, false, false)
+                    Action = c => PInvoke.SetSuspendState(false, false, false)
                 },
                 new Result
                 {
@@ -274,8 +246,8 @@ namespace Flow.Launcher.Plugin.Sys
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
                         // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
                         // 0 for nothing
-                        var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
-                        if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
+                        var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
+                        if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                         {
                             context.API.ShowMsgBox($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",

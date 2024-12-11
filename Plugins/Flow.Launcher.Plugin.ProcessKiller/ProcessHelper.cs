@@ -1,11 +1,13 @@
-using Flow.Launcher.Infrastructure;
+﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
+using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Threading;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
@@ -84,43 +86,35 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
         }
 
-        public string TryGetProcessFilename(Process p)
+        public unsafe string TryGetProcessFilename(Process p)
         {
             try
             {
-                int capacity = 2000;
-                StringBuilder builder = new StringBuilder(capacity);
-                IntPtr ptr = OpenProcess(ProcessAccessFlags.QueryLimitedInformation, false, p.Id);
-                if (!QueryFullProcessImageName(ptr, 0, builder, ref capacity))
+                var handle = PInvoke.OpenProcess(PROCESS_ACCESS_RIGHTS.PROCESS_QUERY_LIMITED_INFORMATION, false, (uint)p.Id);
+                if (handle.Value == IntPtr.Zero)
                 {
-                    return String.Empty;
+                    return string.Empty;
                 }
 
-                return builder.ToString();
+                using var safeHandle = new SafeProcessHandle(handle.Value, true);
+                uint capacity = 2000;
+                char[] buffer = new char[capacity];
+                fixed (char* pBuffer = buffer)
+                {
+                    if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
+                    {
+                        return string.Empty;
+                    }
+
+                    int validLength = Array.IndexOf(buffer, '\0');
+                    if (validLength < 0) validLength = (int)capacity;
+                    return new string(buffer, 0, validLength);
+                }
             }
             catch
             {
-                return "";
+                return string.Empty;
             }
         }
-
-        [Flags]
-        private enum ProcessAccessFlags : uint
-        {
-            QueryLimitedInformation = 0x00001000
-        }
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern bool QueryFullProcessImageName(
-            [In] IntPtr hProcess,
-            [In] int dwFlags,
-            [Out] StringBuilder lpExeName,
-            ref int lpdwSize);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        private static extern IntPtr OpenProcess(
-            ProcessAccessFlags processAccess,
-            bool bInheritHandle,
-            int processId);
     }
 }
