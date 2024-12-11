@@ -52,7 +52,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 //ALT is pressed
                 state.AltPressed = true;
             }
-            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LWIN) & 0x8000) != 0)
+            if ((PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_LWIN) & 0x8000) != 0 ||
+                (PInvoke.GetKeyState((int)VIRTUAL_KEY.VK_RWIN) & 0x8000) != 0)
             {
                 //WIN is pressed
                 state.WinPressed = true;
