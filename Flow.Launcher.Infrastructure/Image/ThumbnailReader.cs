@@ -62,6 +62,7 @@ namespace Flow.Launcher.Infrastructure.Image
             if (nativeShellItem is not IShellItemImageFactory imageFactory)
             {
                 Marshal.ReleaseComObject(nativeShellItem);
+                nativeShellItem = null;
                 throw new InvalidOperationException("Failed to get IShellItemImageFactory");
             }
 
@@ -86,7 +87,10 @@ namespace Flow.Launcher.Infrastructure.Image
             }
             finally
             {
-                Marshal.ReleaseComObject(nativeShellItem);
+                if (nativeShellItem != null)
+                {
+                    Marshal.ReleaseComObject(nativeShellItem);
+                }
             }
 
             return hBitmap;
