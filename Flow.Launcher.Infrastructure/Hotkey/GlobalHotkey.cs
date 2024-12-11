@@ -15,20 +15,23 @@ namespace Flow.Launcher.Infrastructure.Hotkey
     /// </summary>
     public unsafe class GlobalHotkey : IDisposable
     {
+        private static readonly HOOKPROC _procKeyboard = HookKeyboardCallback;
         private static readonly UnhookWindowsHookExSafeHandle hookId;
 
-        public delegate bool KeyboardCallback(int keyEvent, int vkCode, SpecialKeyState state);
+        public delegate bool KeyboardCallback(KeyEvent keyEvent, int vkCode, SpecialKeyState state);
         internal static Func<KeyEvent, int, SpecialKeyState, bool> hookedKeyboardCallback;
 
         static GlobalHotkey()
         {
             // Set the hook
-            using Process curProcess = Process.GetCurrentProcess();
-            using ProcessModule curModule = curProcess.MainModule;
-            hookId = PInvoke.SetWindowsHookEx(
-                WINDOWS_HOOK_ID.WH_KEYBOARD_LL, 
-                LowLevelKeyboardProc, 
-                PInvoke.GetModuleHandle(curModule.ModuleName), 0);
+            hookId = SetHook(_procKeyboard, WINDOWS_HOOK_ID.WH_KEYBOARD_LL);
+        }
+
+        private static UnhookWindowsHookExSafeHandle SetHook(HOOKPROC proc, WINDOWS_HOOK_ID hookId)
+        {
+            using var curProcess = Process.GetCurrentProcess();
+            using var curModule = curProcess.MainModule;
+            return PInvoke.SetWindowsHookEx(hookId, proc, PInvoke.GetModuleHandle(curModule.ModuleName), 0);
         }
 
         public static SpecialKeyState CheckModifiers()
@@ -58,20 +61,19 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return state;
         }
 
-        private static LRESULT LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam)
+        private static LRESULT HookKeyboardCallback(int nCode, WPARAM wParam, LPARAM lParam)
         {
             bool continues = true;
 
             if (nCode >= 0)
             {
-                var wParamValue = (int)wParam.Value;
-                if (wParamValue == (int)KeyEvent.WM_KEYDOWN ||
-                    wParamValue == (int)KeyEvent.WM_KEYUP ||
-                    wParamValue == (int)KeyEvent.WM_SYSKEYDOWN ||
-                    wParamValue == (int)KeyEvent.WM_SYSKEYUP)
+                if (wParam.Value == (int)KeyEvent.WM_KEYDOWN ||
+                    wParam.Value == (int)KeyEvent.WM_KEYUP ||
+                    wParam.Value == (int)KeyEvent.WM_SYSKEYDOWN ||
+                    wParam.Value == (int)KeyEvent.WM_SYSKEYUP)
                 {
                     if (hookedKeyboardCallback != null)
-                        continues = hookedKeyboardCallback((KeyEvent)wParamValue, Marshal.ReadInt32(lParam), CheckModifiers());
+                        continues = hookedKeyboardCallback((KeyEvent)wParam.Value, Marshal.ReadInt32(lParam), CheckModifiers());
                 }
             }
 
@@ -79,7 +81,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             {
                 return PInvoke.CallNextHookEx(hookId, nCode, wParam, lParam);
             }
-            return new LRESULT(-1);
+
+            return new LRESULT(1);
         }
 
         public void Dispose()
