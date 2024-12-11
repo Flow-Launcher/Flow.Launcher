@@ -298,7 +298,6 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\openrecyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     CopyText = recycleBinFolder,
-                    AutoCompleteText = recycleBinFolder,
                     Action = c =>
                     {
                         {
