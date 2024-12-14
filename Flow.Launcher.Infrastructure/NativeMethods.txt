@@ -2,7 +2,6 @@
 DeleteObject
 IShellItem
 IShellItemImageFactory
-ExtractionFailed
 S_OK
 
 SetWindowsHookEx
