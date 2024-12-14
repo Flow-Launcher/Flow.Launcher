@@ -298,6 +298,11 @@ namespace Flow.Launcher
                         break;
                 }
             };
+
+            if (_settings.SelectAllQueryOnReopen)
+            {
+                SelectAllQueryText();
+            }
         }
 
         private void InitializePosition()
@@ -856,6 +861,11 @@ namespace Flow.Launcher
                 BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
                 be.UpdateSource();
             }
+        }
+
+        private void SelectAllQueryText()
+        {
+            QueryTextBox.SelectAll();
         }
     }
 }

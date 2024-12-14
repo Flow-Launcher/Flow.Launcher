@@ -41,6 +41,13 @@ public partial class SettingWindow
         hwndTarget.RenderMode = RenderMode.Default;
 
         InitializePosition();
+
+        // Initialize the new checkbox based on the settings
+        var selectAllQueryOnReopenCheckbox = (System.Windows.Controls.CheckBox)FindName("SelectAllQueryOnReopenCheckbox");
+        if (selectAllQueryOnReopenCheckbox != null)
+        {
+            selectAllQueryOnReopenCheckbox.IsChecked = _settings.SelectAllQueryOnReopen;
+        }
     }
 
     private void OnClosed(object sender, EventArgs e)
