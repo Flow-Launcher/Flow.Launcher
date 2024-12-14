@@ -132,7 +132,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         "ddd dd'/'MM",
         "dddd dd'/'MM",
         "dddd dd', 'MMMM",
-        "dd', 'MMMM"
+        "dd', 'MMMM",
+        "dd.MM.yy",
+        "dd.MM.yyyy"
     };
 
     public string TimeFormat
