@@ -106,6 +106,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         return string.Empty;
                     }
 
+                    // Truncate the buffer to the actual length of the string
                     int validLength = Array.IndexOf(buffer, '\0');
                     if (validLength < 0) validLength = (int)capacity;
                     return new string(buffer, 0, validLength);
