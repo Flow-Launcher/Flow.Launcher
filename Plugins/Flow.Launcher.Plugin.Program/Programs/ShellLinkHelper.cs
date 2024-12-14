@@ -38,11 +38,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             fixed (char* bufferChar = buffer)
             {
                 ((IShellLinkW)link).GetPath((PWSTR)bufferChar, MAX_PATH, &data, (uint)SLGP_FLAGS.SLGP_SHORTPATH);
-
-                // Truncate the buffer to the actual length of the string
-                int validLength = Array.IndexOf(buffer, '\0');
-                if (validLength < 0) validLength = MAX_PATH;
-                target = new string(buffer, 0, validLength);
+                target = GetStringFromBuffer(buffer, MAX_PATH);
             }
 
             // To set the app description
@@ -54,9 +50,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     fixed (char* buffer1Char = buffer1)
                     {
                         ((IShellLinkW)link).GetDescription((PWSTR)buffer1Char, MAX_PATH);
-                        int validLength = Array.IndexOf(buffer1, '\0');
-                        if (validLength < 0) validLength = MAX_PATH;
-                        description = new string(buffer1, 0, validLength);
+                        description = GetStringFromBuffer(buffer1, MAX_PATH);
                     }
                 }
                 catch (COMException e)
@@ -71,9 +65,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 fixed (char* buffer2Char = buffer2)
                 {
                     ((IShellLinkW)link).GetArguments((PWSTR)buffer2Char, MAX_PATH);
-                    int validLength = Array.IndexOf(buffer2, '\0');
-                    if (validLength < 0) validLength = MAX_PATH;
-                    arguments = new string(buffer2, 0, validLength);
+                    arguments = GetStringFromBuffer(buffer2, MAX_PATH);
                 }
             }
             
@@ -81,6 +73,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Marshal.ReleaseComObject(link);
 
             return target;
+        }
+
+        private static unsafe string GetStringFromBuffer(char[] buffer, int maxLength)
+        {
+            // Truncate the buffer to the actual length of the string
+            int validLength = Array.IndexOf(buffer, '\0');
+            if (validLength < 0) validLength = maxLength;
+            return new string(buffer, 0, validLength);
         }
     }
 }
