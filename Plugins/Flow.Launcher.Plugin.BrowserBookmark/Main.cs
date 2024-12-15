@@ -68,7 +68,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = $"https://www.google.com/s2/favicons?domain={c.Url}&sz=64",
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
@@ -90,7 +90,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = $"https://www.google.com/s2/favicons?domain={c.Url}&sz=64",
                         Score = 5,
                         Action = _ =>
                         {
