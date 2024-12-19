@@ -12,3 +12,6 @@ GetWindowRect
 GetClassName
 FindWindowEx
 WINDOW_STYLE
+
+WM_ENTERSIZEMOVE
+WM_EXITSIZEMOVE

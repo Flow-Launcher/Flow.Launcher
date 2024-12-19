@@ -78,21 +78,19 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        private const int WM_ENTERSIZEMOVE = 0x0231;
-        private const int WM_EXITSIZEMOVE = 0x0232;
         private int _initialWidth;
         private int _initialHeight;
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_ENTERSIZEMOVE)
+            if (msg == PInvoke.WM_ENTERSIZEMOVE)
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
                 handled = true;
             }
 
-            if (msg == WM_EXITSIZEMOVE)
+            if (msg == PInvoke.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {
