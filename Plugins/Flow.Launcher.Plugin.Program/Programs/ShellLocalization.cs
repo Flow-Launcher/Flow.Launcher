@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Text;
-
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.LibraryLoader;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -13,51 +13,46 @@ namespace Flow.Launcher.Plugin.Program.Programs
     /// </summary>
     public static class ShellLocalization
     {
-        internal const uint DONTRESOLVEDLLREFERENCES = 0x00000001;
-        internal const uint LOADLIBRARYASDATAFILE = 0x00000002;
-
-        [DllImport("shell32.dll", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int SHGetLocalizedName(string pszPath, StringBuilder pszResModule, ref int cch, out int pidsRes);
-
-        [DllImport("user32.dll", EntryPoint = "LoadStringW", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int LoadString(IntPtr hModule, int resourceID, StringBuilder resourceValue, int len);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadLibraryExW")]
-        internal static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hFile, uint dwFlags);
-
-        [DllImport("kernel32.dll", ExactSpelling = true)]
-        internal static extern int FreeLibrary(IntPtr hModule);
-
-        [DllImport("kernel32.dll", EntryPoint = "ExpandEnvironmentStringsW", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        internal static extern uint ExpandEnvironmentStrings(string lpSrc, StringBuilder lpDst, int nSize);
-
         /// <summary>
         /// Returns the localized name of a shell item.
         /// </summary>
         /// <param name="path">Path to the shell item (e. g. shortcut 'File Explorer.lnk').</param>
         /// <returns>The localized name as string or <see cref="string.Empty"/>.</returns>
-        public static string GetLocalizedName(string path)
+        public static unsafe string GetLocalizedName(string path)
         {
-            StringBuilder resourcePath = new StringBuilder(1024);
-            StringBuilder localizedName = new StringBuilder(1024);
-            int len, id;
-            len = resourcePath.Capacity;
+            int capacity = 1024;
+            char[] resourcePathBuffer = new char[capacity];
 
             // If there is no resource to localize a file name the method returns a non zero value.
-            if (SHGetLocalizedName(path, resourcePath, ref len, out id) == 0)
+            fixed (char* resourcePath = resourcePathBuffer)
             {
-                _ = ExpandEnvironmentStrings(resourcePath.ToString(), resourcePath, resourcePath.Capacity);
-                IntPtr hMod = LoadLibraryEx(resourcePath.ToString(), IntPtr.Zero, DONTRESOLVEDLLREFERENCES | LOADLIBRARYASDATAFILE);
-                if (hMod != IntPtr.Zero)
+                var result = PInvoke.SHGetLocalizedName(path, (PWSTR)resourcePath, (uint)capacity, out var id);
+                if (result == HRESULT.S_OK)
                 {
-                    if (LoadString(hMod, id, localizedName, localizedName.Capacity) != 0)
+                    int validLength = Array.IndexOf(resourcePathBuffer, '\0');
+                    if (validLength < 0) validLength = capacity;
+                    var resourcePathStr = new string(resourcePathBuffer, 0, validLength);
+                    _ = PInvoke.ExpandEnvironmentStrings(resourcePathStr, resourcePath, (uint)capacity);
+                    var handle = PInvoke.LoadLibraryEx(resourcePathStr,
+                        LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
+                    IntPtr safeHandle = handle.DangerousGetHandle();
+                    if (safeHandle != IntPtr.Zero)
                     {
-                        string lString = localizedName.ToString();
-                        _ = FreeLibrary(hMod);
-                        return lString;
-                    }
+                        char[] localizedNameBuffer = new char[capacity];
+                        fixed (char* localizedName = localizedNameBuffer)
+                        {
+                            if (PInvoke.LoadString(handle, (uint)id, (PWSTR)localizedName, capacity) != 0)
+                            {
+                                validLength = Array.IndexOf(localizedNameBuffer, '\0');
+                                if (validLength < 0) validLength = capacity;
+                                var lString = new string(localizedNameBuffer, 0, validLength);
+                                PInvoke.FreeLibrary(new(safeHandle));
+                                return lString;
+                            }
+                        }
 
-                    _ = FreeLibrary(hMod);
+                        PInvoke.FreeLibrary(new(safeHandle));
+                    }
                 }
             }
 
