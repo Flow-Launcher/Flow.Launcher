@@ -59,7 +59,7 @@
     <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
     <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
-    <system:String x:Key="language">Language</system:String>
+    <system:String x:Key="language">שפה</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
     <system:String x:Key="lastQueryModeToolTip">Show/Hide previous results when Flow Launcher is reactivated.</system:String>
     <system:String x:Key="LastQueryPreserved">Preserve Last Query</system:String>
@@ -104,8 +104,8 @@
     <system:String x:Key="searchplugin_Noresult_Title">No results found</system:String>
     <system:String x:Key="searchplugin_Noresult_Subtitle">Please try a different search.</system:String>
     <system:String x:Key="plugin">Plugin</system:String>
-    <system:String x:Key="plugins">Plugins</system:String>
-    <system:String x:Key="browserMorePlugins">Find more plugins</system:String>
+    <system:String x:Key="plugins">תוספים</system:String>
+    <system:String x:Key="browserMorePlugins">מצא תוספים נוספים</system:String>
     <system:String x:Key="enable">On</system:String>
     <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
@@ -127,15 +127,15 @@
 
 
     <!--  Setting Plugin Store  -->
-    <system:String x:Key="pluginStore">Plugin Store</system:String>
+    <system:String x:Key="pluginStore">חנות תוספים</system:String>
     <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
-    <system:String x:Key="pluginStore_None">Plugins</system:String>
+    <system:String x:Key="pluginStore_None">תוספים</system:String>
     <system:String x:Key="pluginStore_Installed">Installed</system:String>
-    <system:String x:Key="refresh">Refresh</system:String>
-    <system:String x:Key="installbtn">Install</system:String>
+    <system:String x:Key="refresh">רענן</system:String>
+    <system:String x:Key="installbtn">התקן</system:String>
     <system:String x:Key="uninstallbtn">Uninstall</system:String>
-    <system:String x:Key="updatebtn">Update</system:String>
+    <system:String x:Key="updatebtn">עדכון</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
     <system:String x:Key="LabelNew">New Version</system:String>
     <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
@@ -144,9 +144,9 @@
 
 
     <!--  Setting Theme  -->
-    <system:String x:Key="theme">Theme</system:String>
+    <system:String x:Key="theme">ערכת נושא</system:String>
     <system:String x:Key="appearance">Appearance</system:String>
-    <system:String x:Key="browserMoreThemes">Theme Gallery</system:String>
+    <system:String x:Key="browserMoreThemes">גלריית ערכות נושא</system:String>
     <system:String x:Key="howToCreateTheme">How to create a theme</system:String>
     <system:String x:Key="hiThere">Hi There</system:String>
     <system:String x:Key="SampleTitleExplorer">Explorer</system:String>
@@ -172,8 +172,8 @@
     <system:String x:Key="OpenThemeFolder">Open Theme Folder</system:String>
     <system:String x:Key="ColorScheme">Color Scheme</system:String>
     <system:String x:Key="ColorSchemeSystem">System Default</system:String>
-    <system:String x:Key="ColorSchemeLight">Light</system:String>
-    <system:String x:Key="ColorSchemeDark">Dark</system:String>
+    <system:String x:Key="ColorSchemeLight">בהיר</system:String>
+    <system:String x:Key="ColorSchemeDark">כהה</system:String>
     <system:String x:Key="SoundEffect">Sound Effect</system:String>
     <system:String x:Key="SoundEffectTip">Play a small sound when the search window opens</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
@@ -231,15 +231,15 @@
     <system:String x:Key="customQueryHotkey">Custom Query Hotkeys</system:String>
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
-    <system:String x:Key="customQuery">Query</system:String>
+    <system:String x:Key="customQuery">שאילתה</system:String>
     <system:String x:Key="customShortcut">Shortcut</system:String>
     <system:String x:Key="customShortcutExpansion">Expansion</system:String>
     <system:String x:Key="builtinShortcutDescription">Description</system:String>
-    <system:String x:Key="delete">Delete</system:String>
-    <system:String x:Key="edit">Edit</system:String>
-    <system:String x:Key="add">Add</system:String>
+    <system:String x:Key="delete">מחק</system:String>
+    <system:String x:Key="edit">ערוך</system:String>
+    <system:String x:Key="add">הוסף</system:String>
     <system:String x:Key="none">None</system:String>
-    <system:String x:Key="pleaseSelectAnItem">Please select an item</system:String>
+    <system:String x:Key="pleaseSelectAnItem">אנא בחר פריט</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
@@ -260,7 +260,7 @@
     <system:String x:Key="userName">User Name</system:String>
     <system:String x:Key="password">Password</system:String>
     <system:String x:Key="testProxy">Test Proxy</system:String>
-    <system:String x:Key="save">Save</system:String>
+    <system:String x:Key="save">שמור</system:String>
     <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
     <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
     <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
@@ -279,7 +279,7 @@
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
     <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
-    <system:String x:Key="checkUpdatesFailed">Check updates failed, please check your connection and proxy settings to api.github.com.</system:String>
+    <system:String x:Key="checkUpdatesFailed">בדיקת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת הגדרות ה-Proxy שלך לכתובת api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
         Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
         or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
@@ -291,7 +291,7 @@
     <system:String x:Key="logfolder">Log Folder</system:String>
     <system:String x:Key="clearlogfolder">Clear Logs</system:String>
     <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
-    <system:String x:Key="welcomewindow">Wizard</system:String>
+    <system:String x:Key="welcomewindow">אשף</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
@@ -324,22 +324,22 @@
     <!--  Action Keyword Setting Dialog  -->
     <system:String x:Key="oldActionKeywords">Old Action Keyword</system:String>
     <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
-    <system:String x:Key="cancel">Cancel</system:String>
-    <system:String x:Key="done">Done</system:String>
+    <system:String x:Key="cancel">ביטול</system:String>
+    <system:String x:Key="done">בוצע</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
-    <system:String x:Key="success">Success</system:String>
-    <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
+    <system:String x:Key="success">הצליח</system:String>
+    <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Hotkey</system:String>
     <system:String x:Key="customeQueryHotkeyTips">Press a custom hotkey to open Flow Launcher and input the specified query automatically.</system:String>
-    <system:String x:Key="preview">Preview</system:String>
+    <system:String x:Key="preview">תצוגה מקדימה</system:String>
     <system:String x:Key="hotkeyIsNotUnavailable">Hotkey is unavailable, please select a new hotkey</system:String>
     <system:String x:Key="invalidPluginHotkey">Invalid plugin hotkey</system:String>
-    <system:String x:Key="update">Update</system:String>
+    <system:String x:Key="update">עדכון</system:String>
     <system:String x:Key="hotkeyRegTitle">Binding Hotkey</system:String>
     <system:String x:Key="hotkeyUnavailable">Current hotkey is unavailable.</system:String>
     <system:String x:Key="hotkeyUnavailableUneditable">This hotkey is reserved for &quot;{0}&quot; and can't be used. Please choose another hotkey.</system:String>
@@ -357,23 +357,23 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
 
     <!--  Common Action  -->
-    <system:String x:Key="commonSave">Save</system:String>
+    <system:String x:Key="commonSave">שמור</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
-    <system:String x:Key="commonCancel">Cancel</system:String>
+    <system:String x:Key="commonCancel">ביטול</system:String>
     <system:String x:Key="commonReset">Reset</system:String>
-    <system:String x:Key="commonDelete">Delete</system:String>
+    <system:String x:Key="commonDelete">מחק</system:String>
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
-    <system:String x:Key="reportWindow_time">Time</system:String>
+    <system:String x:Key="reportWindow_time">זמן</system:String>
     <system:String x:Key="reportWindow_reproduce">Please tell us how application crashed so we can fix it</system:String>
-    <system:String x:Key="reportWindow_send_report">Send Report</system:String>
-    <system:String x:Key="reportWindow_cancel">Cancel</system:String>
-    <system:String x:Key="reportWindow_general">General</system:String>
-    <system:String x:Key="reportWindow_exceptions">Exceptions</system:String>
+    <system:String x:Key="reportWindow_send_report">שלח דיווח</system:String>
+    <system:String x:Key="reportWindow_cancel">ביטול</system:String>
+    <system:String x:Key="reportWindow_general">כללי</system:String>
+    <system:String x:Key="reportWindow_exceptions">חריגים</system:String>
     <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
     <system:String x:Key="reportWindow_source">Source</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
@@ -394,12 +394,12 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
         Flow Launcher was not able to move your user profile data to the new update version.
         Please manually move your profile data folder from {0} to {1}
     </system:String>
-    <system:String x:Key="update_flowlauncher_new_update">New Update</system:String>
+    <system:String x:Key="update_flowlauncher_new_update">עדכון חדש</system:String>
     <system:String x:Key="update_flowlauncher_update_new_version_available">New Flow Launcher release {0} is now available</system:String>
     <system:String x:Key="update_flowlauncher_update_error">An error occurred while trying to install software updates</system:String>
-    <system:String x:Key="update_flowlauncher_update">Update</system:String>
-    <system:String x:Key="update_flowlauncher_update_cancel">Cancel</system:String>
-    <system:String x:Key="update_flowlauncher_fail">Update Failed</system:String>
+    <system:String x:Key="update_flowlauncher_update">עדכון</system:String>
+    <system:String x:Key="update_flowlauncher_update_cancel">ביטול</system:String>
+    <system:String x:Key="update_flowlauncher_fail">העדכון נכשל</system:String>
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
@@ -407,7 +407,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
     <!--  Welcome Window  -->
-    <system:String x:Key="Skip">Skip</system:String>
+    <system:String x:Key="Skip">דלג</system:String>
     <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hello, this is the first time you are running Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Before starting, this wizard will assist in setting up Flow Launcher. You can skip this if you wish. Please choose a language</system:String>
