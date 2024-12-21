@@ -269,7 +269,7 @@
     <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
 
     <!--  Setting About  -->
-    <system:String x:Key="about">About</system:String>
+    <system:String x:Key="about">אודות</system:String>
     <system:String x:Key="website">Website</system:String>
     <system:String x:Key="github">GitHub</system:String>
     <system:String x:Key="docs">Docs</system:String>
