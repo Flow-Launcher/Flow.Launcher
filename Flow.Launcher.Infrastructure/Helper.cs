@@ -1,9 +1,14 @@
-﻿#nullable enable
+#nullable enable
 
 using System;
 using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Linq;
+using System.Collections.Generic;
+using win32api = Microsoft.Win32;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -86,5 +91,41 @@ namespace Flow.Launcher.Infrastructure
 
             return formatted;
         }
+
+        public static string GetActiveOfficeFilePath()
+        {
+            var pid = GetActiveWindowProcessId();
+            var handle = win32api.OpenProcess(win32api.PROCESS_QUERY_INFORMATION | win32api.PROCESS_VM_READ, false, pid);
+            var exePath = win32api.GetModuleFileNameEx(handle, 0);
+            if (exePath.ToLower().Contains("winword.exe"))
+            {
+                return Path.GetFullPath(new win32api.Dispatch("Word.Application").ActiveDocument.FullName);
+            }
+            else if (exePath.ToLower().Contains("powerpnt.exe"))
+            {
+                return Path.GetFullPath(new win32api.Dispatch("PowerPoint.Application").ActivePresentation.FullName);
+            }
+            else if (exePath.ToLower().Contains("excel.exe"))
+            {
+                return Path.GetFullPath(new win32api.Dispatch("Excel.Application").ActiveWorkbook.FullName);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static int GetActiveWindowProcessId()
+        {
+            var window = GetForegroundWindow();
+            var threadProcessId = GetWindowThreadProcessId(window, out var processId);
+            return processId;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out int lpdwProcessId);
     }
 }
