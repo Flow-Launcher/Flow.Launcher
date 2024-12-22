@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Son Sorguyu Sakla</system:String>
     <system:String x:Key="LastQuerySelected">Son Sorguyu Sakla ve Tümünü Seç</system:String>
     <system:String x:Key="LastQueryEmpty">Sorgu Kutusunu Temizle</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Sabit Pencere Yükseliği</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Pencere yüksekliği sürükleme ile ayarlanamaz.</system:String>
     <system:String x:Key="maxShowResults">Maksimum Sonuç Sayısı</system:String>
