@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">حفظ الاستعلام الأخير</system:String>
     <system:String x:Key="LastQuerySelected">اختيار الاستعلام الأخير</system:String>
     <system:String x:Key="LastQueryEmpty">تفريغ الاستعلام الأخير</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">ارتفاع ثابت للنافذة</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">ارتفاع النافذة غير قابل للتعديل عن طريق السحب.</system:String>
     <system:String x:Key="maxShowResults">الحد الأقصى للنتائج المعروضة</system:String>
