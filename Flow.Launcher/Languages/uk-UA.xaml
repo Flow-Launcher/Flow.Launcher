@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Зберегти останній запит</system:String>
     <system:String x:Key="LastQuerySelected">Вибрати останній запит</system:String>
     <system:String x:Key="LastQueryEmpty">Очистити останній запит</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Фіксована висота вікна</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Висота вікна не регулюється перетягуванням.</system:String>
     <system:String x:Key="maxShowResults">Максимальна кількість результатів</system:String>
