@@ -62,7 +62,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double ItemHeightSize { get; set; } = 58;
         public double QueryBoxFontSize { get; set; } = 20;
         public double ResultItemFontSize { get; set; } = 16;
-        public double ResultSubItemFontSize { get; set; } = 13; 
+        public double ResultSubItemFontSize { get; set; } = 13;
         public string QueryBoxFont { get; set; } = FontFamily.GenericSansSerif.Name;
         public string QueryBoxFontStyle { get; set; }
         public string QueryBoxFontWeight { get; set; }
@@ -187,7 +187,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool ShouldUsePinyin { get; set; } = false;
 
         public bool AlwaysPreview { get; set; } = false;
-        
+
         public bool AlwaysStartEn { get; set; } = false;
 
         private SearchPrecisionScore _querySearchPrecision = SearchPrecisionScore.Regular;
@@ -370,7 +370,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         Selected,
         Empty,
-        Preserved
+        Preserved,
+        ActionKeywordPreserved,
+        ActionKeywordSelected
     }
 
     public enum ColorSchemes
