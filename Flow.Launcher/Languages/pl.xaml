@@ -65,6 +65,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="LastQueryPreserved">Zachowaj ostatnie zapytanie</system:String>
     <system:String x:Key="LastQuerySelected">Wybierz ostatnie zapytanie</system:String>
     <system:String x:Key="LastQueryEmpty">Puste ostatnie zapytanie</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Stała wysokość okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Wysokość okna nie jest regulowana poprzez przeciąganie.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
