@@ -65,8 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Ponechať</system:String>
     <system:String x:Key="LastQuerySelected">Označiť</system:String>
     <system:String x:Key="LastQueryEmpty">Vymazať</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Ponechať posledný akčný príkaz</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Označiť posledný akčný príkaz</system:String>
     <system:String x:Key="KeepMaxResults">Pevná výška okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Výška okna sa nedá nastaviť ťahaním.</system:String>
     <system:String x:Key="maxShowResults">Maximum výsledkov</system:String>
