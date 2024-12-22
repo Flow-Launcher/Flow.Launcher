@@ -65,6 +65,8 @@ Clique &quot;Não&quot; se já tiver instalado e, de seguida, ser-lhe-á solicit
     <system:String x:Key="LastQueryPreserved">Manter última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Selecionar última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpar última consulta</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Altura fixa de janela</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Não é possível ajustar o tamanho da janela por arrasto.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados</system:String>
