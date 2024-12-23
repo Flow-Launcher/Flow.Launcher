@@ -65,8 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Mantener la última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Conservar palabra clave de última acción</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Seleccionar palabra clave de última acción</system:String>
     <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se puede ajustar arrastrando el ratón.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
