@@ -264,6 +264,11 @@ namespace Flow.Launcher.Plugin
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
 
         /// <summary>
+        /// Determines if the selected count should be added to the score
+        /// </summary>
+        public bool AddSelectedCount { get; set; } = true;
+
+        /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo

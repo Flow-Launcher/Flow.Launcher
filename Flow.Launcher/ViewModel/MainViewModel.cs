@@ -1476,7 +1476,9 @@ namespace Flow.Launcher.ViewModel
                     else if (result.Score != int.MaxValue)
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        result.Score += result.AddSelectedCount ?
+                            _userSelectedRecord.GetSelectedCount(result) + priorityScore :
+                            priorityScore;
                     }
                 }
             }
