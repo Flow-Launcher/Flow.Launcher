@@ -1471,9 +1471,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (_topMostRecord.IsTopMost(result))
                     {
-                        result.Score = int.MaxValue;
+                        result.Score = Result.MaxScore;
                     }
-                    else if (result.Score != int.MaxValue)
+                    else if (result.Score != Result.MaxScore)
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
                         result.Score += result.AddSelectedCount ?

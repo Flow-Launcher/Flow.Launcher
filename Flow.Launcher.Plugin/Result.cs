@@ -269,6 +269,11 @@ namespace Flow.Launcher.Plugin
         public bool AddSelectedCount { get; set; } = true;
 
         /// <summary>
+        /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
+        /// </summary>
+        public const int MaxScore = int.MaxValue;
+
+        /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo
