@@ -1471,12 +1471,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (_topMostRecord.IsTopMost(result))
                     {
-                        result.Score = int.MaxValue;
+                        result.Score = Result.MaxScore;
                     }
-                    else
+                    else if (result.Score != Result.MaxScore)
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        result.Score += result.AddSelectedCount ?
+                            _userSelectedRecord.GetSelectedCount(result) + priorityScore :
+                            priorityScore;
                     }
                 }
             }
