@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
@@ -14,7 +13,6 @@ using Flow.Launcher.Plugin.SharedCommands;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using FormsApplication = System.Windows.Forms.Application;
-using MessageBox = System.Windows.MessageBox;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -133,6 +131,9 @@ namespace Flow.Launcher.Plugin.Sys
         private List<Result> Commands()
         {
             var results = new List<Result>();
+            var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
+            var userDataPath = DataLocation.DataDirectory();
+            var recycleBinFolder = "shell:RecycleBinFolder";
             results.AddRange(new[]
             {
                 new Result
@@ -143,7 +144,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = context.API.ShowMsgBox(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -163,7 +164,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = context.API.ShowMsgBox(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -183,7 +184,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = context.API.ShowMsgBox(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -202,7 +203,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        var result = MessageBox.Show(
+                        var result = context.API.ShowMsgBox(
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
@@ -279,7 +280,7 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
                         if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
                         {
-                            MessageBox.Show($"Error emptying recycle bin, error code: {result}\n" +
+                            context.API.ShowMsgBox($"Error emptying recycle bin, error code: {result}\n" +
                                             "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
@@ -294,10 +295,11 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
                     IcoPath = "Images\\openrecyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
+                    CopyText = recycleBinFolder,
                     Action = c =>
                     {
                         {
-                                   System.Diagnostics.Process.Start("explorer", "shell:RecycleBinFolder");
+                                   System.Diagnostics.Process.Start("explorer", recycleBinFolder);
                         }
 
                         return true;
@@ -386,9 +388,10 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Open Log Location",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
                     IcoPath = "Images\\app.png",
+                    CopyText = logPath,
+                    AutoCompleteText = logPath,
                     Action = c =>
                     {
-                        var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
                         context.API.OpenDirectory(logPath);
                         return true;
                     }
@@ -398,6 +401,8 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher Tips",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
                     IcoPath = "Images\\app.png",
+                    CopyText = Constant.Documentation,
+                    AutoCompleteText = Constant.Documentation,
                     Action = c =>
                     {
                         context.API.OpenUrl(Constant.Documentation);
@@ -409,9 +414,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher UserData Folder",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
                     IcoPath = "Images\\app.png",
+                    CopyText = userDataPath,
+                    AutoCompleteText = userDataPath,
                     Action = c =>
                     {
-                        context.API.OpenDirectory(DataLocation.DataDirectory());
+                        context.API.OpenDirectory(userDataPath);
                         return true;
                     }
                 },

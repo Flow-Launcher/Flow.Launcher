@@ -4,8 +4,8 @@ using System;
 using NHotkey;
 using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
-using System.Windows;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher.Helper;
 
@@ -46,7 +46,7 @@ internal static class HotKeyMapper
         {
             string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-            MessageBox.Show(errorMsg,errorMsgTitle);
+            MessageBoxEx.Show(errorMsg, errorMsgTitle);
         }
     }
 

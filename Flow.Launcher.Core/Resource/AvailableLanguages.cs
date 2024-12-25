@@ -28,6 +28,7 @@ namespace Flow.Launcher.Core.Resource
         public static Language Czech = new Language("cs", "čeština");
         public static Language Arabic = new Language("ar", "اللغة العربية");
         public static Language Vietnamese = new Language("vi-vn", "Tiếng Việt");
+        public static Language Hebrew = new Language("he", "עברית");
 
 
         public static List<Language> GetAvailableLanguages()
@@ -57,7 +58,8 @@ namespace Flow.Launcher.Core.Resource
                 Turkish,
                 Czech,
                 Arabic,
-                Vietnamese
+                Vietnamese,
+                Hebrew
             };
             return languages;
         }

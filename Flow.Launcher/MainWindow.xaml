@@ -308,7 +308,7 @@
                             VerticalAlignment="Center"
                             Panel.ZIndex="2"
                             RenderOptions.BitmapScalingMode="HighQuality"
-                            Source="{Binding PluginIconPath}"
+                            Source="{Binding PluginIconSource}"
                             Stretch="Uniform"
                             Style="{DynamicResource PluginActivationIcon}" />
                         <Canvas Style="{DynamicResource SearchIconPosition}">

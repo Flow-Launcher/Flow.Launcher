@@ -6,7 +6,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.ViewModel;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -63,7 +63,7 @@ namespace Flow.Launcher
                 o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
+                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
                 Close();
                 return;
             }
