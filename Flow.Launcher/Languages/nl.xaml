@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Behoud laatste zoekopdracht</system:String>
     <system:String x:Key="LastQuerySelected">Selecteer laatste zoekopdracht</system:String>
     <system:String x:Key="LastQueryEmpty">Laatste zoekopdracht verwijderen</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Vaste venster hoogte</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">De vensterhoogte is niet aanpasbaar door te slepen.</system:String>
     <system:String x:Key="maxShowResults">Laat maximale resultaten zien</system:String>

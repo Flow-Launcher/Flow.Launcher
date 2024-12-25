@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Conserva ultima ricerca</system:String>
     <system:String x:Key="LastQuerySelected">Seleziona ultima ricerca</system:String>
     <system:String x:Key="LastQueryEmpty">Cancella ultima ricerca</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Altezza Finestra Fissa</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">L'altezza della finestra non si può regolare trascinando.</system:String>
     <system:String x:Key="maxShowResults">Numero massimo di risultati mostrati</system:String>
