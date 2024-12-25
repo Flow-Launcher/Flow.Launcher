@@ -233,8 +233,11 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    PluginManager.UpdatePluginMetadata(e.Results, pair.Metadata, e.Query);
-                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(e.Results, pair.Metadata, e.Query,
+                    // make a copy of results to avoid plugin change the result when updating view model
+                    var resultsCopy = e.Results.ToList();
+
+                    PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
+                    if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
                             token)))
                     {
                         Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
