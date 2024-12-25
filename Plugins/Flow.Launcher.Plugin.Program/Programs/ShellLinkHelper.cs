@@ -31,14 +31,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             ((IShellLinkW)link).Resolve(hwnd, 0);
 
             const int MAX_PATH = 260;
-            char[] buffer = new char[MAX_PATH];
+            Span<char> buffer = stackalloc char[MAX_PATH];
 
             var data = new WIN32_FIND_DATAW();
             var target = string.Empty;
-            fixed (char* bufferChar = buffer)
+            fixed (char* bufferPtr = buffer)
             {
-                ((IShellLinkW)link).GetPath((PWSTR)bufferChar, MAX_PATH, &data, (uint)SLGP_FLAGS.SLGP_SHORTPATH);
-                target = GetStringFromBuffer(buffer, MAX_PATH);
+                ((IShellLinkW)link).GetPath((PWSTR)bufferPtr, MAX_PATH, &data, (uint)SLGP_FLAGS.SLGP_SHORTPATH);
+                target = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
             }
 
             // To set the app description
@@ -46,11 +46,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 try
                 {
-                    char[] buffer1 = new char[MAX_PATH];
-                    fixed (char* buffer1Char = buffer1)
+                    fixed (char* bufferPtr = buffer)
                     {
-                        ((IShellLinkW)link).GetDescription((PWSTR)buffer1Char, MAX_PATH);
-                        description = GetStringFromBuffer(buffer1, MAX_PATH);
+                        ((IShellLinkW)link).GetDescription(bufferPtr, MAX_PATH);
+                        description = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
                     }
                 }
                 catch (COMException e)
@@ -61,11 +60,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         e);
                 }
 
-                char[] buffer2 = new char[MAX_PATH];
-                fixed (char* buffer2Char = buffer2)
+                fixed (char* bufferPtr = buffer)
                 {
-                    ((IShellLinkW)link).GetArguments((PWSTR)buffer2Char, MAX_PATH);
-                    arguments = GetStringFromBuffer(buffer2, MAX_PATH);
+                    ((IShellLinkW)link).GetArguments(bufferPtr, MAX_PATH);
+                    arguments = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
                 }
             }
             
@@ -73,14 +71,6 @@ namespace Flow.Launcher.Plugin.Program.Programs
             Marshal.ReleaseComObject(link);
 
             return target;
-        }
-
-        private static unsafe string GetStringFromBuffer(char[] buffer, int maxLength)
-        {
-            // Truncate the buffer to the actual length of the string
-            int validLength = Array.IndexOf(buffer, '\0');
-            if (validLength < 0) validLength = maxLength;
-            return new string(buffer, 0, validLength);
         }
     }
 }

@@ -98,7 +98,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
                 using var safeHandle = new SafeProcessHandle(handle.Value, true);
                 uint capacity = 2000;
-                char[] buffer = new char[capacity];
+                Span<char> buffer = new char[capacity];
                 fixed (char* pBuffer = buffer)
                 {
                     if (!PInvoke.QueryFullProcessImageName(safeHandle, PROCESS_NAME_FORMAT.PROCESS_NAME_WIN32, (PWSTR)pBuffer, ref capacity))
@@ -106,10 +106,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                         return string.Empty;
                     }
 
-                    // Truncate the buffer to the actual length of the string
-                    int validLength = Array.IndexOf(buffer, '\0');
-                    if (validLength < 0) validLength = (int)capacity;
-                    return new string(buffer, 0, validLength);
+                    return buffer[..(int)capacity].ToString();
                 }
             }
             catch

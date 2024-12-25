@@ -1,5 +1,7 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
@@ -56,17 +58,16 @@ public class WindowsInteropHelper
         }
 
         string windowClass;
-        int capacity = 256;
-        char[] buffer = new char[capacity];
+        const int capacity = 256;
+        Span<char> buffer = stackalloc char[capacity];
+        int validLength;
         fixed (char* pBuffer = buffer)
         {
-            PInvoke.GetClassName(hWnd, pBuffer, capacity);
-
-            // Truncate the buffer to the actual length of the string
-            int validLength = Array.IndexOf(buffer, '\0');
-            if (validLength < 0) validLength = capacity;
-            windowClass = new string(buffer, 0, validLength);
+            validLength = PInvoke.GetClassName(hWnd, pBuffer, capacity);
         }
+
+        windowClass = buffer[..validLength].ToString();
+
 
         //for Win+Tab (Flip3D)
         if (windowClass == WINDOW_CLASS_WINTAB)
@@ -87,14 +88,15 @@ public class WindowsInteropHelper
         {
             var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
             hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
-            if (!hWndDesktop.Equals(IntPtr.Zero))
+            if (hWndDesktop.Value != (IntPtr.Zero))
             {
                 return false;
             }
         }
 
         Rectangle screenBounds = Screen.FromHandle(hWnd).Bounds;
-        return (appBounds.bottom - appBounds.top) == screenBounds.Height && (appBounds.right - appBounds.left) == screenBounds.Width;
+        return (appBounds.bottom - appBounds.top) == screenBounds.Height &&
+               (appBounds.right - appBounds.left) == screenBounds.Width;
     }
 
     /// <summary>
@@ -104,7 +106,23 @@ public class WindowsInteropHelper
     public static void DisableControlBox(Window win)
     {
         var hwnd = new HWND(new WindowInteropHelper(win).Handle);
-        PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, PInvoke.GetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE) & ~(int)WINDOW_STYLE.WS_SYSMENU);
+        
+        var style = PInvoke.GetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+        
+        if (style == 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
+        
+        style &= ~(int)WINDOW_STYLE.WS_SYSMENU;
+        
+        var previousStyle = PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE,
+            style);
+
+        if (previousStyle == 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
     }
 
     /// <summary>
@@ -127,6 +145,7 @@ public class WindowsInteropHelper
             using var src = new HwndSource(new HwndSourceParameters());
             matrix = src.CompositionTarget.TransformFromDevice;
         }
+
         return new Point((int)(matrix.M11 * unitX), (int)(matrix.M22 * unitY));
     }
 }

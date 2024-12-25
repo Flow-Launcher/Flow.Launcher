@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.LibraryLoader;
@@ -20,39 +21,34 @@ namespace Flow.Launcher.Plugin.Program.Programs
         /// <returns>The localized name as string or <see cref="string.Empty"/>.</returns>
         public static unsafe string GetLocalizedName(string path)
         {
-            int capacity = 1024;
-            char[] resourcePathBuffer = new char[capacity];
+            const int capacity = 1024;
+            Span<char> buffer = new char[capacity];
 
             // If there is no resource to localize a file name the method returns a non zero value.
-            fixed (char* resourcePath = resourcePathBuffer)
+            fixed (char* bufferPtr = buffer)
             {
-                var result = PInvoke.SHGetLocalizedName(path, (PWSTR)resourcePath, (uint)capacity, out var id);
-                if (result == HRESULT.S_OK)
+                var result = PInvoke.SHGetLocalizedName(path, bufferPtr, capacity, out var id);
+                if (result != HRESULT.S_OK)
                 {
-                    int validLength = Array.IndexOf(resourcePathBuffer, '\0');
-                    if (validLength < 0) validLength = capacity;
-                    var resourcePathStr = new string(resourcePathBuffer, 0, validLength);
-                    _ = PInvoke.ExpandEnvironmentStrings(resourcePathStr, resourcePath, (uint)capacity);
-                    var handle = PInvoke.LoadLibraryEx(resourcePathStr,
-                        LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
-                    IntPtr safeHandle = handle.DangerousGetHandle();
-                    if (safeHandle != IntPtr.Zero)
-                    {
-                        char[] localizedNameBuffer = new char[capacity];
-                        fixed (char* localizedName = localizedNameBuffer)
-                        {
-                            if (PInvoke.LoadString(handle, (uint)id, (PWSTR)localizedName, capacity) != 0)
-                            {
-                                validLength = Array.IndexOf(localizedNameBuffer, '\0');
-                                if (validLength < 0) validLength = capacity;
-                                var lString = new string(localizedNameBuffer, 0, validLength);
-                                PInvoke.FreeLibrary(new(safeHandle));
-                                return lString;
-                            }
-                        }
+                    return string.Empty;
+                }
 
-                        PInvoke.FreeLibrary(new(safeHandle));
-                    }
+                var resourcePathStr = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                _ = PInvoke.ExpandEnvironmentStrings(resourcePathStr, bufferPtr, capacity);
+                using var handle = PInvoke.LoadLibraryEx(resourcePathStr,
+                    LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
+                if (handle.IsInvalid)
+                {
+                    return string.Empty;
+                }
+
+                // not sure about the behavior of Pinvoke.LoadString, so we clear the buffer before using it (so it must be a null-terminated string)
+                buffer.Clear();
+
+                if (PInvoke.LoadString(handle, (uint)id, bufferPtr, capacity) != 0)
+                {
+                    var lString = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                    return lString;
                 }
             }
 

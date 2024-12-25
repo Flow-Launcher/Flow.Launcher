@@ -88,7 +88,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public void Dispose()
         {
-            PInvoke.UnhookWindowsHookEx(new HHOOK(hookId.DangerousGetHandle()));
+            hookId.Dispose();
         }
 
         ~GlobalHotkey()

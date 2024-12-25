@@ -25,6 +25,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 CheckSecurityWindow();
                 Thread.Sleep(25);
             }
+
             while (containsSecurityWindow) // while this process contains a "Windows Security" dialog, stay open
             {
                 containsSecurityWindow = false;
@@ -52,24 +53,20 @@ namespace Flow.Launcher.Plugin.SharedCommands
         private static unsafe string GetWindowTitle(HWND hwnd)
         {
             var capacity = PInvoke.GetWindowTextLength(hwnd) + 1;
-            char[] buffer = new char[capacity];
+            int length;
+            Span<char> buffer = stackalloc char[capacity];
             fixed (char* pBuffer = buffer)
             {
                 // If the window has no title bar or text, if the title bar is empty,
                 // or if the window or control handle is invalid, the return value is zero.
-                if (PInvoke.GetWindowText(hwnd, (PWSTR)pBuffer, capacity) == 0)
-                {
-                    return string.Empty;
-                }
-
-                // Truncate the buffer to the actual length of the string
-                int validLength = Array.IndexOf(buffer, '\0');
-                if (validLength < 0) validLength = capacity;
-                return new string(buffer, 0, validLength);
+                length = PInvoke.GetWindowText(hwnd, (PWSTR)pBuffer, capacity);
             }
+
+            return buffer[..length].ToString();
         }
 
-        public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "", string arguments = "", string verb = "", bool createNoWindow = false)
+        public static ProcessStartInfo SetProcessStartInfo(this string fileName, string workingDirectory = "",
+            string arguments = "", string verb = "", bool createNoWindow = false)
         {
             var info = new ProcessStartInfo
             {

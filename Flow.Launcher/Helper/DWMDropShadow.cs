@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Interop;
 using Windows.Win32;
+using Windows.Win32.Foundation;
 using Windows.Win32.Graphics.Dwm;
 using Windows.Win32.UI.Controls;
 
@@ -38,24 +39,22 @@ public class DwmDropShadow
     /// </summary>
     /// <param name="window">Window to which the shadow will be applied</param>
     /// <returns>True if the method succeeded, false if not</returns>
-    private unsafe static bool DropShadow(Window window)
+    private static unsafe bool DropShadow(Window window)
     {
         try
         {
             WindowInteropHelper helper = new WindowInteropHelper(window);
             int val = 2;
-            int ret1 = PInvoke.DwmSetWindowAttribute(new(helper.Handle), DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_POLICY, &val, 4);
+            var ret1 = PInvoke.DwmSetWindowAttribute(new (helper.Handle), DWMWINDOWATTRIBUTE.DWMWA_NCRENDERING_POLICY, &val, 4);
 
-            if (ret1 == 0)
+            if (ret1 == HRESULT.S_OK)
             {
                 var m = new MARGINS { cyBottomHeight = 0, cxLeftWidth = 0, cxRightWidth = 0, cyTopHeight = 0 };
-                int ret2 = PInvoke.DwmExtendFrameIntoClientArea(new(helper.Handle), &m);
-                return ret2 == 0;
+                var ret2 = PInvoke.DwmExtendFrameIntoClientArea(new(helper.Handle), &m);
+                return ret2 == HRESULT.S_OK;
             }
-            else
-            {
-                return false;
-            }
+
+            return false;
         }
         catch (Exception)
         {
