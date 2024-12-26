@@ -29,8 +29,8 @@
     <system:String x:Key="plugin_explorer_everything_setting_header">Everything Setting</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_setting_header">Preview Panel</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Size</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Date Created</system:String>
-    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Date Modified</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">תאריך יצירה</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">תאריך שינוי</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Display File Info</system:String>
     <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Date and time format</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Sort Option:</system:String>
@@ -126,20 +126,20 @@
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Failed to load Everything SDK</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_is_not_running">אזהרה: שירות Everything אינו פועל</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_query_error">שגיאה במהלך שאילתה לEverything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by">Sort By</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by">מיין לפי</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_name">Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">Path</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_path">נתיב</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_size">Size</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_extension">Extension</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_type_name">Type Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">Date Created</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">Date Modified</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">Attributes</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">תאריך יצירה</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">תאריך שינוי</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">מאפיינים</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">Date Recently Changed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">Date Accessed</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">Date Run</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">תאריך שינוי אחרון</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">תאריך גישה</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">תאריך הרצה</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
@@ -149,11 +149,11 @@
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Installing Everything service. Please wait...</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">Successfully installed Everything service</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">Failed to automatically install Everything service. Please manually install it from https://www.voidtools.com</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">מתקין את שירות Everything. אנא המתן...</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">שירות Everything הותקן בהצלחה</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">התקנה אוטומטית של שירות Everything נכשלה. אנא הורד אותו ידנית מ- https://www.voidtools.com</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_select">Unable to find an Everything installation, would you like to manually select a location?{0}{0}Click no and Everything will be automatically installed for you</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_select">לא מצליח למצוא התקנה של Everything, האם תרצה לבחור מיקום באופן ידני?{0}{0}לחץ על לא וEverything יותקן עבורך אוטומטית</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
 
