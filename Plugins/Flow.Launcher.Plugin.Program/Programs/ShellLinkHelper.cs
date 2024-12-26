@@ -35,10 +35,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
             var data = new WIN32_FIND_DATAW();
             var target = string.Empty;
-            fixed (char* bufferPtr = buffer)
+            try
             {
-                ((IShellLinkW)link).GetPath((PWSTR)bufferPtr, MAX_PATH, &data, (uint)SLGP_FLAGS.SLGP_SHORTPATH);
-                target = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                fixed (char* bufferPtr = buffer)
+                {
+                    ((IShellLinkW)link).GetPath((PWSTR)bufferPtr, MAX_PATH, &data, (uint)SLGP_FLAGS.SLGP_SHORTPATH);
+                    target = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                }
+            }
+            catch (COMException e)
+            {
+                ProgramLogger.LogException($"|IShellLinkW|retrieveTargetPath|{path}" +
+                "|Error occurred while getting program arguments", e);
             }
 
             // To set the app description
@@ -66,11 +74,11 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     arguments = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
                 }
             }
-            
+
             // To release unmanaged memory
             Marshal.ReleaseComObject(link);
 
             return target;
-        }
+            }
     }
 }
