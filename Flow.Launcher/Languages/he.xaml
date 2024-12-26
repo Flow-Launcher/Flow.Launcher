@@ -9,7 +9,7 @@
     <system:String x:Key="runtimePluginChooseRuntimeExecutable">אנא בחר את קובץ ההפעלה {0}</system:String>
     <system:String x:Key="runtimePluginUnableToSetExecutablePath">לא ניתן להגדיר נתיב הפעלה {0}, אנא נסה שוב בהגדרות Flow (גלול עד למטה).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">נכשל בהפעלת תוספים</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">תוספים: {0} - נכשלים בטעינה ויהיו מושבתים, אנא צור קשר עם יוצרי התוספים לקבלת עזרה</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">תוספים: {0} - נכשלו בטעינה ויושבתו, אנא צור קשר עם יוצרי התוספים לקבלת עזרה</system:String>
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">רישום מקש הקיצור &quot;{0}&quot; נכשל. ייתכן שמקש הקיצור נמצא בשימוש על ידי תוכנה אחרת. שנה למקש קיצור אחר, או צא מהתוכנה האחרת.</system:String>
