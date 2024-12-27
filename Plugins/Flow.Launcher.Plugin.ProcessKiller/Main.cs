@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
 
@@ -60,30 +60,33 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             return menuOptions;
         }
 
+        private record RunningProcessInfo(string ProcessName, string MainWindowTitle);
+
         private List<Result> CreateResultsFromQuery(Query query)
         {
             string termToSearch = query.Search;
-            var processlist = processHelper.GetMatchingProcesses(termToSearch);
-            
-            if (!processlist.Any())
+            var processList = processHelper.GetMatchingProcesses(termToSearch);
+            var processWithNonEmptyMainWindowTitleList = processHelper.GetProcessesWithNonEmptyWindowTitle();
+
+            if (!processList.Any())
             {
                 return null;
             }
 
             var results = new List<Result>();
 
-            foreach (var pr in processlist)
+            foreach (var pr in processList)
             {
                 var p = pr.Process;
                 var path = processHelper.TryGetProcessFilename(p);
                 results.Add(new Result()
                 {
                     IcoPath = path,
-                    Title = p.ProcessName + " - " + p.Id,
+                    Title = processWithNonEmptyMainWindowTitleList.TryGetValue(p.Id, out var mainWindowTitle) ? mainWindowTitle : p.ProcessName + " - " + p.Id,
                     SubTitle = path,
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
-                    ContextData = p.ProcessName,
+                    ContextData = new RunningProcessInfo(p.ProcessName, mainWindowTitle),
                     AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
                     {
@@ -95,22 +98,25 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 });
             }
 
-            var sortedResults = results.OrderBy(x => x.Title).ToList();
+            var sortedResults = results
+                .OrderBy(x => string.IsNullOrEmpty(((RunningProcessInfo)x.ContextData).MainWindowTitle))
+                .ThenBy(x => x.Title)
+                .ToList();
 
             // When there are multiple results AND all of them are instances of the same executable
             // add a quick option to kill them all at the top of the results.
             var firstResult = sortedResults.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubTitle));
-            if (processlist.Count > 1 && !string.IsNullOrEmpty(termToSearch) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
+            if (processList.Count > 1 && !string.IsNullOrEmpty(termToSearch) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
             {
                 sortedResults.Insert(1, new Result()
                 {
                     IcoPath = firstResult?.IcoPath,
-                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
-                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
+                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), ((RunningProcessInfo)firstResult?.ContextData).ProcessName),
+                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processList.Count),
                     Score = 200,
                     Action = (c) =>
                     {
-                        foreach (var p in processlist)
+                        foreach (var p in processList)
                         {
                             processHelper.TryKill(p.Process);
                         }
