@@ -54,12 +54,12 @@ namespace Flow.Launcher.Plugin.SharedCommands
         {
             var capacity = PInvoke.GetWindowTextLength(hwnd) + 1;
             int length;
-            Span<char> buffer = stackalloc char[capacity];
+            Span<char> buffer = capacity < 1024 ? stackalloc char[capacity] : new char[capacity];
             fixed (char* pBuffer = buffer)
             {
                 // If the window has no title bar or text, if the title bar is empty,
                 // or if the window or control handle is invalid, the return value is zero.
-                length = PInvoke.GetWindowText(hwnd, (PWSTR)pBuffer, capacity);
+                length = PInvoke.GetWindowText(hwnd, pBuffer, capacity);
             }
 
             return buffer[..length].ToString();
