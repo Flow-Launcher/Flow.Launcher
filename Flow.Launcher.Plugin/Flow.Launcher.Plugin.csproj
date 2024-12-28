@@ -57,7 +57,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="Readme.md" Pack="true" PackagePath="\"/>
+    <AdditionalFiles Include="NativeMethods.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Readme.md" Pack="true" PackagePath="\" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
 
@@ -68,6 +72,10 @@
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
     <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 

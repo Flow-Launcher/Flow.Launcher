@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -117,35 +117,38 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
+        public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
                 return;
 
-            var isFile = File.Exists(stringToCopy);
-            if (directCopy && (isFile || Directory.Exists(stringToCopy)))
+            await Win32Helper.StartSTATaskAsync(() =>
             {
-                var paths = new StringCollection
+                var isFile = File.Exists(stringToCopy);
+                if (directCopy && (isFile || Directory.Exists(stringToCopy)))
                 {
-                    stringToCopy
-                };
+                    var paths = new StringCollection
+                    {
+                        stringToCopy
+                    };
 
-                Clipboard.SetFileDropList(paths);
+                    Clipboard.SetFileDropList(paths);
 
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                        GetTranslation("completedSuccessfully"));
-            }
-            else
-            {
-                Clipboard.SetDataObject(stringToCopy);
+                    if (showDefaultNotification)
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                            GetTranslation("completedSuccessfully"));
+                }
+                else
+                {
+                    Clipboard.SetDataObject(stringToCopy);
 
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                        GetTranslation("completedSuccessfully"));
-            }
+                    if (showDefaultNotification)
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                            GetTranslation("completedSuccessfully"));
+                }
+            });
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Text;
-
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.LibraryLoader;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
@@ -13,51 +14,41 @@ namespace Flow.Launcher.Plugin.Program.Programs
     /// </summary>
     public static class ShellLocalization
     {
-        internal const uint DONTRESOLVEDLLREFERENCES = 0x00000001;
-        internal const uint LOADLIBRARYASDATAFILE = 0x00000002;
-
-        [DllImport("shell32.dll", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int SHGetLocalizedName(string pszPath, StringBuilder pszResModule, ref int cch, out int pidsRes);
-
-        [DllImport("user32.dll", EntryPoint = "LoadStringW", CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int LoadString(IntPtr hModule, int resourceID, StringBuilder resourceValue, int len);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, ExactSpelling = true, EntryPoint = "LoadLibraryExW")]
-        internal static extern IntPtr LoadLibraryEx(string lpFileName, IntPtr hFile, uint dwFlags);
-
-        [DllImport("kernel32.dll", ExactSpelling = true)]
-        internal static extern int FreeLibrary(IntPtr hModule);
-
-        [DllImport("kernel32.dll", EntryPoint = "ExpandEnvironmentStringsW", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        internal static extern uint ExpandEnvironmentStrings(string lpSrc, StringBuilder lpDst, int nSize);
-
         /// <summary>
         /// Returns the localized name of a shell item.
         /// </summary>
         /// <param name="path">Path to the shell item (e. g. shortcut 'File Explorer.lnk').</param>
         /// <returns>The localized name as string or <see cref="string.Empty"/>.</returns>
-        public static string GetLocalizedName(string path)
+        public static unsafe string GetLocalizedName(string path)
         {
-            StringBuilder resourcePath = new StringBuilder(1024);
-            StringBuilder localizedName = new StringBuilder(1024);
-            int len, id;
-            len = resourcePath.Capacity;
+            const int capacity = 1024;
+            Span<char> buffer = new char[capacity];
 
             // If there is no resource to localize a file name the method returns a non zero value.
-            if (SHGetLocalizedName(path, resourcePath, ref len, out id) == 0)
+            fixed (char* bufferPtr = buffer)
             {
-                _ = ExpandEnvironmentStrings(resourcePath.ToString(), resourcePath, resourcePath.Capacity);
-                IntPtr hMod = LoadLibraryEx(resourcePath.ToString(), IntPtr.Zero, DONTRESOLVEDLLREFERENCES | LOADLIBRARYASDATAFILE);
-                if (hMod != IntPtr.Zero)
+                var result = PInvoke.SHGetLocalizedName(path, bufferPtr, capacity, out var id);
+                if (result != HRESULT.S_OK)
                 {
-                    if (LoadString(hMod, id, localizedName, localizedName.Capacity) != 0)
-                    {
-                        string lString = localizedName.ToString();
-                        _ = FreeLibrary(hMod);
-                        return lString;
-                    }
+                    return string.Empty;
+                }
 
-                    _ = FreeLibrary(hMod);
+                var resourcePathStr = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                _ = PInvoke.ExpandEnvironmentStrings(resourcePathStr, bufferPtr, capacity);
+                using var handle = PInvoke.LoadLibraryEx(resourcePathStr,
+                    LOAD_LIBRARY_FLAGS.DONT_RESOLVE_DLL_REFERENCES | LOAD_LIBRARY_FLAGS.LOAD_LIBRARY_AS_DATAFILE);
+                if (handle.IsInvalid)
+                {
+                    return string.Empty;
+                }
+
+                // not sure about the behavior of Pinvoke.LoadString, so we clear the buffer before using it (so it must be a null-terminated string)
+                buffer.Clear();
+
+                if (PInvoke.LoadString(handle, (uint)id, bufferPtr, capacity) != 0)
+                {
+                    var lString = MemoryMarshal.CreateReadOnlySpanFromNullTerminated(bufferPtr).ToString();
+                    return lString;
                 }
             }
 
