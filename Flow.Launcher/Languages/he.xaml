@@ -54,10 +54,10 @@
     <system:String x:Key="SearchWindowScreenPrimary">צג ראשי</system:String>
     <system:String x:Key="SearchWindowScreenCustom">צג מותאם אישית</system:String>
     <system:String x:Key="SearchWindowAlign">Search Window Position on Monitor</system:String>
-    <system:String x:Key="SearchWindowAlignCenter">Center</system:String>
-    <system:String x:Key="SearchWindowAlignCenterTop">Center Top</system:String>
-    <system:String x:Key="SearchWindowAlignLeftTop">Left Top</system:String>
-    <system:String x:Key="SearchWindowAlignRightTop">Right Top</system:String>
+    <system:String x:Key="SearchWindowAlignCenter">מרכז</system:String>
+    <system:String x:Key="SearchWindowAlignCenterTop">מרכז עליון</system:String>
+    <system:String x:Key="SearchWindowAlignLeftTop">שמאל עליון</system:String>
+    <system:String x:Key="SearchWindowAlignRightTop">ימין עליון</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">שפה</system:String>
     <system:String x:Key="lastQueryMode">Last Query Style</system:String>
@@ -83,16 +83,16 @@
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
     <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
-    <system:String x:Key="autoUpdates">Auto Update</system:String>
-    <system:String x:Key="select">Select</system:String>
+    <system:String x:Key="autoUpdates">עדכון אוטומטי</system:String>
+    <system:String x:Key="select">בחר</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
     <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
     <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
     <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
-    <system:String x:Key="SearchPrecisionNone">None</system:String>
-    <system:String x:Key="SearchPrecisionLow">Low</system:String>
+    <system:String x:Key="SearchPrecisionNone">ללא</system:String>
+    <system:String x:Key="SearchPrecisionLow">נמוך</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
@@ -120,26 +120,26 @@
     <system:String x:Key="priority">Priority</system:String>
     <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
     <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
-    <system:String x:Key="author">by</system:String>
+    <system:String x:Key="author">מאת</system:String>
     <system:String x:Key="plugin_init_time">Init time:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
-    <system:String x:Key="plugin_query_version">Version</system:String>
-    <system:String x:Key="plugin_query_web">Website</system:String>
-    <system:String x:Key="plugin_uninstall">Uninstall</system:String>
+    <system:String x:Key="plugin_query_version">גרסה</system:String>
+    <system:String x:Key="plugin_query_web">אתר</system:String>
+    <system:String x:Key="plugin_uninstall">הסר התקנה</system:String>
 
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">חנות תוספים</system:String>
-    <system:String x:Key="pluginStore_NewRelease">New Release</system:String>
+    <system:String x:Key="pluginStore_NewRelease">שחרור חדש</system:String>
     <system:String x:Key="pluginStore_RecentlyUpdated">Recently Updated</system:String>
     <system:String x:Key="pluginStore_None">תוספים</system:String>
-    <system:String x:Key="pluginStore_Installed">Installed</system:String>
+    <system:String x:Key="pluginStore_Installed">מותקן</system:String>
     <system:String x:Key="refresh">רענן</system:String>
     <system:String x:Key="installbtn">התקן</system:String>
-    <system:String x:Key="uninstallbtn">Uninstall</system:String>
+    <system:String x:Key="uninstallbtn">הסר התקנה</system:String>
     <system:String x:Key="updatebtn">עדכון</system:String>
     <system:String x:Key="LabelInstalledToolTip">Plugin already installed</system:String>
-    <system:String x:Key="LabelNew">New Version</system:String>
+    <system:String x:Key="LabelNew">גרסה חדשה</system:String>
     <system:String x:Key="LabelNewToolTip">This plugin has been updated within the last 7 days</system:String>
     <system:String x:Key="LabelUpdateToolTip">New Update is Available</system:String>
 
@@ -164,7 +164,7 @@
     <system:String x:Key="queryBoxFont">Query Box Font</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
-    <system:String x:Key="resetCustomize">Reset</system:String>
+    <system:String x:Key="resetCustomize">אפס</system:String>
     <system:String x:Key="CustomizeToolTip">Customize</system:String>
     <system:String x:Key="windowMode">Window Mode</system:String>
     <system:String x:Key="opacity">Opacity</system:String>
@@ -196,9 +196,9 @@
 
 
     <!--  Setting Hotkey  -->
-    <system:String x:Key="hotkey">Hotkey</system:String>
-    <system:String x:Key="hotkeys">Hotkeys</system:String>
-    <system:String x:Key="flowlauncherHotkey">Open Flow Launcher</system:String>
+    <system:String x:Key="hotkey">מקש קיצור</system:String>
+    <system:String x:Key="hotkeys">מקשי קיצור</system:String>
+    <system:String x:Key="flowlauncherHotkey">פתח את Flow Launcher</system:String>
     <system:String x:Key="flowlauncherHotkeyToolTip">Enter shortcut to show/hide Flow Launcher.</system:String>
     <system:String x:Key="previewHotkey">Toggle Preview</system:String>
     <system:String x:Key="previewHotkeyToolTip">Enter shortcut to show/hide preview in search window.</system:String>
@@ -206,24 +206,24 @@
     <system:String x:Key="hotkeyPresetsToolTip">List of currently registered hotkeys</system:String>
     <system:String x:Key="openResultModifiers">Open Result Modifier Key</system:String>
     <system:String x:Key="openResultModifiersToolTip">Select a modifier key to open selected result via keyboard.</system:String>
-    <system:String x:Key="showOpenResultHotkey">Show Hotkey</system:String>
+    <system:String x:Key="showOpenResultHotkey">הצג מקש קיצור</system:String>
     <system:String x:Key="showOpenResultHotkeyToolTip">Show result selection hotkey with results.</system:String>
     <system:String x:Key="autoCompleteHotkey">Auto Complete</system:String>
     <system:String x:Key="autoCompleteHotkeyToolTip">Runs autocomplete for the selected items.</system:String>
     <system:String x:Key="SelectNextItemHotkey">Select Next Item</system:String>
     <system:String x:Key="SelectPrevItemHotkey">Select Previous Item</system:String>
-    <system:String x:Key="SelectNextPageHotkey">Next Page</system:String>
-    <system:String x:Key="SelectPrevPageHotkey">Previous Page</system:String>
+    <system:String x:Key="SelectNextPageHotkey">הדף הבא</system:String>
+    <system:String x:Key="SelectPrevPageHotkey">הדף הקודם</system:String>
     <system:String x:Key="CycleHistoryUpHotkey">Cycle Previous Query</system:String>
     <system:String x:Key="CycleHistoryDownHotkey">Cycle Next Query</system:String>
     <system:String x:Key="OpenContextMenuHotkey">Open Context Menu</system:String>
     <system:String x:Key="OpenNativeContextMenuHotkey">Open Native Context Menu</system:String>
     <system:String x:Key="SettingWindowHotkey">Open Setting Window</system:String>
-    <system:String x:Key="CopyFilePathHotkey">Copy File Path</system:String>
+    <system:String x:Key="CopyFilePathHotkey">העתק את נתיב הקובץ</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
-    <system:String x:Key="RunAsAdminHotkey">Run As Admin</system:String>
+    <system:String x:Key="RunAsAdminHotkey">הרץ כמנהל</system:String>
     <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
     <system:String x:Key="QuickWidthHotkey">Quick Adjust Window Width</system:String>
@@ -234,13 +234,13 @@
     <system:String x:Key="customQueryShortcut">Custom Query Shortcuts</system:String>
     <system:String x:Key="builtinShortcuts">Built-in Shortcuts</system:String>
     <system:String x:Key="customQuery">שאילתה</system:String>
-    <system:String x:Key="customShortcut">Shortcut</system:String>
-    <system:String x:Key="customShortcutExpansion">Expansion</system:String>
-    <system:String x:Key="builtinShortcutDescription">Description</system:String>
+    <system:String x:Key="customShortcut">קיצור דרך</system:String>
+    <system:String x:Key="customShortcutExpansion">הרחבה</system:String>
+    <system:String x:Key="builtinShortcutDescription">תיאור</system:String>
     <system:String x:Key="delete">מחק</system:String>
     <system:String x:Key="edit">ערוך</system:String>
     <system:String x:Key="add">הוסף</system:String>
-    <system:String x:Key="none">None</system:String>
+    <system:String x:Key="none">ללא</system:String>
     <system:String x:Key="pleaseSelectAnItem">אנא בחר פריט</system:String>
     <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
@@ -259,8 +259,8 @@
     <system:String x:Key="enableProxy">Enable HTTP Proxy</system:String>
     <system:String x:Key="server">HTTP Server</system:String>
     <system:String x:Key="port">Port</system:String>
-    <system:String x:Key="userName">User Name</system:String>
-    <system:String x:Key="password">Password</system:String>
+    <system:String x:Key="userName">שם משתמש</system:String>
+    <system:String x:Key="password">סיסמא</system:String>
     <system:String x:Key="testProxy">Test Proxy</system:String>
     <system:String x:Key="save">שמור</system:String>
     <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
@@ -272,11 +272,11 @@
 
     <!--  Setting About  -->
     <system:String x:Key="about">אודות</system:String>
-    <system:String x:Key="website">Website</system:String>
-    <system:String x:Key="github">GitHub</system:String>
-    <system:String x:Key="docs">Docs</system:String>
-    <system:String x:Key="version">Version</system:String>
-    <system:String x:Key="icons">Icons</system:String>
+    <system:String x:Key="website">אתר אינטרנט</system:String>
+    <system:String x:Key="github">Github</system:String>
+    <system:String x:Key="docs">תיעוד</system:String>
+    <system:String x:Key="version">גרסה</system:String>
+    <system:String x:Key="icons">סמלים</system:String>
     <system:String x:Key="about_activate_times">You have activated Flow Launcher {0} times</system:String>
     <system:String x:Key="checkUpdates">Check for Updates</system:String>
     <system:String x:Key="BecomeASponsor">Become A Sponsor</system:String>
@@ -302,8 +302,8 @@
     <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
-    <system:String x:Key="fileManager_name">File Manager</system:String>
-    <system:String x:Key="fileManager_profile_name">Profile Name</system:String>
+    <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
+    <system:String x:Key="fileManager_profile_name">שם פרופיל</system:String>
     <system:String x:Key="fileManager_path">File Manager Path</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
@@ -314,9 +314,9 @@
     <system:String x:Key="defaultBrowser_name">Browser</system:String>
     <system:String x:Key="defaultBrowser_profile_name">Browser Name</system:String>
     <system:String x:Key="defaultBrowser_path">Browser Path</system:String>
-    <system:String x:Key="defaultBrowser_newWindow">New Window</system:String>
-    <system:String x:Key="defaultBrowser_newTab">New Tab</system:String>
-    <system:String x:Key="defaultBrowser_parameter">Private Mode</system:String>
+    <system:String x:Key="defaultBrowser_newWindow">חלון חדש</system:String>
+    <system:String x:Key="defaultBrowser_newTab">כרטיסייה חדשה</system:String>
+    <system:String x:Key="defaultBrowser_parameter">מצב פרטיות</system:String>
 
     <!--  Priority Setting Dialog  -->
     <system:String x:Key="changePriorityWindow">Change Priority</system:String>
@@ -362,14 +362,14 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="commonSave">שמור</system:String>
     <system:String x:Key="commonOverwrite">Overwrite</system:String>
     <system:String x:Key="commonCancel">ביטול</system:String>
-    <system:String x:Key="commonReset">Reset</system:String>
+    <system:String x:Key="commonReset">אפס</system:String>
     <system:String x:Key="commonDelete">מחק</system:String>
-    <system:String x:Key="commonOK">OK</system:String>
-    <system:String x:Key="commonYes">Yes</system:String>
-    <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonOK">אישור</system:String>
+    <system:String x:Key="commonYes">כן</system:String>
+    <system:String x:Key="commonNo">לא</system:String>
 
     <!--  Crash Reporter  -->
-    <system:String x:Key="reportWindow_version">Version</system:String>
+    <system:String x:Key="reportWindow_version">גרסה</system:String>
     <system:String x:Key="reportWindow_time">זמן</system:String>
     <system:String x:Key="reportWindow_reproduce">Please tell us how application crashed so we can fix it</system:String>
     <system:String x:Key="reportWindow_send_report">שלח דיווח</system:String>
@@ -377,21 +377,21 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_general">כללי</system:String>
     <system:String x:Key="reportWindow_exceptions">חריגים</system:String>
     <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
-    <system:String x:Key="reportWindow_source">Source</system:String>
+    <system:String x:Key="reportWindow_source">מקור</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
-    <system:String x:Key="reportWindow_sending">Sending</system:String>
+    <system:String x:Key="reportWindow_sending">שולח</system:String>
     <system:String x:Key="reportWindow_report_succeed">Report sent successfully</system:String>
     <system:String x:Key="reportWindow_report_failed">Failed to send report</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher got an error</system:String>
 
     <!--  General Notice  -->
-    <system:String x:Key="pleaseWait">Please wait...</system:String>
+    <system:String x:Key="pleaseWait">אנא המתן...</system:String>
 
     <!--  Update  -->
     <system:String x:Key="update_flowlauncher_update_check">Checking for new update</system:String>
     <system:String x:Key="update_flowlauncher_already_on_latest">You already have the latest Flow Launcher version</system:String>
-    <system:String x:Key="update_flowlauncher_update_found">Update found</system:String>
-    <system:String x:Key="update_flowlauncher_updating">Updating...</system:String>
+    <system:String x:Key="update_flowlauncher_update_found">עדכון נמצא</system:String>
+    <system:String x:Key="update_flowlauncher_updating">מעדכן...</system:String>
     <system:String x:Key="update_flowlauncher_fail_moving_portable_user_profile_data">
         Flow Launcher was not able to move your user profile data to the new update version.
         Please manually move your profile data folder from {0} to {1}
@@ -405,7 +405,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
     <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
     <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
-    <system:String x:Key="update_flowlauncher_update_files">Update files</system:String>
+    <system:String x:Key="update_flowlauncher_update_files">עדכן קבצים</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
     <!--  Welcome Window  -->
@@ -416,7 +416,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="Welcome_Page2_Title">Search and run all files and applications on your PC</system:String>
     <system:String x:Key="Welcome_Page2_Text01">Search everything from applications, files, bookmarks, YouTube, Twitter and more. All from the comfort of your keyboard without ever touching the mouse.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher starts with the hotkey below, go ahead and try it out now. To change it, click on the input and press the desired hotkey on the keyboard.</system:String>
-    <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
+    <system:String x:Key="Welcome_Page3_Title">מקשי קיצור</system:String>
     <system:String x:Key="Welcome_Page4_Title">Action Keyword and Commands</system:String>
     <system:String x:Key="Welcome_Page4_Text01">Search the web, launch applications or run various functions through Flow Launcher plugins. Certain functions start with an action keyword, and if necessary, they can be used without action keywords. Try the queries below in Flow Launcher.</system:String>
     <system:String x:Key="Welcome_Page5_Title">Let's Start Flow Launcher</system:String>
