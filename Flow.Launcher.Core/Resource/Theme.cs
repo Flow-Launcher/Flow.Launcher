@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -98,12 +96,12 @@ namespace Flow.Launcher.Core.Resource
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                BlurEnabled = IsBlurTheme();
+                BlurEnabled = Win32Helper.IsBlurTheme();
 
                 if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
 
-                SetBlurForWindow();
+                Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
             }
             catch (DirectoryNotFoundException)
             {
@@ -356,98 +354,6 @@ namespace Flow.Launcher.Core.Resource
 
             UpdateResourceDictionary(dict);
         }
-
-        #region Blur Handling
-        /*
-        Found on https://github.com/riverar/sample-win10-aeroglass
-        */
-        private enum AccentState
-        {
-            ACCENT_DISABLED = 0,
-            ACCENT_ENABLE_GRADIENT = 1,
-            ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
-            ACCENT_ENABLE_BLURBEHIND = 3,
-            ACCENT_INVALID_STATE = 4
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct AccentPolicy
-        {
-            public AccentState AccentState;
-            public int AccentFlags;
-            public int GradientColor;
-            public int AnimationId;
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct WindowCompositionAttributeData
-        {
-            public WindowCompositionAttribute Attribute;
-            public IntPtr Data;
-            public int SizeOfData;
-        }
-
-        private enum WindowCompositionAttribute
-        {
-            WCA_ACCENT_POLICY = 19
-        }
-        [DllImport("user32.dll")]
-        private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
-
-        /// <summary>
-        /// Sets the blur for a window via SetWindowCompositionAttribute
-        /// </summary>
-        public void SetBlurForWindow()
-        {
-            if (BlurEnabled)
-            {
-                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_ENABLE_BLURBEHIND);
-            }
-            else
-            {
-                SetWindowAccent(Application.Current.MainWindow, AccentState.ACCENT_DISABLED);
-            }
-        }
-
-        private bool IsBlurTheme()
-        {
-            if (Environment.OSVersion.Version >= new Version(6, 2))
-            {
-                var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-
-                if (resource is bool)
-                    return (bool)resource;
-
-                return false;
-            }
-
-            return false;
-        }
-
-        private void SetWindowAccent(Window w, AccentState state)
-        {
-            var windowHelper = new WindowInteropHelper(w);
-
-            windowHelper.EnsureHandle();
-
-            var accent = new AccentPolicy { AccentState = state };
-            var accentStructSize = Marshal.SizeOf(accent);
-
-            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-            Marshal.StructureToPtr(accent, accentPtr, false);
-
-            var data = new WindowCompositionAttributeData
-            {
-                Attribute = WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                SizeOfData = accentStructSize,
-                Data = accentPtr
-            };
-
-            SetWindowCompositionAttribute(windowHelper.Handle, ref data);
-
-            Marshal.FreeHGlobal(accentPtr);
-        }
-        #endregion
 
         public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);
     }
