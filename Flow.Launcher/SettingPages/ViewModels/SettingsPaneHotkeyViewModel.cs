@@ -33,7 +33,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void SetTogglingHotkey(HotkeyModel hotkey)
     {
-        HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+        HotKeyMapper.RegisterHotkey(hotkey.HotkeyRaw, hotkey.PreviousHotkey, HotKeyMapper.ToggleHotkey);
     }
 
     [RelayCommand]
@@ -57,7 +57,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         if (result is MessageBoxResult.Yes)
         {
             Settings.CustomPluginHotkeys.Remove(item);
-            HotKeyMapper.RemoveHotkey(item.Hotkey);
+            HotKeyMapper.UnregisterHotkey(item.Hotkey);
         }
     }
 

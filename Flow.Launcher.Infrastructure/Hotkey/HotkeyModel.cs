@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Infrastructure.Hotkey
 {
@@ -12,6 +13,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
         public bool Shift { get; set; }
         public bool Win { get; set; }
         public bool Ctrl { get; set; }
+
+        public string HotkeyRaw { get; set; } = string.Empty;
+        public string PreviousHotkey { get; set; } = string.Empty;
 
         public Key CharKey { get; set; } = Key.None;
 
@@ -49,18 +53,56 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
-        public HotkeyModel(string hotkeyString)
+        // Used for WPF control only
+        public void SetHotkeyFromString(string hotkeyString)
         {
+            Clear();
             Parse(hotkeyString);
+            HotkeyRaw = ToChefKeysString();
         }
 
-        public HotkeyModel(bool alt, bool shift, bool win, bool ctrl, Key key)
+        internal void SetHotkeyFromWPFControl(SpecialKeyState specialKeyState, Key key)
         {
-            Alt = alt;
-            Shift = shift;
-            Win = win;
-            Ctrl = ctrl;
+            Alt = specialKeyState.AltPressed;
+            Shift = specialKeyState.ShiftPressed;
+            Win = specialKeyState.WinPressed;
+            Ctrl = specialKeyState.CtrlPressed;
             CharKey = key;
+            HotkeyRaw = ToChefKeysString();
+            PreviousHotkey = string.Empty;
+        }
+
+        public HotkeyModel(string hotkey) 
+        {
+            SetHotkeyFromString(hotkey);
+        }
+
+        //public HotkeyModel(bool alt, bool shift, bool win, bool ctrl, Key key)
+        //{
+        //    Alt = alt;
+        //    Shift = shift;
+        //    Win = win;
+        //    Ctrl = ctrl;
+        //    CharKey = key;
+        //}
+
+        // Use for ChefKeys only
+        internal void AddString(string key)
+        {
+            HotkeyRaw = string.IsNullOrEmpty(HotkeyRaw) ? key : HotkeyRaw + "+" + key;
+        }
+
+        internal bool MaxKeysReached() => DisplayKeysRaw().Count() == 4;
+
+        internal void Clear()
+        {
+            Alt = false;
+            Shift = false;
+            Win = false;
+            Ctrl = false;
+            HotkeyRaw = string.Empty;
+            PreviousHotkey = string.Empty;
+            CharKey = Key.None;
         }
 
         private void Parse(string hotkeyString)
@@ -71,28 +113,36 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
 
             List<string> keys = hotkeyString.Replace(" ", "").Split('+').ToList();
-            if (keys.Contains("Alt"))
+            if (keys.Contains("Alt") || keys.Contains("LeftAlt") || keys.Contains("RightAlt"))
             {
                 Alt = true;
                 keys.Remove("Alt");
+                keys.Remove("LeftAlt");
+                keys.Remove("RightAlt");
             }
 
-            if (keys.Contains("Shift"))
+            if (keys.Contains("Shift") || keys.Contains("LeftShift") || keys.Contains("RightShift"))
             {
                 Shift = true;
                 keys.Remove("Shift");
+                keys.Remove("LeftShift");
+                keys.Remove("RightShift");
             }
 
-            if (keys.Contains("Win"))
+            if (keys.Contains("Win") || keys.Contains("LWin") || keys.Contains("RWin"))
             {
                 Win = true;
                 keys.Remove("Win");
+                keys.Remove("LWin");
+                keys.Remove("RWin");
             }
 
-            if (keys.Contains("Ctrl"))
+            if (keys.Contains("Ctrl") || keys.Contains("LeftCtrl")|| keys.Contains("RightCtrl"))
             {
                 Ctrl = true;
                 keys.Remove("Ctrl");
+                keys.Remove("LeftCtrl");
+                keys.Remove("RightCtrl");
             }
 
             if (keys.Count == 1)
@@ -117,47 +167,71 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
-        public override string ToString()
+        public string ToChefKeysString()
         {
-            return string.Join(" + ", EnumerateDisplayKeys());
+            var key = string.Join("+", EnumerateDisplayKeys(true));
+            
+            return key;
         }
 
-        public IEnumerable<string> EnumerateDisplayKeys()
+        public IEnumerable<string> DisplayKeysRaw() => !string.IsNullOrEmpty(HotkeyRaw) ? HotkeyRaw.Split('+') : Array.Empty<string>();
+
+        public IEnumerable<string> EnumerateDisplayKeys(bool forChefKeys = false)
         {
             if (Ctrl && CharKey is not (Key.LeftCtrl or Key.RightCtrl))
             {
-                yield return "Ctrl";
+                yield return GetKeyString("Ctrl", forChefKeys);
             }
 
             if (Alt && CharKey is not (Key.LeftAlt or Key.RightAlt))
             {
-                yield return "Alt";
+                yield return GetKeyString("Alt", forChefKeys);
             }
 
             if (Shift && CharKey is not (Key.LeftShift or Key.RightShift))
             {
-                yield return "Shift";
+                yield return GetKeyString("Shift", forChefKeys);
             }
 
             if (Win && CharKey is not (Key.LWin or Key.RWin))
             {
-                yield return "Win";
+                yield return GetKeyString("Win", forChefKeys);
             }
 
             if (CharKey != Key.None)
             {
                 yield return specialSymbolDictionary.TryGetValue(CharKey, out var value)
                     ? value
-                    : CharKey.ToString();
+                    : GetKeyString(CharKey.ToString(), forChefKeys);
+            }
+        }
+
+        private string GetKeyString(string key, bool convertToChefKeysString)
+        {
+            if (!convertToChefKeysString)
+                return key;
+
+            switch (key)
+            {
+                case "Alt":
+                    return "LeftAlt";
+                case "Ctrl":
+                    return "LeftCtrl";
+                case "Shift":
+                    return "LeftShift";
+                case "Win":
+                    return "LWin";
+                default:
+                    return key;
             }
         }
 
         /// <summary>
-        /// Validate hotkey
+        /// Validate hotkey for WPF control only
         /// </summary>
         /// <param name="validateKeyGestrue">Try to validate hotkey as a KeyGesture.</param>
         /// <returns></returns>
-        public bool Validate(bool validateKeyGestrue = false)
+        public bool ValidateForWpf(bool validateKeyGestrue = false)
         {
             switch (CharKey)
             {
