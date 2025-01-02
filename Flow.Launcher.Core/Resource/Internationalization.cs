@@ -18,6 +18,8 @@ namespace Flow.Launcher.Core.Resource
     {
         public Settings Settings { get; set; }
         private const string Folder = "Languages";
+        private const string SystemLanguageCode = "System";
+        private const string DefaultLanguageCode = "en";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
         private readonly List<string> _languageDirectories = new List<string>();
@@ -68,8 +70,18 @@ namespace Flow.Launcher.Core.Resource
         public void ChangeLanguage(string languageCode)
         {
             languageCode = languageCode.NonNull();
-            Language language = GetLanguageByLanguageCode(languageCode);
-            ChangeLanguage(language);
+
+            // Get actual language if language code is system
+            var isSystem = false;
+            if (languageCode == SystemLanguageCode)
+            {
+                languageCode = GetSystemLanguageCode();
+                isSystem = true;
+            }
+
+            // Get language by language code and change language
+            var language = GetLanguageByLanguageCode(languageCode);
+            ChangeLanguage(language, isSystem);
         }
 
         private Language GetLanguageByLanguageCode(string languageCode)
@@ -87,10 +99,9 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        public void ChangeLanguage(Language language)
+        private void ChangeLanguage(Language language, bool isSystem)
         {
             language = language.NonNull();
-
 
             RemoveOldLanguageFiles();
             if (language != AvailableLanguages.English)
@@ -103,7 +114,7 @@ namespace Flow.Launcher.Core.Resource
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
 
             // Raise event after culture is set
-            Settings.Language = language.LanguageCode;
+            Settings.Language = isSystem ? SystemLanguageCode : language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
@@ -167,7 +178,35 @@ namespace Flow.Launcher.Core.Resource
 
         public List<Language> LoadAvailableLanguages()
         {
-            return AvailableLanguages.GetAvailableLanguages();
+            var list = AvailableLanguages.GetAvailableLanguages();
+            list.Insert(0, new Language(SystemLanguageCode, "System"));
+            return list;
+        }
+
+        private string GetSystemLanguageCode()
+        {
+            var availableLanguages = AvailableLanguages.GetAvailableLanguages();
+
+            // Retrieve the language identifiers for the current culture
+            var currentCulture = CultureInfo.CurrentCulture;
+            var twoLetterCode = currentCulture.TwoLetterISOLanguageName;
+            var threeLetterCode = currentCulture.ThreeLetterISOLanguageName;
+            var fullName = currentCulture.Name;
+
+            // Try to find a match in the available languages list
+            foreach (var language in availableLanguages)
+            {
+                var languageCode = language.LanguageCode;
+
+                if (string.Equals(languageCode, twoLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, threeLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return languageCode;
+                }
+            }
+
+            return DefaultLanguageCode;
         }
 
         public string GetTranslation(string key)
