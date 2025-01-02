@@ -92,6 +92,8 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             HotkeyRaw = string.IsNullOrEmpty(HotkeyRaw) ? key : HotkeyRaw + "+" + key;
         }
 
+        internal string GetLastKeySet() => !string.IsNullOrEmpty(HotkeyRaw) ? HotkeyRaw.Split('+').Last() : string.Empty;
+
         internal bool MaxKeysReached() => DisplayKeysRaw().Count() == 4;
 
         internal void Clear()

@@ -134,19 +134,27 @@ public partial class HotkeyControlDialog : ContentDialog
         if (ChefKeysManager.StartMenuBlocked && key.ToString() == ChefKeysManager.StartMenuSimulatedKey)
             return;
 
+        AddKey(key);
+        
+        SetKeysToDisplay(HotkeyToUpdate);
+    }
+
+    private void AddKey(Key key)
+    {
+        if (HotkeyToUpdate.GetLastKeySet() == key.ToString())
+            return;
+
         if (!isWPFHotkeyControl)
         {
             if (HotkeyToUpdate.MaxKeysReached())
                 return;
-            
+
             HotkeyToUpdate.AddString(key.ToString());
         }
         else
         {
             HotkeyToUpdate.SetHotkeyFromWPFControl(GlobalHotkey.CheckModifiers(), key);
         }
-        
-        SetKeysToDisplay(HotkeyToUpdate);
     }
 
     private void SetKeysToDisplay(HotkeyModel? hotkey)
