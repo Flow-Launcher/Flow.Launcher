@@ -179,7 +179,7 @@ namespace Flow.Launcher.Core.Resource
         public List<Language> LoadAvailableLanguages()
         {
             var list = AvailableLanguages.GetAvailableLanguages();
-            list.Insert(0, new Language(SystemLanguageCode, "System"));
+            list.Insert(0, new Language(SystemLanguageCode, AvailableLanguages.GetSystemTranslation(GetSystemLanguageCode())));
             return list;
         }
 
