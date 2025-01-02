@@ -182,7 +182,7 @@ namespace Flow.Launcher
                 if (!hotkeyAvailable)
                     return;
 
-                Hotkey = keyModel.HotkeyRaw;
+                Hotkey = keyModel.ToWPFHotkeyString();
                 SetKeysToDisplay(CurrentHotkey);
 
                 // If exists then will be unregistered, if doesn't no errors will be thrown.
@@ -193,7 +193,7 @@ namespace Flow.Launcher
             }
             else
             {
-                Hotkey = keyModel.HotkeyRaw;
+                Hotkey = keyModel.ToWPFHotkeyString();
                 ChangeHotkey?.Execute(keyModel);
             }
         }

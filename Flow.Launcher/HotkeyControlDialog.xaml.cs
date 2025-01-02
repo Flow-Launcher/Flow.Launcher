@@ -144,17 +144,10 @@ public partial class HotkeyControlDialog : ContentDialog
         if (HotkeyToUpdate.GetLastKeySet() == key.ToString())
             return;
 
-        if (!isWPFHotkeyControl)
-        {
-            if (HotkeyToUpdate.MaxKeysReached())
-                return;
+        if (MaxKeysLimitReached())
+            return;
 
-            HotkeyToUpdate.AddString(key.ToString());
-        }
-        else
-        {
-            HotkeyToUpdate.SetHotkeyFromWPFControl(GlobalHotkey.CheckModifiers(), key);
-        }
+        HotkeyToUpdate.AddString(key.ToString());
     }
 
     private void SetKeysToDisplay(HotkeyModel? hotkey)
@@ -170,19 +163,9 @@ public partial class HotkeyControlDialog : ContentDialog
 
         IEnumerable<string> enumerateMethod;
 
-        if (!isWPFHotkeyControl)
+        foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
         {
-            foreach (var key in hotkey.Value.DisplayKeysRaw()!)
-            {
-                KeysToDisplay.Add(key);
-            }
-        }
-        else
-        {
-            foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
-            {
-                KeysToDisplay.Add(key);
-            }
+            KeysToDisplay.Add(key);
         }
 
         if (tbMsg == null)
@@ -190,7 +173,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
     if (_hotkeySettings.RegisteredHotkeys
                 .FirstOrDefault(v => v.Hotkey == hotkey 
-                                || v.Hotkey.ToChefKeysString() == hotkey.Value.HotkeyRaw)
+                                || v.Hotkey.FromWPFKeysToString() == hotkey.Value.HotkeyRaw)
                 is { } registeredHotkeyData)
         {
             var description = string.Format(
@@ -252,6 +235,8 @@ public partial class HotkeyControlDialog : ContentDialog
 
     private static bool CheckWPFHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
             => hotkey.ValidateForWpf(validateKeyGesture) && HotKeyMapper.CheckHotkeyAvailability(hotkey.HotkeyRaw);
+
+    private bool MaxKeysLimitReached() => isWPFHotkeyControl ? KeysToDisplay.Count == 2 : KeysToDisplay.Count == 4;
 
     private void Overwrite(object sender, RoutedEventArgs e)
     {
