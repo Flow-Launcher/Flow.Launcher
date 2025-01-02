@@ -169,8 +169,7 @@ namespace Flow.Launcher
 
         private void SetHotkey(HotkeyModel keyModel, bool triggerValidate = true)
         {
-            // WPF hotkey control uses CharKey
-            if (string.IsNullOrEmpty(keyModel.HotkeyRaw) || string.IsNullOrEmpty(keyModel.CharKey.ToString()))
+            if (string.IsNullOrEmpty(keyModel.HotkeyRaw))
                 return;
 
             if (triggerValidate)

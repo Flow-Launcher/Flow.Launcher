@@ -171,7 +171,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
     if (_hotkeySettings.RegisteredHotkeys
                 .FirstOrDefault(v => v.Hotkey == hotkey 
-                                || v.Hotkey.FromWPFKeysToString() == hotkey.Value.HotkeyRaw)
+                                || v.Hotkey.HotkeyRaw == hotkey.Value.HotkeyRaw)
                 is { } registeredHotkeyData)
         {
             var description = string.Format(

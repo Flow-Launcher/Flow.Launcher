@@ -9,182 +9,29 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 {
     public record struct HotkeyModel
     {
-        public bool LeftAlt { get; set; }
-        public bool LeftShift { get; set; }
-        public bool LWin { get; set; }
-        public bool LeftCtrl { get; set; }
-        public bool RightAlt { get; set; }
-        public bool RightShift { get; set; }
-        public bool RWin { get; set; }
-        public bool RightCtrl { get; set; }
-
         public string HotkeyRaw { get; set; } = string.Empty;
         public string PreviousHotkey { get; set; } = string.Empty;
 
-        public Key CharKey { get; set; } = Key.None;
-
-        private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
-        {
-            { Key.Space, "Space" }, { Key.Oem3, "~" }
-        };
-
-        public ModifierKeys ModifierKeys
-        {
-            get
-            {
-                ModifierKeys modifierKeys = ModifierKeys.None;
-                if (LeftAlt || RightAlt)
-                {
-                    modifierKeys |= ModifierKeys.Alt;
-                }
-
-                if (LeftShift || RightShift)
-                {
-                    modifierKeys |= ModifierKeys.Shift;
-                }
-
-                if (LWin || RWin)
-                {
-                    modifierKeys |= ModifierKeys.Windows;
-                }
-
-                if (LeftCtrl || RightCtrl)
-                {
-                    modifierKeys |= ModifierKeys.Control;
-                }
-
-                return modifierKeys;
-            }
-        }
-
-        // Used for WPF control only
-        public void SetHotkeyFromString(string hotkeyString)
-        {
-            Clear();
-            Parse(hotkeyString);
-            HotkeyRaw = FromWPFKeysToString();
-        }
-
-        internal void SetHotkeyFromWPFControl(SpecialKeyState specialKeyState, Key key)
-        {
-            LeftAlt = specialKeyState.LeftAltPressed;
-            LeftShift = specialKeyState.LeftShiftPressed;
-            LWin = specialKeyState.LWinPressed;
-            LeftCtrl = specialKeyState.LeftCtrlPressed;
-            RightAlt = specialKeyState.RightAltPressed;
-            RightShift = specialKeyState.RightShiftPressed;
-            RWin = specialKeyState.RWinPressed;
-            RightCtrl = specialKeyState.RightCtrlPressed;
-            CharKey = key;
-            HotkeyRaw = FromWPFKeysToString();
-            PreviousHotkey = string.Empty;
-        }
-
+        // HotkeyRaw always be without spaces round '+'. WPF Control hotkey string saved to settings will contain spaces.
         public HotkeyModel(string hotkey) 
         {
-            SetHotkeyFromString(hotkey);
+            HotkeyRaw = ToHotkeyRawString(hotkey);
         }
 
-        // Use for ChefKeys only
         internal void AddString(string key)
         {
             HotkeyRaw = string.IsNullOrEmpty(HotkeyRaw) ? key : HotkeyRaw + "+" + key;
-            Parse(HotkeyRaw);
         }
+
+        // Display in the form of WPF Control i.e. simplified text e.g. LeftAlt -> Alt
+        public IEnumerable<string> EnumerateDisplayKeys() => !string.IsNullOrEmpty(HotkeyRaw) ? ToWPFHotkeyString().Split(" + ") : Array.Empty<string>();
 
         internal string GetLastKeySet() => !string.IsNullOrEmpty(HotkeyRaw) ? HotkeyRaw.Split('+').Last() : string.Empty;    
 
         internal void Clear()
         {
-            LeftAlt = false;
-            LeftShift = false;
-            LWin = false;
-            LeftCtrl = false;
-            RightAlt = false;
-            RightShift = false;
-            RWin = false;
-            RightCtrl = false;
             HotkeyRaw = string.Empty;
             PreviousHotkey = string.Empty;
-            CharKey = Key.None;
-        }
-
-        private void Parse(string hotkeyString)
-        {
-            if (string.IsNullOrEmpty(hotkeyString))
-            {
-                return;
-            }
-
-            List<string> keys = hotkeyString.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
-            if (keys.Contains("Alt") || keys.Contains("LeftAlt"))
-            {
-                LeftAlt = true;
-                keys.Remove("Alt");
-                keys.Remove("LeftAlt");
-            }
-            if (keys.Contains("RightAlt"))
-            {
-                RightAlt = true;
-                keys.Remove("RightAlt");
-            }
-
-            if (keys.Contains("Shift") || keys.Contains("LeftShift"))
-            {
-                LeftShift = true;
-                keys.Remove("Shift");
-                keys.Remove("LeftShift");
-            }
-            if (keys.Contains("RightShift"))
-            {
-                RightShift = true;
-                keys.Remove("RightShift");
-            }
-
-            if (keys.Contains("Win") || keys.Contains("LWin"))
-            {
-                LWin = true;
-                keys.Remove("Win");
-                keys.Remove("LWin");
-            }
-            if (keys.Contains("RWin"))
-            {
-                RWin = true;
-                keys.Remove("RWin");
-            }
-
-            if (keys.Contains("Ctrl") || keys.Contains("LeftCtrl"))
-            {
-                LeftCtrl = true;
-                keys.Remove("Ctrl");
-                keys.Remove("LeftCtrl");
-            }
-            if (keys.Contains("RightCtrl"))
-            {
-                RightCtrl = true;
-                keys.Remove("RightCtrl");
-            }
-
-            if (keys.Count == 1)
-            {
-                string charKey = keys[0];
-                KeyValuePair<Key, string>? specialSymbolPair =
-                    specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
-                if (specialSymbolPair.Value.Value != null)
-                {
-                    CharKey = specialSymbolPair.Value.Key;
-                }
-                else
-                {
-                    try
-                    {
-                        CharKey = (Key)Enum.Parse(typeof(Key), charKey);
-                    }
-                    catch (ArgumentException)
-                    {
-                    }
-                }
-            }
         }
 
         // WPF Control hotkey form i.e. simplified text e.g. LeftAlt+X -> Alt + X, includes space around '+'
@@ -221,59 +68,46 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return hotkey;
         }
 
-        // Display in the form of WPF Control i.e. simplified text e.g. LeftAlt -> Alt
-        public IEnumerable<string> EnumerateDisplayKeys() => !string.IsNullOrEmpty(HotkeyRaw) ? ToWPFHotkeyString().Split(" + ") : Array.Empty<string>();
-
-        public string FromWPFKeysToString() => string.Join("+", EnumerateWPFKeys());
-
-        public IEnumerable<string> EnumerateWPFKeys()
+        // Converts any WPF Control hotkey e.g. Alt + X -> LeftAlt+X
+        public readonly string ToHotkeyRawString(string wpfHotkey)
         {
-            if (LeftCtrl && CharKey is not Key.LeftCtrl)
+            var hotkey = string.Empty;
+
+            foreach (var key in wpfHotkey.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
             {
-                yield return "LeftCtrl";
+                if (!string.IsNullOrEmpty(hotkey))
+                    hotkey += "+";
+
+                switch (key)
+                {
+                    case "Ctrl":
+                        hotkey += "LeftCtrl";
+                        break;
+                    case "Alt":
+                        hotkey += "LeftAlt";
+                        break;
+                    case "Shift":
+                        hotkey += "LeftShift";
+                        break;
+                    case "Win":
+                        hotkey += "LWin";
+                        break;
+
+                    default:
+                        hotkey += key;
+                        break;
+                }
             }
 
-            if (LeftAlt && CharKey is not Key.LeftAlt)
-            {
-                yield return "LeftAlt";
-            }
-
-            if (LeftShift && CharKey is not Key.LeftShift)
-            {
-                yield return "LeftShift";
-            }
-
-            if (LWin && CharKey is not Key.LWin)
-            {
-                yield return "LWin";
-            }
-            if (RightCtrl && CharKey is not Key.RightCtrl)
-            {
-                yield return "RightCtrl";
-            }
-
-            if (RightAlt && CharKey is not Key.RightAlt)
-            {
-                yield return "RightAlt";
-            }
-
-            if (RightShift && CharKey is not Key.RightShift)
-            {
-                yield return "RightShift";
-            }
-
-            if (RWin && CharKey is not Key.RWin)
-            {
-                yield return "RWin";
-            }
-
-            if (CharKey != Key.None)
-            {
-                yield return specialSymbolDictionary.TryGetValue(CharKey, out var value)
-                    ? value
-                    : CharKey.ToString();
-            }
+            return hotkey;
         }
+
+        public bool Alt { get; set; }
+        public bool Shift { get; set; }
+        public bool Win { get; set; }
+        public bool Ctrl { get; set; }
+
+        public Key CharKey { get; set; } = Key.None;
 
         /// <summary>
         /// Validate hotkey for WPF control only
@@ -321,6 +155,103 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
+        private void Parse(string hotkeyString)
+        {
+            if (string.IsNullOrEmpty(hotkeyString))
+            {
+                return;
+            }
+
+            List<string> keys = hotkeyString.Split('+', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToList();
+
+            if (keys.Contains("Alt") || keys.Contains("LeftAlt") || keys.Contains("RightAlt"))
+            {
+                Alt = true;
+                keys.Remove("Alt");
+                keys.Remove("LeftAlt");
+                keys.Remove("RightAlt");
+            }
+
+            if (keys.Contains("Shift") || keys.Contains("LeftShift") || keys.Contains("RightShift"))
+            {
+                Shift = true;
+                keys.Remove("Shift");
+                keys.Remove("LeftShift");
+                keys.Remove("RightShift");
+            }
+
+            if (keys.Contains("Win") || keys.Contains("LWin") || keys.Contains("RWin"))
+            {
+                Win = true;
+                keys.Remove("Win");
+                keys.Remove("LWin");
+                keys.Remove("RWin");
+            }
+
+            if (keys.Contains("Ctrl") || keys.Contains("LeftCtrl") || keys.Contains("RightCtrl"))
+            {
+                Ctrl = true;
+                keys.Remove("Ctrl");
+                keys.Remove("LeftCtrl");
+                keys.Remove("RightCtrl");
+            }
+
+            if (keys.Count == 1)
+            {
+                string charKey = keys[0];
+                KeyValuePair<Key, string>? specialSymbolPair =
+                    specialSymbolDictionary.FirstOrDefault(pair => pair.Value == charKey);
+                if (specialSymbolPair.Value.Value != null)
+                {
+                    CharKey = specialSymbolPair.Value.Key;
+                }
+                else
+                {
+                    try
+                    {
+                        CharKey = (Key)Enum.Parse(typeof(Key), charKey);
+                    }
+                    catch (ArgumentException)
+                    {
+                    }
+                }
+            }
+        }
+
+        private static readonly Dictionary<Key, string> specialSymbolDictionary = new Dictionary<Key, string>
+        {
+            { Key.Space, "Space" }, { Key.Oem3, "~" }
+        };
+
+        public ModifierKeys ModifierKeys
+        {
+            get
+            {
+                ModifierKeys modifierKeys = ModifierKeys.None;
+                if (Alt)
+                {
+                    modifierKeys |= ModifierKeys.Alt;
+                }
+
+                if (Shift)
+                {
+                    modifierKeys |= ModifierKeys.Shift;
+                }
+
+                if (Win)
+                {
+                    modifierKeys |= ModifierKeys.Windows;
+                }
+
+                if (Ctrl)
+                {
+                    modifierKeys |= ModifierKeys.Control;
+                }
+
+                return modifierKeys;
+            }
+        }
+
         private static bool IsPrintableCharacter(Key key)
         {
             // https://stackoverflow.com/questions/11881199/identify-if-a-event-key-is-text-not-only-alphanumeric
@@ -349,7 +280,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(ModifierKeys, CharKey);
+            return HotkeyRaw.GetHashCode();
         }
     }
 }
