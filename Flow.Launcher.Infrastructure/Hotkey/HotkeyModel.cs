@@ -187,6 +187,7 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             }
         }
 
+        // WPF Control hotkey form i.e. simplified text e.g. LeftAlt+X -> Alt + X, includes space around '+'
         public readonly string ToWPFHotkeyString()
         {
             var hotkey = string.Empty;
@@ -220,9 +221,9 @@ namespace Flow.Launcher.Infrastructure.Hotkey
             return hotkey;
         }
 
-        public IEnumerable<string> EnumerateDisplayKeys() => !string.IsNullOrEmpty(HotkeyRaw) ? HotkeyRaw.Split('+') : Array.Empty<string>();
+        // Display in the form of WPF Control i.e. simplified text e.g. LeftAlt -> Alt
+        public IEnumerable<string> EnumerateDisplayKeys() => !string.IsNullOrEmpty(HotkeyRaw) ? ToWPFHotkeyString().Split(" + ") : Array.Empty<string>();
 
-        //For WPF hotkey control
         public string FromWPFKeysToString() => string.Join("+", EnumerateWPFKeys());
 
         public IEnumerable<string> EnumerateWPFKeys()

@@ -161,8 +161,6 @@ public partial class HotkeyControlDialog : ContentDialog
             return;
         }
 
-        IEnumerable<string> enumerateMethod;
-
         foreach (var key in hotkey.Value.EnumerateDisplayKeys()!)
         {
             KeysToDisplay.Add(key);
