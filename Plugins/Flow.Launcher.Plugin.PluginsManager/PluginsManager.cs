@@ -324,7 +324,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     string.Format(
                                         Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                                         x.Name));
-                            }, TaskContinuationOptions.OnlyOnFaulted);
+                            }, token, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
                             return true;
                         },
@@ -337,7 +337,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     });
 
             // Update all result
-            if (resultsForUpdate.Count() > 1)
+            if (resultsForUpdate.Count > 1)
             {
                 var updateAllResult = new Result
                 {
@@ -351,13 +351,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             message = string.Format(
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt"),
-                                resultsForUpdate.Count(), Environment.NewLine);
+                                resultsForUpdate.Count, Environment.NewLine);
                         }
                         else
                         {
                             message = string.Format(
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_all_prompt_no_restart"),
-                                resultsForUpdate.Count());
+                                resultsForUpdate.Count);
                         }
 
                         if (Context.API.ShowMsgBox(message,
@@ -401,7 +401,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_restart"),
-                                    resultsForUpdate.Count()));
+                                    resultsForUpdate.Count));
                             Context.API.RestartApp();
                         }
                         else
@@ -409,7 +409,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             Context.API.ShowMsg(Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_all_success_no_restart"),
-                                    resultsForUpdate.Count()));
+                                    resultsForUpdate.Count));
                         }
 
                         return true;
@@ -545,7 +545,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                    Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(constructedUrlPart));
         }
 
-        internal async ValueTask<List<Result>> RequestInstallOrUpdate(string search, CancellationToken token,
+        internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,
             bool usePrimaryUrlOnly = false)
         {
             await PluginsManifest.UpdateManifestAsync(token, usePrimaryUrlOnly);
