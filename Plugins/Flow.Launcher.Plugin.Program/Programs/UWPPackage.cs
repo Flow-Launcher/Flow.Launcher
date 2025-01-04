@@ -488,6 +488,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     },
                     IcoPath = "Images/folder.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
+                    CopyText = Location,
                 }
             };
 

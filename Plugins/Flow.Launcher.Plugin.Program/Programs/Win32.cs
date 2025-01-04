@@ -267,6 +267,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     },
                     IcoPath = "Images/folder.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
+                    CopyText = ParentDirectory,
                 },
             };
             if (Extension(FullPath) == ShortcutExtension)
@@ -278,16 +279,18 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private Result OpenTargetFolderContextMenuResult(IPublicAPI api)
         {
+            var ParentDirectory = Path.GetDirectoryName(ExecutablePath);
             return new Result
             {
                 Title = api.GetTranslation("flowlauncher_plugin_program_open_target_folder"),
                 Action = _ =>
                 {
-                    api.OpenDirectory(Path.GetDirectoryName(ExecutablePath), ExecutablePath);
+                    api.OpenDirectory(ParentDirectory, ExecutablePath);
                     return true;
                 },
                 IcoPath = "Images/folder.png",
                 Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8de"),
+                CopyText = ParentDirectory,
             };
         }
 
