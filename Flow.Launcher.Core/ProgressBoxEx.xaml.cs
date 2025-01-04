@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core
             InitializeComponent();
         }
 
-        public static IProgressBoxEx Show(string caption, Action forceClosed)
+        public static IProgressBoxEx Show(string caption, Action forceClosed = null)
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {

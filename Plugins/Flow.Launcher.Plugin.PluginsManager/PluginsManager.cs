@@ -158,7 +158,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     var totalBytes = response.Content.Headers.ContentLength ?? -1L;
                     var canReportProgress = totalBytes != -1;
 
-                    if (canReportProgress && (prgBox = Context.API.ShowProgressBox("Download plugin...")) != null)
+                    if (canReportProgress && (prgBox = Context.API.ShowProgressBox($"Download {plugin.Name}...")) != null)
                     {
                         await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                         await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
