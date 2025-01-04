@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core;
+using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -142,6 +143,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
+            ProgressBoxEx prgBox = null;
             try
             {
                 if (!plugin.IsFromLocalInstallPath)
@@ -149,7 +151,42 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (File.Exists(filePath))
                         File.Delete(filePath);
 
-                    await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                    using var httpClient = new HttpClient();
+                    using var response = await httpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+
+                    response.EnsureSuccessStatusCode();
+
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    if (canReportProgress && (prgBox = ProgressBoxEx.Show("Download plugin...")) != null)
+                    {
+                        await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                        await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+
+                        var buffer = new byte[8192];
+                        long totalRead = 0;
+                        int read;
+
+                        while ((read = await contentStream.ReadAsync(buffer).ConfigureAwait(false)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer.AsMemory(0, read)).ConfigureAwait(false);
+                            totalRead += read;
+
+                            var progressValue = totalRead * 100 / totalBytes;
+                            prgBox.ReportProgress(progressValue);
+                        }
+
+                        Application.Current.Dispatcher.Invoke(() =>
+                        {
+                            prgBox.Close();
+                            prgBox = null;
+                        });
+                    }
+                    else
+                    {
+                        await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                    }
                 }
                 else
                 {
@@ -164,6 +201,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+                // force close progress box
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (prgBox != null)
+                    {
+                        prgBox.Close();
+                        prgBox = null;
+                    }
+                });
                 return;
             }
             catch (Exception e)
@@ -172,6 +218,15 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
                         plugin.Name));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+                // force close progress box
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (prgBox != null)
+                    {
+                        prgBox.Close();
+                        prgBox = null;
+                    }
+                });
                 return;
             }
 
