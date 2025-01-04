@@ -324,6 +324,8 @@ namespace Flow.Launcher
         public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
+        public IProgressBoxEx ShowProgressBox(string caption, Action forceClosed = null) => ProgressBoxEx.Show(caption, forceClosed);
+
         #endregion
 
         #region Private Methods

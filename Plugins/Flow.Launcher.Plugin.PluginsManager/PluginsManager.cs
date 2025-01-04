@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core;
-using Flow.Launcher.Core.ExternalPlugins;
+﻿using Flow.Launcher.Core.ExternalPlugins;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -143,7 +142,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
-            ProgressBoxEx prgBox = null;
+            IProgressBoxEx prgBox = null;
             try
             {
                 if (!plugin.IsFromLocalInstallPath)
@@ -159,7 +158,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     var totalBytes = response.Content.Headers.ContentLength ?? -1L;
                     var canReportProgress = totalBytes != -1;
 
-                    if (canReportProgress && (prgBox = ProgressBoxEx.Show("Download plugin...")) != null)
+                    if (canReportProgress && (prgBox = Context.API.ShowProgressBox("Download plugin...")) != null)
                     {
                         await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                         await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);

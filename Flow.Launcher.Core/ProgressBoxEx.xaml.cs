@@ -2,26 +2,31 @@
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core
 {
-    public partial class ProgressBoxEx : Window
+    public partial class ProgressBoxEx : Window, IProgressBoxEx
     {
-        private ProgressBoxEx()
+        private readonly Action _forceClosed;
+        private bool _isClosed;
+
+        private ProgressBoxEx(Action forceClosed)
         {
+            _forceClosed = forceClosed;
             InitializeComponent();
         }
 
-        public static ProgressBoxEx Show(string caption)
+        public static IProgressBoxEx Show(string caption, Action forceClosed)
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                return Application.Current.Dispatcher.Invoke(() => Show(caption));
+                return Application.Current.Dispatcher.Invoke(() => Show(caption, forceClosed));
             }
 
             try
             {
-                var prgBox = new ProgressBoxEx
+                var prgBox = new ProgressBoxEx(forceClosed)
                 {
                     Title = caption
                 };
@@ -51,6 +56,7 @@ namespace Flow.Launcher.Core
             else if (progress >= 100)
             {
                 ProgressBar.Value = 100;
+                Close();
             }
             else
             {
@@ -58,19 +64,42 @@ namespace Flow.Launcher.Core
             }
         }
 
+        private new void Close()
+        {
+            if (_isClosed)
+            {
+                return;
+            }
+            
+            base.Close();
+            _isClosed = true;
+        }
+
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
-            Close();
+            ForceClose();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            ForceClose();
         }
 
         private void Button_Cancel(object sender, RoutedEventArgs e)
         {
-            Close();
+            ForceClose();
+        }
+
+        private void ForceClose()
+        {
+            if (_isClosed)
+            {
+                return;
+            }
+            
+            base.Close();
+            _isClosed = true;
+            _forceClosed?.Invoke();
         }
     }
 }
