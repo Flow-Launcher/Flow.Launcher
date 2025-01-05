@@ -143,6 +143,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
             IProgressBoxEx prgBox = null;
+            var downloadCancelled = false;
             try
             {
                 if (!plugin.IsFromLocalInstallPath)
@@ -158,7 +159,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     var totalBytes = response.Content.Headers.ContentLength ?? -1L;
                     var canReportProgress = totalBytes != -1;
 
-                    if (canReportProgress && (prgBox = Context.API.ShowProgressBox($"Download {plugin.Name}...")) != null)
+                    if (canReportProgress && 
+                        (prgBox = Context.API.ShowProgressBox($"Download {plugin.Name}...", () =>
+                    {
+                            httpClient.CancelPendingRequests();
+                            downloadCancelled = true;
+                            prgBox = null;
+                        })) != null)
                     {
                         await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
                         await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
@@ -173,26 +180,37 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             totalRead += read;
 
                             var progressValue = totalRead * 100 / totalBytes;
+
+                            // check if user cancelled download before reporting progress
+                            if (downloadCancelled)
+                                return;
+
                             prgBox.ReportProgress(progressValue);
                         }
+
+                        // check if user cancelled download before closing progress box
+                        if (downloadCancelled)
+                            return;
 
                         Application.Current.Dispatcher.Invoke(() =>
                         {
                             prgBox.Close();
                             prgBox = null;
                         });
+
+                        Install(plugin, filePath);
                     }
                     else
                     {
                         await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                        Install(plugin, filePath);
                     }
                 }
                 else
                 {
                     filePath = plugin.LocalInstallPath;
-                }
-
                 Install(plugin, filePath);
+            }
             }
             catch (HttpRequestException e)
             {
