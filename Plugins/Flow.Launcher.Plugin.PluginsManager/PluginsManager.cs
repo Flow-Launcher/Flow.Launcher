@@ -161,7 +161,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                     if (canReportProgress && 
                         (prgBox = Context.API.ShowProgressBox($"Download {plugin.Name}...", () =>
-                    {
+                        {
                             httpClient.CancelPendingRequests();
                             downloadCancelled = true;
                             prgBox = null;
@@ -209,32 +209,31 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 else
                 {
                     filePath = plugin.LocalInstallPath;
-                Install(plugin, filePath);
-            }
+                    Install(plugin, filePath);
+                }
             }
             catch (HttpRequestException e)
             {
+                // force close progress box
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    if (prgBox != null)
+                    {
+                        prgBox.Close();
+                        prgBox = null;
+                    }
+                });
+
+                // show error message
                 Context.API.ShowMsgError(
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
                     Context.API.GetTranslation("plugin_pluginsmanager_download_error"));
                 Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
-                // force close progress box
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (prgBox != null)
-                    {
-                        prgBox.Close();
-                        prgBox = null;
-                    }
-                });
+
                 return;
             }
             catch (Exception e)
             {
-                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
-                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
-                        plugin.Name));
-                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
                 // force close progress box
                 Application.Current.Dispatcher.Invoke(() =>
                 {
@@ -244,6 +243,13 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         prgBox = null;
                     }
                 });
+
+                // show error message
+                Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
+                    string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),
+                        plugin.Name));
+                Log.Exception("PluginsManager", "An error occurred while downloading plugin", e);
+
                 return;
             }
 
