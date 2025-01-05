@@ -197,20 +197,22 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             prgBox.Close();
                             prgBox = null;
                         });
-
-                        Install(plugin, filePath);
                     }
                     else
                     {
                         await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
-                        Install(plugin, filePath);
                     }
                 }
                 else
                 {
                     filePath = plugin.LocalInstallPath;
-                    Install(plugin, filePath);
                 }
+
+                // check if user cancelled download before installing plugin
+                if (downloadCancelled)
+                    return;
+
+                Install(plugin, filePath);
             }
             catch (HttpRequestException e)
             {
