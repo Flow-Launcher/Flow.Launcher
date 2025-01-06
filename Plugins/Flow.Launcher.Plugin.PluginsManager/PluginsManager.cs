@@ -163,9 +163,12 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (canReportProgress && 
                         (prgBox = Context.API.ShowProgressBox(prgBoxTitle, () =>
                         {
-                            httpClient.CancelPendingRequests();
-                            downloadCancelled = true;
-                            prgBox = null;
+                            if (prgBox != null)
+                            {
+                                httpClient.CancelPendingRequests();
+                                downloadCancelled = true;
+                                prgBox = null;
+                            }
                         })) != null)
                     {
                         await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
@@ -185,19 +188,19 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             // check if user cancelled download before reporting progress
                             if (downloadCancelled)
                                 return;
-
-                            prgBox.ReportProgress(progressValue);
+                            else
+                                prgBox.ReportProgress(progressValue);
                         }
 
                         // check if user cancelled download before closing progress box
                         if (downloadCancelled)
                             return;
-
-                        Application.Current.Dispatcher.Invoke(() =>
-                        {
-                            prgBox.Close();
-                            prgBox = null;
-                        });
+                        else
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                prgBox.Close();
+                                prgBox = null;
+                            });
                     }
                     else
                     {
@@ -212,8 +215,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 // check if user cancelled download before installing plugin
                 if (downloadCancelled)
                     return;
-
-                Install(plugin, filePath);
+                else
+                    Install(plugin, filePath);
             }
             catch (HttpRequestException e)
             {
