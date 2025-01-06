@@ -18,7 +18,6 @@ namespace Flow.Launcher.Core.Resource
     {
         public Settings Settings { get; set; }
         private const string Folder = "Languages";
-        private const string SystemLanguageCode = "System";
         private const string DefaultLanguageCode = "en";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
@@ -73,7 +72,7 @@ namespace Flow.Launcher.Core.Resource
 
             // Get actual language if language code is system
             var isSystem = false;
-            if (languageCode == SystemLanguageCode)
+            if (languageCode == Constant.SystemLanguageCode)
             {
                 languageCode = GetSystemLanguageCode();
                 isSystem = true;
@@ -114,7 +113,7 @@ namespace Flow.Launcher.Core.Resource
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
 
             // Raise event after culture is set
-            Settings.Language = isSystem ? SystemLanguageCode : language.LanguageCode;
+            Settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
@@ -179,7 +178,7 @@ namespace Flow.Launcher.Core.Resource
         public List<Language> LoadAvailableLanguages()
         {
             var list = AvailableLanguages.GetAvailableLanguages();
-            list.Insert(0, new Language(SystemLanguageCode, AvailableLanguages.GetSystemTranslation(GetSystemLanguageCode())));
+            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(GetSystemLanguageCode())));
             return list;
         }
 
