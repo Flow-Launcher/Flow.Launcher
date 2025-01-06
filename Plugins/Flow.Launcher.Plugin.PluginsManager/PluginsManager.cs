@@ -196,11 +196,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         if (downloadCancelled)
                             return;
                         else
-                            Application.Current.Dispatcher.Invoke(() =>
-                            {
-                                prgBox.Close();
-                                prgBox = null;
-                            });
+                            CleanupProgressBoxEx(prgBox);
                     }
                     else
                     {
@@ -221,14 +217,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (HttpRequestException e)
             {
                 // force close progress box
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (prgBox != null)
-                    {
-                        prgBox.Close();
-                        prgBox = null;
-                    }
-                });
+                CleanupProgressBoxEx(prgBox);
 
                 // show error message
                 Context.API.ShowMsgError(
@@ -241,14 +230,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (Exception e)
             {
                 // force close progress box
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    if (prgBox != null)
-                    {
-                        prgBox.Close();
-                        prgBox = null;
-                    }
-                });
+                CleanupProgressBoxEx(prgBox);
 
                 // show error message
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
@@ -272,6 +254,14 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
                         plugin.Name));
             }
+        }
+
+        private static void CleanupProgressBoxEx(IProgressBoxEx prgBox)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                prgBox?.Close();
+            });
         }
 
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,
