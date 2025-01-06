@@ -53,6 +53,6 @@ namespace Flow.Launcher.Infrastructure
         public const string GitHub = "https://github.com/Flow-Launcher/Flow.Launcher";
         public const string Docs = "https://flowlauncher.com/docs";
 
-        public const string SystemLanguageCode = "System";
+        public const string SystemLanguageCode = "system";
     }
 }
