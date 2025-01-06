@@ -17,7 +17,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        const string zip = "zip";
+        private static readonly HttpClient HttpClient = new();
+
+        private const string zip = "zip";
 
         private PluginInitContext Context { get; set; }
 
@@ -151,8 +153,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (File.Exists(filePath))
                         File.Delete(filePath);
 
-                    using var httpClient = new HttpClient();
-                    using var response = await httpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                    using var response = await HttpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
 
                     response.EnsureSuccessStatusCode();
 
@@ -165,7 +166,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             if (prgBox != null)
                             {
-                                httpClient.CancelPendingRequests();
+                                HttpClient.CancelPendingRequests();
                                 downloadCancelled = true;
                                 prgBox = null;
                             }
