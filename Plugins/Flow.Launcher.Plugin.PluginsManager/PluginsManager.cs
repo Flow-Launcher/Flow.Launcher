@@ -159,8 +159,9 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     var totalBytes = response.Content.Headers.ContentLength ?? -1L;
                     var canReportProgress = totalBytes != -1;
 
+                    var prgBoxTitle = $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {plugin.Name}";
                     if (canReportProgress && 
-                        (prgBox = Context.API.ShowProgressBox($"Download {plugin.Name}...", () =>
+                        (prgBox = Context.API.ShowProgressBox(prgBoxTitle, () =>
                         {
                             httpClient.CancelPendingRequests();
                             downloadCancelled = true;
