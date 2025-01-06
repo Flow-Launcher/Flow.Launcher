@@ -168,7 +168,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             {
                                 HttpClient.CancelPendingRequests();
                                 downloadCancelled = true;
-                                prgBox = null;
                             }
                         })) != null)
                     {
