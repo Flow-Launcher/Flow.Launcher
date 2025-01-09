@@ -63,7 +63,7 @@ namespace Flow.Launcher
                 o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
                 Close();
                 return;
             }

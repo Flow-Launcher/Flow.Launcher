@@ -46,7 +46,7 @@ internal static class HotKeyMapper
         {
             string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 

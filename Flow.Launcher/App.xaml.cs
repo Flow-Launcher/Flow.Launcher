@@ -15,13 +15,15 @@ using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
-    public partial class App : IDisposable, ISingleInstanceApp
+    public partial class App : IDisposable, ISingleInstanceApp, IApp
     {
+        public IPublicAPI PublicAPI => API;
         public static PublicAPIInstance API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;

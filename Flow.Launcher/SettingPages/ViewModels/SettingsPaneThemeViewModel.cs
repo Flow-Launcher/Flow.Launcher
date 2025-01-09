@@ -49,7 +49,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (ThemeManager.Instance.BlurEnabled && value)
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
                 return;
             }
 
