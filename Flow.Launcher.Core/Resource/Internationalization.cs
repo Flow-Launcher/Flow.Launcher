@@ -124,7 +124,7 @@ namespace Flow.Launcher.Core.Resource
             // "Do you want to search with pinyin?"
             string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？" ;
 
-            if (MessageBoxEx.Show(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (AppExtensions.API.ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;

@@ -119,7 +119,7 @@ namespace Flow.Launcher.Core.Plugin
 
                 _ = Task.Run(() =>
                 {
-                    MessageBoxEx.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    AppExtensions.API.ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                     $"Please refer to the logs for more information", "",
                         MessageBoxButton.OK, MessageBoxImage.Warning);

@@ -53,7 +53,7 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        MessageBoxEx.Show(api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        AppExtensions.API.ShowMsgBox(api.GetTranslation("update_flowlauncher_already_on_latest"));
                     return;
                 }
 
@@ -68,9 +68,9 @@ namespace Flow.Launcher.Core
                 if (DataLocation.PortableDataLocationInUse())
                 {
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show);
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show))
-                        MessageBoxEx.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => AppExtensions.API.ShowMsgBox(s));
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => AppExtensions.API.ShowMsgBox(s)))
+                        AppExtensions.API.ShowMsgBox(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
                 }
@@ -83,7 +83,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (MessageBoxEx.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (AppExtensions.API.ShowMsgBox(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
