@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin;
 
-namespace Flow.Launcher.Core
+namespace Flow.Launcher
 {
     public partial class ProgressBoxEx : Window, IProgressBoxEx
     {
