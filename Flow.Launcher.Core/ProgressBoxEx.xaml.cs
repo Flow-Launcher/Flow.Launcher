@@ -70,6 +70,7 @@ namespace Flow.Launcher.Core
             if (!Application.Current.Dispatcher.CheckAccess())
             {
                 await Application.Current.Dispatcher.InvokeAsync(Close);
+                return;
             }
 
             Close();
