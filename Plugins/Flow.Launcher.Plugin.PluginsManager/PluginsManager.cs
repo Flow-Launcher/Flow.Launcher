@@ -196,7 +196,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         if (downloadCancelled)
                             return;
                         else
-                            CleanupProgressBoxEx(prgBox);
+                            prgBox?.Close();
                     }
                     else
                     {
@@ -217,7 +217,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (HttpRequestException e)
             {
                 // force close progress box
-                CleanupProgressBoxEx(prgBox);
+                prgBox?.Close();
 
                 // show error message
                 Context.API.ShowMsgError(
@@ -230,7 +230,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (Exception e)
             {
                 // force close progress box
-                CleanupProgressBoxEx(prgBox);
+                prgBox?.Close();
 
                 // show error message
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
@@ -254,14 +254,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_success_no_restart"),
                         plugin.Name));
             }
-        }
-
-        private static void CleanupProgressBoxEx(IProgressBoxEx prgBox)
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                prgBox?.Close();
-            });
         }
 
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,

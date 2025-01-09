@@ -66,11 +66,16 @@ namespace Flow.Launcher.Core
 
         private new void Close()
         {
+            if (!Application.Current.Dispatcher.CheckAccess())
+            {
+                Application.Current.Dispatcher.Invoke(Close);
+            }
+
             if (_isClosed)
             {
                 return;
             }
-            
+
             base.Close();
             _isClosed = true;
         }
