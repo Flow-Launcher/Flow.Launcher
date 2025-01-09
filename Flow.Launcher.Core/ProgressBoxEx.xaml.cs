@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure.Logger;
@@ -64,13 +65,18 @@ namespace Flow.Launcher.Core
             }
         }
 
-        private new void Close()
+        public async Task CloseAsync()
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {
-                Application.Current.Dispatcher.Invoke(Close);
+                await Application.Current.Dispatcher.InvokeAsync(Close);
             }
 
+            Close();
+        }
+
+        private new void Close()
+        {
             if (_isClosed)
             {
                 return;

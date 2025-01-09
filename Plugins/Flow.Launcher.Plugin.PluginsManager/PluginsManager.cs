@@ -196,7 +196,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         if (downloadCancelled)
                             return;
                         else
-                            prgBox?.Close();
+                            await prgBox?.CloseAsync();
                     }
                     else
                     {
@@ -217,7 +217,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (HttpRequestException e)
             {
                 // force close progress box
-                prgBox?.Close();
+                await prgBox?.CloseAsync();
 
                 // show error message
                 Context.API.ShowMsgError(
@@ -230,7 +230,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             catch (Exception e)
             {
                 // force close progress box
-                prgBox?.Close();
+                await prgBox?.CloseAsync();
 
                 // show error message
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),

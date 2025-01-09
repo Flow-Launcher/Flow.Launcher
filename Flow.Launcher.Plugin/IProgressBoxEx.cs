@@ -1,4 +1,6 @@
-﻿namespace Flow.Launcher.Plugin;
+﻿using System.Threading.Tasks;
+
+namespace Flow.Launcher.Plugin;
 
 /// <summary>
 /// Interface for progress box
@@ -16,5 +18,5 @@ public interface IProgressBoxEx
     /// <summary>
     /// Close progress box.
     /// </summary>
-    public void Close();
+    public Task CloseAsync();
 }
