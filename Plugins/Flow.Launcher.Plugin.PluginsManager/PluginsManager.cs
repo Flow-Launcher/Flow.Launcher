@@ -153,7 +153,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (File.Exists(filePath))
                         File.Delete(filePath);
 
-                    using var response = await HttpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead).ConfigureAwait(false);
+                    using var cts = new CancellationTokenSource();
+                    using var response = await HttpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead, cts.Token).ConfigureAwait(false);
 
                     response.EnsureSuccessStatusCode();
 
@@ -166,7 +167,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         {
                             if (prgBox != null)
                             {
-                                HttpClient.CancelPendingRequests();
+                                cts.Cancel();
                                 downloadCancelled = true;
                             }
                         })) != null)
