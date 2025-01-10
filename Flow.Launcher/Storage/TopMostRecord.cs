@@ -52,8 +52,14 @@ namespace Flow.Launcher.Storage
 
         public bool Equals(Result r)
         {
-            return Title == r.Title
-                && SubTitle == r.SubTitle
+            var titleEqual = r.GetTitleKey != null ?
+                r.GetTitleKey(Title) == r.GetTitleKey(r.Title) :
+                Title == r.Title;
+            var subTitleEqual = r.GetSubTitleKey != null ?
+                r.GetSubTitleKey(SubTitle) == r.GetSubTitleKey(r.SubTitle) :
+                SubTitle == r.SubTitle;
+            return titleEqual
+                && subTitleEqual
                 && PluginID == r.PluginID;
         }
     }

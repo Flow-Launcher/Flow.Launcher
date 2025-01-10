@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public class Result
     {
-
         private string _pluginDirectory;
 
         private string _icoPath;
@@ -102,7 +100,6 @@ namespace Flow.Launcher.Plugin
         /// Information for Glyph Icon (Prioritized than IcoPath/Icon if user enable Glyph Icons)
         /// </summary>
         public GlyphInfo Glyph { get; init; }
-
 
         /// <summary>
         /// An action to take in the form of a function call when the result has been selected.
@@ -272,6 +269,26 @@ namespace Flow.Launcher.Plugin
         /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
         /// </summary>
         public const int MaxScore = int.MaxValue;
+
+        /// <summary>
+        /// An action to get the key of the title. This is used when FL checks whether the result is the topmost record. Or FL calculates the hashcode of the result for user selected records.
+        /// This can be useful when your plugin will change the title of the result dynamically.
+        /// </summary>
+        /// <remarks>
+        /// The function is invoked with the title of the result as the only parameter.
+        /// Its result determines the key of the title.
+        /// </remarks>
+        public Func<string, string> GetTitleKey { get; set; } = null;
+
+        /// <summary>
+        /// An action to get the key of the subtitle. This is used when FL checks whether the result is the topmost record. Or FL calculates the hashcode of the result for user selected records.
+        /// This can be useful when your plugin will change the subtitle of the result dynamically.
+        /// </summary>
+        /// <remarks>
+        /// The function is invoked with the subtitle of the result as the only parameter.
+        /// Its result determines the key of the subtitle.
+        /// </remarks>
+        public Func<string, string> GetSubTitleKey { get; set; } = null;
 
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
