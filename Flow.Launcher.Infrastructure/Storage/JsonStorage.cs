@@ -190,7 +190,7 @@ namespace Flow.Launcher.Infrastructure.Storage
 
         public async Task SaveAsync()
         {
-            var tempOutput = File.OpenWrite(TempFilePath);
+            await using var tempOutput = File.OpenWrite(TempFilePath);
             await JsonSerializer.SerializeAsync(tempOutput, Data,
                 new JsonSerializerOptions { WriteIndented = true });
             AtomicWriteSetting();
