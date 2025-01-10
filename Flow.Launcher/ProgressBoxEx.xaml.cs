@@ -10,7 +10,6 @@ namespace Flow.Launcher
     public partial class ProgressBoxEx : Window, IProgressBoxEx
     {
         private readonly Action _forceClosed;
-        private bool _isClosed;
 
         private ProgressBoxEx(Action forceClosed)
         {
@@ -76,17 +75,6 @@ namespace Flow.Launcher
             Close();
         }
 
-        private new void Close()
-        {
-            if (_isClosed)
-            {
-                return;
-            }
-
-            base.Close();
-            _isClosed = true;
-        }
-
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
         {
             ForceClose();
@@ -104,13 +92,7 @@ namespace Flow.Launcher
 
         private void ForceClose()
         {
-            if (_isClosed)
-            {
-                return;
-            }
-            
-            base.Close();
-            _isClosed = true;
+            Close();
             _forceClosed?.Invoke();
         }
     }
