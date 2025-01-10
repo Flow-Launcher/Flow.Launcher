@@ -138,7 +138,7 @@ namespace Flow.Launcher.Core.Plugin
             SetupJsonRPC();
             try
             {
-                await RPC.InvokeAsync("reload", context);
+                await RPC.InvokeAsync("reload", Context);
             }
             catch (RemoteMethodNotFoundException e)
             {
