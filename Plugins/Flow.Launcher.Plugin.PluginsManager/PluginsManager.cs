@@ -145,6 +145,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
             var downloadCancelled = false;
+            var exceptionHappened = false;
             try
             {
                 if (!plugin.IsFromLocalInstallPath)
@@ -168,8 +169,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             {
                                 if (reportProgress == null)
                                 {
-                                    // cannot use progress box
-                                    await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                                    // when reportProgress is null, it means there is expcetion with the progress box
+                                    // so we record it with exceptionHappened and return so that progress box will close instantly
+                                    exceptionHappened = true;
+                                    return;
                                 }
                                 else
                                 {
@@ -200,6 +203,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 cts.Cancel();
                                 downloadCancelled = true;
                             });
+
+                        // if exception happened while downloading and user does not cancel downloading,
+                        // we need to redownload the plugin
+                        if (exceptionHappened && (!downloadCancelled))
+                            await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
                     }
                     else
                     {
