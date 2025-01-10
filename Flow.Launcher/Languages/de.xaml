@@ -65,8 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Letzte Abfrage beibehalten</system:String>
     <system:String x:Key="LastQuerySelected">Letzte Abfrage auswählen</system:String>
     <system:String x:Key="LastQueryEmpty">Letzte Abfrage leeren</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Letztes Aktions-Schlüsselwort beibehalten</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Letztes Aktions-Schlüsselwort auswählen</system:String>
     <system:String x:Key="KeepMaxResults">Feste Fensterhöhe</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Die Fensterhöhe ist durch Ziehen nicht anpassbar.</system:String>
     <system:String x:Key="maxShowResults">Maximal gezeigte Ergebnisse</system:String>
