@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -126,9 +126,9 @@ namespace Flow.Launcher
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
                 var paths = new StringCollection
-                {
-                    stringToCopy
-                };
+                    {
+                        stringToCopy
+                    };
 
                 Clipboard.SetFileDropList(paths);
 

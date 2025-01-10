@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
+using Windows.Win32;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -54,10 +54,6 @@ namespace Flow.Launcher.Infrastructure
             return explorerWindows.Zip(zOrders).MinBy(x => x.Second).First;
         }
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool EnumWindows(EnumWindowsProc lpEnumFunc, IntPtr lParam);
-
         private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
 
         /// <summary>
@@ -70,9 +66,9 @@ namespace Flow.Launcher.Infrastructure
 
             var index = 0;
             var numRemaining = hWnds.Count;
-            EnumWindows((wnd, _) =>
+            PInvoke.EnumWindows((wnd, _) =>
             {
-                var searchIndex = hWnds.FindIndex(x => x.HWND == wnd.ToInt32());
+                var searchIndex = hWnds.FindIndex(x => new IntPtr(x.HWND) == wnd);
                 if (searchIndex != -1)
                 {
                     z[searchIndex] = index;
