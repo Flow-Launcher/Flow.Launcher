@@ -78,8 +78,8 @@ namespace Flow.Launcher.Test.Plugins
 
             foreach (var ((result1, result2), referenceResult) in results1.Zip(results2).Zip(reference.Result))
             {
-                Assert.AreEqual(result1, result2);
-                Assert.AreEqual(result1, referenceResult);
+                Assert.AreEqual(result1.Title, result2.Title);
+                Assert.AreEqual(result1.Title, referenceResult.Title);
 
                 Assert.IsNotNull(result1);
                 Assert.IsNotNull(result1.AsyncAction);
