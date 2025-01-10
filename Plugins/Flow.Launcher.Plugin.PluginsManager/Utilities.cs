@@ -71,9 +71,8 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 if (pluginJsonEntry != null)
                 {
-                    using StreamReader reader = new StreamReader(pluginJsonEntry.Open());
-                    string pluginJsonContent = reader.ReadToEnd();
-                    plugin = JsonSerializer.Deserialize<UserPlugin>(pluginJsonContent);
+                    using Stream stream = pluginJsonEntry.Open();
+                    plugin = JsonSerializer.Deserialize<UserPlugin>(stream);
                     plugin.IcoPath = "Images\\zipfolder.png";
                 }
             }
