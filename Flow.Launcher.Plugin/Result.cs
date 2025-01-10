@@ -203,6 +203,17 @@ namespace Flow.Launcher.Plugin
                 TitleHighlightData = TitleHighlightData,
                 OriginQuery = OriginQuery,
                 PluginDirectory = PluginDirectory,
+                ContextData = ContextData,
+                PluginID = PluginID,
+                TitleToolTip = TitleToolTip,
+                SubTitleToolTip = SubTitleToolTip,
+                PreviewPanel = PreviewPanel,
+                ProgressBar = ProgressBar,
+                ProgressBarColor = ProgressBarColor,
+                Preview = Preview,
+                AddSelectedCount = AddSelectedCount,
+                GetTitleKey = GetTitleKey,
+                GetSubTitleKey = GetSubTitleKey,
             };
         }
 
