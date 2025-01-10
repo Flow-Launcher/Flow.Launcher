@@ -3,6 +3,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.SettingPages.ViewModels;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -42,13 +43,13 @@ namespace Flow.Launcher
         {
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
+                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;
             }
             DialogResult = !update || originalKey != Key || originalValue != Value;

@@ -51,6 +51,11 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateQueryAndResultHashCode(Query query, Result result)
         {
+            if (query == null)
+            {
+                return GenerateResultHashCode(result);
+            }
+
             int hashcode = GenerateStaticHashCode(query.ActionKeyword);
             hashcode = GenerateStaticHashCode(query.Search, hashcode);
             hashcode = GenerateStaticHashCode(result.Title, hashcode);

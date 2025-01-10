@@ -10,10 +10,6 @@ using Flow.Launcher.Plugin.Explorer.Search;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
 using System.Linq;
 using Flow.Launcher.Plugin.Explorer.Helper;
-using MessageBox = System.Windows.Forms.MessageBox;
-using MessageBoxIcon = System.Windows.Forms.MessageBoxIcon;
-using MessageBoxButton = System.Windows.Forms.MessageBoxButtons;
-using DialogResult = System.Windows.Forms.DialogResult;
 using Flow.Launcher.Plugin.Explorer.ViewModels;
 
 namespace Flow.Launcher.Plugin.Explorer
@@ -177,12 +173,12 @@ namespace Flow.Launcher.Plugin.Explorer
                         {
                             try
                             {
-                                if (MessageBox.Show(
+                                if (Context.API.ShowMsgBox(
                                         string.Format(Context.API.GetTranslation("plugin_explorer_delete_folder_link"), record.FullPath),
                                         string.Empty,
                                         MessageBoxButton.YesNo,
-                                        MessageBoxIcon.Warning)
-                                    == DialogResult.No)
+                                        MessageBoxImage.Warning)
+                                    == MessageBoxResult.No)
                                     return false;
 
                                 if (isFile)

@@ -70,7 +70,8 @@ namespace Flow.Launcher.Plugin
                     && !string.IsNullOrEmpty(PluginDirectory)
                     && !Path.IsPathRooted(value)
                     && !value.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
-                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+                    && !value.StartsWith("https://", StringComparison.OrdinalIgnoreCase)
+                    && !value.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     _icoPath = Path.Combine(PluginDirectory, value);
                 }
@@ -240,6 +241,16 @@ namespace Flow.Launcher.Plugin
         /// Contains data used to populate the preview section of this result.
         /// </summary>
         public PreviewInfo Preview { get; set; } = PreviewInfo.Default;
+
+        /// <summary>
+        /// Determines if the user selection count should be added to the score. This can be useful when set to false to allow the result sequence order to be the same everytime instead of changing based on selection.
+        /// </summary>
+        public bool AddSelectedCount { get; set; } = true;
+
+        /// <summary>
+        /// Maximum score. This can be useful when set one result to the top by default. This is the score for the results set to the topmost by users.
+        /// </summary>
+        public const int MaxScore = int.MaxValue;
 
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>

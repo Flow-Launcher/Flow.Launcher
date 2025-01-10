@@ -233,7 +233,7 @@ namespace Flow.Launcher.ViewModel
             if (!resultsForUpdates.Any())
                 return Results;
 
-            return Results.Where(r => r != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
+            return Results.Where(r => r?.Result != null && resultsForUpdates.All(u => u.ID != r.Result.PluginID))
                           .Concat(resultsForUpdates.SelectMany(u => u.Results, (u, r) => new ResultViewModel(r, _settings)))
                           .OrderByDescending(rv => rv.Result.Score)
                           .ToList();

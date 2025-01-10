@@ -4,8 +4,8 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Resource;
 
@@ -57,7 +57,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 EnvName,
                 Environment.NewLine
             );
-            if (MessageBox.Show(noRuntimeMessage, string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
+            if (MessageBoxEx.Show(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
                 var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
                 string selectedFile;
@@ -82,7 +82,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                MessageBox.Show(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
+                MessageBoxEx.Show(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
                 Log.Error("PluginsLoader",
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
@@ -98,7 +98,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             if (expectedPath == currentPath)
                 return;
 
-            FilesFolders.RemoveFolderIfExists(installedDirPath);
+            FilesFolders.RemoveFolderIfExists(installedDirPath, MessageBoxEx.Show);
 
             InstallEnvironment();
 

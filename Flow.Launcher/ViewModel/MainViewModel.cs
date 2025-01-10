@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -23,6 +23,8 @@ using CommunityToolkit.Mvvm.Input;
 using System.Globalization;
 using System.Windows.Input;
 using System.ComponentModel;
+using Flow.Launcher.Infrastructure.Image;
+using System.Windows.Media;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -484,6 +486,14 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public void BackToQueryResults()
+        {
+            if (!SelectedIsFromQueryResults())
+            {
+                SelectedResults = Results;
+            }
+        }
+
         [RelayCommand]
         public void ToggleGameMode()
         {
@@ -722,6 +732,8 @@ namespace Flow.Launcher.ViewModel
             set => Settings.ResultSubItemFontSize = value;
         }
 
+        public ImageSource PluginIconSource { get; private set; } = null;
+
         public string PluginIconPath { get; set; } = null;
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
@@ -759,7 +771,7 @@ namespace Flow.Launcher.ViewModel
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
-        
+
         #endregion
 
         #region Preview
@@ -821,7 +833,7 @@ namespace Flow.Launcher.ViewModel
         }
 
         private void HidePreview()
-        {            
+        {
             if (PluginManager.UseExternalPreview())
                 CloseExternalPreview();
 
@@ -900,7 +912,7 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
         }
-        
+
         private void UpdatePreview()
         {
             switch (PluginManager.UseExternalPreview())
@@ -1066,6 +1078,7 @@ namespace Flow.Launcher.ViewModel
                 Results.Clear();
                 Results.Visibility = Visibility.Collapsed;
                 PluginIconPath = null;
+                PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
                 return;
             }
@@ -1099,11 +1112,13 @@ namespace Flow.Launcher.ViewModel
             if (plugins.Count == 1)
             {
                 PluginIconPath = plugins.Single().Metadata.IcoPath;
+                PluginIconSource = await ImageLoader.LoadAsync(PluginIconPath);
                 SearchIconVisibility = Visibility.Hidden;
             }
             else
             {
                 PluginIconPath = null;
+                PluginIconSource = null;
                 SearchIconVisibility = Visibility.Visible;
             }
 
@@ -1386,6 +1401,16 @@ namespace Flow.Launcher.ViewModel
                         await Task.Delay(100);
                     LastQuerySelected = false;
                     break;
+                case LastQueryMode.ActionKeywordPreserved or LastQueryMode.ActionKeywordSelected:
+                    var newQuery = _lastQuery.ActionKeyword;
+                    if (!string.IsNullOrEmpty(newQuery))
+                        newQuery += " ";
+                    ChangeQueryText(newQuery);
+                    if (Settings.UseAnimation)
+                        await Task.Delay(100);
+                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                        LastQuerySelected = false;
+                    break;
                 default:
                     throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
             }
@@ -1446,12 +1471,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (_topMostRecord.IsTopMost(result))
                     {
-                        result.Score = int.MaxValue;
+                        result.Score = Result.MaxScore;
                     }
-                    else
+                    else if (result.Score != Result.MaxScore)
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                        result.Score += result.AddSelectedCount ?
+                            _userSelectedRecord.GetSelectedCount(result) + priorityScore :
+                            priorityScore;
                     }
                 }
             }
