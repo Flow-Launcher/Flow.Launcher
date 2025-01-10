@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher
 {
-    public partial class ProgressBoxEx : Window, IProgressBoxEx
+    public partial class ProgressBoxEx : Window
     {
         private readonly Action _forceClosed;
 
@@ -17,31 +16,48 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        public static IProgressBoxEx Show(string caption, Action forceClosed = null)
+        public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null)
         {
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                return Application.Current.Dispatcher.Invoke(() => Show(caption, forceClosed));
-            }
-
+            ProgressBoxEx prgBox = null;
             try
             {
-                var prgBox = new ProgressBoxEx(forceClosed)
+                if (!Application.Current.Dispatcher.CheckAccess())
                 {
-                    Title = caption
-                };
-                prgBox.TitleTextBlock.Text = caption;
-                prgBox.Show();
-                return prgBox;
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
+                    {
+                        prgBox = new ProgressBoxEx(forceClosed)
+                        {
+                            Title = caption
+                        };
+                        prgBox.TitleTextBlock.Text = caption;
+                        prgBox.Show();
+                    });
+                }
+
+                await reportProgressAsync(prgBox.ReportProgress).ConfigureAwait(false);
             }
             catch (Exception e)
             {
                 Log.Error($"|ProgressBoxEx.Show|An error occurred: {e.Message}");
-                return null;
+
+                await reportProgressAsync(null).ConfigureAwait(false);
+            }
+            finally
+            {
+                if (!Application.Current.Dispatcher.CheckAccess())
+                {
+                    await Application.Current.Dispatcher.InvokeAsync(async () =>
+                    {
+                        if (prgBox != null)
+                        {
+                            await prgBox.CloseAsync();
+                        }
+                    });
+                }
             }
         }
 
-        public void ReportProgress(double progress)
+        private void ReportProgress(double progress)
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {
@@ -64,7 +80,7 @@ namespace Flow.Launcher
             }
         }
 
-        public async Task CloseAsync()
+        private async Task CloseAsync()
         {
             if (!Application.Current.Dispatcher.CheckAccess())
             {

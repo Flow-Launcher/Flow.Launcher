@@ -144,7 +144,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
-            IProgressBoxEx prgBox = null;
             var downloadCancelled = false;
             try
             {
@@ -162,42 +161,45 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     var canReportProgress = totalBytes != -1;
 
                     var prgBoxTitle = $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {plugin.Name}";
-                    if (canReportProgress && 
-                        (prgBox = Context.API.ShowProgressBox(prgBoxTitle, () =>
-                        {
-                            if (prgBox != null)
+                    if (canReportProgress)
+                    {
+                        await Context.API.ShowProgressBoxAsync(prgBoxTitle, 
+                            async (reportProgress) =>
+                            {
+                                if (reportProgress == null)
+                                {
+                                    // cannot use progress box
+                                    await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
+                                }
+                                else
+                                {
+                                    await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                                    await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+
+                                    var buffer = new byte[8192];
+                                    long totalRead = 0;
+                                    int read;
+
+                                    while ((read = await contentStream.ReadAsync(buffer).ConfigureAwait(false)) > 0)
+                                    {
+                                        await fileStream.WriteAsync(buffer.AsMemory(0, read)).ConfigureAwait(false);
+                                        totalRead += read;
+
+                                        var progressValue = totalRead * 100 / totalBytes;
+
+                                        // check if user cancelled download before reporting progress
+                                        if (downloadCancelled)
+                                            return;
+                                        else
+                                            reportProgress(progressValue);
+                                    }
+                                }
+                            }, 
+                            () =>
                             {
                                 cts.Cancel();
                                 downloadCancelled = true;
-                            }
-                        })) != null)
-                    {
-                        await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                        await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
-
-                        var buffer = new byte[8192];
-                        long totalRead = 0;
-                        int read;
-
-                        while ((read = await contentStream.ReadAsync(buffer).ConfigureAwait(false)) > 0)
-                        {
-                            await fileStream.WriteAsync(buffer.AsMemory(0, read)).ConfigureAwait(false);
-                            totalRead += read;
-
-                            var progressValue = totalRead * 100 / totalBytes;
-
-                            // check if user cancelled download before reporting progress
-                            if (downloadCancelled)
-                                return;
-                            else
-                                prgBox.ReportProgress(progressValue);
-                        }
-
-                        // check if user cancelled download before closing progress box
-                        if (downloadCancelled)
-                            return;
-                        else
-                            await prgBox?.CloseAsync();
+                            });
                     }
                     else
                     {
@@ -217,9 +219,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             catch (HttpRequestException e)
             {
-                // force close progress box
-                await prgBox?.CloseAsync();
-
                 // show error message
                 Context.API.ShowMsgError(
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin"), plugin.Name),
@@ -230,9 +229,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
             catch (Exception e)
             {
-                // force close progress box
-                await prgBox?.CloseAsync();
-
                 // show error message
                 Context.API.ShowMsgError(Context.API.GetTranslation("plugin_pluginsmanager_install_error_title"),
                     string.Format(Context.API.GetTranslation("plugin_pluginsmanager_install_error_subtitle"),

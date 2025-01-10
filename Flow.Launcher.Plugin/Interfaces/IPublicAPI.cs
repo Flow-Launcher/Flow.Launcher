@@ -322,8 +322,13 @@ namespace Flow.Launcher.Plugin
         /// If there is issue when showing the message box, it will return null.
         /// </summary>
         /// <param name="caption">The caption of the message box.</param>
+        /// <param name="reportProgressAsync">
+        /// Time-consuming task function, whose input is the action to report progress.
+        /// The input of the action is the progress value which is a double value between 0 and 100.
+        /// If there are any exceptions, this action will be null.
+        /// </param>
         /// <param name="forceClosed">When user closes the progress box manually by button or esc key, this action will be called.</param>
         /// <returns>A progress box interface.</returns>
-        public IProgressBoxEx ShowProgressBox(string caption, Action forceClosed = null);
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null);
     }
 }
