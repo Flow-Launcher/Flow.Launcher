@@ -83,15 +83,50 @@ namespace Flow.Launcher.Infrastructure.Http
             }
         }
 
-        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default)
         {
             try
             {
                 using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
+
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream, token);
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    if (canReportProgress && reportProgress != null)
+                    {
+                        await using var contentStream = await response.Content.ReadAsStreamAsync(token);
+                        await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+
+                        var buffer = new byte[8192];
+                        long totalRead = 0;
+                        int read;
+                        double progressValue = 0;
+
+                        reportProgress(0);
+
+                        while ((read = await contentStream.ReadAsync(buffer, token)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer.AsMemory(0, read), token);
+                            totalRead += read;
+
+                            progressValue = totalRead * 100.0 / totalBytes;
+
+                            if (token.IsCancellationRequested)
+                                return;
+                            else
+                                reportProgress(progressValue);
+                        }
+
+                        if (progressValue < 100)
+                            reportProgress(100);
+                    }
+                    else
+                    {
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                        await response.Content.CopyToAsync(fileStream, token);
+                    }
                 }
                 else
                 {

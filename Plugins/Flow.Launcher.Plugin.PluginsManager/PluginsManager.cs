@@ -17,8 +17,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
 {
     internal class PluginsManager
     {
-        private static readonly HttpClient HttpClient = new();
-
         private const string zip = "zip";
 
         private PluginInitContext Context { get; set; }
@@ -144,75 +142,37 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
             var filePath = Path.Combine(Path.GetTempPath(), downloadFilename);
 
-            var downloadCancelled = false;
             var exceptionHappened = false;
             try
             {
+                using var cts = new CancellationTokenSource();
+
                 if (!plugin.IsFromLocalInstallPath)
                 {
                     if (File.Exists(filePath))
                         File.Delete(filePath);
 
-                    using var cts = new CancellationTokenSource();
-                    using var response = await HttpClient.GetAsync(plugin.UrlDownload, HttpCompletionOption.ResponseHeadersRead, cts.Token).ConfigureAwait(false);
-
-                    response.EnsureSuccessStatusCode();
-
-                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
-                    var canReportProgress = totalBytes != -1;
-
                     var prgBoxTitle = $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {plugin.Name}";
-                    if (canReportProgress)
-                    {
-                        await Context.API.ShowProgressBoxAsync(prgBoxTitle, 
-                            async (reportProgress) =>
+                    await Context.API.ShowProgressBoxAsync(prgBoxTitle,
+                        async (reportProgress) =>
+                        {
+                            if (reportProgress == null)
                             {
-                                if (reportProgress == null)
-                                {
-                                    // when reportProgress is null, it means there is expcetion with the progress box
-                                    // so we record it with exceptionHappened and return so that progress box will close instantly
-                                    exceptionHappened = true;
-                                    return;
-                                }
-                                else
-                                {
-                                    await using var contentStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                                    await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
-
-                                    var buffer = new byte[8192];
-                                    long totalRead = 0;
-                                    int read;
-
-                                    while ((read = await contentStream.ReadAsync(buffer).ConfigureAwait(false)) > 0)
-                                    {
-                                        await fileStream.WriteAsync(buffer.AsMemory(0, read)).ConfigureAwait(false);
-                                        totalRead += read;
-
-                                        var progressValue = totalRead * 100 / totalBytes;
-
-                                        // check if user cancelled download before reporting progress
-                                        if (downloadCancelled)
-                                            return;
-                                        else
-                                            reportProgress(progressValue);
-                                    }
-                                }
-                            }, 
-                            () =>
+                                // when reportProgress is null, it means there is expcetion with the progress box
+                                // so we record it with exceptionHappened and return so that progress box will close instantly
+                                exceptionHappened = true;
+                                return;
+                            }
+                            else
                             {
-                                cts.Cancel();
-                                downloadCancelled = true;
-                            });
+                                await Http.DownloadAsync(plugin.UrlDownload, filePath, reportProgress, cts.Token).ConfigureAwait(false);
+                            }
+                        }, cts.Cancel);
 
-                        // if exception happened while downloading and user does not cancel downloading,
-                        // we need to redownload the plugin
-                        if (exceptionHappened && (!downloadCancelled))
-                            await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        await Http.DownloadAsync(plugin.UrlDownload, filePath).ConfigureAwait(false);
-                    }
+                    // if exception happened while downloading and user does not cancel downloading,
+                    // we need to redownload the plugin
+                    if (exceptionHappened && (!cts.IsCancellationRequested))
+                        await Http.DownloadAsync(plugin.UrlDownload, filePath, null, cts.Token).ConfigureAwait(false);
                 }
                 else
                 {
@@ -220,7 +180,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                 }
 
                 // check if user cancelled download before installing plugin
-                if (downloadCancelled)
+                if (cts.IsCancellationRequested)
                     return;
                 else
                     Install(plugin, filePath);

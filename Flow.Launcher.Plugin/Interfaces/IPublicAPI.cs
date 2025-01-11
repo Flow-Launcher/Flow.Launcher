@@ -181,9 +181,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="url">URL to download file</param>
         /// <param name="filePath">path to save downloaded file</param>
+        /// <param name="reportProgress">
+        /// Action to report progress. The input of the action is the progress value which is a double value between 0 and 100.
+        /// It will be called if url support range request and the reportProgress is not null.
+        /// </param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
-        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
         /// Add ActionKeyword for specific plugin
