@@ -46,12 +46,9 @@ namespace Flow.Launcher
             {
                 if (!Application.Current.Dispatcher.CheckAccess())
                 {
-                    await Application.Current.Dispatcher.InvokeAsync(async () =>
+                    await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        if (prgBox != null)
-                        {
-                            await prgBox.CloseAsync();
-                        }
+                        prgBox?.Close();
                     });
                 }
             }
@@ -78,17 +75,6 @@ namespace Flow.Launcher
             {
                 ProgressBar.Value = progress;
             }
-        }
-
-        private async Task CloseAsync()
-        {
-            if (!Application.Current.Dispatcher.CheckAccess())
-            {
-                await Application.Current.Dispatcher.InvokeAsync(Close);
-                return;
-            }
-
-            Close();
         }
 
         private void KeyEsc_OnPress(object sender, ExecutedRoutedEventArgs e)
