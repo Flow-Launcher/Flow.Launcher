@@ -33,6 +33,15 @@ namespace Flow.Launcher
                         prgBox.Show();
                     });
                 }
+                else
+                {
+                    prgBox = new ProgressBoxEx(forceClosed)
+                    {
+                        Title = caption
+                    };
+                    prgBox.TitleTextBlock.Text = caption;
+                    prgBox.Show();
+                }
 
                 await reportProgressAsync(prgBox.ReportProgress).ConfigureAwait(false);
             }
@@ -50,6 +59,10 @@ namespace Flow.Launcher
                     {
                         prgBox?.Close();
                     });
+                }
+                else
+                {
+                    prgBox?.Close();
                 }
             }
         }
