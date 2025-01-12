@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
@@ -13,6 +13,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel, IHotkeySettings
     {
+        private FlowLauncherJsonStorage<Settings> _storage;
+
+        public void Initialize(FlowLauncherJsonStorage<Settings> storage)
+        {
+            _storage = storage;
+        }
+
+        public void Save()
+        {
+            _storage.Save();
+        }
+
         private string language = "en";
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";

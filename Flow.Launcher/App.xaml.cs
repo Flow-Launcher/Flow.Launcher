@@ -14,6 +14,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
@@ -52,6 +53,10 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.Initialize(storage);
+
                 _portable.PreStartCleanUpAfterPortabilityUpdate();
 
                 Log.Info(
@@ -62,8 +67,7 @@ namespace Flow.Launcher
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
-                _settingsVM = new SettingWindowViewModel(_updater, _portable);
-                _settings = _settingsVM.Settings;
+                _settingsVM = new SettingWindowViewModel(_settings, _updater, _portable);
                 _settings.WMPInstalled =  WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);

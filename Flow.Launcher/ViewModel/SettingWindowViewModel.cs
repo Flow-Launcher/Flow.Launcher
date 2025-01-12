@@ -1,6 +1,5 @@
 ﻿using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -8,21 +7,17 @@ namespace Flow.Launcher.ViewModel;
 
 public class SettingWindowViewModel : BaseModel
 {
-    private readonly FlowLauncherJsonStorage<Settings> _storage;
-
     public Updater Updater { get; }
 
     public IPortable Portable { get; }
 
     public Settings Settings { get; }
 
-    public SettingWindowViewModel(Updater updater, IPortable portable)
+    public SettingWindowViewModel(Settings settings, Updater updater, IPortable portable)
     {
-        _storage = new FlowLauncherJsonStorage<Settings>();
-
+        Settings = settings;
         Updater = updater;
         Portable = portable;
-        Settings = _storage.Load();
     }
 
     public async void UpdateApp()
@@ -30,14 +25,12 @@ public class SettingWindowViewModel : BaseModel
         await Updater.UpdateAppAsync(App.API, false);
     }
 
-
-
     /// <summary>
     /// Save Flow settings. Plugins settings are not included.
     /// </summary>
     public void Save()
     {
-        _storage.Save();
+        Settings.Save();
     }
 
     public double SettingWindowWidth
