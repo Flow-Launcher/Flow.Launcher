@@ -27,7 +27,7 @@ namespace Flow.Launcher
 {
     public partial class App : IDisposable, ISingleInstanceApp
     {
-        public static PublicAPIInstance API { get; private set; }
+        public static IPublicAPI API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
         private Settings _settings;
@@ -93,7 +93,7 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
-                API = Ioc.Default.GetRequiredService<IPublicAPI>() as PublicAPIInstance;
+                API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
