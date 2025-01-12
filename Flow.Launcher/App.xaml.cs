@@ -74,6 +74,8 @@ namespace Flow.Launcher
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
+                Ioc.Default.GetRequiredService<SettingWindowViewModel>().Initialize();
+
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
 

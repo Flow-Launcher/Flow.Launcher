@@ -11,6 +11,8 @@ using System.Windows.Media.Effects;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -22,6 +24,7 @@ namespace Flow.Launcher.Core.Resource
 
         private const int ShadowExtraMargin = 32;
 
+        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
         private string _oldTheme;
@@ -108,7 +111,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
-                    AppExtensions.API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -118,7 +121,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
-                    AppExtensions.API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
+                    API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;

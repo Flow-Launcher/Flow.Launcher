@@ -17,14 +17,17 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        public string GitHubRepository { get; }
+        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
-        public Updater(string gitHubRepository)
+        public string GitHubRepository { get; set; }
+
+        public void Initialize(string gitHubRepository)
         {
             GitHubRepository = gitHubRepository;
         }
@@ -53,7 +56,7 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        AppExtensions.API.ShowMsgBox(api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        API.ShowMsgBox(api.GetTranslation("update_flowlauncher_already_on_latest"));
                     return;
                 }
 
@@ -68,9 +71,9 @@ namespace Flow.Launcher.Core
                 if (DataLocation.PortableDataLocationInUse())
                 {
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => AppExtensions.API.ShowMsgBox(s));
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => AppExtensions.API.ShowMsgBox(s)))
-                        AppExtensions.API.ShowMsgBox(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => API.ShowMsgBox(s));
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => API.ShowMsgBox(s)))
+                        API.ShowMsgBox(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
                 }
@@ -83,7 +86,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (AppExtensions.API.ShowMsgBox(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (API.ShowMsgBox(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
