@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Core;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -13,11 +14,11 @@ public class SettingWindowViewModel : BaseModel
 
     public Settings Settings { get; }
 
-    public SettingWindowViewModel(Settings settings, Updater updater, IPortable portable)
+    public SettingWindowViewModel()
     {
-        Settings = settings;
-        Updater = updater;
-        Portable = portable;
+        Settings = Ioc.Default.GetRequiredService<Settings>();
+        Updater = Ioc.Default.GetRequiredService<Updater>();
+        Portable = Ioc.Default.GetRequiredService<Portable>();
     }
 
     public async void UpdateApp()

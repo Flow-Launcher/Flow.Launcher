@@ -25,6 +25,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -58,13 +59,13 @@ namespace Flow.Launcher.ViewModel
 
         #region Constructor
 
-        public MainViewModel(Settings settings)
+        public MainViewModel()
         {
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
 
-            Settings = settings;
+            Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
             {
                 switch (args.PropertyName)

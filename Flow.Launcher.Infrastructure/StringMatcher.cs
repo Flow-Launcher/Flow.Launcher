@@ -1,4 +1,5 @@
-﻿using Flow.Launcher.Plugin.SharedModels;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Flow.Launcher.Infrastructure
 
         public StringMatcher(IAlphabet alphabet = null)
         {
-            _alphabet = alphabet;
+            _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
         }
 
         public static StringMatcher Instance { get; internal set; }

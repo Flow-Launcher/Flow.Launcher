@@ -25,7 +25,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
-using Flow.Launcher.Core;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher
 {
@@ -33,15 +33,15 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
+        private readonly IAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance()
         {
-            _settingsVM = settingsVM;
-            _mainVM = mainVM;
-            _alphabet = alphabet;
+            _settingsVM = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+            _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+            _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
