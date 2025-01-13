@@ -8,13 +8,13 @@ namespace Flow.Launcher.Infrastructure
 {
     public class StringMatcher
     {
-        private readonly MatchOption _defaultMatchOption = new MatchOption();
+        private readonly MatchOption _defaultMatchOption = new();
 
         public SearchPrecisionScore UserSettingSearchPrecision { get; set; }
 
         private readonly IAlphabet _alphabet;
 
-        public StringMatcher(IAlphabet alphabet = null)
+        public StringMatcher()
         {
             _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
         }
@@ -242,16 +242,16 @@ namespace Flow.Launcher.Infrastructure
             return false;
         }
 
-        private bool IsAcronymChar(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronymChar(string stringToCompare, int compareStringIndex)
             => char.IsUpper(stringToCompare[compareStringIndex]) ||
                compareStringIndex == 0 || // 0 index means char is the start of the compare string, which is an acronym
                char.IsWhiteSpace(stringToCompare[compareStringIndex - 1]);
 
-        private bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
+        private static bool IsAcronymNumber(string stringToCompare, int compareStringIndex)
             => stringToCompare[compareStringIndex] >= 0 && stringToCompare[compareStringIndex] <= 9;
 
         // To get the index of the closest space which preceeds the first matching index
-        private int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
+        private static int CalculateClosestSpaceIndex(List<int> spaceIndices, int firstMatchIndex)
         {
             var closestSpaceIndex = -1;
 
