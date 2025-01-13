@@ -19,6 +19,12 @@ namespace Flow.Launcher.Infrastructure
             _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
         }
 
+        // This is a workaround to allow unit tests to set the instance
+        public StringMatcher(IAlphabet alphabet)
+        {
+            _alphabet = alphabet;
+        }
+
         public static StringMatcher Instance { get; internal set; }
 
         public static MatchResult FuzzySearch(string query, string stringToCompare)
