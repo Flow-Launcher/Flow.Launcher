@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -33,17 +34,24 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly IAlphabet _alphabet;
 
-        #region Constructor
+        private Updater _updater;
+
+        #region Constructor & Initialization
 
         public PublicAPIInstance()
         {
             _settingsVM = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
             _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
-            _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
+        }
+
+        public void Initialize()
+        {
+            // We need to initialize Updater not in the constructor because we want to avoid
+            // recrusive dependency injection
+            _updater = Ioc.Default.GetRequiredService<Updater>();
         }
 
         #endregion
@@ -78,14 +86,14 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
-        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
+        public void CheckForNewUpdate() => _ = _updater.UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
             PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
-            ImageLoader.Save();
+            _ = ImageLoader.Save();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -105,7 +113,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
         }
 

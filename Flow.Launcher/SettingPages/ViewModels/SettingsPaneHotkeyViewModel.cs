@@ -7,7 +7,6 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -71,7 +70,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomQueryHotkeySetting(null, Settings);
+        var window = new CustomQueryHotkeySetting(Settings);
         window.UpdateItem(item);
         window.ShowDialog();
     }
@@ -79,7 +78,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void CustomHotkeyAdd()
     {
-        new CustomQueryHotkeySetting(null, Settings).ShowDialog();
+        new CustomQueryHotkeySetting(Settings).ShowDialog();
     }
 
     [RelayCommand]

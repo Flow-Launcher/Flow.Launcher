@@ -96,7 +96,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private Task UpdateApp() => _updater.UpdateAppAsync(App.API, false);
+    private Task UpdateApp() => _updater.UpdateAppAsync(false);
 
     private void ClearLogFolder()
     {

@@ -74,8 +74,6 @@ namespace Flow.Launcher
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
-                Ioc.Default.GetRequiredService<SettingWindowViewModel>().Initialize();
-
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
 
@@ -96,6 +94,7 @@ namespace Flow.Launcher
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
                 API = Ioc.Default.GetRequiredService<IPublicAPI>();
+                ((PublicAPIInstance)API).Initialize();
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;
@@ -160,11 +159,11 @@ namespace Flow.Launcher
                 {
                     // check update every 5 hours
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(API);
+                    await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(API);
+                        await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
                 }
             });
         }

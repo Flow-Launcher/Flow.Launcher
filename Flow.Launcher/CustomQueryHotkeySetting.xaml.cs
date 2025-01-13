@@ -6,20 +6,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        private SettingWindow _settingWidow;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
         public Settings Settings { get; }
 
-        public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings)
+        public CustomQueryHotkeySetting(Settings settings)
         {
-            _settingWidow = settingWidow;
             Settings = settings;
             InitializeComponent();
         }

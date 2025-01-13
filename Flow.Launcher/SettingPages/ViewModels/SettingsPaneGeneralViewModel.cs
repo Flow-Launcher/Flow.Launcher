@@ -160,7 +160,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     private void UpdateApp()
     {
-        _ = _updater.UpdateAppAsync(App.API, false);
+        _ = _updater.UpdateAppAsync(false);
     }
 
     public bool AutoUpdates
