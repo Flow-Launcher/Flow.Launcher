@@ -14,9 +14,9 @@ namespace Flow.Launcher.Infrastructure
 
         private readonly IAlphabet _alphabet;
 
-        public StringMatcher(IAlphabet alphabet = null)
+        public StringMatcher()
         {
-            _alphabet = alphabet ?? Ioc.Default.GetRequiredService<IAlphabet>();
+            _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
         }
 
         public static StringMatcher Instance { get; internal set; }
