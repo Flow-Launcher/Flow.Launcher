@@ -1872,10 +1872,10 @@
     <value>Microsoft IME Register Word (Japanese)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Restaurer vos fichiers avec l'historique des fichiers</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
-    <value>Turn On-Screen keyboard on or off</value>
+    <value>Allumer ou éteindre le clavier à l'écran</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
     <value>Block or allow third-party cookies</value>
