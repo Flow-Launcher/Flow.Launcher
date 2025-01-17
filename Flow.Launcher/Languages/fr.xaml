@@ -326,7 +326,7 @@
     <system:String x:Key="oldActionKeywords">Ancien mot-clé d'action</system:String>
     <system:String x:Key="newActionKeywords">Nouveau mot-clé d'action</system:String>
     <system:String x:Key="cancel">Annuler</system:String>
-    <system:String x:Key="done">Termin</system:String>
+    <system:String x:Key="done">Terminé</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossible de trouver le module spécifi</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Le nouveau mot-clé d'action doit être spécifi</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Le nouveau mot-clé d'action a été assigné à un autre module, veuillez en choisir un autre</system:String>
