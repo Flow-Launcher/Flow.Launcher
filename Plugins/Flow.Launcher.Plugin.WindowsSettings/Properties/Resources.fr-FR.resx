@@ -1941,13 +1941,13 @@
     <value>Historique de dépannage</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>Diagnostiquez les problèmes de mémoire de votre ordinateur</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
-    <value>View recommended actions to keep Windows running smoothly</value>
+    <value>Afficher les actions recommandées pour que Windows fonctionne correctement</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Change cursor blink rate</value>
+    <value>Changer la fréquence de clignotement du curseur</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
     <value>Ajouter ou supprimer des programmes</value>
@@ -1956,25 +1956,25 @@
     <value>Créer un disque de réinitialisation de mot de passe</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
-    <value>Configure advanced user profile properties</value>
+    <value>Configurer les propriétés du profil utilisateur avancé</value>
   </data>
   <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
     <value>Démarrer ou arrêter l'utilisation de la fonction AutoPlay pour tous les médias et appareils</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Modifier les paramètres de maintenance automatique</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
-    <value>Specify single- or double-click to open</value>
+    <value>Spécifiez un simple ou double-cliquez pour ouvrir</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Sélectionnez les utilisateurs qui peuvent utiliser le bureau distant</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
     <value>Afficher les programmes installés sur votre ordinateur</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Autoriser l'accès à distance à votre ordinateur</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
     <value>Afficher les paramètres avancés du système</value>
@@ -1992,16 +1992,16 @@
     <value>Modifier l'ordre des gadgets Windows SideShow</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>Vérifier le statut du clavier</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>Contrôler l'ordinateur sans souris ou clavier</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>Changer ou supprimer un programme</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Change multi-touch gesture settings</value>
+    <value>Modifier les paramètres des gestes tactiles</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
     <value>Set up ODBC data sources (64-bit)</value>
