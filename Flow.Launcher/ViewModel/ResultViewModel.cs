@@ -29,7 +29,7 @@ namespace Flow.Launcher.ViewModel
 
             if (Result.Glyph is { FontFamily: not null } glyph)
             {
-                // Checks if it's a system installed font, which does not require path to be provided. 
+                // Checks if it's a system installed font, which does not require path to be provided.
                 if (glyph.FontFamily.EndsWith(".ttf") || glyph.FontFamily.EndsWith(".otf"))
                 {
                     string fontFamilyPath = glyph.FontFamily;
@@ -64,7 +64,7 @@ namespace Flow.Launcher.ViewModel
 
         }
 
-        private Settings Settings { get; }
+        public Settings Settings { get; }
 
         public Visibility ShowOpenResultHotkey =>
             Settings.ShowOpenResultHotkey ? Visibility.Visible : Visibility.Collapsed;

@@ -22,7 +22,6 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#2e3440" />
         <Setter Property="Foreground" Value="#50596b" />
         <Setter Property="FontSize" Value="30" />
     </Style>

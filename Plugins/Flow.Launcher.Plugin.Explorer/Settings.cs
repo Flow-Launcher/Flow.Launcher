@@ -25,10 +25,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public string ShellPath { get; set; } = "cmd";
 
+        public string ExcludedFileTypes { get; set; } = "";
+
 
         public bool UseLocationAsWorkingDir { get; set; } = false;
 
-        public bool ShowWindowsContextMenu { get; set; } = true;
+        public bool ShowInlinedWindowsContextMenu { get; set; } = false;
+
+        public string WindowsContextMenuIncludedItems { get; set; } = string.Empty;
+
+        public string WindowsContextMenuExcludedItems { get; set; } = string.Empty;
 
         public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
@@ -54,6 +60,16 @@ namespace Flow.Launcher.Plugin.Explorer
 
 
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
+
+        public bool ShowFileSizeInPreviewPanel { get; set; } = true;
+
+        public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
+
+        public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
+
+        public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
+
+        public string PreviewPanelTimeFormat { get; set; } = "HH:mm";
 
         private EverythingSearchManager _everythingManagerInstance;
         private WindowsIndexSearchManager _windowsIndexSearchManager;
@@ -137,7 +153,8 @@ namespace Flow.Launcher.Plugin.Explorer
                                          ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
 
         public bool EverythingSearchFullPath { get; set; } = false;
-        
+        public bool EverythingEnableRunCount { get; set; } = true;
+
         #endregion
 
         internal enum ActionKeyword

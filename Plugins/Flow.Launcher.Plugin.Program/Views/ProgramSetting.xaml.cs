@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         private ListSortDirection _lastDirection;
 
         // We do not save all program sources to settings, so using
-        // this as temporary holder for displaying all loaded programs sources. 
+        // this as temporary holder for displaying all loaded programs sources.
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
         public bool EnableDescription
@@ -44,6 +44,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 Main.ResetCache();
                 _settings.HideAppsPath = value;
+            }
+        }
+
+        public bool HideUninstallers
+        {
+            get => _settings.HideUninstallers;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideUninstallers = value;
             }
         }
 
@@ -168,7 +178,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedProgramSource == null)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
             }
             else
             {
@@ -273,7 +283,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedItems.Count == 0)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
                 return;
             }
 
@@ -282,7 +292,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 var msg = string.Format(
                     context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
-                if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (context.API.ShowMsgBox(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }

@@ -7,6 +7,7 @@ namespace Flow.Launcher.Infrastructure
     public static class Constant
     {
         public const string FlowLauncher = "Flow.Launcher";
+        public const string FlowLauncherFullName = "Flow Launcher";
         public const string Plugins = "Plugins";
         public const string PluginMetadataFileName = "plugin.json";
 
@@ -30,6 +31,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
         public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
+        public static readonly string ImageIcon = Path.Combine(ImagesDirectory, "image.png");
 
         public static string PythonPath;
         public static string NodePath;

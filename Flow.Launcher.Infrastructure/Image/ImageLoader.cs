@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Flow.Launcher.Infrastructure.Logger;
@@ -17,10 +18,11 @@ namespace Flow.Launcher.Infrastructure.Image
     {
         private static readonly ImageCache ImageCache = new();
         private static SemaphoreSlim storageLock { get; } = new SemaphoreSlim(1, 1);
-        private static BinaryStorage<Dictionary<(string, bool), int>> _storage;
+        private static BinaryStorage<List<(string, bool)>> _storage;
         private static readonly ConcurrentDictionary<string, string> GuidToKey = new();
         private static IImageHashGenerator _hashGenerator;
         private static readonly bool EnableImageHash = true;
+        public static ImageSource Image { get; } = new BitmapImage(new Uri(Constant.ImageIcon));
         public static ImageSource MissingImage { get; } = new BitmapImage(new Uri(Constant.MissingImgIcon));
         public static ImageSource LoadingImage { get; } = new BitmapImage(new Uri(Constant.LoadingImgIcon));
         public const int SmallIconSize = 64;
@@ -31,12 +33,12 @@ namespace Flow.Launcher.Infrastructure.Image
 
         public static async Task InitializeAsync()
         {
-            _storage = new BinaryStorage<Dictionary<(string, bool), int>>("Image");
+            _storage = new BinaryStorage<List<(string, bool)>>("Image");
             _hashGenerator = new ImageHashGenerator();
 
             var usage = await LoadStorageToConcurrentDictionaryAsync();
 
-            ImageCache.Initialize(usage.ToDictionary(x => x.Key, x => x.Value));
+            ImageCache.Initialize(usage);
 
             foreach (var icon in new[] { Constant.DefaultIcon, Constant.MissingImgIcon })
             {
@@ -49,7 +51,7 @@ namespace Flow.Launcher.Infrastructure.Image
             {
                 await Stopwatch.NormalAsync("|ImageLoader.Initialize|Preload images cost", async () =>
                 {
-                    foreach (var ((path, isFullImage), _) in usage)
+                    foreach (var (path, isFullImage) in usage)
                     {
                         await LoadAsync(path, isFullImage);
                     }
@@ -66,9 +68,8 @@ namespace Flow.Launcher.Infrastructure.Image
             try
             {
                 await _storage.SaveAsync(ImageCache.EnumerateEntries()
-                    .ToDictionary(
-                        x => x.Key,
-                        x => x.Value.usage));
+                    .Select(x => x.Key)
+                    .ToList());
             }
             finally
             {
@@ -76,14 +77,12 @@ namespace Flow.Launcher.Infrastructure.Image
             }
         }
 
-        private static async Task<ConcurrentDictionary<(string, bool), int>> LoadStorageToConcurrentDictionaryAsync()
+        private static async Task<List<(string, bool)>> LoadStorageToConcurrentDictionaryAsync()
         {
             await storageLock.WaitAsync();
             try
             {
-                var loaded = await _storage.TryLoadAsync(new Dictionary<(string, bool), int>());
-
-                return new ConcurrentDictionary<(string, bool), int>(loaded);
+                return await _storage.TryLoadAsync(new List<(string, bool)>());
             }
             finally
             {
@@ -141,7 +140,7 @@ namespace Flow.Launcher.Infrastructure.Image
                     return new ImageResult(image, ImageType.ImageFile);
                 }
 
-                if (path.StartsWith("data:", StringComparison.OrdinalIgnoreCase))
+                if (path.StartsWith("data:image", StringComparison.OrdinalIgnoreCase))
                 {
                     var imageSource = new BitmapImage(new Uri(path));
                     imageSource.Freeze();
@@ -217,8 +216,16 @@ namespace Flow.Launcher.Infrastructure.Image
                     type = ImageType.ImageFile;
                     if (loadFullImage)
                     {
-                        image = LoadFullImage(path);
-                        type = ImageType.FullImageFile;
+                        try
+                        {
+                            image = LoadFullImage(path);
+                            type = ImageType.FullImageFile;
+                        }
+                        catch (NotSupportedException)
+                        {
+                            image = Image;
+                            type = ImageType.Error;
+                        }
                     }
                     else
                     {

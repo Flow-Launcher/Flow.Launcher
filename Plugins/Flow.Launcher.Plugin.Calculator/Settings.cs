@@ -1,5 +1,5 @@
 ﻿
-namespace Flow.Launcher.Plugin.Caculator
+namespace Flow.Launcher.Plugin.Calculator
 {
     public class Settings
     {

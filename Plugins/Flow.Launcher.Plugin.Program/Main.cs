@@ -11,6 +11,7 @@ using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using Microsoft.Extensions.Caching.Memory;
+using Path = System.IO.Path;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
@@ -33,6 +34,17 @@ namespace Flow.Launcher.Plugin.Program
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
 
+        private static readonly string[] commonUninstallerNames =
+        {
+            "uninst.exe",
+            "unins000.exe",
+            "uninst000.exe",
+            "uninstall.exe"
+        };
+        // For cases when the uninstaller is named like "Uninstall Program Name.exe"
+        private const string CommonUninstallerPrefix = "uninstall";
+        private const string CommonUninstallerSuffix = ".exe";
+
         static Main()
         {
         }
@@ -48,14 +60,26 @@ namespace Flow.Launcher.Plugin.Program
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
                 var resultList = await Task.Run(() =>
-                    _win32s.Cast<IProgram>()
-                        .Concat(_uwps)
-                        .AsParallel()
-                        .WithCancellation(token)
-                        .Where(p => p.Enabled)
-                        .Select(p => p.Result(query.Search, Context.API))
-                        .Where(r => r?.Score > 0)
-                        .ToList());
+                {
+                    try
+                    {
+                        return _win32s.Cast<IProgram>()
+                            .Concat(_uwps)
+                            .AsParallel()
+                            .WithCancellation(token)
+                            .Where(HideUninstallersFilter)
+                            .Where(p => p.Enabled)
+                            .Select(p => p.Result(query.Search, Context.API))
+                            .Where(r => r?.Score > 0)
+                            .ToList();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        return emptyResults;
+                    }
+                   
+                }, token);
 
                 resultList = resultList.Any() ? resultList : emptyResults;
 
@@ -66,6 +90,16 @@ namespace Flow.Launcher.Plugin.Program
             });
 
             return result;
+        }
+
+        private bool HideUninstallersFilter(IProgram program)
+        {
+            if (!_settings.HideUninstallers) return true;
+            if (program is not Win32 win32) return true;
+            var fileName = Path.GetFileName(win32.ExecutablePath);
+            return !commonUninstallerNames.Contains(fileName, StringComparer.OrdinalIgnoreCase) &&
+                   !(fileName.StartsWith(CommonUninstallerPrefix, StringComparison.OrdinalIgnoreCase) &&
+                     fileName.EndsWith(CommonUninstallerSuffix, StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task InitAsync(PluginInitContext context)

@@ -55,17 +55,17 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (string.IsNullOrEmpty(_searchSource.Title))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_title");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.Url))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_url");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (string.IsNullOrEmpty(_searchSource.ActionKeyword))
             {
                 var warning = _api.GetTranslation("flowlauncher_plugin_websearch_input_action_keyword");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
             else if (_action == Action.Add)
             {
@@ -92,7 +92,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
         }
 
@@ -113,7 +113,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             else
             {
                 var warning = _api.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(warning);
+                _context.API.ShowMsgBox(warning);
             }
 
             if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
@@ -138,7 +138,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (!string.IsNullOrEmpty(selectedNewIconImageFullPath))
                 {
                     if (_viewModel.ShouldProvideHint(selectedNewIconImageFullPath))
-                        MessageBox.Show(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
+                        _context.API.ShowMsgBox(_api.GetTranslation("flowlauncher_plugin_websearch_iconpath_hint"));
                     
                     imgPreviewIcon.Source = await _viewModel.LoadPreviewIconAsync(selectedNewIconImageFullPath);
                 }

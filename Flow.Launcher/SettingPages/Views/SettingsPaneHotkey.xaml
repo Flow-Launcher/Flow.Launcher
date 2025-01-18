@@ -1,0 +1,455 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneHotkey"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:flowlauncher="clr-namespace:Flow.Launcher"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    xmlns:userSettings="clr-namespace:Flow.Launcher.Infrastructure.UserSettings;assembly=Flow.Launcher.Infrastructure"
+    xmlns:viewModels="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    Title="Hotkey"
+    d:DataContext="{d:DesignInstance viewModels:SettingsPaneHotkeyViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ScrollViewer
+        Padding="0 0 6 0"
+        FontSize="14"
+        VirtualizingStackPanel.IsVirtualizing="True"
+        VirtualizingStackPanel.ScrollUnit="Pixel">
+        <StackPanel Margin="5 18 18 10">
+            <TextBlock
+                Margin="0 5 0 6"
+                FontSize="30"
+                Style="{StaticResource PageTitle}"
+                Text="{DynamicResource hotkeys}"
+                TextAlignment="left" />
+
+            <cc:Card
+                Title="{DynamicResource flowlauncherHotkey}"
+                Icon="&#xeda7;"
+                Sub="{DynamicResource flowlauncherHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
+                    DefaultHotkey="Alt+Space"
+                    Hotkey="{Binding Settings.Hotkey}"
+                    HotkeySettings="{Binding Settings}"
+                    ValidateKeyGesture="True"
+                    WindowTitle="{DynamicResource flowlauncherHotkey}" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource previewHotkey}"
+                Icon="&#xe8a1;"
+                Sub="{DynamicResource previewHotkeyToolTip}">
+                <flowlauncher:HotkeyControl
+                    DefaultHotkey="F1"
+                    Hotkey="{Binding Settings.PreviewHotkey}"
+                    HotkeySettings="{Binding Settings}"
+                    ValidateKeyGesture="False"
+                    WindowTitle="{DynamicResource previewHotkey}" />
+            </cc:Card>
+
+            <cc:CardGroup Margin="0 12 0 0">
+                <cc:Card Title="{DynamicResource openResultModifiers}" Sub="{DynamicResource openResultModifiersToolTip}">
+                    <ComboBox
+                        Width="120"
+                        FontSize="14"
+                        ItemsSource="{Binding OpenResultModifiersList}"
+                        SelectedValue="{Binding Settings.OpenResultModifiers}" />
+                </cc:Card>
+
+                <cc:Card Title="{DynamicResource showOpenResultHotkey}" Sub="{DynamicResource showOpenResultHotkeyToolTip}">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding Settings.ShowOpenResultHotkey}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+            </cc:CardGroup>
+
+            <cc:ExCard
+                Title="{DynamicResource hotkeyPresets}"
+                Margin="0 14 0 0"
+                Icon="&#xf0e2;"
+                Sub="{DynamicResource hotkeyPresetsToolTip}">
+                <StackPanel>
+                    <cc:Card
+                        Title="{DynamicResource OpenContainFolderHotkey}"
+                        Icon="&#xe8b7;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+Enter" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource RunAsAdminHotkey}"
+                        Icon="&#xe7ef;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+Shift+Enter" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource ToggleHistoryHotkey}"
+                        Icon="&#xf738;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+H" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource CopyFilePathHotkey}"
+                        Icon="&#xe8c8;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+Shift+C" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource OpenContextMenuHotkey}"
+                        Icon="&#xede3;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+I"
+                            Hotkey="{Binding Settings.OpenContextMenuHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource OpenContextMenuHotkey}"
+                        Icon="&#xede3;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Shift+Enter" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource OpenNativeContextMenuHotkey}"
+                        Icon="&#xede3;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Alt+Enter" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource SettingWindowHotkey}"
+                        Icon="&#xe713;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Ctrl+I"
+                            Hotkey="{Binding Settings.SettingWindowHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource ToggleGameModeHotkey}"
+                        Icon="&#xe7fc;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+F12" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource RequeryHotkey}"
+                        Icon="&#xe72c;"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="Ctrl+R" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource CycleHistoryUpHotkey}"
+                        Icon="&#xe70e;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Alt+Up"
+                            Hotkey="{Binding Settings.CycleHistoryUpHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource CycleHistoryDownHotkey}"
+                        Icon="&#xe70d;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey="Alt+Down"
+                            Hotkey="{Binding Settings.CycleHistoryDownHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource ReloadPluginHotkey}"
+                        Icon="&#xe72c;"
+                        Sub="{DynamicResource ReloadPluginHotkeyToolTip}"
+                        Type="Inside">
+                        <cc:HotkeyDisplay Keys="F5" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource SelectPrevPageHotkey}"
+                        Icon="&#xf0ad;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Hotkey="{Binding Settings.SelectPrevPageHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource SelectNextPageHotkey}"
+                        Icon="&#xf0ae;"
+                        Type="Inside">
+                        <flowlauncher:HotkeyControl
+                            DefaultHotkey=""
+                            Hotkey="{Binding Settings.SelectNextPageHotkey}"
+                            HotkeySettings="{Binding Settings}"
+                            ValidateKeyGesture="False" />
+                    </cc:Card>
+
+                    <cc:Card
+                        Title="{DynamicResource QuickWidthHotkey}"
+                        Icon="&#xe7ea;"
+                        Type="Inside">
+                        <StackPanel Orientation="Horizontal">
+                            <cc:HotkeyDisplay Keys="Ctrl+[" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+]" />
+                        </StackPanel>
+                    </cc:Card>
+                    <cc:Card
+                        Title="{DynamicResource QuickHeightHotkey}"
+                        Icon="&#xe7eb;"
+                        Type="Inside">
+                        <StackPanel Orientation="Horizontal">
+                            <cc:HotkeyDisplay Keys="Ctrl+Plus" />
+                            <cc:HotkeyDisplay Margin="4 0 0 0" Keys="Ctrl+Minus" />
+                        </StackPanel>
+                    </cc:Card>
+                </StackPanel>
+            </cc:ExCard>
+
+
+            <cc:ExCard
+                Title="{DynamicResource autoCompleteHotkey}"
+                Margin="0 14 0 0"
+                Icon="&#xe893;"
+                Sub="{DynamicResource autoCompleteHotkeyToolTip}">
+                <cc:ExCard.SideContent>
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey="Ctrl+Tab"
+                        Hotkey="{Binding Settings.AutoCompleteHotkey}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource autoCompleteHotkey}"
+                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
+                    Type="InsideFit">
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey=""
+                        Hotkey="{Binding Settings.AutoCompleteHotkey2}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <cc:ExCard
+                Title="{DynamicResource SelectPrevItemHotkey}"
+                Margin="0 4 0 0"
+                Icon="&#xe74a;">
+                <cc:ExCard.SideContent>
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey="Shift+Tab"
+                        Hotkey="{Binding Settings.SelectPrevItemHotkey}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource SelectPrevItemHotkey}"
+                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
+                    Type="InsideFit">
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey=""
+                        Hotkey="{Binding Settings.SelectPrevItemHotkey2}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <cc:ExCard
+                Title="{DynamicResource SelectNextItemHotkey}"
+                Margin="0 4 0 0"
+                Icon="&#xe74b;">
+                <cc:ExCard.SideContent>
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey="Tab"
+                        Hotkey="{Binding Settings.SelectNextItemHotkey}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:ExCard.SideContent>
+                <cc:Card
+                    Title="{DynamicResource SelectNextItemHotkey}"
+                    Sub="{DynamicResource AdditionalHotkeyToolTip}"
+                    Type="InsideFit">
+                    <flowlauncher:HotkeyControl
+                        DefaultHotkey=""
+                        Hotkey="{Binding Settings.SelectNextItemHotkey2}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="False" />
+                </cc:Card>
+            </cc:ExCard>
+
+            <cc:ExCard
+                Title="{DynamicResource customQueryHotkey}"
+                Margin="0 20 0 0"
+                Icon="&#xf26c;">
+                <StackPanel>
+                    <Separator
+                        Width="Auto"
+                        Margin="0"
+                        BorderThickness="1"
+                        Style="{StaticResource SettingSeparatorStyle}" />
+                    <StackPanel Margin="18 18 18 0">
+                        <ListView
+                            MinHeight="160"
+                            Margin="0"
+                            Background="{DynamicResource Color02B}"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1"
+                            ItemsSource="{Binding Settings.CustomPluginHotkeys}"
+                            SelectedItem="{Binding SelectedCustomPluginHotkey}"
+                            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="180" Header="{DynamicResource hotkey}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="userSettings:CustomPluginHotkey">
+                                                <TextBlock Text="{Binding Hotkey}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="430" Header="{DynamicResource customQuery}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="userSettings:CustomPluginHotkey">
+                                                <TextBlock Text="{Binding ActionKeyword}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                            <Button
+                                MinWidth="100"
+                                Margin="10"
+                                Command="{Binding CustomHotkeyDeleteCommand}"
+                                Content="{DynamicResource delete}" />
+                            <Button
+                                MinWidth="100"
+                                Margin="10"
+                                Command="{Binding CustomHotkeyEditCommand}"
+                                Content="{DynamicResource edit}" />
+                            <Button
+                                MinWidth="100"
+                                Margin="10 10 0 10"
+                                Command="{Binding CustomHotkeyAddCommand}"
+                                Content="{DynamicResource add}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </cc:ExCard>
+
+            <cc:ExCard
+                Title="{DynamicResource customQueryShortcut}"
+                Margin="0 4 0 0"
+                Icon="&#xf26b;">
+                <StackPanel>
+                    <Separator
+                        Width="Auto"
+                        Margin="0"
+                        BorderThickness="1"
+                        Style="{StaticResource SettingSeparatorStyle}" />
+                    <StackPanel Margin="18 12 18 0">
+                        <ListView
+                            MinHeight="160"
+                            Margin="0 6 0 0"
+                            Background="{DynamicResource Color02B}"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1"
+                            ItemsSource="{Binding Settings.CustomShortcuts}"
+                            SelectedItem="{Binding SelectedCustomShortcut}"
+                            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type userSettings:CustomShortcutModel}">
+                                                <TextBlock Text="{Binding Key}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="430" Header="{DynamicResource customShortcutExpansion}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type userSettings:CustomShortcutModel}">
+                                                <TextBlock Text="{Binding Value}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                        <StackPanel
+                            Margin="0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <Button
+                                MinWidth="100"
+                                Margin="10"
+                                Command="{Binding CustomShortcutDeleteCommand}"
+                                Content="{DynamicResource delete}" />
+                            <Button
+                                MinWidth="100"
+                                Margin="10"
+                                Command="{Binding CustomShortcutEditCommand}"
+                                Content="{DynamicResource edit}" />
+                            <Button
+                                MinWidth="100"
+                                Margin="10 10 0 10"
+                                Command="{Binding CustomShortcutAddCommand}"
+                                Content="{DynamicResource add}" />
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+            </cc:ExCard>
+
+            <cc:ExCard
+                Title="{DynamicResource builtinShortcuts}"
+                Margin="0 4 0 14"
+                Icon="&#xf158;">
+                <StackPanel>
+                    <Separator
+                        Width="Auto"
+                        Margin="0"
+                        BorderThickness="1"
+                        Style="{StaticResource SettingSeparatorStyle}" />
+                    <StackPanel Margin="16 8 16 0">
+                        <ListView
+                            MinHeight="160"
+                            Margin="0 6 0 16"
+                            Background="{DynamicResource Color02B}"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1"
+                            ItemsSource="{Binding Settings.BuiltinShortcuts}"
+                            Style="{StaticResource {x:Static GridView.GridViewStyleKey}}">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Width="180" Header="{DynamicResource customShortcut}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type userSettings:BuiltinShortcutModel}">
+                                                <TextBlock Text="{Binding Key}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Width="430" Header="{DynamicResource builtinShortcutDescription}">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate DataType="{x:Type userSettings:BuiltinShortcutModel}">
+                                                <TextBlock Text="{Binding Description, Converter={StaticResource TranslationConverter}}" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </StackPanel>
+                </StackPanel>
+            </cc:ExCard>
+
+
+        </StackPanel>
+    </ScrollViewer>
+</ui:Page>

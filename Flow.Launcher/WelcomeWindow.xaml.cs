@@ -17,7 +17,6 @@ namespace Flow.Launcher
             InitializeComponent();
             BackButton.IsEnabled = false;
             this.settings = settings;
-            ContentFrame.Navigate(PageTypeSelector(1), settings);
         }
 
         private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
@@ -102,9 +101,15 @@ namespace Flow.Launcher
             var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
             textBox.MoveFocus(tRequest);
         }
+
         private void OnActivated(object sender, EventArgs e)
         {
             Keyboard.ClearFocus();
+        }
+
+        private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(PageTypeSelector(1), settings); /* Set First Page */
         }
     }
 }

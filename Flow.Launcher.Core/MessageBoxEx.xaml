@@ -1,0 +1,155 @@
+﻿<Window
+    x:Class="Flow.Launcher.Core.MessageBoxEx"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Flow.Launcher.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="MessageBoxWindow"
+    Width="420"
+    Height="Auto"
+    Background="{DynamicResource PopuBGColor}"
+    Foreground="{DynamicResource PopupTextColor}"
+    ResizeMode="NoResize"
+    SizeToContent="Height"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="32" ResizeBorderThickness="{x:Static SystemParameters.WindowResizeBorderThickness}" />
+    </WindowChrome.WindowChrome>
+    <Window.InputBindings>
+        <KeyBinding Key="Escape" Command="Close" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Close" Executed="KeyEsc_OnPress" />
+    </Window.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+            <RowDefinition MinHeight="68" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Button
+                        Grid.Column="1"
+                        Click="Button_Cancel"
+                        Style="{StaticResource TitleBarCloseButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,11 27,20 M 18,20 27,11"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                </Grid>
+            </StackPanel>
+        </StackPanel>
+        <Grid Grid.Row="1" Margin="30 0 30 24">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="0 0 0 12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image
+                    Name="Img"
+                    Grid.Column="0"
+                    Width="18"
+                    Height="18"
+                    Margin="0 0 10 0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    RenderOptions.BitmapScalingMode="Fant"
+                    Stretch="UniformToFill"
+                    Visibility="Collapsed" />
+                <TextBlock
+                    x:Name="TitleTextBlock"
+                    Grid.Column="1"
+                    MaxWidth="400"
+                    Margin="0 0 26 0"
+                    VerticalAlignment="Center"
+                    FontFamily="Segoe UI"
+                    FontSize="20"
+                    FontWeight="SemiBold"
+                    TextAlignment="Left"
+                    TextWrapping="Wrap" />
+            </Grid>
+            <TextBlock
+                x:Name="DescTextBlock"
+                Grid.Row="1"
+                MaxWidth="400"
+                Margin="0 0 26 0"
+                HorizontalAlignment="Stretch"
+                FontSize="14"
+                TextAlignment="Left"
+                TextWrapping="Wrap" />
+            <TextBlock
+                x:Name="DescOnlyTextBlock"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                MaxWidth="400"
+                Margin="0 0 26 0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                FontSize="14"
+                TextAlignment="Left"
+                TextWrapping="Wrap"
+                Visibility="Collapsed" />
+        </Grid>
+        <Border
+            Grid.Row="2"
+            Margin="0 0 0 0"
+            Background="{DynamicResource PopupButtonAreaBGColor}"
+            BorderBrush="{DynamicResource PopupButtonAreaBorderColor}"
+            BorderThickness="0 1 0 0">
+            <WrapPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnOk"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonOK}" />
+                <Button
+                    x:Name="btnYes"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonYes}" />
+                <Button
+                    x:Name="btnNo"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonNo}" />
+                <Button
+                    x:Name="btnCancel"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Click"
+                    Content="{DynamicResource commonCancel}" />
+            </WrapPanel>
+        </Border>
+    </Grid>
+</Window>
