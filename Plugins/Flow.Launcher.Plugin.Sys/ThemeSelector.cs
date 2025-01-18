@@ -83,12 +83,31 @@ namespace Flow.Launcher.Plugin.Sys
             };
         }
 
+        private bool disposed;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    // Dispose managed resources
+                    if (context?.API != null)
+                    {
+                        context.API.VisibilityChanged -= OnVisibilityChanged;
+                    }
+                }
+                // Free unmanaged resources
+                disposed = true;
+            }
+        }
+        ~ThemeSelector()
+        {
+            Dispose(false);
+        }
         public void Dispose()
         {
-            if (context != null && context.API != null)
-            {
-                context.API.VisibilityChanged -= OnVisibilityChanged;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
