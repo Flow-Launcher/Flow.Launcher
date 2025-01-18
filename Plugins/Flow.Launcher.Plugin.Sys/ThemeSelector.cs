@@ -26,8 +26,7 @@ namespace Flow.Launcher.Plugin.Sys
                 LoadThemes();
             }
 
-            int keywordIndex = query.Search.IndexOf(Keyword, StringComparison.Ordinal);
-            string search = query.Search[(keywordIndex + Keyword.Length + 1)..];
+            string search = query.SecondToEndSearch;
 
             if (string.IsNullOrWhiteSpace(search))
             {
@@ -52,7 +51,7 @@ namespace Flow.Launcher.Plugin.Sys
         }
 
         private void LoadThemes() 
-            => themes = ThemeManager.Instance.LoadAvailableThemes().Select(Path.GetFileNameWithoutExtension);
+            => themes = ThemeManager.Instance.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
 
         private static Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
 
