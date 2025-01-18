@@ -26,20 +26,21 @@ namespace Flow.Launcher.Plugin.Sys
                 LoadThemes();
             }
 
-            string search = query.Search[(query.Search.IndexOf(Keyword, StringComparison.Ordinal) + Keyword.Length + 1)..];
+            int keywordIndex = query.Search.IndexOf(Keyword, StringComparison.Ordinal);
+            string search = query.Search[(keywordIndex + Keyword.Length + 1)..];
 
             if (string.IsNullOrWhiteSpace(search))
             {
                 return themes.Select(CreateThemeResult)
-                             .OrderBy(x => x.Title)
-                             .ToList();
+                                .OrderBy(x => x.Title)
+                                .ToList();
             }
 
             return themes.Select(theme => (theme, matchResult: context.API.FuzzySearch(search, theme)))
-                         .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
-                         .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
-                         .OrderBy(x => x.Title)
-                         .ToList();
+                            .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
+                            .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
+                            .OrderBy(x => x.Title)
+                            .ToList();
         }
 
         private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
