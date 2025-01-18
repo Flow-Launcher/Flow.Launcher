@@ -23,12 +23,13 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private readonly List<string> _languageDirectories = new List<string>();
         private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
+        private readonly string SystemLanguageCode;
 
         public Internationalization()
         {
             AddFlowLauncherLanguageDirectory();
+            SystemLanguageCode = GetSystemLanguageCode();
         }
-
 
         private void AddFlowLauncherLanguageDirectory()
         {
@@ -36,6 +37,31 @@ namespace Flow.Launcher.Core.Resource
             _languageDirectories.Add(directory);
         }
 
+        private static string GetSystemLanguageCode()
+        {
+            var availableLanguages = AvailableLanguages.GetAvailableLanguages();
+
+            // Retrieve the language identifiers for the current culture
+            var currentCulture = CultureInfo.CurrentCulture;
+            var twoLetterCode = currentCulture.TwoLetterISOLanguageName;
+            var threeLetterCode = currentCulture.ThreeLetterISOLanguageName;
+            var fullName = currentCulture.Name;
+
+            // Try to find a match in the available languages list
+            foreach (var language in availableLanguages)
+            {
+                var languageCode = language.LanguageCode;
+
+                if (string.Equals(languageCode, twoLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, threeLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return languageCode;
+                }
+            }
+
+            return DefaultLanguageCode;
+        }
 
         internal void AddPluginLanguageDirectories(IEnumerable<PluginPair> plugins)
         {
@@ -74,7 +100,7 @@ namespace Flow.Launcher.Core.Resource
             var isSystem = false;
             if (languageCode == Constant.SystemLanguageCode)
             {
-                languageCode = GetSystemLanguageCode();
+                languageCode = SystemLanguageCode;
                 isSystem = true;
             }
 
@@ -178,34 +204,8 @@ namespace Flow.Launcher.Core.Resource
         public List<Language> LoadAvailableLanguages()
         {
             var list = AvailableLanguages.GetAvailableLanguages();
-            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(GetSystemLanguageCode())));
+            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(SystemLanguageCode)));
             return list;
-        }
-
-        private string GetSystemLanguageCode()
-        {
-            var availableLanguages = AvailableLanguages.GetAvailableLanguages();
-
-            // Retrieve the language identifiers for the current culture
-            var currentCulture = CultureInfo.CurrentCulture;
-            var twoLetterCode = currentCulture.TwoLetterISOLanguageName;
-            var threeLetterCode = currentCulture.ThreeLetterISOLanguageName;
-            var fullName = currentCulture.Name;
-
-            // Try to find a match in the available languages list
-            foreach (var language in availableLanguages)
-            {
-                var languageCode = language.LanguageCode;
-
-                if (string.Equals(languageCode, twoLetterCode, StringComparison.OrdinalIgnoreCase) ||
-                    string.Equals(languageCode, threeLetterCode, StringComparison.OrdinalIgnoreCase) ||
-                    string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return languageCode;
-                }
-            }
-
-            return DefaultLanguageCode;
         }
 
         public string GetTranslation(string key)
