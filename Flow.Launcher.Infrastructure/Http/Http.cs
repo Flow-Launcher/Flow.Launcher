@@ -97,7 +97,7 @@ namespace Flow.Launcher.Infrastructure.Http
                     if (canReportProgress && reportProgress != null)
                     {
                         await using var contentStream = await response.Content.ReadAsStreamAsync(token);
-                        await using var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.Write, FileShare.None, 8192, true);
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 8192, true);
 
                         var buffer = new byte[8192];
                         long totalRead = 0;
