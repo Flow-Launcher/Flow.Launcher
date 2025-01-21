@@ -70,6 +70,8 @@ namespace Flow.Launcher
                     ).Build();
                 Ioc.Default.ConfigureServices(host.Services);
 
+                API = Ioc.Default.GetRequiredService<IPublicAPI>();
+
                 Ioc.Default.GetRequiredService<Updater>().Initialize(Launcher.Properties.Settings.Default.GithubRepo);
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
@@ -92,9 +94,6 @@ namespace Flow.Launcher
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
-
-                API = Ioc.Default.GetRequiredService<IPublicAPI>();
-                ((PublicAPIInstance)API).Initialize();
 
                 Http.API = API;
                 Http.Proxy = _settings.Proxy;

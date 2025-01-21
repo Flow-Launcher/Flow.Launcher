@@ -35,9 +35,7 @@ namespace Flow.Launcher
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
 
-        private Updater _updater;
-
-        #region Constructor & Initialization
+        #region Constructor
 
         public PublicAPIInstance()
         {
@@ -45,13 +43,6 @@ namespace Flow.Launcher
             _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
-        }
-
-        public void Initialize()
-        {
-            // We need to initialize Updater not in the constructor because we want to avoid
-            // recrusive dependency injection
-            _updater = Ioc.Default.GetRequiredService<Updater>();
         }
 
         #endregion
@@ -86,7 +77,7 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
-        public void CheckForNewUpdate() => _ = _updater.UpdateAppAsync(false);
+        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
