@@ -30,7 +30,31 @@ namespace Flow.Launcher
         public static IPublicAPI API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
-        private Settings _settings;
+        private readonly Settings _settings;
+
+        public App()
+        {
+            // Initialize settings
+            var storage = new FlowLauncherJsonStorage<Settings>();
+            _settings = storage.Load();
+            _settings.Initialize(storage);
+            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+
+            // Configure the dependency injection container
+            var host = Host.CreateDefaultBuilder()
+                .UseContentRoot(AppContext.BaseDirectory)
+                .ConfigureServices(services => services
+                    .AddSingleton(_ => _settings)
+                    .AddSingleton<Updater>()
+                    .AddSingleton<Portable>()
+                    .AddSingleton<SettingWindowViewModel>()
+                    .AddSingleton<IAlphabet, PinyinAlphabet>()
+                    .AddSingleton<StringMatcher>()
+                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                    .AddSingleton<MainViewModel>()
+                ).Build();
+            Ioc.Default.ConfigureServices(host.Services);
+        }
 
         [STAThread]
         public static void Main()
@@ -49,27 +73,6 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
-                // Initialize settings
-                var storage = new FlowLauncherJsonStorage<Settings>();
-                _settings = storage.Load();
-                _settings.Initialize(storage);
-                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-
-                // Configure the dependency injection container
-                var host = Host.CreateDefaultBuilder()
-                    .UseContentRoot(AppContext.BaseDirectory)
-                    .ConfigureServices(services => services
-                        .AddSingleton(_ => _settings)
-                        .AddSingleton<Updater>()
-                        .AddSingleton<Portable>()
-                        .AddSingleton<SettingWindowViewModel>()
-                        .AddSingleton<IAlphabet, PinyinAlphabet>()
-                        .AddSingleton<StringMatcher>()
-                        .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                        .AddSingleton<MainViewModel>()
-                    ).Build();
-                Ioc.Default.ConfigureServices(host.Services);
-
                 API = Ioc.Default.GetRequiredService<IPublicAPI>();
 
                 Ioc.Default.GetRequiredService<Updater>().Initialize(Launcher.Properties.Settings.Default.GithubRepo);
