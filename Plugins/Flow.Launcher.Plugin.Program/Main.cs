@@ -43,8 +43,31 @@ namespace Flow.Launcher.Plugin.Program
         };
         private static readonly string[] commonUninstallerPrefixs =
         {
-            "uninstall",
-            "卸载"
+            "uninstall",//en
+            "卸载",//zh-cn
+            "卸載",//zh-tw
+            "видалити",//uk-UA
+            "удалить",//ru
+            "désinstaller",//fr
+            "アンインストール",//ja
+            "deïnstalleren",//nl
+            "odinstaluj",//pl
+            "afinstallere",//da
+            "deinstallieren",//de
+            "삭제",//ko
+            "деинсталирај",//sr
+            "desinstalar",//pt-pt
+            "desinstalar",//pt-br
+            "desinstalar",//es
+            "desinstalar",//es-419
+            "disinstallare",//it
+            "avinstallere",//nb-NO
+            "odinštalovať",//sk
+            "kaldır",//tr
+            "odinstalovat",//cs
+            "إلغاء التثبيت",//ar
+            "gỡ bỏ",//vi-vn
+            "הסרה"//he
         };
         private const string ExeUninstallerSuffix = ".exe";
         private const string InkUninstallerSuffix = ".lnk";
