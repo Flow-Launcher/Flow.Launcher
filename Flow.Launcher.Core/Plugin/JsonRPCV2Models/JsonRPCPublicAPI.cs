@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
 {
-    public class JsonRPCPublicAPI
+    public class JsonRPCPublicAPI : IPublicAPI
     {
-        private IPublicAPI _api;
+        private readonly IPublicAPI _api;
 
         public JsonRPCPublicAPI(IPublicAPI api)
         {
@@ -55,6 +55,14 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             return _api.ReloadAllPluginData();
         }
 
+        /// <summary>
+        /// The same as <see cref="ReloadAllPluginDataAsync"/>
+        /// </summary>
+        public Task ReloadAllPluginData()
+        {
+            return _api.ReloadAllPluginData();
+        }
+
         public void CheckForNewUpdate()
         {
             _api.CheckForNewUpdate();
@@ -78,6 +86,12 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
         public bool IsMainWindowVisible()
         {
             return _api.IsMainWindowVisible();
+        }
+
+        public event VisibilityChangedEventHandler VisibilityChanged
+        {
+            add { _api.VisibilityChanged += value; }
+            remove { _api.VisibilityChanged -= value; }
         }
 
         public void ShowMsg(string title, string subTitle = "", string iconPath = "")
@@ -105,6 +119,15 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             return _api.GetAllPlugins();
         }
 
+        public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+        {
+            _api.RegisterGlobalKeyboardCallback(callback);
+        }
+
+        public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback)
+        {
+            _api.RemoveGlobalKeyboardCallback(callback);
+        }
 
         public MatchResult FuzzySearch(string query, string stringToCompare)
         {
@@ -121,8 +144,7 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             return _api.HttpGetStreamAsync(url, token);
         }
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
-            CancellationToken token = default)
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
         {
             return _api.HttpDownloadAsync(url, filePath, token);
         }
@@ -157,21 +179,74 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.LogWarn(className, message, methodName);
         }
 
+        public void LogException(string className, string message, Exception e, [CallerMemberName] string methodName = "")
+        {
+            _api.LogException(className, message, e, methodName);
+        }
+
+        public T LoadSettingJsonStorage<T>() where T : new()
+        {
+            return _api.LoadSettingJsonStorage<T>();
+        }
+
+        public void SaveSettingJsonStorage<T>() where T : new()
+        {
+            _api.SaveSettingJsonStorage<T>();
+        }
+
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             _api.OpenDirectory(DirectoryPath, FileNameOrFilePath);
         }
 
+        public void OpenUrl(Uri url, bool? inPrivate = null)
+        {
+            _api.OpenUrl(url);
+        }
 
         public void OpenUrl(string url, bool? inPrivate = null)
         {
             _api.OpenUrl(url, inPrivate);
         }
 
+        public void OpenAppUri(Uri appUri)
+        {
+            _api.OpenAppUri(appUri);
+        }
 
         public void OpenAppUri(string appUri)
         {
             _api.OpenAppUri(appUri);
+        }
+
+        public void ToggleGameMode()
+        {
+            _api.ToggleGameMode();
+        }
+
+        public void SetGameMode(bool value)
+        {
+            _api.SetGameMode(value);
+        }
+
+        public bool IsGameModeOn()
+        {
+            return _api.IsGameModeOn();
+        }
+
+        public void ReQuery(bool reselect = true)
+        {
+            _api.ReQuery(reselect);
+        }
+
+        public void BackToQueryResults()
+        {
+            _api.BackToQueryResults();
+        }
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK)
+        {
+            return _api.ShowMsgBox(messageBoxText, caption, button, icon, defaultResult);
         }
     }
 }
