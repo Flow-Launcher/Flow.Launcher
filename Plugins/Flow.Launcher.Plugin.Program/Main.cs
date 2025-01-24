@@ -41,9 +41,13 @@ namespace Flow.Launcher.Plugin.Program
             "uninst000.exe",
             "uninstall.exe"
         };
-        // For cases when the uninstaller is named like "Uninstall Program Name.exe"
-        private const string CommonUninstallerPrefix = "uninstall";
-        private const string CommonUninstallerSuffix = ".exe";
+        private static readonly string[] commonUninstallerPrefixs =
+        {
+            "uninstall",
+            "卸载"
+        };
+        private const string ExeUninstallerSuffix = ".exe";
+        private const string InkUninstallerSuffix = ".lnk";
 
         static Main()
         {
@@ -96,10 +100,33 @@ namespace Flow.Launcher.Plugin.Program
         {
             if (!_settings.HideUninstallers) return true;
             if (program is not Win32 win32) return true;
+
+            // First check the executable path
             var fileName = Path.GetFileName(win32.ExecutablePath);
-            return !commonUninstallerNames.Contains(fileName, StringComparer.OrdinalIgnoreCase) &&
-                   !(fileName.StartsWith(CommonUninstallerPrefix, StringComparison.OrdinalIgnoreCase) &&
-                     fileName.EndsWith(CommonUninstallerSuffix, StringComparison.OrdinalIgnoreCase));
+            // For cases when the uninstaller is named like "uninst.exe"
+            if (commonUninstallerNames.Contains(fileName, StringComparer.OrdinalIgnoreCase)) return false;
+            // For cases when the uninstaller is named like "Uninstall Program Name.exe"
+            foreach (var prefix in commonUninstallerPrefixs)
+            {
+                if (fileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                    fileName.EndsWith(ExeUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            // Second check the ink path
+            if (!string.IsNullOrEmpty(win32.LnkResolvedPath))
+            {
+                var inkFileName = Path.GetFileName(win32.FullPath);
+                // For cases when the uninstaller is named like "Uninstall Program Name.ink"
+                foreach (var prefix in commonUninstallerPrefixs)
+                {
+                    if (inkFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                        inkFileName.EndsWith(InkUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
+                        return false;
+                }
+            }
+
+            return true;
         }
 
         public async Task InitAsync(PluginInitContext context)
