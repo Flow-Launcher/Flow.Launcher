@@ -136,7 +136,7 @@ namespace Flow.Launcher.Plugin.Program
                     return false;
             }
 
-            // Second check the ink path
+            // Second check the lnk path
             if (!string.IsNullOrEmpty(win32.LnkResolvedPath))
             {
                 var inkFileName = Path.GetFileName(win32.FullPath);
