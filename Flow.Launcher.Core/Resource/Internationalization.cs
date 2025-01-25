@@ -28,7 +28,7 @@ namespace Flow.Launcher.Core.Resource
         public Internationalization()
         {
             AddFlowLauncherLanguageDirectory();
-            SystemLanguageCode = GetSystemLanguageCode();
+            SystemLanguageCode = GetSystemLanguageCodeAtStartup();
         }
 
         private void AddFlowLauncherLanguageDirectory()
@@ -37,11 +37,13 @@ namespace Flow.Launcher.Core.Resource
             _languageDirectories.Add(directory);
         }
 
-        private static string GetSystemLanguageCode()
+        private static string GetSystemLanguageCodeAtStartup()
         {
             var availableLanguages = AvailableLanguages.GetAvailableLanguages();
 
-            // Retrieve the language identifiers for the current culture
+            // Retrieve the language identifiers for the current culture.
+            // ChangeLanguage method overrides the CultureInfo.CurrentCulture, so this needs to
+            // be called at startup in order to get the correct lang code of system. 
             var currentCulture = CultureInfo.CurrentCulture;
             var twoLetterCode = currentCulture.TwoLetterISOLanguageName;
             var threeLetterCode = currentCulture.ThreeLetterISOLanguageName;
