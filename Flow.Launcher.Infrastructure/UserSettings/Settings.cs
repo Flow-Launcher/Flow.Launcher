@@ -25,7 +25,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             _storage.Save();
         }
 
-        private string language = "en";
+        private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
