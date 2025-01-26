@@ -1273,6 +1273,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.Remove(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.BackToQueryResults();
+                        App.API.ReQuery();
                         return false;
                     }
                 };
@@ -1289,6 +1291,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.AddOrUpdate(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.BackToQueryResults();
+                        App.API.ReQuery();
                         return false;
                     }
                 };
