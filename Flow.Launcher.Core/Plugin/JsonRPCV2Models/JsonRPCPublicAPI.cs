@@ -201,7 +201,7 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
 
         public void OpenUrl(Uri url, bool? inPrivate = null)
         {
-            _api.OpenUrl(url);
+            _api.OpenUrl(url, inPrivate);
         }
 
         public void OpenUrl(string url, bool? inPrivate = null)
