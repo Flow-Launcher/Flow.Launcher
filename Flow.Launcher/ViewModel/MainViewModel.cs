@@ -34,8 +34,6 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
-        private Result lastContextMenuResult = new Result();
-        private List<Result> lastContextMenuResults = new List<Result>();
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -986,19 +984,10 @@ namespace Flow.Launcher.ViewModel
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
                 List<Result> results;
-                if (selected == lastContextMenuResult)
-                {
-                    results = lastContextMenuResults;
-                }
-                else
-                {
+
                     results = PluginManager.GetContextMenusForPlugin(selected);
-                    lastContextMenuResults = results;
-                    lastContextMenuResult = selected;
                     results.Add(ContextMenuTopMost(selected));
                     results.Add(ContextMenuPluginInfo(selected.PluginID));
-                }
-
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1381,8 +1370,6 @@ namespace Flow.Launcher.ViewModel
             lastHistoryIndex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
-            lastContextMenuResult = new Result();
-            lastContextMenuResults = new List<Result>();
 
             if (ExternalPreviewVisible)
                 CloseExternalPreview();
