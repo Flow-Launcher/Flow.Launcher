@@ -51,6 +51,8 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateQueryAndResultHashCode(Query query, Result result)
         {
+            // query is null when user select the context menu item directly of one item from query list
+            // so we only need to consider the result
             if (query == null)
             {
                 return GenerateResultHashCode(result);

@@ -12,6 +12,8 @@ namespace Flow.Launcher.Storage
 
         internal bool IsTopMost(Result result)
         {
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to check if the result is top most
             if (records.IsEmpty || result.OriginQuery == null ||
                 !records.TryGetValue(result.OriginQuery.RawQuery, out var value))
             {

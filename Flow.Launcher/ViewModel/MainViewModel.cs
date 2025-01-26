@@ -396,11 +396,15 @@ namespace Flow.Launcher.ViewModel
                 })
                 .ConfigureAwait(false);
 
-
             if (SelectedIsFromQueryResults())
             {
                 _userSelectedRecord.Add(result);
-                _history.Add(result.OriginQuery.RawQuery);
+                // origin query is null when user select the context menu item directly of one item from query list
+                // so we don't want to add it to history
+                if (result.OriginQuery != null)
+                {
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
                 lastHistoryIndex = 1;
             }
 
@@ -985,9 +989,9 @@ namespace Flow.Launcher.ViewModel
             {
                 List<Result> results;
 
-                    results = PluginManager.GetContextMenusForPlugin(selected);
-                    results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected.PluginID));
+                results = PluginManager.GetContextMenusForPlugin(selected);
+                results.Add(ContextMenuTopMost(selected));
+                results.Add(ContextMenuPluginInfo(selected.PluginID));
 
                 if (!string.IsNullOrEmpty(query))
                 {
