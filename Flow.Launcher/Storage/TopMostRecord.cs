@@ -26,11 +26,25 @@ namespace Flow.Launcher.Storage
 
         internal void Remove(Result result)
         {
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to remove the record
+            if (result.OriginQuery == null)
+            {
+                return;
+            }
+
             records.Remove(result.OriginQuery.RawQuery, out _);
         }
 
         internal void AddOrUpdate(Result result)
         {
+            // origin query is null when user select the context menu item directly of one item from query list
+            // in this case, we do not need to add or update the record
+            if (result.OriginQuery == null)
+            {
+                return;
+            }
+
             var record = new Record
             {
                 PluginID = result.PluginID,
@@ -38,11 +52,6 @@ namespace Flow.Launcher.Storage
                 SubTitle = result.SubTitle
             };
             records.AddOrUpdate(result.OriginQuery.RawQuery, record, (key, oldValue) => record);
-        }
-
-        public void Load(Dictionary<string, Record> dictionary)
-        {
-            records = new ConcurrentDictionary<string, Record>(dictionary);
         }
     }
 
