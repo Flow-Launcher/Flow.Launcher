@@ -68,7 +68,7 @@ namespace Flow.Launcher.Infrastructure
             var numRemaining = hWnds.Count;
             PInvoke.EnumWindows((wnd, _) =>
             {
-                var searchIndex = hWnds.FindIndex(x => x.HWND == wnd.Value);
+                var searchIndex = hWnds.FindIndex(x => new IntPtr(x.HWND) == wnd);
                 if (searchIndex != -1)
                 {
                     z[searchIndex] = index;
