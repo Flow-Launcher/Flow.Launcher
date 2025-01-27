@@ -54,6 +54,9 @@ namespace Flow.Launcher
                     .AddSingleton<MainViewModel>()
                 ).Build();
             Ioc.Default.ConfigureServices(host.Services);
+
+            // Initialize the public API first
+            API = Ioc.Default.GetRequiredService<IPublicAPI>();
         }
 
         [STAThread]
@@ -73,8 +76,6 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
-                API = Ioc.Default.GetRequiredService<IPublicAPI>();
-
                 Ioc.Default.GetRequiredService<Updater>().Initialize(Launcher.Properties.Settings.Default.GithubRepo);
 
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
