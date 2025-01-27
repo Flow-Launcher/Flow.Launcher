@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">前回のクエリを保存</system:String>
     <system:String x:Key="LastQuerySelected">前回のクエリを選択</system:String>
     <system:String x:Key="LastQueryEmpty">前回のクエリを消去</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">結果の最大表示件数</system:String>

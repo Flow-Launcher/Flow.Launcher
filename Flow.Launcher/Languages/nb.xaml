@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Bevar siste spørring</system:String>
     <system:String x:Key="LastQuerySelected">Velg siste spørring</system:String>
     <system:String x:Key="LastQueryEmpty">Tøm siste spørring</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Fast vindushøyde</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Vindushøyden kan ikke justeres ved å dra.</system:String>
     <system:String x:Key="maxShowResults">Maksimalt antall resultater vist</system:String>

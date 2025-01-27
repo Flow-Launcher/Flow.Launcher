@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">保留上一個查詢</system:String>
     <system:String x:Key="LastQuerySelected">選擇上一個查詢</system:String>
     <system:String x:Key="LastQueryEmpty">清空上次搜尋關鍵字</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Fixed Window Height</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">最大結果顯示個數</system:String>

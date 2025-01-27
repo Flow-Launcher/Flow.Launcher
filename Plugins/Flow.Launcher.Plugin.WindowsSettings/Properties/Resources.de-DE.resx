@@ -126,7 +126,7 @@
     <comment>File name, Should not translated</comment>
   </data>
   <data name="AccessibilityOptions" xml:space="preserve">
-    <value>Barrierefreiheitsoptionen</value>
+    <value>Optionen für Barrierefreiheit</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="AccessoryApps" xml:space="preserve">
@@ -296,7 +296,7 @@
     <value>Programme</value>
   </data>
   <data name="AreaSurfaceHub" xml:space="preserve">
-    <value>SurfaceHub</value>
+    <value>Oberflächenhub</value>
   </data>
   <data name="AreaSystem" xml:space="preserve">
     <value>System</value>
@@ -424,11 +424,11 @@
     <comment>Mean the "Caps Lock" key</comment>
   </data>
   <data name="CellularAndSim" xml:space="preserve">
-    <value>Mobilfunknetz und SIM-Karte</value>
+    <value>Mobilfunk und SIM</value>
     <comment>Area NetworkAndInternet</comment>
   </data>
   <data name="ChooseWhichFoldersAppearOnStart" xml:space="preserve">
-    <value>Wählen Sie aus, welche Ordner im Startmenü angezeigt werden</value>
+    <value>Wählen Sie, welche Ordner im Start erscheinen</value>
     <comment>Area Personalization</comment>
   </data>
   <data name="ClientServiceForNetWare" xml:space="preserve">
@@ -547,7 +547,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="deuteranopia" xml:space="preserve">
-    <value>deuteranopia</value>
+    <value>Farbenfehlsichtigkeit</value>
     <comment>Medical: Mean you don't can see red colors</comment>
   </data>
   <data name="DeviceManager" xml:space="preserve">
@@ -654,7 +654,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="FindFast" xml:space="preserve">
-    <value>FindFast</value>
+    <value>Schnell finden</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="findfast.cpl" xml:space="preserve">
@@ -697,7 +697,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="GameDvr" xml:space="preserve">
-    <value>Game DVR</value>
+    <value>DVR</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="GameMode" xml:space="preserve">
@@ -865,7 +865,7 @@
     <comment>Area Apps</comment>
   </data>
   <data name="Messaging" xml:space="preserve">
-    <value>Messaging</value>
+    <value>Nachrichten</value>
     <comment>Area Privacy</comment>
   </data>
   <data name="MeteredConnection" xml:space="preserve">
@@ -876,7 +876,7 @@
     <comment>Area Privacy</comment>
   </data>
   <data name="MicrosoftMailPostOffice" xml:space="preserve">
-    <value>Microsoft Mail Post Office</value>
+    <value>Microsoft Mail Post</value>
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="mlcfg32.cpl" xml:space="preserve">
@@ -1251,7 +1251,7 @@
     <comment>Area System</comment>
   </data>
   <data name="protanopia" xml:space="preserve">
-    <value>protanopia</value>
+    <value>Protanopie</value>
     <comment>Medical: Mean you don't can see green colors</comment>
   </data>
   <data name="Provisioning" xml:space="preserve">
@@ -1332,7 +1332,7 @@
     <comment>Area Control Panel (legacy settings)</comment>
   </data>
   <data name="schedtasks" xml:space="preserve">
-    <value>schedtasks</value>
+    <value>sedtasks</value>
     <comment>File name, Should not translated</comment>
   </data>
   <data name="Scheduled" xml:space="preserve">
@@ -1412,7 +1412,7 @@
     <comment>Area System</comment>
   </data>
   <data name="Speech" xml:space="preserve">
-    <value>Speech</value>
+    <value>Sprache</value>
     <comment>Area EaseOfAccess</comment>
   </data>
   <data name="SpeechRecognition" xml:space="preserve">
@@ -1544,7 +1544,7 @@
     <value>Transparenz</value>
   </data>
   <data name="tritanopia" xml:space="preserve">
-    <value>tritanopia</value>
+    <value>Farbenblindheit (Blau)</value>
     <comment>Medical: Mean you don't can see yellow and blue colors</comment>
   </data>
   <data name="Troubleshoot" xml:space="preserve">
@@ -1552,7 +1552,7 @@
     <comment>Area UpdateAndSecurity</comment>
   </data>
   <data name="TruePlay" xml:space="preserve">
-    <value>TruePlay</value>
+    <value>TruePlaying</value>
     <comment>Area Gaming</comment>
   </data>
   <data name="Typing" xml:space="preserve">
@@ -2064,7 +2064,7 @@
     <value>Microsoft ChangJie-Einstellungen</value>
   </data>
   <data name="ReplaceSoundsWithVisualCues" xml:space="preserve">
-    <value>Replace sounds with visual cues</value>
+    <value>Sounds durch visuelle Hinweise ersetzen</value>
   </data>
   <data name="ChangeTemporaryInternetFileSettings" xml:space="preserve">
     <value>Temporäre Internet-Dateieinstellungen ändern</value>
@@ -2079,7 +2079,7 @@
     <value>Change the mouse pointer display or speed</value>
   </data>
   <data name="BackUpYourRecoveryKey" xml:space="preserve">
-    <value>Back up your recovery key</value>
+    <value>Ihren Wiederherstellungsschlüssel sichern</value>
   </data>
   <data name="SaveBackupCopiesOfYourFilesWithFileHistory" xml:space="preserve">
     <value>Save backup copies of your files with File History</value>
@@ -2130,10 +2130,10 @@
     <value>Ändern, wie der Mauszeiger ausschaut</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Change power-saving settings</value>
+    <value>Energiespareinstellungen ändern</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
-    <value>Optimise for blindness</value>
+    <value>Optimieren für Blindheit</value>
   </data>
   <data name="null" xml:space="preserve">
     <value>
@@ -2143,7 +2143,7 @@
     <value>Windows-Features ein- oder ausschalten</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>Betriebssystem, welches auf deinem Computer läuft, anzeigen</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Lokale Dienste ansehen</value>
@@ -2155,7 +2155,7 @@
     <value>Ihre Offline-Dateien verschlüsseln</value>
   </data>
   <data name="TrainTheComputerToRecogniseYourVoice" xml:space="preserve">
-    <value>Train the computer to recognise your voice</value>
+    <value>Trainieren Sie den Computer, Ihre Stimme zu erkennen</value>
   </data>
   <data name="AdvancedPrinterSetup" xml:space="preserve">
     <value>Erweiterte Druckereinrichtung</value>
@@ -2461,10 +2461,10 @@
     <value>Set your default programs</value>
   </data>
   <data name="SetUpABroadbandConnection" xml:space="preserve">
-    <value>Set up a broadband connection</value>
+    <value>Eine Breitbandverbindung einrichten</value>
   </data>
   <data name="CalibrateTheScreenForPenOrTouchInput" xml:space="preserve">
-    <value>Calibrate the screen for pen or touch input</value>
+    <value>Kalibrieren des Screens für Stift- oder Toucheingabe</value>
   </data>
   <data name="ManageUserCertificates" xml:space="preserve">
     <value>Benutzerzertifikate verwalten</value>
