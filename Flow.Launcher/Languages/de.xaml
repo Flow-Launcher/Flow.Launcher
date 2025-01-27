@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Letzte Abfrage beibehalten</system:String>
     <system:String x:Key="LastQuerySelected">Letzte Abfrage auswählen</system:String>
     <system:String x:Key="LastQueryEmpty">Letzte Abfrage leeren</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Feste Fensterhöhe</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Die Fensterhöhe ist durch Ziehen nicht anpassbar.</system:String>
     <system:String x:Key="maxShowResults">Maximal gezeigte Ergebnisse</system:String>
@@ -77,7 +79,7 @@
     <system:String x:Key="defaultBrowserToolTip">Einstellung für Neuer Tab, Neues Fenster, Privater Modus.</system:String>
     <system:String x:Key="pythonFilePath">Python-Pfad</system:String>
     <system:String x:Key="nodeFilePath">Node.js-Pfad</system:String>
-    <system:String x:Key="selectNodeExecutable">Bitte wählen Sie das Programm Node.js aus</system:String>
+    <system:String x:Key="selectNodeExecutable">Bitte wählen Sie die ausführbare Datei Node.js aus</system:String>
     <system:String x:Key="selectPythonExecutable">Bitte wählen Sie pythonw.exe aus</system:String>
     <system:String x:Key="typingStartEn">Tippen immer im englischen Modus starten</system:String>
     <system:String x:Key="typingStartEnTooltip">Ändern Sie Ihre Eingabemethode temporär in den englischen Modus, wenn Sie Flow aktivieren.</system:String>
@@ -166,8 +168,8 @@
     <system:String x:Key="CustomizeToolTip">Individuell anpassen</system:String>
     <system:String x:Key="windowMode">Fenstermodus</system:String>
     <system:String x:Key="opacity">Opazität</system:String>
-    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} ist nicht vorhanden, Fallback auf Standard-Theme</system:String>
-    <system:String x:Key="theme_load_failure_parse_error">Theme {0} konnte nicht geladen werden, Fallback auf Standard-Theme</system:String>
+    <system:String x:Key="theme_load_failure_path_not_exists">Theme {0} ist nicht vorhanden, Fallback auf Default-Theme</system:String>
+    <system:String x:Key="theme_load_failure_parse_error">Theme {0} konnte nicht geladen werden, Fallback auf Default-Theme</system:String>
     <system:String x:Key="ThemeFolder">Theme-Ordner</system:String>
     <system:String x:Key="OpenThemeFolder">Theme-Ordner öffnen</system:String>
     <system:String x:Key="ColorScheme">Farbschema</system:String>
@@ -175,7 +177,7 @@
     <system:String x:Key="ColorSchemeLight">Hell</system:String>
     <system:String x:Key="ColorSchemeDark">Dunkel</system:String>
     <system:String x:Key="SoundEffect">Soundeffekt</system:String>
-    <system:String x:Key="SoundEffectTip">Einen kleinen Sound abspielen, wenn das Suchfenster geöffnet wird</system:String>
+    <system:String x:Key="SoundEffectTip">Einen kurzen Sound abspielen, wenn das Suchfenster geöffnet wird</system:String>
     <system:String x:Key="SoundEffectVolume">Lautstärke der Soundeffekte</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Lautstärke des Soundeffekts anpassen</system:String>
     <system:String x:Key="SoundEffectWarning">Windows Media Player ist nicht verfügbar und ist für die Lautstärkeregelung von Flow erforderlich. Bitte überprüfen Sie Ihre Installation, wenn Sie die Lautstärke anpassen müssen.</system:String>
@@ -287,8 +289,8 @@
     <system:String x:Key="releaseNotes">Versionshinweise</system:String>
     <system:String x:Key="documentation">Tipps zur Nutzung</system:String>
     <system:String x:Key="devtool">DevTools</system:String>
-    <system:String x:Key="settingfolder">Ordner Einstellungen</system:String>
-    <system:String x:Key="logfolder">Ordner Logs</system:String>
+    <system:String x:Key="settingfolder">Ordner »Settings«</system:String>
+    <system:String x:Key="logfolder">Ordner »Logs«</system:String>
     <system:String x:Key="clearlogfolder">Logs löschen</system:String>
     <system:String x:Key="clearlogfolderMessage">Sind Sie sicher, dass Sie alle Logs löschen wollen?</system:String>
     <system:String x:Key="welcomewindow">Assistent</system:String>
@@ -411,8 +413,8 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="Welcome_Page1_Title">Willkommen bei Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Hallo, dies ist das erste Mal, dass Sie Flow Launcher ausführen!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Bevor Sie beginnen, hilft dieser Assistent bei der Einrichtung von Flow Launcher. Sie können dies überspringen, wenn Sie möchten. Bitte wählen Sie eine Sprache</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Suchen und führen Sie alle Dateien und Anwendungen auf Ihrem PC aus</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Suchen Sie alles in Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Alle Dateien und Anwendungen auf Ihrem PC suchen und ausführen</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Durchsuchen Sie alles von Anwendungen, Dateien, Lesezeichen, YouTube, Twitter und vielem mehr. Alles bequem über Ihre Tastatur, ohne die Maus zu berühren.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher startet mit dem unten stehenden Hotkey, probieren Sie ihn gleich aus. Um ihn zu ändern, klicken Sie auf die Eingabe und drücken Sie den gewünschten Hotkey auf der Tastatur.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Hotkeys</system:String>
     <system:String x:Key="Welcome_Page4_Title">Aktions-Schlüsselwort und Befehle</system:String>

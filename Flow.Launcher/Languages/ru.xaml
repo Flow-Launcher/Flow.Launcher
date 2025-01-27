@@ -1,12 +1,13 @@
+﻿<?xml version="1.0"?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
-        Flow определил, что вы установили {0} плагины, которым требуется {1} для работы. Скачать {1}?
+        Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
         {2}{2}
-        Кликните нет, если он уже установлен, и вам будет предложено выбрать папку, где находится исполняемый файл {1}
+        Click no if it's already installed, and you will be prompted to select the folder that contains the {1} executable
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Пожалуйста, выберите исполняемый файл {0}</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Не удалось установить путь к исполняемому файлу {0}, пожалуйста, попробуйте через настройки Flow (прокрутите вниз).</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Please select the {0} executable</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Unable to set {0} executable path, please try from Flow's settings (scroll down to the bottom).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Fail to Init Plugins</system:String>
     <system:String x:Key="failedToInitializePluginsMessage">Plugins: {0} - fail to load and would be disabled, please contact plugin creator for help</system:String>
 
@@ -64,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Сохранение последнего запроса</system:String>
     <system:String x:Key="LastQuerySelected">Выбор последнего запроса</system:String>
     <system:String x:Key="LastQueryEmpty">Очистить последний запрос</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Фиксированная высота окна</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">The window height is not adjustable by dragging.</system:String>
     <system:String x:Key="maxShowResults">Максимальное количество результатов</system:String>
