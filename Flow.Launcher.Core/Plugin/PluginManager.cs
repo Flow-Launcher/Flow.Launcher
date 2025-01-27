@@ -519,7 +519,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath);
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, MessageBoxEx.Show);
 
             Directory.Delete(tempFolderPluginPath, true);
 

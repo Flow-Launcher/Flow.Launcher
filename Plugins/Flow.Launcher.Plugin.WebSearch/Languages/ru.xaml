@@ -31,7 +31,6 @@
     <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Скопировать URL-адрес</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Скопировать URL поиска в буфер обмена</system:String>
 
-
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Title</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable">Состояние</system:String>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -15,6 +14,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
+using Flow.Launcher.Core;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
 
@@ -49,7 +49,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (ThemeManager.Instance.BlurEnabled && value)
             {
-                MessageBox.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
                 return;
             }
 
@@ -132,7 +132,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         "ddd dd'/'MM",
         "dddd dd'/'MM",
         "dddd dd', 'MMMM",
-        "dd', 'MMMM"
+        "dd', 'MMMM",
+        "dd.MM.yy",
+        "dd.MM.yyyy"
     };
 
     public string TimeFormat

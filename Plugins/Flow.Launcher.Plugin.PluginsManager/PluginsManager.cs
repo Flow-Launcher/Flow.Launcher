@@ -131,7 +131,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     Environment.NewLine);
             }
 
-            if (MessageBox.Show(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
+            if (Context.API.ShowMsgBox(message, Context.API.GetTranslation("plugin_pluginsmanager_install_title"),
                     MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return;
 
@@ -265,7 +265,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Environment.NewLine);
                             }
 
-                            if (MessageBox.Show(message,
+                            if (Context.API.ShowMsgBox(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                     MessageBoxButton.YesNo) != MessageBoxResult.Yes)
                             {
@@ -360,7 +360,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 resultsForUpdate.Count());
                         }
 
-                        if (MessageBox.Show(message,
+                        if (Context.API.ShowMsgBox(message,
                                 Context.API.GetTranslation("plugin_pluginsmanager_update_title"),
                                 MessageBoxButton.YesNo) == MessageBoxResult.No)
                         {
@@ -474,7 +474,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                     if (Settings.WarnFromUnknownSource)
                     {
                         if (!InstallSourceKnown(plugin.UrlDownload)
-                            && MessageBox.Show(string.Format(
+                            && Context.API.ShowMsgBox(string.Format(
                                     Context.API.GetTranslation("plugin_pluginsmanager_install_unknown_source_warning"),
                                     Environment.NewLine),
                                 Context.API.GetTranslation(
@@ -511,7 +511,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         if (Settings.WarnFromUnknownSource)
                         {
                             if (!InstallSourceKnown(plugin.Website)
-                                && MessageBox.Show(string.Format(
+                                && Context.API.ShowMsgBox(string.Format(
                                         Context.API.GetTranslation(
                                             "plugin_pluginsmanager_install_unknown_source_warning"),
                                         Environment.NewLine),
@@ -648,7 +648,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Environment.NewLine);
                             }
 
-                            if (MessageBox.Show(message,
+                            if (Context.API.ShowMsgBox(message,
                                     Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {

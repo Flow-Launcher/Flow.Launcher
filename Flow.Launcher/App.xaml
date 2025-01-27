@@ -20,6 +20,11 @@
                                 <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
                             </ResourceDictionary.MergedDictionaries>
                         </ResourceDictionary>
+                        <ResourceDictionary x:Key="HighContrast">
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Resources/Dark.xaml" />
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
                     </ui:ThemeResources.ThemeDictionaries>
                 </ui:ThemeResources>
                 <ui:XamlControlsResources />

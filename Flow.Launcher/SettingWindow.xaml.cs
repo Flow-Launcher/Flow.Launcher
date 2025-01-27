@@ -29,7 +29,6 @@ public partial class SettingWindow
         _api = api;
         InitializePosition();
         InitializeComponent();
-        NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
@@ -169,7 +168,11 @@ public partial class SettingWindow
         else
         {
             var selectedItem = (NavigationViewItem)args.SelectedItem;
-            if (selectedItem == null) return;
+            if (selectedItem == null)
+            {
+                NavView_Loaded(sender, null); /* Reset First Page */
+                return;
+            }
 
             var pageType = selectedItem.Name switch
             {
@@ -184,6 +187,23 @@ public partial class SettingWindow
             };
             ContentFrame.Navigate(pageType, paneData);
         }
+    }
+
+    private void NavView_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (ContentFrame.IsLoaded)
+        {
+            ContentFrame_Loaded(sender, e);
+        }
+        else
+        {
+            ContentFrame.Loaded += ContentFrame_Loaded;
+        }
+    }
+
+    private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
+    {
+        NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
 
     public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
