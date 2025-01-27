@@ -99,10 +99,9 @@ namespace Flow.Launcher
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
-                Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePluginsAsync(API);
+                await PluginManager.InitializePluginsAsync();
                 await imageLoadertask;
 
                 var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();

@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.Threading;
 using Flow.Launcher.Plugin;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.Http
 
         private static HttpClient client = new HttpClient();
 
-        public static IPublicAPI API { get; set; }
+        private static IPublicAPI API { get; set; } = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         static Http()
         {
