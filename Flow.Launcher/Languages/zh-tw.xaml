@@ -1,5 +1,8 @@
-﻿<?xml version="1.0"?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+﻿<?xml version="1.0" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!--  Startup  -->
     <system:String x:Key="runtimePluginInstalledChooseRuntimePrompt">
         Flow detected you have installed {0} plugins, which will require {1} to run. Would you like to download {1}?
@@ -44,6 +47,7 @@
     <system:String x:Key="portableMode">便攜模式</system:String>
     <system:String x:Key="portableModeToolTIp">將所有設定和使用者資料存儲在一個資料夾中（當與可移動磁碟或雲服務一起使用時很有用）。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">開機時啟動</system:String>
+    <system:String x:Key="useLogonTaskForStartup">使用登錄任務而非啟動項以更快自啟</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦點時自動隱藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不顯示新版本提示</system:String>
