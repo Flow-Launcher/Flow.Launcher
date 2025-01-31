@@ -56,15 +56,16 @@ public class AutoStartup
                     UnscheduleLogonTask();
                     ScheduleLogonTask();
                 }
+
+                return true;
             }
             catch (Exception)
             {
                 Log.Error("AutoStartup", "Failed to check logon task");
-                return false;
             }
         }
 
-        return true;
+        return false;
     }
 
     public static void Disable(bool logonTask)
