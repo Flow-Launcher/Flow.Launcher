@@ -14,6 +14,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.Storage;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -439,7 +440,7 @@ namespace Flow.Launcher.Core.Plugin
         public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
             InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            UninstallPlugin(existingVersion, removeSettings:false, checkModified:false);
+            UninstallPlugin(existingVersion, removeSettings:false, removePluginSettings:false, checkModified: false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
 
@@ -454,9 +455,9 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Uninstall a plugin.
         /// </summary>
-        public static void UninstallPlugin(PluginMetadata plugin, bool removeSettings = true)
+        public static void UninstallPlugin(PluginMetadata plugin, bool removeSettings = true, bool removePluginSettings = false)
         {
-            UninstallPlugin(plugin, removeSettings, true);
+            UninstallPlugin(plugin, removeSettings, removePluginSettings, true);
         }
 
         #endregion
@@ -529,7 +530,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        internal static void UninstallPlugin(PluginMetadata plugin, bool removeSettings, bool checkModified)
+        internal static void UninstallPlugin(PluginMetadata plugin, bool removeSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
@@ -540,6 +541,18 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Settings.Plugins.Remove(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
+            }
+
+            if (removePluginSettings)
+            {
+                var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
+                var assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                var assemblyName = assembly.GetName().Name;
+                var directoryPath = Path.Combine(DataLocation.DataDirectory(), JsonStorage<object>.DirectoryName, Constant.Plugins, assemblyName);
+                if (Directory.Exists(directoryPath))
+                {
+                    Directory.Delete(directoryPath, true);
+                }
             }
 
             // Marked for deletion. Will be deleted on next start up
