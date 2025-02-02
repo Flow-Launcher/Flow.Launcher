@@ -58,6 +58,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var rootDirectory = context.CurrentPluginMetadata.PluginDirectory;
                 var libDirectory = Path.Combine(rootDirectory, "lib");
+                var libPyWin32Directory = Path.Combine(libDirectory, "win32");
+                var libPyWin32LibDirectory = Path.Combine(libPyWin32Directory, "lib");
                 var pluginDirectory = Path.Combine(rootDirectory, "plugin");
 
                 // This makes it easier for plugin authors to import their own modules.
@@ -70,6 +72,8 @@ namespace Flow.Launcher.Core.Plugin
                      import sys
                      sys.path.append(r'{rootDirectory}')
                      sys.path.append(r'{libDirectory}')
+                     sys.path.append(r'{libPyWin32LibDirectory}')
+                     sys.path.append(r'{libPyWin32Directory}')
                      sys.path.append(r'{pluginDirectory}')
 
                      import runpy
