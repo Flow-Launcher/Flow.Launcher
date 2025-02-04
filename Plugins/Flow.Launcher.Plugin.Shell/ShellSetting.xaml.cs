@@ -91,8 +91,8 @@ namespace Flow.Launcher.Plugin.Shell
                 Shell.Cmd => 0,
                 Shell.Powershell => 1,
                 Shell.Pwsh => 2,
-                Shell.TerminalPWSH = 3,
-                Shell.TerminalCMD = 4,
+                Shell.TerminalPWSH => 3,
+                Shell.TerminalCMD => 4,
                 _ => ShellComboBox.Items.Count - 1
             };
 
