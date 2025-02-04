@@ -91,6 +91,8 @@ namespace Flow.Launcher.Plugin.Shell
                 Shell.Cmd => 0,
                 Shell.Powershell => 1,
                 Shell.Pwsh => 2,
+                Shell.TerminalPWSH = 3,
+                Shell.TerminalCMD = 4,
                 _ => ShellComboBox.Items.Count - 1
             };
 
@@ -101,6 +103,8 @@ namespace Flow.Launcher.Plugin.Shell
                     0 => Shell.Cmd,
                     1 => Shell.Powershell,
                     2 => Shell.Pwsh,
+                    3 => Shell.TerminalPWSH,
+                    4 => Shell.TerminalCMD,
                     _ => Shell.RunCommand
                 };
                 LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;

@@ -279,6 +279,33 @@ namespace Flow.Launcher.Plugin.Shell
 
                     break;
                 }
+                case Shell.TerminalPWSH:
+                {
+                    info.filename = "wt.exe"
+                    info.ArgumentList.Add("pwsh");
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                    }
+                    info.ArgumentList.Add("-Command");
+                    info.ArgumentList.Add(command);
+                    break;
+                }
+                case Shell.TerminalCMD:
+                {
+                    info.filename = "wt.exe"
+                    info.ArgumentList.Add("cmd");
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("/k");
+                    }
+                    else
+                    {
+                        info.ArgumentList.Add("/c");
+                    }
+                    info.ArgumentList.Add(command);
+                    break;
+                }
                 default:
                     throw new NotImplementedException();
             }
