@@ -43,7 +43,7 @@
             Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" />
         <ComboBox
             x:Name="ShellComboBox"
-            Grid.Row="6"
+            Grid.Row="4"
             Margin="10,5,5,5"
             HorizontalAlignment="Left">
             <ComboBoxItem>CMD</ComboBoxItem>

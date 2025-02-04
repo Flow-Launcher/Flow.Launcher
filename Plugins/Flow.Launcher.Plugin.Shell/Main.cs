@@ -281,7 +281,7 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 case Shell.TerminalPWSH:
                 {
-                    info.filename = "wt.exe";
+                    info.FileName = "wt.exe";
                     info.ArgumentList.Add("pwsh");
                     if (_settings.LeaveShellOpen)
                     {
@@ -293,7 +293,7 @@ namespace Flow.Launcher.Plugin.Shell
                 }
                 case Shell.TerminalCMD:
                 {
-                    info.filename = "wt.exe";
+                    info.FileName = "wt.exe";
                     info.ArgumentList.Add("cmd");
                     if (_settings.LeaveShellOpen)
                     {
