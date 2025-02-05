@@ -16,6 +16,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <CheckBox
             x:Name="ReplaceWinR"
@@ -41,19 +42,23 @@
             Margin="10,5,5,5"
             HorizontalAlignment="Left"
             Content="{DynamicResource flowlauncher_plugin_cmd_always_run_as_administrator}" />
+        <CheckBox
+            x:Name="UseWindowsTerminal"
+            Grid.Row="4"
+            Margin="10,5,5,5"
+            HorizontalAlignment="Left"
+            Content="{DynamicResource flowlauncher_plugin_cmd_use_windows_terminal}" />
         <ComboBox
             x:Name="ShellComboBox"
-            Grid.Row="4"
+            Grid.Row="5"
             Margin="10,5,5,5"
             HorizontalAlignment="Left">
             <ComboBoxItem>CMD</ComboBoxItem>
             <ComboBoxItem>PowerShell</ComboBoxItem>
             <ComboBoxItem>Pwsh</ComboBoxItem>
-            <ComboBoxItem>Terminal (Pwsh)</ComboBoxItem>
-            <ComboBoxItem>Terminal (CMD)</ComboBoxItem>
             <ComboBoxItem>RunCommand</ComboBoxItem>
         </ComboBox>
-        <StackPanel Grid.Row="5" Orientation="Horizontal">
+        <StackPanel Grid.Row="6" Orientation="Horizontal">
             <CheckBox
                 x:Name="ShowOnlyMostUsedCMDs"
                 Margin="10,5,5,5"

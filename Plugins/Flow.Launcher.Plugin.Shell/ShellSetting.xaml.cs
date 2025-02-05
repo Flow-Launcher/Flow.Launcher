@@ -23,6 +23,8 @@ namespace Flow.Launcher.Plugin.Shell
             LeaveShellOpen.IsChecked = _settings.LeaveShellOpen;
             
             AlwaysRunAsAdministrator.IsChecked = _settings.RunAsAdministrator;
+
+            UseWindowsTerminal.IsChecked = _settings.UseWindowsTerminal;
             
             LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
             
@@ -76,6 +78,16 @@ namespace Flow.Launcher.Plugin.Shell
                 _settings.RunAsAdministrator = false;
             };
 
+            UseWindowsTerminal.Checked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = true;
+            };
+
+            UseWindowsTerminal.Unchecked += (o, e) =>
+            {
+                _settings.UseWindowsTerminal = false;
+            };
+
             ReplaceWinR.Checked += (o, e) =>
             {
                 _settings.ReplaceWinR = true;
@@ -91,8 +103,6 @@ namespace Flow.Launcher.Plugin.Shell
                 Shell.Cmd => 0,
                 Shell.Powershell => 1,
                 Shell.Pwsh => 2,
-                Shell.TerminalPWSH => 3,
-                Shell.TerminalCMD => 4,
                 _ => ShellComboBox.Items.Count - 1
             };
 
@@ -103,8 +113,6 @@ namespace Flow.Launcher.Plugin.Shell
                     0 => Shell.Cmd,
                     1 => Shell.Powershell,
                     2 => Shell.Pwsh,
-                    3 => Shell.TerminalPWSH,
-                    4 => Shell.TerminalCMD,
                     _ => Shell.RunCommand
                 };
                 LeaveShellOpen.IsEnabled = _settings.Shell != Shell.RunCommand;
