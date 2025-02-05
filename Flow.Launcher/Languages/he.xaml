@@ -86,9 +86,9 @@
     <system:String x:Key="autoUpdates">עדכון אוטומטי</system:String>
     <system:String x:Key="select">בחר</system:String>
     <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
-    <system:String x:Key="hideOnStartupToolTip">Flow Launcher search window is hidden in the tray after starting up.</system:String>
-    <system:String x:Key="hideNotifyIcon">Hide tray icon</system:String>
-    <system:String x:Key="hideNotifyIconToolTip">When the icon is hidden from the tray, the Settings menu can be opened by right-clicking on the search window.</system:String>
+    <system:String x:Key="hideOnStartupToolTip">חלון החיפוש של Flow Launcher מוסתר במגש לאחר ההפעלה.</system:String>
+    <system:String x:Key="hideNotifyIcon">הסתר אייקון מגש</system:String>
+    <system:String x:Key="hideNotifyIconToolTip">כאשר האייקון מוסתר מהמגש, ניתן לפתוח את תפריט ההגדרות על ידי לחיצה ימנית על חלון החיפוש.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
     <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
