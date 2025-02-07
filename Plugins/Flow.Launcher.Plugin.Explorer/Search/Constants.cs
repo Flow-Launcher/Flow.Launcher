@@ -31,6 +31,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
         internal const string DefaultContentSearchActionKeyword = "doc:";
 
+        internal const char UnixDirectorySeparator = '/';
+
         internal const char DirectorySeparator = '\\';
 
         internal const string WindowsIndexingOptions = "srchadmin.dll";
