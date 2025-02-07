@@ -148,7 +148,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                 if (!plugin.IsFromLocalInstallPath)
                 {
-                    await DeleteFileAndDownloadMsgBoxAsync(
+                    await DownloadFileAsync(
                         $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {plugin.Name}",
                         plugin.UrlDownload, filePath, cts);
                 }
@@ -199,32 +199,39 @@ namespace Flow.Launcher.Plugin.PluginsManager
             }
         }
 
-        private async Task DeleteFileAndDownloadMsgBoxAsync(string prgBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts)
+        private async Task DownloadFileAsync(string prgBoxTitle, string downloadUrl, string filePath, CancellationTokenSource cts, bool deleteFile = true, bool showProgress = true)
         {
-            if (File.Exists(filePath))
+            if (deleteFile && File.Exists(filePath))
                 File.Delete(filePath);
 
-            var exceptionHappened = false;
-            await Context.API.ShowProgressBoxAsync(prgBoxTitle,
-                async (reportProgress) =>
-                {
-                    if (reportProgress == null)
+            if (showProgress)
+            {
+                var exceptionHappened = false;
+                await Context.API.ShowProgressBoxAsync(prgBoxTitle,
+                    async (reportProgress) =>
                     {
-                        // when reportProgress is null, it means there is expcetion with the progress box
-                        // so we record it with exceptionHappened and return so that progress box will close instantly
-                        exceptionHappened = true;
-                        return;
-                    }
-                    else
-                    {
-                        await Context.API.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
-                    }
-                }, cts.Cancel);
+                        if (reportProgress == null)
+                        {
+                            // when reportProgress is null, it means there is expcetion with the progress box
+                            // so we record it with exceptionHappened and return so that progress box will close instantly
+                            exceptionHappened = true;
+                            return;
+                        }
+                        else
+                        {
+                            await Context.API.HttpDownloadAsync(downloadUrl, filePath, reportProgress, cts.Token).ConfigureAwait(false);
+                        }
+                    }, cts.Cancel);
 
-            // if exception happened while downloading and user does not cancel downloading,
-            // we need to redownload the plugin
-            if (exceptionHappened && (!cts.IsCancellationRequested))
-                await Context.API.HttpDownloadAsync(downloadUrl, filePath).ConfigureAwait(false);
+                // if exception happened while downloading and user does not cancel downloading,
+                // we need to redownload the plugin
+                if (exceptionHappened && (!cts.IsCancellationRequested))
+                    await Context.API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+            }
+            else
+            {
+                await Context.API.HttpDownloadAsync(downloadUrl, filePath, token: cts.Token).ConfigureAwait(false);
+            }
         }
 
         internal async ValueTask<List<Result>> RequestUpdateAsync(string search, CancellationToken token,
@@ -318,7 +325,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
 
                                 if (!x.PluginNewUserPlugin.IsFromLocalInstallPath)
                                 {
-                                    await DeleteFileAndDownloadMsgBoxAsync(
+                                    await DownloadFileAsync(
                                         $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {x.PluginNewUserPlugin.Name}",
                                         x.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
                                 }
@@ -418,7 +425,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             {
                                 using var cts = new CancellationTokenSource();
 
-                                await DeleteFileAndDownloadMsgBoxAsync(
+                                await DownloadFileAsync(
                                     $"{Context.API.GetTranslation("plugin_pluginsmanager_downloading_plugin")} {plugin.PluginNewUserPlugin.Name}",
                                     plugin.PluginNewUserPlugin.UrlDownload, downloadToFilePath, cts);
 
