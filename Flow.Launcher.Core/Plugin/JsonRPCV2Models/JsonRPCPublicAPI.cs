@@ -173,5 +173,10 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
         {
             _api.OpenAppUri(appUri);
         }
+
+        public void BackToQueryResults()
+        {
+            _api.BackToQueryResults();
+        }
     }
 }
