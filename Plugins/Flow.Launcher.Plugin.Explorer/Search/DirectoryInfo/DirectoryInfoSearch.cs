@@ -1,4 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo
     {
         internal static IEnumerable<SearchResult> TopLevelDirectorySearch(Query query, string search, CancellationToken token)
         {
-            // if user uses the unix directory separator, we need to convert it to windows directory separator
-            search = search.Replace(Constants.UnixDirectorySeparator, Constants.DirectorySeparator);
-
             var criteria = ConstructSearchCriteria(search);
 
             if (search.LastIndexOf(Constants.AllFilesFolderSearchWildcard) >
