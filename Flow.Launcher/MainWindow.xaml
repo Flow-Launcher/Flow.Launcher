@@ -37,7 +37,7 @@
     mc:Ignorable="d">
     <!--  WindowChrome  -->
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="9" ResizeBorderThickness="32 4 32 32" />
+        <WindowChrome CaptionHeight="9" />
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <converters:QuerySuggestionBoxConverter x:Key="QuerySuggestionBoxConverter" />
