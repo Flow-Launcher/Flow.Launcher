@@ -189,6 +189,23 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
+        public object RemovePluginSettings(string assemblyName)
+        {
+            foreach (var keyValuePair in _pluginJsonStorages)
+            {
+                var key = keyValuePair.Key;
+                var value = keyValuePair.Value;
+                var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
+                if (name == assemblyName)
+                {
+                    _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
+                    return pluginJsonStorage;
+                }
+            }
+
+            return null;
+        }
+
         /// <summary>
         /// Save plugin settings.
         /// </summary>

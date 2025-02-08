@@ -14,7 +14,6 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.Storage;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -548,10 +547,17 @@ namespace Flow.Launcher.Core.Plugin
                 var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
                 var assembly = assemblyLoader.LoadAssemblyAndDependencies();
                 var assemblyName = assembly.GetName().Name;
-                var directoryPath = Path.Combine(DataLocation.DataDirectory(), JsonStorage<object>.DirectoryName, Constant.Plugins, assemblyName);
-                if (Directory.Exists(directoryPath))
+
+                // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
+                // so we need to remove it from the api instance
+                var method = API.GetType().GetMethod("RemovePluginSettings");
+                var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
+
+                // if there exists a json storage for current plugin, we need to delete the directory path
+                if (pluginJsonStorage != null)
                 {
-                    Directory.Delete(directoryPath, true);
+                    var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
+                    deleteMethod?.Invoke(pluginJsonStorage, null);
                 }
             }
 
