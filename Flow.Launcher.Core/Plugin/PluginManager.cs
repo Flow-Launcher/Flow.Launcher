@@ -521,7 +521,15 @@ namespace Flow.Launcher.Core.Plugin
 
             FilesFolders.CopyAll(pluginFolderPath, newPluginPath, MessageBoxEx.Show);
 
-            Directory.Delete(tempFolderPluginPath, true);
+            try
+            {
+                if (Directory.Exists(tempFolderPluginPath))
+                    Directory.Delete(tempFolderPluginPath, true);
+            }
+            catch (Exception e)
+            {
+                Log.Exception($"|PluginManager.InstallPlugin|Failed to delete temp folder {tempFolderPluginPath}", e);
+            }
 
             if (checkModified)
             {
@@ -557,7 +565,14 @@ namespace Flow.Launcher.Core.Plugin
                 if (pluginJsonStorage != null)
                 {
                     var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
-                    deleteMethod?.Invoke(pluginJsonStorage, null);
+                    try
+                    {
+                        deleteMethod?.Invoke(pluginJsonStorage, null);
+                    }
+                    catch (Exception e)
+                    {
+                        Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {assemblyName}", e);
+                    }
                 }
             }
 
