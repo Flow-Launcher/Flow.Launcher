@@ -544,36 +544,54 @@ namespace Flow.Launcher.Core.Plugin
                 throw new ArgumentException($"Plugin {plugin.Name} has been modified");
             }
 
+            if (removePluginSettings)
+            {
+                if (AllowedLanguage.IsDotNet(plugin.Language))  // for the plugin in .NET, we can use assembly loader
+                {
+                    var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
+                    var assembly = assemblyLoader.LoadAssemblyAndDependencies();
+                    var assemblyName = assembly.GetName().Name;
+
+                    // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
+                    // so we need to remove it from the api instance
+                    var method = API.GetType().GetMethod("RemovePluginSettings");
+                    var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
+
+                    // if there exists a json storage for current plugin, we need to delete the directory path
+                    if (pluginJsonStorage != null)
+                    {
+                        var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
+                        try
+                        {
+                            deleteMethod?.Invoke(pluginJsonStorage, null);
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
+                        }
+                    }
+                }
+                else  // the plugin with json prc interface
+                {
+                    var pluginPair = AllPlugins.FirstOrDefault(p => p.Metadata.ID == plugin.ID);
+                    if (pluginPair != null && pluginPair.Plugin is JsonRPCPlugin jsonRpcPlugin)
+                    {
+                        try
+                        {
+                            jsonRpcPlugin.DeletePluginSettingsDirectory();
+                        }
+                        catch (Exception e)
+                        {
+                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
+                        }
+                    }
+                }
+            }
+
             if (removePluginFromSettings)
             {
                 Settings.Plugins.Remove(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
-            }
-
-            if (removePluginSettings)
-            {
-                var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
-                var assembly = assemblyLoader.LoadAssemblyAndDependencies();
-                var assemblyName = assembly.GetName().Name;
-
-                // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
-                // so we need to remove it from the api instance
-                var method = API.GetType().GetMethod("RemovePluginSettings");
-                var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
-
-                // if there exists a json storage for current plugin, we need to delete the directory path
-                if (pluginJsonStorage != null)
-                {
-                    var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
-                    try
-                    {
-                        deleteMethod?.Invoke(pluginJsonStorage, null);
-                    }
-                    catch (Exception e)
-                    {
-                        Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {assemblyName}", e);
-                    }
-                }
             }
 
             // Marked for deletion. Will be deleted on next start up
