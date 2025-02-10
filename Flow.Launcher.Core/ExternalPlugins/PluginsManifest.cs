@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
+        public static async Task<bool> UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
         {
             try
             {
@@ -36,6 +36,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
                     {
                         UserPlugins = results;
                         lastFetchedAt = DateTime.Now;
+
+                        return true;
                     }
                 }
             }
@@ -47,6 +49,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 manifestUpdateLock.Release();
             }
+
+            return false;
         }
     }
 }

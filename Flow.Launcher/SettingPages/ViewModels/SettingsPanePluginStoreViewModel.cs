@@ -24,8 +24,10 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     [RelayCommand]
     private async Task RefreshExternalPluginsAsync()
     {
-        await PluginsManifest.UpdateManifestAsync();
-        OnPropertyChanged(nameof(ExternalPlugins));
+        if (await PluginsManifest.UpdateManifestAsync())
+        {
+            OnPropertyChanged(nameof(ExternalPlugins));
+        }
     }
 
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)
