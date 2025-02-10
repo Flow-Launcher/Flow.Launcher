@@ -27,12 +27,16 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
-                if (UserPlugins == null || UserPlugins.Count == 0 || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
+                if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
                     var results = await mainPluginStore.FetchAsync(token, usePrimaryUrlOnly).ConfigureAwait(false);
 
-                    UserPlugins = results;
-                    lastFetchedAt = DateTime.Now;
+                    // If the results are empty, we shouldn't update the manifest because the results are invalid.
+                    if (results.Count != 0)
+                    {
+                        UserPlugins = results;
+                        lastFetchedAt = DateTime.Now;
+                    }
                 }
             }
             catch (Exception e)
