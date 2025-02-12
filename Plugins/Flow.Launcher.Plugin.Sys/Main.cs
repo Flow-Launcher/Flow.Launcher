@@ -15,9 +15,10 @@ using Control = System.Windows.Controls.Control;
 
 namespace Flow.Launcher.Plugin.Sys
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n
+    public class Main : IPlugin, ISettingProvider, IPluginI18n, IDisposable
     {
         private PluginInitContext context;
+        private ThemeSelector themeSelector;
         private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
 
         public Control CreateSettingPanel()
@@ -28,6 +29,11 @@ namespace Flow.Launcher.Plugin.Sys
 
         public List<Result> Query(Query query)
         {
+            if(query.Search.StartsWith(ThemeSelector.Keyword))
+            {
+                return themeSelector.Query(query);
+            }
+
             var commands = Commands();
             var results = new List<Result>();
             foreach (var c in commands)
@@ -76,6 +82,7 @@ namespace Flow.Launcher.Plugin.Sys
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            themeSelector = new ThemeSelector(context);
             KeywordTitleMappings = new Dictionary<string, string>{
                 {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
                 {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
@@ -96,7 +103,8 @@ namespace Flow.Launcher.Plugin.Sys
                 {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
                 {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
                 {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
-                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"}
+                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"},
+                {"Set Flow Launcher Theme", "flowlauncher_plugin_sys_theme_selector_cmd"}
             };
         }
 
@@ -407,6 +415,18 @@ namespace Flow.Launcher.Plugin.Sys
                         context.API.ToggleGameMode();
                         return true;
                     }
+                },
+                new Result
+                {
+                    Title = "Set Flow Launcher Theme",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
+                    IcoPath = "Images\\theme_selector.png",
+                    Glyph = new GlyphInfo("/Resources/#Segoe Fluent Icons", "\ue790"),
+                    Action = c =>
+                    {
+                        context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
+                        return false;
+                    }
                 }
             });
 
@@ -421,6 +441,11 @@ namespace Flow.Launcher.Plugin.Sys
         public string GetTranslatedPluginDescription()
         {
             return context.API.GetTranslation("flowlauncher_plugin_sys_plugin_description");
+        }
+
+        public void Dispose()
+        {
+            themeSelector.Dispose(); 
         }
     }
 }
