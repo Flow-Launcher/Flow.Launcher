@@ -6,6 +6,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.UserSettings;
 using ToolGood.Words.Pinyin;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -129,7 +130,12 @@ namespace Flow.Launcher.Infrastructure
 
         private Settings _settings;
 
-        public void Initialize([NotNull] Settings settings)
+        public PinyinAlphabet()
+        {
+            Initialize(Ioc.Default.GetRequiredService<Settings>());
+        }
+
+        private void Initialize([NotNull] Settings settings)
         {
             _settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }

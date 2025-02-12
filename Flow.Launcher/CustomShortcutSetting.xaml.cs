@@ -43,13 +43,13 @@ namespace Flow.Launcher
         {
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;
             }
             DialogResult = !update || originalKey != Key || originalValue != Value;

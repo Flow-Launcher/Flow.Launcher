@@ -25,6 +25,7 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 
 namespace Flow.Launcher
@@ -33,15 +34,13 @@ namespace Flow.Launcher
     {
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance()
         {
-            _settingsVM = settingsVM;
-            _mainVM = mainVM;
-            _alphabet = alphabet;
+            _settingsVM = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+            _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
@@ -78,14 +77,14 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
-        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
+        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
             PluginManager.Save();
             _mainVM.Save();
             _settingsVM.Save();
-            ImageLoader.Save();
+            _ = ImageLoader.Save();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -105,7 +104,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
         }
 

@@ -22,7 +22,7 @@ public partial class SettingsPaneProxyViewModel : BaseModel
     private void OnTestProxyClicked()
     {
         var message = TestProxy();
-        MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation(message));
+        App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation(message));
     }
 
     private string TestProxy()

@@ -62,7 +62,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
-        var confirmResult = MessageBoxEx.Show(
+        var confirmResult = App.API.ShowMsgBox(
             InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
             InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
             MessageBoxButton.YesNo
@@ -96,7 +96,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private Task UpdateApp() => _updater.UpdateAppAsync(App.API, false);
+    private Task UpdateApp() => _updater.UpdateAppAsync(false);
 
     private void ClearLogFolder()
     {
