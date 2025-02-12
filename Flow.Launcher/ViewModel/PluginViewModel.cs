@@ -146,6 +146,7 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void OpenDeletePluginWindow()
         {
+            PluginManager.API.BackToQueryResults();
             PluginManager.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
             PluginManager.API.ShowMainWindow();
         }
