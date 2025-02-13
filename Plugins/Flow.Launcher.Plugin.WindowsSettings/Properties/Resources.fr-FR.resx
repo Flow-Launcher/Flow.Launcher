@@ -1872,19 +1872,19 @@
     <value>Microsoft IME Register Word (Japanese)</value>
   </data>
   <data name="RestoreYourFilesWithFileHistory" xml:space="preserve">
-    <value>Restore your files with File History</value>
+    <value>Restaurer vos fichiers avec l'historique des fichiers</value>
   </data>
   <data name="TurnOnScreenKeyboardOnOrOff" xml:space="preserve">
-    <value>Turn On-Screen keyboard on or off</value>
+    <value>Allumer ou éteindre le clavier à l'écran</value>
   </data>
   <data name="BlockOrAllowThirdPartyCookies" xml:space="preserve">
-    <value>Block or allow third-party cookies</value>
+    <value>Bloquer ou autoriser les cookies tiers</value>
   </data>
   <data name="FindAndFixAudioRecordingProblems" xml:space="preserve">
-    <value>Find and fix audio recording problems</value>
+    <value>Trouver et résoudre les problèmes d'enregistrement audio</value>
   </data>
   <data name="CreateARecoveryDrive" xml:space="preserve">
-    <value>Create a recovery drive</value>
+    <value>Créer un lecteur de récupération</value>
   </data>
   <data name="MicrosoftNewPhoneticSettings" xml:space="preserve">
     <value>Microsoft New Phonetic Settings</value>
@@ -1893,10 +1893,10 @@
     <value>Générer un rapport de santé du système</value>
   </data>
   <data name="FixProblemsWithYourComputer" xml:space="preserve">
-    <value>Fix problems with your computer</value>
+    <value>Corriger les problèmes avec votre ordinateur</value>
   </data>
   <data name="BackUpAndRestoreWindows7" xml:space="preserve">
-    <value>Back up and Restore (Windows 7)</value>
+    <value>Sauvegarder et restaurer (Windows 7)</value>
   </data>
   <data name="PreviewDeleteShowOrHideFonts" xml:space="preserve">
     <value>Aperçu, supprimer, afficher ou masquer les polices</value>
@@ -1905,22 +1905,22 @@
     <value>Paramètres rapides Microsoft</value>
   </data>
   <data name="ViewReliabilityHistory" xml:space="preserve">
-    <value>View reliability history</value>
+    <value>Voir l'historique de fiabilité</value>
   </data>
   <data name="AccessRemoteappAndDesktops" xml:space="preserve">
-    <value>Access RemoteApp and desktops</value>
+    <value>Accéder aux applications distantes et aux ordinateurs de bureau</value>
   </data>
   <data name="SetUpODBCDataSources" xml:space="preserve">
-    <value>Set up ODBC data sources</value>
+    <value>Mettre en place les sources de données ODBC</value>
   </data>
   <data name="ResetSecurityPolicies" xml:space="preserve">
-    <value>Reset Security Policies</value>
+    <value>Réinitialiser la politique de sécurité</value>
   </data>
   <data name="BlockOrAllowPopUps" xml:space="preserve">
-    <value>Block or allow pop-ups</value>
+    <value>Bloquer ou autoriser les pop-up</value>
   </data>
   <data name="TurnAutocompleteInInternetExplorerOnOrOff" xml:space="preserve">
-    <value>Turn autocomplete in Internet Explorer on or off</value>
+    <value>Activer ou désactiver la saisie automatique dans Internet Explorer</value>
   </data>
   <data name="MicrosoftPinyinSimplefastOptions" xml:space="preserve">
     <value>Microsoft Pinyin SimpleFast Options</value>
@@ -1941,13 +1941,13 @@
     <value>Historique de dépannage</value>
   </data>
   <data name="DiagnoseYourComputersMemoryProblems" xml:space="preserve">
-    <value>Diagnose your computer's memory problems</value>
+    <value>Diagnostiquez les problèmes de mémoire de votre ordinateur</value>
   </data>
   <data name="ViewRecommendedActionsToKeepWindowsRunningSmoothly" xml:space="preserve">
-    <value>View recommended actions to keep Windows running smoothly</value>
+    <value>Afficher les actions recommandées pour que Windows fonctionne correctement</value>
   </data>
   <data name="ChangeCursorBlinkRate" xml:space="preserve">
-    <value>Change cursor blink rate</value>
+    <value>Changer la fréquence de clignotement du curseur</value>
   </data>
   <data name="AddOrRemovePrograms" xml:space="preserve">
     <value>Ajouter ou supprimer des programmes</value>
@@ -1956,25 +1956,25 @@
     <value>Créer un disque de réinitialisation de mot de passe</value>
   </data>
   <data name="ConfigureAdvancedUserProfileProperties" xml:space="preserve">
-    <value>Configure advanced user profile properties</value>
+    <value>Configurer les propriétés du profil utilisateur avancé</value>
   </data>
   <data name="StartOrStopUsingAutoplayForAllMediaAndDevices" xml:space="preserve">
     <value>Démarrer ou arrêter l'utilisation de la fonction AutoPlay pour tous les médias et appareils</value>
   </data>
   <data name="ChangeAutomaticMaintenanceSettings" xml:space="preserve">
-    <value>Change Automatic Maintenance settings</value>
+    <value>Modifier les paramètres de maintenance automatique</value>
   </data>
   <data name="SpecifySingleOrDoubleClickToOpen" xml:space="preserve">
-    <value>Specify single- or double-click to open</value>
+    <value>Spécifiez un simple ou double-cliquez pour ouvrir</value>
   </data>
   <data name="SelectUsersWhoCanUseRemoteDesktop" xml:space="preserve">
-    <value>Select users who can use remote desktop</value>
+    <value>Sélectionnez les utilisateurs qui peuvent utiliser le bureau distant</value>
   </data>
   <data name="ShowWhichProgramsAreInstalledOnYourComputer" xml:space="preserve">
     <value>Afficher les programmes installés sur votre ordinateur</value>
   </data>
   <data name="AllowRemoteAccessToYourComputer" xml:space="preserve">
-    <value>Allow remote access to your computer</value>
+    <value>Autoriser l'accès à distance à votre ordinateur</value>
   </data>
   <data name="ViewAdvancedSystemSettings" xml:space="preserve">
     <value>Afficher les paramètres avancés du système</value>
@@ -1992,16 +1992,16 @@
     <value>Modifier l'ordre des gadgets Windows SideShow</value>
   </data>
   <data name="CheckKeyboardStatus" xml:space="preserve">
-    <value>Check keyboard status</value>
+    <value>Vérifier le statut du clavier</value>
   </data>
   <data name="ControlTheComputerWithoutTheMouseOrKeyboard" xml:space="preserve">
-    <value>Control the computer without the mouse or keyboard</value>
+    <value>Contrôler l'ordinateur sans souris ou clavier</value>
   </data>
   <data name="ChangeOrRemoveAProgram" xml:space="preserve">
-    <value>Change or remove a program</value>
+    <value>Changer ou supprimer un programme</value>
   </data>
   <data name="ChangeMultiTouchGestureSettings" xml:space="preserve">
-    <value>Change multi-touch gesture settings</value>
+    <value>Modifier les paramètres des gestes tactiles</value>
   </data>
   <data name="SetUpODBCDataSources64Bit" xml:space="preserve">
     <value>Set up ODBC data sources (64-bit)</value>
@@ -2019,25 +2019,25 @@
     <value>Change Windows SideShow settings</value>
   </data>
   <data name="UseAudioDescriptionForVideo" xml:space="preserve">
-    <value>Use audio description for video</value>
+    <value>Utiliser la description audio pour la vidéo</value>
   </data>
   <data name="ChangeWorkgroupName" xml:space="preserve">
-    <value>Change workgroup name</value>
+    <value>Changer le nom du groupe de travail</value>
   </data>
   <data name="FindAndFixPrintingProblems" xml:space="preserve">
-    <value>Find and fix printing problems</value>
+    <value>Trouver et résoudre les problèmes d'impression</value>
   </data>
   <data name="ChangeWhenTheComputerSleeps" xml:space="preserve">
-    <value>Change when the computer sleeps</value>
+    <value>Changer lorsque l'ordinateur se met en veille</value>
   </data>
   <data name="SetUpAVirtualPrivateNetworkVPNConnection" xml:space="preserve">
     <value>Configurer une connexion à un réseau privé virtuel (VPN)</value>
   </data>
   <data name="AccommodateLearningAbilities" xml:space="preserve">
-    <value>Accommodate learning abilities</value>
+    <value>Apporter des aptitudes d'apprentissage</value>
   </data>
   <data name="SetUpADialUpConnection" xml:space="preserve">
-    <value>Set up a dial-up connection</value>
+    <value>Configurer une connexion commutée</value>
   </data>
   <data name="SetUpAConnectionOrNetwork" xml:space="preserve">
     <value>Configurer une connexion ou un réseau</value>
@@ -2046,16 +2046,16 @@
     <value>Comment modifier votre mot de passe Windows</value>
   </data>
   <data name="MakeItEasierToSeeTheMousePointer" xml:space="preserve">
-    <value>Make it easier to see the mouse pointer</value>
+    <value>Faciliter la visualisation du pointeur de la souris</value>
   </data>
   <data name="SetUpIscsiInitiator" xml:space="preserve">
-    <value>Set up iSCSI initiator</value>
+    <value>Configurer l'initiateur iSCSI</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
     <value>Accommodate low vision</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
-    <value>Manage offline files</value>
+    <value>Gérer les fichiers hors ligne</value>
   </data>
   <data name="ReviewYourComputersStatusAndResolveIssues" xml:space="preserve">
     <value>Review your computer's status and resolve issues</value>
