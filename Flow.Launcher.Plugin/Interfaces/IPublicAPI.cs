@@ -1,4 +1,4 @@
-using Flow.Launcher.Plugin.SharedModels;
+﻿using Flow.Launcher.Plugin.SharedModels;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;
@@ -181,9 +181,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="url">URL to download file</param>
         /// <param name="filePath">path to save downloaded file</param>
+        /// <param name="reportProgress">
+        /// Action to report progress. The input of the action is the progress value which is a double value between 0 and 100.
+        /// It will be called if url support range request and the reportProgress is not null.
+        /// </param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
-        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
         /// Add ActionKeyword for specific plugin
@@ -316,5 +320,19 @@ namespace Flow.Launcher.Plugin
         /// <param name="defaultResult">Specifies the default result of the message box.</param>
         /// <returns>Specifies which message box button is clicked by the user.</returns>
         public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
+
+        /// <summary>
+        /// Displays a standardised Flow message box.
+        /// If there is issue when showing the message box, it will return null.
+        /// </summary>
+        /// <param name="caption">The caption of the message box.</param>
+        /// <param name="reportProgressAsync">
+        /// Time-consuming task function, whose input is the action to report progress.
+        /// The input of the action is the progress value which is a double value between 0 and 100.
+        /// If there are any exceptions, this action will be null.
+        /// </param>
+        /// <param name="forceClosed">When user closes the progress box manually by button or esc key, this action will be called.</param>
+        /// <returns>A progress box interface.</returns>
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null);
     }
 }
