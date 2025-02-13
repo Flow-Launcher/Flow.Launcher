@@ -112,10 +112,16 @@ namespace Flow.Launcher.Core.Plugin
             RPC.StartListening();
         }
 
-        public virtual Task ReloadDataAsync()
+        public virtual async Task ReloadDataAsync()
         {
             SetupJsonRPC();
-            return Task.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("reload", Context);
+            }
+            catch (RemoteMethodNotFoundException e)
+            {
+            }
         }
 
         public virtual async ValueTask DisposeAsync()
