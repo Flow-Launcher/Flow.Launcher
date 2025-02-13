@@ -364,8 +364,8 @@ namespace Flow.Launcher.Core.Plugin
             {
                 NonGlobalPlugins[newActionKeyword] = plugin;
             }
-
-            plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (!plugin.Metadata.ActionKeywords.Contains(newActionKeyword))
+                plugin.Metadata.ActionKeywords.Add(newActionKeyword);
         }
 
         /// <summary>
