@@ -1,22 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace Flow.Launcher.Plugin
 {
     public class Query
     {
         public Query() { }
-
-        [Obsolete("Use the default Query constructor.")]
-        public Query(string rawQuery, string search, string[] terms, string[] searchTerms, string actionKeyword = "")
-        {
-            Search = search;
-            RawQuery = rawQuery;
-            SearchTerms = searchTerms;
-            ActionKeyword = actionKeyword;
-        }
 
         /// <summary>
         /// Raw query, this includes action keyword if it has
