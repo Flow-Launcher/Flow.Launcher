@@ -14,6 +14,8 @@ namespace Flow.Launcher.Plugin.Shell
 
         public bool RunAsAdministrator { get; set; } = true;
 
+        public bool UseWindowsTerminal { get; set; } = false;
+
         public bool ShowOnlyMostUsedCMDs { get; set; }
 
         public int ShowOnlyMostUsedCMDsNumber { get; set; }
