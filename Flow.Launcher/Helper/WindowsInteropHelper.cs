@@ -148,4 +148,79 @@ public class WindowsInteropHelper
 
         return new Point((int)(matrix.M11 * unitX), (int)(matrix.M22 * unitY));
     }
+
+    #region Alt Tab
+
+    private const int GWL_EXSTYLE = -20;
+    private const int WS_EX_TOOLWINDOW = 0x00000080;
+    private const int WS_EX_APPWINDOW = 0x00040000;
+
+    [DllImport("user32.dll")]
+    private static extern IntPtr GetWindowLong(IntPtr hWnd, int nIndex);
+
+    [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr", SetLastError = true)]
+    private static extern IntPtr IntSetWindowLongPtr(IntPtr hWnd, int nIndex, IntPtr dwNewLong);
+
+    [DllImport("user32.dll", EntryPoint = "SetWindowLong", SetLastError = true)]
+    private static extern int IntSetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+
+    [DllImport("kernel32.dll", EntryPoint = "SetLastError")]
+    private static extern void SetLastError(int dwErrorCode);
+
+    private static IntPtr SetWindowLong(IntPtr hWnd, int nIndex, IntPtr dwNewLong)
+    {
+        SetLastError(0); // Clear any existing error
+
+        if (IntPtr.Size == 4) return new IntPtr(IntSetWindowLong(hWnd, nIndex, IntPtrToInt32(dwNewLong)));
+
+        return IntSetWindowLongPtr(hWnd, nIndex, dwNewLong);
+    }
+
+    private static int IntPtrToInt32(IntPtr intPtr)
+    {
+        return unchecked((int)intPtr.ToInt64());
+    }
+
+    /// <summary>
+    ///     Hide windows in the Alt+Tab window list
+    /// </summary>
+    /// <param name="window">To hide a window</param>
+    public static void HideFromAltTab(Window window)
+    {
+        var helper = new WindowInteropHelper(window);
+        var exStyle = GetWindowLong(helper.Handle, GWL_EXSTYLE).ToInt32();
+
+        // Add TOOLWINDOW style, remove APPWINDOW style
+        exStyle = (exStyle | WS_EX_TOOLWINDOW) & ~WS_EX_APPWINDOW;
+
+        SetWindowLong(helper.Handle, GWL_EXSTYLE, new IntPtr(exStyle));
+    }
+
+    /// <summary>
+    ///     Restore window display in the Alt+Tab window list.
+    /// </summary>
+    /// <param name="window">To restore the displayed window</param>
+    public static void ShowInAltTab(Window window)
+    {
+        var helper = new WindowInteropHelper(window);
+        var exStyle = GetWindowLong(helper.Handle, GWL_EXSTYLE).ToInt32();
+
+        // Remove the TOOLWINDOW style and add the APPWINDOW style.
+        exStyle = (exStyle & ~WS_EX_TOOLWINDOW) | WS_EX_APPWINDOW;
+
+        SetWindowLong(helper.Handle, GWL_EXSTYLE, new IntPtr(exStyle));
+    }
+
+    /// <summary>
+    ///     To obtain the current overridden style of a window.
+    /// </summary>
+    /// <param name="window">To obtain the style dialog window</param>
+    /// <returns>current extension style value</returns>
+    public static int GetCurrentWindowStyle(Window window)
+    {
+        var helper = new WindowInteropHelper(window);
+        return GetWindowLong(helper.Handle, GWL_EXSTYLE).ToInt32();
+    }
+
+    #endregion
 }
