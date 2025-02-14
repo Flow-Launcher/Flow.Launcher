@@ -151,16 +151,17 @@ public class WindowsInteropHelper
 
     #region Alt Tab
 
-    private static IntPtr SetWindowLong(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+    private static int SetWindowLong(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
     {
         PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
-        return PInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
-    }
+        var result = PInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
+        if (result == 0 && Marshal.GetLastPInvokeError() != 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
 
-    private static int IntPtrToInt32(IntPtr intPtr)
-    {
-        return unchecked((int)intPtr.ToInt64());
+        return result;
     }
 
     /// <summary>
@@ -169,13 +170,12 @@ public class WindowsInteropHelper
     /// <param name="window">To hide a window</param>
     public static void HideFromAltTab(Window window)
     {
-        var helper = new WindowInteropHelper(window);
-        var exStyle = PInvoke.GetWindowLong(new(helper.Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+        var exStyle = GetCurrentWindowStyle(window);
 
         // Add TOOLWINDOW style, remove APPWINDOW style
         var newExStyle = ((uint)exStyle | (uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) & ~(uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
 
-        SetWindowLong(new(helper.Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+        SetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
     }
 
     /// <summary>
@@ -184,13 +184,12 @@ public class WindowsInteropHelper
     /// <param name="window">To restore the displayed window</param>
     public static void ShowInAltTab(Window window)
     {
-        var helper = new WindowInteropHelper(window);
-        var exStyle = PInvoke.GetWindowLong(new(helper.Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+        var exStyle = GetCurrentWindowStyle(window);
 
         // Remove the TOOLWINDOW style and add the APPWINDOW style.
         var newExStyle = ((uint)exStyle & ~(uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) | (uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
 
-        SetWindowLong(new(helper.Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+        SetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
     }
 
     /// <summary>
@@ -198,10 +197,14 @@ public class WindowsInteropHelper
     /// </summary>
     /// <param name="window">To obtain the style dialog window</param>
     /// <returns>current extension style value</returns>
-    public static int GetCurrentWindowStyle(Window window)
+    private static int GetCurrentWindowStyle(Window window)
     {
-        var helper = new WindowInteropHelper(window);
-        return PInvoke.GetWindowLong(new(helper.Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+        var style = PInvoke.GetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+        if (style == 0 && Marshal.GetLastPInvokeError() != 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
+        return style;
     }
 
     #endregion
