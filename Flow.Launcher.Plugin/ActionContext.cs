@@ -38,6 +38,14 @@ namespace Flow.Launcher.Plugin
         /// True if the Windows key is pressed.
         /// </summary>
         public bool WinPressed { get; set; }
+        public bool LeftShiftPressed { get; set; }
+        public bool RightShiftPressed { get; set; }
+        public bool LeftCtrlPressed { get; set; }
+        public bool RightCtrlPressed { get; set; }
+        public bool LeftAltPressed { get; set; }
+        public bool RightAltPressed { get; set; }
+        public bool LWinPressed { get; set; }
+        public bool RWinPressed { get; set; }
 
         /// <summary>
         /// Get this object represented as a <see cref="ModifierKeys"/> flag combination.

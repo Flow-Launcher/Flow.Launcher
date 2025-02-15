@@ -37,7 +37,7 @@ namespace Flow.Launcher
 
                 var pluginHotkey = new CustomPluginHotkey
                 {
-                    Hotkey = HotkeyControl.CurrentHotkey.ToString(), ActionKeyword = tbAction.Text
+                    Hotkey = HotkeyControl.CurrentHotkey.HotkeyRaw, ActionKeyword = tbAction.Text
                 };
                 Settings.CustomPluginHotkeys.Add(pluginHotkey);
 
@@ -47,9 +47,9 @@ namespace Flow.Launcher
             {
                 var oldHotkey = updateCustomHotkey.Hotkey;
                 updateCustomHotkey.ActionKeyword = tbAction.Text;
-                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.ToString();
+                updateCustomHotkey.Hotkey = HotkeyControl.CurrentHotkey.HotkeyRaw;
                 //remove origin hotkey
-                HotKeyMapper.RemoveHotkey(oldHotkey);
+                HotKeyMapper.UnregisterHotkey(oldHotkey);
                 HotKeyMapper.SetCustomQueryHotkey(updateCustomHotkey);
             }
 

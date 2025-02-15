@@ -107,7 +107,8 @@
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Left"
                         HotkeySettings="{Binding Settings}"
-                        DefaultHotkey="" />
+                        DefaultHotkey=""
+                        IsWPFHotkeyControl="False" />
                     <TextBlock
                         Grid.Row="1"
                         Grid.Column="0"

@@ -1370,6 +1370,7 @@ namespace Flow.Launcher.ViewModel
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
+            Application.Current.MainWindow.Focus(); // TEST
         }
 
         public async void Hide()
