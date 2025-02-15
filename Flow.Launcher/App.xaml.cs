@@ -119,7 +119,7 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.Enable();
+                    Helper.AutoStartup.Enable(_settings.UseLogonTaskForStartup);
                 }
                 catch (Exception e)
                 {

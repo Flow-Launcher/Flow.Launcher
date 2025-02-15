@@ -42,9 +42,16 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             try
             {
                 if (value)
-                    AutoStartup.Enable();
+                {
+                    // Enable either registry or task scheduler
+                    AutoStartup.Enable(UseLogonTaskForStartup);
+                }
                 else
-                    AutoStartup.Disable();
+                {
+                    // Disable both registry and task scheduler
+                    AutoStartup.Disable(true);
+                    AutoStartup.Disable(false);
+                }  
             }
             catch (Exception e)
             {
@@ -54,6 +61,29 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+    public bool UseLogonTaskForStartup
+    {
+        get => Settings.UseLogonTaskForStartup;
+        set
+        {
+            Settings.UseLogonTaskForStartup = value;
+
+            if (StartFlowLauncherOnSystemStartup)
+            {
+                try
+                {
+                    // Disable and enable to update the startup method
+                    AutoStartup.Disable(!UseLogonTaskForStartup);
+                    AutoStartup.Enable(UseLogonTaskForStartup);
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
+                        e.Message);
+                }
+            } 
+        }
+    }
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =
         DropdownDataGeneric<SearchWindowScreens>.GetValues<SearchWindowScreenData>("SearchWindowScreen");

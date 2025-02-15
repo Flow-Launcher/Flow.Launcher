@@ -36,6 +36,13 @@
                     OnContent="{DynamicResource enable}" />
             </cc:Card>
 
+            <cc:Card Title="{DynamicResource useLogonTaskForStartup}" Sub="{DynamicResource useLogonTaskForStartupTooltip}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding UseLogonTaskForStartup}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
+
             <cc:Card
                 Title="{DynamicResource hideOnStartup}"
                 Icon="&#xed1a;"
