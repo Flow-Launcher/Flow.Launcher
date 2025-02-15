@@ -13,8 +13,8 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
 {
     public string FilterText { get; set; } = string.Empty;
 
-    public IList<PluginStoreItemViewModel> ExternalPlugins => PluginsManifest.UserPlugins
-        .Select(p => new PluginStoreItemViewModel(p))
+    public IList<PluginStoreItemViewModel> ExternalPlugins => 
+        PluginsManifest.UserPlugins?.Select(p => new PluginStoreItemViewModel(p))
         .OrderByDescending(p => p.Category == PluginStoreItemViewModel.NewRelease)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.RecentlyUpdated)
         .ThenByDescending(p => p.Category == PluginStoreItemViewModel.None)
@@ -24,8 +24,10 @@ public partial class SettingsPanePluginStoreViewModel : BaseModel
     [RelayCommand]
     private async Task RefreshExternalPluginsAsync()
     {
-        await PluginsManifest.UpdateManifestAsync();
-        OnPropertyChanged(nameof(ExternalPlugins));
+        if (await PluginsManifest.UpdateManifestAsync())
+        {
+            OnPropertyChanged(nameof(ExternalPlugins));
+        }
     }
 
     public bool SatisfiesFilter(PluginStoreItemViewModel plugin)

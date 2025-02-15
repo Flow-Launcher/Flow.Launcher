@@ -1,4 +1,4 @@
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
 using System.Threading;
@@ -21,7 +21,7 @@ namespace Flow.Launcher.Core.ExternalPlugins
 
         public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
+        public static async Task<bool> UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
         {
             try
             {
@@ -31,8 +31,14 @@ namespace Flow.Launcher.Core.ExternalPlugins
                 {
                     var results = await mainPluginStore.FetchAsync(token, usePrimaryUrlOnly).ConfigureAwait(false);
 
-                    UserPlugins = results;
-                    lastFetchedAt = DateTime.Now;
+                    // If the results are empty, we shouldn't update the manifest because the results are invalid.
+                    if (results.Count != 0)
+                    {
+                        UserPlugins = results;
+                        lastFetchedAt = DateTime.Now;
+
+                        return true;
+                    }
                 }
             }
             catch (Exception e)
@@ -43,6 +49,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 manifestUpdateLock.Release();
             }
+
+            return false;
         }
     }
 }
