@@ -76,6 +76,7 @@ namespace Flow.Launcher
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
+            App.API.BackToQueryResults();
             App.API.ChangeQuery(tbAction.Text);
             Application.Current.MainWindow.Show();
             Application.Current.MainWindow.Opacity = 1;

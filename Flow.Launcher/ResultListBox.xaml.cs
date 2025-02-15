@@ -149,7 +149,10 @@ namespace Flow.Launcher
             var rawQuery = query;
             var effect = DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
             if (effect == DragDropEffects.Move)
+            {
+                App.API.BackToQueryResults();
                 App.API.ChangeQuery(rawQuery, true);
+            }
         }
         private void ResultListBox_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
