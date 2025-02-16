@@ -31,8 +31,6 @@ namespace Flow.Launcher.Infrastructure.Image
 
         private static readonly Guid GUID_IShellItem = typeof(IShellItem).GUID;
 
-        private static readonly HRESULT S_ExtractionFailed = (HRESULT)0x8004B200;
-
         public static BitmapSource GetThumbnail(string fileName, int width, int height, ThumbnailOptions options)
         {
             HBITMAP hBitmap = GetHBitmap(Path.GetFullPath(fileName), width, height, options);
@@ -79,7 +77,12 @@ namespace Flow.Launcher.Infrastructure.Image
                 {
                     imageFactory.GetImage(size, (SIIGBF)options, &hBitmap);
                 }
-                catch (COMException ex) when (ex.HResult == S_ExtractionFailed && options == ThumbnailOptions.ThumbnailOnly)
+                catch (COMException)
+                {
+                    // Fallback to IconOnly if ThumbnailOnly fails
+                    imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
+                }
+                catch (FileNotFoundException)
                 {
                     // Fallback to IconOnly if ThumbnailOnly fails
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
