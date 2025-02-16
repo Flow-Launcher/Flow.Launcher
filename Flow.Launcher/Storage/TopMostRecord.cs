@@ -33,7 +33,8 @@ namespace Flow.Launcher.Storage
             {
                 PluginID = result.PluginID,
                 Title = result.Title,
-                SubTitle = result.SubTitle
+                SubTitle = result.SubTitle,
+                RecordKey = result.RecordKey
             };
             records.AddOrUpdate(result.OriginQuery.RawQuery, record, (key, oldValue) => record);
         }
@@ -49,12 +50,21 @@ namespace Flow.Launcher.Storage
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string PluginID { get; set; }
+        public string RecordKey { get; set; }
 
         public bool Equals(Result r)
         {
-            return Title == r.Title
-                && SubTitle == r.SubTitle
-                && PluginID == r.PluginID;
+            if (string.IsNullOrEmpty(RecordKey) || string.IsNullOrEmpty(r.RecordKey))
+            {
+                return Title == r.Title
+                    && SubTitle == r.SubTitle
+                    && PluginID == r.PluginID;
+            }
+            else
+            {
+                return RecordKey == r.RecordKey
+                    && PluginID == r.PluginID;
+            }
         }
     }
 }
