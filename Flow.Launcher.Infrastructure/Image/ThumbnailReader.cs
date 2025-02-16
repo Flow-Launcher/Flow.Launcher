@@ -79,12 +79,12 @@ namespace Flow.Launcher.Infrastructure.Image
                 }
                 catch (COMException)
                 {
-                    // Fallback to IconOnly if ThumbnailOnly fails
+                    // Fallback to IconOnly for COM exceptions
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
                 }
                 catch (FileNotFoundException)
                 {
-                    // Fallback to IconOnly if ThumbnailOnly fails
+                    // Fallback to IconOnly if files cannot be found
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
                 }
             }
