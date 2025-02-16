@@ -1359,7 +1359,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void Show()
+        public void Show(bool invokeEvent = true)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -1368,7 +1368,8 @@ namespace Flow.Launcher.ViewModel
                 MainWindowOpacity = 1;
 
                 MainWindowVisibilityStatus = true;
-                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+                if (invokeEvent)
+                    VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
