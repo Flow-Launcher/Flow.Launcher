@@ -68,7 +68,7 @@ namespace Flow.Launcher
         private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbExpand.Text);
-            _mainViewModel.Show(false);
+            _mainViewModel.Show();
             Application.Current.MainWindow.Focus();
         }
     }

@@ -80,7 +80,7 @@ namespace Flow.Launcher
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbAction.Text);
-            _mainViewModel.Show(false);
+            _mainViewModel.Show();
             Application.Current.MainWindow.Focus();
         }
 
