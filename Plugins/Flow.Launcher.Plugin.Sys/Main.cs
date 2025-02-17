@@ -122,7 +122,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            Process.Start("shutdown", "/s /t 0");
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, SHUTDOWN_REASON.SHTDN_REASON_NONE);
 
                         return true;
                     }
@@ -141,7 +141,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            Process.Start("shutdown", "/r /t 0");
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, SHUTDOWN_REASON.SHTDN_REASON_NONE);
 
                         return true;
                     }
@@ -160,7 +160,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            Process.Start("shutdown", "/r /o /t 0");
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, SHUTDOWN_REASON.SHTDN_REASON_NONE);
 
                         return true;
                     }
@@ -179,7 +179,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, 0);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, SHUTDOWN_REASON.SHTDN_REASON_NONE);
 
                         return true;
                     }
