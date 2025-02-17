@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Windows;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
@@ -9,6 +10,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Windows.Win32;
 using Windows.Win32.Foundation;
+using Windows.Win32.Security;
 using Windows.Win32.System.Shutdown;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
@@ -19,6 +21,8 @@ namespace Flow.Launcher.Plugin.Sys
     {
         private PluginInitContext context;
         private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
+
+        private const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
 
         public Control CreateSettingPanel()
         {
@@ -100,6 +104,44 @@ namespace Flow.Launcher.Plugin.Sys
             };
         }
 
+        private static unsafe bool EnableShutdownPrivilege()
+        {
+            try
+            {
+                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                {
+                    return false;
+                }
+
+                if (!PInvoke.LookupPrivilegeValue(null, SE_SHUTDOWN_NAME, out var luid))
+                {
+                    return false;
+                }
+
+                var privileges = new TOKEN_PRIVILEGES
+                {
+                    PrivilegeCount = 1,
+                    Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
+                };
+
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, 0, null, null))
+                {
+                    return false;
+                }
+
+                if (Marshal.GetLastWin32Error() != (int)WIN32_ERROR.NO_ERROR)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private List<Result> Commands()
         {
             var results = new List<Result>();
@@ -125,8 +167,11 @@ namespace Flow.Launcher.Plugin.Sys
                         // software updates, or other predefined reasons.
                         // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF,
-                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF,
+                                    SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            else
+                                Process.Start("shutdown", "/s /t 0");
 
                         return true;
                     }
@@ -145,8 +190,11 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT,
-                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT,
+                                    SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            else
+                                Process.Start("shutdown", "/r /t 0");
 
                         return true;
                     }
@@ -165,8 +213,11 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS,
-                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS,
+                                    SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
+                            else
+                                Process.Start("shutdown", "/r /o /t 0");
 
                         return true;
                     }
