@@ -120,10 +120,9 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
-                        {
                             Process.Start("shutdown", "/s /t 0");
-                        }
 
                         return true;
                     }
@@ -140,10 +139,9 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
-                        {
                             Process.Start("shutdown", "/r /t 0");
-                        }
 
                         return true;
                     }
@@ -204,7 +202,11 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
-                    Action = c => PInvoke.SetSuspendState(false, false, false)
+                    Action = c =>
+                    {
+                        PInvoke.SetSuspendState(false, false, false);
+                        return true;
+                    }
                 },
                 new Result
                 {
@@ -231,10 +233,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
                     Action = c =>
                     {
-                        {
-                            System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
-                        }
-
+                        Process.Start("control.exe", "srchadmin.dll");
                         return true;
                     }
                 },
@@ -272,10 +271,7 @@ namespace Flow.Launcher.Plugin.Sys
                     CopyText = recycleBinFolder,
                     Action = c =>
                     {
-                        {
-                                   System.Diagnostics.Process.Start("explorer", recycleBinFolder);
-                        }
-
+                        Process.Start("explorer", recycleBinFolder);
                         return true;
                     }
                 },
