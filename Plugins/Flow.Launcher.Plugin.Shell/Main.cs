@@ -202,28 +202,31 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 case Shell.Cmd:
                 {
-                    info.FileName = "cmd.exe";
-                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}";
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("cmd");
+                    }
+                    else
+                    {
+                        info.FileName = "cmd.exe";
+                    }
 
-                    //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
-                    //// Previous code using ArgumentList, commands needed to be separated correctly:                      
-                    //// Incorrect:
-                    // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                    // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
-
-                    //// Correct version should be:
-                    //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                    //info.ArgumentList.Add("mkdir");
-                    //info.ArgumentList.Add(@"c:\test new");
-
-                    //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
-
+                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
                     break;
                 }
 
                 case Shell.Powershell:
                 {
-                    info.FileName = "powershell.exe";
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("powershell");
+                    }
+                    else
+                    {
+                        info.FileName = "powershell.exe";
+                    }
                     if (_settings.LeaveShellOpen)
                     {
                         info.ArgumentList.Add("-NoExit");
@@ -232,21 +235,28 @@ namespace Flow.Launcher.Plugin.Shell
                     else
                     {
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
+                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     }
                     break;
                 }
 
                 case Shell.Pwsh:
                 {
-                    info.FileName = "pwsh.exe";
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("pwsh");
+                    }
+                    else
+                    {
+                        info.FileName = "pwsh.exe";
+                    }
                     if (_settings.LeaveShellOpen)
                     {
                         info.ArgumentList.Add("-NoExit");
                     }
                     info.ArgumentList.Add("-Command");
-                    info.ArgumentList.Add($"{command}; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'; [System.Console]::ReadKey(); exit" : "")}");
-
+                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     break;
                 }
 
