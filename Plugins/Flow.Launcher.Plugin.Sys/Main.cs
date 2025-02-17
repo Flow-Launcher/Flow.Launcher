@@ -121,8 +121,12 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
+                        // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure,
+                        // software updates, or other predefined reasons.
+                        // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, SHUTDOWN_REASON.SHTDN_REASON_NONE);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF,
+                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
 
                         return true;
                     }
@@ -141,7 +145,8 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, SHUTDOWN_REASON.SHTDN_REASON_NONE);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT,
+                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
 
                         return true;
                     }
@@ -160,7 +165,8 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, SHUTDOWN_REASON.SHTDN_REASON_NONE);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS,
+                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
 
                         return true;
                     }
@@ -179,7 +185,8 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, SHUTDOWN_REASON.SHTDN_REASON_NONE);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF,
+                                SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED);
 
                         return true;
                     }
