@@ -51,7 +51,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
             return query.FirstSearch.ToLower() switch
             {
                 //search could be url, no need ToLower() when passed in
-                Settings.InstallCommand => await pluginManager.RequestInstallOrUpdate(query.SecondToEndSearch, token, query.IsReQuery),
+                Settings.InstallCommand => await pluginManager.RequestInstallOrUpdateAsync(query.SecondToEndSearch, token, query.IsReQuery),
                 Settings.UninstallCommand => pluginManager.RequestUninstall(query.SecondToEndSearch),
                 Settings.UpdateCommand => await pluginManager.RequestUpdateAsync(query.SecondToEndSearch, token, query.IsReQuery),
                 _ => pluginManager.GetDefaultHotKeys().Where(hotkey =>

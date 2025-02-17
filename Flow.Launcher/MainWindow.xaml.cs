@@ -171,6 +171,11 @@ namespace Flow.Launcher
             Environment.Exit(0);
         }
 
+        private void OnSourceInitialized(object sender, EventArgs e)
+        {
+            WindowsInteropHelper.HideFromAltTab(this);
+        }
+
         private void OnInitialized(object sender, EventArgs e)
         {
         }

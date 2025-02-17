@@ -15,7 +15,6 @@ namespace Flow.Launcher.Storage
         [JsonInclude, JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public Dictionary<string, int> records { get; private set; }
 
-
         public UserSelectedRecord()
         {
             recordsWithQuery = new Dictionary<int, int>();
@@ -45,8 +44,15 @@ namespace Flow.Launcher.Storage
 
         private static int GenerateResultHashCode(Result result)
         {
-            int hashcode = GenerateStaticHashCode(result.Title);
-            return GenerateStaticHashCode(result.SubTitle, hashcode);
+            if (string.IsNullOrEmpty(result.RecordKey))
+            {
+                int hashcode = GenerateStaticHashCode(result.Title);
+                return GenerateStaticHashCode(result.SubTitle, hashcode);
+            }
+            else
+            {
+                return GenerateStaticHashCode(result.RecordKey);
+            }
         }
 
         private static int GenerateQueryAndResultHashCode(Query query, Result result)
@@ -58,8 +64,16 @@ namespace Flow.Launcher.Storage
 
             int hashcode = GenerateStaticHashCode(query.ActionKeyword);
             hashcode = GenerateStaticHashCode(query.Search, hashcode);
-            hashcode = GenerateStaticHashCode(result.Title, hashcode);
-            hashcode = GenerateStaticHashCode(result.SubTitle, hashcode);
+
+            if (string.IsNullOrEmpty(result.RecordKey))
+            {
+                hashcode = GenerateStaticHashCode(result.Title, hashcode);
+                hashcode = GenerateStaticHashCode(result.SubTitle, hashcode);
+            }
+            else
+            {
+                hashcode = GenerateStaticHashCode(result.RecordKey, hashcode);
+            }
 
             return hashcode;
         }
