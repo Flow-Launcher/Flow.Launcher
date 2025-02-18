@@ -9,3 +9,4 @@ WIN32_ERROR
 LookupPrivilegeValue
 AdjustTokenPrivileges
 TOKEN_PRIVILEGES
+SE_SHUTDOWN_NAME

@@ -22,7 +22,6 @@ namespace Flow.Launcher.Plugin.Sys
         private PluginInitContext context;
         private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
 
-        private const string SE_SHUTDOWN_NAME = "SeShutdownPrivilege";
         // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure, software updates, or other predefined reasons.
         // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
         private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
@@ -116,7 +115,7 @@ namespace Flow.Launcher.Plugin.Sys
                     return false;
                 }
 
-                if (!PInvoke.LookupPrivilegeValue(null, SE_SHUTDOWN_NAME, out var luid))
+                if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_SHUTDOWN_NAME, out var luid))
                 {
                     return false;
                 }
