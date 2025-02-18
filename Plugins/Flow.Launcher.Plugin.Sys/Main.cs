@@ -333,7 +333,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
-                        Application.Current.MainWindow.Hide();
+                        context.API.HideMainWindow();
 
                         _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
                             context.API.ShowMsg(
@@ -352,7 +352,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
-                        Application.Current.MainWindow.Hide();
+                        context.API.HideMainWindow();
                         context.API.CheckForNewUpdate();
                         return true;
                     }
