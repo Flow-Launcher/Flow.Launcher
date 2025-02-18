@@ -269,12 +269,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
-                        var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.UseShellExecute = true;
-
-                        ShellCommand.Execute(info);
-
+                        PInvoke.SetSuspendState(true, false, false);
                         return true;
                     }
                 },
