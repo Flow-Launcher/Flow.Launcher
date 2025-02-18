@@ -7,7 +7,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
 using Flow.Launcher.Core;
-using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
@@ -15,15 +14,13 @@ namespace Flow.Launcher
     {
         private SettingWindow _settingWidow;
         private readonly Settings _settings;
-        private readonly MainViewModel _mainViewModel;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
 
-        public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings, MainViewModel mainVM)
+        public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings)
         {
             _settingWidow = settingWidow;
             _settings = settings;
-            _mainViewModel = mainVM;
             InitializeComponent();
         }
 
@@ -80,7 +77,7 @@ namespace Flow.Launcher
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbAction.Text);
-            _mainViewModel.Show();
+            App.API.ShowMainWindow();
             Application.Current.MainWindow.Focus();
         }
 

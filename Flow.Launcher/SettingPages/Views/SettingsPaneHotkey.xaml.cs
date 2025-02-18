@@ -12,9 +12,9 @@ public partial class SettingsPaneHotkey
     {
         if (!IsInitialized)
         {
-            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings, MainViewModel: { } mainVM })
+            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
                 throw new ArgumentException("Settings are required for SettingsPaneHotkey.");
-            _viewModel = new SettingsPaneHotkeyViewModel(settings, mainVM);
+            _viewModel = new SettingsPaneHotkeyViewModel(settings);
             DataContext = _viewModel;
             InitializeComponent();
         }

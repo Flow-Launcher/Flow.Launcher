@@ -20,14 +20,12 @@ public partial class SettingWindow
     private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
-    private readonly MainViewModel _mainVM;
 
-    public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel, MainViewModel mainVM)
+    public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
     {
         _settings = viewModel.Settings;
         DataContext = viewModel;
         _viewModel = viewModel;
-        _mainVM = mainVM;
         _api = api;
         InitializePosition();
         InitializeComponent();
@@ -162,7 +160,7 @@ public partial class SettingWindow
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _viewModel.Updater, _viewModel.Portable, _mainVM);
+        var paneData = new PaneData(_settings, _viewModel.Updater, _viewModel.Portable);
         if (args.IsSettingsSelected)
         {
             ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);
@@ -208,5 +206,5 @@ public partial class SettingWindow
         NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
 
-    public record PaneData(Settings Settings, Updater Updater, IPortable Portable, MainViewModel MainViewModel);
+    public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
 }

@@ -8,14 +8,12 @@ using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Core;
-using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
 public partial class SettingsPaneHotkeyViewModel : BaseModel
 {
     public Settings Settings { get; }
-    private MainViewModel MainVM { get; }
 
     public CustomPluginHotkey SelectedCustomPluginHotkey { get; set; }
     public CustomShortcutModel SelectedCustomShortcut { get; set; }
@@ -27,10 +25,9 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
         $"{KeyConstant.Ctrl}+{KeyConstant.Alt}"
     };
 
-    public SettingsPaneHotkeyViewModel(Settings settings, MainViewModel mainVM)
+    public SettingsPaneHotkeyViewModel(Settings settings)
     {
         Settings = settings;
-        MainVM = mainVM;
     }
 
     [RelayCommand]
@@ -74,7 +71,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
             return;
         }
 
-        var window = new CustomQueryHotkeySetting(null, Settings, MainVM);
+        var window = new CustomQueryHotkeySetting(null, Settings);
         window.UpdateItem(item);
         window.ShowDialog();
     }
@@ -82,7 +79,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void CustomHotkeyAdd()
     {
-        new CustomQueryHotkeySetting(null, Settings, MainVM).ShowDialog();
+        new CustomQueryHotkeySetting(null, Settings).ShowDialog();
     }
 
     [RelayCommand]
@@ -129,7 +126,7 @@ public partial class SettingsPaneHotkeyViewModel : BaseModel
     [RelayCommand]
     private void CustomShortcutAdd()
     {
-        var window = new CustomShortcutSetting(this, MainVM);
+        var window = new CustomShortcutSetting(this);
         if (window.ShowDialog() is true)
         {
             var shortcut = new CustomShortcutModel(window.Key, window.Value);

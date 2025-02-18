@@ -4,24 +4,21 @@ using System.Windows;
 using System.Windows.Input;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.Core;
-using Flow.Launcher.ViewModel;
 
 namespace Flow.Launcher
 {
     public partial class CustomShortcutSetting : Window
     {
         private readonly SettingsPaneHotkeyViewModel _hotkeyVm;
-        private readonly MainViewModel _mainViewModel;
         public string Key { get; set; } = String.Empty;
         public string Value { get; set; } = String.Empty;
         private string originalKey { get; } = null;
         private string originalValue { get; } = null;
         private bool update { get; } = false;
 
-        public CustomShortcutSetting(SettingsPaneHotkeyViewModel vm, MainViewModel mainVM)
+        public CustomShortcutSetting(SettingsPaneHotkeyViewModel vm)
         {
             _hotkeyVm = vm;
-            _mainViewModel = mainVM;
             InitializeComponent();
         }
 
@@ -68,7 +65,7 @@ namespace Flow.Launcher
         private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbExpand.Text);
-            _mainViewModel.Show();
+            App.API.ShowMainWindow();
             Application.Current.MainWindow.Focus();
         }
     }
