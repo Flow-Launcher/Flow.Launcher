@@ -18,9 +18,9 @@
         CornerRadius="0"
         Style="{DynamicResource SettingGroupBox}"
         Visibility="{Binding ActionKeywordsVisibility}">
-        <DockPanel Margin="22 0 18 0" VerticalAlignment="Center">
+        <DockPanel Margin="60 0 18 0" VerticalAlignment="Center">
             <TextBlock
-                Margin="48 0 10 0"
+                Margin="10 0 10 0"
                 DockPanel.Dock="Left"
                 Style="{StaticResource Glyph}">
                 &#xe819;
@@ -34,7 +34,6 @@
             <Button
                 Width="100"
                 Height="34"
-                Margin="5 0 0 0"
                 HorizontalAlignment="Right"
                 Command="{Binding SetActionKeywordsCommand}"
                 Content="{Binding ActionKeywordsText}"
