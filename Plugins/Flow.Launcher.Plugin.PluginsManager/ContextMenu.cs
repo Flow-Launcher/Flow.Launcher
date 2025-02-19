@@ -59,7 +59,6 @@ namespace Flow.Launcher.Plugin.PluginsManager
                         var link = pluginManifestInfo.UrlSourceCode.StartsWith("https://github.com") 
                                         ? Regex.Replace(pluginManifestInfo.UrlSourceCode, @"\/tree\/\w+$", "") + "/issues"
                                         : pluginManifestInfo.UrlSourceCode;
-
                         Context.API.OpenUrl(link);
                         return true;
                     }

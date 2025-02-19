@@ -150,6 +150,7 @@ namespace Flow.Launcher
             var effect = DragDrop.DoDragDrop((DependencyObject)sender, data, DragDropEffects.Move | DragDropEffects.Copy);
             if (effect == DragDropEffects.Move)
             {
+                // if user happens to open context menu, we need to return back to query results before changing query
                 App.API.BackToQueryResults();
                 App.API.ChangeQuery(rawQuery, true);
             }

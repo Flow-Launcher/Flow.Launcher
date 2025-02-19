@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
 using Flow.Launcher.Infrastructure.Hotkey;
@@ -379,9 +378,11 @@ namespace Flow.Launcher.Plugin.Shell
         private void OnWinRPressed()
         {
             // show the main window and set focus to the query box
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 context.API.ShowMainWindow();
+                // if user happens to open context menu, we need to return back to query results before changing query
+                context.API.BackToQueryResults();
                 context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
             });
 

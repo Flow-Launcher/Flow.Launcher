@@ -76,6 +76,7 @@ namespace Flow.Launcher
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)
         {
+            // if user happens to open context menu, we need to return back to query results before changing query
             App.API.BackToQueryResults();
             App.API.ChangeQuery(tbAction.Text);
             Application.Current.MainWindow.Show();

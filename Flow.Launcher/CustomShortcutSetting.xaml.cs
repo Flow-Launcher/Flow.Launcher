@@ -64,6 +64,7 @@ namespace Flow.Launcher
 
         private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
         {
+            // if user happens to open context menu, we need to return back to query results before changing query
             App.API.BackToQueryResults();
             App.API.ChangeQuery(tbExpand.Text);
             Application.Current.MainWindow.Show();
