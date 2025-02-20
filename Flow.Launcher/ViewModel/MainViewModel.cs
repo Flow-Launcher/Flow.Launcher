@@ -231,8 +231,8 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    // make a copy of results to avoid plugin change the result when updating view model
-                    var resultsCopy = e.Results.ToList();
+                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                    var resultsCopy = DeepCloneResults(e.Results, token);
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
@@ -412,6 +412,22 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
             }
+        }
+
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        {
+            var resultsCopy = new List<Result>();
+            foreach (var result in results.ToList())
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                var resultCopy = result.Clone();
+                resultsCopy.Add(resultCopy);
+            }
+            return resultsCopy;
         }
 
         #endregion
@@ -1469,9 +1485,9 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (_topMostRecord.IsTopMost(result))
                     {
-                        result.Score = Result.MaxScore;
+                        result.Score = 100000; //Result.MaxScore;
                     }
-                    else if (result.Score != Result.MaxScore)
+                    else
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
                         result.Score += result.AddSelectedCount ?
