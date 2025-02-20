@@ -34,8 +34,6 @@ namespace Flow.Launcher.ViewModel
 
         private bool _isQueryRunning;
         private Query _lastQuery;
-        private Result lastContextMenuResult = new Result();
-        private List<Result> lastContextMenuResults = new List<Result>();
         private string _queryTextBeforeLeaveResults;
 
         private readonly FlowLauncherJsonStorage<History> _historyItemsStorage;
@@ -398,11 +396,15 @@ namespace Flow.Launcher.ViewModel
                 })
                 .ConfigureAwait(false);
 
-
             if (SelectedIsFromQueryResults())
             {
                 _userSelectedRecord.Add(result);
-                _history.Add(result.OriginQuery.RawQuery);
+                // origin query is null when user select the context menu item directly of one item from query list
+                // so we don't want to add it to history
+                if (result.OriginQuery != null)
+                {
+                    _history.Add(result.OriginQuery.RawQuery);
+                }
                 lastHistoryIndex = 1;
             }
 
@@ -986,19 +988,10 @@ namespace Flow.Launcher.ViewModel
             if (selected != null) // SelectedItem returns null if selection is empty.
             {
                 List<Result> results;
-                if (selected == lastContextMenuResult)
-                {
-                    results = lastContextMenuResults;
-                }
-                else
-                {
-                    results = PluginManager.GetContextMenusForPlugin(selected);
-                    lastContextMenuResults = results;
-                    lastContextMenuResult = selected;
-                    results.Add(ContextMenuTopMost(selected));
-                    results.Add(ContextMenuPluginInfo(selected.PluginID));
-                }
 
+                results = PluginManager.GetContextMenusForPlugin(selected);
+                results.Add(ContextMenuTopMost(selected));
+                results.Add(ContextMenuPluginInfo(selected.PluginID));
 
                 if (!string.IsNullOrEmpty(query))
                 {
@@ -1273,6 +1266,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.Remove(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.BackToQueryResults();
+                        App.API.ReQuery();
                         return false;
                     }
                 };
@@ -1289,6 +1284,8 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.AddOrUpdate(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.BackToQueryResults();
+                        App.API.ReQuery();
                         return false;
                     }
                 };
@@ -1378,8 +1375,6 @@ namespace Flow.Launcher.ViewModel
             lastHistoryIndex = 1;
             // Trick for no delay
             MainWindowOpacity = 0;
-            lastContextMenuResult = new Result();
-            lastContextMenuResults = new List<Result>();
 
             if (ExternalPreviewVisible)
                 CloseExternalPreview();

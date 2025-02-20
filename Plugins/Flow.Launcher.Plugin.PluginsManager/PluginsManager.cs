@@ -534,7 +534,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                             return false;
                     }
 
-                    Application.Current.MainWindow.Hide();
+                    Context.API.HideMainWindow();
                     _ = InstallOrUpdateAsync(plugin);
 
                     return ShouldHideWindow;
@@ -572,7 +572,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                 return false;
                         }
 
-                        Application.Current.MainWindow.Hide();
+                        Context.API.HideMainWindow();
                         _ = InstallOrUpdateAsync(plugin);
 
                         return ShouldHideWindow;
@@ -626,7 +626,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     return ShouldHideWindow;
                                 }
 
-                                Application.Current.MainWindow.Hide();
+                                Context.API.HideMainWindow();
                                 _ = InstallOrUpdateAsync(x); // No need to wait
                                 return ShouldHideWindow;
                             },
@@ -703,7 +703,7 @@ namespace Flow.Launcher.Plugin.PluginsManager
                                     Context.API.GetTranslation("plugin_pluginsmanager_uninstall_title"),
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                             {
-                                Application.Current.MainWindow.Hide();
+                                Context.API.HideMainWindow();
                                 Uninstall(x.Metadata);
                                 if (Settings.AutoRestartAfterChanging)
                                 {
