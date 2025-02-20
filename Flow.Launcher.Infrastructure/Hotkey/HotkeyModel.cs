@@ -167,10 +167,11 @@ namespace Flow.Launcher.Infrastructure.Hotkey
                 case Key.RightCtrl:
                 case Key.LeftShift:
                 case Key.RightShift:
-                case Key.LWin:
-                case Key.RWin:
                 case Key.None:
                     return false;
+                case Key.LWin:
+                case Key.RWin:
+                    return true;
                 default:
                     if (validateKeyGestrue)
                     {
