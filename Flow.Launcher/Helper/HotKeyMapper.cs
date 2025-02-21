@@ -6,6 +6,8 @@ using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core;
+using ChefKeys;
+using System.Globalization;
 
 namespace Flow.Launcher.Helper;
 
@@ -29,15 +31,40 @@ internal static class HotKeyMapper
             _mainViewModel.ToggleFlowLauncher();
     }
 
+    internal static void OnToggleHotkeyWithChefKeys()
+    {
+        if (!_mainViewModel.ShouldIgnoreHotkeys())
+            _mainViewModel.ToggleFlowLauncher();
+    }
+
     private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
     {
+        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+        {
+            SetWithChefKeys(hotkeyStr);
+            return;
+        }
+
         var hotkey = new HotkeyModel(hotkeyStr);
         SetHotkey(hotkey, action);
+    }
+
+    private static void SetWithChefKeys(string hotkeyStr)
+    {
+        ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
+        ChefKeysManager.Start();
     }
 
     internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
     {
         string hotkeyStr = hotkey.ToString();
+
+        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+        {
+            SetWithChefKeys(hotkeyStr);
+            return;
+        }
+
         try
         {
             HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
@@ -52,10 +79,22 @@ internal static class HotKeyMapper
 
     internal static void RemoveHotkey(string hotkeyStr)
     {
+        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+        {
+            RemoveWithChefKeys(hotkeyStr);
+            return;
+        }
+
         if (!string.IsNullOrEmpty(hotkeyStr))
         {
             HotkeyManager.Current.Remove(hotkeyStr);
         }
+    }
+
+    private static void RemoveWithChefKeys(string hotkeyStr)
+    {
+        ChefKeysManager.UnregisterHotkey(hotkeyStr);
+        ChefKeysManager.Stop();
     }
 
     internal static void LoadCustomPluginHotkey()

@@ -154,7 +154,16 @@ namespace Flow.Launcher
         {
             if (triggerValidate)
             {
-                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                bool hotkeyAvailable = false;
+                // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
+                {
+                    hotkeyAvailable = true;
+                }
+                else
+                {
+                    hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                }
 
                 if (!hotkeyAvailable)
                 {
