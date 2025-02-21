@@ -15,7 +15,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     {
         private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
-        public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
+        public string Hotkey { get; set; } = $"{KeyConstant.LeftAlt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
         public string ColorScheme { get; set; } = "System";
         public bool ShowOpenResultHotkey { get; set; } = true;
@@ -288,27 +288,27 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 // Customizeable hotkeys
                 if(!string.IsNullOrEmpty(Hotkey))
                     list.Add(new(Hotkey, "flowlauncherHotkey", () => Hotkey = ""));
-                if(!string.IsNullOrEmpty(PreviewHotkey))
+                if (!string.IsNullOrEmpty(PreviewHotkey))
                     list.Add(new(PreviewHotkey, "previewHotkey", () => PreviewHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey))
                     list.Add(new(AutoCompleteHotkey, "autoCompleteHotkey", () => AutoCompleteHotkey = ""));
-                if(!string.IsNullOrEmpty(AutoCompleteHotkey2))
+                if (!string.IsNullOrEmpty(AutoCompleteHotkey2))
                     list.Add(new(AutoCompleteHotkey2, "autoCompleteHotkey", () => AutoCompleteHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey))
                     list.Add(new(SelectNextItemHotkey, "SelectNextItemHotkey", () => SelectNextItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectNextItemHotkey2))
                     list.Add(new(SelectNextItemHotkey2, "SelectNextItemHotkey", () => SelectNextItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey))
                     list.Add(new(SelectPrevItemHotkey, "SelectPrevItemHotkey", () => SelectPrevItemHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevItemHotkey2))
+                if (!string.IsNullOrEmpty(SelectPrevItemHotkey2))
                     list.Add(new(SelectPrevItemHotkey2, "SelectPrevItemHotkey", () => SelectPrevItemHotkey2 = ""));
-                if(!string.IsNullOrEmpty(SettingWindowHotkey))
+                if (!string.IsNullOrEmpty(SettingWindowHotkey))
                     list.Add(new(SettingWindowHotkey, "SettingWindowHotkey", () => SettingWindowHotkey = ""));
-                if(!string.IsNullOrEmpty(OpenContextMenuHotkey))
+                if (!string.IsNullOrEmpty(OpenContextMenuHotkey))
                     list.Add(new(OpenContextMenuHotkey, "OpenContextMenuHotkey", () => OpenContextMenuHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectNextPageHotkey))
+                if (!string.IsNullOrEmpty(SelectNextPageHotkey))
                     list.Add(new(SelectNextPageHotkey, "SelectNextPageHotkey", () => SelectNextPageHotkey = ""));
-                if(!string.IsNullOrEmpty(SelectPrevPageHotkey))
+                if (!string.IsNullOrEmpty(SelectPrevPageHotkey))
                     list.Add(new(SelectPrevPageHotkey, "SelectPrevPageHotkey", () => SelectPrevPageHotkey = ""));
                 if (!string.IsNullOrEmpty(CycleHistoryUpHotkey))
                     list.Add(new(CycleHistoryUpHotkey, "CycleHistoryUpHotkey", () => CycleHistoryUpHotkey = ""));
