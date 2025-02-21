@@ -34,6 +34,8 @@ namespace Flow.Launcher.Plugin
 
         public List<string> ActionKeywords { get; set; }
 
+        public bool AllowModifyActionKeywords { get; set; } = true;
+
         public string IcoPath { get; set;}
         
         public override string ToString()
