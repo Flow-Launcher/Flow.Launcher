@@ -34,6 +34,8 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
 
+    private static bool isOpenFlowHotkey;
+
     public HotkeyControlDialog(string hotkey, string defaultHotkey, IHotkeySettings hotkeySettings, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
@@ -47,6 +49,10 @@ public partial class HotkeyControlDialog : ContentDialog
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();
+
+        isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
+                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
+                                    && x.Hotkey.ToString() == hotkey);
 
         ChefKeysManager.StartMenuEnableBlocking = true;
         ChefKeysManager.Start();
@@ -181,8 +187,13 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
-        hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+    {
+        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"))
+            return true;
+
+        return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    }
 
     private void Overwrite(object sender, RoutedEventArgs e)
     {
