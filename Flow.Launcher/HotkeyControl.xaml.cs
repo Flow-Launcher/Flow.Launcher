@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -154,7 +154,15 @@ namespace Flow.Launcher
         {
             if (triggerValidate)
             {
-                bool hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                bool hotkeyAvailable = false;
+                if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
+                {
+                    hotkeyAvailable = true;
+                }
+                else
+                {
+                    hotkeyAvailable = CheckHotkeyAvailability(keyModel, ValidateKeyGesture);
+                }
 
                 if (!hotkeyAvailable)
                 {
