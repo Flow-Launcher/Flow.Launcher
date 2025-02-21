@@ -96,9 +96,9 @@
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
                     <CheckBox
                         Margin="12 0 12 0"
-                        Content="{DynamicResource flowlauncher_plugin_program_enable_hidedulplicatedwindowsapp}"
-                        IsChecked="{Binding HideDulplicatedWindowsApp}"
-                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidedulplicatedwindowsapp_tooltip}" />
+                        Content="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp}"
+                        IsChecked="{Binding HideDuplicatedWindowsApp}"
+                        ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip}" />
                 </WrapPanel>
             </DockPanel>
             <Separator

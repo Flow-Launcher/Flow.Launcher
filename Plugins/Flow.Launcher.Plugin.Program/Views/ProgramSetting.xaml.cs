@@ -57,13 +57,13 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        public bool HideDulplicatedWindowsApp
+        public bool HideDuplicatedWindowsApp
         {
-            get => _settings.HideDulplicatedWindowsApp;
+            get => _settings.HideDuplicatedWindowsApp;
             set
             {
                 Main.ResetCache();
-                _settings.HideDulplicatedWindowsApp = value;
+                _settings.HideDuplicatedWindowsApp = value;
             }
         }
 

@@ -93,7 +93,7 @@ namespace Flow.Launcher.Plugin.Program
                     try
                     {
                         // Collect all UWP Windows app directories
-                        var uwpsDirectories = _settings.HideDulplicatedWindowsApp ? _uwps
+                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
                             .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
                             .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
                             .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Plugin.Program
                             .AsParallel()
                             .WithCancellation(token)
                             .Where(HideUninstallersFilter)
-                            .Where(p => HideDulplicatedWindowsAppFilter(p, uwpsDirectories))
+                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
                             .Where(p => p.Enabled)
                             .Select(p => p.Result(query.Search, Context.API))
                             .Where(r => r?.Score > 0)
@@ -163,7 +163,7 @@ namespace Flow.Launcher.Plugin.Program
             return true;
         }
 
-        private static bool HideDulplicatedWindowsAppFilter(IProgram program, string[] uwpsDirectories)
+        private static bool HideDuplicatedWindowsAppFilter(IProgram program, string[] uwpsDirectories)
         {
             if (uwpsDirectories == null || uwpsDirectories.Length == 0) return true;
             if (program is UWPApp) return true;
