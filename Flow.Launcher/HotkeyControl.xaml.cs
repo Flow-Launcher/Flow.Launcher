@@ -1,4 +1,4 @@
-#nullable enable
+﻿#nullable enable
 
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -155,6 +155,7 @@ namespace Flow.Launcher
             if (triggerValidate)
             {
                 bool hotkeyAvailable = false;
+                // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
                 if (keyModel.ToString() == "LWin" || keyModel.ToString() == "RWin")
                 {
                     hotkeyAvailable = true;

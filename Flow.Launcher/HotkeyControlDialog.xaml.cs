@@ -50,6 +50,7 @@ public partial class HotkeyControlDialog : ContentDialog
 
         InitializeComponent();
 
+        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
         isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
                              .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
                                     && x.Hotkey.ToString() == hotkey);
