@@ -342,10 +342,17 @@ namespace Flow.Launcher.Core.Plugin
 
         public static bool ActionKeywordRegistered(IReadOnlyList<string> actionKeywords)
         {
-            return actionKeywords.Any(ActionKeywordRegistered);
+            foreach (var actionKeyword in actionKeywords)
+            {
+                if (ActionKeywordRegistered(actionKeyword))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
-        private static bool ActionKeywordRegistered(string actionKeyword)
+        public static bool ActionKeywordRegistered(string actionKeyword)
         {
             // this method is only checking for action keywords (defined as not '*') registration
             // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
@@ -369,6 +376,7 @@ namespace Flow.Launcher.Core.Plugin
                 NonGlobalPlugins[newActionKeyword] = plugin;
             }
 
+            // Update action keywords in plugin metadata
             plugin.Metadata.ActionKeywords.Add(newActionKeyword);
         }
 
@@ -390,27 +398,28 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
 
+            // Update action keywords in plugin metadata
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }
 
-        public static void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeyword, IReadOnlyList<string> newActionKeyword)
+        public static void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
         {
-            if (CheckActionKeywordChanged(oldActionKeyword, newActionKeyword))
+            if (CheckActionKeywordChanged(oldActionKeywords, newActionKeywords))
             {
-                foreach (var actionKeyword in newActionKeyword)
+                foreach (var actionKeyword in newActionKeywords)
                 {
                     AddActionKeyword(id, actionKeyword);
                 }
-                foreach (var actionKeyword in oldActionKeyword)
+                foreach (var actionKeyword in oldActionKeywords)
                 {
                     RemoveActionKeyword(id, actionKeyword);
                 }
 
                 // Update action keyword in plugin metadata
                 var plugin = GetPluginForId(id);
-                if (newActionKeyword.Count > 0)
+                if (newActionKeywords.Count > 0)
                 {
-                    plugin.Metadata.ActionKeyword = newActionKeyword[0];
+                    plugin.Metadata.ActionKeyword = newActionKeywords[0];
                 }
                 else
                 {
@@ -424,6 +433,27 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionKeyword.Count != newActionKeyword.Count)
                 return true;
             return oldActionKeyword.Where((t, i) => t != newActionKeyword[i]).Any();
+        }
+
+        public static void ReplaceActionKeyword(string id, string oldActionKeyword, string newActionKeyword)
+        {
+            if (oldActionKeyword != newActionKeyword)
+            {
+                AddActionKeyword(id, newActionKeyword);
+                RemoveActionKeyword(id, oldActionKeyword);
+
+                // Update action keyword in plugin metadata
+                var plugin = GetPluginForId(id);
+                var newActionKeywords = plugin.Metadata.ActionKeywords;
+                if (newActionKeywords.Count > 0)
+                {
+                    plugin.Metadata.ActionKeyword = newActionKeywords[0];
+                }
+                else
+                {
+                    plugin.Metadata.ActionKeyword = string.Empty;
+                }
+            }
         }
 
         private static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)

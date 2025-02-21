@@ -80,7 +80,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         private void AddSearchSource()
         {
             var keyword = _searchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(keyword))
+            if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
                 PluginManager.AddActionKeyword(id, keyword);
@@ -100,7 +100,7 @@ namespace Flow.Launcher.Plugin.WebSearch
         {
             var newKeyword = _searchSource.ActionKeyword;
             var oldKeyword = _oldSearchSource.ActionKeyword;
-            if (!PluginManager.ActionKeywordRegistered(newKeyword) || oldKeyword == newKeyword)
+            if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
                 PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
