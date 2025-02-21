@@ -72,7 +72,7 @@ namespace Flow.Launcher.Plugin.Program
         private const string ExeUninstallerSuffix = ".exe";
         private const string InkUninstallerSuffix = ".lnk";
 
-        private const string WindowsAppPath = "c:\\program files\\windowsapps";
+        private static readonly string WindowsAppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
 
         static Main()
         {
