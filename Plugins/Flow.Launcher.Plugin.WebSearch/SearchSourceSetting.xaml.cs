@@ -83,7 +83,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (!_context.API.ActionKeywordAssigned(keyword))
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.AddActionKeyword(id, keyword);
+                _context.API.AddActionKeyword(id, keyword);
 
                 _searchSources.Add(_searchSource);
 

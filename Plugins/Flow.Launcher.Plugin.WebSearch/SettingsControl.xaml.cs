@@ -40,7 +40,7 @@ namespace Flow.Launcher.Plugin.WebSearch
                 if (result == MessageBoxResult.Yes)
                 {
                     var id = _context.CurrentPluginMetadata.ID;
-                    PluginManager.RemoveActionKeyword(id, selected.ActionKeyword);
+                    _context.API.RemoveActionKeyword(id, selected.ActionKeyword);
                     _settings.SearchSources.Remove(selected);
                 }
             }
