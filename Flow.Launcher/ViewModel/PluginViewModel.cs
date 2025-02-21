@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Resources.Controls;
+using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -109,9 +110,9 @@ namespace Flow.Launcher.ViewModel
         public int Priority => PluginPair.Metadata.Priority;
         public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
-        public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
+        public void ChangeActionKeyword(IReadOnlyList<string> newActionKeywords, IReadOnlyList<string> oldActionKeywords)
         {
-            PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
+            PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeywords, newActionKeywords);
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
@@ -150,7 +151,7 @@ namespace Flow.Launcher.ViewModel
             PluginManager.API.ShowMainWindow();
         }
 
-        public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
+        public static bool IsActionKeywordRegistered(IReadOnlyList<string> newActionKeywords) => PluginManager.ActionKeywordRegistered(newActionKeywords);
 
         [RelayCommand]
         private void SetActionKeywords()

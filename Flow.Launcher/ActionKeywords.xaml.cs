@@ -3,6 +3,7 @@ using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core;
+using System.Linq;
 
 namespace Flow.Launcher
 {
@@ -32,13 +33,17 @@ namespace Flow.Launcher
 
         private void btnDone_OnClick(object sender, RoutedEventArgs _)
         {
-            var oldActionKeyword = plugin.Metadata.ActionKeywords[0];
-            var newActionKeyword = tbAction.Text.Trim();
-            newActionKeyword = newActionKeyword.Length > 0 ? newActionKeyword : "*";
+            var oldActionKeywords = plugin.Metadata.ActionKeywords;
+
+            var newActionKeywords = tbAction.Text.Split(Query.ActionKeywordSeparator).ToList();
+            newActionKeywords.RemoveAll(string.IsNullOrEmpty);
+            newActionKeywords = newActionKeywords.Distinct().ToList();
+
+            newActionKeywords = newActionKeywords.Count > 0 ? newActionKeywords : new() { Query.GlobalPluginWildcardSign };
             
-            if (!PluginViewModel.IsActionKeywordRegistered(newActionKeyword))
+            if (!PluginViewModel.IsActionKeywordRegistered(newActionKeywords))
             {
-                pluginViewModel.ChangeActionKeyword(newActionKeyword, oldActionKeyword);
+                pluginViewModel.ChangeActionKeyword(newActionKeywords, oldActionKeywords);
                 Close();
             }
             else

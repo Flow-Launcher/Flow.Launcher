@@ -340,7 +340,12 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
-        public static bool ActionKeywordRegistered(string actionKeyword)
+        public static bool ActionKeywordRegistered(IReadOnlyList<string> actionKeywords)
+        {
+            return actionKeywords.Any(ActionKeywordRegistered);
+        }
+
+        private static bool ActionKeywordRegistered(string actionKeyword)
         {
             // this method is only checking for action keywords (defined as not '*') registration
             // hence the actionKeyword != Query.GlobalPluginWildcardSign logic
@@ -385,17 +390,29 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
 
-
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
         }
 
-        public static void ReplaceActionKeyword(string id, string oldActionKeyword, string newActionKeyword)
+        public static void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeyword, IReadOnlyList<string> newActionKeyword)
         {
-            if (oldActionKeyword != newActionKeyword)
+            if (CheckActionKeywordChanged(oldActionKeyword, newActionKeyword))
             {
-                AddActionKeyword(id, newActionKeyword);
-                RemoveActionKeyword(id, oldActionKeyword);
+                foreach (var actionKeyword in newActionKeyword)
+                {
+                    AddActionKeyword(id, actionKeyword);
+                }
+                foreach (var actionKeyword in oldActionKeyword)
+                {
+                    RemoveActionKeyword(id, actionKeyword);
+                }
             }
+        }
+
+        private static bool CheckActionKeywordChanged(IReadOnlyList<string> oldActionKeyword, IReadOnlyList<string> newActionKeyword)
+        {
+            if (oldActionKeyword.Count != newActionKeyword.Count)
+                return true;
+            return oldActionKeyword.Where((t, i) => t != newActionKeyword[i]).Any();
         }
 
         private static string GetContainingFolderPathAfterUnzip(string unzippedParentFolderPath)
