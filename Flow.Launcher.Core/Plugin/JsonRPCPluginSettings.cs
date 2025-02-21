@@ -112,7 +112,7 @@ namespace Flow.Launcher.Core.Plugin
         public Control CreateSettingPanel()
         {
             if (Settings == null || Settings.Count == 0)
-                return new();
+                return null;
 
             var settingWindow = new UserControl();
             var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
