@@ -229,7 +229,6 @@ namespace Flow.Launcher.Core.Plugin
             if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
                 return GlobalPlugins;
 
-
             var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
             {

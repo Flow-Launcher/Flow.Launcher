@@ -1118,7 +1118,6 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
                 // Wait 45 millisecond for query change in global query
@@ -1144,7 +1143,6 @@ namespace Flow.Launcher.ViewModel
                 false => QueryTask(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
-
 
             try
             {

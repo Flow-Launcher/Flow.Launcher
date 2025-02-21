@@ -43,7 +43,6 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         public const string ActionKeywordSeparator = ";";
 
-
         /// <summary>
         /// Wildcard action keyword. Plugins using this value will be queried on every search.
         /// </summary>
