@@ -4,6 +4,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core;
 using System.Linq;
+using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher
 {
@@ -41,7 +42,7 @@ namespace Flow.Launcher
 
             newActionKeywords = newActionKeywords.Count > 0 ? newActionKeywords : new() { Query.GlobalPluginWildcardSign };
             
-            if (!PluginViewModel.IsActionKeywordRegistered(newActionKeywords))
+            if (!PluginManager.ActionKeywordRegistered(newActionKeywords, oldActionKeywords))
             {
                 pluginViewModel.ChangeActionKeyword(newActionKeywords, oldActionKeywords);
                 Close();

@@ -340,16 +340,22 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
-        public static bool ActionKeywordRegistered(IReadOnlyList<string> actionKeywords)
+        public static bool ActionKeywordRegistered(IReadOnlyList<string> newActionKeywords, IReadOnlyList<string> oldActionKeywords)
         {
-            foreach (var actionKeyword in actionKeywords)
+            foreach (var actionKeyword in newActionKeywords)
             {
-                if (ActionKeywordRegistered(actionKeyword))
+                if (ActionKeywordRegistered(actionKeyword, oldActionKeywords))
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        private static bool ActionKeywordRegistered(string actionKeyword, IReadOnlyList<string> oldActionKeywords)
+        {
+            if (oldActionKeywords.Contains(actionKeyword)) return false;
+            return ActionKeywordRegistered(actionKeyword);
         }
 
         public static bool ActionKeywordRegistered(string actionKeyword)

@@ -151,8 +151,6 @@ namespace Flow.Launcher.ViewModel
             PluginManager.API.ShowMainWindow();
         }
 
-        public static bool IsActionKeywordRegistered(IReadOnlyList<string> newActionKeywords) => PluginManager.ActionKeywordRegistered(newActionKeywords);
-
         [RelayCommand]
         private void SetActionKeywords()
         {
