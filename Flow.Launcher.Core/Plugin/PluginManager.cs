@@ -412,13 +412,15 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (CheckActionKeywordChanged(oldActionKeywords, newActionKeywords))
             {
+                // Fix collection modified while iterating exception
+                var oldActionKeywordsClone = oldActionKeywords.ToList();
+                foreach (var actionKeyword in oldActionKeywordsClone)
+                {
+                    RemoveActionKeyword(id, actionKeyword);
+                }
                 foreach (var actionKeyword in newActionKeywords)
                 {
                     AddActionKeyword(id, actionKeyword);
-                }
-                foreach (var actionKeyword in oldActionKeywords)
-                {
-                    RemoveActionKeyword(id, actionKeyword);
                 }
 
                 // Update action keyword in plugin metadata
@@ -445,8 +447,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             if (oldActionKeyword != newActionKeyword)
             {
-                AddActionKeyword(id, newActionKeyword);
                 RemoveActionKeyword(id, oldActionKeyword);
+                AddActionKeyword(id, newActionKeyword);
 
                 // Update action keyword in plugin metadata
                 var plugin = GetPluginForId(id);
