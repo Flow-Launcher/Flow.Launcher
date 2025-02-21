@@ -405,6 +405,17 @@ namespace Flow.Launcher.Core.Plugin
                 {
                     RemoveActionKeyword(id, actionKeyword);
                 }
+
+                // Update action keyword in plugin metadata
+                var plugin = GetPluginForId(id);
+                if (newActionKeyword.Count > 0)
+                {
+                    plugin.Metadata.ActionKeyword = newActionKeyword[0];
+                }
+                else
+                {
+                    plugin.Metadata.ActionKeyword = string.Empty;
+                }
             }
         }
 
