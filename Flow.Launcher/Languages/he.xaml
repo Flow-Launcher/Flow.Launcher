@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">רישום מקש הקיצור &quot;{0}&quot; נכשל. ייתכן שמקש הקיצור נמצא בשימוש על ידי תוכנה אחרת. שנה למקש קיצור אחר, או צא מהתוכנה האחרת.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">לא ניתן היה להפעיל את {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">פורמט קובץ תוסף Flow Launcher לא חוקי</system:String>
