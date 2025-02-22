@@ -1494,7 +1494,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (_topMostRecord.IsTopMost(result))
                     {
-                        result.Score = 100000; //Result.MaxScore;
+                        result.Score = Result.MaxScore;
                     }
                     else
                     {
