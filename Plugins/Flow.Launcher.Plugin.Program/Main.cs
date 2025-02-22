@@ -292,7 +292,6 @@ namespace Flow.Launcher.Plugin.Program
                             Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                             Context.API.GetTranslation(
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                        Context.API.BackToQueryResults();
                         Context.API.ReQuery();
                         return false;
                     },
