@@ -60,7 +60,6 @@ namespace Flow.Launcher
             InitializePosition();
 
             InitSoundEffects();
-
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
 
             this.Loaded += (_, _) =>
@@ -182,6 +181,9 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
+            // Remove OS minimizing/maximizing animation
+            ThemeManager.Instance.RefreshFrame();
+
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
             CheckFirstLaunch();

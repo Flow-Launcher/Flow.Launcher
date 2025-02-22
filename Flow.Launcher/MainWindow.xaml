@@ -15,12 +15,11 @@
     MinHeight="30"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
-    AllowsTransparency="True"
-    Background="Transparent"
+    AllowsTransparency="False"
+    Background="#DB213C95"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
-    SourceInitialized="OnSourceInitialized"
     Initialized="OnInitialized"
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
@@ -31,10 +30,11 @@
     ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
+    SourceInitialized="OnSourceInitialized"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="None"
+    WindowStyle="SingleBorderWindow"
     mc:Ignorable="d">
     <!--  WindowChrome  -->
     <WindowChrome.WindowChrome>
@@ -213,7 +213,7 @@
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
 
-    <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
+    <Border MouseDown="OnMouseDown">
         <StackPanel Orientation="Vertical">
             <Grid>
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">
