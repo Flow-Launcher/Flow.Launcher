@@ -2130,7 +2130,7 @@
     <value>Ändern, wie der Mauszeiger ausschaut</value>
   </data>
   <data name="ChangePowerSavingSettings" xml:space="preserve">
-    <value>Change power-saving settings</value>
+    <value>Energiespareinstellungen ändern</value>
   </data>
   <data name="OptimiseForBlindness" xml:space="preserve">
     <value>Optimieren für Blindheit</value>
@@ -2143,7 +2143,7 @@
     <value>Windows-Features ein- oder ausschalten</value>
   </data>
   <data name="ShowWhichOperatingSystemYourComputerIsRunning" xml:space="preserve">
-    <value>Show which operating system your computer is running</value>
+    <value>Betriebssystem, welches auf deinem Computer läuft, anzeigen</value>
   </data>
   <data name="ViewLocalServices" xml:space="preserve">
     <value>Lokale Dienste ansehen</value>

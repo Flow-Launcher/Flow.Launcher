@@ -90,7 +90,7 @@ namespace Flow.Launcher.ViewModel
         private Control _bottomPart2;
         public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
-        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider;
+        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider settingProvider && settingProvider.CreateSettingPanel() != null;
         public Control SettingControl
             => IsExpanded
                 ? _settingControl

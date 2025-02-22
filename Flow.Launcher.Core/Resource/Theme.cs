@@ -11,6 +11,7 @@ using System.Windows.Media.Effects;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
+using System.Windows.Shell;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -306,12 +307,15 @@ namespace Flow.Launcher.Core.Resource
             var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
             if (marginSetter == null)
             {
+                var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
                 marginSetter = new Setter()
                 {
                     Property = Border.MarginProperty,
-                    Value = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin),
+                    Value = margin,
                 };
                 windowBorderStyle.Setters.Add(marginSetter);
+
+                SetResizeBoarderThickness(margin);
             }
             else
             {
@@ -322,6 +326,8 @@ namespace Flow.Launcher.Core.Resource
                     baseMargin.Right + ShadowExtraMargin,
                     baseMargin.Bottom + ShadowExtraMargin);
                 marginSetter.Value = newMargin;
+
+                SetResizeBoarderThickness(newMargin);
             }
 
             windowBorderStyle.Setters.Add(effectSetter);
@@ -352,7 +358,34 @@ namespace Flow.Launcher.Core.Resource
                 marginSetter.Value = newMargin;
             }
 
+            SetResizeBoarderThickness(null);
+
             UpdateResourceDictionary(dict);
+        }
+
+        // because adding drop shadow effect will change the margin of the window,
+        // we need to update the window chrome thickness to correct set the resize border
+        private static void SetResizeBoarderThickness(Thickness? effectMargin)
+        {
+            var window = Application.Current.MainWindow;
+            if (WindowChrome.GetWindowChrome(window) is WindowChrome windowChrome)
+            {
+                Thickness thickness;
+                if (effectMargin == null)
+                {
+                    thickness = SystemParameters.WindowResizeBorderThickness;
+                }
+                else
+                {
+                    thickness = new Thickness(
+                        effectMargin.Value.Left + SystemParameters.WindowResizeBorderThickness.Left,
+                        effectMargin.Value.Top + SystemParameters.WindowResizeBorderThickness.Top,
+                        effectMargin.Value.Right + SystemParameters.WindowResizeBorderThickness.Right,
+                        effectMargin.Value.Bottom + SystemParameters.WindowResizeBorderThickness.Bottom);
+                }
+
+                windowChrome.ResizeBorderThickness = thickness;
+            }
         }
 
         public record ThemeData(string FileNameWithoutExtension, string Name, bool? IsDark = null, bool? HasBlur = null);

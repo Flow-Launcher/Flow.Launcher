@@ -281,7 +281,7 @@ namespace Flow.Launcher.Core.Plugin
             return results;
         }
 
-        public static void UpdatePluginMetadata(List<Result> results, PluginMetadata metadata, Query query)
+        public static void UpdatePluginMetadata(IReadOnlyList<Result> results, PluginMetadata metadata, Query query)
         {
             foreach (var r in results)
             {

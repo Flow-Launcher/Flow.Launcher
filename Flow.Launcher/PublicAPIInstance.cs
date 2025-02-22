@@ -117,38 +117,35 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
+        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
                 return;
 
-            await Win32Helper.StartSTATaskAsync(() =>
+            var isFile = File.Exists(stringToCopy);
+            if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
-                var isFile = File.Exists(stringToCopy);
-                if (directCopy && (isFile || Directory.Exists(stringToCopy)))
-                {
-                    var paths = new StringCollection
+                var paths = new StringCollection
                     {
                         stringToCopy
                     };
 
-                    Clipboard.SetFileDropList(paths);
+                Clipboard.SetFileDropList(paths);
 
-                    if (showDefaultNotification)
-                        ShowMsg(
-                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                            GetTranslation("completedSuccessfully"));
-                }
-                else
-                {
-                    Clipboard.SetDataObject(stringToCopy);
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                        GetTranslation("completedSuccessfully"));
+            }
+            else
+            {
+                Clipboard.SetDataObject(stringToCopy);
 
-                    if (showDefaultNotification)
-                        ShowMsg(
-                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                            GetTranslation("completedSuccessfully"));
-                }
-            });
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                        GetTranslation("completedSuccessfully"));
+            }
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
@@ -167,8 +164,8 @@ namespace Flow.Launcher
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
             Http.GetStreamAsync(url);
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
-            CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
@@ -326,6 +323,8 @@ namespace Flow.Launcher
 
         public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
+
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, forceClosed);
 
         #endregion
 

@@ -15,7 +15,20 @@ namespace Flow.Launcher.Infrastructure
         {
             var explorerWindow = GetActiveExplorer();
             string locationUrl = explorerWindow?.LocationURL;
-            return !string.IsNullOrEmpty(locationUrl) ? new Uri(locationUrl).LocalPath + "\\" : null;
+            return !string.IsNullOrEmpty(locationUrl) ? GetDirectoryPath(new Uri(locationUrl).LocalPath) : null;
+        }
+
+        /// <summary>
+        /// Get directory path from a file path
+        /// </summary>
+        private static string GetDirectoryPath(string path)
+        {
+            if (!path.EndsWith("\\"))
+            {
+                return path + "\\";
+            }
+
+            return path;
         }
 
         /// <summary>
@@ -68,7 +81,7 @@ namespace Flow.Launcher.Infrastructure
             var numRemaining = hWnds.Count;
             PInvoke.EnumWindows((wnd, _) =>
             {
-                var searchIndex = hWnds.FindIndex(x => x.HWND == wnd.Value);
+                var searchIndex = hWnds.FindIndex(x => new IntPtr(x.HWND) == wnd);
                 if (searchIndex != -1)
                 {
                     z[searchIndex] = index;

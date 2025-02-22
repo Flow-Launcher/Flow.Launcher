@@ -13,7 +13,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel, IHotkeySettings
     {
-        private string language = "en";
+        private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
@@ -230,7 +230,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         [JsonIgnore]
         public ObservableCollection<BuiltinShortcutModel> BuiltinShortcuts { get; set; } = new()
         {
-            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", () => Win32Helper.StartSTATaskAsync(Clipboard.GetText).Result),
+            new BuiltinShortcutModel("{clipboard}", "shortcut_clipboard_description", Clipboard.GetText),
             new BuiltinShortcutModel("{active_explorer_path}", "shortcut_active_explorer_path", FileExplorerHelper.GetActiveExplorerPath)
         };
 
