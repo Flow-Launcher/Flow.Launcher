@@ -1,12 +1,11 @@
-using NUnit.Framework;
+﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 using System.Threading.Tasks;
 using System.IO;
 using System.Threading;
 using System.Text;
-using System.Text.Json;
-using System.Linq;
 using System.Collections.Generic;
 
 namespace Flow.Launcher.Test.Plugins
@@ -40,13 +39,13 @@ namespace Flow.Launcher.Test.Plugins
                 Search = resultText
             }, default);
 
-            Assert.IsNotNull(results);
+            ClassicAssert.IsNotNull(results);
 
             foreach (var result in results)
             {
-                Assert.IsNotNull(result);
-                Assert.IsNotNull(result.AsyncAction);
-                Assert.IsNotNull(result.Title);
+                ClassicAssert.IsNotNull(result);
+                ClassicAssert.IsNotNull(result.AsyncAction);
+                ClassicAssert.IsNotNull(result.Title);
             }
 
         }
@@ -56,12 +55,11 @@ namespace Flow.Launcher.Test.Plugins
             new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>()),
             new JsonRPCQueryResponseModel(0, new List<JsonRPCResult>
             {
-                new JsonRPCResult
+                new()
                 {
                     Title = "Test1", SubTitle = "Test2"
                 }
             })
         };
-
     }
 }
