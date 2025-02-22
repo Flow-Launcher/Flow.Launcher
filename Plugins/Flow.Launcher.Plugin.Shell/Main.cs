@@ -382,7 +382,6 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 context.API.ShowMainWindow();
                 // if user happens to open context menu, we need to return back to query results before changing query
-                context.API.BackToQueryResults();
                 context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
             });
 

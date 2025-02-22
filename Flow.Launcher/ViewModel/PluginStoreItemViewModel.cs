@@ -64,8 +64,6 @@ namespace Flow.Launcher.ViewModel
         private void ShowCommandQuery(string action)
         {
             var actionKeyword = PluginManagerData.Metadata.ActionKeywords.Any() ? PluginManagerData.Metadata.ActionKeywords[0] + " " : String.Empty;
-            // if user happens to open context menu, we need to return back to query results before changing query
-            App.API.BackToQueryResults();
             App.API.ChangeQuery($"{actionKeyword}{action} {_plugin.Name}");
             App.API.ShowMainWindow();
         }

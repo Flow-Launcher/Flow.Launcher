@@ -146,8 +146,6 @@ namespace Flow.Launcher.ViewModel
         [RelayCommand]
         private void OpenDeletePluginWindow()
         {
-            // if user happens to open context menu, we need to return back to query results before changing query
-            PluginManager.API.BackToQueryResults();
             PluginManager.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
             PluginManager.API.ShowMainWindow();
         }
@@ -161,5 +159,4 @@ namespace Flow.Launcher.ViewModel
             changeKeywordsWindow.ShowDialog();
         }
     }
-
 }

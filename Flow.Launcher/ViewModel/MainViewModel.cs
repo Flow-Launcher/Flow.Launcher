@@ -279,10 +279,8 @@ namespace Flow.Launcher.ViewModel
 
         public void ReQuery(bool reselect)
         {
-            if (SelectedIsFromQueryResults())
-            {
-                QueryResults(isReQuery: true, reSelect: reselect);
-            }
+            BackToQueryResults();
+            QueryResults(isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -491,7 +489,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public void BackToQueryResults()
+        private void BackToQueryResults()
         {
             if (!SelectedIsFromQueryResults())
             {
@@ -610,6 +608,8 @@ namespace Flow.Launcher.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                BackToQueryResults();
+
                 if (QueryText != queryText)
                 {
                     // re-query is done in QueryText's setter method
@@ -1266,8 +1266,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.Remove(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
-                        // if user happens to open context menu, we need to return back to query results before changing query
-                        App.API.BackToQueryResults();
                         App.API.ReQuery();
                         return false;
                     }
@@ -1285,8 +1283,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.AddOrUpdate(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
-                        // if user happens to open context menu, we need to return back to query results before changing query
-                        App.API.BackToQueryResults();
                         App.API.ReQuery();
                         return false;
                     }
