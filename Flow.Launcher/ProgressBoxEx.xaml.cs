@@ -95,14 +95,19 @@ namespace Flow.Launcher
             ForceClose();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Cancel(object sender, RoutedEventArgs e)
         {
             ForceClose();
         }
 
-        private void Button_Cancel(object sender, RoutedEventArgs e)
+        private void Button_Minimize(object sender, RoutedEventArgs e)
         {
-            ForceClose();
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Button_Background(object sender, RoutedEventArgs e)
+        {
+            Hide();
         }
 
         private void ForceClose()
