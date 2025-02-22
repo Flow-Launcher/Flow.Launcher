@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin
     {
         /// <summary>
         /// Change Flow.Launcher query.
-        /// When current results are from context menu or history, we will back to query results before changing query.
+        /// When current results are from context menu or history, it will go back to query results before changing query.
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
