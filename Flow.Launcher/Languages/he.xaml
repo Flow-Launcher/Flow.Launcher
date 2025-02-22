@@ -13,7 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">רישום מקש הקיצור &quot;{0}&quot; נכשל. ייתכן שמקש הקיצור נמצא בשימוש על ידי תוכנה אחרת. שנה למקש קיצור אחר, או צא מהתוכנה האחרת.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">ביטול הרישום של מקש קיצור &quot;{0}&quot; נכשל. אנא נסה שוב או עיין ביומן הרישום לפרטים נוספים</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">לא ניתן היה להפעיל את {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">פורמט קובץ תוסף Flow Launcher לא חוקי</system:String>
@@ -36,8 +36,8 @@
     <system:String x:Key="textTitle">טקסט</system:String>
     <system:String x:Key="GameMode">מצב משחק</system:String>
     <system:String x:Key="GameModeToolTip">השהה את השימוש במקשי קיצור.</system:String>
-    <system:String x:Key="PositionReset">Position Reset</system:String>
-    <system:String x:Key="PositionResetToolTip">Reset search window position</system:String>
+    <system:String x:Key="PositionReset">איפוס מיקום</system:String>
+    <system:String x:Key="PositionResetToolTip">אפס את מיקום חלון החיפוש</system:String>
 
     <!--  Setting General  -->
     <system:String x:Key="flowlauncher_settings">הגדרות</system:String>
@@ -91,7 +91,7 @@
     <system:String x:Key="hideNotifyIcon">הסתר אייקון מגש</system:String>
     <system:String x:Key="hideNotifyIconToolTip">כאשר האייקון מוסתר מהמגש, ניתן לפתוח את תפריט ההגדרות על ידי לחיצה ימנית על חלון החיפוש.</system:String>
     <system:String x:Key="querySearchPrecision">Query Search Precision</system:String>
-    <system:String x:Key="querySearchPrecisionToolTip">Changes minimum match score required for results.</system:String>
+    <system:String x:Key="querySearchPrecisionToolTip">משנה את ציון ההתאמה המינימלי הנדרש לתוצאות.</system:String>
     <system:String x:Key="SearchPrecisionNone">ללא</system:String>
     <system:String x:Key="SearchPrecisionLow">נמוך</system:String>
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
