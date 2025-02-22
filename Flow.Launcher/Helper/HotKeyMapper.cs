@@ -8,6 +8,7 @@ using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core;
 using ChefKeys;
 using System.Globalization;
+using Flow.Launcher.Infrastructure.Logger;
 
 namespace Flow.Launcher.Helper;
 
@@ -39,38 +40,49 @@ internal static class HotKeyMapper
 
     private static void SetHotkey(string hotkeyStr, EventHandler<HotkeyEventArgs> action)
     {
-        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-        {
-            SetWithChefKeys(hotkeyStr);
-            return;
-        }
-
         var hotkey = new HotkeyModel(hotkeyStr);
         SetHotkey(hotkey, action);
     }
 
     private static void SetWithChefKeys(string hotkeyStr)
     {
-        ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
-        ChefKeysManager.Start();
+        try
+        {
+            ChefKeysManager.RegisterHotkey(hotkeyStr, hotkeyStr, OnToggleHotkeyWithChefKeys);
+            ChefKeysManager.Start();
+        }
+        catch (Exception e)
+        {
+            Log.Error(
+                string.Format("|HotkeyMapper.SetWithChefKeys|Error registering hotkey: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace));
+            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
+            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+        }
     }
 
     internal static void SetHotkey(HotkeyModel hotkey, EventHandler<HotkeyEventArgs> action)
     {
         string hotkeyStr = hotkey.ToString();
-
-        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
-        {
-            SetWithChefKeys(hotkeyStr);
-            return;
-        }
-
         try
         {
+            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+            {
+                SetWithChefKeys(hotkeyStr);
+                return;
+            }
+
             HotkeyManager.Current.AddOrReplace(hotkeyStr, hotkey.CharKey, hotkey.ModifierKeys, action);
         }
-        catch (Exception)
+        catch (Exception e)
         {
+            Log.Error(
+                string.Format("|HotkeyMapper.SetHotkey|Error registering hotkey {2}: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace,
+                              hotkeyStr));
             string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
             MessageBoxEx.Show(errorMsg, errorMsgTitle);
@@ -79,15 +91,26 @@ internal static class HotKeyMapper
 
     internal static void RemoveHotkey(string hotkeyStr)
     {
-        if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+        try
         {
-            RemoveWithChefKeys(hotkeyStr);
-            return;
-        }
+            if (hotkeyStr == "LWin" || hotkeyStr == "RWin")
+            {
+                RemoveWithChefKeys(hotkeyStr);
+                return;
+            }
 
-        if (!string.IsNullOrEmpty(hotkeyStr))
+            if (!string.IsNullOrEmpty(hotkeyStr))
+                HotkeyManager.Current.Remove(hotkeyStr);
+        }
+        catch (Exception e)
         {
-            HotkeyManager.Current.Remove(hotkeyStr);
+            Log.Error(
+                string.Format("|HotkeyMapper.RemoveHotkey|Error removing hotkey: {0} \nStackTrace:{1}",
+                              e.Message,
+                              e.StackTrace));
+            string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("unregisterHotkeyFailed"), hotkeyStr);
+            string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
+            MessageBoxEx.Show(errorMsg, errorMsgTitle);
         }
     }
 
