@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Impossible de lancer {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Le format de fichier n'est pas un plugin Flow Launcher valide</system:String>
