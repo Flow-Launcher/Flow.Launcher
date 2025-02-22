@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">&quot;{0}&quot; kısayolunu atama başarısız oldu. Kısayolu başka bir program kullanıyorsa kapatmayı deneyin veya kısayolu değiştirin.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0} başlatılamıyor</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Geçersiz Flow Launcher eklenti dosyası formatı</system:String>
