@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Не вдалося зареєструвати гарячу клавішу &quot;{0}&quot;. Можливо, гаряча клавіша використовується іншою програмою. Змініть її на іншу гарячу клавішу або вийдіть з програми, де вона використовується.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Не вдалося запустити {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Невірний формат файлу плагіна Flow Launcher</system:String>
