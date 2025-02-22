@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Sneltoets &quot;{0}&quot; registreren. De sneltoets kan in gebruik zijn door een ander programma. Verander naar een andere sneltoets of sluit een ander programma.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Kan {0} niet starten</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ongeldige Flow Launcher plugin bestandsextensie</system:String>
