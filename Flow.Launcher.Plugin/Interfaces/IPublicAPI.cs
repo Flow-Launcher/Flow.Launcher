@@ -300,7 +300,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// When current results are from context menu or history, we will back to query results before requerying.
+        /// When current results are from context menu or history, it will go back to query results before requerying.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
