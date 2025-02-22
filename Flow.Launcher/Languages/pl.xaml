@@ -13,6 +13,7 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego &quot;{0}&quot;. Klucz skrótu może być używany przez inny program. Zmień skrót klawiszowy lub wyjdź z innego programu.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nie udało się uruchomić: {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Niepoprawny format pliku wtyczki</system:String>
