@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Registrazione del tasto di scelta rapida &quot;{0}&quot; non riuscita. Il tasto di scelta rapida potrebbe essere in uso da un altro programma. Passa a un altro tasto di scelta rapida o esci da un altro programma.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Avvio fallito {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato file plugin non valido</system:String>
