@@ -319,6 +319,8 @@ namespace Flow.Launcher
 
         public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
 
+        public void BackToQueryResults() => _mainVM.BackToQueryResults();
+
         public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 

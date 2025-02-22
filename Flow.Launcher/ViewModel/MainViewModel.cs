@@ -489,7 +489,7 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        private void BackToQueryResults()
+        public void BackToQueryResults()
         {
             if (!SelectedIsFromQueryResults())
             {

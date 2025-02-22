@@ -306,6 +306,12 @@ namespace Flow.Launcher.Plugin
         public void ReQuery(bool reselect = true);
 
         /// <summary>
+        /// Back to the query results.
+        /// This method should run when selected item is from context menu or history.
+        /// </summary>
+        public void BackToQueryResults();
+
+        /// <summary>
         /// Displays a standardised Flow message box.
         /// </summary>
         /// <param name="messageBoxText">The message of the message box.</param>
