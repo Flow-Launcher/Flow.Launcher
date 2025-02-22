@@ -266,8 +266,9 @@ namespace Flow.Launcher.Plugin
         /// The key to identify the record. This is used when FL checks whether the result is the topmost record. Or FL calculates the hashcode of the result for user selected records.
         /// This can be useful when your plugin will change the Title or SubTitle of the result dynamically.
         /// If the plugin does not specific this, FL just uses Title and SubTitle to identify this result.
+        /// Note: Because old data does not have this key, we should use null as the default value for consistency.
         /// </summary>
-        public string RecordKey { get; set; } = string.Empty;
+        public string RecordKey { get; set; } = null;
 
         /// <summary>
         /// Info of the preview section of a <see cref="Result"/>

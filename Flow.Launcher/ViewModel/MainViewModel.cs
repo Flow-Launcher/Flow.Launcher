@@ -231,8 +231,8 @@ namespace Flow.Launcher.ViewModel
 
                     var token = e.Token == default ? _updateToken : e.Token;
 
-                    // make a copy of results to avoid plugin change the result when updating view model
-                    var resultsCopy = e.Results.ToList();
+                    // make a clone to avoid possible issue that plugin will also change the list and items when updating view model
+                    var resultsCopy = DeepCloneResults(e.Results, token);
 
                     PluginManager.UpdatePluginMetadata(resultsCopy, pair.Metadata, e.Query);
                     if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, pair.Metadata, e.Query,
@@ -412,6 +412,22 @@ namespace Flow.Launcher.ViewModel
             {
                 Hide();
             }
+        }
+
+        private static IReadOnlyList<Result> DeepCloneResults(IReadOnlyList<Result> results, CancellationToken token = default)
+        {
+            var resultsCopy = new List<Result>();
+            foreach (var result in results.ToList())
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+
+                var resultCopy = result.Clone();
+                resultsCopy.Add(resultCopy);
+            }
+            return resultsCopy;
         }
 
         #endregion
@@ -1180,9 +1196,18 @@ namespace Flow.Launcher.ViewModel
 
                 currentCancellationToken.ThrowIfCancellationRequested();
 
-                results ??= _emptyResult;
+                IReadOnlyList<Result> resultsCopy;
+                if (results == null)
+                {
+                    resultsCopy = _emptyResult;
+                }
+                else
+                {
+                    // make a copy of results to avoid possible issue that FL changes some properties of the records, like score, etc.
+                    resultsCopy = DeepCloneResults(results);
+                }
 
-                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(results, plugin.Metadata, query,
+                if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
                         currentCancellationToken, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
@@ -1471,12 +1496,31 @@ namespace Flow.Launcher.ViewModel
                     {
                         result.Score = Result.MaxScore;
                     }
-                    else if (result.Score != Result.MaxScore)
+                    else
                     {
                         var priorityScore = metaResults.Metadata.Priority * 150;
-                        result.Score += result.AddSelectedCount ?
-                            _userSelectedRecord.GetSelectedCount(result) + priorityScore :
-                            priorityScore;
+                        if (result.AddSelectedCount)
+                        {
+                            if ((long)result.Score + _userSelectedRecord.GetSelectedCount(result) + priorityScore > Result.MaxScore)
+                            {
+                                result.Score = Result.MaxScore;
+                            }
+                            else
+                            {
+                                result.Score += _userSelectedRecord.GetSelectedCount(result) + priorityScore;
+                            }
+                        }
+                        else
+                        {
+                            if ((long)result.Score + priorityScore > Result.MaxScore)
+                            {
+                                result.Score = Result.MaxScore;
+                            }
+                            else
+                            {
+                                result.Score += priorityScore;
+                            }
+                        }
                     }
                 }
             }
