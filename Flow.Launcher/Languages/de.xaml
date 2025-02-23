@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plug-in-Store</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Neue Version</system:String>
     <system:String x:Key="LabelNewToolTip">Dieses Plug-in ist innerhalb der letzten 7 Tage aktualisiert worden</system:String>
     <system:String x:Key="LabelUpdateToolTip">Neues Update ist verfügbar</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dieses Theme unterstützt zwei Modi (hell/dunkel).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dieses Theme unterstützt Unschärfe und transparenten Hintergrund.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
