@@ -26,7 +26,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
 
         public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
-        public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), "Settings", Constant.Plugins);
+        public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), Constant.Settings, Constant.Plugins);
+        public static readonly string PluginCacheDirectory = Path.Combine(DataDirectory(), Constant.Cache, Constant.Plugins);
 
         public const string PythonEnvironmentName = "Python";
         public const string NodeEnvironmentName = "Node.js";
