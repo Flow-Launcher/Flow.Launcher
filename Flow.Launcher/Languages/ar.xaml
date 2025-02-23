@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">الإصدار</system:String>
     <system:String x:Key="plugin_query_web">الموقع الإلكتروني</system:String>
     <system:String x:Key="plugin_uninstall">إلغاء التثبيت</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">متجر الإضافات</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">إصدار جديد</system:String>
     <system:String x:Key="LabelNewToolTip">تم تحديث هذه الإضافة في آخر 7 أيام</system:String>
     <system:String x:Key="LabelUpdateToolTip">يتوفر تحديث جديد</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">السمة</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">التاريخ</system:String>
     <system:String x:Key="TypeIsDarkToolTip">هذه السمة تدعم الوضعين (فاتح/داكن).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">هذه السمة تدعم الخلفية الضبابية الشفافة.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">مفتاح الاختصار</system:String>
