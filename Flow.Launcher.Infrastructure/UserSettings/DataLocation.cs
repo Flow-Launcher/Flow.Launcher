@@ -25,8 +25,10 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             return false;
         }
 
+        public static readonly string SettingsDirectorty = Path.Combine(DataDirectory(), Constant.Settings);
         public static readonly string PluginsDirectory = Path.Combine(DataDirectory(), Constant.Plugins);
-        public static readonly string PluginSettingsDirectory = Path.Combine(DataDirectory(), Constant.Settings, Constant.Plugins);
+
+        public static readonly string PluginSettingsDirectory = Path.Combine(SettingsDirectorty, Constant.Plugins);
         public static readonly string PluginCacheDirectory = Path.Combine(DataDirectory(), Constant.Cache, Constant.Plugins);
 
         public const string PythonEnvironmentName = "Python";

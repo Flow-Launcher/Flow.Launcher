@@ -21,7 +21,7 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// </remarks>
     public class BinaryStorage<T>
     {
-        const string DirectoryName = "Cache";
+        const string DirectoryName = Constant.Cache;
 
         const string FileSuffix = ".cache";
 
