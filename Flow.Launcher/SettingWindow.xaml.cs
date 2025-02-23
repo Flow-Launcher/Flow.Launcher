@@ -27,7 +27,7 @@ public partial class SettingWindow
     public SettingWindow()
     {
         var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
-        _settings = viewModel.Settings;
+        _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
         _updater = Ioc.Default.GetRequiredService<Updater>();

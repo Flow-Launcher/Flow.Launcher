@@ -3,6 +3,7 @@ using Flow.Launcher.Plugin.SharedModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure
 {
@@ -14,15 +15,11 @@ namespace Flow.Launcher.Infrastructure
 
         private readonly IAlphabet _alphabet;
 
-        public StringMatcher()
-        {
-            _alphabet = Ioc.Default.GetRequiredService<IAlphabet>();
-        }
-
         // This is a workaround to allow unit tests to set the instance
-        public StringMatcher(IAlphabet alphabet)
+        public StringMatcher(IAlphabet alphabet, Settings settings)
         {
             _alphabet = alphabet;
+            UserSettingSearchPrecision = settings.QuerySearchPrecision;
         }
 
         public static MatchResult FuzzySearch(string query, string stringToCompare)

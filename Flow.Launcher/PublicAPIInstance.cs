@@ -247,7 +247,7 @@ namespace Flow.Launcher
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
-            var explorerInfo = _settingsVM.Settings.CustomExplorer;
+            var explorerInfo = _settingsVM._settings.CustomExplorer;
 
             explorer.StartInfo = new ProcessStartInfo
             {
@@ -268,7 +268,7 @@ namespace Flow.Launcher
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                var browserInfo = _settingsVM.Settings.CustomBrowser;
+                var browserInfo = _settingsVM._settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 

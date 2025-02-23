@@ -91,8 +91,6 @@ namespace Flow.Launcher
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
-                Ioc.Default.GetRequiredService<StringMatcher>().UserSettingSearchPrecision = _settings.QuerySearchPrecision;
-
                 // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
