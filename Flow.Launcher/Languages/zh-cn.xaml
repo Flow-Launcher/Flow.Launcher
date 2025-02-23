@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">新版本</system:String>
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">日期</system:String>
     <system:String x:Key="TypeIsDarkToolTip">该主题支持两种（浅色/深色）模式。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">该主题支持模糊透明背景。</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
