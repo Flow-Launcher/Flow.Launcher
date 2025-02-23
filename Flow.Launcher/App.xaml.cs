@@ -37,7 +37,7 @@ namespace Flow.Launcher
             // Initialize settings
             var storage = new FlowLauncherJsonStorage<Settings>();
             _settings = storage.Load();
-            _settings.Initialize(storage);
+            _settings.SetStorage(storage);
             _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
 
             // Configure the dependency injection container
@@ -55,8 +55,9 @@ namespace Flow.Launcher
                 ).Build();
             Ioc.Default.ConfigureServices(host.Services);
 
-            // Initialize the public API first
+            // Initialize the public API and Settings first
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
+            _settings.Initialize();
         }
 
         [STAThread]
@@ -90,9 +91,7 @@ namespace Flow.Launcher
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
-                var stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
-                StringMatcher.Instance = stringMatcher;
-                stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
+                Ioc.Default.GetRequiredService<StringMatcher>().UserSettingSearchPrecision = _settings.QuerySearchPrecision;
 
                 InternationalizationManager.Instance.Settings = _settings;
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);

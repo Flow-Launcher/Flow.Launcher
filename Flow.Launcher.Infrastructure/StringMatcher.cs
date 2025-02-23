@@ -25,11 +25,9 @@ namespace Flow.Launcher.Infrastructure
             _alphabet = alphabet;
         }
 
-        public static StringMatcher Instance { get; internal set; }
-
         public static MatchResult FuzzySearch(string query, string stringToCompare)
         {
-            return Instance.FuzzyMatch(query, stringToCompare);
+            return Ioc.Default.GetRequiredService<StringMatcher>().FuzzyMatch(query, stringToCompare);
         }
 
         public MatchResult FuzzyMatch(string query, string stringToCompare)

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
@@ -14,10 +15,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
     public class Settings : BaseModel, IHotkeySettings
     {
         private FlowLauncherJsonStorage<Settings> _storage;
+        private StringMatcher _stringMatcher = null;
 
-        public void Initialize(FlowLauncherJsonStorage<Settings> storage)
+        public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
         {
             _storage = storage;
+        }
+
+        public void Initialize()
+        {
+            _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
         }
 
         public void Save()
@@ -192,7 +199,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
@@ -210,8 +216,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set
             {
                 _querySearchPrecision = value;
-                if (StringMatcher.Instance != null)
-                    StringMatcher.Instance.UserSettingSearchPrecision = value;
+                if (_stringMatcher != null)
+                    _stringMatcher.UserSettingSearchPrecision = value;
             }
         }
 
