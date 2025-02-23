@@ -22,13 +22,13 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        private readonly IPublicAPI API;
-
         public string GitHubRepository { get; init; }
+
+        private readonly IPublicAPI _api;
 
         public Updater(IPublicAPI publicAPI, string gitHubRepository)
         {
-            API = publicAPI;
+            _api = publicAPI;
             GitHubRepository = gitHubRepository;
         }
 
@@ -40,8 +40,8 @@ namespace Flow.Launcher.Core
             try
             {
                 if (!silentUpdate)
-                    API.ShowMsg(API.GetTranslation("pleaseWait"),
-                        API.GetTranslation("update_flowlauncher_update_check"));
+                    _api.ShowMsg(_api.GetTranslation("pleaseWait"),
+                        _api.GetTranslation("update_flowlauncher_update_check"));
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
@@ -56,13 +56,13 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        API.ShowMsgBox(API.GetTranslation("update_flowlauncher_already_on_latest"));
+                        _api.ShowMsgBox(_api.GetTranslation("update_flowlauncher_already_on_latest"));
                     return;
                 }
 
                 if (!silentUpdate)
-                    API.ShowMsg(API.GetTranslation("update_flowlauncher_update_found"),
-                        API.GetTranslation("update_flowlauncher_updating"));
+                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_update_found"),
+                        _api.GetTranslation("update_flowlauncher_updating"));
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -71,9 +71,9 @@ namespace Flow.Launcher.Core
                 if (DataLocation.PortableDataLocationInUse())
                 {
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => API.ShowMsgBox(s));
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => API.ShowMsgBox(s)))
-                        API.ShowMsgBox(string.Format(API.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s));
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s)))
+                        _api.ShowMsgBox(string.Format(_api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
                 }
@@ -86,7 +86,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (API.ShowMsgBox(newVersionTips, API.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (_api.ShowMsgBox(newVersionTips, _api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
@@ -99,8 +99,8 @@ namespace Flow.Launcher.Core
                     Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
                 
                 if (!silentUpdate)
-                    API.ShowMsg(API.GetTranslation("update_flowlauncher_fail"),
-                        API.GetTranslation("update_flowlauncher_check_connection"));
+                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
+                        _api.GetTranslation("update_flowlauncher_check_connection"));
             }
             finally
             {

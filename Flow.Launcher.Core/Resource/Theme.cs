@@ -25,9 +25,9 @@ namespace Flow.Launcher.Core.Resource
 
         private const int ShadowExtraMargin = 32;
 
-        private readonly IPublicAPI API;
-        private readonly Settings Settings;
-        private readonly List<string> _themeDirectories = new List<string>();
+        private readonly IPublicAPI _api;
+        private readonly Settings _settings;
+        private readonly List<string> _themeDirectories = new();
         private ResourceDictionary _oldResource;
         private string _oldTheme;
         private const string Folder = Constant.Themes;
@@ -41,8 +41,8 @@ namespace Flow.Launcher.Core.Resource
 
         public Theme(IPublicAPI publicAPI, Settings settings)
         {
-            API = publicAPI;
-            Settings = settings;
+            _api = publicAPI;
+            _settings = settings;
 
             _themeDirectories.Add(DirectoryPath);
             _themeDirectories.Add(UserDirectoryPath);
@@ -94,7 +94,7 @@ namespace Flow.Launcher.Core.Resource
                 // to things like fonts
                 UpdateResourceDictionary(GetResourceDictionary(theme));
 
-                Settings.Theme = theme;
+                _settings.Theme = theme;
 
 
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
@@ -105,7 +105,7 @@ namespace Flow.Launcher.Core.Resource
 
                 BlurEnabled = Win32Helper.IsBlurTheme();
 
-                if (Settings.UseDropShadowEffect && !BlurEnabled)
+                if (_settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
 
                 Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
@@ -115,7 +115,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
-                    API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -125,7 +125,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
-                    API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
+                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -153,7 +153,7 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        private ResourceDictionary CurrentThemeResourceDictionary() => GetThemeResourceDictionary(Settings.Theme);
+        private ResourceDictionary CurrentThemeResourceDictionary() => GetThemeResourceDictionary(_settings.Theme);
 
         public ResourceDictionary GetResourceDictionary(string theme)
         {
@@ -162,10 +162,10 @@ namespace Flow.Launcher.Core.Resource
             if (dict["QueryBoxStyle"] is Style queryBoxStyle &&
                 dict["QuerySuggestionBoxStyle"] is Style querySuggestionBoxStyle)
             {
-                var fontFamily = new FontFamily(Settings.QueryBoxFont);
-                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.QueryBoxFontStyle);
-                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.QueryBoxFontWeight);
-                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.QueryBoxFontStretch);
+                var fontFamily = new FontFamily(_settings.QueryBoxFont);
+                var fontStyle = FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.QueryBoxFontStyle);
+                var fontWeight = FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.QueryBoxFontWeight);
+                var fontStretch = FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.QueryBoxFontStretch);
 
                 queryBoxStyle.Setters.Add(new Setter(TextBox.FontFamilyProperty, fontFamily));
                 queryBoxStyle.Setters.Add(new Setter(TextBox.FontStyleProperty, fontStyle));
@@ -190,10 +190,10 @@ namespace Flow.Launcher.Core.Resource
                 dict["ItemHotkeyStyle"] is Style resultHotkeyItemStyle &&
                 dict["ItemHotkeySelectedStyle"] is Style resultHotkeyItemSelectedStyle)
             {
-                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultFont));
-                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultFontStyle));
-                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.ResultFontWeight));
-                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultFontStretch));
+                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultFont));
+                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultFontStyle));
+                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultFontWeight));
+                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
@@ -205,10 +205,10 @@ namespace Flow.Launcher.Core.Resource
                 dict["ItemSubTitleStyle"] is Style resultSubItemStyle &&
                 dict["ItemSubTitleSelectedStyle"] is Style resultSubItemSelectedStyle)
             {
-                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(Settings.ResultSubFont));
-                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(Settings.ResultSubFontStyle));
-                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(Settings.ResultSubFontWeight));
-                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(Settings.ResultSubFontStretch));
+                Setter fontFamily = new Setter(TextBlock.FontFamilyProperty, new FontFamily(_settings.ResultSubFont));
+                Setter fontStyle = new Setter(TextBlock.FontStyleProperty, FontHelper.GetFontStyleFromInvariantStringOrNormal(_settings.ResultSubFontStyle));
+                Setter fontWeight = new Setter(TextBlock.FontWeightProperty, FontHelper.GetFontWeightFromInvariantStringOrNormal(_settings.ResultSubFontWeight));
+                Setter fontStretch = new Setter(TextBlock.FontStretchProperty, FontHelper.GetFontStretchFromInvariantStringOrNormal(_settings.ResultSubFontStretch));
 
                 Setter[] setters = { fontFamily, fontStyle, fontWeight, fontStretch };
                 Array.ForEach(
@@ -218,7 +218,7 @@ namespace Flow.Launcher.Core.Resource
 
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
-            var width = Settings.WindowSize;
+            var width = _settings.WindowSize;
             windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             mainWindowWidth = (double)width;
             return dict;
@@ -226,7 +226,7 @@ namespace Flow.Launcher.Core.Resource
 
         private ResourceDictionary GetCurrentResourceDictionary( )
         {
-            return  GetResourceDictionary(Settings.Theme);
+            return  GetResourceDictionary(_settings.Theme);
         }
 
         public List<ThemeData> LoadAvailableThemes()
