@@ -77,6 +77,7 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
+        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
         public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
