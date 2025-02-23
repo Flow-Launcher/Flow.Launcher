@@ -418,11 +418,15 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        private static bool CheckActionKeywordChanged(IReadOnlyList<string> oldActionKeyword, IReadOnlyList<string> newActionKeyword)
+        private static bool CheckActionKeywordChanged(IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
         {
-            if (oldActionKeyword.Count != newActionKeyword.Count)
+            if (oldActionKeywords.Count != newActionKeywords.Count)
                 return true;
-            return oldActionKeyword.Where((t, i) => t != newActionKeyword[i]).Any();
+
+            var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
+            var sortedNewActionKeywords = newActionKeywords.OrderBy(s => s).ToList();
+
+            return !sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords);
         }
 
         public static void ReplaceActionKeyword(string id, string oldActionKeyword, string newActionKeyword)
