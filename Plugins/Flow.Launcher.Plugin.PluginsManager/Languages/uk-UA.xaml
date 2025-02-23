@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Встановлення плагіна</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Завантажити та встановити {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Видалення плагіна</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Не вдалося знайти файл метаданих plugin.json у розпакованому zip-архіві.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Помилка: Плагін, який має ідентичну або новішу версію з {0}, вже існує.</system:String>
@@ -35,13 +37,13 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Плагін {0} успішно оновлено. Перезапускаємо Flow, будь ласка, зачекайте...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Встановлення з невідомого джерела</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Ви встановлюєте цей плагін з невідомого джерела, тому він може бути потенційно небезпечним!{0}{0}Переконайтеся, що ви розумієте, звідки цей плагін, і що він є безпечним.{0}{0}Бажаєте продовжити?{0}{0}(Ви можете вимкнути це попередження через налаштування)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Плагін {0} успішно встановлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Плагін {0} успішно видалено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Плагін {0} успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} плагіни успішно оновлено. Будь ласка, перезапустіть Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Плагін {0} вже було змінено. Будь ласка, перезапустіть Flow, перш ніж вносити будь-які подальші зміни.</system:String>
-   
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Менеджер плагінів</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Керування встановленням, видаленням або оновленням плагінів Flow Launcher</system:String>
