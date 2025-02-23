@@ -1,6 +1,5 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using Flow.Launcher.Core.Plugin;
 using System.ComponentModel;
 using System.Windows.Data;
 

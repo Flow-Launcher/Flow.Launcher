@@ -151,7 +151,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="callback"></param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
-
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
         /// </summary>
@@ -334,5 +333,13 @@ namespace Flow.Launcher.Plugin
         /// <param name="forceClosed">When user closes the progress box manually by button or esc key, this action will be called.</param>
         /// <returns>A progress box interface.</returns>
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null);
+
+        /// <summary>
+        /// Replace ActionKeyword for specific plugin
+        /// </summary>
+        /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
+        /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
+        /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
+        public void ReplaceActionKeyword(string pluginId, string oldActionKeyword, string newActionKeyword);
     }
 }

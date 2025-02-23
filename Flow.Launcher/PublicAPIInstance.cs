@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using Flow.Launcher.Core;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
@@ -311,7 +312,6 @@ namespace Flow.Launcher
             return _mainVM.GameModeStatus;
         }
 
-
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
@@ -325,6 +325,8 @@ namespace Flow.Launcher
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, forceClosed);
+
+        public void ReplaceActionKeyword(string pluginId, string oldActionKeyword, string newActionKeyword) => PluginManager.ReplaceActionKeyword(pluginId, oldActionKeyword, newActionKeyword);
 
         #endregion
 

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 using Microsoft.Win32;
-using Flow.Launcher.Core.Plugin;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
@@ -103,7 +102,7 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                PluginManager.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.ReplaceActionKeyword(id, oldKeyword, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;
