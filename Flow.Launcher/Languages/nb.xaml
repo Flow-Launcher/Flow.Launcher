@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Versjon</system:String>
     <system:String x:Key="plugin_query_web">Nettsted</system:String>
     <system:String x:Key="plugin_uninstall">Avinstaller</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Programtillegg butikk</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Ny versjon</system:String>
     <system:String x:Key="LabelNewToolTip">Dette programtillegget er oppdatert i løpet av de siste 7 dagene</system:String>
     <system:String x:Key="LabelUpdateToolTip">Ny oppdatering er tilgjengelig</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Drakt</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Dato</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dette temaet støtter to (lys/mørk) moduser.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dette temaet støtter uskarp gjennomsiktig bakgrunn.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hurtigtast</system:String>
