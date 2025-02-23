@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Verze</system:String>
     <system:String x:Key="plugin_query_web">Webová stránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalovat</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Obchod s pluginy</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Nová verze</system:String>
     <system:String x:Key="LabelNewToolTip">Tento plugin byl aktualizován během posledních 7 dní</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nová aktualizace je k dispozici</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motiv</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesová zkratka</system:String>
