@@ -42,8 +42,8 @@ namespace Flow.Launcher
             newActionKeywords = newActionKeywords.Distinct().ToList();
 
             newActionKeywords = newActionKeywords.Count > 0 ? newActionKeywords : new() { Query.GlobalPluginWildcardSign };
-            
-            if (!ActionKeywordRegistered(newActionKeywords, oldActionKeywords))
+
+            if (!newActionKeywords.Except(oldActionKeywords).Any(PluginManager.ActionKeywordRegistered))
             {
                 pluginViewModel.ChangeActionKeyword(newActionKeywords, oldActionKeywords);
                 Close();
@@ -53,25 +53,6 @@ namespace Flow.Launcher
                 string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
                 MessageBoxEx.Show(msg);
             }
-        }
-
-        private static bool ActionKeywordRegistered(IReadOnlyList<string> newActionKeywords, IReadOnlyList<string> oldActionKeywords)
-        {
-            foreach (var actionKeyword in newActionKeywords)
-            {
-                // We need to check if this new action keyword is from the old action keywords because
-                // we have not changed action keyword yet so PluginManager still has the old action keywords
-                if (oldActionKeywords.Contains(actionKeyword))
-                {
-                    continue;
-                }
-
-                if (PluginManager.ActionKeywordRegistered(actionKeyword))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
     }
 }
