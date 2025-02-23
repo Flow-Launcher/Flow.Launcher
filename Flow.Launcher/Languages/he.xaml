@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">גרסה</system:String>
     <system:String x:Key="plugin_query_web">אתר</system:String>
     <system:String x:Key="plugin_uninstall">הסר התקנה</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">חנות תוספים</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">גרסה חדשה</system:String>
     <system:String x:Key="LabelNewToolTip">תוסף זה עודכן במהלך 7 הימים האחרונים</system:String>
     <system:String x:Key="LabelUpdateToolTip">עדכון חדש זמין</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">ערכת נושא</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">תאריך</system:String>
     <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>
