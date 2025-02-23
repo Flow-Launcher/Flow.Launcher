@@ -127,7 +127,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_query_version">Wersja</system:String>
     <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
@@ -143,8 +144,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="LabelNew">Nowa wersja</system:String>
     <system:String x:Key="LabelNewToolTip">Ta wtyczka została zaktualizowana w ciągu ostatnich 7 dni</system:String>
     <system:String x:Key="LabelUpdateToolTip">Dostępna jest nowa aktualizacja</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Skórka</system:String>
@@ -194,7 +193,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="Date">Data</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ten motyw obsługuje dwa tryby (jasny/ciemny).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ten motyw obsługuje rozmyte przezroczyste tło.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Skrót klawiszowy</system:String>
