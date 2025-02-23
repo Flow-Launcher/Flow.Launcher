@@ -45,7 +45,7 @@ namespace Flow.Launcher
                 .UseContentRoot(AppContext.BaseDirectory)
                 .ConfigureServices(services => services
                     .AddSingleton(_ => _settings)
-                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>()))
+                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
                     .AddSingleton<Portable>()
                     .AddSingleton<SettingWindowViewModel>()
                     .AddSingleton<IAlphabet, PinyinAlphabet>()
@@ -79,8 +79,6 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
-                Ioc.Default.GetRequiredService<Updater>().Initialize(Launcher.Properties.Settings.Default.GithubRepo);
-
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");

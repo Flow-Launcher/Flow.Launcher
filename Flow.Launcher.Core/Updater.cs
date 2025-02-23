@@ -24,15 +24,11 @@ namespace Flow.Launcher.Core
     {
         private readonly IPublicAPI API;
 
-        public string GitHubRepository { get; set; }
+        public string GitHubRepository { get; init; }
 
-        public Updater(IPublicAPI publicAPI)
+        public Updater(IPublicAPI publicAPI, string gitHubRepository)
         {
             API = publicAPI;
-        }
-
-        public void Initialize(string gitHubRepository)
-        {
             GitHubRepository = gitHubRepository;
         }
 
