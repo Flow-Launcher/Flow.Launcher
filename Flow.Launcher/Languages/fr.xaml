@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Nouvelle version</system:String>
     <system:String x:Key="LabelNewToolTip">Cette extension a été mis à jour au cours des 7 derniers jours</system:String>
     <system:String x:Key="LabelUpdateToolTip">Une nouvelle mise à jour est disponible</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Date</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
