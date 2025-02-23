@@ -25,11 +25,11 @@ namespace Flow.Launcher.Core.Resource
 
         private const int ShadowExtraMargin = 32;
 
-        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+        private readonly IPublicAPI API;
+        private readonly Settings Settings;
         private readonly List<string> _themeDirectories = new List<string>();
         private ResourceDictionary _oldResource;
         private string _oldTheme;
-        public Settings Settings { get; set; }
         private const string Folder = Constant.Themes;
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
@@ -39,8 +39,11 @@ namespace Flow.Launcher.Core.Resource
 
         private double mainWindowWidth;
 
-        public Theme()
+        public Theme(IPublicAPI publicAPI, Settings settings)
         {
+            API = publicAPI;
+            Settings = settings;
+
             _themeDirectories.Add(DirectoryPath);
             _themeDirectories.Add(UserDirectoryPath);
             MakeSureThemeDirectoriesExist();

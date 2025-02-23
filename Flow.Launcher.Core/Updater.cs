@@ -17,7 +17,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Text.Json.Serialization;
 using System.Threading;
-using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core
 {

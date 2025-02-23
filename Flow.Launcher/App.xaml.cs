@@ -50,8 +50,10 @@ namespace Flow.Launcher
                     .AddSingleton<SettingWindowViewModel>()
                     .AddSingleton<IAlphabet, PinyinAlphabet>()
                     .AddSingleton<StringMatcher>()
+                    .AddSingleton<Internationalization>()
                     .AddSingleton<IPublicAPI, PublicAPIInstance>()
                     .AddSingleton<MainViewModel>()
+                    .AddSingleton<Theme>()
                 ).Build();
             Ioc.Default.ConfigureServices(host.Services);
 
@@ -93,7 +95,7 @@ namespace Flow.Launcher
 
                 Ioc.Default.GetRequiredService<StringMatcher>().UserSettingSearchPrecision = _settings.QuerySearchPrecision;
 
-                InternationalizationManager.Instance.Settings = _settings;
+                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
@@ -114,7 +116,7 @@ namespace Flow.Launcher
                 HotKeyMapper.Initialize(mainVM);
 
                 // main windows needs initialized before theme change because of blur settings
-                ThemeManager.Instance.Settings = _settings;
+                // TODO: Clean ThemeManager.Instance in future
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);

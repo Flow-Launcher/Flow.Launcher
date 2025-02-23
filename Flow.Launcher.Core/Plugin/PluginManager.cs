@@ -204,7 +204,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             InternationalizationManager.Instance.AddPluginLanguageDirectories(GetPluginsForInterface<IPluginI18n>());
-            InternationalizationManager.Instance.ChangeLanguage(InternationalizationManager.Instance.Settings.Language);
+            InternationalizationManager.Instance.ChangeLanguage(Ioc.Default.GetRequiredService<Settings>().Language);
 
             if (failedPlugins.Any())
             {
