@@ -16,12 +16,14 @@ namespace Flow.Launcher.Plugin
         public string Website { get; set; }
         public bool Disabled { get; set; }
         public string ExecuteFilePath { get; private set;}
-
         public string ExecuteFileName { get; set; }
+
+        [JsonIgnore]
+        public string AssemblyName { get; internal set; }
 
         public string PluginDirectory
         {
-            get { return _pluginDirectory; }
+            get => _pluginDirectory;
             internal set
             {
                 _pluginDirectory = value;
@@ -49,9 +51,17 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         [JsonIgnore]
         public long InitTime { get; set; }
+
         [JsonIgnore]
         public long AvgQueryTime { get; set; }
+
         [JsonIgnore]
         public int QueryCount { get; set; }
+
+        [JsonIgnore]
+        public string PluginSettingsDirectoryPath { get; internal set; }
+
+        [JsonIgnore]
+        public string PluginCacheDirectoryPath { get; internal set; }
     }
 }

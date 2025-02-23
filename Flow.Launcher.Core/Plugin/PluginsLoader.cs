@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -73,6 +74,11 @@ namespace Flow.Launcher.Core.Plugin
                                 typeof(IAsyncPlugin));
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
+
+                            var assemblyName = assembly.GetName().Name;
+                            metadata.AssemblyName = assemblyName;
+                            metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, assemblyName);
+                            metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, assemblyName);
                         }
 #if DEBUG
                         catch (Exception e)
