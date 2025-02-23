@@ -23,9 +23,14 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+        private readonly IPublicAPI API;
 
         public string GitHubRepository { get; set; }
+
+        public Updater(IPublicAPI publicAPI)
+        {
+            API = publicAPI;
+        }
 
         public void Initialize(string gitHubRepository)
         {

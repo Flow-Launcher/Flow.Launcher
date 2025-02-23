@@ -45,7 +45,7 @@ namespace Flow.Launcher
                 .UseContentRoot(AppContext.BaseDirectory)
                 .ConfigureServices(services => services
                     .AddSingleton(_ => _settings)
-                    .AddSingleton<Updater>()
+                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>()))
                     .AddSingleton<Portable>()
                     .AddSingleton<SettingWindowViewModel>()
                     .AddSingleton<IAlphabet, PinyinAlphabet>()
