@@ -111,7 +111,7 @@ namespace Flow.Launcher
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                HotKeyMapper.Initialize(mainVM);
+                HotKeyMapper.Initialize();
 
                 // main windows needs initialized before theme change because of blur settings
                 // TODO: Clean ThemeManager.Instance in future
