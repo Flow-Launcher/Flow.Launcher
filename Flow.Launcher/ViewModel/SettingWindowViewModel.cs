@@ -1,12 +1,11 @@
-﻿using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Infrastructure.UserSettings;
+﻿using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.ViewModel;
 
 public partial class SettingWindowViewModel : BaseModel
 {
-    public readonly Settings _settings; 
+    private readonly Settings _settings; 
 
     public SettingWindowViewModel(Settings settings)
     {

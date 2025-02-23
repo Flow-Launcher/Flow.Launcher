@@ -27,11 +27,13 @@ using System.Diagnostics;
 using System.Collections.Specialized;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
+        private readonly Settings _settings;
         private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
 
@@ -39,6 +41,7 @@ namespace Flow.Launcher
 
         public PublicAPIInstance()
         {
+            _settings = Ioc.Default.GetRequiredService<Settings>();
             _settingsVM = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
             _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
@@ -247,7 +250,7 @@ namespace Flow.Launcher
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
-            var explorerInfo = _settingsVM._settings.CustomExplorer;
+            var explorerInfo = _settings.CustomExplorer;
 
             explorer.StartInfo = new ProcessStartInfo
             {
@@ -268,7 +271,7 @@ namespace Flow.Launcher
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                var browserInfo = _settingsVM._settings.CustomBrowser;
+                var browserInfo = _settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
