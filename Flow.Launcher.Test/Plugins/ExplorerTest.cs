@@ -5,12 +5,10 @@ using Flow.Launcher.Plugin.Explorer.Search.DirectoryInfo;
 using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Versioning;
-using System.Threading;
-using System.Threading.Tasks;
 using static Flow.Launcher.Plugin.Explorer.Search.SearchManager;
 
 namespace Flow.Launcher.Test.Plugins
@@ -22,28 +20,6 @@ namespace Flow.Launcher.Test.Plugins
     [TestFixture]
     public class ExplorerTest
     {
-#pragma warning disable CS1998 // async method with no await (more readable to leave it async to match the tested signature)
-        private async Task<List<Result>> MethodWindowsIndexSearchReturnsZeroResultsAsync(Query dummyQuery, string dummyString, CancellationToken dummyToken)
-        {
-            return new List<Result>();
-        }
-#pragma warning restore CS1998
-
-        private List<Result> MethodDirectoryInfoClassSearchReturnsTwoResults(Query dummyQuery, string dummyString, CancellationToken token)
-        {
-            return new List<Result>
-            {
-                new Result
-                {
-                    Title = "Result 1"
-                },
-                new Result
-                {
-                    Title = "Result 2"
-                }
-            };
-        }
-
         private bool PreviousLocationExistsReturnsTrue(string dummyString) => true;
 
         private bool PreviousLocationNotExistReturnsFalse(string dummyString) => false;
@@ -57,7 +33,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = QueryConstructor.TopLevelDirectoryConstraint(folderPath);
 
             // Then
-            Assert.IsTrue(result == expectedString,
+            ClassicAssert.IsTrue(result == expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual: {result}{Environment.NewLine}");
         }
@@ -74,7 +50,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryString = queryConstructor.Directory(folderPath);
 
             // Then
-            Assert.IsTrue(queryString.Replace("  ", " ") == expectedString.Replace("  ", " "),
+            ClassicAssert.IsTrue(queryString.Replace("  ", " ") == expectedString.Replace("  ", " "),
                 $"Expected string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {queryString}{Environment.NewLine}");
         }
@@ -94,7 +70,7 @@ namespace Flow.Launcher.Test.Plugins
             var queryString = queryConstructor.Directory(folderPath, userSearchString);
 
             // Then
-            Assert.AreEqual(expectedString, queryString);
+            ClassicAssert.AreEqual(expectedString, queryString);
         }
 
         [SupportedOSPlatform("windows7.0")]
@@ -105,7 +81,7 @@ namespace Flow.Launcher.Test.Plugins
             const string resultString = QueryConstructor.RestrictionsForAllFilesAndFoldersSearch;
 
             // Then
-            Assert.AreEqual(expectedString, resultString);
+            ClassicAssert.AreEqual(expectedString, resultString);
         }
 
         [SupportedOSPlatform("windows7.0")]
@@ -128,7 +104,7 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = queryConstructor.FilesAndFolders(userSearchString);
 
             // Then
-            Assert.AreEqual(expectedString, resultString);
+            ClassicAssert.AreEqual(expectedString, resultString);
         }
 
 
@@ -138,13 +114,13 @@ namespace Flow.Launcher.Test.Plugins
             string querySearchString, string expectedString)
         {
             // Given
-            var queryConstructor = new QueryConstructor(new Settings());
+            _ = new QueryConstructor(new Settings());
 
             //When
             var resultString = QueryConstructor.RestrictionsForFileContentSearch(querySearchString);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
+            ClassicAssert.IsTrue(resultString == expectedString,
                 $"Expected QueryWhereRestrictions string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
@@ -162,12 +138,12 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = queryConstructor.FileContent(userSearchString);
 
             // Then
-            Assert.IsTrue(resultString == expectedString,
+            ClassicAssert.IsTrue(resultString == expectedString,
                 $"Expected query string: {expectedString}{Environment.NewLine} " +
                 $"Actual string was: {resultString}{Environment.NewLine}");
         }
 
-        public void GivenQuery_WhenActionKeywordForFileContentSearchExists_ThenFileContentSearchRequiredShouldReturnTrue()
+        public static void GivenQuery_WhenActionKeywordForFileContentSearchExists_ThenFileContentSearchRequiredShouldReturnTrue()
         {
             // Given
             var query = new Query
@@ -181,7 +157,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = searchManager.IsFileContentSearch(query.ActionKeyword);
 
             // Then
-            Assert.IsTrue(result,
+            ClassicAssert.IsTrue(result,
                 $"Expected True for file content search. {Environment.NewLine} " +
                 $"Actual result was: {result}{Environment.NewLine}");
         }
@@ -206,7 +182,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = FilesFolders.IsLocationPathString(querySearchString);
 
             //Then
-            Assert.IsTrue(result == expectedResult,
+            ClassicAssert.IsTrue(result == expectedResult,
                 $"Expected query search string check result is: {expectedResult} {Environment.NewLine} " +
                 $"Actual check result is {result} {Environment.NewLine}");
 
@@ -233,7 +209,7 @@ namespace Flow.Launcher.Test.Plugins
             var previousDirectoryPath = FilesFolders.GetPreviousExistingDirectory(previousLocationExists, path);
 
             //Then
-            Assert.IsTrue(previousDirectoryPath == expectedString,
+            ClassicAssert.IsTrue(previousDirectoryPath == expectedString,
                 $"Expected path string: {expectedString} {Environment.NewLine} " +
                 $"Actual path string is {previousDirectoryPath} {Environment.NewLine}");
         }
@@ -246,7 +222,7 @@ namespace Flow.Launcher.Test.Plugins
             var returnedPath = FilesFolders.ReturnPreviousDirectoryIfIncompleteString(path);
 
             //Then
-            Assert.IsTrue(returnedPath == expectedString,
+            ClassicAssert.IsTrue(returnedPath == expectedString,
                 $"Expected path string: {expectedString} {Environment.NewLine} " +
                 $"Actual path string is {returnedPath} {Environment.NewLine}");
         }
@@ -260,7 +236,7 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = QueryConstructor.RecursiveDirectoryConstraint(path);
 
             // Then
-            Assert.AreEqual(expectedString, resultString);
+            ClassicAssert.AreEqual(expectedString, resultString);
         }
 
         [SupportedOSPlatform("windows7.0")]
@@ -274,7 +250,7 @@ namespace Flow.Launcher.Test.Plugins
             var resultString = DirectoryInfoSearch.ConstructSearchCriteria(path);
 
             // Then
-            Assert.AreEqual(expectedString, resultString);
+            ClassicAssert.AreEqual(expectedString, resultString);
         }
 
         [TestCase("c:\\somefolder\\someotherfolder", ResultType.Folder, "irrelevant", false, true, "c:\\somefolder\\someotherfolder\\")]
@@ -305,7 +281,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
 
             // Then
-            Assert.AreEqual(result, expectedResult);
+            ClassicAssert.AreEqual(result, expectedResult);
         }
 
         [TestCase("c:\\somefolder\\somefile", ResultType.File, "irrelevant", false, true, "e c:\\somefolder\\somefile")]
@@ -334,7 +310,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = ResultManager.GetPathWithActionKeyword(path, type, actionKeyword);
 
             // Then
-            Assert.AreEqual(result, expectedResult);
+            ClassicAssert.AreEqual(result, expectedResult);
         }
 
         [TestCase("somefolder", "c:\\somefolder\\", ResultType.Folder, "q", false, false, "q somefolder")]
@@ -366,7 +342,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = ResultManager.GetAutoCompleteText(title, query, path, resultType);
 
             // Then
-            Assert.AreEqual(result, expectedResult);
+            ClassicAssert.AreEqual(result, expectedResult);
         }
 
         [TestCase("somefile", "c:\\somefolder\\somefile", ResultType.File, "q", false, false, "q somefile")]
@@ -398,7 +374,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = ResultManager.GetAutoCompleteText(title, query, path, resultType);
 
             // Then
-            Assert.AreEqual(result, expectedResult);
+            ClassicAssert.AreEqual(result, expectedResult);
         }
 
         [TestCase(@"c:\foo", @"c:\foo", true)]
@@ -420,7 +396,7 @@ namespace Flow.Launcher.Test.Plugins
             };
 
             // When, Then
-            Assert.AreEqual(expectedResult, comparator.Equals(result1, result2));
+            ClassicAssert.AreEqual(expectedResult, comparator.Equals(result1, result2));
         }
 
         [TestCase(@"c:\foo\", @"c:\foo\")]
@@ -444,7 +420,7 @@ namespace Flow.Launcher.Test.Plugins
             var hash2 = comparator.GetHashCode(result2);
 
             // When, Then
-            Assert.IsTrue(hash1 == hash2);
+            ClassicAssert.IsTrue(hash1 == hash2);
         }
 
         [TestCase(@"%appdata%", true)]
@@ -461,7 +437,7 @@ namespace Flow.Launcher.Test.Plugins
             var result = EnvironmentVariables.HasEnvironmentVar(path);
 
             // Then
-            Assert.AreEqual(result, expectedResult);
+            ClassicAssert.AreEqual(result, expectedResult);
         }
     }
 }

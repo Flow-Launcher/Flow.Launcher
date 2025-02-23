@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -36,7 +37,7 @@ namespace Flow.Launcher.Test
                 OneOneOneOne
             };
 
-        public List<int> GetPrecisionScores()
+        public static List<int> GetPrecisionScores()
         {
             var listToReturn = new List<int>();
 
@@ -73,10 +74,10 @@ namespace Flow.Launcher.Test
 
             results = results.Where(x => x.Score > 0).OrderByDescending(x => x.Score).ToList();
 
-            Assert.IsTrue(results.Count == 3);
-            Assert.IsTrue(results[0].Title == "Inste");
-            Assert.IsTrue(results[1].Title == "Install Package");
-            Assert.IsTrue(results[2].Title == "file open in browser-test");
+            ClassicAssert.IsTrue(results.Count == 3);
+            ClassicAssert.IsTrue(results[0].Title == "Inste");
+            ClassicAssert.IsTrue(results[1].Title == "Install Package");
+            ClassicAssert.IsTrue(results[2].Title == "file open in browser-test");
         }
 
         [TestCase("Chrome")]
@@ -86,7 +87,7 @@ namespace Flow.Launcher.Test
             var matcher = new StringMatcher(alphabet);
             var scoreResult = matcher.FuzzyMatch(searchString, compareString).RawScore;
 
-            Assert.True(scoreResult == 0);
+            ClassicAssert.True(scoreResult == 0);
         }
 
         [TestCase("chr")]
@@ -127,7 +128,7 @@ namespace Flow.Launcher.Test
                 Debug.WriteLine("###############################################");
                 Debug.WriteLine("");
 
-                Assert.IsFalse(filteredResult.Any(x => x.Score < precisionScore));
+                ClassicAssert.IsFalse(filteredResult.Any(x => x.Score < precisionScore));
             }
         }
 
@@ -153,7 +154,7 @@ namespace Flow.Launcher.Test
             var rawScore = matcher.FuzzyMatch(queryString, compareString).RawScore;
 
             // Should
-            Assert.AreEqual(expectedScore, rawScore,
+            ClassicAssert.AreEqual(expectedScore, rawScore,
                 $"Expected score for compare string '{compareString}': {expectedScore}, Actual: {rawScore}");
         }
 
@@ -192,12 +193,12 @@ namespace Flow.Launcher.Test
             Debug.WriteLine("###############################################");
             Debug.WriteLine($"QueryString: {queryString}     CompareString: {compareString}");
             Debug.WriteLine(
-                $"RAW SCORE: {matchResult.RawScore.ToString()}, PrecisionLevelSetAt: {expectedPrecisionScore} ({(int) expectedPrecisionScore})");
+                $"RAW SCORE: {matchResult.RawScore}, PrecisionLevelSetAt: {expectedPrecisionScore} ({(int) expectedPrecisionScore})");
             Debug.WriteLine("###############################################");
             Debug.WriteLine("");
 
             // Should
-            Assert.AreEqual(expectedPrecisionResult, matchResult.IsSearchPrecisionScoreMet(),
+            ClassicAssert.AreEqual(expectedPrecisionResult, matchResult.IsSearchPrecisionScoreMet(),
                 $"Query: {queryString}{Environment.NewLine} " +
                 $"Compare: {compareString}{Environment.NewLine}" +
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
@@ -243,12 +244,12 @@ namespace Flow.Launcher.Test
             Debug.WriteLine("###############################################");
             Debug.WriteLine($"QueryString: {queryString}     CompareString: {compareString}");
             Debug.WriteLine(
-                $"RAW SCORE: {matchResult.RawScore.ToString()}, PrecisionLevelSetAt: {expectedPrecisionScore} ({(int) expectedPrecisionScore})");
+                $"RAW SCORE: {matchResult.RawScore}, PrecisionLevelSetAt: {expectedPrecisionScore} ({(int) expectedPrecisionScore})");
             Debug.WriteLine("###############################################");
             Debug.WriteLine("");
 
             // Should
-            Assert.AreEqual(expectedPrecisionResult, matchResult.IsSearchPrecisionScoreMet(),
+            ClassicAssert.AreEqual(expectedPrecisionResult, matchResult.IsSearchPrecisionScoreMet(),
                 $"Query:{queryString}{Environment.NewLine} " +
                 $"Compare:{compareString}{Environment.NewLine}" +
                 $"Raw Score: {matchResult.RawScore}{Environment.NewLine}" +
@@ -279,7 +280,7 @@ namespace Flow.Launcher.Test
             Debug.WriteLine("");
 
             // Should
-            Assert.True(compareString1Result.Score > compareString2Result.Score,
+            ClassicAssert.True(compareString1Result.Score > compareString2Result.Score,
                 $"Query: \"{queryString}\"{Environment.NewLine} " +
                 $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}" +
                 $"Should be greater than{Environment.NewLine}" +
@@ -312,7 +313,7 @@ namespace Flow.Launcher.Test
             Debug.WriteLine("");
 
             // Should
-            Assert.True(compareString1Result.Score > compareString2Result.Score,
+            ClassicAssert.True(compareString1Result.Score > compareString2Result.Score,
                 $"Query: \"{queryString}\"{Environment.NewLine} " +
                 $"CompareString1: \"{compareString1}\", Score: {compareString1Result.Score}{Environment.NewLine}" +
                 $"Should be greater than{Environment.NewLine}" +
@@ -338,7 +339,7 @@ namespace Flow.Launcher.Test
             var secondScore = new[] {secondNameMatch, secondDescriptionMatch, secondExecutableNameMatch}.Max();
 
             // Assert
-            Assert.IsTrue(firstScore > secondScore,
+            ClassicAssert.IsTrue(firstScore > secondScore,
                 $"Query: \"{queryString}\"{Environment.NewLine} " +
                 $"Name of first: \"{firstName}\", Final Score: {firstScore}{Environment.NewLine}" +
                 $"Should be greater than{Environment.NewLine}" +
@@ -362,7 +363,7 @@ namespace Flow.Launcher.Test
         {
             var matcher = new StringMatcher(alphabet);
             var score = matcher.FuzzyMatch(queryString, compareString).Score;
-            Assert.IsTrue(score == desiredScore,
+            ClassicAssert.IsTrue(score == desiredScore,
                 $@"Query: ""{queryString}""
                    CompareString: ""{compareString}""
                    Score: {score}
