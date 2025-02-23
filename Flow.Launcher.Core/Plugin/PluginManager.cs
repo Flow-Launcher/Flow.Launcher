@@ -548,14 +548,10 @@ namespace Flow.Launcher.Core.Plugin
             {
                 if (AllowedLanguage.IsDotNet(plugin.Language))  // for the plugin in .NET, we can use assembly loader
                 {
-                    var assemblyLoader = new PluginAssemblyLoader(plugin.ExecuteFilePath);
-                    var assembly = assemblyLoader.LoadAssemblyAndDependencies();
-                    var assemblyName = assembly.GetName().Name;
-
                     // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
                     // so we need to remove it from the api instance
                     var method = API.GetType().GetMethod("RemovePluginSettings");
-                    var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
+                    var pluginJsonStorage = method?.Invoke(API, new object[] { plugin.AssemblyName });
 
                     // if there exists a json storage for current plugin, we need to delete the directory path
                     if (pluginJsonStorage != null)
