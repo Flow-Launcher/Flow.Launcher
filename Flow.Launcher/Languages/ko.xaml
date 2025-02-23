@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
     <system:String x:Key="plugin_uninstall">제거</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">새 버전</system:String>
     <system:String x:Key="LabelNewToolTip">이 플러그인은 최근 7일 사이 업데이트 되었습니다</system:String>
     <system:String x:Key="LabelUpdateToolTip">새 업데이트 설치 가능</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">날짜</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
