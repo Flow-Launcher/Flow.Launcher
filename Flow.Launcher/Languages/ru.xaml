@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Версия</system:String>
     <system:String x:Key="plugin_query_web">Веб-сайт</system:String>
     <system:String x:Key="plugin_uninstall">Удалить</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Магазин плагинов</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Новая версия</system:String>
     <system:String x:Key="LabelNewToolTip">Этот плагин был обновлён за последние 7 дней</system:String>
     <system:String x:Key="LabelUpdateToolTip">Доступно новое обновление</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Тема</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Дата</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Горячая клавиша</system:String>
