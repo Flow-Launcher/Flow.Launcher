@@ -11,12 +11,13 @@ namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
+        private readonly Settings _settings;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
 
         public CustomQueryHotkeySetting(Settings settings)
         {
-            Settings = settings;
+            _settings = settings;
             InitializeComponent();
         }
 
