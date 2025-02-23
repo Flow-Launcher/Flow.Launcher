@@ -210,9 +210,9 @@ namespace Flow.Launcher.Core.Plugin
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
                 API.ShowMsg(
-                    InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsTitle"),
+                    API.GetTranslation("failedToInitializePluginsTitle"),
                     string.Format(
-                        InternationalizationManager.Instance.GetTranslation("failedToInitializePluginsMessage"),
+                        API.GetTranslation("failedToInitializePluginsMessage"),
                         failed
                     ),
                     "",
@@ -568,6 +568,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
+                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
@@ -583,6 +585,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
+                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
