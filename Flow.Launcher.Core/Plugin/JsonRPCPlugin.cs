@@ -1,10 +1,8 @@
 ﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -14,15 +12,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Microsoft.IO;
 using System.Windows;
-using System.Windows.Controls;
-using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
-using CheckBox = System.Windows.Controls.CheckBox;
-using Control = System.Windows.Controls.Control;
-using Orientation = System.Windows.Controls.Orientation;
-using TextBox = System.Windows.Controls.TextBox;
-using UserControl = System.Windows.Controls.UserControl;
-using System.Windows.Documents;
 
 namespace Flow.Launcher.Core.Plugin
 {
