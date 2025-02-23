@@ -15,11 +15,16 @@ namespace Flow.Launcher.Infrastructure
 
         private readonly IAlphabet _alphabet;
 
-        // This is a workaround to allow unit tests to set the instance
         public StringMatcher(IAlphabet alphabet, Settings settings)
         {
             _alphabet = alphabet;
             UserSettingSearchPrecision = settings.QuerySearchPrecision;
+        }
+
+        // This is a workaround to allow unit tests to set the instance
+        public StringMatcher(IAlphabet alphabet)
+        {
+            _alphabet = alphabet;
         }
 
         public static MatchResult FuzzySearch(string query, string stringToCompare)
