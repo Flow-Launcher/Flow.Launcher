@@ -61,7 +61,6 @@ namespace Flow.Launcher
 
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
-
             this.Loaded += (_, _) =>
             {
                 var handle = new WindowInteropHelper(this).Handle;
@@ -106,6 +105,7 @@ namespace Flow.Launcher
 
             return IntPtr.Zero;
         }
+
 
         private void OnResizeEnd()
         {
@@ -181,7 +181,6 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
-            // Remove OS minimizing/maximizing animation
             ThemeManager.Instance.RefreshFrame();
 
             // MouseEventHandler

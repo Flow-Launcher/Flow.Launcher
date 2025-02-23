@@ -16,7 +16,7 @@
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
     AllowsTransparency="False"
-    Background="#DB213C95"
+    Background="#E12E2E2E"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
@@ -213,7 +213,7 @@
             Modifiers="{Binding CycleHistoryDownHotkey, Converter={StaticResource StringToKeyBindingConverter}, ConverterParameter='modifiers'}" />
     </Window.InputBindings>
 
-    <Border MouseDown="OnMouseDown">
+    <Border MouseDown="OnMouseDown" Style="{DynamicResource WindowBorderStyle}">
         <StackPanel Orientation="Vertical">
             <Grid>
                 <Border MinHeight="30" Style="{DynamicResource QueryBoxBgStyle}">

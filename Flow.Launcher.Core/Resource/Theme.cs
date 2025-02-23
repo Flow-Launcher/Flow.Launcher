@@ -15,6 +15,7 @@ using System.Windows.Shell;
 using static Flow.Launcher.Core.Resource.Theme.ParameterTypes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
+using System.Diagnostics;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -119,8 +120,9 @@ namespace Flow.Launcher.Core.Resource
 
             // Remove OS minimizing/maximizing animation
             Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             SetBlurForWindow();
         }
 
@@ -131,24 +133,26 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+
             //SetWindowAccent();
             var dict = GetThemeResourceDictionary(Settings.Theme);
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             if (BlurEnabled)
             {
+                //mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                BlurColor(BlurMode());
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                //mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-                BlurColor(BlurMode());
             }
             else
             {
-                mainWindow.WindowStyle = WindowStyle.None;
-                if (windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background") != null)
-                {
-                    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                }
+                //mainWindow.WindowStyle = WindowStyle.None;
+                //if (windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background") != null)
+                //{
+                //    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                //}
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
             }
             UpdateResourceDictionary(dict);
@@ -156,28 +160,34 @@ namespace Flow.Launcher.Core.Resource
 
         public void BlurColor(string Color)
         {
+
             if (Color == "Light")
             {
+                //mainWindow.Background = new SolidColorBrush(defaultBGcolor.Value);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
             }
             else if (Color == "Dark")
             {
+                //mainWindow.Background = new SolidColorBrush(darkBGcolor.Value);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
             }
             else /* Case of "Auto" Blur Type Theme */
             {
                 //if (_isDarkTheme())
                 //{
+                //    mainWindow.Background = new SolidColorBrush(darkBGcolor.Value);
                 //    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                 //}
                 //else
                 //{
+                //    mainWindow.Background = new SolidColorBrush(defaultBGcolor.Value);
                 //    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 //}
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-            }
+                //mainWindow.Background = new SolidColorBrush(Colors.Red);
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);            }
 
         }
+
         public bool IsBlurTheme()
         {
             if (Environment.OSVersion.Version >= new Version(6, 2))
@@ -206,6 +216,24 @@ namespace Flow.Launcher.Core.Resource
 
             return null;
         }
+
+        //public SolidColorBrush BGColor(string colorBgKey)
+        //{
+        //    var defaultBG = Application.Current.TryFindResource("DefaultBG");
+        //    var darkBG = Application.Current.TryFindResource("DarkBG");
+
+        //    if (colorBgKey == "")
+        //    {
+        //        var resource = Application.Current.TryFindResource("BlurMode");
+
+        //        if (resource is string)
+        //            return (SolidColorBrush)resource;
+
+        //        return new SolidColorBrush(Colors.DarkGray);
+        //    }
+
+        //    return null;
+        //}
 
         #endregion
 
@@ -252,8 +280,8 @@ namespace Flow.Launcher.Core.Resource
                 if (Settings.UseDropShadowEffect && !BlurEnabled)
                     AddDropShadowEffectToCurrentTheme();
 
-                Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
-                //Win32Helper.SetMicaForWindow(Application.Current.MainWindow, BlurEnabled);
+                //Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
+                SetBlurForWindow();
             }
             catch (DirectoryNotFoundException)
             {
