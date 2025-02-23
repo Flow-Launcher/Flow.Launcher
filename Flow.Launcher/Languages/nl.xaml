@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Verwijderen</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Nieuwe Versie</system:String>
     <system:String x:Key="LabelNewToolTip">Deze plug-in is in de laatste 7 dagen bijgewerkt</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nieuwe update beschikbaar</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dit thema ondersteunt twee (licht/donker) modi.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
