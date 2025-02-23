@@ -127,7 +127,8 @@
     <system:String x:Key="plugin_query_version">Versão</system:String>
     <system:String x:Key="plugin_query_web">Site</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Loja de Plugins</system:String>
@@ -143,8 +144,6 @@
     <system:String x:Key="LabelNew">Nova Versão</system:String>
     <system:String x:Key="LabelNewToolTip">Este plugin foi atualizado nos últimos 7 dias</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nova Atualização Disponível</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Tema</system:String>
@@ -194,7 +193,6 @@
     <system:String x:Key="Date">Data</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Atalho</system:String>
