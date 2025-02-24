@@ -108,7 +108,12 @@ namespace Flow.Launcher.Core.Resource
         public void RefreshFrame()
         {
             IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
+            if (mainWindowPtr == IntPtr.Zero)
+                return;
+
             HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
+            if (mainWindowSrc == null)
+                return;
             //mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 255, 181, 178);
 
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
@@ -136,7 +141,12 @@ namespace Flow.Launcher.Core.Resource
 
             //SetWindowAccent();
             var dict = GetThemeResourceDictionary(Settings.Theme);
+            if (dict == null)
+                return; 
+
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            if (windowBorderStyle == null)
+                return;
             Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             if (BlurEnabled)
             {
