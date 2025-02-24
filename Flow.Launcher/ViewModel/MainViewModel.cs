@@ -1397,6 +1397,7 @@ namespace Flow.Launcher.ViewModel
         public async void Hide()
         {
             lastHistoryIndex = 1;
+
             // Trick for no delay
             MainWindowOpacity = 0;
 
@@ -1408,17 +1409,17 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
+            // 텍스트 초기화 즉시 적용
+            if (Settings.LastQueryMode == LastQueryMode.Empty)
+            {
+                ChangeQueryText(string.Empty);
+                await Task.Yield(); // UI 갱신 보장
+            }
+
             switch (Settings.LastQueryMode)
             {
-                case LastQueryMode.Empty:
-                    ChangeQueryText(string.Empty);
-                    await Task.Yield();
-                    break;
-
                 case LastQueryMode.Preserved:
                 case LastQueryMode.Selected:
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
                     LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
                     break;
 
@@ -1429,13 +1430,13 @@ namespace Flow.Launcher.ViewModel
                         newQuery += " ";
                     ChangeQueryText(newQuery);
 
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
-                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.ActionKeywordPreserved);
+                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                        LastQuerySelected = false;
                     break;
-        }
+            }
 
-        MainWindowVisibilityStatus = false;
+            // 창 숨김 즉시 처리
+            MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
