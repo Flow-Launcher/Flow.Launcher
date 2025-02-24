@@ -364,8 +364,16 @@ namespace Flow.Launcher.Core.Plugin
                 NonGlobalPlugins[newActionKeyword] = plugin;
             }
 
-            // Update action keywords in plugin metadata
+            // Update action keywords and action keyword in plugin metadata
             plugin.Metadata.ActionKeywords.Add(newActionKeyword);
+            if (plugin.Metadata.ActionKeywords.Count > 0)
+            {
+                plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
+            }
+            else
+            {
+                plugin.Metadata.ActionKeyword = string.Empty;
+            }
         }
 
         /// <summary>
@@ -386,67 +394,15 @@ namespace Flow.Launcher.Core.Plugin
             if (oldActionkeyword != Query.GlobalPluginWildcardSign)
                 NonGlobalPlugins.Remove(oldActionkeyword);
 
-            // Update action keywords in plugin metadata
+            // Update action keywords and action keyword in plugin metadata
             plugin.Metadata.ActionKeywords.Remove(oldActionkeyword);
-        }
-
-        public static void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
-        {
-            if (CheckActionKeywordChanged(oldActionKeywords, newActionKeywords))
+            if (plugin.Metadata.ActionKeywords.Count > 0)
             {
-                // Fix collection modified while iterating exception
-                var oldActionKeywordsClone = oldActionKeywords.ToList();
-                foreach (var actionKeyword in oldActionKeywordsClone)
-                {
-                    RemoveActionKeyword(id, actionKeyword);
-                }
-                foreach (var actionKeyword in newActionKeywords)
-                {
-                    AddActionKeyword(id, actionKeyword);
-                }
-
-                // Update action keyword in plugin metadata
-                var plugin = GetPluginForId(id);
-                if (newActionKeywords.Count > 0)
-                {
-                    plugin.Metadata.ActionKeyword = newActionKeywords[0];
-                }
-                else
-                {
-                    plugin.Metadata.ActionKeyword = string.Empty;
-                }
+                plugin.Metadata.ActionKeyword = plugin.Metadata.ActionKeywords[0];
             }
-        }
-
-        private static bool CheckActionKeywordChanged(IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
-        {
-            if (oldActionKeywords.Count != newActionKeywords.Count)
-                return true;
-
-            var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
-            var sortedNewActionKeywords = newActionKeywords.OrderBy(s => s).ToList();
-
-            return !sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords);
-        }
-
-        public static void ReplaceActionKeyword(string id, string oldActionKeyword, string newActionKeyword)
-        {
-            if (oldActionKeyword != newActionKeyword)
+            else
             {
-                RemoveActionKeyword(id, oldActionKeyword);
-                AddActionKeyword(id, newActionKeyword);
-
-                // Update action keyword in plugin metadata
-                var plugin = GetPluginForId(id);
-                var newActionKeywords = plugin.Metadata.ActionKeywords;
-                if (newActionKeywords.Count > 0)
-                {
-                    plugin.Metadata.ActionKeyword = newActionKeywords[0];
-                }
-                else
-                {
-                    plugin.Metadata.ActionKeyword = string.Empty;
-                }
+                plugin.Metadata.ActionKeyword = string.Empty;
             }
         }
 

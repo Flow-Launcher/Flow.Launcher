@@ -110,9 +110,8 @@ namespace Flow.Launcher.ViewModel
         public int Priority => PluginPair.Metadata.Priority;
         public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
-        public void ChangeActionKeyword(IReadOnlyList<string> newActionKeywords, IReadOnlyList<string> oldActionKeywords)
+        public void OnActionKeywordsChanged()
         {
-            PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeywords, newActionKeywords);
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
@@ -158,5 +157,4 @@ namespace Flow.Launcher.ViewModel
             changeKeywordsWindow.ShowDialog();
         }
     }
-
 }

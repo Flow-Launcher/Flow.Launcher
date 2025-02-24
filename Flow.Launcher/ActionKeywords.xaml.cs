@@ -45,14 +45,49 @@ namespace Flow.Launcher
 
             if (!newActionKeywords.Except(oldActionKeywords).Any(PluginManager.ActionKeywordRegistered))
             {
-                pluginViewModel.ChangeActionKeyword(newActionKeywords, oldActionKeywords);
-                Close();
+                if (oldActionKeywords.Count != newActionKeywords.Count)
+                {
+                    ReplaceActionKeyword(plugin.Metadata.ID, oldActionKeywords, newActionKeywords);
+                }
+
+                var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
+                var sortedNewActionKeywords = newActionKeywords.OrderBy(s => s).ToList();
+
+                if (sortedOldActionKeywords.SequenceEqual(sortedNewActionKeywords))
+                {
+                    // User just changes the sequence of action keywords
+                    var msg = translater.GetTranslation("newActionKeywordsSameAsOld");
+                    MessageBoxEx.Show(msg);
+                }
+                else
+                {
+                    ReplaceActionKeyword(plugin.Metadata.ID, oldActionKeywords, newActionKeywords);
+                }
             }
             else
             {
                 string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
                 MessageBoxEx.Show(msg);
             }
+        }
+
+        private void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
+        {
+            // Because add & remove action keyword will change action keyword metadata,
+            // so we need to clone it to fix collection modified while iterating exception
+            var oldActionKeywordsClone = oldActionKeywords.ToList();
+            foreach (var actionKeyword in oldActionKeywordsClone)
+            {
+                PluginManager.RemoveActionKeyword(id, actionKeyword);
+            }
+            foreach (var actionKeyword in newActionKeywords)
+            {
+                PluginManager.AddActionKeyword(id, actionKeyword);
+            }
+
+            // Update action keywords text and close
+            pluginViewModel.OnActionKeywordsChanged();
+            Close();
         }
     }
 }

@@ -15,7 +15,6 @@ namespace Flow.Launcher.Plugin.WebSearch
         private SearchSourceViewModel _viewModel;
         private string selectedNewIconImageFullPath;
 
-
         public SearchSourceSettingWindow(IList<SearchSource> sources, PluginInitContext context, SearchSource old)
         {
             _oldSearchSource = old;
@@ -102,7 +101,8 @@ namespace Flow.Launcher.Plugin.WebSearch
             if (!_context.API.ActionKeywordAssigned(newKeyword) || oldKeyword == newKeyword)
             {
                 var id = _context.CurrentPluginMetadata.ID;
-                _context.API.ReplaceActionKeyword(id, oldKeyword, newKeyword);
+                _context.API.RemoveActionKeyword(id, oldKeyword);
+                _context.API.AddActionKeyword(id, newKeyword);
 
                 var index = _searchSources.IndexOf(_oldSearchSource);
                 _searchSources[index] = _searchSource;

@@ -326,8 +326,6 @@ namespace Flow.Launcher
 
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, forceClosed);
 
-        public void ReplaceActionKeyword(string pluginId, string oldActionKeyword, string newActionKeyword) => PluginManager.ReplaceActionKeyword(pluginId, oldActionKeyword, newActionKeyword);
-
         #endregion
 
         #region Private Methods

@@ -189,14 +189,14 @@ namespace Flow.Launcher.Plugin
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
-        /// Add ActionKeyword for specific plugin
+        /// Add ActionKeyword and update action keyword metadata for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
-        /// Remove ActionKeyword for specific plugin
+        /// Remove ActionKeyword and update action keyword metadata for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
         /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
@@ -333,13 +333,5 @@ namespace Flow.Launcher.Plugin
         /// <param name="forceClosed">When user closes the progress box manually by button or esc key, this action will be called.</param>
         /// <returns>A progress box interface.</returns>
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null);
-
-        /// <summary>
-        /// Replace ActionKeyword for specific plugin
-        /// </summary>
-        /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
-        /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
-        /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
-        public void ReplaceActionKeyword(string pluginId, string oldActionKeyword, string newActionKeyword);
     }
 }
