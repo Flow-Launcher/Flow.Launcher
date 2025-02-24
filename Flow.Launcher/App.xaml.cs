@@ -22,6 +22,7 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
@@ -74,6 +75,12 @@ namespace Flow.Launcher
                 WriteToLogFile($"AppContext.BaseDirectory: {AppContext.BaseDirectory}");
                 _host = Host.CreateDefaultBuilder()
                     .UseContentRoot(AppContext.BaseDirectory)
+                    .ConfigureLogging(logging =>
+                    {
+                        // Clear default logging providers
+                        // Fix issue EventLog access is not supported on this platform.
+                        logging.ClearProviders();
+                    })
                     .ConfigureServices(services => services
                         .AddSingleton(_ => _settings)
                         .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
