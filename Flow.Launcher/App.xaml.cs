@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,10 +36,36 @@ namespace Flow.Launcher
         public App()
         {
             // Initialize settings
+            WriteToLogFile(1);
             var storage = new FlowLauncherJsonStorage<Settings>();
-            _settings = storage.Load();
-            _settings.SetStorage(storage);
-            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            WriteToLogFile(2);
+            try
+            {
+                _settings = storage.Load();
+            }
+            catch (Exception ex)
+            {
+                WriteToLogFile(ex.Message);
+            }
+            WriteToLogFile(3);
+            try
+            {
+                _settings.SetStorage(storage);
+            }
+            catch (Exception ex)
+            {
+                WriteToLogFile(ex.Message);
+            }
+            WriteToLogFile(4);
+            try
+            {
+                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            }
+            catch (Exception ex)
+            {
+                WriteToLogFile(ex.Message);
+            }
+            WriteToLogFile(5);
 
             // Configure the dependency injection container
             var host = Host.CreateDefaultBuilder()
@@ -55,30 +82,55 @@ namespace Flow.Launcher
                     .AddSingleton<MainViewModel>()
                     .AddSingleton<Theme>()
                 ).Build();
+            WriteToLogFile(6);
             Ioc.Default.ConfigureServices(host.Services);
+            WriteToLogFile(7);
 
             // Initialize the public API and Settings first
             API = Ioc.Default.GetRequiredService<IPublicAPI>();
+            WriteToLogFile(8);
             _settings.Initialize();
+            WriteToLogFile(9);
+        }
+
+        private static void WriteToLogFile(string message)
+        {
+            // d:\LOG.TXT
+            using var sw = new StreamWriter("d:\\LOG.TXT", true);
+            sw.WriteLine($" {message} ");
+        }
+
+        private static void WriteToLogFile(int message)
+        {
+            // d:\LOG.TXT
+            using var sw = new StreamWriter("d:\\LOG.TXT", true);
+            sw.WriteLine($" {message} ");
         }
 
         [STAThread]
         public static void Main()
         {
+            WriteToLogFile("A");
             if (SingleInstance<App>.InitializeAsFirstInstance(Unique))
             {
+                WriteToLogFile("B");
                 using (var application = new App())
                 {
+                    WriteToLogFile("C");
                     application.InitializeComponent();
+                    WriteToLogFile("D");
                     application.Run();
+                    WriteToLogFile("E");
                 }
             }
         }
 
         private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
+            WriteToLogFile(10);
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
+                WriteToLogFile(11);
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
