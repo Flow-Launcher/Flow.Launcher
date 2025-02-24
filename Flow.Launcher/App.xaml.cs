@@ -32,6 +32,7 @@ namespace Flow.Launcher
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
         private readonly Settings _settings;
+        private readonly IHost _host;
 
         public App()
         {
@@ -68,22 +69,37 @@ namespace Flow.Launcher
             WriteToLogFile(5);
 
             // Configure the dependency injection container
-            var host = Host.CreateDefaultBuilder()
-                .UseContentRoot(AppContext.BaseDirectory)
-                .ConfigureServices(services => services
-                    .AddSingleton(_ => _settings)
-                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
-                    .AddSingleton<Portable>()
-                    .AddSingleton<SettingWindowViewModel>()
-                    .AddSingleton<IAlphabet, PinyinAlphabet>()
-                    .AddSingleton<StringMatcher>()
-                    .AddSingleton<Internationalization>()
-                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                    .AddSingleton<MainViewModel>()
-                    .AddSingleton<Theme>()
-                ).Build();
+            try
+            {
+                WriteToLogFile($"AppContext.BaseDirectory: {AppContext.BaseDirectory}");
+                _host = Host.CreateDefaultBuilder()
+                    .UseContentRoot(AppContext.BaseDirectory)
+                    .ConfigureServices(services => services
+                        .AddSingleton(_ => _settings)
+                        .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                        .AddSingleton<Portable>()
+                        .AddSingleton<SettingWindowViewModel>()
+                        .AddSingleton<IAlphabet, PinyinAlphabet>()
+                        .AddSingleton<StringMatcher>()
+                        .AddSingleton<Internationalization>()
+                        .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                        .AddSingleton<MainViewModel>()
+                        .AddSingleton<Theme>()
+                    ).Build();
+            }
+            catch (Exception ex)
+            {
+                WriteToLogFile(ex.Message);
+            }
             WriteToLogFile(6);
-            Ioc.Default.ConfigureServices(host.Services);
+            try
+            {
+                Ioc.Default.ConfigureServices(_host.Services);
+            }
+            catch (Exception ex)
+            {
+                WriteToLogFile(ex.Message);
+            }
             WriteToLogFile(7);
 
             // Initialize the public API and Settings first
