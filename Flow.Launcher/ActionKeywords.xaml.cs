@@ -4,7 +4,6 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using Flow.Launcher.Core;
 using System.Linq;
-using Flow.Launcher.Core.Plugin;
 using System.Collections.Generic;
 
 namespace Flow.Launcher
@@ -43,11 +42,14 @@ namespace Flow.Launcher
 
             newActionKeywords = newActionKeywords.Count > 0 ? newActionKeywords : new() { Query.GlobalPluginWildcardSign };
 
-            if (!newActionKeywords.Except(oldActionKeywords).Any(PluginManager.ActionKeywordRegistered))
+            var addedActionKeywords = newActionKeywords.Except(oldActionKeywords).ToList();
+            var removedActionKeywords = oldActionKeywords.Except(newActionKeywords).ToList();
+            if (!addedActionKeywords.Any(App.API.ActionKeywordAssigned))
             {
                 if (oldActionKeywords.Count != newActionKeywords.Count)
                 {
-                    ReplaceActionKeyword(plugin.Metadata.ID, oldActionKeywords, newActionKeywords);
+                    ReplaceActionKeyword(plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
+                    return;
                 }
 
                 var sortedOldActionKeywords = oldActionKeywords.OrderBy(s => s).ToList();
@@ -61,7 +63,7 @@ namespace Flow.Launcher
                 }
                 else
                 {
-                    ReplaceActionKeyword(plugin.Metadata.ID, oldActionKeywords, newActionKeywords);
+                    ReplaceActionKeyword(plugin.Metadata.ID, removedActionKeywords, addedActionKeywords);
                 }
             }
             else
@@ -71,21 +73,18 @@ namespace Flow.Launcher
             }
         }
 
-        private void ReplaceActionKeyword(string id, IReadOnlyList<string> oldActionKeywords, IReadOnlyList<string> newActionKeywords)
+        private void ReplaceActionKeyword(string id, IReadOnlyList<string> removedActionKeywords, IReadOnlyList<string> addedActionKeywords)
         {
-            // Because add & remove action keyword will change action keyword metadata,
-            // so we need to clone it to fix collection modified while iterating exception
-            var oldActionKeywordsClone = oldActionKeywords.ToList();
-            foreach (var actionKeyword in oldActionKeywordsClone)
+            foreach (var actionKeyword in removedActionKeywords)
             {
-                PluginManager.RemoveActionKeyword(id, actionKeyword);
+                App.API.RemoveActionKeyword(id, actionKeyword);
             }
-            foreach (var actionKeyword in newActionKeywords)
+            foreach (var actionKeyword in addedActionKeywords)
             {
-                PluginManager.AddActionKeyword(id, actionKeyword);
+                App.API.AddActionKeyword(id, actionKeyword);
             }
 
-            // Update action keywords text and close
+            // Update action keywords text and close window
             pluginViewModel.OnActionKeywordsChanged();
             Close();
         }

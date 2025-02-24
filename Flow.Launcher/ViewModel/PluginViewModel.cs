@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Resources.Controls;
-using System.Collections.Generic;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -43,7 +42,6 @@ namespace Flow.Launcher.ViewModel
                 };
             }
         }
-
 
         private async void LoadIconAsync()
         {
