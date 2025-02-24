@@ -77,13 +77,13 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenSettingsFolder()
     {
-        PluginManager.API.OpenDirectory(DataLocation.SettingsDirectorty);
+        PluginManager.API.OpenDirectory(DataLocation.SettingsDirectory);
     }
 
     [RelayCommand]
     private void OpenParentOfSettingsFolder(object parameter)
     {
-        string settingsFolderPath = Path.Combine(DataLocation.SettingsDirectorty);
+        string settingsFolderPath = Path.Combine(DataLocation.SettingsDirectory);
         string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
         PluginManager.API.OpenDirectory(parentFolderPath);
     }
