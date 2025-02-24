@@ -193,26 +193,46 @@ namespace Flow.Launcher.Plugin.Program
             {
                 Helper.ValidateDirectory(Context.CurrentPluginMetadata.PluginCacheDirectoryPath);
 
-                static bool MoveFile(string sourcePath, string destinationPath)
+                static void MoveFile(string sourcePath, string destinationPath)
                 {
                     if (!File.Exists(sourcePath))
                     {
-                        return false;
+                        return;
                     }
 
                     if (File.Exists(destinationPath))
                     {
-                        File.Delete(sourcePath);
-                        return false;
+                        try
+                        {
+                            File.Delete(sourcePath);
+                        }
+                        catch (Exception)
+                        {
+                            // Ignore, we will handle next time we start the plugin
+                        }
+                        return;
                     }
 
                     var destinationDirectory = Path.GetDirectoryName(destinationPath);
                     if (!Directory.Exists(destinationDirectory) && (!string.IsNullOrEmpty(destinationDirectory)))
                     {
-                        Directory.CreateDirectory(destinationDirectory);
+                        try
+                        {
+                            Directory.CreateDirectory(destinationDirectory);
+                        }
+                        catch (Exception)
+                        {
+                            // Ignore, we will handle next time we start the plugin
+                        }
                     }
-                    File.Move(sourcePath, destinationPath);
-                    return true;
+                    try
+                    {
+                        File.Move(sourcePath, destinationPath);
+                    }
+                    catch (Exception)
+                    {
+                        // Ignore, we will handle next time we start the plugin
+                    }
                 }
 
                 // Move old cache files to the new cache directory
