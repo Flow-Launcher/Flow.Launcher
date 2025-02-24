@@ -12,7 +12,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 {
     public static class Log
     {
-        public const string DirectoryName = "Logs";
+        public const string DirectoryName = Constant.Logs;
 
         public static string CurrentLogDirectory { get; }
 

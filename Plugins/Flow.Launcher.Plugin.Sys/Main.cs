@@ -147,8 +147,6 @@ namespace Flow.Launcher.Plugin.Sys
         private List<Result> Commands()
         {
             var results = new List<Result>();
-            var logPath = Path.Combine(DataLocation.DataDirectory(), "Logs", Constant.Version);
-            var userDataPath = DataLocation.DataDirectory();
             var recycleBinFolder = "shell:RecycleBinFolder";
             results.AddRange(new[]
             {
@@ -406,11 +404,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Open Log Location",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
                     IcoPath = "Images\\app.png",
-                    CopyText = logPath,
-                    AutoCompleteText = logPath,
+                    CopyText = DataLocation.VersionLogDirectory,
+                    AutoCompleteText = DataLocation.VersionLogDirectory,
                     Action = c =>
                     {
-                        context.API.OpenDirectory(logPath);
+                        context.API.OpenDirectory(DataLocation.VersionLogDirectory);
                         return true;
                     }
                 },
@@ -432,11 +430,11 @@ namespace Flow.Launcher.Plugin.Sys
                     Title = "Flow Launcher UserData Folder",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
                     IcoPath = "Images\\app.png",
-                    CopyText = userDataPath,
-                    AutoCompleteText = userDataPath,
+                    CopyText = DataLocation.DataDirectory(),
+                    AutoCompleteText = DataLocation.DataDirectory(),
                     Action = c =>
                     {
-                        context.API.OpenDirectory(userDataPath);
+                        context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 },

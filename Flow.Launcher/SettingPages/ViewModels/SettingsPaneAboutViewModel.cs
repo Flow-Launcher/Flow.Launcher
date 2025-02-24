@@ -115,7 +115,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
     private static DirectoryInfo GetLogDir(string version = "")
     {
-        return new DirectoryInfo(Path.Combine(DataLocation.DataDirectory(), Constant.Logs, version));
+        return new DirectoryInfo(Path.Combine(DataLocation.LogDirectory, version));
     }
 
     private static List<FileInfo> GetLogFiles(string version = "")
