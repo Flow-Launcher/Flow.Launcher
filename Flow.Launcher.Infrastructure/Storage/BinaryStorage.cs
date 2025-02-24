@@ -1,9 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Reflection;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters;
-using System.Runtime.Serialization.Formatters.Binary;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -16,18 +11,16 @@ namespace Flow.Launcher.Infrastructure.Storage
     /// Normally, it has better performance, but not readable
     /// </summary>
     /// <remarks>
-    /// It utilize MemoryPack, which means the object must be MemoryPackSerializable
-    /// https://github.com/Cysharp/MemoryPack
+    /// It utilize MemoryPack, which means the object must be MemoryPackSerializable <see href="https://github.com/Cysharp/MemoryPack"/>
     /// </remarks>
     public class BinaryStorage<T>
     {
-        const string DirectoryName = Constant.Cache;
+        public const string FileSuffix = ".cache";
 
-        const string FileSuffix = ".cache";
-
-        public BinaryStorage(string filename)
+        // Let the derived class to set the file path
+        public BinaryStorage(string filename, string directoryPath = null)
         {
-            var directoryPath = Path.Combine(DataLocation.DataDirectory(), DirectoryName);
+            directoryPath ??= DataLocation.CacheDirectory;
             Helper.ValidateDirectory(directoryPath);
 
             FilePath = Path.Combine(directoryPath, $"{filename}{FileSuffix}");
@@ -58,14 +51,14 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
         }
 
-        private async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
+        private static async ValueTask<T> DeserializeAsync(Stream stream, T defaultData)
         {
             try
             {
                 var t = await MemoryPackSerializer.DeserializeAsync<T>(stream);
                 return t;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
                 // Log.Exception($"|BinaryStorage.Deserialize|Deserialize error for file <{FilePath}>", e);
                 return defaultData;
