@@ -34,16 +34,14 @@ namespace Flow.Launcher
     public class PublicAPIInstance : IPublicAPI
     {
         private readonly Settings _settings;
-        private readonly SettingWindowViewModel _settingsVM;
         private readonly MainViewModel _mainVM;
 
         #region Constructor
 
-        public PublicAPIInstance()
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
-            _settings = Ioc.Default.GetRequiredService<Settings>();
-            _settingsVM = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
-            _mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+            _settings = settings;
+            _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
@@ -87,7 +85,7 @@ namespace Flow.Launcher
         {
             PluginManager.Save();
             _mainVM.Save();
-            _settingsVM.Save();
+            _settings.Save();
             _ = ImageLoader.Save();
         }
 
