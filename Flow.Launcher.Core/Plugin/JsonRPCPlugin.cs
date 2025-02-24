@@ -8,7 +8,6 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Microsoft.IO;
 using System.Windows;
@@ -31,7 +30,7 @@ namespace Flow.Launcher.Core.Plugin
         private int RequestId { get; set; }
 
         private string SettingConfigurationPath => Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory, Context.CurrentPluginMetadata.Name, "Settings.json");
+        private string SettingPath => Path.Combine(Context.CurrentPluginMetadata.PluginSettingsDirectoryPath, "Settings.json");
 
         public override List<Result> LoadContextMenus(Result selectedResult)
         {

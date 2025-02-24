@@ -23,13 +23,5 @@ namespace Flow.Launcher.Infrastructure.Storage
         {
             Data = data;
         }
-
-        public void DeleteDirectory()
-        {
-            if (Directory.Exists(DirectoryPath))
-            {
-                Directory.Delete(DirectoryPath, true);
-            }
-        }
     }
 }

@@ -75,6 +75,7 @@ namespace Flow.Launcher.Core.Plugin
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
 
+                            // Same as PluginJsonStorage.cs constructor
                             var assemblyName = assembly.GetName().Name;
                             metadata.AssemblyName = assemblyName;
                             metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, assemblyName);

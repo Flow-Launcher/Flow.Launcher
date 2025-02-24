@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -28,8 +27,7 @@ namespace Flow.Launcher.Core.Plugin
         private string SettingConfigurationPath =>
             Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
 
-        private string SettingDirectory => Path.Combine(DataLocation.PluginSettingsDirectory,
-            Context.CurrentPluginMetadata.Name);
+        private string SettingDirectory => Context.CurrentPluginMetadata.PluginSettingsDirectoryPath;
 
         private string SettingPath => Path.Combine(SettingDirectory, "Settings.json");
 
@@ -144,14 +142,6 @@ namespace Flow.Launcher.Core.Plugin
         public Control CreateSettingPanel()
         {
             return Settings.CreateSettingPanel();
-        }
-
-        public void DeletePluginSettingsDirectory()
-        {
-            if (Directory.Exists(SettingDirectory))
-            {
-                Directory.Delete(SettingDirectory, true);
-            }
         }
     }
 }

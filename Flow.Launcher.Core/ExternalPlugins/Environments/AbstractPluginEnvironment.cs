@@ -115,10 +115,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             {
                 if (metadata.Language.Equals(languageToSet, StringComparison.OrdinalIgnoreCase))
                 {
-                    pluginPairs.Add(CreatePluginPair(filePath, metadata));
                     metadata.AssemblyName = string.Empty;
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
+
+                    pluginPairs.Add(CreatePluginPair(filePath, metadata));
                 }
             }
 
