@@ -68,7 +68,35 @@ public class AutoStartup
         return false;
     }
 
-    public static void Disable(bool logonTask)
+    public static void DisableViaLogonTaskAndRegistry()
+    {
+        Disable(true);
+        Disable(false);
+    }
+
+    public static void EnableViaLogonTask()
+    {
+        Enable(true);
+    }
+
+    public static void EnableViaRegistry()
+    {
+        Enable(false);
+    }
+
+    public static void ChangeToViaLogonTask()
+    {
+        Disable(false);
+        Enable(true);
+    }
+
+    public static void ChangeToViaRegistry()
+    {
+        Disable(true);
+        Enable(false);
+    }
+
+    private static void Disable(bool logonTask)
     {
         try
         {
@@ -89,7 +117,7 @@ public class AutoStartup
         }
     }
 
-    internal static void Enable(bool logonTask)
+    private static void Enable(bool logonTask)
     {
         try
         {

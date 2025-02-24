@@ -43,14 +43,18 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 if (value)
                 {
-                    // Enable either registry or task scheduler
-                    AutoStartup.Enable(UseLogonTaskForStartup);
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.EnableViaRegistry();
+                    }
                 }
                 else
                 {
-                    // Disable both registry and task scheduler
-                    AutoStartup.Disable(true);
-                    AutoStartup.Disable(false);
+                    AutoStartup.DisableViaLogonTaskAndRegistry();
                 }  
             }
             catch (Exception e)
@@ -72,9 +76,14 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             {
                 try
                 {
-                    // Disable and enable to update the startup method
-                    AutoStartup.Disable(!UseLogonTaskForStartup);
-                    AutoStartup.Enable(UseLogonTaskForStartup);
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.ChangeToViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.ChangeToViaRegistry();
+                    }
                 }
                 catch (Exception e)
                 {
