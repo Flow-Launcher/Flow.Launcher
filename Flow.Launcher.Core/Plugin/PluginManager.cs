@@ -546,50 +546,41 @@ namespace Flow.Launcher.Core.Plugin
 
             if (removePluginSettings)
             {
-                if (AllowedLanguage.IsDotNet(plugin.Language))  // for the plugin in .NET, we can use assembly loader
+                // For dotnet plugins, we need to remove their PluginJsonStorage instance
+                if (AllowedLanguage.IsDotNet(plugin.Language))
                 {
-                    // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
-                    // so we need to remove it from the api instance
                     var method = API.GetType().GetMethod("RemovePluginSettings");
-                    var pluginJsonStorage = method?.Invoke(API, new object[] { plugin.AssemblyName });
-
-                    // if there exists a json storage for current plugin, we need to delete the directory path
-                    if (pluginJsonStorage != null)
-                    {
-                        var deleteMethod = pluginJsonStorage.GetType().GetMethod("DeleteDirectory");
-                        try
-                        {
-                            deleteMethod?.Invoke(pluginJsonStorage, null);
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
-                        }
-                    }
+                    method?.Invoke(API, new object[] { plugin.AssemblyName });
                 }
-                else  // the plugin with json prc interface
+
+                try
                 {
-                    var pluginPair = AllPlugins.FirstOrDefault(p => p.Metadata.ID == plugin.ID);
-                    if (pluginPair != null && pluginPair.Plugin is JsonRPCPlugin jsonRpcPlugin)
-                    {
-                        try
-                        {
-                            jsonRpcPlugin.DeletePluginSettingsDirectory();
-                        }
-                        catch (Exception e)
-                        {
-                            Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
-                        }
-                    }
+                    var pluginSettingsDirectory = plugin.PluginSettingsDirectoryPath;
+                    if (Directory.Exists(pluginSettingsDirectory))
+                        Directory.Delete(pluginSettingsDirectory, true);
+                }
+                catch (Exception e)
+                {
+                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin settings folder for {plugin.Name}", e);
+                    API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                        string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                 }
             }
 
             if (removePluginFromSettings)
             {
+                try
+                {
+                    var pluginCacheDirectory = plugin.PluginCacheDirectoryPath;
+                    if (Directory.Exists(pluginCacheDirectory))
+                        Directory.Delete(pluginCacheDirectory, true);
+                }
+                catch (Exception e)
+                {
+                    Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin cache folder for {plugin.Name}", e);
+                    API.ShowMsg(API.GetTranslation("failedToRemovePluginCacheTitle"),
+                        string.Format(API.GetTranslation("failedToRemovePluginCacheMessage"), plugin.Name));
+                }
                 Settings.Plugins.Remove(plugin.ID);
                 AllPlugins.RemoveAll(p => p.Metadata.ID == plugin.ID);
             }
