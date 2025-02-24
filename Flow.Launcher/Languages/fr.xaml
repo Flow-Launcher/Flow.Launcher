@@ -13,7 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Échec de la réinitialisation du raccourci &quot;{0}&quot;. Veuillez réessayer ou consulter le journal pour plus de détails</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Impossible de lancer {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Le format de fichier n'est pas un plugin Flow Launcher valide</system:String>
@@ -127,8 +127,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
