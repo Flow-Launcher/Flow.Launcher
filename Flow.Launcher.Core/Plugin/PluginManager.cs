@@ -14,6 +14,7 @@ using ISavable = Flow.Launcher.Plugin.ISavable;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Text.Json;
 using Flow.Launcher.Core.Resource;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -28,7 +29,7 @@ namespace Flow.Launcher.Core.Plugin
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
-        public static IPublicAPI API { private set; get; }
+        public static IPublicAPI API { get; private set; } = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
@@ -158,9 +159,8 @@ namespace Flow.Launcher.Core.Plugin
         /// Call initialize for all plugins
         /// </summary>
         /// <returns>return the list of failed to init plugins or null for none</returns>
-        public static async Task InitializePluginsAsync(IPublicAPI api)
+        public static async Task InitializePluginsAsync()
         {
-            API = api;
             var failedPlugins = new ConcurrentQueue<PluginPair>();
 
             var InitTasks = AllPlugins.Select(pair => Task.Run(async delegate
@@ -204,7 +204,7 @@ namespace Flow.Launcher.Core.Plugin
             }
 
             InternationalizationManager.Instance.AddPluginLanguageDirectories(GetPluginsForInterface<IPluginI18n>());
-            InternationalizationManager.Instance.ChangeLanguage(InternationalizationManager.Instance.Settings.Language);
+            InternationalizationManager.Instance.ChangeLanguage(Ioc.Default.GetRequiredService<Settings>().Language);
 
             if (failedPlugins.Any())
             {
@@ -519,7 +519,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, MessageBoxEx.Show);
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => API.ShowMsgBox(s));
 
             try
             {

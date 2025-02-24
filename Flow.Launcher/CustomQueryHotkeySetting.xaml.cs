@@ -6,20 +6,17 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
     public partial class CustomQueryHotkeySetting : Window
     {
-        private SettingWindow _settingWidow;
         private readonly Settings _settings;
         private bool update;
         private CustomPluginHotkey updateCustomHotkey;
 
-        public CustomQueryHotkeySetting(SettingWindow settingWidow, Settings settings)
+        public CustomQueryHotkeySetting(Settings settings)
         {
-            _settingWidow = settingWidow;
             _settings = settings;
             InitializeComponent();
         }
@@ -63,7 +60,7 @@ namespace Flow.Launcher
                 o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
                 Close();
                 return;
             }

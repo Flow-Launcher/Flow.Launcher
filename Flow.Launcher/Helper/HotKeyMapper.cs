@@ -5,10 +5,9 @@ using NHotkey;
 using NHotkey.Wpf;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Core;
 using ChefKeys;
-using System.Globalization;
 using Flow.Launcher.Infrastructure.Logger;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Helper;
 
@@ -17,10 +16,10 @@ internal static class HotKeyMapper
     private static Settings _settings;
     private static MainViewModel _mainViewModel;
 
-    internal static void Initialize(MainViewModel mainVM)
+    internal static void Initialize()
     {
-        _mainViewModel = mainVM;
-        _settings = _mainViewModel.Settings;
+        _mainViewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+        _settings = Ioc.Default.GetService<Settings>();
 
         SetHotkey(_settings.Hotkey, OnToggleHotkey);
         LoadCustomPluginHotkey();
@@ -85,7 +84,7 @@ internal static class HotKeyMapper
                               hotkeyStr));
             string errorMsg = string.Format(InternationalizationManager.Instance.GetTranslation("registerHotkeyFailed"), hotkeyStr);
             string errorMsgTitle = InternationalizationManager.Instance.GetTranslation("MessageBoxTitle");
-            MessageBoxEx.Show(errorMsg, errorMsgTitle);
+            App.API.ShowMsgBox(errorMsg, errorMsgTitle);
         }
     }
 
