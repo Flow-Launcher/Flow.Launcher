@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Helper;
@@ -17,16 +18,21 @@ namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
+    private readonly Updater _updater;
+    private readonly IPortable _portable;
     private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
 
-    public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
+    public SettingWindow()
     {
-        _settings = viewModel.Settings;
+        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+        _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
-        _api = api;
+        _updater = Ioc.Default.GetRequiredService<Updater>();
+        _portable = Ioc.Default.GetRequiredService<Portable>();
+        _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         InitializePosition();
         InitializeComponent();
     }
@@ -125,7 +131,7 @@ public partial class SettingWindow
         WindowState = _settings.SettingWindowState;
     }
 
-    private bool IsPositionValid(double top, double left)
+    private static bool IsPositionValid(double top, double left)
     {
         foreach (var screen in Screen.AllScreens)
         {
@@ -145,7 +151,7 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
-        var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+        var left = (dip2.X - ActualWidth) / 2 + dip1.X;
         return left;
     }
 
@@ -154,13 +160,13 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
-        var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+        var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _viewModel.Updater, _viewModel.Portable);
+        var paneData = new PaneData(_settings, _updater, _portable);
         if (args.IsSettingsSelected)
         {
             ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);

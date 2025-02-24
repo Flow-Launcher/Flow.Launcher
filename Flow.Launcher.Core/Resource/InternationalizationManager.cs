@@ -1,26 +1,12 @@
-﻿namespace Flow.Launcher.Core.Resource
+﻿using System;
+using CommunityToolkit.Mvvm.DependencyInjection;
+
+namespace Flow.Launcher.Core.Resource
 {
+    [Obsolete("InternationalizationManager.Instance is obsolete. Use Ioc.Default.GetRequiredService<Internationalization>() instead.")]
     public static class InternationalizationManager
     {
-        private static Internationalization instance;
-        private static object syncObject = new object();
-
         public static Internationalization Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new Internationalization();
-                        }
-                    }
-                }
-                return instance;
-            }
-        }
+            => Ioc.Default.GetRequiredService<Internationalization>();
     }
 }

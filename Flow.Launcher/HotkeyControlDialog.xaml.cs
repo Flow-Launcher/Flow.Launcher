@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using ChefKeys;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
@@ -33,6 +34,8 @@ public partial class HotkeyControlDialog : ContentDialog
     public string ResultValue { get; private set; } = string.Empty;
     public static string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
 
+    private static bool isOpenFlowHotkey;
+
     public HotkeyControlDialog(string hotkey, string defaultHotkey, IHotkeySettings hotkeySettings, string windowTitle = "")
     {
         WindowTitle = windowTitle switch
@@ -46,6 +49,14 @@ public partial class HotkeyControlDialog : ContentDialog
         SetKeysToDisplay(CurrentHotkey);
 
         InitializeComponent();
+
+        // TODO: This is a temporary way to enforce changing only the open flow hotkey to Win, and will be removed by PR #3157
+        isOpenFlowHotkey = _hotkeySettings.RegisteredHotkeys
+                             .Any(x => x.DescriptionResourceKey == "flowlauncherHotkey" 
+                                    && x.Hotkey.ToString() == hotkey);
+
+        ChefKeysManager.StartMenuEnableBlocking = true;
+        ChefKeysManager.Start();
     }
 
     private void Reset(object sender, RoutedEventArgs routedEventArgs)
@@ -61,12 +72,18 @@ public partial class HotkeyControlDialog : ContentDialog
 
     private void Cancel(object sender, RoutedEventArgs routedEventArgs)
     {
+        ChefKeysManager.StartMenuEnableBlocking = false;
+        ChefKeysManager.Stop();
+
         ResultType = EResultType.Cancel;
         Hide();
     }
 
     private void Save(object sender, RoutedEventArgs routedEventArgs)
     {
+        ChefKeysManager.StartMenuEnableBlocking = false;
+        ChefKeysManager.Stop();
+
         if (KeysToDisplay.Count == 1 && KeysToDisplay[0] == EmptyHotkey)
         {
             ResultType = EResultType.Delete;
@@ -84,6 +101,9 @@ public partial class HotkeyControlDialog : ContentDialog
 
         //when alt is pressed, the real key should be e.SystemKey
         Key key = e.Key == Key.System ? e.SystemKey : e.Key;
+
+        if (ChefKeysManager.StartMenuBlocked && key.ToString() == ChefKeysManager.StartMenuSimulatedKey)
+            return;
 
         SpecialKeyState specialKeyState = GlobalHotkey.CheckModifiers();
 
@@ -168,8 +188,13 @@ public partial class HotkeyControlDialog : ContentDialog
         }
     }
 
-    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
-        hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture)
+    {
+        if (isOpenFlowHotkey && (hotkey.ToString() == "LWin" || hotkey.ToString() == "RWin"))
+            return true;
+
+        return hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
+    }
 
     private void Overwrite(object sender, RoutedEventArgs e)
     {

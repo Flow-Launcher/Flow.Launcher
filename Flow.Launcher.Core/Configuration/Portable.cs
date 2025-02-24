@@ -9,11 +9,15 @@ using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using System.Linq;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Configuration
 {
     public class Portable : IPortable
     {
+        private readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+
         /// <summary>
         /// As at Squirrel.Windows version 1.5.2, UpdateManager needs to be disposed after finish
         /// </summary>
@@ -40,7 +44,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.PortableDataPath);
 
-                MessageBoxEx.Show("Flow Launcher needs to restart to finish disabling portable mode, " +
+                API.ShowMsgBox("Flow Launcher needs to restart to finish disabling portable mode, " +
                     "after the restart your portable data profile will be deleted and roaming data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -64,7 +68,7 @@ namespace Flow.Launcher.Core.Configuration
 #endif
                 IndicateDeletion(DataLocation.RoamingDataPath);
 
-                MessageBoxEx.Show("Flow Launcher needs to restart to finish enabling portable mode, " +
+                API.ShowMsgBox("Flow Launcher needs to restart to finish enabling portable mode, " +
                     "after the restart your roaming data profile will be deleted and portable data profile kept");
 
                 UpdateManager.RestartApp(Constant.ApplicationFileName);
@@ -95,13 +99,13 @@ namespace Flow.Launcher.Core.Configuration
 
         public void MoveUserDataFolder(string fromLocation, string toLocation)
         {
-            FilesFolders.CopyAll(fromLocation, toLocation, MessageBoxEx.Show);
+            FilesFolders.CopyAll(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
             VerifyUserDataAfterMove(fromLocation, toLocation);
         }
 
         public void VerifyUserDataAfterMove(string fromLocation, string toLocation)
         {
-            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, MessageBoxEx.Show);
+            FilesFolders.VerifyBothFolderFilesEqual(fromLocation, toLocation, (s) => API.ShowMsgBox(s));
         }
 
         public void CreateShortcuts()
@@ -157,13 +161,13 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and prompt the user to pick the portable data location
             if (File.Exists(roamingDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(roamingDataDir, MessageBoxEx.Show);
+                FilesFolders.RemoveFolderIfExists(roamingDataDir, (s) => API.ShowMsgBox(s));
 
-                if (MessageBoxEx.Show("Flow Launcher has detected you enabled portable mode, " +
+                if (API.ShowMsgBox("Flow Launcher has detected you enabled portable mode, " +
                                     "would you like to move it to a different location?", string.Empty,
                                     MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
-                    FilesFolders.OpenPath(Constant.RootDirectory, MessageBoxEx.Show);
+                    FilesFolders.OpenPath(Constant.RootDirectory, (s) => API.ShowMsgBox(s));
 
                     Environment.Exit(0);
                 }
@@ -172,9 +176,9 @@ namespace Flow.Launcher.Core.Configuration
             // delete it and notify the user about it.
             else if (File.Exists(portableDataDeleteFilePath))
             {
-                FilesFolders.RemoveFolderIfExists(portableDataDir, MessageBoxEx.Show);
+                FilesFolders.RemoveFolderIfExists(portableDataDir, (s) => API.ShowMsgBox(s));
 
-                MessageBoxEx.Show("Flow Launcher has detected you disabled portable mode, " +
+                API.ShowMsgBox("Flow Launcher has detected you disabled portable mode, " +
                                     "the relevant shortcuts and uninstaller entry have been created");
             }
         }
@@ -186,7 +190,7 @@ namespace Flow.Launcher.Core.Configuration
 
             if (roamingLocationExists && portableLocationExists)
             {
-                MessageBoxEx.Show(string.Format("Flow Launcher detected your user data exists both in {0} and " +
+                API.ShowMsgBox(string.Format("Flow Launcher detected your user data exists both in {0} and " +
                                     "{1}. {2}{2}Please delete {1} in order to proceed. No changes have occurred.", 
                                     DataLocation.PortableDataPath, DataLocation.RoamingDataPath, Environment.NewLine));
 

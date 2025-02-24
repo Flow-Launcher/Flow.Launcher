@@ -159,5 +159,4 @@ namespace Flow.Launcher.ViewModel
             changeKeywordsWindow.ShowDialog();
         }
     }
-
 }
