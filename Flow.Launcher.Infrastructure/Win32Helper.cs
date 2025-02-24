@@ -2,33 +2,30 @@
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows;
+using Windows.Win32;
+using Windows.Win32.Graphics.Dwm;
 
 namespace Flow.Launcher.Infrastructure
 {
     public static class Win32Helper
     {
-        private enum DwmSystemBackdropType
-        {
-            DWMSBT_AUTO = 0,
-            DWMSBT_NONE = 1,
-            DWMSBT_MICA = 2,
-            DWMSBT_ACRYLIC = 3,
-            DWMSBT_TABBED = 4
-        }
+        #region Mica
 
-        private const int DWMWA_SYSTEMBACKDROP_TYPE = 38;
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref DwmSystemBackdropType pvAttribute, int cbAttribute);
-
-        public static void SetMicaForWindow(Window window, bool enableMica)
+        public static unsafe bool SetMicaForWindow(Window window, bool enableMica)
         {
             var windowHelper = new WindowInteropHelper(window);
             windowHelper.EnsureHandle();
 
-            DwmSystemBackdropType backdropType = enableMica ? DwmSystemBackdropType.DWMSBT_MICA : DwmSystemBackdropType.DWMSBT_NONE;
-            DwmSetWindowAttribute(windowHelper.Handle, DWMWA_SYSTEMBACKDROP_TYPE, ref backdropType, sizeof(int));
+            DWM_SYSTEMBACKDROP_TYPE backdropType = enableMica ? DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW : DWM_SYSTEMBACKDROP_TYPE.DWMSBT_NONE;
+            return PInvoke.DwmSetWindowAttribute(
+                new(windowHelper.Handle), 
+                DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
+                &backdropType,
+                (uint)Marshal.SizeOf<int>()).Succeeded;
         }
+
+        #endregion
+
         #region Blur Handling
 
         /*
