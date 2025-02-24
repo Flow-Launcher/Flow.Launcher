@@ -75,11 +75,7 @@ namespace Flow.Launcher.Core.Plugin
 
                             plugin = Activator.CreateInstance(type) as IAsyncPlugin;
 
-                            // Same as PluginJsonStorage.cs constructor
-                            var assemblyName = assembly.GetName().Name;
-                            metadata.AssemblyName = assemblyName;
-                            metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, assemblyName);
-                            metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, assemblyName);
+                            metadata.AssemblyName = assembly.GetName().Name;
                         }
 #if DEBUG
                         catch (Exception)
@@ -149,8 +145,6 @@ namespace Flow.Launcher.Core.Plugin
                     };
 
                     plugin.Metadata.AssemblyName = string.Empty;
-                    plugin.Metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, plugin.Metadata.Name);
-                    plugin.Metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, plugin.Metadata.Name);
 
                     return plugin;
                 });
@@ -169,8 +163,6 @@ namespace Flow.Launcher.Core.Plugin
                     };
 
                     plugin.Metadata.AssemblyName = string.Empty;
-                    plugin.Metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, plugin.Metadata.Name);
-                    plugin.Metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, plugin.Metadata.Name);
 
                     return plugin;
                 });

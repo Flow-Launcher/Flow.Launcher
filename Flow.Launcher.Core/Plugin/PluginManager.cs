@@ -32,7 +32,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
-        private static List<string> _modifiedPlugins = new List<string>();
+        private static List<string> _modifiedPlugins = new();
 
         /// <summary>
         /// Directories that will hold Flow Launcher plugin directory
@@ -152,6 +152,27 @@ namespace Flow.Launcher.Core.Plugin
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
+            UpdateAndValidatePluginDirectory(_metadatas);
+        }
+
+        private static void UpdateAndValidatePluginDirectory(List<PluginMetadata> metadatas)
+        {
+            foreach (var metadata in metadatas)
+            {
+                if (AllowedLanguage.IsDotNet(metadata.Language))
+                {
+                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.AssemblyName);
+                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.AssemblyName);
+                }
+                else
+                {
+                    metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
+                    metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
+                }
+
+                Helper.ValidateDirectory(metadata.PluginSettingsDirectoryPath);
+                Helper.ValidateDirectory(metadata.PluginCacheDirectoryPath);
+            }
         }
 
         /// <summary>
@@ -226,11 +247,9 @@ namespace Flow.Launcher.Core.Plugin
             if (query is null)
                 return Array.Empty<PluginPair>();
 
-            if (!NonGlobalPlugins.ContainsKey(query.ActionKeyword))
+            if (!NonGlobalPlugins.TryGetValue(query.ActionKeyword, out var plugin))
                 return GlobalPlugins;
 
-
-            var plugin = NonGlobalPlugins[query.ActionKeyword];
             return new List<PluginPair>
             {
                 plugin

@@ -18,7 +18,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         static Log()
         {
-            CurrentLogDirectory = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Version);
+            CurrentLogDirectory = DataLocation.VersionLogDirectory;
             if (!Directory.Exists(CurrentLogDirectory))
             {
                 Directory.CreateDirectory(CurrentLogDirectory);
