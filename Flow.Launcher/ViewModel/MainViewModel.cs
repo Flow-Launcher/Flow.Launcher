@@ -1412,33 +1412,30 @@ namespace Flow.Launcher.ViewModel
             {
                 case LastQueryMode.Empty:
                     ChangeQueryText(string.Empty);
-                    await Task.Delay(100); //Time for change to opacity
+                    await Task.Yield();
                     break;
+
                 case LastQueryMode.Preserved:
-                    if (Settings.UseAnimation)
-                        await Task.Delay(100);
-                    LastQuerySelected = true;
-                    break;
                 case LastQueryMode.Selected:
                     if (Settings.UseAnimation)
                         await Task.Delay(100);
-                    LastQuerySelected = false;
+                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
                     break;
-                case LastQueryMode.ActionKeywordPreserved or LastQueryMode.ActionKeywordSelected:
+
+                case LastQueryMode.ActionKeywordPreserved:
+                case LastQueryMode.ActionKeywordSelected:
                     var newQuery = _lastQuery.ActionKeyword;
                     if (!string.IsNullOrEmpty(newQuery))
                         newQuery += " ";
                     ChangeQueryText(newQuery);
+
                     if (Settings.UseAnimation)
                         await Task.Delay(100);
-                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                        LastQuerySelected = false;
+                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.ActionKeywordPreserved);
                     break;
-                default:
-                    throw new ArgumentException($"wrong LastQueryMode: <{Settings.LastQueryMode}>");
-            }
+        }
 
-            MainWindowVisibilityStatus = false;
+        MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
