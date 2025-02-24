@@ -139,9 +139,19 @@ namespace Flow.Launcher.Core.Plugin
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata =>
                 {
-                    Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
+                    var plugin = new PluginPair
+                    {
+                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
+
+                    plugin.Metadata.AssemblyName = string.Empty;
+                    plugin.Metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, plugin.Metadata.Name);
+                    plugin.Metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, plugin.Metadata.Name);
+
+                    return plugin;
                 });
         }
 
@@ -149,9 +159,19 @@ namespace Flow.Launcher.Core.Plugin
         {
             return source
                 .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
-                .Select(metadata => new PluginPair
+                .Select(metadata =>
                 {
-                    Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath), Metadata = metadata
+                    var plugin = new PluginPair
+                    {
+                        Plugin = new ExecutablePlugin(metadata.ExecuteFilePath),
+                        Metadata = metadata
+                    };
+
+                    plugin.Metadata.AssemblyName = string.Empty;
+                    plugin.Metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, plugin.Metadata.Name);
+                    plugin.Metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, plugin.Metadata.Name);
+
+                    return plugin;
                 });
         }
     }
