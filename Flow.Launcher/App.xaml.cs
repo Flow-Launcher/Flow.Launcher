@@ -30,37 +30,7 @@ namespace Flow.Launcher
         public static IPublicAPI API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
-        private readonly Settings _settings;
-
-        public App()
-        {
-            // Initialize settings
-            var storage = new FlowLauncherJsonStorage<Settings>();
-            _settings = storage.Load();
-            _settings.SetStorage(storage);
-            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-
-            // Configure the dependency injection container
-            var host = Host.CreateDefaultBuilder()
-                .UseContentRoot(AppContext.BaseDirectory)
-                .ConfigureServices(services => services
-                    .AddSingleton(_ => _settings)
-                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
-                    .AddSingleton<Portable>()
-                    .AddSingleton<SettingWindowViewModel>()
-                    .AddSingleton<IAlphabet, PinyinAlphabet>()
-                    .AddSingleton<StringMatcher>()
-                    .AddSingleton<Internationalization>()
-                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                    .AddSingleton<MainViewModel>()
-                    .AddSingleton<Theme>()
-                ).Build();
-            Ioc.Default.ConfigureServices(host.Services);
-
-            // Initialize the public API and Settings first
-            API = Ioc.Default.GetRequiredService<IPublicAPI>();
-            _settings.Initialize();
-        }
+        private Settings _settings;
 
         [STAThread]
         public static void Main()
@@ -79,6 +49,33 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
+                // Initialize settings
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.SetStorage(storage);
+                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+
+                // Configure the dependency injection container
+                var host = Host.CreateDefaultBuilder()
+                    .UseContentRoot(AppContext.BaseDirectory)
+                    .ConfigureServices(services => services
+                        .AddSingleton(_ => _settings)
+                        .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                        .AddSingleton<Portable>()
+                        .AddSingleton<SettingWindowViewModel>()
+                        .AddSingleton<IAlphabet, PinyinAlphabet>()
+                        .AddSingleton<StringMatcher>()
+                        .AddSingleton<Internationalization>()
+                        .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                        .AddSingleton<MainViewModel>()
+                        .AddSingleton<Theme>()
+                    ).Build();
+                Ioc.Default.ConfigureServices(host.Services);
+
+                // Initialize the public API and Settings first
+                API = Ioc.Default.GetRequiredService<IPublicAPI>();
+                _settings.Initialize();
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
