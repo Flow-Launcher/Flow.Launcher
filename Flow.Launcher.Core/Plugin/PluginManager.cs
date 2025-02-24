@@ -152,10 +152,10 @@ namespace Flow.Launcher.Core.Plugin
             Settings = settings;
             Settings.UpdatePluginSettings(_metadatas);
             AllPlugins = PluginsLoader.Plugins(_metadatas, Settings);
-            UpdateAndValidatePluginDirectory(_metadatas);
+            UpdatePluginDirectory(_metadatas);
         }
 
-        private static void UpdateAndValidatePluginDirectory(List<PluginMetadata> metadatas)
+        private static void UpdatePluginDirectory(List<PluginMetadata> metadatas)
         {
             foreach (var metadata in metadatas)
             {
@@ -169,9 +169,6 @@ namespace Flow.Launcher.Core.Plugin
                     metadata.PluginSettingsDirectoryPath = Path.Combine(DataLocation.PluginSettingsDirectory, metadata.Name);
                     metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, metadata.Name);
                 }
-
-                Helper.ValidateDirectory(metadata.PluginSettingsDirectoryPath);
-                Helper.ValidateDirectory(metadata.PluginCacheDirectoryPath);
             }
         }
 

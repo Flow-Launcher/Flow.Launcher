@@ -123,7 +123,7 @@ namespace Flow.Launcher.Plugin
         public int QueryCount { get; set; }
 
         /// <summary>
-        /// The path to the plugin settings directory.
+        /// The path to the plugin settings directory which is not validated.
         /// It is used to store plugin settings files and data files.
         /// When plugin is deleted, FL will ask users whether to keep its settings.
         /// If users do not want to keep, this directory will be deleted.
@@ -132,7 +132,7 @@ namespace Flow.Launcher.Plugin
         public string PluginSettingsDirectoryPath { get; internal set; }
 
         /// <summary>
-        /// The path to the plugin cache directory.
+        /// The path to the plugin cache directory which is not validated.
         /// It is used to store cache files.
         /// When plugin is deleted, this directory will be deleted as well.
         /// </summary>
