@@ -81,7 +81,7 @@ namespace Flow.Launcher.Core.Plugin
                             metadata.PluginCacheDirectoryPath = Path.Combine(DataLocation.PluginCacheDirectory, assemblyName);
                         }
 #if DEBUG
-                        catch (Exception e)
+                        catch (Exception)
                         {
                             throw;
                         }
@@ -117,7 +117,7 @@ namespace Flow.Launcher.Core.Plugin
 
             if (erroredPlugins.Count > 0)
             {
-                var errorPluginString = String.Join(Environment.NewLine, erroredPlugins);
+                var errorPluginString = string.Join(Environment.NewLine, erroredPlugins);
 
                 var errorMessage = "The following "
                                    + (erroredPlugins.Count > 1 ? "plugins have " : "plugin has ")
