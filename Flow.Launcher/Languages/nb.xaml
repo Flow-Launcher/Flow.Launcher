@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Portabel modus</system:String>
     <system:String x:Key="portableModeToolTIp">Lagre alle innstillinger og brukerdata i en mappe (nyttig når man bruker flyttbare stasjoner eller skytjenester).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher ved systemoppstart</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Feil ved å sette kjør ved oppstart</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skjul Flow Launcher når fokus forsvinner</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ikke vis varsler om nye versjoner</system:String>
