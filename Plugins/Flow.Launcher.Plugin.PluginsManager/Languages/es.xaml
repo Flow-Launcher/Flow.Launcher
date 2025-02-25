@@ -13,8 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalando complemento</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Descargar e instalar {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Desinstalar complemento</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Mantener la configuración del complemento</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">¿Desea mantener la configuración del complemento para el próximo uso?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Complemento {0} instalado correctamente. Reiniciando Flow, por favor espere...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">No se ha podido encontrar el archivo de metadatos plugin.json del archivo zip extraído.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Error: Ya existe un complemento que tiene la misma o mayor versión con {0}.</system:String>
