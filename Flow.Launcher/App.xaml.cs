@@ -136,7 +136,14 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.Enable();
+                    if (_settings.UseLogonTaskForStartup)
+                    {
+                        Helper.AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        Helper.AutoStartup.EnableViaRegistry();
+                    }
                 }
                 catch (Exception e)
                 {
