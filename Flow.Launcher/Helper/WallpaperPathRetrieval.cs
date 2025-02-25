@@ -16,7 +16,7 @@ public static class WallpaperPathRetrieval
 {
     private static readonly int MAX_PATH = 260;
 
-    private static readonly Dictionary<DateTime, ImageBrush> wallpaperCache = new();
+    private static readonly Dictionary<(string, DateTime), ImageBrush> wallpaperCache = new();
 
     public static Brush GetWallpaperBrush()
     {
@@ -26,20 +26,20 @@ public static class WallpaperPathRetrieval
             return Application.Current.Dispatcher.Invoke(GetWallpaperBrush);
         }
 
-        var wallpaper = GetWallpaperPath();
-        if (wallpaper is not null && File.Exists(wallpaper))
+        var wallpaperPath = GetWallpaperPath();
+        if (wallpaperPath is not null && File.Exists(wallpaperPath))
         {
-            // Since the wallpaper file name is the same (TranscodedWallpaper),
-            // we need to use the last modified date to differentiate them
-            var dateModified = File.GetLastWriteTime(wallpaper);
-            wallpaperCache.TryGetValue(dateModified, out var cachedWallpaper);
+            // Since the wallpaper file name can be the same (TranscodedWallpaper),
+            // we need to add the last modified date to differentiate them
+            var dateModified = File.GetLastWriteTime(wallpaperPath);
+            wallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
             if (cachedWallpaper != null)
             {
                 return cachedWallpaper;
             }
 
             // We should not dispose the memory stream since the bitmap is still in use
-            var memStream = new MemoryStream(File.ReadAllBytes(wallpaper));
+            var memStream = new MemoryStream(File.ReadAllBytes(wallpaperPath));
             var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.StreamSource = memStream;
@@ -49,7 +49,7 @@ public static class WallpaperPathRetrieval
             bitmap.Freeze(); // Make the bitmap thread-safe
             var wallpaperBrush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
             wallpaperBrush.Freeze(); // Make the brush thread-safe
-            wallpaperCache.Add(dateModified, wallpaperBrush);
+            wallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
             return wallpaperBrush;
         }
 
