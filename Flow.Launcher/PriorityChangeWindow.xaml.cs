@@ -1,11 +1,9 @@
 ﻿using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -15,7 +13,6 @@ namespace Flow.Launcher
     public partial class PriorityChangeWindow : Window
     {
         private readonly PluginPair plugin;
-        private readonly Internationalization translater = InternationalizationManager.Instance;
         private readonly PluginViewModel pluginViewModel;
         public PriorityChangeWindow(string pluginId, PluginViewModel pluginViewModel)
         {
@@ -24,7 +21,7 @@ namespace Flow.Launcher
             this.pluginViewModel = pluginViewModel;
             if (plugin == null)
             {
-                App.API.ShowMsgBox(translater.GetTranslation("cannotFindSpecifiedPlugin"));
+                App.API.ShowMsgBox(App.API.GetTranslation("cannotFindSpecifiedPlugin"));
                 Close();
             }
         }
@@ -43,10 +40,9 @@ namespace Flow.Launcher
             }
             else
             {
-                string msg = translater.GetTranslation("invalidPriority");
+                string msg = App.API.GetTranslation("invalidPriority");
                 App.API.ShowMsgBox(msg);
             }
-
         }
 
         private void PriorityChangeWindow_Loaded(object sender, RoutedEventArgs e)
@@ -54,10 +50,10 @@ namespace Flow.Launcher
             tbAction.Text = pluginViewModel.Priority.ToString();
             tbAction.Focus();
         }
+
         private void window_MouseDown(object sender, MouseButtonEventArgs e) /* for close hotkey popup */
         {
-            TextBox textBox = Keyboard.FocusedElement as TextBox;
-            if (textBox != null)
+            if (Keyboard.FocusedElement is TextBox textBox)
             {
                 TraversalRequest tRequest = new TraversalRequest(FocusNavigationDirection.Next);
                 textBox.MoveFocus(tRequest);

@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure;
+﻿using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.IO;
@@ -164,7 +163,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
                     return false;
                 },
                 Score = score,
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
+                TitleToolTip = Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenDirectory"),
                 SubTitleToolTip = path,
                 ContextData = new SearchResult { Type = ResultType.Folder, FullPath = path, WindowsIndexed = windowsIndexed }
             };
@@ -319,7 +318,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search
 
                     return true;
                 },
-                TitleToolTip = InternationalizationManager.Instance.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
+                TitleToolTip = Context.API.GetTranslation("plugin_explorer_plugin_ToolTipOpenContainingFolder"),
                 SubTitleToolTip = filePath,
                 ContextData = new SearchResult { Type = ResultType.File, FullPath = filePath, WindowsIndexed = windowsIndexed }
             };

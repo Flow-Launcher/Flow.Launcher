@@ -1,5 +1,4 @@
-﻿using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
+﻿using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -60,7 +59,7 @@ namespace Flow.Launcher
                 o.ActionKeyword == item.ActionKeyword && o.Hotkey == item.Hotkey);
             if (updateCustomHotkey == null)
             {
-                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("invalidPluginHotkey"));
+                App.API.ShowMsgBox(App.API.GetTranslation("invalidPluginHotkey"));
                 Close();
                 return;
             }
@@ -68,7 +67,7 @@ namespace Flow.Launcher
             tbAction.Text = updateCustomHotkey.ActionKeyword;
             HotkeyControl.SetHotkey(updateCustomHotkey.Hotkey, false);
             update = true;
-            lblAdd.Text = InternationalizationManager.Instance.GetTranslation("update");
+            lblAdd.Text = App.API.GetTranslation("update");
         }
 
         private void BtnTestActionKeyword_OnClick(object sender, RoutedEventArgs e)

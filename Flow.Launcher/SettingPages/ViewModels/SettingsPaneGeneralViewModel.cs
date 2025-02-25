@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
@@ -48,7 +48,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
+                Notification.Show(App.API.GetTranslation("setAutoStartFailed"),
                     e.Message);
             }
         }
@@ -117,9 +117,9 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         get => Settings.Language;
         set
         {
-            InternationalizationManager.Instance.ChangeLanguage(value);
+            _translater.ChangeLanguage(value);
 
-            if (InternationalizationManager.Instance.PromptShouldUsePinyin(value))
+            if (_translater.PromptShouldUsePinyin(value))
                 ShouldUsePinyin = true;
 
             UpdateEnumDropdownLocalizations();
@@ -132,10 +132,11 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         set => Settings.ShouldUsePinyin = value;
     }
 
-    public List<Language> Languages => InternationalizationManager.Instance.LoadAvailableLanguages();
+    private readonly Internationalization _translater = Ioc.Default.GetRequiredService<Internationalization>();
+    public List<Language> Languages => _translater.LoadAvailableLanguages();
 
     public string AlwaysPreviewToolTip => string.Format(
-        InternationalizationManager.Instance.GetTranslation("AlwaysPreviewToolTip"),
+        App.API.GetTranslation("AlwaysPreviewToolTip"),
         Settings.PreviewHotkey
     );
 
@@ -181,7 +182,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectPython()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectPythonExecutable"),
+            App.API.GetTranslation("selectPythonExecutable"),
             "Python|pythonw.exe"
         );
 
@@ -193,7 +194,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     private void SelectNode()
     {
         var selectedFile = GetFileFromDialog(
-            InternationalizationManager.Instance.GetTranslation("selectNodeExecutable"),
+            App.API.GetTranslation("selectNodeExecutable"),
             "node|*.exe"
         );
 

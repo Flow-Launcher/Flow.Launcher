@@ -1,15 +1,12 @@
 ﻿using System.Windows;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
-using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
     public partial class ActionKeywords
     {
         private readonly PluginPair plugin;
-        private readonly Internationalization translater = InternationalizationManager.Instance;
         private readonly PluginViewModel pluginViewModel;
 
         public ActionKeywords(PluginViewModel pluginViewModel)
@@ -43,7 +40,7 @@ namespace Flow.Launcher
             }
             else
             {
-                string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
+                string msg = App.API.GetTranslation("newActionKeywordsHasBeenAssigned");
                 App.API.ShowMsgBox(msg);
             }
         }

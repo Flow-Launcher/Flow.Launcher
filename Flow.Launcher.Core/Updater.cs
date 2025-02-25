@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using JetBrains.Annotations;
 using Squirrel;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
@@ -146,8 +145,7 @@ namespace Flow.Launcher.Core
 
         public string NewVersionTips(string version)
         {
-            var translator = InternationalizationManager.Instance;
-            var tips = string.Format(translator.GetTranslation("newVersionTips"), version);
+            var tips = string.Format(_api.GetTranslation("newVersionTips"), version);
 
             return tips;
         }

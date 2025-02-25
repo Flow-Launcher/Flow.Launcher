@@ -49,7 +49,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (_theme.BlurEnabled && value)
             {
-                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                App.API.ShowMsgBox(App.API.GetTranslation("shadowEffectNotAllowed"));
                 return;
             }
 
@@ -240,8 +240,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             {
                 new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleExplorer"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleExplorer"),
+                    Title = App.API.GetTranslation("SampleTitleExplorer"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleExplorer"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Explorer\Images\explorer.png"
@@ -249,8 +249,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleWebSearch"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleWebSearch"),
+                    Title = App.API.GetTranslation("SampleTitleWebSearch"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleWebSearch"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.WebSearch\Images\web_search.png"
@@ -258,8 +258,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProgram"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProgram"),
+                    Title = App.API.GetTranslation("SampleTitleProgram"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProgram"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.Program\Images\program.png"
@@ -267,8 +267,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 },
                 new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("SampleTitleProcessKiller"),
-                    SubTitle = InternationalizationManager.Instance.GetTranslation("SampleSubTitleProcessKiller"),
+                    Title = App.API.GetTranslation("SampleTitleProcessKiller"),
+                    SubTitle = App.API.GetTranslation("SampleSubTitleProcessKiller"),
                     IcoPath = Path.Combine(
                         Constant.ProgramDirectory,
                         @"Plugins\Flow.Launcher.Plugin.ProcessKiller\Images\app.png"

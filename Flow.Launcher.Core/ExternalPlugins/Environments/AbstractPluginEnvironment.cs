@@ -7,7 +7,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
-using Flow.Launcher.Core.Resource;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
@@ -55,14 +54,14 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
 
             var noRuntimeMessage = string.Format(
-                InternationalizationManager.Instance.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
+                API.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
                 Language,
                 EnvName,
                 Environment.NewLine
             );
             if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
-                var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
+                var msg = string.Format(API.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
                 string selectedFile;
 
                 selectedFile = GetFileFromDialog(msg, FileDialogFilter);
@@ -85,7 +84,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
+                API.ShowMsgBox(string.Format(API.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
                 Log.Error("PluginsLoader",
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");

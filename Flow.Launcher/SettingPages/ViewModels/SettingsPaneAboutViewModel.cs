@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -23,7 +22,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         get
         {
             var size = GetLogFiles().Sum(file => file.Length);
-            return $"{InternationalizationManager.Instance.GetTranslation("clearlogfolder")} ({BytesToReadableString(size)})";
+            return $"{App.API.GetTranslation("clearlogfolder")} ({BytesToReadableString(size)})";
         }
     }
 
@@ -41,7 +40,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     };
 
     public string ActivatedTimes => string.Format(
-        InternationalizationManager.Instance.GetTranslation("about_activate_times"),
+        App.API.GetTranslation("about_activate_times"),
         _settings.ActivateTimes
     );
 
@@ -62,8 +61,8 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     private void AskClearLogFolderConfirmation()
     {
         var confirmResult = App.API.ShowMsgBox(
-            InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
-            InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
+            App.API.GetTranslation("clearlogfolderMessage"),
+            App.API.GetTranslation("clearlogfolder"),
             MessageBoxButton.YesNo
         );
 
@@ -95,7 +94,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private Task UpdateApp() => _updater.UpdateAppAsync(false);
+    private Task UpdateAppAsync() => _updater.UpdateAppAsync(false);
 
     private void ClearLogFolder()
     {

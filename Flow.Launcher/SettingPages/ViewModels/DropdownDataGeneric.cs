@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
@@ -19,7 +18,7 @@ public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
         foreach (var value in enumValues)
         {
             var key = keyPrefix + value;
-            var display = InternationalizationManager.Instance.GetTranslation(key);
+            var display = App.API.GetTranslation(key);
             data.Add(new TR { Display = display, Value = value, LocalizationKey = key });
         }
 
@@ -30,7 +29,7 @@ public class DropdownDataGeneric<TValue> : BaseModel where TValue : Enum
     {
         foreach (var item in options)
         {
-            item.Display = InternationalizationManager.Instance.GetTranslation(item.LocalizationKey);
+            item.Display = App.API.GetTranslation(item.LocalizationKey);
         }
     }
 }

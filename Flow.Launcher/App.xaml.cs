@@ -91,8 +91,7 @@ namespace Flow.Launcher
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
-                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
-                InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
+                Ioc.Default.GetRequiredService<Internationalization>().ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
 
@@ -142,8 +141,7 @@ namespace Flow.Launcher
                     // but if it fails (permissions, etc) then don't keep retrying
                     // this also gives the user a visual indication in the Settings widget
                     _settings.StartFlowLauncherOnSystemStartup = false;
-                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
-                        e.Message);
+                    Notification.Show(API.GetTranslation("setAutoStartFailed"), e.Message);
                 }
             }
         }

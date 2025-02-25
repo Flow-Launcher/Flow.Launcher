@@ -4,7 +4,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 
@@ -114,7 +113,7 @@ namespace Flow.Launcher
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
             hotkey.Validate(validateKeyGesture) && HotKeyMapper.CheckAvailability(hotkey);
 
-        public string EmptyHotkey => InternationalizationManager.Instance.GetTranslation("none");
+        public string EmptyHotkey => App.API.GetTranslation("none");
 
         public ObservableCollection<string> KeysToDisplay { get; set; } = new();
 

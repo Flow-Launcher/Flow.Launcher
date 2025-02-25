@@ -1,15 +1,16 @@
 ﻿using System.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
 {
     public class LocalizedDescriptionAttribute : DescriptionAttribute
     {
-        private readonly Internationalization _translator;
+        private static readonly IPublicAPI _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         private readonly string _resourceKey;
 
         public LocalizedDescriptionAttribute(string resourceKey)
         {
-            _translator = InternationalizationManager.Instance;
             _resourceKey = resourceKey;
         }
 
@@ -17,7 +18,7 @@ namespace Flow.Launcher.Core.Resource
         {
             get
             {
-                string description = _translator.GetTranslation(_resourceKey);
+                string description = _api.GetTranslation(_resourceKey);
                 return string.IsNullOrWhiteSpace(description) ? 
                     string.Format("[[{0}]]", _resourceKey) : description;
             }

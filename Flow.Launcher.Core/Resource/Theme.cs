@@ -12,7 +12,6 @@ using System.Windows.Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
@@ -115,7 +114,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
                 if (theme != defaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;
@@ -125,7 +124,7 @@ namespace Flow.Launcher.Core.Resource
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
                 if (theme != defaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));
                     ChangeTheme(defaultTheme);
                 }
                 return false;

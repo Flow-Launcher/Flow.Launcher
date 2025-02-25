@@ -5,7 +5,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
@@ -47,8 +46,6 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
-
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -251,8 +248,8 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"),
-                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+            Notification.Show(App.API.GetTranslation("success"),
+                App.API.GetTranslation("completedSuccessfully"));
         }
 
         [RelayCommand]
@@ -1045,8 +1042,8 @@ namespace Flow.Launcher.ViewModel
             var results = new List<Result>();
             foreach (var h in _history.Items)
             {
-                var title = _translator.GetTranslation("executeQuery");
-                var time = _translator.GetTranslation("lastExecuteTime");
+                var title = App.API.GetTranslation("executeQuery");
+                var time = App.API.GetTranslation("lastExecuteTime");
                 var result = new Result
                 {
                     Title = string.Format(title, h.Query),
@@ -1285,13 +1282,13 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("cancelTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("cancelTopMostInThisQuery"),
                     IcoPath = "Images\\down.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1301,14 +1298,14 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1321,12 +1318,11 @@ namespace Flow.Launcher.ViewModel
         private Result ContextMenuPluginInfo(string id)
         {
             var metadata = PluginManager.GetPluginForId(id).Metadata;
-            var translator = InternationalizationManager.Instance;
 
-            var author = translator.GetTranslation("author");
-            var website = translator.GetTranslation("website");
-            var version = translator.GetTranslation("version");
-            var plugin = translator.GetTranslation("plugin");
+            var author = App.API.GetTranslation("author");
+            var website = App.API.GetTranslation("website");
+            var version = App.API.GetTranslation("version");
+            var plugin = App.API.GetTranslation("plugin");
             var title = $"{plugin}: {metadata.Name}";
             var icon = metadata.IcoPath;
             var subtitle = $"{author} {metadata.Author}";
