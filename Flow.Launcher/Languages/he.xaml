@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">מצב נייד</system:String>
     <system:String x:Key="portableModeToolTIp">אחסן את כל ההגדרות ונתוני המשתמש בתיקייה אחת (שימושי בשימוש עם כוננים נשלפים או שירותי ענן).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">הפעל את Flow Launcher בעת הפעלת Window</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">שגיאה בהגדרת ההפעלה בעת הפעלת windows</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">הסתר את Flow Launcher כאשר הוא אינו החלון הפעיל</system:String>
     <system:String x:Key="dontPromptUpdateMsg">אל תציג התראות על גרסה חדשה</system:String>
