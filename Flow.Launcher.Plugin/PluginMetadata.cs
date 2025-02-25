@@ -9,8 +9,6 @@ namespace Flow.Launcher.Plugin
     /// </summary>
     public class PluginMetadata : BaseModel
     {
-        private string _pluginDirectory;
-
         /// <summary>
         /// Plugin ID.
         /// </summary>
@@ -68,6 +66,8 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         [JsonIgnore]
         public string AssemblyName { get; internal set; }
+
+        private string _pluginDirectory;
 
         /// <summary>
         /// Plugin source directory.
