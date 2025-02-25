@@ -48,12 +48,10 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
             catch (Exception e)
             {
-                Notification.Show(App.API.GetTranslation("setAutoStartFailed"),
-                    e.Message);
+                App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
         }
     }
-
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =
         DropdownDataGeneric<SearchWindowScreens>.GetValues<SearchWindowScreenData>("SearchWindowScreen");

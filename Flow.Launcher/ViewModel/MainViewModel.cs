@@ -248,7 +248,7 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(App.API.GetTranslation("success"),
+            App.API.ShowMsg(App.API.GetTranslation("success"), 
                 App.API.GetTranslation("completedSuccessfully"));
         }
 
