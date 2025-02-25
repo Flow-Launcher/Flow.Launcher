@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
@@ -14,8 +15,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
-using Flow.Launcher.Core;
-using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
@@ -24,6 +23,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 {
     private const string DefaultFont = "Segoe UI";
     public Settings Settings { get; }
+    private readonly Theme _theme = Ioc.Default.GetRequiredService<Theme>();
 
     public static string LinkHowToCreateTheme => @"https://flowlauncher.com/docs/#/how-to-create-a-theme";
     public static string LinkThemeGallery => "https://github.com/Flow-Launcher/Flow.Launcher/discussions/1438";
@@ -35,9 +35,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             _selectedTheme = value;
-            ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
+            _theme.ChangeTheme(value.FileNameWithoutExtension);
 
-            if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
+            if (_theme.BlurEnabled && Settings.UseDropShadowEffect)
                 DropShadowEffect = false;
         }
     }
@@ -47,7 +47,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.UseDropShadowEffect;
         set
         {
-            if (ThemeManager.Instance.BlurEnabled && value)
+            if (_theme.BlurEnabled && value)
             {
                 App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
                 return;
@@ -55,11 +55,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
             if (value)
             {
-                ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+                _theme.AddDropShadowEffectToCurrentTheme();
             }
             else
             {
-                ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
+                _theme.RemoveDropShadowEffectFromCurrentTheme();
             }
 
             Settings.UseDropShadowEffect = value;
@@ -97,7 +97,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     }
 
     private List<Theme.ThemeData> _themes;
-    public List<Theme.ThemeData> Themes => _themes ??= ThemeManager.Instance.LoadAvailableThemes();
+    public List<Theme.ThemeData> Themes => _themes ??= _theme.LoadAvailableThemes();
 
     public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
@@ -300,7 +300,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.QueryBoxFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
@@ -322,7 +322,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.QueryBoxFontStretch = value.Stretch.ToString();
             Settings.QueryBoxFontWeight = value.Weight.ToString();
             Settings.QueryBoxFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
@@ -344,7 +344,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.ResultFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
@@ -366,7 +366,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultFontStretch = value.Stretch.ToString();
             Settings.ResultFontWeight = value.Weight.ToString();
             Settings.ResultFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
@@ -390,7 +390,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         set
         {
             Settings.ResultSubFont = value.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
@@ -411,7 +411,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             Settings.ResultSubFontStretch = value.Stretch.ToString();
             Settings.ResultSubFontWeight = value.Weight.ToString();
             Settings.ResultSubFontStyle = value.Style.ToString();
-            ThemeManager.Instance.ChangeTheme(Settings.Theme);
+            _theme.ChangeTheme(Settings.Theme);
         }
     }
 
