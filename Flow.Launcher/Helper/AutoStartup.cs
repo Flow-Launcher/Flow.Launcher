@@ -59,9 +59,9 @@ public class AutoStartup
 
                 return true;
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Log.Error("AutoStartup", "Failed to check logon task");
+                Log.Error("AutoStartup", $"Failed to check logon task: {e}");
             }
         }
 
@@ -159,9 +159,9 @@ public class AutoStartup
             TaskService.Instance.RootFolder.RegisterTaskDefinition(LogonTaskName, td);
             return true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Log.Error("AutoStartup", "Failed to schedule logon task");
+            Log.Error("AutoStartup", $"Failed to schedule logon task: {e}");
             return false;
         }
     }
@@ -174,9 +174,9 @@ public class AutoStartup
             taskService.RootFolder.DeleteTask(LogonTaskName);
             return true;
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            Log.Error("AutoStartup", "Failed to unschedule logon task");
+            Log.Error("AutoStartup", $"Failed to unschedule logon task: {e}");
             return false;
         }
     }
