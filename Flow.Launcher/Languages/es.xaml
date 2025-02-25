@@ -13,7 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">No se ha podido registrar el atajo de teclado &quot;{0}&quot;. El atajo de teclado puede estar siendo utilizado por otro programa. Seleccione un atajo de teclado diferente o salga del otro programa.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">No se ha podido anular el registro de la tecla de acceso rápido «{0}». Inténtelo de nuevo o consulte el registro para obtener más detalles</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">No se ha podido iniciar {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Formato de archivo del complemento de Flow Launcher no válido</system:String>
@@ -45,8 +45,8 @@
     <system:String x:Key="portableMode">Modo Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Guarda toda la configuración y datos de usuario en una carpeta (Útil cuando se utiliza con unidades extraíbles o servicios en la nube).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Cargar Flow Launcher al iniciar el sistema</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Usar la tarea de inicio de sesión en lugar de la entrada de inicio para una experiencia de inicio más rápida</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Después de la desinstalación, es necesario eliminar manualmente la tarea (Flow.Launcher Startup) mediante el Programador de Tareas</system:String>
     <system:String x:Key="setAutoStartFailed">Error de configuración de arranque al iniciar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher cuando se pierde el foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">No mostrar notificaciones de nuevas versiones</system:String>
@@ -129,8 +129,8 @@
     <system:String x:Key="plugin_query_version">Versión</system:String>
     <system:String x:Key="plugin_query_web">Sitio web</system:String>
     <system:String x:Key="plugin_uninstall">Desinstalar</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fallo al eliminar la configuración del complemento</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Complementos: {0} - Fallo al eliminar los archivos de configuración del complemento, por favor elimínelos manualmente</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Tienda complementos</system:String>
