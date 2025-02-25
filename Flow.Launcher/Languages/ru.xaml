@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Портативный режим</system:String>
     <system:String x:Key="portableModeToolTIp">Храните все настройки и данные пользователя в одной папке (полезно при использовании со съёмными дисками или облачными сервисами).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Запускать Flow Launcher при запуске системы</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Ошибка настройки запуска при запуске</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Скрывать Flow Launcher, если потерян фокуc</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Не отображать сообщение об обновлении, когда доступна новая версия</system:String>
