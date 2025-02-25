@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Modo Portátil</system:String>
     <system:String x:Key="portableModeToolTIp">Armazene todas as configurações e dados do usuário em uma pasta (útil quando usado com unidades removíveis ou serviços em nuvem).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow Launcher com inicialização do sistema</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Erro ao ativar início com o sistema</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Esconder Flow Launcher quando foco for perdido</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não mostrar notificações de novas versões</system:String>
