@@ -102,8 +102,8 @@ namespace Flow.Launcher
                 await imageLoadertask;
 
                 var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+                ((PublicAPIInstance)API).Initialize(mainVM);
                 var window = new MainWindow(_settings, mainVM);
-
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
