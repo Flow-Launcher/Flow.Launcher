@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">ポータブルモード</system:String>
     <system:String x:Key="portableModeToolTIp">すべての設定とユーザーデータを1つのフォルダに保存します(リムーバブルドライブやクラウドサービスで使用する場合に便利です)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">スタートアップ時にFlow Launcherを起動する</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">フォーカスを失った時にFlow Launcherを隠す</system:String>
     <system:String x:Key="dontPromptUpdateMsg">最新版が入手可能であっても、アップグレードメッセージを表示しない</system:String>
