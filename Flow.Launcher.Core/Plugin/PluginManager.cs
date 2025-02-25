@@ -29,7 +29,7 @@ namespace Flow.Launcher.Core.Plugin
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
 
-        public static IPublicAPI API { get; private set; } = Ioc.Default.GetRequiredService<IPublicAPI>();
+        private static readonly IPublicAPI _api = Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
@@ -63,7 +63,7 @@ namespace Flow.Launcher.Core.Plugin
                 savable?.Save();
             }
 
-            API.SavePluginSettings();
+            _api.SavePluginSettings();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -168,7 +168,7 @@ namespace Flow.Launcher.Core.Plugin
                 try
                 {
                     var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
+                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, _api)));
 
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
@@ -209,10 +209,10 @@ namespace Flow.Launcher.Core.Plugin
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                API.ShowMsg(
-                    API.GetTranslation("failedToInitializePluginsTitle"),
+                _api.ShowMsg(
+                    _api.GetTranslation("failedToInitializePluginsTitle"),
                     string.Format(
-                        API.GetTranslation("failedToInitializePluginsMessage"),
+                        _api.GetTranslation("failedToInitializePluginsMessage"),
                         failed
                     ),
                     "",
@@ -519,7 +519,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => API.ShowMsgBox(s));
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => _api.ShowMsgBox(s));
 
             try
             {
@@ -554,8 +554,8 @@ namespace Flow.Launcher.Core.Plugin
 
                     // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
                     // so we need to remove it from the api instance
-                    var method = API.GetType().GetMethod("RemovePluginSettings");
-                    var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
+                    var method = _api.GetType().GetMethod("RemovePluginSettings");
+                    var pluginJsonStorage = method?.Invoke(_api, new object[] { assemblyName });
 
                     // if there exists a json storage for current plugin, we need to delete the directory path
                     if (pluginJsonStorage != null)
@@ -568,8 +568,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                            _api.ShowMsg(_api.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(_api.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
@@ -585,8 +585,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                            _api.ShowMsg(_api.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(_api.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
