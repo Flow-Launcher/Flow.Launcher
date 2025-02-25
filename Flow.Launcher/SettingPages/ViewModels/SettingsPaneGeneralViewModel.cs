@@ -42,14 +42,54 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             try
             {
                 if (value)
-                    AutoStartup.Enable();
+                {
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.EnableViaRegistry();
+                    }
+                }
                 else
-                    AutoStartup.Disable();
+                {
+                    AutoStartup.DisableViaLogonTaskAndRegistry();
+                }  
             }
             catch (Exception e)
             {
                 App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"), e.Message);
             }
+        }
+    }
+
+    public bool UseLogonTaskForStartup
+    {
+        get => Settings.UseLogonTaskForStartup;
+        set
+        {
+            Settings.UseLogonTaskForStartup = value;
+
+            if (StartFlowLauncherOnSystemStartup)
+            {
+                try
+                {
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.ChangeToViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.ChangeToViaRegistry();
+                    }
+                }
+                catch (Exception e)
+                {
+                    App.API.ShowMsg(App.API.GetTranslation("setAutoStartFailed"),
+                        e.Message);
+                }
+            } 
         }
     }
 
