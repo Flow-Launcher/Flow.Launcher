@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Modalità portatile</system:String>
     <system:String x:Key="portableModeToolTIp">Memorizzare tutte le impostazioni e i dati dell'utente in un'unica cartella (utile se utilizzato con unità rimovibili o servizi cloud).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Avvia Wow all'avvio di Windows</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Errore nell'impostazione del lancio all'avvio</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Nascondi Flow Launcher quando perde il focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Non mostrare le notifiche per una nuova versione</system:String>
