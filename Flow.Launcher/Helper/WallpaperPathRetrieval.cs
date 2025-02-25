@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Microsoft.Win32;
@@ -15,10 +16,16 @@ public static class WallpaperPathRetrieval
 {
     private static readonly int MAX_PATH = 260;
 
-    private static readonly Dictionary<DateTime, BitmapImage> wallpaperCache = new();
+    private static readonly Dictionary<DateTime, ImageBrush> wallpaperCache = new();
 
     public static Brush GetWallpaperBrush()
     {
+        // Invoke the method on the UI thread
+        if (!Application.Current.Dispatcher.CheckAccess())
+        {
+            return Application.Current.Dispatcher.Invoke(GetWallpaperBrush);
+        }
+
         var wallpaper = GetWallpaperPath();
         if (wallpaper is not null && File.Exists(wallpaper))
         {
@@ -28,7 +35,7 @@ public static class WallpaperPathRetrieval
             wallpaperCache.TryGetValue(dateModified, out var cachedWallpaper);
             if (cachedWallpaper != null)
             {
-                return new ImageBrush(cachedWallpaper) { Stretch = Stretch.UniformToFill };
+                return cachedWallpaper;
             }
 
             // We should not dispose the memory stream since the bitmap is still in use
@@ -40,8 +47,10 @@ public static class WallpaperPathRetrieval
             bitmap.DecodePixelHeight = 600;
             bitmap.EndInit();
             bitmap.Freeze(); // Make the bitmap thread-safe
-            wallpaperCache[dateModified] = bitmap;
-            return new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+            var wallpaperBrush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+            wallpaperBrush.Freeze(); // Make the brush thread-safe
+            wallpaperCache.Add(dateModified, wallpaperBrush);
+            return wallpaperBrush;
         }
 
         var wallpaperColor = GetWallpaperColor();
