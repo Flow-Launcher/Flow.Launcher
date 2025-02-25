@@ -45,6 +45,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="portableMode">Tryb przenośny</system:String>
     <system:String x:Key="portableModeToolTIp">Przechowuj wszystkie ustawienia i dane użytkownika w jednym folderze (Przydatne, gdy używane na dyskach wymiennych lub usługach chmurowych).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Błąd uruchamiania ustawień przy starcie</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
