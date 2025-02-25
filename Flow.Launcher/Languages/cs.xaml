@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Přenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Ukládat všechna nastavení a uživatelská data v jedné složce (Užitečné při užití s přenosnými zařízeními).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustit Flow Launcher při spuštění systému</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Při nastavování spouštění došlo k chybě</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skrýt Flow Launcher při vykliknutí</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovat oznámení o nové verzi</system:String>
