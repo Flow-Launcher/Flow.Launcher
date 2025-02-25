@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Microsoft.Win32;
 using Windows.Win32;
 using Windows.Win32.UI.WindowsAndMessaging;
@@ -14,7 +15,40 @@ public static class WallpaperPathRetrieval
 {
     private static readonly int MAX_PATH = 260;
 
-    public static unsafe string GetWallpaperPath()
+    private static readonly Dictionary<DateTime, BitmapImage> wallpaperCache = new();
+
+    public static Brush GetWallpaperBrush()
+    {
+        var wallpaper = GetWallpaperPath();
+        if (wallpaper is not null && File.Exists(wallpaper))
+        {
+            // Since the wallpaper file name is the same (TranscodedWallpaper),
+            // we need to use the last modified date to differentiate them
+            var dateModified = File.GetLastWriteTime(wallpaper);
+            wallpaperCache.TryGetValue(dateModified, out var cachedWallpaper);
+            if (cachedWallpaper != null)
+            {
+                return new ImageBrush(cachedWallpaper) { Stretch = Stretch.UniformToFill };
+            }
+
+            // We should not dispose the memory stream since the bitmap is still in use
+            var memStream = new MemoryStream(File.ReadAllBytes(wallpaper));
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = memStream;
+            bitmap.DecodePixelWidth = 800;
+            bitmap.DecodePixelHeight = 600;
+            bitmap.EndInit();
+            bitmap.Freeze(); // Make the bitmap thread-safe
+            wallpaperCache[dateModified] = bitmap;
+            return new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+        }
+
+        var wallpaperColor = GetWallpaperColor();
+        return new SolidColorBrush(wallpaperColor);
+    }
+
+    private static unsafe string GetWallpaperPath()
     {
         var wallpaperPtr = stackalloc char[MAX_PATH];
         PInvoke.SystemParametersInfo(SYSTEM_PARAMETERS_INFO_ACTION.SPI_GETDESKWALLPAPER, (uint)MAX_PATH,
@@ -25,7 +59,7 @@ public static class WallpaperPathRetrieval
         return wallpaper.ToString();
     }
 
-    public static Color GetWallpaperColor()
+    private static Color GetWallpaperColor()
     {
         RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors", true);
         var result = key?.GetValue("Background", null);
