@@ -190,6 +190,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Add ActionKeyword and update action keyword metadata for specific plugin
+        /// Before adding, please check if action keyword is already assigned by <see cref="ActionKeywordAssigned"/>
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
