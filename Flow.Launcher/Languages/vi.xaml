@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Chế độ Portabler</system:String>
     <system:String x:Key="portableModeToolTIp">Lưu trữ tất cả cài đặt và dữ liệu người dùng trong một thư mục (hữu ích khi sử dụng với thiết bị lưu trữ di động hoặc dịch vụ đám mây).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Khởi động Flow Launcher khi khởi động hệ thống</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Không lưu được tính năng tự khởi động khi khởi động hệ thống</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ẩn Flow Launcher khi mất tiêu điểm</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Không hiển thị thông báo khi có phiên bản mới</system:String>
