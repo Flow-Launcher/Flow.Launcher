@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Taşınabilir Mod</system:String>
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Sistem ile Başlat</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
