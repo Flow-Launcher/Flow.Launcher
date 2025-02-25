@@ -45,6 +45,8 @@
     <system:String x:Key="portableMode">Draagbare Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Alle instellingen en gebruikersgegevens opslaan in één map (Nuttig bij het gebruik van verwijderbare schijven of cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
