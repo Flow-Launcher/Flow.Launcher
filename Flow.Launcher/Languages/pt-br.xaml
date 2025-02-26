@@ -384,6 +384,9 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_report_succeed">Relatório enviado com sucesso</system:String>
     <system:String x:Key="reportWindow_report_failed">Falha ao enviar relatório</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher apresentou um erro</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor, aguarde...</system:String>
