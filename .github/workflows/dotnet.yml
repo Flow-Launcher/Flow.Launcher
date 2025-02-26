@@ -10,9 +10,6 @@ on:
       - dev
       - master
   pull_request:
-    branches:
-      - dev
-      - master
 
 jobs:
   build:
