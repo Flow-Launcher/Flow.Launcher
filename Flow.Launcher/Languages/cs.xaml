@@ -384,6 +384,9 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="reportWindow_report_succeed">Hlášení bylo úspěšně odesláno</system:String>
     <system:String x:Key="reportWindow_report_failed">Nepodařilo se odeslat hlášení</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Počkejte prosím...</system:String>
