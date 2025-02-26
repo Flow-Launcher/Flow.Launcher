@@ -2,7 +2,7 @@
   
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows10.0.19041.0</TargetFramework>
+    <TargetFramework>net9.0-windows10.0.19041.0</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>false</UseWindowsForms>
     <StartupObject>Flow.Launcher.App</StartupObject>
@@ -90,7 +90,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
-    <!-- Do not upgrade Microsoft.Extensions.DependencyInjection and Microsoft.Extensions.Hosting since we are .Net7.0 -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.0" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />

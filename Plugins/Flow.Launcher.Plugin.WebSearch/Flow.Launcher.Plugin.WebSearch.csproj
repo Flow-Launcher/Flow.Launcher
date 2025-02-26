@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net9.0-windows</TargetFramework>
     <ProjectGuid>{403B57F2-1856-4FC7-8A24-36AB346B763E}</ProjectGuid>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <UseWPF>true</UseWPF>

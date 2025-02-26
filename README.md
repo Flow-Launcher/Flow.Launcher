@@ -391,7 +391,7 @@ Get in touch if you like to join the Flow-Launcher Team and help build this grea
 
 - Install Visual Studio 2022
 
-- Install .Net 7 SDK
+- Install .Net 9 SDK
   - via Visual Studio installer
   - via winget `winget install Microsoft.DotNet.SDK.7`
-  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+  - Manually from [here](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
