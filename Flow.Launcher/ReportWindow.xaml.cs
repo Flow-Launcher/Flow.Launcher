@@ -6,10 +6,10 @@ using System.Text;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
+using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Plugin.SharedCommands;
-using Flow.Launcher.Infrastructure.Exception;
 
 namespace Flow.Launcher
 {
@@ -55,12 +55,11 @@ namespace Flow.Launcher
             ErrorTextbox.Document.Blocks.Add(paragraph);
 
             StringBuilder content = new StringBuilder();
-            content.AppendLine(RuntimeInfo());
+            content.AppendLine(ErrorReporting.RuntimeInfo());
+            content.AppendLine(ErrorReporting.DependenciesInfo());
             content.AppendLine();
-            content.AppendLine(DependenciesInfo());
-            content.AppendLine();
-            content.AppendLine(string.Format(App.API.GetTranslation("reportWindow_date"), DateTime.Now.ToString(CultureInfo.InvariantCulture)));
-            content.AppendLine(App.API.GetTranslation("reportWindow_exception"));
+            content.AppendLine($"Date: {DateTime.Now.ToString(CultureInfo.InvariantCulture)}");
+            content.AppendLine("Exception:");
             content.AppendLine(exception.ToString());
             paragraph = new Paragraph();
             paragraph.Inlines.Add(content.ToString());
@@ -93,28 +92,6 @@ namespace Flow.Launcher
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
             Close();
-        }
-
-        private static string RuntimeInfo()
-        {
-            var info =
-                $"""
-                Flow Launcher {App.API.GetTranslation("reportWindow_version")}: {Constant.Version}
-                OS {App.API.GetTranslation("reportWindow_version")}: {ExceptionFormatter.GetWindowsFullVersionFromRegistry()}
-                IntPtr {App.API.GetTranslation("reportWindow_length")}: {IntPtr.Size}
-                x64: {Environment.Is64BitOperatingSystem}
-                """;
-            return info;
-        }
-
-        private static string DependenciesInfo()
-        {
-            var info = 
-                $"""
-                {App.API.GetTranslation("pythonFilePath")}: {Constant.PythonPath}
-                {App.API.GetTranslation("nodeFilePath")}: {Constant.NodePath}
-                """;
-            return info;
         }
     }
 }
