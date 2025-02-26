@@ -8,15 +8,15 @@ namespace Flow.Launcher
 {
     public partial class ProgressBoxEx : Window
     {
-        private readonly Action _forceClosed;
+        private readonly Action _cancelProgress;
 
-        private ProgressBoxEx(Action forceClosed)
+        private ProgressBoxEx(Action cancelProgress)
         {
-            _forceClosed = forceClosed;
+            _cancelProgress = cancelProgress;
             InitializeComponent();
         }
 
-        public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null)
+        public static async Task ShowAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null)
         {
             ProgressBoxEx prgBox = null;
             try
@@ -25,7 +25,7 @@ namespace Flow.Launcher
                 {
                     await Application.Current.Dispatcher.InvokeAsync(() =>
                     {
-                        prgBox = new ProgressBoxEx(forceClosed)
+                        prgBox = new ProgressBoxEx(cancelProgress)
                         {
                             Title = caption
                         };
@@ -35,7 +35,7 @@ namespace Flow.Launcher
                 }
                 else
                 {
-                    prgBox = new ProgressBoxEx(forceClosed)
+                    prgBox = new ProgressBoxEx(cancelProgress)
                     {
                         Title = caption
                     };
@@ -113,7 +113,7 @@ namespace Flow.Launcher
         private void ForceClose()
         {
             Close();
-            _forceClosed?.Invoke();
+            _cancelProgress?.Invoke();
         }
     }
 }
