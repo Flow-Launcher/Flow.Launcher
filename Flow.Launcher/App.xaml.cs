@@ -44,7 +44,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBoxEx.Show($"Cannot load setting storage: {e}");
+                MessageBox.Show($"Cannot load setting storage: {e}");
             }
 
             // Configure the dependency injection container
@@ -68,7 +68,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBoxEx.Show($"Cannot configure dependency injection container: {e}");
+                MessageBox.Show($"Cannot configure dependency injection container: {e}");
             }
 
             // Initialize the public API and Settings first
@@ -79,7 +79,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBoxEx.Show($"Cannot initialize public API and settings: {e}");
+                MessageBox.Show($"Cannot initialize public API and settings: {e}");
             }
         }
 
