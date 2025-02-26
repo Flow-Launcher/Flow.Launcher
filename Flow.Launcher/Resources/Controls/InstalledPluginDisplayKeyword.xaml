@@ -20,7 +20,7 @@
         Visibility="{Binding ActionKeywordsVisibility}">
         <DockPanel Margin="{StaticResource SettingPanelMargin}">
             <TextBlock
-                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Left"
@@ -28,7 +28,7 @@
                 &#xe819;
             </TextBlock>
             <TextBlock
-                Margin="{StaticResource SettingPanelItemRightMargin}"
+                Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 DockPanel.Dock="Left"
@@ -36,6 +36,7 @@
                 Text="{DynamicResource actionKeywords}" />
             <Button
                 Width="100"
+                Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
                 HorizontalAlignment="Right"
                 Command="{Binding SetActionKeywordsCommand}"
                 Content="{Binding ActionKeywordsText}"
