@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: .NET
+name: Build
 
 on:
   workflow_dispatch:
@@ -32,14 +32,6 @@ jobs:
             "**/SolutionAssemblyInfo.cs"
           version: ${{ env.FlowVersion }}.${{ env.BUILD_NUMBER }}
       - uses: actions/cache@v4
-        name: Restore Nuget Cache
-        with:
-          path: |
-            ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget
-      - uses: actions/cache@v4
         name: Restore dotnet tool Cache
         with:
           path: |
@@ -50,10 +42,11 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 9.0.x
+          cache: true
       - name: Install vpk
-         Install vpk tool (dotnet tool install will not reinstall if already installed)
-         We will update the cli by removing cache
+          Install vpk tool (dotnet tool install will not reinstall if already installed)
+          We will update the cli by removing cache
         run: |
           if (!(Get-Command vpk -ErrorAction SilentlyContinue)) {
             dotnet tool install -g vpk
