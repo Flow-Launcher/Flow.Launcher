@@ -44,7 +44,8 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Cannot load setting storage: {e}");
+                ShowErrorMsgBox("Cannot load setting storage, please check local data directory", e);
+                return;
             }
 
             // Configure the dependency injection container
@@ -68,7 +69,8 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Cannot configure dependency injection container: {e}");
+                ShowErrorMsgBox("Cannot configure dependency injection container, please open new issue in Flow.Launcher", e);
+                return;
             }
 
             // Initialize the public API and Settings first
@@ -79,8 +81,14 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                MessageBox.Show($"Cannot initialize public API and settings: {e}");
+                ShowErrorMsgBox("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
+                return;
             }
+        }
+
+        private static void ShowErrorMsgBox(string caption, Exception e)
+        {
+            MessageBox.Show(e.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         [STAThread]
