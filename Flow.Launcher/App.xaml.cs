@@ -35,31 +35,52 @@ namespace Flow.Launcher
         public App()
         {
             // Initialize settings
-            var storage = new FlowLauncherJsonStorage<Settings>();
-            _settings = storage.Load();
-            _settings.SetStorage(storage);
-            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            try
+            {
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.SetStorage(storage);
+                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            }
+            catch (Exception e)
+            {
+                MessageBoxEx.Show($"Cannot load setting storage: {e}");
+            }
 
             // Configure the dependency injection container
-            var host = Host.CreateDefaultBuilder()
-                .UseContentRoot(AppContext.BaseDirectory)
-                .ConfigureServices(services => services
-                    .AddSingleton(_ => _settings)
-                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
-                    .AddSingleton<Portable>()
-                    .AddSingleton<SettingWindowViewModel>()
-                    .AddSingleton<IAlphabet, PinyinAlphabet>()
-                    .AddSingleton<StringMatcher>()
-                    .AddSingleton<Internationalization>()
-                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                    .AddSingleton<MainViewModel>()
-                    .AddSingleton<Theme>()
-                ).Build();
-            Ioc.Default.ConfigureServices(host.Services);
+            try
+            {
+                var host = Host.CreateDefaultBuilder()
+                    .UseContentRoot(AppContext.BaseDirectory)
+                    .ConfigureServices(services => services
+                        .AddSingleton(_ => _settings)
+                        .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                        .AddSingleton<Portable>()
+                        .AddSingleton<SettingWindowViewModel>()
+                        .AddSingleton<IAlphabet, PinyinAlphabet>()
+                        .AddSingleton<StringMatcher>()
+                        .AddSingleton<Internationalization>()
+                        .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                        .AddSingleton<MainViewModel>()
+                        .AddSingleton<Theme>()
+                    ).Build();
+                Ioc.Default.ConfigureServices(host.Services);
+            }
+            catch (Exception e)
+            {
+                MessageBoxEx.Show($"Cannot configure dependency injection container: {e}");
+            }
 
             // Initialize the public API and Settings first
-            API = Ioc.Default.GetRequiredService<IPublicAPI>();
-            _settings.Initialize();
+            try
+            {
+                API = Ioc.Default.GetRequiredService<IPublicAPI>();
+                _settings.Initialize();
+            }
+            catch (Exception e)
+            {
+                MessageBoxEx.Show($"Cannot initialize public API and settings: {e}");
+            }
         }
 
         [STAThread]
