@@ -165,17 +165,17 @@ namespace Flow.Launcher
         {
             // we try to enable auto-startup on first launch, or reenable if it was removed
             // but the user still has the setting set
-            if (_settings.StartFlowLauncherOnSystemStartup && !Infrastructure.AutoStartup.IsEnabled)
+            if (_settings.StartFlowLauncherOnSystemStartup && !Helper.AutoStartup.IsEnabled)
             {
                 try
                 {
                     if (_settings.UseLogonTaskForStartup)
                     {
-                        Infrastructure.AutoStartup.EnableViaLogonTask();
+                        Helper.AutoStartup.EnableViaLogonTask();
                     }
                     else
                     {
-                        Infrastructure.AutoStartup.EnableViaRegistry();
+                        Helper.AutoStartup.EnableViaRegistry();
                     }
                 }
                 catch (Exception e)
