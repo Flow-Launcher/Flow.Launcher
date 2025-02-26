@@ -91,6 +91,7 @@
     </PackageReference>
     <PackageReference Include="InputSimulator" Version="1.0.4" />
     <!-- Do not upgrade Microsoft.Extensions.DependencyInjection and Microsoft.Extensions.Hosting since we are .Net7.0 -->
+    <!-- TaskScheduler seems to be incompatible with 7.0.x version, so we use 6.0.x -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.3" />
