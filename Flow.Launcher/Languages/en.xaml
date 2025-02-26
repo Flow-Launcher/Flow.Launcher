@@ -114,6 +114,7 @@
     <system:String x:Key="disable">Off</system:String>
     <system:String x:Key="actionKeywordsTitle">Action keyword Setting</system:String>
     <system:String x:Key="actionKeywords">Action keyword</system:String>
+    <system:String x:Key="globalSearch">Global search</system:String>
     <system:String x:Key="currentActionKeywords">Current action keyword</system:String>
     <system:String x:Key="newActionKeyword">New action keyword</system:String>
     <system:String x:Key="actionKeywordsTooltip">Change Action Keywords</system:String>

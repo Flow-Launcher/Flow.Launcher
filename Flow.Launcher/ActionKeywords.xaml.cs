@@ -77,11 +77,25 @@ namespace Flow.Launcher
         {
             foreach (var actionKeyword in removedActionKeywords)
             {
-                App.API.RemoveActionKeyword(id, actionKeyword);
+                if (actionKeyword == Query.GlobalPluginWildcardSign)
+                {
+                    pluginViewModel.GlobalSearch = false;
+                }
+                else
+                {
+                    App.API.RemoveActionKeyword(id, actionKeyword);
+                }
             }
             foreach (var actionKeyword in addedActionKeywords)
             {
-                App.API.AddActionKeyword(id, actionKeyword);
+                if (actionKeyword == Query.GlobalPluginWildcardSign)
+                {
+                    pluginViewModel.GlobalSearch = true;
+                }
+                else
+                {
+                    App.API.AddActionKeyword(id, actionKeyword);
+                }
             }
 
             // Update action keywords text and close window
