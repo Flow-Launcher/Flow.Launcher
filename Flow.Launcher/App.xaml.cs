@@ -44,7 +44,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                ShowErrorMsgBox("Cannot load setting storage, please check local data directory", e);
+                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
                 return;
             }
 
@@ -69,7 +69,7 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                ShowErrorMsgBox("Cannot configure dependency injection container, please open new issue in Flow.Launcher", e);
+                ShowErrorMsgBoxAndFailFast("Cannot configure dependency injection container, please open new issue in Flow.Launcher", e);
                 return;
             }
 
@@ -81,14 +81,18 @@ namespace Flow.Launcher
             }
             catch (Exception e)
             {
-                ShowErrorMsgBox("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
+                ShowErrorMsgBoxAndFailFast("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
                 return;
             }
         }
 
-        private static void ShowErrorMsgBox(string caption, Exception e)
+        private static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
         {
-            MessageBox.Show(e.ToString(), caption, MessageBoxButton.OK, MessageBoxImage.Error);
+            // Firstly show users the message
+            MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
+            Environment.FailFast(message, e);
         }
 
         [STAThread]
