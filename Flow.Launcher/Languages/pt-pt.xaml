@@ -45,8 +45,8 @@
     <system:String x:Key="portableMode">Modo portátil</system:String>
     <system:String x:Key="portableModeToolTIp">Guardar todas as definições e dados do utilizador numa pasta (indicado se utilizar discos amovíveis ou serviços cloud)</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Iniciar Flow Launcher ao arrancar o sistema</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Utilizar tarefa de arranque em vez de uma entrada de arranque para uma experiência mais rápida</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Se desinstalar a aplicação, tem que remover manualmente a tarefa (Flow.Launcher Startup) no agendamento de tarefas</system:String>
     <system:String x:Key="setAutoStartFailed">Erro ao definir para iniciar ao arrancar</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ocultar Flow Launcher ao perder o foco</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Não notificar acerca de novas versões</system:String>
@@ -383,9 +383,9 @@ Se adicionar o prefixo '@' durante a introdução do atalho, será utilizada qua
     <system:String x:Key="reportWindow_report_succeed">Relatório enviado com sucesso</system:String>
     <system:String x:Key="reportWindow_report_failed">Falha ao enviar o relatório</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Ocorreu um erro</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Abra um relatório de erro em</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Carregue o ficheiro de registos: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copie a mensagem abaixo</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Por favor aguarde...</system:String>
