@@ -105,23 +105,6 @@ namespace Flow.Launcher.ViewModel
         public string Version => InternationalizationManager.Instance.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
         public string InitAndQueryTime => InternationalizationManager.Instance.GetTranslation("plugin_init_time") + " " + PluginPair.Metadata.InitTime + "ms, " + InternationalizationManager.Instance.GetTranslation("plugin_query_time") + " " + PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
-        public bool GlobalSearch
-        {
-            get => PluginPair.Metadata.ActionKeywords.Contains(Query.GlobalPluginWildcardSign);
-            set
-            {
-                if (value)
-                {
-                    App.API.AddActionKeyword(PluginPair.Metadata.ID, Query.GlobalPluginWildcardSign);
-                }
-                else
-                {
-                    App.API.RemoveActionKeyword(PluginPair.Metadata.ID, Query.GlobalPluginWildcardSign);
-                }
-                OnPropertyChanged();
-                OnActionKeywordsChanged();
-            }
-        }
         public int Priority => PluginPair.Metadata.Priority;
         public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
