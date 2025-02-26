@@ -41,6 +41,11 @@ jobs:
         with:
           dotnet-version: 9.0.x
           cache: true
+          cache-dependency-path: |
+            Flow.Launcher/packages.lock.json
+            Flow.Launcher.Core/packages.lock.json            
+            Flow.Launcher.Infrastructure/packages.lock.json
+            Flow.Launcher.Plugin/packages.lock.json
       - name: Install vpk
           Install vpk tool (dotnet tool install will not reinstall if already installed)
           We will update the cli by removing cache
@@ -49,7 +54,7 @@ jobs:
             dotnet tool install -g vpk
           }
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore --locked-mode
       - name: Build
         run: dotnet build --no-restore -c Release
       - name: Initialize Service
