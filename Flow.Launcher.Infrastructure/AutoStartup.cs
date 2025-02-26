@@ -2,12 +2,11 @@
 using System.IO;
 using System.Linq;
 using System.Security.Principal;
-using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.Win32;
 using Microsoft.Win32.TaskScheduler;
 
-namespace Flow.Launcher.Helper;
+namespace Flow.Launcher.Infrastructure;
 
 public class AutoStartup
 {
@@ -32,7 +31,7 @@ public class AutoStartup
                 var path = key?.GetValue(Constant.FlowLauncher) as string;
                 return path == Constant.ExecutablePath;
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Log.Error("AutoStartup", $"Ignoring non-critical registry error (querying if enabled): {e}");
             }
@@ -59,7 +58,7 @@ public class AutoStartup
 
                 return true;
             }
-            catch (Exception e)
+            catch (System.Exception e)
             {
                 Log.Error("AutoStartup", $"Failed to check logon task: {e}");
             }
@@ -110,7 +109,7 @@ public class AutoStartup
                 key?.DeleteValue(Constant.FlowLauncher, false);
             }
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Log.Error("AutoStartup", $"Failed to disable auto-startup: {e}");
             throw;
@@ -131,7 +130,7 @@ public class AutoStartup
                 key?.SetValue(Constant.FlowLauncher, $"\"{Constant.ExecutablePath}\"");
             }
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Log.Error("AutoStartup", $"Failed to enable auto-startup: {e}");
             throw;
@@ -159,7 +158,7 @@ public class AutoStartup
             TaskService.Instance.RootFolder.RegisterTaskDefinition(LogonTaskName, td);
             return true;
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Log.Error("AutoStartup", $"Failed to schedule logon task: {e}");
             return false;
@@ -174,7 +173,7 @@ public class AutoStartup
             taskService.RootFolder.DeleteTask(LogonTaskName);
             return true;
         }
-        catch (Exception e)
+        catch (System.Exception e)
         {
             Log.Error("AutoStartup", $"Failed to unschedule logon task: {e}");
             return false;
