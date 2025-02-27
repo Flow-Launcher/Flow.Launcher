@@ -75,9 +75,9 @@
     <system:String x:Key="maxShowResults">Maximum results shown</system:String>
     <system:String x:Key="maxShowResultsToolTip">You can also quickly adjust this by using CTRL+Plus and CTRL+Minus.</system:String>
     <system:String x:Key="ignoreHotkeysOnFullscreen">Ignore hotkeys in fullscreen mode</system:String>
-    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">Disable Flow Launcher activation when a full screen application is active (Recommended for games).</system:String>
-    <system:String x:Key="defaultFileManager">Default File Manager</system:String>
-    <system:String x:Key="defaultFileManagerToolTip">Select the file manager to use when opening the folder.</system:String>
+    <system:String x:Key="ignoreHotkeysOnFullscreenToolTip">השבת את הפעלת Flow Launcher כאשר יישום מסך מלא פעיל (מומלץ למשחקים).</system:String>
+    <system:String x:Key="defaultFileManager">מנהל הקבצים המוגדר כברירת מחדל</system:String>
+    <system:String x:Key="defaultFileManagerToolTip">בחר את מנהל הקבצים לשימוש בעת פתיחת תיקיה.</system:String>
     <system:String x:Key="defaultBrowser">דפדפן ברירת מחדל</system:String>
     <system:String x:Key="defaultBrowserToolTip">Setting for New Tab, New Window, Private Mode.</system:String>
     <system:String x:Key="pythonFilePath">נתיב Python</system:String>
@@ -85,10 +85,10 @@
     <system:String x:Key="selectNodeExecutable">Please select the Node.js executable</system:String>
     <system:String x:Key="selectPythonExecutable">Please select pythonw.exe</system:String>
     <system:String x:Key="typingStartEn">Always Start Typing in English Mode</system:String>
-    <system:String x:Key="typingStartEnTooltip">Temporarily change your input method to English mode when activating Flow.</system:String>
+    <system:String x:Key="typingStartEnTooltip">שנה זמנית את שיטת הקלט שלך למצב אנגלית בעת הפעלת Flow.</system:String>
     <system:String x:Key="autoUpdates">עדכון אוטומטי</system:String>
     <system:String x:Key="select">בחר</system:String>
-    <system:String x:Key="hideOnStartup">Hide Flow Launcher on startup</system:String>
+    <system:String x:Key="hideOnStartup">הסתר את Flow Launcher בהפעלת המחשב</system:String>
     <system:String x:Key="hideOnStartupToolTip">חלון החיפוש של Flow Launcher מוסתר במגש לאחר ההפעלה.</system:String>
     <system:String x:Key="hideNotifyIcon">הסתר אייקון מגש</system:String>
     <system:String x:Key="hideNotifyIconToolTip">כאשר האייקון מוסתר מהמגש, ניתן לפתוח את תפריט ההגדרות על ידי לחיצה ימנית על חלון החיפוש.</system:String>
@@ -99,7 +99,7 @@
     <system:String x:Key="SearchPrecisionRegular">Regular</system:String>
     <system:String x:Key="ShouldUsePinyin">Search with Pinyin</system:String>
     <system:String x:Key="ShouldUsePinyinToolTip">Allows using Pinyin to search. Pinyin is the standard system of romanized spelling for translating Chinese.</system:String>
-    <system:String x:Key="AlwaysPreview">Always Preview</system:String>
+    <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
 
@@ -121,10 +121,10 @@
     <system:String x:Key="currentPriority">Current Priority</system:String>
     <system:String x:Key="newPriority">עדיפות חדשה</system:String>
     <system:String x:Key="priority">עדיפות</system:String>
-    <system:String x:Key="priorityToolTip">Change Plugin Results Priority</system:String>
-    <system:String x:Key="pluginDirectory">Plugin Directory</system:String>
+    <system:String x:Key="priorityToolTip">שנה עדיפות תוצאות תוסף</system:String>
+    <system:String x:Key="pluginDirectory">ספריית תוספים</system:String>
     <system:String x:Key="author">מאת</system:String>
-    <system:String x:Key="plugin_init_time">Init time:</system:String>
+    <system:String x:Key="plugin_init_time">זמן פתיחה:</system:String>
     <system:String x:Key="plugin_query_time">Query time:</system:String>
     <system:String x:Key="plugin_query_version">גרסה</system:String>
     <system:String x:Key="plugin_query_web">אתר</system:String>
@@ -162,13 +162,13 @@
     <system:String x:Key="SampleTitleProcessKiller">ProcessKiller</system:String>
     <system:String x:Key="SampleSubTitleProcessKiller">הפסקת תהליכים לא רצויים</system:String>
     <system:String x:Key="SearchBarHeight">גובה סרגל החיפוש</system:String>
-    <system:String x:Key="ItemHeight">Item Height</system:String>
-    <system:String x:Key="queryBoxFont">Query Box Font</system:String>
+    <system:String x:Key="ItemHeight">גובה פריט</system:String>
+    <system:String x:Key="queryBoxFont">גופן תיבת שאילתות</system:String>
     <system:String x:Key="resultItemFont">Result Title Font</system:String>
     <system:String x:Key="resultSubItemFont">Result Subtitle Font</system:String>
     <system:String x:Key="resetCustomize">אפס</system:String>
     <system:String x:Key="CustomizeToolTip">Customize</system:String>
-    <system:String x:Key="windowMode">Window Mode</system:String>
+    <system:String x:Key="windowMode">מצב חלון</system:String>
     <system:String x:Key="opacity">Opacity</system:String>
     <system:String x:Key="theme_load_failure_path_not_exists">ערכת הנושא {0} אינה קיימת, חוזר לערכת ברירת המחדל</system:String>
     <system:String x:Key="theme_load_failure_parse_error">נכשל בטעינת העיצוב {0}, חוזר לערכת ברירת המחדל</system:String>
@@ -182,7 +182,7 @@
     <system:String x:Key="SoundEffectTip">השמע צליל קטן כאשר חלון החיפוש נפתח</system:String>
     <system:String x:Key="SoundEffectVolume">Sound Effect Volume</system:String>
     <system:String x:Key="SoundEffectVolumeTip">Adjust the volume of the sound effect</system:String>
-    <system:String x:Key="SoundEffectWarning">Windows Media Player is unavailable and is required for Flow's volume adjustment. Please check your installation if you need to adjust volume.</system:String>
+    <system:String x:Key="SoundEffectWarning">Windows Media Player אינו זמין, והוא נדרש להתאמת עוצמת הקול של Flow. אנא בדוק את ההתקנה שלך אם אתה צריך להתאים את עוצמת הקול.</system:String>
     <system:String x:Key="Animation">אנימציה</system:String>
     <system:String x:Key="AnimationTip">השתמש באנימציה בממשק המשתמש</system:String>
     <system:String x:Key="AnimationSpeed">מהירות אנימציה</system:String>
@@ -194,7 +194,7 @@
     <system:String x:Key="Clock">שעון</system:String>
     <system:String x:Key="Date">תאריך</system:String>
     <system:String x:Key="TypeIsDarkToolTip">ערכת נושא זאת תומך בשני מצבים (בהיר/כהה).</system:String>
-    <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
+    <system:String x:Key="TypeHasBlurToolTip">ערכת נושא זו תומכת בטשטוש רקע שקוף.</system:String>
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">מקש קיצור</system:String>
@@ -223,7 +223,7 @@
     <system:String x:Key="CopyFilePathHotkey">העתק את נתיב הקובץ</system:String>
     <system:String x:Key="ToggleGameModeHotkey">Toggle Game Mode</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Toggle History</system:String>
-    <system:String x:Key="OpenContainFolderHotkey">Open Containing Folder</system:String>
+    <system:String x:Key="OpenContainFolderHotkey">פתח תיקייה מכילה</system:String>
     <system:String x:Key="RunAsAdminHotkey">הרץ כמנהל</system:String>
     <system:String x:Key="RequeryHotkey">Refresh Search Results</system:String>
     <system:String x:Key="ReloadPluginHotkey">Reload Plugins Data</system:String>
@@ -243,12 +243,12 @@
     <system:String x:Key="add">הוסף</system:String>
     <system:String x:Key="none">ללא</system:String>
     <system:String x:Key="pleaseSelectAnItem">אנא בחר פריט</system:String>
-    <system:String x:Key="deleteCustomHotkeyWarning">Are you sure you want to delete {0} plugin hotkey?</system:String>
+    <system:String x:Key="deleteCustomHotkeyWarning">האם אתה בטוח שברצונך למחוק את מקש הקיצור של התוסף {0}?</system:String>
     <system:String x:Key="deleteCustomShortcutWarning">Are you sure you want to delete shortcut: {0} with expansion {1}?</system:String>
     <system:String x:Key="shortcut_clipboard_description">Get text from clipboard.</system:String>
     <system:String x:Key="shortcut_active_explorer_path">Get path from active explorer.</system:String>
     <system:String x:Key="queryWindowShadowEffect">Query window shadow effect</system:String>
-    <system:String x:Key="shadowEffectCPUUsage">Shadow effect has a substantial usage of GPU. Not recommended if your computer performance is limited.</system:String>
+    <system:String x:Key="shadowEffectCPUUsage">לאפקט הצל יש שימוש ניכר ב-GPU. לא מומלץ אם ביצועי המחשב שלך מוגבלים.</system:String>
     <system:String x:Key="windowWidthSize">Window Width Size</system:String>
     <system:String x:Key="windowWidthSizeToolTip">You can also quickly adjust this by using Ctrl+[ and Ctrl+].</system:String>
     <system:String x:Key="useGlyphUI">Use Segoe Fluent Icons</system:String>
@@ -264,12 +264,12 @@
     <system:String x:Key="password">סיסמא</system:String>
     <system:String x:Key="testProxy">בדוק Proxy</system:String>
     <system:String x:Key="save">שמור</system:String>
-    <system:String x:Key="serverCantBeEmpty">Server field can't be empty</system:String>
+    <system:String x:Key="serverCantBeEmpty">שדה השרת לא יכול להיות ריק</system:String>
     <system:String x:Key="portCantBeEmpty">Port field can't be empty</system:String>
     <system:String x:Key="invalidPortFormat">Invalid port format</system:String>
     <system:String x:Key="saveProxySuccessfully">Proxy configuration saved successfully</system:String>
     <system:String x:Key="proxyIsCorrect">Proxy configured correctly</system:String>
-    <system:String x:Key="proxyConnectFailed">Proxy connection failed</system:String>
+    <system:String x:Key="proxyConnectFailed">החיבור ל- Proxy נכשל</system:String>
 
     <!--  Setting About  -->
     <system:String x:Key="about">אודות</system:String>
@@ -284,8 +284,8 @@
     <system:String x:Key="newVersionTips">New version {0} is available, would you like to restart Flow Launcher to use the update?</system:String>
     <system:String x:Key="checkUpdatesFailed">בדיקת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת הגדרות ה-Proxy שלך לכתובת api.github.com.</system:String>
     <system:String x:Key="downloadUpdatesFailed">
-        Download updates failed, please check your connection and proxy settings to github-cloud.s3.amazonaws.com,
-        or go to https://github.com/Flow-Launcher/Flow.Launcher/releases to download updates manually.
+        הורדת העדכונים נכשלה, אנא בדוק את הגדרות החיבור ואת ה-proxy שלך אל github-cloud.s3.amazonaws.com,
+        או עבור אל https://github.com/Flow-Launcher/Flow.Launcher/releases כדי להוריד עדכונים באופן ידני.
     </system:String>
     <system:String x:Key="releaseNotes">הערות שחרור</system:String>
     <system:String x:Key="documentation">Usage Tips</system:String>
@@ -293,24 +293,24 @@
     <system:String x:Key="settingfolder">Setting Folder</system:String>
     <system:String x:Key="logfolder">תיקיית יומני רישום</system:String>
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
-    <system:String x:Key="clearlogfolderMessage">Are you sure you want to delete all logs?</system:String>
+    <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
     <system:String x:Key="welcomewindow">אשף</system:String>
     <system:String x:Key="userdatapath">User Data Location</system:String>
-    <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
-    <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
+    <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
 
     <!--  FileManager Setting Dialog  -->
-    <system:String x:Key="fileManagerWindow">Select File Manager</system:String>
+    <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
     <system:String x:Key="fileManager_tips">Please specify the file location of the file manager you using and add arguments as required. The &quot;%d&quot; represents the directory path to open for, used by the Arg for Folder field and for commands opening specific directories. The &quot;%f&quot; represents the file path to open for, used by the Arg for File field and for commands opening specific files.</system:String>
     <system:String x:Key="fileManager_tips2">For example, if the file manager uses a command such as &quot;totalcmd.exe /A c:\windows&quot; to open the c:\windows directory, the File Manager Path will be totalcmd.exe, and the Arg For Folder will be /A &quot;%d&quot;. Certain file managers like QTTabBar may just require a path to be supplied, in this instance use &quot;%d&quot; as the File Manager Path and leave the rest of the fileds blank.</system:String>
     <system:String x:Key="fileManager_name">מנהל קבצים</system:String>
     <system:String x:Key="fileManager_profile_name">שם פרופיל</system:String>
-    <system:String x:Key="fileManager_path">File Manager Path</system:String>
+    <system:String x:Key="fileManager_path">נתיב מנהל קבצים</system:String>
     <system:String x:Key="fileManager_directory_arg">Arg For Folder</system:String>
     <system:String x:Key="fileManager_file_arg">Arg For File</system:String>
 
     <!--  DefaultBrowser Setting Dialog  -->
-    <system:String x:Key="defaultBrowserTitle">Default Web Browser</system:String>
+    <system:String x:Key="defaultBrowserTitle">דפדפן ברירת מחדל</system:String>
     <system:String x:Key="defaultBrowser_tips">The default setting follows the OS default browser setting. If specified separately, flow uses that browser.</system:String>
     <system:String x:Key="defaultBrowser_name">דפדפן</system:String>
     <system:String x:Key="defaultBrowser_profile_name">שם דפדפן</system:String>
@@ -329,9 +329,9 @@
     <system:String x:Key="newActionKeywords">New Action Keyword</system:String>
     <system:String x:Key="cancel">ביטול</system:String>
     <system:String x:Key="done">בוצע</system:String>
-    <system:String x:Key="cannotFindSpecifiedPlugin">Can't find specified plugin</system:String>
-    <system:String x:Key="newActionKeywordsCannotBeEmpty">New Action Keyword can't be empty</system:String>
-    <system:String x:Key="newActionKeywordsHasBeenAssigned">This new Action Keyword is already assigned to another plugin, please choose a different one</system:String>
+    <system:String x:Key="cannotFindSpecifiedPlugin">לא ניתן למצוא את התוסף שצוין</system:String>
+    <system:String x:Key="newActionKeywordsCannotBeEmpty">מילת הפעולה החדשה לא יכולה להיות ריקה</system:String>
+    <system:String x:Key="newActionKeywordsHasBeenAssigned">מילת הפעולה החדשה כבר מוקצה לתוסף אחר, אנא בחר אחת שונה</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
     <system:String x:Key="actionkeyword_tips">Enter the action keyword you like to use to start the plugin. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
@@ -350,14 +350,14 @@
     <system:String x:Key="hotkeyRegGuide">Press the keys you want to use for this function.</system:String>
 
     <!--  Custom Query Shortcut Dialog  -->
-    <system:String x:Key="customeQueryShortcutTitle">Custom Query Shortcut</system:String>
+    <system:String x:Key="customeQueryShortcutTitle">קיצור דרך לשאילתה מותאמת אישית</system:String>
     <system:String x:Key="customeQueryShortcutTips">Enter a shortcut that automatically expands to the specified query.</system:String>
     <system:String x:Key="customeQueryShortcutGuide" xml:space="preserve">A shortcut is expanded when it exactly matches the query. 
 
 If you add an '@' prefix while inputting a shortcut, it matches any position in the query. Builtin shortcuts match any position in a query.
     </system:String>
-    <system:String x:Key="duplicateShortcut">Shortcut already exists, please enter a new Shortcut or edit the existing one.</system:String>
-    <system:String x:Key="emptyShortcut">Shortcut and/or its expansion is empty.</system:String>
+    <system:String x:Key="duplicateShortcut">קיצור דרך כבר קיים, אנא הזן קיצור דרך חדש או ערוך את הקיים.</system:String>
+    <system:String x:Key="emptyShortcut">קיצור הדרך ו/או ההרחבה שלו ריקים.</system:String>
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">שמור</system:String>
@@ -377,13 +377,13 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_cancel">ביטול</system:String>
     <system:String x:Key="reportWindow_general">כללי</system:String>
     <system:String x:Key="reportWindow_exceptions">חריגים</system:String>
-    <system:String x:Key="reportWindow_exception_type">Exception Type</system:String>
+    <system:String x:Key="reportWindow_exception_type">סוג החריגה</system:String>
     <system:String x:Key="reportWindow_source">מקור</system:String>
     <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
     <system:String x:Key="reportWindow_sending">שולח</system:String>
-    <system:String x:Key="reportWindow_report_succeed">Report sent successfully</system:String>
-    <system:String x:Key="reportWindow_report_failed">Failed to send report</system:String>
-    <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher got an error</system:String>
+    <system:String x:Key="reportWindow_report_succeed">הדוח נשלח בהצלחה</system:String>
+    <system:String x:Key="reportWindow_report_failed">שליחת הדוח נכשלה</system:String>
+    <system:String x:Key="reportWindow_flowlauncher_got_an_error">אירעה שגיאה ב-Flow Launcher</system:String>
     <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
     <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
     <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
@@ -401,20 +401,20 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
         Please manually move your profile data folder from {0} to {1}
     </system:String>
     <system:String x:Key="update_flowlauncher_new_update">עדכון חדש</system:String>
-    <system:String x:Key="update_flowlauncher_update_new_version_available">New Flow Launcher release {0} is now available</system:String>
-    <system:String x:Key="update_flowlauncher_update_error">An error occurred while trying to install software updates</system:String>
+    <system:String x:Key="update_flowlauncher_update_new_version_available">גרסה חדשה {0} של Flow Launcher זמינה כעת</system:String>
+    <system:String x:Key="update_flowlauncher_update_error">אירעה שגיאה במהלך ניסיון התקנת עדכוני התוכנה</system:String>
     <system:String x:Key="update_flowlauncher_update">עדכון</system:String>
     <system:String x:Key="update_flowlauncher_update_cancel">ביטול</system:String>
     <system:String x:Key="update_flowlauncher_fail">העדכון נכשל</system:String>
-    <system:String x:Key="update_flowlauncher_check_connection">Check your connection and try updating proxy settings to github-cloud.s3.amazonaws.com.</system:String>
-    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">This upgrade will restart Flow Launcher</system:String>
-    <system:String x:Key="update_flowlauncher_update_update_files">Following files will be updated</system:String>
+    <system:String x:Key="update_flowlauncher_check_connection">בדוק את החיבור שלך ונסה לעדכן את הגדרות הפרוקסי ל-github-cloud.s3.amazonaws.com.</system:String>
+    <system:String x:Key="update_flowlauncher_update_restart_flowlauncher_tip">שדרוג זה יאתחל את Flow Launcher</system:String>
+    <system:String x:Key="update_flowlauncher_update_update_files">הקבצים הבאים יעודכנו</system:String>
     <system:String x:Key="update_flowlauncher_update_files">עדכן קבצים</system:String>
     <system:String x:Key="update_flowlauncher_update_update_description">Update description</system:String>
 
     <!--  Welcome Window  -->
     <system:String x:Key="Skip">דלג</system:String>
-    <system:String x:Key="Welcome_Page1_Title">Welcome to Flow Launcher</system:String>
+    <system:String x:Key="Welcome_Page1_Title">ברוך הבא אל Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">שלום, זו הפעם הראשונה שבה Flow Launcher מופעל!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">לפני שתתחיל, אשף זה יסייע בהגדרת Flow Launcher. אתה יכול לדלג על שלב זה. בחר שפה</system:String>
     <system:String x:Key="Welcome_Page2_Title">חפש והפעל את כל הקבצים והיישומים במחשב שלך</system:String>
@@ -428,23 +428,23 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
 
     <!--  General Guide & Hotkey  -->
 
-    <system:String x:Key="HotkeyUpDownDesc">Back / Context Menu</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Item Navigation</system:String>
-    <system:String x:Key="HotkeyShiftEnterDesc">Open Context Menu</system:String>
-    <system:String x:Key="HotkeyCtrlEnterDesc">Open Containing Folder</system:String>
-    <system:String x:Key="HotkeyCtrlShiftEnterDesc">Run as Admin / Open Folder in Default File Manager</system:String>
-    <system:String x:Key="HotkeyCtrlHDesc">Query History</system:String>
-    <system:String x:Key="HotkeyESCDesc">Back to Result in Context Menu</system:String>
-    <system:String x:Key="HotkeyTabDesc">Autocomplete</system:String>
-    <system:String x:Key="HotkeyRunDesc">Open / Run Selected Item</system:String>
+    <system:String x:Key="HotkeyUpDownDesc">חזור / תפריט הקשר</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">ניווט בין פריטים</system:String>
+    <system:String x:Key="HotkeyShiftEnterDesc">פתח תפריט הקשר</system:String>
+    <system:String x:Key="HotkeyCtrlEnterDesc">פתח תיקייה מכילה</system:String>
+    <system:String x:Key="HotkeyCtrlShiftEnterDesc">הפעל כמנהל / פתח תיקייה במנהל הקבצים ברירת מחדל</system:String>
+    <system:String x:Key="HotkeyCtrlHDesc">היסטוריית שאילתות</system:String>
+    <system:String x:Key="HotkeyESCDesc">חזור לתוצאה בתפריט הקשר</system:String>
+    <system:String x:Key="HotkeyTabDesc">השלמה אוטומטית</system:String>
+    <system:String x:Key="HotkeyRunDesc">פתח / הפעל פריט נבחר</system:String>
     <system:String x:Key="HotkeyCtrlIDesc">פתח חלון הגדרות</system:String>
-    <system:String x:Key="HotkeyF5Desc">Reload Plugin Data</system:String>
+    <system:String x:Key="HotkeyF5Desc">טען מחדש נתוני תוסף</system:String>
 
-    <system:String x:Key="HotkeySelectFirstResult">Select first result</system:String>
-    <system:String x:Key="HotkeySelectLastResult">Select last result</system:String>
-    <system:String x:Key="HotkeyRequery">Run current query again</system:String>
-    <system:String x:Key="HotkeyOpenResult">Open result</system:String>
-    <system:String x:Key="HotkeyOpenResultN">Open result #{0}</system:String>
+    <system:String x:Key="HotkeySelectFirstResult">בחר בתוצאה הראשונה</system:String>
+    <system:String x:Key="HotkeySelectLastResult">בחר בתוצאה האחרונה</system:String>
+    <system:String x:Key="HotkeyRequery">הפעל מחדש את השאילתה הנוכחית</system:String>
+    <system:String x:Key="HotkeyOpenResult">פתח תוצאה</system:String>
+    <system:String x:Key="HotkeyOpenResultN">פתח תוצאה #{0}</system:String>
 
     <system:String x:Key="RecommendWeather">מזג אוויר</system:String>
     <system:String x:Key="RecommendWeatherDesc">מזג אוויר מתוצאות Google</system:String>
