@@ -30,6 +30,8 @@ namespace Flow.Launcher.Core.Plugin
         private JsonStorage<ConcurrentDictionary<string, object>> _storage;
 
         // maybe move to resource?
+        private static Thickness settingPanelMargin1 = (Thickness)System.Windows.Application.Current.FindResource("SettingPanelMargin");
+        
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
         private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
         private static readonly Thickness settingPanelMargin = new(0, 0, 0, 0);

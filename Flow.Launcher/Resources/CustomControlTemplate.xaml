@@ -5587,8 +5587,13 @@
     </Style>
 
     <!--  Settings Panel  -->
-    <Thickness x:Key="SettingPanelMargin">70,0,18,0</Thickness>
+    <Thickness x:Key="SettingPanelMargin">70,9,18,9</Thickness>
+    <Thickness x:Key="SettingPanelItemLeftMargin">9,0,0,0</Thickness>
+    <Thickness x:Key="SettingPanelItemRightMargin">0,0,9,0</Thickness>
+    <Thickness x:Key="SettingPanelItemTopBottomMargin">0,9,0,9</Thickness>
+
     <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,9,0,9</Thickness>
     <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,9,9,9</Thickness>
-    <Thickness x:Key="SettingPanelItemLeftRightTopBottomMargin">9,9,9,9</Thickness>
+    <Thickness x:Key="SettingPanelItemLeftBottomMargin">9,0,0,9</Thickness>
+    <Thickness x:Key="SettingPanelItemRightBottomMargin">0,0,9,9</Thickness>
 </ResourceDictionary>

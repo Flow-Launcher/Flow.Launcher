@@ -54,7 +54,7 @@
         <TextBlock
             Grid.Row="1"
             Grid.Column="0"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Margin="{StaticResource SettingPanelItemRightBottomMargin}"
             VerticalAlignment="Center"
             FontSize="14"
             Text="{DynamicResource flowlauncher_plugin_calculator_max_decimal_places}" />
@@ -62,7 +62,7 @@
             x:Name="MaxDecimalPlaces"
             Grid.Row="1"
             Grid.Column="1"
-            Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+            Margin="{StaticResource SettingPanelItemRightBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
             ItemsSource="{Binding MaxDecimalPlacesRange}"
