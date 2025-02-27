@@ -26,7 +26,6 @@ using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
 using Flow.Launcher.Core;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
