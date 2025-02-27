@@ -383,9 +383,9 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="reportWindow_report_succeed">Signalement envoy</system:String>
     <system:String x:Key="reportWindow_report_failed">Échec de l'envoi du signalement</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher a rencontré une erreur</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Veuillez ouvrir un nouveau ticket dans</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Télécharger le fichier journal : {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copiez le message d’exception ci-dessous</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Veuillez patienter...</system:String>
