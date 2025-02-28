@@ -34,16 +34,21 @@ namespace Flow.Launcher
     public class PublicAPIInstance : IPublicAPI
     {
         private readonly Settings _settings;
-        private readonly MainViewModel _mainVM;
+        private MainViewModel _mainVM;
 
-        #region Constructor
+        #region Constructor & Initialization
 
-        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
+        public PublicAPIInstance(Settings settings)
         {
             _settings = settings;
-            _mainVM = mainVM;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
+        }
+
+        // We must initialize mainVM later to avoid unknown issue that _mainVM fails to work
+        public void Initialize(MainViewModel mainVM)
+        {
+            _mainVM = mainVM;
         }
 
         #endregion
