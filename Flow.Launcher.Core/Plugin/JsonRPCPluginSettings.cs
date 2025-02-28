@@ -30,16 +30,9 @@ namespace Flow.Launcher.Core.Plugin
         private JsonStorage<ConcurrentDictionary<string, object>> _storage;
 
         // maybe move to resource?
-        private static Thickness settingPanelMargin1 = (Thickness)System.Windows.Application.Current.FindResource("SettingPanelMargin");
-        
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
         private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
-        private static readonly Thickness settingPanelMargin = new(0, 0, 0, 0);
-        private static readonly Thickness settingTextBlockMargin = new(70, 9, 18, 9);
-        private static readonly Thickness settingLabelPanelMargin = new(70, 9, 18, 9);
-        private static readonly Thickness settingLabelMargin = new(0, 0, 0, 0);
-        private static readonly Thickness settingDescMargin = new(0, 2, 0, 0);
-        private static readonly Thickness settingSepMargin = new(0, 0, 0, 2);
+        private static readonly Thickness settingPanelMargin = (Thickness)System.Windows.Application.Current.FindResource("SettingPanelMargin");
 
         public async Task InitializeAsync()
         {
@@ -51,9 +44,10 @@ namespace Flow.Launcher.Core.Plugin
                 return;
             }
 
-            foreach (var (type, attributes) in Configuration.Body)
+            foreach (var (_, attributes) in Configuration.Body)
             {
-                if (attributes.Name == null)
+                // Skip if the setting does not have attributes or name
+                if (attributes?.Name == null)
                 {
                     continue;
                 }
@@ -64,7 +58,6 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
         }
-
 
         public void UpdateSettings(IReadOnlyDictionary<string, object> settings)
         {
@@ -113,298 +106,249 @@ namespace Flow.Launcher.Core.Plugin
 
         public Control CreateSettingPanel()
         {
-            if (Settings == null || Settings.Count == 0)
-                return null;
-
-            var settingWindow = new UserControl();
-            var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
-
-            ColumnDefinition gridCol1 = new ColumnDefinition();
-            ColumnDefinition gridCol2 = new ColumnDefinition();
-
-            gridCol1.Width = new GridLength(70, GridUnitType.Star);
-            gridCol2.Width = new GridLength(30, GridUnitType.Star);
-            mainPanel.ColumnDefinitions.Add(gridCol1);
-            mainPanel.ColumnDefinitions.Add(gridCol2);
-            settingWindow.Content = mainPanel;
-            int rowCount = 0;
-
-            foreach (var (type, attribute) in Configuration.Body)
+            // If there are no settings or the settings are empty, return null
+            if (Settings == null || Settings.IsEmpty)
             {
-                Separator sep = new Separator();
-                sep.VerticalAlignment = VerticalAlignment.Top;
-                sep.Margin = settingSepMargin;
-                sep.SetResourceReference(Separator.BackgroundProperty, "Color03B"); /* for theme change */
-                var panel = new StackPanel
+                return null;
+            }
+
+            // Create main grid
+            var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
+            mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
+            {
+                Width = new GridLength(70, GridUnitType.Star)  // TODO: Auto
+            });
+            mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
+            {
+                Width = new GridLength(30, GridUnitType.Star)  // TODO: Auto
+            });
+
+            // Iterate over each setting and create one row for it
+            int rowCount = 0;
+            foreach (var (type, attributes) in Configuration.Body)
+            {
+                // Skip if the setting does not have attributes or name
+                if (attributes?.Name == null)
                 {
-                    Orientation = Orientation.Vertical,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingLabelPanelMargin
-                };
-
-                RowDefinition gridRow = new RowDefinition();
-                mainPanel.RowDefinitions.Add(gridRow);
-                var name = new TextBlock()
-                {
-                    Text = attribute.Label,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingLabelMargin,
-                    TextWrapping = TextWrapping.WrapWithOverflow
-                };
-
-                var desc = new TextBlock()
-                {
-                    Text = attribute.Description,
-                    FontSize = 12,
-                    VerticalAlignment = VerticalAlignment.Center,
-                    Margin = settingDescMargin,
-                    TextWrapping = TextWrapping.WrapWithOverflow
-                };
-
-                desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B");
-
-                if (attribute.Description == null) /* if no description, hide */
-                    desc.Visibility = Visibility.Collapsed;
-
-
-                if (type != "textBlock") /* if textBlock, hide desc */
-                {
-                    panel.Children.Add(name);
-                    panel.Children.Add(desc);
+                    continue;
                 }
 
+                // Add a new row to the main grid
+                mainPanel.RowDefinitions.Add(new RowDefinition());
 
-                Grid.SetColumn(panel, 0);
-                Grid.SetRow(panel, rowCount);
-
+                // State controls for column 0 and 1
+                StackPanel panel = null;
                 FrameworkElement contentControl;
+
+                // If the type is textBlock or seperator, we do not need to create a panel
+                if (type != "textBlock" && type != "seperator")
+                {
+                    // Create a panel to hold the label and description
+                    panel = new StackPanel
+                    {
+                        Orientation = Orientation.Vertical,
+                        VerticalAlignment = VerticalAlignment.Center
+                    };
+
+                    // Create a text block for name
+                    var name = new TextBlock()
+                    {
+                        Text = attributes.Label,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        TextWrapping = TextWrapping.WrapWithOverflow
+                    };
+
+                    // Create a text block for description
+                    TextBlock desc = null;
+                    if (attributes.Description != null)
+                    {
+                        desc = new TextBlock()
+                        {
+                            Text = attributes.Description,
+                            FontSize = 12,
+                            VerticalAlignment = VerticalAlignment.Center,
+                            Margin = new(0, 2, 0, 0),  // TODO: Use resource
+                            TextWrapping = TextWrapping.WrapWithOverflow
+                        };
+
+                        desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B"); // for theme change
+                    }
+
+                    // Add the name and description to the panel
+                    panel.Children.Add(name);
+                    if (desc != null)
+                    {
+                        panel.Children.Add(desc);
+                    }
+                }
 
                 switch (type)
                 {
                     case "textBlock":
-                    {
-                        contentControl = new TextBlock
                         {
-                            Text = attribute.Description.Replace("\\r\\n", "\r\n"),
-                            Margin = settingTextBlockMargin,
-                            Padding = new Thickness(0, 0, 0, 0),
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
-                            TextAlignment = TextAlignment.Left,
-                            TextWrapping = TextWrapping.Wrap
-                        };
+                            contentControl = new TextBlock
+                            {
+                                Text = attributes.Description.Replace("\\r\\n", "\r\n"),
+                                Padding = new Thickness(0, 0, 0, 0),
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                                TextAlignment = TextAlignment.Left,
+                                TextWrapping = TextWrapping.Wrap
+                            };
 
-                        Grid.SetColumn(contentControl, 0);
-                        Grid.SetColumnSpan(contentControl, 2);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-
-                        break;
-                    }
+                            break;
+                        }
                     case "input":
-                    {
-                        var textBox = new TextBox()
                         {
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            Margin = settingControlMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
+                            var textBox = new TextBox()
+                            {
+                                Text = Settings[attributes.Name] as string ?? string.Empty,
+                                Margin = settingControlMargin,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                ToolTip = attributes.Description
+                            };
 
-                        textBox.TextChanged += (_, _) =>
-                        {
-                            Settings[attribute.Name] = textBox.Text;
-                        };
+                            textBox.TextChanged += (_, _) =>
+                            {
+                                Settings[attributes.Name] = textBox.Text;
+                            };
 
-                        contentControl = textBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
+                            contentControl = textBox;
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-
-                        break;
-                    }
+                            break;
+                        }
                     case "inputWithFileBtn":
                     case "inputWithFolderBtn":
-                    {
-                        var textBox = new TextBox()
                         {
-                            Margin = new Thickness(10, 0, 0, 0),
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
-
-                        textBox.TextChanged += (_, _) =>
-                        {
-                            Settings[attribute.Name] = textBox.Text;
-                        };
-
-                        var Btn = new System.Windows.Controls.Button()
-                        {
-                            Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
-                        };
-
-                        Btn.Click += (_, _) =>
-                        {
-                            using CommonDialog dialog = type switch
+                            var textBox = new TextBox()
                             {
-                                "inputWithFolderBtn" => new FolderBrowserDialog(),
-                                _ => new OpenFileDialog(),
+                                Margin = new Thickness(10, 0, 0, 0),
+                                Text = Settings[attributes.Name] as string ?? string.Empty,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                ToolTip = attributes.Description
                             };
-                            if (dialog.ShowDialog() != DialogResult.OK) return;
 
-                            var path = dialog switch
+                            textBox.TextChanged += (_, _) =>
                             {
-                                FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
-                                OpenFileDialog fileDialog => fileDialog.FileName,
+                                Settings[attributes.Name] = textBox.Text;
                             };
-                            textBox.Text = path;
-                            Settings[attribute.Name] = path;
-                        };
 
-                        var dockPanel = new DockPanel() { Margin = settingControlMargin };
+                            var Btn = new System.Windows.Controls.Button()
+                            {
+                                Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
+                            };
 
-                        DockPanel.SetDock(Btn, Dock.Right);
-                        dockPanel.Children.Add(Btn);
-                        dockPanel.Children.Add(textBox);
-                        contentControl = dockPanel;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
+                            Btn.Click += (_, _) =>
+                            {
+                                using CommonDialog dialog = type switch
+                                {
+                                    "inputWithFolderBtn" => new FolderBrowserDialog(),
+                                    _ => new OpenFileDialog(),
+                                };
+                                if (dialog.ShowDialog() != DialogResult.OK) return;
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
+                                var path = dialog switch
+                                {
+                                    FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
+                                    OpenFileDialog fileDialog => fileDialog.FileName,
+                                };
+                                textBox.Text = path;
+                                Settings[attributes.Name] = path;
+                            };
 
-                        break;
-                    }
+                            var dockPanel = new DockPanel() { Margin = settingControlMargin };
+
+                            DockPanel.SetDock(Btn, Dock.Right);
+                            dockPanel.Children.Add(Btn);
+                            dockPanel.Children.Add(textBox);
+                            contentControl = dockPanel;
+
+                            break;
+                        }
                     case "textarea":
-                    {
-                        var textBox = new TextBox()
                         {
-                            Height = 120,
-                            Margin = settingControlMargin,
-                            VerticalAlignment = VerticalAlignment.Center,
-                            TextWrapping = TextWrapping.WrapWithOverflow,
-                            AcceptsReturn = true,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            Text = Settings[attribute.Name] as string ?? string.Empty,
-                            ToolTip = attribute.Description
-                        };
+                            var textBox = new TextBox()
+                            {
+                                Height = 120,
+                                Margin = settingControlMargin,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                TextWrapping = TextWrapping.WrapWithOverflow,
+                                AcceptsReturn = true,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                Text = Settings[attributes.Name] as string ?? string.Empty,
+                                ToolTip = attributes.Description
+                            };
 
-                        textBox.TextChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = ((TextBox)sender).Text;
-                        };
+                            textBox.TextChanged += (sender, _) =>
+                            {
+                                Settings[attributes.Name] = ((TextBox)sender).Text;
+                            };
 
-                        contentControl = textBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
+                            contentControl = textBox;
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-
-                        break;
-                    }
+                            break;
+                        }
                     case "passwordBox":
-                    {
-                        var passwordBox = new PasswordBox()
                         {
-                            Margin = settingControlMargin,
-                            Password = Settings[attribute.Name] as string ?? string.Empty,
-                            PasswordChar = attribute.passwordChar == default ? '*' : attribute.passwordChar,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
-                            ToolTip = attribute.Description
-                        };
+                            var passwordBox = new PasswordBox()
+                            {
+                                Margin = settingControlMargin,
+                                Password = Settings[attributes.Name] as string ?? string.Empty,
+                                PasswordChar = attributes.passwordChar == default ? '*' : attributes.passwordChar,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                ToolTip = attributes.Description
+                            };
 
-                        passwordBox.PasswordChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = ((PasswordBox)sender).Password;
-                        };
+                            passwordBox.PasswordChanged += (sender, _) =>
+                            {
+                                Settings[attributes.Name] = ((PasswordBox)sender).Password;
+                            };
 
-                        contentControl = passwordBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
+                            contentControl = passwordBox;
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-
-                        break;
-                    }
+                            break;
+                        }
                     case "dropdown":
-                    {
-                        var comboBox = new System.Windows.Controls.ComboBox()
                         {
-                            ItemsSource = attribute.Options,
-                            SelectedItem = Settings[attribute.Name],
-                            Margin = settingControlMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            ToolTip = attribute.Description
-                        };
+                            var comboBox = new ComboBox()
+                            {
+                                ItemsSource = attributes.Options,
+                                SelectedItem = Settings[attributes.Name],
+                                Margin = settingControlMargin,
+                                HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                                ToolTip = attributes.Description
+                            };
 
-                        comboBox.SelectionChanged += (sender, _) =>
-                        {
-                            Settings[attribute.Name] = (string)((System.Windows.Controls.ComboBox)sender).SelectedItem;
-                        };
+                            comboBox.SelectionChanged += (sender, _) =>
+                            {
+                                Settings[attributes.Name] = (string)((ComboBox)sender).SelectedItem;
+                            };
 
-                        contentControl = comboBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
+                            contentControl = comboBox;
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
-
-                        break;
-                    }
+                            break;
+                        }
                     case "checkbox":
                         var checkBox = new CheckBox
                         {
                             IsChecked =
-                                Settings[attribute.Name] is bool isChecked
+                                Settings[attributes.Name] is bool isChecked
                                     ? isChecked
-                                    : bool.Parse(attribute.DefaultValue),
+                                    : bool.Parse(attributes.DefaultValue),
                             Margin = settingCheckboxMargin,
                             HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            ToolTip = attribute.Description
+                            ToolTip = attributes.Description
                         };
 
                         checkBox.Click += (sender, _) =>
                         {
-                            Settings[attribute.Name] = ((CheckBox)sender).IsChecked;
+                            Settings[attributes.Name] = ((CheckBox)sender).IsChecked;
                         };
 
                         contentControl = checkBox;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
-
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
 
                         break;
                     case "hyperlink":
-                        var hyperlink = new Hyperlink { ToolTip = attribute.Description, NavigateUri = attribute.url };
+                        var hyperlink = new Hyperlink { ToolTip = attributes.Description, NavigateUri = attributes.url };
 
                         var linkbtn = new System.Windows.Controls.Button
                         {
@@ -412,32 +356,59 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = settingControlMargin
                         };
 
-                        linkbtn.Content = attribute.urlLabel;
+                        linkbtn.Content = attributes.urlLabel;
 
                         contentControl = linkbtn;
-                        Grid.SetColumn(contentControl, 1);
-                        Grid.SetRow(contentControl, rowCount);
-                        if (rowCount != 0)
-                            mainPanel.Children.Add(sep);
 
-                        Grid.SetRow(sep, rowCount);
-                        Grid.SetColumn(sep, 0);
-                        Grid.SetColumnSpan(sep, 2);
+                        break;
+                    case "seperator":  // TODO: Support seperator
+                        // TODO: Use style for Seperator
+                        contentControl = new Separator
+                        {
+                            VerticalAlignment = VerticalAlignment.Top,
+                            Margin = new(-70, 13.5, -18, 13.5),
+                            Height = 1
+                        };
+                        contentControl.SetResourceReference(Separator.BackgroundProperty, "Color03B");
 
                         break;
                     default:
                         continue;
                 }
 
-                if (type != "textBlock")
-                    SettingControls[attribute.Name] = contentControl;
+                // If type is textBlock or seperator, we just add the content control to the main grid
+                if (panel == null)
+                {
+                    // Add the content control to the column 0, row rowCount and columnSpan 2 of the main grid
+                    mainPanel.Children.Add(contentControl);
+                    Grid.SetColumn(contentControl, 0);
+                    Grid.SetColumnSpan(contentControl, 2);
+                    Grid.SetRow(contentControl, rowCount);
+                }
+                else
+                {
+                    // Add the panel to the column 0 and row rowCount of the main grid
+                    mainPanel.Children.Add(panel);
+                    Grid.SetColumn(panel, 0);
+                    Grid.SetRow(panel, rowCount);
 
-                mainPanel.Children.Add(panel);
-                mainPanel.Children.Add(contentControl);
+                    // Add the content control to the column 1 and row rowCount of the main grid
+                    mainPanel.Children.Add(contentControl);
+                    Grid.SetColumn(contentControl, 1);
+                    Grid.SetRow(contentControl, rowCount);
+
+                    // Add into SettingControls for later use if need
+                    SettingControls[attributes.Name] = contentControl;
+                }
+
                 rowCount++;
             }
 
-            return settingWindow;
+            // Wrap the main grid in a user control
+            return new UserControl()
+            {
+                Content = mainPanel
+            };
         }
     }
 }
