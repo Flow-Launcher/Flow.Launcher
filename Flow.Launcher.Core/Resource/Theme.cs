@@ -149,7 +149,7 @@ namespace Flow.Launcher.Core.Resource
         {
 
             //SetWindowAccent();
-            var dict = GetThemeResourceDictionary(Settings.Theme);
+            var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
                 return; 
 
@@ -183,7 +183,7 @@ namespace Flow.Launcher.Core.Resource
         // WindowBorderStyle에서 Background 색상 가져오는 함수
         private Color GetWindowBorderStyleBackground()
         {
-            var Resources = GetThemeResourceDictionary(Settings.Theme);
+            var Resources = GetThemeResourceDictionary(_settings.Theme);
             var windowBorderStyle = (Style)Resources["WindowBorderStyle"];
 
             var backgroundSetter = windowBorderStyle.Setters
@@ -225,7 +225,7 @@ namespace Flow.Launcher.Core.Resource
 
         public void ThemeModeColor(string Mode)
         {
-            var dict = GetThemeResourceDictionary(Settings.Theme);
+            var dict = GetThemeResourceDictionary(_settings.Theme);
 
             Color lightBG;
             Color darkBG;
@@ -256,7 +256,7 @@ namespace Flow.Launcher.Core.Resource
             if (Mode == "Auto")
             {
                 int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-                string colorScheme = Settings.ColorScheme;
+                string colorScheme = _settings.ColorScheme;
                 bool isDarkMode = themeValue == 0; // 0이면 다크 모드
                 if (colorScheme == "System")
                 {
