@@ -134,20 +134,20 @@ namespace Flow.Launcher.ViewModel
         {
             var directory = PluginPair.Metadata.PluginDirectory;
             if (!string.IsNullOrEmpty(directory))
-                PluginManager.API.OpenDirectory(directory);
+                App.API.OpenDirectory(directory);
         }
 
         [RelayCommand]
         private void OpenSourceCodeLink()
         {
-            PluginManager.API.OpenUrl(PluginPair.Metadata.Website);
+            App.API.OpenUrl(PluginPair.Metadata.Website);
         }
 
         [RelayCommand]
         private void OpenDeletePluginWindow()
         {
-            PluginManager.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
-            PluginManager.API.ShowMainWindow();
+            App.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
+            App.API.ShowMainWindow();
         }
 
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
