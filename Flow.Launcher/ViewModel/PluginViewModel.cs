@@ -99,7 +99,7 @@ namespace Flow.Launcher.ViewModel
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
-        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.AllowModifyActionKeywords ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.HideActionKeywordPanel ? Visibility.Collapsed : Visibility.Visible;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
         public string Version => InternationalizationManager.Instance.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;

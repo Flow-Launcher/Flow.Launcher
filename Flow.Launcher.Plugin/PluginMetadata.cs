@@ -34,7 +34,7 @@ namespace Flow.Launcher.Plugin
 
         public List<string> ActionKeywords { get; set; }
 
-        public bool AllowModifyActionKeywords { get; set; } = true;
+        public bool HideActionKeywordPanel { get; set; }
 
         public string IcoPath { get; set;}
         
