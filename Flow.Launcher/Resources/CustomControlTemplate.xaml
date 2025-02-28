@@ -5599,7 +5599,7 @@
     <Style x:Key="SettingPanelSeperatorStyle" TargetType="Separator">
         <Setter Property="Margin" Value="-70 13.5 -18 13.5" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
-        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Background" Value="{DynamicResource Color03B}" />
     </Style>
 </ResourceDictionary>
