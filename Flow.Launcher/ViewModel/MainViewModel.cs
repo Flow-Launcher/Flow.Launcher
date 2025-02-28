@@ -26,6 +26,7 @@ using System.ComponentModel;
 using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Plugin.SharedModels;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1016,10 +1017,20 @@ namespace Flow.Launcher.ViewModel
                     (
                         r =>
                         {
-                            var match = StringMatcher.FuzzySearch(query, r.Title);
-                            if (!match.IsSearchPrecisionScoreMet())
+                            MatchResult match;
+                            if (!string.IsNullOrEmpty(r.StringMatcherKey))
                             {
-                                match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                                match = StringMatcher.FuzzySearch(query, r.StringMatcherKey);
+                                // If StringMatcherKey is not met, we should not check Title and SubTitle because
+                                // developers have set the StringMatcherKey to be the only searchable field
+                            }
+                            else
+                            {
+                                match = StringMatcher.FuzzySearch(query, r.Title);
+                                if (!match.IsSearchPrecisionScoreMet())
+                                {
+                                    match = StringMatcher.FuzzySearch(query, r.SubTitle);
+                                }
                             }
 
                             if (!match.IsSearchPrecisionScoreMet()) return false;
@@ -1067,8 +1078,10 @@ namespace Flow.Launcher.ViewModel
             {
                 var filtered = results.Where
                 (
-                    r => StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
-                         StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
+                    r => (!string.IsNullOrEmpty(r.StringMatcherKey)) ?
+                        StringMatcher.FuzzySearch(query, r.StringMatcherKey).IsSearchPrecisionScoreMet() :
+                        StringMatcher.FuzzySearch(query, r.Title).IsSearchPrecisionScoreMet() ||
+                        StringMatcher.FuzzySearch(query, r.SubTitle).IsSearchPrecisionScoreMet()
                 ).ToList();
                 History.AddResults(filtered, id);
             }

@@ -271,6 +271,13 @@ namespace Flow.Launcher.Plugin
         public string RecordKey { get; set; } = null;
 
         /// <summary>
+        /// The key to be compared with the user input for fuzzy search.
+        /// This can be useful when the plugin wants to provide a different string for fuzzy search.
+        /// If the plugin does not specific this, FL just uses Title and SubTitle to compare with the user input.
+        /// </summary>
+        public string StringMatcherKey { get; set; }
+
+        /// <summary>
         /// Info of the preview section of a <see cref="Result"/>
         /// </summary>
         public record PreviewInfo
