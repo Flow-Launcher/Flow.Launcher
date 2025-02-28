@@ -17,7 +17,8 @@ namespace Flow.Launcher.Plugin
     public interface IPublicAPI
     {
         /// <summary>
-        /// Change Flow.Launcher query
+        /// Change Flow.Launcher query.
+        /// When current results are from context menu or history, it will go back to query results before changing query.
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
@@ -299,7 +300,7 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// This method should run when selected item is from query results.
+        /// When current results are from context menu or history, it will go back to query results before requerying.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);

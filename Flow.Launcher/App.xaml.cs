@@ -4,6 +4,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
@@ -14,24 +15,52 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Http;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
+using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher
 {
     public partial class App : IDisposable, ISingleInstanceApp
     {
-        public static PublicAPIInstance API { get; private set; }
+        public static IPublicAPI API { get; private set; }
         private const string Unique = "Flow.Launcher_Unique_Application_Mutex";
         private static bool _disposed;
-        private Settings _settings;
-        private MainViewModel _mainVM;
-        private SettingWindowViewModel _settingsVM;
-        private readonly Updater _updater = new Updater(Flow.Launcher.Properties.Settings.Default.GithubRepo);
-        private readonly Portable _portable = new Portable();
-        private readonly PinyinAlphabet _alphabet = new PinyinAlphabet();
-        private StringMatcher _stringMatcher;
+        private readonly Settings _settings;
+
+        public App()
+        {
+            // Initialize settings
+            var storage = new FlowLauncherJsonStorage<Settings>();
+            _settings = storage.Load();
+            _settings.SetStorage(storage);
+            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+
+            // Configure the dependency injection container
+            var host = Host.CreateDefaultBuilder()
+                .UseContentRoot(AppContext.BaseDirectory)
+                .ConfigureServices(services => services
+                    .AddSingleton(_ => _settings)
+                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                    .AddSingleton<Portable>()
+                    .AddSingleton<SettingWindowViewModel>()
+                    .AddSingleton<IAlphabet, PinyinAlphabet>()
+                    .AddSingleton<StringMatcher>()
+                    .AddSingleton<Internationalization>()
+                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                    .AddSingleton<MainViewModel>()
+                    .AddSingleton<Theme>()
+                ).Build();
+            Ioc.Default.ConfigureServices(host.Services);
+
+            // Initialize the public API and Settings first
+            API = Ioc.Default.GetRequiredService<IPublicAPI>();
+            _settings.Initialize();
+        }
 
         [STAThread]
         public static void Main()
@@ -50,52 +79,40 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
-                _portable.PreStartCleanUpAfterPortabilityUpdate();
+                Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
-                Log.Info(
-                    "|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
+                Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
                 Log.Info($"|App.OnStartup|Runtime info:{ErrorReporting.RuntimeInfo()}");
+
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
 
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
-                _settingsVM = new SettingWindowViewModel(_updater, _portable);
-                _settings = _settingsVM.Settings;
-                _settings.WMPInstalled =  WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
-
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);
 
-                _alphabet.Initialize(_settings);
-                _stringMatcher = new StringMatcher(_alphabet);
-                StringMatcher.Instance = _stringMatcher;
-                _stringMatcher.UserSettingSearchPrecision = _settings.QuerySearchPrecision;
-
-                InternationalizationManager.Instance.Settings = _settings;
+                // TODO: Clean InternationalizationManager.Instance and InternationalizationManager.Instance.GetTranslation in future
                 InternationalizationManager.Instance.ChangeLanguage(_settings.Language);
 
                 PluginManager.LoadPlugins(_settings.PluginSettings);
-                _mainVM = new MainViewModel(_settings);
 
-                API = new PublicAPIInstance(_settingsVM, _mainVM, _alphabet);
-
-                Http.API = API;
                 Http.Proxy = _settings.Proxy;
 
-                await PluginManager.InitializePluginsAsync(API);
+                await PluginManager.InitializePluginsAsync();
                 await imageLoadertask;
 
-                var window = new MainWindow(_settings, _mainVM);
+                var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
+                var window = new MainWindow(_settings, mainVM);
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 
                 Current.MainWindow = window;
                 Current.MainWindow.Title = Constant.FlowLauncher;
 
-                HotKeyMapper.Initialize(_mainVM);
+                HotKeyMapper.Initialize();
 
                 // main windows needs initialized before theme change because of blur settings
-                ThemeManager.Instance.Settings = _settings;
+                // TODO: Clean ThemeManager.Instance in future
                 ThemeManager.Instance.ChangeTheme(_settings.Theme);
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -119,7 +136,14 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.Enable();
+                    if (_settings.UseLogonTaskForStartup)
+                    {
+                        Helper.AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        Helper.AutoStartup.EnableViaRegistry();
+                    }
                 }
                 catch (Exception e)
                 {
@@ -141,11 +165,11 @@ namespace Flow.Launcher
                 {
                     // check update every 5 hours
                     var timer = new PeriodicTimer(TimeSpan.FromHours(5));
-                    await _updater.UpdateAppAsync(API);
+                    await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
 
                     while (await timer.WaitForNextTickAsync())
                         // check updates on startup
-                        await _updater.UpdateAppAsync(API);
+                        await Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync();
                 }
             });
         }
@@ -188,7 +212,7 @@ namespace Flow.Launcher
 
         public void OnSecondAppStarted()
         {
-            _mainVM.Show();
+            Ioc.Default.GetRequiredService<MainViewModel>().Show();
         }
     }
 }

@@ -72,6 +72,8 @@ namespace Flow.Launcher.Plugin.Program
         private const string ExeUninstallerSuffix = ".exe";
         private const string InkUninstallerSuffix = ".lnk";
 
+        private static readonly string WindowsAppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
+
         static Main()
         {
         }
@@ -90,11 +92,20 @@ namespace Flow.Launcher.Plugin.Program
                 {
                     try
                     {
+                        // Collect all UWP Windows app directories
+                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
+                            .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
+                            .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
+                            .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .ToArray() : null;
+
                         return _win32s.Cast<IProgram>()
                             .Concat(_uwps)
                             .AsParallel()
                             .WithCancellation(token)
                             .Where(HideUninstallersFilter)
+                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
                             .Where(p => p.Enabled)
                             .Select(p => p.Result(query.Search, Context.API))
                             .Where(r => r?.Score > 0)
@@ -150,6 +161,23 @@ namespace Flow.Launcher.Plugin.Program
             }
 
             return true;
+        }
+
+        private static bool HideDuplicatedWindowsAppFilter(IProgram program, string[] uwpsDirectories)
+        {
+            if (uwpsDirectories == null || uwpsDirectories.Length == 0) return true;
+            if (program is UWPApp) return true;
+
+            var location = program.Location.TrimEnd('\\'); // Ensure trailing slash
+            if (string.IsNullOrEmpty(location))
+                return true; // Keep if location is invalid
+
+            if (!location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase))
+                return true; // Keep if not a Windows app
+
+            // Check if the any Win32 executable directory contains UWP Windows app location matches 
+            return !uwpsDirectories.Any(uwpDirectory =>
+                location.StartsWith(uwpDirectory, StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task InitAsync(PluginInitContext context)
@@ -264,7 +292,6 @@ namespace Flow.Launcher.Plugin.Program
                             Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                             Context.API.GetTranslation(
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
-                        Context.API.BackToQueryResults();
                         Context.API.ReQuery();
                         return false;
                     },

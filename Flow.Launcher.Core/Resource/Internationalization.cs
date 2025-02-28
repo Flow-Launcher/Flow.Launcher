@@ -11,22 +11,24 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Globalization;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.Resource
 {
     public class Internationalization
     {
-        public Settings Settings { get; set; }
         private const string Folder = "Languages";
         private const string DefaultLanguageCode = "en";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
+        private readonly Settings _settings;
         private readonly List<string> _languageDirectories = new List<string>();
         private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
         private readonly string SystemLanguageCode;
 
-        public Internationalization()
+        public Internationalization(Settings settings)
         {
+            _settings = settings;
             AddFlowLauncherLanguageDirectory();
             SystemLanguageCode = GetSystemLanguageCodeAtStartup();
         }
@@ -141,7 +143,7 @@ namespace Flow.Launcher.Core.Resource
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
 
             // Raise event after culture is set
-            Settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
+            _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
@@ -152,7 +154,7 @@ namespace Flow.Launcher.Core.Resource
         {
             var languageToSet = GetLanguageByLanguageCode(languageCodeToSet);
 
-            if (Settings.ShouldUsePinyin)
+            if (_settings.ShouldUsePinyin)
                 return false;
 
             if (languageToSet != AvailableLanguages.Chinese && languageToSet != AvailableLanguages.Chinese_TW)
@@ -162,7 +164,7 @@ namespace Flow.Launcher.Core.Resource
             // "Do you want to search with pinyin?"
             string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？" ;
 
-            if (MessageBoxEx.Show(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            if (Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;

@@ -25,6 +25,7 @@ using System.Windows.Input;
 using System.ComponentModel;
 using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -56,13 +57,13 @@ namespace Flow.Launcher.ViewModel
 
         #region Constructor
 
-        public MainViewModel(Settings settings)
+        public MainViewModel()
         {
             _queryTextBeforeLeaveResults = "";
             _queryText = "";
             _lastQuery = new Query();
 
-            Settings = settings;
+            Settings = Ioc.Default.GetRequiredService<Settings>();
             Settings.PropertyChanged += (_, args) =>
             {
                 switch (args.PropertyName)
@@ -279,10 +280,8 @@ namespace Flow.Launcher.ViewModel
 
         public void ReQuery(bool reselect)
         {
-            if (SelectedIsFromQueryResults())
-            {
-                QueryResults(isReQuery: true, reSelect: reselect);
-            }
+            BackToQueryResults();
+            QueryResults(isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -626,6 +625,8 @@ namespace Flow.Launcher.ViewModel
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
+                BackToQueryResults();
+
                 if (QueryText != queryText)
                 {
                     // re-query is done in QueryText's setter method
@@ -1291,7 +1292,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.Remove(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
-                        App.API.BackToQueryResults();
                         App.API.ReQuery();
                         return false;
                     }
@@ -1309,7 +1309,6 @@ namespace Flow.Launcher.ViewModel
                     {
                         _topMostRecord.AddOrUpdate(result);
                         App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
-                        App.API.BackToQueryResults();
                         App.API.ReQuery();
                         return false;
                     }

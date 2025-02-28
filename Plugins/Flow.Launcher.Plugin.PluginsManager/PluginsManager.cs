@@ -733,7 +733,11 @@ namespace Flow.Launcher.Plugin.PluginsManager
         {
             try
             {
-                PluginManager.UninstallPlugin(plugin, removeSettings: true);
+                var removePluginSettings = Context.API.ShowMsgBox(
+                    Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_subtitle"),
+                    Context.API.GetTranslation("plugin_pluginsmanager_keep_plugin_settings_title"),
+                    button: MessageBoxButton.YesNo) == MessageBoxResult.No;
+                PluginManager.UninstallPlugin(plugin, removePluginFromSettings: true, removePluginSettings: removePluginSettings);
             }
             catch (ArgumentException e)
             {

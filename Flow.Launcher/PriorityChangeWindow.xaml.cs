@@ -24,7 +24,7 @@ namespace Flow.Launcher
             this.pluginViewModel = pluginViewModel;
             if (plugin == null)
             {
-                MessageBoxEx.Show(translater.GetTranslation("cannotFindSpecifiedPlugin"));
+                App.API.ShowMsgBox(translater.GetTranslation("cannotFindSpecifiedPlugin"));
                 Close();
             }
         }
@@ -44,7 +44,7 @@ namespace Flow.Launcher
             else
             {
                 string msg = translater.GetTranslation("invalidPriority");
-                MessageBoxEx.Show(msg);
+                App.API.ShowMsgBox(msg);
             }
 
         }
