@@ -17,6 +17,7 @@ public static class WallpaperPathRetrieval
     private static readonly int MAX_PATH = 260;
 
     private static readonly Dictionary<(string, DateTime), ImageBrush> wallpaperCache = new();
+    private const int MaxCacheSize = 3;
 
     public static Brush GetWallpaperBrush()
     {
@@ -26,35 +27,55 @@ public static class WallpaperPathRetrieval
             return Application.Current.Dispatcher.Invoke(GetWallpaperBrush);
         }
 
-        var wallpaperPath = GetWallpaperPath();
-        if (wallpaperPath is not null && File.Exists(wallpaperPath))
+        try
         {
-            // Since the wallpaper file name can be the same (TranscodedWallpaper),
-            // we need to add the last modified date to differentiate them
-            var dateModified = File.GetLastWriteTime(wallpaperPath);
-            wallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
-            if (cachedWallpaper != null)
+            var wallpaperPath = GetWallpaperPath();
+            if (wallpaperPath is not null && File.Exists(wallpaperPath))
             {
-                return cachedWallpaper;
+                // Since the wallpaper file name can be the same (TranscodedWallpaper),
+                // we need to add the last modified date to differentiate them
+                var dateModified = File.GetLastWriteTime(wallpaperPath);
+                wallpaperCache.TryGetValue((wallpaperPath, dateModified), out var cachedWallpaper);
+                if (cachedWallpaper != null)
+                {
+                    return cachedWallpaper;
+                }
+
+                // We should not dispose the memory stream since the bitmap is still in use
+                var memStream = new MemoryStream(File.ReadAllBytes(wallpaperPath));
+                var bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.StreamSource = memStream;
+                bitmap.DecodePixelWidth = 800;
+                bitmap.DecodePixelHeight = 600;
+                bitmap.EndInit();
+                bitmap.Freeze(); // Make the bitmap thread-safe
+                var wallpaperBrush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
+                wallpaperBrush.Freeze(); // Make the brush thread-safe
+
+                // Manage cache size
+                if (wallpaperCache.Count >= MaxCacheSize)
+                {
+                    // Remove the oldest wallpaper from the cache
+                    var oldestCache = wallpaperCache.Keys.OrderBy(k => k.Item2).FirstOrDefault();
+                    if (oldestCache != default)
+                    {
+                        wallpaperCache.Remove(oldestCache);
+                    }
+                }
+
+                wallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
+                return wallpaperBrush;
             }
 
-            // We should not dispose the memory stream since the bitmap is still in use
-            var memStream = new MemoryStream(File.ReadAllBytes(wallpaperPath));
-            var bitmap = new BitmapImage();
-            bitmap.BeginInit();
-            bitmap.StreamSource = memStream;
-            bitmap.DecodePixelWidth = 800;
-            bitmap.DecodePixelHeight = 600;
-            bitmap.EndInit();
-            bitmap.Freeze(); // Make the bitmap thread-safe
-            var wallpaperBrush = new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
-            wallpaperBrush.Freeze(); // Make the brush thread-safe
-            wallpaperCache.Add((wallpaperPath, dateModified), wallpaperBrush);
-            return wallpaperBrush;
+            var wallpaperColor = GetWallpaperColor();
+            return new SolidColorBrush(wallpaperColor);
         }
-
-        var wallpaperColor = GetWallpaperColor();
-        return new SolidColorBrush(wallpaperColor);
+        catch (Exception ex)
+        {
+            App.API.LogException(nameof(WallpaperPathRetrieval), "Error retrieving wallpaper", ex);
+            return new SolidColorBrush(Colors.Transparent);
+        }
     }
 
     private static unsafe string GetWallpaperPath()
