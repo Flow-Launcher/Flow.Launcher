@@ -28,8 +28,10 @@ namespace Flow.Launcher.Core.Plugin
         public static List<PluginPair> AllPlugins { get; private set; }
         public static readonly HashSet<PluginPair> GlobalPlugins = new();
         public static readonly Dictionary<string, PluginPair> NonGlobalPlugins = new();
-
-        private static readonly IPublicAPI _api = Ioc.Default.GetRequiredService<IPublicAPI>();
+        
+        // We should not initialize API in static constructor because it will create another API instance
+        private static IPublicAPI api = null;
+        private static IPublicAPI API => api ??= Ioc.Default.GetRequiredService<IPublicAPI>();
 
         private static PluginsSettings Settings;
         private static List<PluginMetadata> _metadatas;
