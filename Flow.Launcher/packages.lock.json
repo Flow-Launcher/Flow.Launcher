@@ -26,6 +26,17 @@
         "resolved": "1.0.4",
         "contentHash": "D0LvRCPQMX6/FJHBjng+RO+wRDuHTJrfo7IAc7rmkPvRqchdVGJWg3y70peOtDy3OLNK+HSOwVkH4GiuLnkKgA=="
       },
+      "Jack251970.TaskScheduler": {
+        "type": "Direct",
+        "requested": "[2.12.1, )",
+        "resolved": "2.12.1",
+        "contentHash": "+epAtsLMugiznJCNRYCYB6eBcr+bx+CVlwPWMprO5CbnNkWu9mlSV8XN5BQJrGYwmlAtlGfZA3p3PcFFlrgR6A==",
+        "dependencies": {
+          "Microsoft.Win32.Registry": "5.0.0",
+          "System.Diagnostics.EventLog": "8.0.0",
+          "System.Security.AccessControl": "6.0.1"
+        }
+      },
       "Microsoft.Extensions.DependencyInjection": {
         "type": "Direct",
         "requested": "[7.0.0, )",
@@ -37,13 +48,13 @@
       },
       "Microsoft.Extensions.Hosting": {
         "type": "Direct",
-        "requested": "[7.0.0, )",
-        "resolved": "7.0.0",
-        "contentHash": "4nFc8xCfK26G524ioreZvz/IeIKN/gY1LApoGpaIThKqBdTwauUo4ETCf12lQcoefijqe3Imnfvnk31IezFatg==",
+        "requested": "[7.0.1, )",
+        "resolved": "7.0.1",
+        "contentHash": "aoeMou6XSW84wiqd895OdaGyO9PfH6nohQJ0XBcshRDafbdIU6PQIVl8TpOCssPYq3ciRseP5064hbFyCR9J9w==",
         "dependencies": {
           "Microsoft.Extensions.Configuration": "7.0.0",
           "Microsoft.Extensions.Configuration.Abstractions": "7.0.0",
-          "Microsoft.Extensions.Configuration.Binder": "7.0.0",
+          "Microsoft.Extensions.Configuration.Binder": "7.0.3",
           "Microsoft.Extensions.Configuration.CommandLine": "7.0.0",
           "Microsoft.Extensions.Configuration.EnvironmentVariables": "7.0.0",
           "Microsoft.Extensions.Configuration.FileExtensions": "7.0.0",
@@ -61,7 +72,8 @@
           "Microsoft.Extensions.Logging.Debug": "7.0.0",
           "Microsoft.Extensions.Logging.EventLog": "7.0.0",
           "Microsoft.Extensions.Logging.EventSource": "7.0.0",
-          "Microsoft.Extensions.Options": "7.0.0"
+          "Microsoft.Extensions.Options": "7.0.1",
+          "System.Diagnostics.DiagnosticSource": "7.0.1"
         }
       },
       "Microsoft.Toolkit.Uwp.Notifications": {
@@ -116,17 +128,6 @@
         "requested": "[3.0.0, )",
         "resolved": "3.0.0",
         "contentHash": "RR+8GbPQ/gjDqov/1QN1OPoUlbUruNwcL3WjWCeLw+MY7+od/ENhnkYxCfAC6rQLIu3QifaJt3kPYyP3RumqMQ=="
-      },
-      "TaskScheduler": {
-        "type": "Direct",
-        "requested": "[2.11.0, )",
-        "resolved": "2.11.0",
-        "contentHash": "p9wH58XSNIyUtO7PIFAEldaKUzpYmlj+YWAfnUqBKnGxIZRY51I9BrsBGJijUVwlxrgmLLPUigRIv2ZTD4uPJA==",
-        "dependencies": {
-          "Microsoft.Win32.Registry": "5.0.0",
-          "System.Diagnostics.EventLog": "8.0.0",
-          "System.Security.AccessControl": "6.0.1"
-        }
       },
       "VirtualizingWrapPanel": {
         "type": "Direct",
@@ -227,8 +228,8 @@
       },
       "Microsoft.Extensions.Configuration.Binder": {
         "type": "Transitive",
-        "resolved": "7.0.0",
-        "contentHash": "tgU4u7bZsoS9MKVRiotVMAwHtbREHr5/5zSEV+JPhg46+ox47Au84E3D2IacAaB0bk5ePNaNieTlPrfjbbRJkg==",
+        "resolved": "7.0.3",
+        "contentHash": "1eRFwJBrkkncTpvh6mivB8zg4uBVm6+Y6stEJERrVEqZZc8Hvf+N1iIgj2ySYDUQko4J1Gw1rLf1M8bG83F0eA==",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Abstractions": "7.0.0"
         }
@@ -405,8 +406,8 @@
       },
       "Microsoft.Extensions.Options": {
         "type": "Transitive",
-        "resolved": "7.0.0",
-        "contentHash": "lP1yBnTTU42cKpMozuafbvNtQ7QcBjr/CcK3bYOGEMH55Fjt+iecXjT6chR7vbgCMqy3PG3aNQSZgo/EuY/9qQ==",
+        "resolved": "7.0.1",
+        "contentHash": "pZRDYdN1FpepOIfHU62QoBQ6zdAoTvnjxFfqAzEd9Jhb2dfhA5i6jeTdgGgcgTWFRC7oT0+3XrbQu4LjvgX1Nw==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "Microsoft.Extensions.Primitives": "7.0.0"
@@ -548,6 +549,11 @@
           "Newtonsoft.Json": "13.0.1",
           "System.IO.Pipelines": "8.0.0"
         }
+      },
+      "System.Diagnostics.DiagnosticSource": {
+        "type": "Transitive",
+        "resolved": "7.0.1",
+        "contentHash": "T9SLFxzDp0SreCffRDXSAS5G+lq6E8qP4knHS2IBjwCdx2KEvGnGZsq7gFpselYOda7l6gXsJMD93TQsFj/URA=="
       },
       "System.Diagnostics.EventLog": {
         "type": "Transitive",
