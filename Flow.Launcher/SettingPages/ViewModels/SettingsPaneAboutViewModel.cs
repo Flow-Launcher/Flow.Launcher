@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
-using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -77,7 +76,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenSettingsFolder()
     {
-        PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
     }
 
     [RelayCommand]
@@ -85,7 +84,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
         string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
-        PluginManager.API.OpenDirectory(parentFolderPath);
+        App.API.OpenDirectory(parentFolderPath);
     }
 
 

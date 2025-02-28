@@ -368,6 +368,7 @@
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">Background</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
@@ -384,6 +385,9 @@
     <system:String x:Key="reportWindow_report_succeed">Report sent successfully</system:String>
     <system:String x:Key="reportWindow_report_failed">Failed to send report</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher got an error</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>
