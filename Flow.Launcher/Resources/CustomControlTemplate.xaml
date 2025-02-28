@@ -5587,17 +5587,17 @@
     </Style>
 
     <!--  Settings Panel  -->
-    <Thickness x:Key="SettingPanelMargin">70,9,18,9</Thickness>
+    <Thickness x:Key="SettingPanelMargin">70,13.5,18,13.5</Thickness>
 
     <Thickness x:Key="SettingPanelItemLeftMargin">9,0,0,0</Thickness>
     <Thickness x:Key="SettingPanelItemRightMargin">0,0,9,0</Thickness>
-    <Thickness x:Key="SettingPanelItemTopBottomMargin">0,9,0,9</Thickness>
+    <Thickness x:Key="SettingPanelItemTopBottomMargin">0,4.5,0,4.5</Thickness>
 
-    <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,9,0,9</Thickness>
-    <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,9,9,9</Thickness>
+    <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,4.5,0,4.5</Thickness>
+    <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,4.5,9,4.5</Thickness>
 
     <Style x:Key="SettingPanelSeperatorStyle" TargetType="Separator">
-        <Setter Property="Margin" Value="-70 9 -18 9" />
+        <Setter Property="Margin" Value="-70 13.5 -18 13.5" />
         <Setter Property="Height" Value="1" />
         <Setter Property="BorderBrush" Value="{DynamicResource Color03B}" />
         <Setter Property="BorderThickness" Value="1" />

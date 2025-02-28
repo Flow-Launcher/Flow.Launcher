@@ -21,6 +21,7 @@
             <TextBlock
                 MinWidth="120"
                 Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                VerticalAlignment="Center"
                 Text="{DynamicResource flowlauncher_plugin_program_index_source}" />
             <WrapPanel
                 Width="Auto"
@@ -62,6 +63,7 @@
                 <TextBlock
                     MinWidth="120"
                     Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
+                    VerticalAlignment="Center"
                     Text="{DynamicResource flowlauncher_plugin_program_index_option}" />
                 <WrapPanel
                     Width="Auto"
