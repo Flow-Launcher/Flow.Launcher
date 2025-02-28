@@ -335,5 +335,15 @@ namespace Flow.Launcher.Plugin
         /// <param name="forceClosed">When user closes the progress box manually by button or esc key, this action will be called.</param>
         /// <returns>A progress box interface.</returns>
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null);
+
+        /// <summary>
+        /// Start the loading bar in main window
+        /// </summary>
+        public void StartLoadingBar();
+
+        /// <summary>
+        /// Stop the loading bar in main window
+        /// </summary>
+        public void StopLoadingBar();
     }
 }
