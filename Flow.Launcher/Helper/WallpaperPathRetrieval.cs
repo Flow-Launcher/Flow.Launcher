@@ -15,9 +15,9 @@ namespace Flow.Launcher.Helper;
 public static class WallpaperPathRetrieval
 {
     private static readonly int MAX_PATH = 260;
+    private static readonly int MAX_CACHE_SIZE = 3;
 
     private static readonly Dictionary<(string, DateTime), ImageBrush> wallpaperCache = new();
-    private const int MaxCacheSize = 3;
 
     public static Brush GetWallpaperBrush()
     {
@@ -54,7 +54,7 @@ public static class WallpaperPathRetrieval
                 wallpaperBrush.Freeze(); // Make the brush thread-safe
 
                 // Manage cache size
-                if (wallpaperCache.Count >= MaxCacheSize)
+                if (wallpaperCache.Count >= MAX_CACHE_SIZE)
                 {
                     // Remove the oldest wallpaper from the cache
                     var oldestCache = wallpaperCache.Keys.OrderBy(k => k.Item2).FirstOrDefault();
