@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.SettingPages.ViewModels;
 using Flow.Launcher.ViewModel;
 
@@ -49,7 +48,7 @@ public partial class SettingsPanePluginStore
 
     private void Hyperlink_OnRequestNavigate(object sender, RequestNavigateEventArgs e)
     {
-        PluginManager.API.OpenUrl(e.Uri.AbsoluteUri);
+        App.API.OpenUrl(e.Uri.AbsoluteUri);
         e.Handled = true;
     }
 
