@@ -114,15 +114,15 @@ namespace Flow.Launcher.Core.Plugin
                 return null;
             }
 
-            // Create main grid
+            // Create main grid with two columns
             var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
-                Width = new GridLength(70, GridUnitType.Star)  // TODO: Auto
+                Width = new GridLength(0, GridUnitType.Auto)
             });
             mainPanel.ColumnDefinitions.Add(new ColumnDefinition()
             {
-                Width = new GridLength(30, GridUnitType.Star)  // TODO: Auto
+                Width = new GridLength(0, GridUnitType.Auto)
             });
 
             // Iterate over each setting and create one row for it
@@ -136,7 +136,10 @@ namespace Flow.Launcher.Core.Plugin
                 }
 
                 // Add a new row to the main grid
-                mainPanel.RowDefinitions.Add(new RowDefinition());
+                mainPanel.RowDefinitions.Add(new RowDefinition()
+                {
+                    Height = new GridLength(0, GridUnitType.Auto)
+                });
 
                 // State controls for column 0 and 1
                 StackPanel? panel = null;
@@ -357,10 +360,9 @@ namespace Flow.Launcher.Core.Plugin
                         var linkbtn = new System.Windows.Controls.Button
                         {
                             HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            Margin = settingControlMargin
+                            Margin = settingControlMargin,
+                            Content = attributes.urlLabel
                         };
-
-                        linkbtn.Content = attributes.urlLabel;
 
                         contentControl = linkbtn;
 
