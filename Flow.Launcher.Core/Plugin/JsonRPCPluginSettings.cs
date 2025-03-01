@@ -1,5 +1,6 @@
 ﻿using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,11 +19,11 @@ namespace Flow.Launcher.Core.Plugin
         public required string SettingPath { get; init; }
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
 
-        public IReadOnlyDictionary<string, object> Inner => Settings;
-        protected ConcurrentDictionary<string, object> Settings { get; set; } = null!;
+        public IReadOnlyDictionary<string, object?> Inner => Settings;
+        protected ConcurrentDictionary<string, object?> Settings { get; set; } = null!;
         public required IPublicAPI API { get; init; }
 
-        private JsonStorage<ConcurrentDictionary<string, object>> _storage = null!;
+        private JsonStorage<ConcurrentDictionary<string, object?>> _storage = null!;
 
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
@@ -31,15 +32,35 @@ namespace Flow.Launcher.Core.Plugin
 
         public async Task InitializeAsync()
         {
-            _storage = new JsonStorage<ConcurrentDictionary<string, object>>(SettingPath);
-            Settings = await _storage.LoadAsync();
+            if (Settings == null)
+            {
+                _storage = new JsonStorage<ConcurrentDictionary<string, object?>>(SettingPath);
+                Settings = await _storage.LoadAsync();
+
+                // Because value type of settings dictionary is object which causes them to be JsonElement when loading from json files,
+                // we need to convert it to the correct type
+                foreach (var (key, value) in Settings)
+                {
+                    if (value is JsonElement jsonElement)
+                    {
+                        Settings[key] = jsonElement.ValueKind switch
+                        {
+                            JsonValueKind.String => jsonElement.GetString() ?? value,
+                            JsonValueKind.True => jsonElement.GetBoolean(),
+                            JsonValueKind.False => jsonElement.GetBoolean(),
+                            JsonValueKind.Null => null,
+                            _ => value
+                        };
+                    }
+                }
+            }
 
             if (Configuration == null)
             {
                 return;
             }
 
-            foreach (var (_, attributes) in Configuration.Body)
+            foreach (var (type, attributes) in Configuration.Body)
             {
                 // Skip if the setting does not have attributes or name
                 if (attributes?.Name == null)
@@ -47,9 +68,20 @@ namespace Flow.Launcher.Core.Plugin
                     continue;
                 }
 
-                if (!Settings.ContainsKey(attributes.Name))
+                if (NeedSaveInSettings(type))
                 {
-                    Settings[attributes.Name] = attributes.DefaultValue;
+                    // If need save in settings, we need to make sure the setting exists in the settings file
+                    if (!Settings.ContainsKey(attributes.Name))
+                    {
+                        if (type == "checkbox")
+                        {
+                            Settings[attributes.Name] = bool.Parse(attributes.DefaultValue);
+                        }
+                        else
+                        {
+                            Settings[attributes.Name] = attributes.DefaultValue;
+                        }
+                    }
                 }
             }
         }
@@ -103,8 +135,8 @@ namespace Flow.Launcher.Core.Plugin
 
         public Control? CreateSettingPanel()
         {
-            // If there are no settings or the settings are empty, return null
-            if (Configuration == null || Settings == null || Settings.IsEmpty)
+            // If there are no settings or the settings configuration is empty, return null
+            if (Configuration == null || Settings == null || Configuration.Body.Count == 0)
             {
                 return null;
             }
@@ -291,7 +323,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                Height = 150,
+                                MaxHeight = 150,
                                 MinWidth = 180,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
@@ -449,8 +481,8 @@ namespace Flow.Launcher.Core.Plugin
                     Grid.SetRow(contentControl, rowCount);
                 }
 
-                // Add into SettingControls for later use if need
-                if (type != "textBlock" && type != "seperator")
+                // Add into SettingControls for settings storage if need
+                if (NeedSaveInSettings(type))
                 {
                     SettingControls[attributes.Name] = contentControl;
                 }
@@ -463,6 +495,11 @@ namespace Flow.Launcher.Core.Plugin
             {
                 Content = mainPanel
             };
+        }
+
+        private static bool NeedSaveInSettings(string type)
+        {
+            return type != "textBlock" && type != "seperator" && type != "hyperlink";
         }
     }
 }
