@@ -25,13 +25,9 @@ namespace Flow.Launcher.Core.Plugin
         private JsonStorage<ConcurrentDictionary<string, object>> _storage = null!;
 
         private static readonly Thickness SettingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
-
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
-        private static readonly Thickness SettingPanelItemRightMargin = (Thickness)Application.Current.FindResource("SettingPanelItemRightMargin");
         private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
-
         private static readonly Thickness SettingPanelItemLeftTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftTopBottomMargin");
-        private static readonly Thickness SettingPanelItemRightTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemRightTopBottomMargin");
 
         public async Task InitializeAsync()
         {
@@ -195,8 +191,9 @@ namespace Flow.Launcher.Core.Plugin
                             contentControl = new TextBlock
                             {
                                 Text = attributes.Description?.Replace("\\r\\n", "\r\n") ?? string.Empty,
-                                Margin = SettingPanelItemTopBottomMargin,
                                 HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Margin = SettingPanelItemTopBottomMargin,
                                 TextAlignment = TextAlignment.Left,
                                 TextWrapping = TextWrapping.Wrap
                             };
@@ -207,9 +204,11 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                Text = Settings[attributes.Name] as string ?? string.Empty,
+                                MinWidth = 180,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
-                                HorizontalAlignment = HorizontalAlignment.Stretch,
+                                Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
                             };
 
@@ -227,9 +226,11 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
+                                MinWidth = 240,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 ToolTip = attributes.Description
                             };
 
@@ -240,6 +241,8 @@ namespace Flow.Launcher.Core.Plugin
 
                             var Btn = new Button()
                             {
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
                                 Content = "Browse"  // TODO: Localization
                             };
@@ -268,16 +271,19 @@ namespace Flow.Launcher.Core.Plugin
                                 Settings[attributes.Name] = path;
                             };
 
-                            var dockPanel = new DockPanel()
+                            var stackPanel = new StackPanel()
                             {
-                                Margin = SettingPanelItemTopBottomMargin
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Margin = SettingPanelItemTopBottomMargin,
+                                Orientation = Orientation.Horizontal
                             };
 
-                            DockPanel.SetDock(Btn, Dock.Right);
-                            dockPanel.Children.Add(Btn);
-                            dockPanel.Children.Add(textBox);
+                            // Create a stack panel to wrap the button and text box
+                            stackPanel.Children.Add(textBox);
+                            stackPanel.Children.Add(Btn);
 
-                            contentControl = dockPanel;
+                            contentControl = stackPanel;
 
                             break;
                         }
@@ -286,11 +292,12 @@ namespace Flow.Launcher.Core.Plugin
                             var textBox = new TextBox()
                             {
                                 Height = 150,
-                                Margin = SettingPanelItemLeftTopBottomMargin,
+                                MinWidth = 180,
+                                HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
+                                Margin = SettingPanelItemLeftTopBottomMargin,
                                 TextWrapping = TextWrapping.WrapWithOverflow,
                                 AcceptsReturn = true,
-                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
                             };
@@ -308,10 +315,12 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var passwordBox = new PasswordBox()
                             {
+                                MinWidth = 180,
+                                HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 Password = Settings[attributes.Name] as string ?? string.Empty,
                                 PasswordChar = attributes.passwordChar == default ? '*' : attributes.passwordChar,
-                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 ToolTip = attributes.Description
                             };
 
@@ -330,8 +339,9 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 ItemsSource = attributes.Options,
                                 SelectedItem = Settings[attributes.Name],
-                                Margin = SettingPanelItemLeftTopBottomMargin,
                                 HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Margin = SettingPanelItemLeftTopBottomMargin,
                                 ToolTip = attributes.Description
                             };
 
@@ -352,8 +362,9 @@ namespace Flow.Launcher.Core.Plugin
                                 Settings[attributes.Name] is bool isChecked
                                     ? isChecked
                                     : bool.Parse(attributes.DefaultValue),
-                                Margin = SettingPanelItemTopBottomMargin,
                                 HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
+                                Margin = SettingPanelItemTopBottomMargin,
                                 Content = attributes.Label,
                                 ToolTip = attributes.Description
                             };
@@ -382,17 +393,17 @@ namespace Flow.Launcher.Core.Plugin
                                 e.Handled = true;
                             };
 
-                            var textBlock = new TextBlock();
-                            textBlock.Inlines.Add(hyperlink);
-
-                            var linkbtn = new Button
+                            var textBlock = new TextBlock()
                             {
                                 HorizontalAlignment = HorizontalAlignment.Left,
+                                VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
-                                Content = textBlock
+                                TextAlignment = TextAlignment.Left,
+                                TextWrapping = TextWrapping.Wrap
                             };
+                            textBlock.Inlines.Add(hyperlink);
 
-                            contentControl = linkbtn;
+                            contentControl = textBlock;
 
                             break;
                         }
