@@ -7,7 +7,7 @@ using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
 using Flow.Launcher.Infrastructure.Logger;
 
-namespace Flow.Launcher.Core
+namespace Flow.Launcher
 {
     public partial class MessageBoxEx : Window
     {

@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using NUnit.Framework.Legacy;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Plugin;
 using System.Collections.Generic;
@@ -15,37 +16,37 @@ namespace Flow.Launcher.Test
             // Given
             var duplicateList = new List<PluginMetadata>
             {
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B4085823D60DC76F28855",
                     Version = "1.0.0"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B4085823D60DC76F28855",
                     Version = "1.0.1"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B4085823D60DC76F28855",
                     Version = "1.0.2"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B4085823D60DC76F28855",
                     Version = "1.0.0"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B4085823D60DC76F28855",
                     Version = "1.0.0"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "ABC0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "ABC0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
@@ -56,11 +57,11 @@ namespace Flow.Launcher.Test
             (var unique, var duplicates) = PluginConfig.GetUniqueLatestPluginMetadata(duplicateList);
             
             // Then
-            Assert.True(unique.FirstOrDefault().ID == "CEA0TYUC6D3B4085823D60DC76F28855" && unique.FirstOrDefault().Version == "1.0.2");
-            Assert.True(unique.Count() == 1);
+            ClassicAssert.True(unique.FirstOrDefault().ID == "CEA0TYUC6D3B4085823D60DC76F28855" && unique.FirstOrDefault().Version == "1.0.2");
+            ClassicAssert.True(unique.Count == 1);
 
-            Assert.False(duplicates.Any(x => x.Version == "1.0.2" && x.ID == "CEA0TYUC6D3B4085823D60DC76F28855"));
-            Assert.True(duplicates.Count() == 6);
+            ClassicAssert.False(duplicates.Any(x => x.Version == "1.0.2" && x.ID == "CEA0TYUC6D3B4085823D60DC76F28855"));
+            ClassicAssert.True(duplicates.Count == 6);
         }
 
         [Test]
@@ -69,12 +70,12 @@ namespace Flow.Launcher.Test
             // Given
             var duplicateList = new List<PluginMetadata>
             {
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
                 },
-                new PluginMetadata
+                new()
                 {
                     ID = "CEA0TYUC6D3B7855823D60DC76F28855",
                     Version = "1.0.0"
@@ -85,8 +86,8 @@ namespace Flow.Launcher.Test
             (var unique, var duplicates) = PluginConfig.GetUniqueLatestPluginMetadata(duplicateList);
 
             // Then
-            Assert.True(unique.Count() == 0);
-            Assert.True(duplicates.Count() == 2);
+            ClassicAssert.True(unique.Count == 0);
+            ClassicAssert.True(duplicates.Count == 2);
         }
     }
 }

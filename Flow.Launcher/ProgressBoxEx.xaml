@@ -12,6 +12,7 @@
     Foreground="{DynamicResource PopupTextColor}"
     ResizeMode="NoResize"
     SizeToContent="Height"
+    Topmost="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <WindowChrome.WindowChrome>
@@ -35,9 +36,32 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
                         Grid.Column="1"
+                        Click="Button_Minimize"
+                        RenderOptions.EdgeMode="Aliased"
+                        Style="{DynamicResource TitleBarButtonStyle}">
+                        <Path
+                            Width="46"
+                            Height="32"
+                            Data="M 18,15 H 28"
+                            Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource AncestorType={x:Type Button}}}"
+                            StrokeThickness="1">
+                            <Path.Style>
+                                <Style TargetType="Path">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Path=IsActive, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" Value="False">
+                                            <Setter Property="Opacity" Value="0.5" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Button>
+                    <Button
+                        Grid.Column="2"
                         Click="Button_Cancel"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
@@ -95,10 +119,16 @@
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
+                    x:Name="btnBackground"
+                    MinWidth="120"
+                    Margin="5 0 5 0"
+                    Click="Button_Background"
+                    Content="{DynamicResource commonBackground}" />
+                <Button
                     x:Name="btnCancel"
                     MinWidth="120"
                     Margin="5 0 5 0"
-                    Click="Button_Click"
+                    Click="Button_Cancel"
                     Content="{DynamicResource commonCancel}" />
             </WrapPanel>
         </Border>

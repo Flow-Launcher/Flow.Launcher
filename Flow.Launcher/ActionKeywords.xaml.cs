@@ -69,7 +69,7 @@ namespace Flow.Launcher
             else
             {
                 string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBoxEx.Show(msg);
+                App.API.ShowMsgBox(msg);
             }
         }
 
