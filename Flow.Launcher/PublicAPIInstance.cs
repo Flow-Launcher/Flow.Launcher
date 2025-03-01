@@ -25,23 +25,23 @@ using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
-        private readonly SettingWindowViewModel _settingsVM;
+        private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
-            _settingsVM = settingsVM;
+            _settings = settings;
             _mainVM = mainVM;
-            _alphabet = alphabet;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
@@ -78,14 +78,15 @@ namespace Flow.Launcher
 
         public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
 
-        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
+        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
+        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
             PluginManager.Save();
             _mainVM.Save();
-            _settingsVM.Save();
-            ImageLoader.Save();
+            _settings.Save();
+            _ = ImageLoader.Save();
         }
 
         public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
@@ -105,7 +106,7 @@ namespace Flow.Launcher
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
         }
 
@@ -244,7 +245,7 @@ namespace Flow.Launcher
         public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
-            var explorerInfo = _settingsVM.Settings.CustomExplorer;
+            var explorerInfo = _settings.CustomExplorer;
 
             explorer.StartInfo = new ProcessStartInfo
             {
@@ -265,7 +266,7 @@ namespace Flow.Launcher
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                var browserInfo = _settingsVM.Settings.CustomBrowser;
+                var browserInfo = _settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
@@ -338,7 +339,7 @@ namespace Flow.Launcher
         public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
             MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
 
-        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action forceClosed = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, forceClosed);
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
 
         #endregion
 

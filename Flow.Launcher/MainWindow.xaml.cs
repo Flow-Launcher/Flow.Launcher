@@ -438,7 +438,7 @@ namespace Flow.Launcher
             if (_settings.FirstLaunch)
             {
                 _settings.FirstLaunch = false;
-                PluginManager.API.SaveAppAllSettings();
+                App.API.SaveAppAllSettings();
                 OpenWelcomeWindow();
             }
         }

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Text.Json.Serialization;
 using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
 using Flow.Launcher.ViewModel;
@@ -13,6 +14,24 @@ namespace Flow.Launcher.Infrastructure.UserSettings
 {
     public class Settings : BaseModel, IHotkeySettings
     {
+        private FlowLauncherJsonStorage<Settings> _storage;
+        private StringMatcher _stringMatcher = null;
+
+        public void SetStorage(FlowLauncherJsonStorage<Settings> storage)
+        {
+            _storage = storage;
+        }
+
+        public void Initialize()
+        {
+            _stringMatcher = Ioc.Default.GetRequiredService<StringMatcher>();
+        }
+
+        public void Save()
+        {
+            _storage.Save();
+        }
+
         private string language = Constant.SystemLanguageCode;
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
@@ -180,7 +199,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-
         /// <summary>
         /// when false Alphabet static service will always return empty results
         /// </summary>
@@ -198,8 +216,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             set
             {
                 _querySearchPrecision = value;
-                if (StringMatcher.Instance != null)
-                    StringMatcher.Instance.UserSettingSearchPrecision = value;
+                if (_stringMatcher != null)
+                    _stringMatcher.UserSettingSearchPrecision = value;
             }
         }
 
@@ -238,6 +256,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool EnableUpdateLog { get; set; }
 
         public bool StartFlowLauncherOnSystemStartup { get; set; } = false;
+        public bool UseLogonTaskForStartup { get; set; } = false;
         public bool HideOnStartup { get; set; } = true;
         bool _hideNotifyIcon { get; set; }
         public bool HideNotifyIcon

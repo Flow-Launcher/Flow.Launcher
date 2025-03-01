@@ -8,6 +8,7 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using System;
 using System.Threading;
 using Flow.Launcher.Plugin;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -16,8 +17,6 @@ namespace Flow.Launcher.Infrastructure.Http
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static HttpClient client = new HttpClient();
-
-        public static IPublicAPI API { get; set; }
 
         static Http()
         {
@@ -78,7 +77,7 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                API.ShowMsg("Please try again", "Unable to parse Http Proxy");
+                Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
                 Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
             }
         }

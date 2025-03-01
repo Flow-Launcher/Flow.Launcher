@@ -5,7 +5,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -14,7 +13,6 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
 using ModernWpf;
-using Flow.Launcher.Core;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
 
@@ -49,7 +47,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (ThemeManager.Instance.BlurEnabled && value)
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
                 return;
             }
 
@@ -212,24 +210,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public Brush PreviewBackground
     {
-        get
-        {
-            var wallpaper = WallpaperPathRetrieval.GetWallpaperPath();
-            if (wallpaper is not null && File.Exists(wallpaper))
-            {
-                var memStream = new MemoryStream(File.ReadAllBytes(wallpaper));
-                var bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.StreamSource = memStream;
-                bitmap.DecodePixelWidth = 800;
-                bitmap.DecodePixelHeight = 600;
-                bitmap.EndInit();
-                return new ImageBrush(bitmap) { Stretch = Stretch.UniformToFill };
-            }
-
-            var wallpaperColor = WallpaperPathRetrieval.GetWallpaperColor();
-            return new SolidColorBrush(wallpaperColor);
-        }
+        get => WallpaperPathRetrieval.GetWallpaperBrush();
     }
 
     public ResultsViewModel PreviewResults
