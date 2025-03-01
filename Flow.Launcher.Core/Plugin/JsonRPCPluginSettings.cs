@@ -4,15 +4,8 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
-using CheckBox = System.Windows.Controls.CheckBox;
-using ComboBox = System.Windows.Controls.ComboBox;
-using Control = System.Windows.Controls.Control;
-using Orientation = System.Windows.Controls.Orientation;
-using TextBox = System.Windows.Controls.TextBox;
-using UserControl = System.Windows.Controls.UserControl;
 
 #nullable enable
 
@@ -34,7 +27,7 @@ namespace Flow.Launcher.Core.Plugin
         // TODO: Move to resource
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
         private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
-        private static readonly Thickness settingPanelMargin = (Thickness)System.Windows.Application.Current.FindResource("SettingPanelMargin");
+        private static readonly Thickness settingPanelMargin = (Thickness)Application.Current.FindResource("SettingPanelMargin");
 
         public async Task InitializeAsync()
         {
@@ -64,7 +57,9 @@ namespace Flow.Launcher.Core.Plugin
         public void UpdateSettings(IReadOnlyDictionary<string, object> settings)
         {
             if (settings == null || settings.Count == 0)
+            {
                 return;
+            }
 
             foreach (var (key, value) in settings)
             {
@@ -174,7 +169,7 @@ namespace Flow.Launcher.Core.Plugin
                             Text = attributes.Description,
                             FontSize = 12,
                             VerticalAlignment = VerticalAlignment.Center,
-                            Margin = new(0, 2, 0, 0),  // TODO: Use resource
+                            Margin = new(0, 2, 0, 0),
                             TextWrapping = TextWrapping.WrapWithOverflow
                         };
                         desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B"); // for theme change
@@ -196,7 +191,7 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 Text = attributes.Description?.Replace("\\r\\n", "\r\n") ?? string.Empty,
                                 Padding = new Thickness(0, 0, 0, 0),
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                                HorizontalAlignment = HorizontalAlignment.Left,
                                 TextAlignment = TextAlignment.Left,
                                 TextWrapping = TextWrapping.Wrap
                             };
@@ -209,7 +204,7 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 Margin = settingControlMargin,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 ToolTip = attributes.Description
                             };
 
@@ -229,7 +224,7 @@ namespace Flow.Launcher.Core.Plugin
                             {
                                 Margin = new Thickness(10, 0, 0, 0),
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 ToolTip = attributes.Description
                             };
 
@@ -238,25 +233,29 @@ namespace Flow.Launcher.Core.Plugin
                                 Settings[attributes.Name] = textBox.Text;
                             };
 
-                            var Btn = new System.Windows.Controls.Button()
+                            var Btn = new Button()
                             {
                                 Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
                             };
 
                             Btn.Click += (_, _) =>
                             {
-                                using CommonDialog dialog = type switch
+                                using System.Windows.Forms.CommonDialog dialog = type switch
                                 {
-                                    "inputWithFolderBtn" => new FolderBrowserDialog(),
-                                    _ => new OpenFileDialog(),
+                                    "inputWithFolderBtn" => new System.Windows.Forms.FolderBrowserDialog(),
+                                    _ => new System.Windows.Forms.OpenFileDialog(),
                                 };
-                                if (dialog.ShowDialog() != DialogResult.OK) return;
+
+                                if (dialog.ShowDialog() != System.Windows.Forms.DialogResult.OK)
+                                {
+                                    return;
+                                }
 
                                 var path = dialog switch
                                 {
-                                    FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
-                                    OpenFileDialog fileDialog => fileDialog.FileName,
-                                    _ => string.Empty
+                                    System.Windows.Forms.FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
+                                    System.Windows.Forms.OpenFileDialog fileDialog => fileDialog.FileName,
+                                    _ => throw new System.NotImplementedException()
                                 };
                                 textBox.Text = path;
                                 Settings[attributes.Name] = path;
@@ -280,7 +279,7 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 TextWrapping = TextWrapping.WrapWithOverflow,
                                 AcceptsReturn = true,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 Text = Settings[attributes.Name] as string ?? string.Empty,
                                 ToolTip = attributes.Description
                             };
@@ -301,7 +300,7 @@ namespace Flow.Launcher.Core.Plugin
                                 Margin = settingControlMargin,
                                 Password = Settings[attributes.Name] as string ?? string.Empty,
                                 PasswordChar = attributes.passwordChar == default ? '*' : attributes.passwordChar,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Stretch,
+                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 ToolTip = attributes.Description
                             };
 
@@ -321,7 +320,7 @@ namespace Flow.Launcher.Core.Plugin
                                 ItemsSource = attributes.Options,
                                 SelectedItem = Settings[attributes.Name],
                                 Margin = settingControlMargin,
-                                HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
+                                HorizontalAlignment = HorizontalAlignment.Right,
                                 ToolTip = attributes.Description
                             };
 
@@ -335,49 +334,55 @@ namespace Flow.Launcher.Core.Plugin
                             break;
                         }
                     case "checkbox":
-                        var checkBox = new CheckBox
                         {
-                            IsChecked =
+                            var checkBox = new CheckBox
+                            {
+                                IsChecked =
                                 Settings[attributes.Name] is bool isChecked
                                     ? isChecked
                                     : bool.Parse(attributes.DefaultValue),
-                            Margin = settingCheckboxMargin,
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            ToolTip = attributes.Description
-                        };
+                                Margin = settingCheckboxMargin,
+                                HorizontalAlignment = HorizontalAlignment.Right,
+                                ToolTip = attributes.Description
+                            };
 
-                        checkBox.Click += (sender, _) =>
-                        {
-                            Settings[attributes.Name] = ((CheckBox)sender).IsChecked!;
-                        };
+                            checkBox.Click += (sender, _) =>
+                            {
+                                Settings[attributes.Name] = ((CheckBox)sender).IsChecked!;
+                            };
 
-                        contentControl = checkBox;
+                            contentControl = checkBox;
 
-                        break;
+                            break;
+                        }
                     case "hyperlink":
-                        var hyperlink = new Hyperlink { ToolTip = attributes.Description, NavigateUri = attributes.url };
-
-                        var linkbtn = new System.Windows.Controls.Button
                         {
-                            HorizontalAlignment = System.Windows.HorizontalAlignment.Right,
-                            Margin = settingControlMargin,
-                            Content = attributes.urlLabel
-                        };
+                            var hyperlink = new Hyperlink { ToolTip = attributes.Description, NavigateUri = attributes.url };
 
-                        contentControl = linkbtn;
+                            var linkbtn = new Button
+                            {
+                                HorizontalAlignment = HorizontalAlignment.Right,
+                                Margin = settingControlMargin,
+                                Content = attributes.urlLabel
+                            };
 
-                        break;
-                    case "seperator":  // TODO: Support seperator
-                        // TODO: Use style for Seperator
-                        contentControl = new Separator
+                            contentControl = linkbtn;
+
+                            break;
+                        }
+                    case "seperator":
                         {
-                            VerticalAlignment = VerticalAlignment.Top,
-                            Margin = new(-70, 13.5, -18, 13.5),
-                            Height = 1
-                        };
-                        contentControl.SetResourceReference(Separator.BackgroundProperty, "Color03B");
+                            // TODO: Move to resource
+                            contentControl = new Separator
+                            {
+                                VerticalAlignment = VerticalAlignment.Top,
+                                Margin = new(-70, 13.5, -18, 13.5),
+                                Height = 1
+                            };
+                            contentControl.SetResourceReference(Separator.BackgroundProperty, "Color03B");
 
-                        break;
+                            break;
+                        }
                     default:
                         continue;
                 }
