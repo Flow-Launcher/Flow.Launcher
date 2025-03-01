@@ -5603,6 +5603,8 @@
         <Setter Property="Background" Value="{DynamicResource Color03B}" />
     </Style>
 
-    <system:Double x:Key="SettingPanelTextBlockMinWidth">180</system:Double>
-    <system:Double x:Key="SettingPanelPathTextBlockMinWidth">240</system:Double>
+    <system:Double x:Key="SettingPanelTextBoxMinWidth">180</system:Double>
+    <system:Double x:Key="SettingPanelPathTextBoxMinWidth">240</system:Double>
+    <system:Double x:Key="SettingPanelAreaTextBoxMinWidth">270</system:Double>
+    <system:Double x:Key="SettingPanelAreaTextBoxMinHeight">150</system:Double>
 </ResourceDictionary>

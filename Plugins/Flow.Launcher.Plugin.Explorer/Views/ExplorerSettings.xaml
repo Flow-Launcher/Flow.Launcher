@@ -174,7 +174,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FileEditorPath}"
@@ -200,7 +200,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FolderEditorPath}"
@@ -226,7 +226,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding ShellPath}"
@@ -296,7 +296,7 @@
         <TextBox
             Grid.Row="9"
             Grid.Column="1"
-            MinWidth="{StaticResource SettingPanelTextBlockMinWidth}"
+            MinWidth="{StaticResource SettingPanelTextBoxMinWidth}"
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             HorizontalAlignment="Left"
             Text="{Binding ExcludedFileTypes}"
@@ -311,7 +311,7 @@
         <TextBox
             Grid.Row="10"
             Grid.Column="1"
-            MinWidth="{StaticResource SettingPanelTextBlockMinWidth}"
+            MinWidth="{StaticResource SettingPanelTextBoxMinWidth}"
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             HorizontalAlignment="Left"
             VerticalAlignment="Center"
@@ -358,8 +358,8 @@
             Grid.Row="15"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            MinWidth="240"
-            MinHeight="150"
+            MinWidth="{StaticResource SettingPanelAreaTextBoxMinWidth}"
+            MinHeight="{StaticResource SettingPanelAreaTextBoxMinHeight}"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Left"
             AcceptsReturn="True"
@@ -378,8 +378,8 @@
             Grid.Row="17"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            MinWidth="240"
-            MinHeight="150"
+            MinWidth="{StaticResource SettingPanelAreaTextBoxMinWidth}"
+            MinHeight="{StaticResource SettingPanelAreaTextBoxMinHeight}"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Left"
             AcceptsReturn="True"
@@ -526,7 +526,7 @@
         <TextBox
             Grid.Row="26"
             Grid.Column="1"
-            MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
+            MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Text="{Binding EverythingInstalledPath}" />

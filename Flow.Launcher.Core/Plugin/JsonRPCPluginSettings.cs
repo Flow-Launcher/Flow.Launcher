@@ -29,8 +29,10 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
         private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
         private static readonly Thickness SettingPanelItemLeftTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftTopBottomMargin");
-        private static readonly double SettingPanelTextBlockMinWidth = (double)Application.Current.FindResource("SettingPanelTextBlockMinWidth");
-        private static readonly double SettingPanelPathTextBlockMinWidth = (double)Application.Current.FindResource("SettingPanelPathTextBlockMinWidth");
+        private static readonly double SettingPanelTextBoxMinWidth = (double)Application.Current.FindResource("SettingPanelTextBoxMinWidth");
+        private static readonly double SettingPanelPathTextBoxMinWidth = (double)Application.Current.FindResource("SettingPanelPathTextBoxMinWidth");
+        private static readonly double SettingPanelAreaTextBoxMinWidth = (double)Application.Current.FindResource("SettingPanelAreaTextBoxMinWidth");
+        private static readonly double SettingPanelAreaTextBoxMinHeight = (double)Application.Current.FindResource("SettingPanelAreaTextBoxMinHeight");
 
         public async Task InitializeAsync()
         {
@@ -229,7 +231,7 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemTopBottomMargin,
                                 TextAlignment = TextAlignment.Left,
-                                TextWrapping = TextWrapping.Wrap  // TODO: Check password and others
+                                TextWrapping = TextWrapping.Wrap
                             };
 
                             break;
@@ -238,7 +240,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MinWidth = SettingPanelTextBlockMinWidth,
+                                MinWidth = SettingPanelTextBoxMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
@@ -260,7 +262,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MinWidth = SettingPanelPathTextBlockMinWidth,
+                                MinWidth = SettingPanelPathTextBoxMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
@@ -325,8 +327,8 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MinHeight = 150,
-                                MinWidth = 240,
+                                MinHeight = SettingPanelAreaTextBoxMinHeight,
+                                MinWidth = SettingPanelAreaTextBoxMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
@@ -349,15 +351,16 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var passwordBox = new PasswordBox()
                             {
-                                MinWidth = SettingPanelTextBlockMinWidth,
+                                MinWidth = SettingPanelTextBoxMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 Password = Settings[attributes.Name] as string ?? string.Empty,
                                 PasswordChar = attributes.passwordChar == default ? '*' : attributes.passwordChar,
-                                ToolTip = attributes.Description
+                                ToolTip = attributes.Description,
                             };
 
+                            // TODO: Fix issue here
                             passwordBox.PasswordChanged += (sender, _) =>
                             {
                                 Settings[attributes.Name] = ((PasswordBox)sender).Password;
