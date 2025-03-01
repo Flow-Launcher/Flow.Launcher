@@ -2,11 +2,10 @@
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.ViewModel;
+using System.Windows.Media;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -28,6 +27,11 @@ namespace Flow.Launcher.Resources.Pages
         private static void SetTogglingHotkey(HotkeyModel hotkey)
         {
             HotKeyMapper.SetHotkey(hotkey, HotKeyMapper.OnToggleHotkey);
+        }
+
+        public Brush PreviewBackground
+        {
+            get => WallpaperPathRetrieval.GetWallpaperBrush();
         }
     }
 }

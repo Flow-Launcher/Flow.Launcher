@@ -35,31 +35,64 @@ namespace Flow.Launcher
         public App()
         {
             // Initialize settings
-            var storage = new FlowLauncherJsonStorage<Settings>();
-            _settings = storage.Load();
-            _settings.SetStorage(storage);
-            _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            try
+            {
+                var storage = new FlowLauncherJsonStorage<Settings>();
+                _settings = storage.Load();
+                _settings.SetStorage(storage);
+                _settings.WMPInstalled = WindowsMediaPlayerHelper.IsWindowsMediaPlayerInstalled();
+            }
+            catch (Exception e)
+            {
+                ShowErrorMsgBoxAndFailFast("Cannot load setting storage, please check local data directory", e);
+                return;
+            }
 
             // Configure the dependency injection container
-            var host = Host.CreateDefaultBuilder()
-                .UseContentRoot(AppContext.BaseDirectory)
-                .ConfigureServices(services => services
-                    .AddSingleton(_ => _settings)
-                    .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
-                    .AddSingleton<Portable>()
-                    .AddSingleton<SettingWindowViewModel>()
-                    .AddSingleton<IAlphabet, PinyinAlphabet>()
-                    .AddSingleton<StringMatcher>()
-                    .AddSingleton<Internationalization>()
-                    .AddSingleton<IPublicAPI, PublicAPIInstance>()
-                    .AddSingleton<MainViewModel>()
-                    .AddSingleton<Theme>()
-                ).Build();
-            Ioc.Default.ConfigureServices(host.Services);
+            try
+            {
+                var host = Host.CreateDefaultBuilder()
+                    .UseContentRoot(AppContext.BaseDirectory)
+                    .ConfigureServices(services => services
+                        .AddSingleton(_ => _settings)
+                        .AddSingleton(sp => new Updater(sp.GetRequiredService<IPublicAPI>(), Launcher.Properties.Settings.Default.GithubRepo))
+                        .AddSingleton<Portable>()
+                        .AddSingleton<SettingWindowViewModel>()
+                        .AddSingleton<IAlphabet, PinyinAlphabet>()
+                        .AddSingleton<StringMatcher>()
+                        .AddSingleton<Internationalization>()
+                        .AddSingleton<IPublicAPI, PublicAPIInstance>()
+                        .AddSingleton<MainViewModel>()
+                        .AddSingleton<Theme>()
+                    ).Build();
+                Ioc.Default.ConfigureServices(host.Services);
+            }
+            catch (Exception e)
+            {
+                ShowErrorMsgBoxAndFailFast("Cannot configure dependency injection container, please open new issue in Flow.Launcher", e);
+                return;
+            }
 
             // Initialize the public API and Settings first
-            API = Ioc.Default.GetRequiredService<IPublicAPI>();
-            _settings.Initialize();
+            try
+            {
+                API = Ioc.Default.GetRequiredService<IPublicAPI>();
+                _settings.Initialize();
+            }
+            catch (Exception e)
+            {
+                ShowErrorMsgBoxAndFailFast("Cannot initialize api and settings, please open new issue in Flow.Launcher", e);
+                return;
+            }
+        }
+
+        private static void ShowErrorMsgBoxAndFailFast(string message, Exception e)
+        {
+            // Firstly show users the message
+            MessageBox.Show(e.ToString(), message, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            // Flow cannot construct its App instance, so ensure Flow crashes w/ the exception info.
+            Environment.FailFast(message, e);
         }
 
         [STAThread]
@@ -136,7 +169,14 @@ namespace Flow.Launcher
             {
                 try
                 {
-                    Helper.AutoStartup.Enable();
+                    if (_settings.UseLogonTaskForStartup)
+                    {
+                        Helper.AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        Helper.AutoStartup.EnableViaRegistry();
+                    }
                 }
                 catch (Exception e)
                 {
