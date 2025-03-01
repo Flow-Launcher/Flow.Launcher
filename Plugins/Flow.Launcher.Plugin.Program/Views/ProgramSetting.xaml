@@ -67,21 +67,20 @@
                     Text="{DynamicResource flowlauncher_plugin_program_index_option}" />
                 <WrapPanel
                     Width="Auto"
-                    Margin="{StaticResource SettingPanelItemTopBottomMargin}"
                     HorizontalAlignment="Right"
                     DockPanel.Dock="Right">
                     <CheckBox
-                        Margin="{StaticResource SettingPanelItemRightMargin}"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath}"
                         IsChecked="{Binding HideAppsPath}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hidelnkpath_tooltip}" />
                     <CheckBox
-                        Margin="{StaticResource SettingPanelItemRightMargin}"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers}"
                         IsChecked="{Binding HideUninstallers}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideuninstallers_tooltip}" />
                     <CheckBox
-                        Margin="{StaticResource SettingPanelItemRightMargin}"
+                        Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
                         Content="{DynamicResource flowlauncher_plugin_program_enable_description}"
                         IsChecked="{Binding EnableDescription}"
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_description_tooltip}" />
