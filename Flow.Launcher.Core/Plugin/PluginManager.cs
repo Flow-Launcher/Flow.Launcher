@@ -65,7 +65,7 @@ namespace Flow.Launcher.Core.Plugin
                 savable?.Save();
             }
 
-            _api.SavePluginSettings();
+            API.SavePluginSettings();
         }
 
         public static async ValueTask DisposePluginsAsync()
@@ -170,7 +170,7 @@ namespace Flow.Launcher.Core.Plugin
                 try
                 {
                     var milliseconds = await Stopwatch.DebugAsync($"|PluginManager.InitializePlugins|Init method time cost for <{pair.Metadata.Name}>",
-                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, _api)));
+                        () => pair.Plugin.InitAsync(new PluginInitContext(pair.Metadata, API)));
 
                     pair.Metadata.InitTime += milliseconds;
                     Log.Info(
@@ -212,10 +212,10 @@ namespace Flow.Launcher.Core.Plugin
             if (failedPlugins.Any())
             {
                 var failed = string.Join(",", failedPlugins.Select(x => x.Metadata.Name));
-                _api.ShowMsg(
-                    _api.GetTranslation("failedToInitializePluginsTitle"),
+                API.ShowMsg(
+                    API.GetTranslation("failedToInitializePluginsTitle"),
                     string.Format(
-                        _api.GetTranslation("failedToInitializePluginsMessage"),
+                        API.GetTranslation("failedToInitializePluginsMessage"),
                         failed
                     ),
                     "",
@@ -522,7 +522,7 @@ namespace Flow.Launcher.Core.Plugin
 
             var newPluginPath = Path.Combine(installDirectory, folderName);
 
-            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => _api.ShowMsgBox(s));
+            FilesFolders.CopyAll(pluginFolderPath, newPluginPath, (s) => API.ShowMsgBox(s));
 
             try
             {
@@ -557,8 +557,8 @@ namespace Flow.Launcher.Core.Plugin
 
                     // if user want to remove the plugin settings, we cannot call save method for the plugin json storage instance of this plugin
                     // so we need to remove it from the api instance
-                    var method = _api.GetType().GetMethod("RemovePluginSettings");
-                    var pluginJsonStorage = method?.Invoke(_api, new object[] { assemblyName });
+                    var method = API.GetType().GetMethod("RemovePluginSettings");
+                    var pluginJsonStorage = method?.Invoke(API, new object[] { assemblyName });
 
                     // if there exists a json storage for current plugin, we need to delete the directory path
                     if (pluginJsonStorage != null)
@@ -571,8 +571,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            _api.ShowMsg(_api.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(_api.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
@@ -588,8 +588,8 @@ namespace Flow.Launcher.Core.Plugin
                         catch (Exception e)
                         {
                             Log.Exception($"|PluginManager.UninstallPlugin|Failed to delete plugin json folder for {plugin.Name}", e);
-                            _api.ShowMsg(_api.GetTranslation("failedToRemovePluginSettingsTitle"),
-                                string.Format(_api.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
+                            API.ShowMsg(API.GetTranslation("failedToRemovePluginSettingsTitle"),
+                                string.Format(API.GetTranslation("failedToRemovePluginSettingsMessage"), plugin.Name));
                         }
                     }
                 }
