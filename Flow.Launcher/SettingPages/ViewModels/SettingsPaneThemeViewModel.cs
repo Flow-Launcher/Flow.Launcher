@@ -35,8 +35,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             _selectedTheme = value;
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
-            if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect)
-                DropShadowEffect = false;
+            if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
+                DropShadowEffect = true;
             ThemeManager.Instance.RefreshFrame();
         }
     }
@@ -46,20 +46,21 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.UseDropShadowEffect;
         set
         {
-            if (ThemeManager.Instance.BlurEnabled && value)
+            if (ThemeManager.Instance.BlurEnabled && value == false)
             {
-                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowed"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowedBlur"));
+                Settings.UseDropShadowEffect = true;
                 return;
             }
 
-            if (value)
-            {
-                ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
-            }
-            else
-            {
-                ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
-            }
+            //if (value)
+            //{
+            //    ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+            //}
+            //else
+            //{
+            //    ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
+            //}
 
             Settings.UseDropShadowEffect = value;
         }

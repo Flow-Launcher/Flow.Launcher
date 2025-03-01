@@ -189,7 +189,6 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
-
             //SetWindowAccent();
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
@@ -218,6 +217,7 @@ namespace Flow.Launcher.Core.Resource
                 //    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 //}
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
+
             }
             UpdateResourceDictionary(dict);
         }
@@ -655,47 +655,47 @@ namespace Flow.Launcher.Core.Resource
         {
             var dict = GetCurrentResourceDictionary();
 
-            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            //var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = new Setter
-            {
-                Property = Border.EffectProperty,
-                Value = new DropShadowEffect
-                {
-                    Opacity = 0.3,
-                    ShadowDepth = 12,
-                    Direction = 270,
-                    BlurRadius = 30
-                }
-            };
+            //var effectSetter = new Setter
+            //{
+            //    Property = Border.EffectProperty,
+            //    Value = new DropShadowEffect
+            //    {
+            //        Opacity = 0.3,
+            //        ShadowDepth = 12,
+            //        Direction = 270,
+            //        BlurRadius = 30
+            //    }
+            //};
 
-            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-            if (marginSetter == null)
-            {
-                var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
-                marginSetter = new Setter()
-                {
-                    Property = Border.MarginProperty,
-                    Value = margin,
-                };
-                windowBorderStyle.Setters.Add(marginSetter);
+            //var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            //if (marginSetter == null)
+            //{
+            //    var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
+            //    marginSetter = new Setter()
+            //    {
+            //        Property = Border.MarginProperty,
+            //        Value = margin,
+            //    };
+            //    windowBorderStyle.Setters.Add(marginSetter);
 
-                SetResizeBoarderThickness(margin);
-            }
-            else
-            {
-                var baseMargin = (Thickness)marginSetter.Value;
-                var newMargin = new Thickness(
-                    baseMargin.Left + ShadowExtraMargin,
-                    baseMargin.Top + ShadowExtraMargin,
-                    baseMargin.Right + ShadowExtraMargin,
-                    baseMargin.Bottom + ShadowExtraMargin);
-                marginSetter.Value = newMargin;
+            //    SetResizeBoarderThickness(margin);
+            //}
+            //else
+            //{
+            //    var baseMargin = (Thickness)marginSetter.Value;
+            //    var newMargin = new Thickness(
+            //        baseMargin.Left + ShadowExtraMargin,
+            //        baseMargin.Top + ShadowExtraMargin,
+            //        baseMargin.Right + ShadowExtraMargin,
+            //        baseMargin.Bottom + ShadowExtraMargin);
+            //    marginSetter.Value = newMargin;
 
-                SetResizeBoarderThickness(newMargin);
-            }
+            //    SetResizeBoarderThickness(newMargin);
+            //}
 
-            windowBorderStyle.Setters.Add(effectSetter);
+            //windowBorderStyle.Setters.Add(effectSetter);
 
             UpdateResourceDictionary(dict);
         }
@@ -703,25 +703,26 @@ namespace Flow.Launcher.Core.Resource
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
             var dict = GetCurrentResourceDictionary();
-            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            mainWindow.WindowStyle = WindowStyle.None;
+            //var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
-            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            //var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
+            //var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
 
-            if (effectSetter != null)
-            {
-                windowBorderStyle.Setters.Remove(effectSetter);
-            }
-            if (marginSetter != null)
-            {
-                var currentMargin = (Thickness)marginSetter.Value;
-                var newMargin = new Thickness(
-                    currentMargin.Left - ShadowExtraMargin,
-                    currentMargin.Top - ShadowExtraMargin,
-                    currentMargin.Right - ShadowExtraMargin,
-                    currentMargin.Bottom - ShadowExtraMargin);
-                marginSetter.Value = newMargin;
-            }
+            //if (effectSetter != null)
+            //{
+            //    windowBorderStyle.Setters.Remove(effectSetter);
+            //}
+            //if (marginSetter != null)
+            //{
+            //    var currentMargin = (Thickness)marginSetter.Value;
+            //    var newMargin = new Thickness(
+            //        currentMargin.Left - ShadowExtraMargin,
+            //        currentMargin.Top - ShadowExtraMargin,
+            //        currentMargin.Right - ShadowExtraMargin,
+            //        currentMargin.Bottom - ShadowExtraMargin);
+            //    marginSetter.Value = newMargin;
+            //}
 
             SetResizeBoarderThickness(null);
 

@@ -104,6 +104,8 @@
     <system:String x:Key="AlwaysPreview">Always Preview</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Always open preview panel when Flow activates. Press {0} to toggle preview.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Shadow effect is not allowed while current theme has blur effect enabled</system:String>
+    <system:String x:Key="shadowEffectRestart">The shadow effect transition takes effect after the program restarts</system:String>
+    <system:String x:Key="shadowEffectNotAllowedBlur">Translucent themes cannot turn off shadow effects</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>

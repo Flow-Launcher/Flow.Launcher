@@ -375,7 +375,7 @@
                 Title="{DynamicResource queryWindowShadowEffect}"
                 Margin="0 8 0 0"
                 Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectCPUUsage}">
+                Sub="{DynamicResource shadowEffectRestart}">
                 <ui:ToggleSwitch
                     IsOn="{Binding DropShadowEffect}"
                     OffContent="{DynamicResource disable}"
