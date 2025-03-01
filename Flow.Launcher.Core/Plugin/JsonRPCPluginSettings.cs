@@ -278,7 +278,7 @@ namespace Flow.Launcher.Core.Plugin
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
-                                Content = "Browse"  // TODO: Localization
+                                Content = API.GetTranslation("select")
                             };
 
                             Btn.Click += (_, _) =>

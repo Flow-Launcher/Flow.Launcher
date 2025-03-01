@@ -174,18 +174,17 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FileEditorPath}"
                 TextWrapping="NoWrap" />
             <Button
-                MinWidth="45"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding OpenFileEditorPath}"
-                Content="..." />
+                Content="{DynamicResource select}" />
         </StackPanel>
 
         <TextBlock
@@ -201,18 +200,17 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FolderEditorPath}"
                 TextWrapping="NoWrap" />
             <Button
-                MinWidth="45"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding OpenFolderEditorPath}"
-                Content="..." />
+                Content="{DynamicResource select}" />
         </StackPanel>
 
         <TextBlock
@@ -228,18 +226,17 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelTextBlockMinWidth}"
+                MinWidth="{StaticResource SettingPanelPathTextBlockMinWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding ShellPath}"
                 TextWrapping="NoWrap" />
             <Button
-                MinWidth="45"
                 Margin="{StaticResource SettingPanelItemLeftMargin}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Command="{Binding OpenShellPath}"
-                Content="..." />
+                Content="{DynamicResource select}" />
         </StackPanel>
 
         <TextBlock
