@@ -227,7 +227,7 @@ namespace Flow.Launcher.Core.Plugin
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemTopBottomMargin,
                                 TextAlignment = TextAlignment.Left,
-                                TextWrapping = TextWrapping.Wrap
+                                TextWrapping = TextWrapping.Wrap  // TODO: Check password and others
                             };
 
                             break;
