@@ -5602,4 +5602,7 @@
         <Setter Property="VerticalAlignment" Value="Top" />
         <Setter Property="Background" Value="{DynamicResource Color03B}" />
     </Style>
+
+    <system:Double x:Key="SettingPanelTextBlockMinWidth">180</system:Double>
+    <system:Double x:Key="SettingPanelPathTextBlockMinWidth">240</system:Double>
 </ResourceDictionary>

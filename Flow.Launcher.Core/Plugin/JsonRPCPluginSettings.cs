@@ -29,6 +29,8 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly Thickness SettingPanelItemLeftMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftMargin");
         private static readonly Thickness SettingPanelItemTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemTopBottomMargin");
         private static readonly Thickness SettingPanelItemLeftTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftTopBottomMargin");
+        private static readonly double SettingPanelTextBlockMinWidth = (double)Application.Current.FindResource("SettingPanelTextBlockMinWidth");
+        private static readonly double SettingPanelPathTextBlockMinWidth = (double)Application.Current.FindResource("SettingPanelPathTextBlockMinWidth");
 
         public async Task InitializeAsync()
         {
@@ -236,7 +238,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MinWidth = 180,
+                                MinWidth = SettingPanelTextBlockMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
@@ -258,7 +260,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MinWidth = 240,
+                                MinWidth = SettingPanelPathTextBlockMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftMargin,
@@ -324,7 +326,7 @@ namespace Flow.Launcher.Core.Plugin
                             var textBox = new TextBox()
                             {
                                 MaxHeight = 150,
-                                MinWidth = 180,
+                                MinWidth = SettingPanelTextBlockMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
@@ -347,7 +349,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var passwordBox = new PasswordBox()
                             {
-                                MinWidth = 180,
+                                MinWidth = SettingPanelTextBlockMinWidth,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
