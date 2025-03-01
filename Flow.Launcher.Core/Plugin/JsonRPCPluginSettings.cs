@@ -14,6 +14,8 @@ using Orientation = System.Windows.Controls.Orientation;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControl = System.Windows.Controls.UserControl;
 
+#nullable enable
+
 namespace Flow.Launcher.Core.Plugin
 {
     public class JsonRPCPluginSettings
@@ -24,12 +26,12 @@ namespace Flow.Launcher.Core.Plugin
         public Dictionary<string, FrameworkElement> SettingControls { get; } = new();
 
         public IReadOnlyDictionary<string, object> Inner => Settings;
-        protected ConcurrentDictionary<string, object> Settings { get; set; }
+        protected ConcurrentDictionary<string, object> Settings { get; set; } = null!;
         public required IPublicAPI API { get; init; }
 
-        private JsonStorage<ConcurrentDictionary<string, object>> _storage;
+        private JsonStorage<ConcurrentDictionary<string, object>> _storage = null!;
 
-        // maybe move to resource?
+        // TODO: Move to resource
         private static readonly Thickness settingControlMargin = new(0, 9, 18, 9);
         private static readonly Thickness settingCheckboxMargin = new(0, 9, 9, 9);
         private static readonly Thickness settingPanelMargin = (Thickness)System.Windows.Application.Current.FindResource("SettingPanelMargin");
@@ -104,10 +106,10 @@ namespace Flow.Launcher.Core.Plugin
             _storage.Save();
         }
 
-        public Control CreateSettingPanel()
+        public Control? CreateSettingPanel()
         {
             // If there are no settings or the settings are empty, return null
-            if (Settings == null || Settings.IsEmpty)
+            if (Configuration == null || Settings == null || Settings.IsEmpty)
             {
                 return null;
             }
@@ -124,7 +126,7 @@ namespace Flow.Launcher.Core.Plugin
             });
 
             // Iterate over each setting and create one row for it
-            int rowCount = 0;
+            var rowCount = 0;
             foreach (var (type, attributes) in Configuration.Body)
             {
                 // Skip if the setting does not have attributes or name
@@ -137,7 +139,7 @@ namespace Flow.Launcher.Core.Plugin
                 mainPanel.RowDefinitions.Add(new RowDefinition());
 
                 // State controls for column 0 and 1
-                StackPanel panel = null;
+                StackPanel? panel = null;
                 FrameworkElement contentControl;
 
                 // If the type is textBlock or seperator, we do not need to create a panel
@@ -151,6 +153,7 @@ namespace Flow.Launcher.Core.Plugin
                     };
 
                     // Create a text block for name
+                    // TODO: Move to resource
                     var name = new TextBlock()
                     {
                         Text = attributes.Label,
@@ -159,9 +162,10 @@ namespace Flow.Launcher.Core.Plugin
                     };
 
                     // Create a text block for description
-                    TextBlock desc = null;
+                    TextBlock? desc = null;
                     if (attributes.Description != null)
                     {
+                        // TODO: Move to resource
                         desc = new TextBlock()
                         {
                             Text = attributes.Description,
@@ -170,7 +174,6 @@ namespace Flow.Launcher.Core.Plugin
                             Margin = new(0, 2, 0, 0),  // TODO: Use resource
                             TextWrapping = TextWrapping.WrapWithOverflow
                         };
-
                         desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B"); // for theme change
                     }
 
@@ -188,7 +191,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             contentControl = new TextBlock
                             {
-                                Text = attributes.Description.Replace("\\r\\n", "\r\n"),
+                                Text = attributes.Description?.Replace("\\r\\n", "\r\n") ?? string.Empty,
                                 Padding = new Thickness(0, 0, 0, 0),
                                 HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
                                 TextAlignment = TextAlignment.Left,
@@ -250,6 +253,7 @@ namespace Flow.Launcher.Core.Plugin
                                 {
                                     FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
                                     OpenFileDialog fileDialog => fileDialog.FileName,
+                                    _ => string.Empty
                                 };
                                 textBox.Text = path;
                                 Settings[attributes.Name] = path;
@@ -341,7 +345,7 @@ namespace Flow.Launcher.Core.Plugin
 
                         checkBox.Click += (sender, _) =>
                         {
-                            Settings[attributes.Name] = ((CheckBox)sender).IsChecked;
+                            Settings[attributes.Name] = ((CheckBox)sender).IsChecked!;
                         };
 
                         contentControl = checkBox;
