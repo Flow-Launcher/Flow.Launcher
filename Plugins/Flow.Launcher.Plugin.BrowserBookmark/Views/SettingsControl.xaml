@@ -65,11 +65,11 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
-                    MinWidth="130"
+                    Width="100"
                     Click="NewCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_addBrowserBookmark}" />
                 <Button
-                    MinWidth="130"
+                    Width="100"
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
                     Click="EditCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_editBrowserBookmark}">
@@ -85,7 +85,7 @@
                     </Button.Style>
                 </Button>
                 <Button
-                    MinWidth="120"
+                    Width="100"
                     Margin="{StaticResource SettingPanelItemLeftMargin}"
                     Click="DeleteCustomBrowser"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_removeBrowserBookmark}" />
