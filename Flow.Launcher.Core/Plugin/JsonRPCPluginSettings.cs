@@ -325,8 +325,8 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var textBox = new TextBox()
                             {
-                                MaxHeight = 150,
-                                MinWidth = SettingPanelTextBlockMinWidth,
+                                MinHeight = 150,
+                                MinWidth = 240,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
