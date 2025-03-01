@@ -12,6 +12,10 @@
     </ResourceDictionary.MergedDictionaries>
 
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+    <system:String x:Key="BlurMode">Dark</system:String>
+    <system:String x:Key="CornerType">DoNotRound</system:String>
+    <Color x:Key="lightBG">#C7000000</Color>
+    <Color x:Key="darkBG">#C7000000</Color>
 
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />

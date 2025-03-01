@@ -168,9 +168,9 @@ namespace Flow.Launcher.Core.Resource
             {
                 DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
                 {
-                    "DONOTROUND" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
-                    "ROUND" => DWM_WINDOW_CORNER_PREFERENCE.Round,
-                    "ROUNDSMALL" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+                    "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
+                    "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
+                    "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
                     _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
                 };
 
@@ -333,13 +333,13 @@ namespace Flow.Launcher.Core.Resource
             }
             else if (Mode == "Dark")
             {
-                mainWindow.Background = new SolidColorBrush(Colors.Green);
+                mainWindow.Background = new SolidColorBrush(darkBG);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                 return;
             }
             else if (Mode == "Light")
             {
-                mainWindow.Background = new SolidColorBrush(Colors.Yellow);
+                mainWindow.Background = new SolidColorBrush(lightBG);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 return;
             }
