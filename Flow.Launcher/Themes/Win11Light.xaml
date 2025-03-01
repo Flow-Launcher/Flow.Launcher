@@ -14,6 +14,7 @@
     </ResourceDictionary.MergedDictionaries>
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="BlurMode">Auto</system:String>
+    <system:String x:Key="CornerType">ROUND</system:String>
     <Color x:Key="lightBG">#BFFAFAFA</Color>
     <Color x:Key="darkBG">#DD202020</Color>
     <Style

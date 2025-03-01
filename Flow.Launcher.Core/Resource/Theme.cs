@@ -20,6 +20,8 @@ using System.Diagnostics;
 using Microsoft.Win32;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -72,6 +74,21 @@ namespace Flow.Launcher.Core.Resource
         }
 
         #region Blur Handling
+        private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
+        public enum DWM_WINDOW_CORNER_PREFERENCE
+        {
+            Default = 0,
+            DoNotRound = 1,
+            Round = 2,
+            RoundSmall = 3
+        }
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute, int cbAttribute);
+        public static void SetWindowCornerPreference(System.Windows.Window window, DWM_WINDOW_CORNER_PREFERENCE preference)
+        {
+            IntPtr hWnd = new WindowInteropHelper(window).Handle;
+            DwmSetWindowAttribute(hWnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(int));
+        }
         public class ParameterTypes
         {
 
@@ -111,7 +128,7 @@ namespace Flow.Launcher.Core.Resource
                 => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
         }
 
-        Window mainWindow = Application.Current.MainWindow;
+        System.Windows.Window mainWindow = Application.Current.MainWindow;
 
         public void RefreshFrame()
         {
@@ -138,9 +155,34 @@ namespace Flow.Launcher.Core.Resource
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             ThemeModeColor(BlurMode());
             SetBlurForWindow();
+            SetCornerForWindow();
         }
 
 
+        public void SetCornerForWindow()
+        {
+            var dict = GetThemeResourceDictionary(_settings.Theme);
+            if (dict == null)
+                return;
+            if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
+            {
+                DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
+                {
+                    "DONOTROUND" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
+                    "ROUND" => DWM_WINDOW_CORNER_PREFERENCE.Round,
+                    "ROUNDSMALL" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+                    _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
+                };
+
+                SetWindowCornerPreference(mainWindow, preference);
+           
+            }
+            else
+            {
+                SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
+ 
+            }
+        }
 
         /// <summary>
         /// Sets the blur for a window via SetWindowCompositionAttribute
@@ -536,7 +578,7 @@ namespace Flow.Launcher.Core.Resource
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
-            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
+            windowStyle.Setters.Add(new Setter(System.Windows.Window.WidthProperty, width));
             mainWindowWidth = (double)width;
             return dict;
         }
