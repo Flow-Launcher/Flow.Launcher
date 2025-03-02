@@ -188,7 +188,6 @@ namespace Flow.Launcher.Core.Plugin
                     };
 
                     // Create a text block for name
-                    // TODO: Move to resource
                     var name = new TextBlock()
                     {
                         Text = attributes.Label,
@@ -200,16 +199,14 @@ namespace Flow.Launcher.Core.Plugin
                     TextBlock? desc = null;
                     if (attributes.Description != null)
                     {
-                        // TODO: Move to resource
                         desc = new TextBlock()
                         {
                             Text = attributes.Description,
-                            FontSize = 12,
                             VerticalAlignment = VerticalAlignment.Center,
-                            Margin = new(0, 2, 0, 0),
                             TextWrapping = TextWrapping.WrapWithOverflow
                         };
-                        desc.SetResourceReference(TextBlock.ForegroundProperty, "Color04B"); // for theme change
+
+                        desc.SetResourceReference(TextBlock.StyleProperty, "SettingPanelTextBlockDescriptionStyle"); // for theme change
                     }
 
                     // Add the name and description to the panel
@@ -446,15 +443,9 @@ namespace Flow.Launcher.Core.Plugin
                         }
                     case "seperator":
                         {
-                            // TODO: Move to resource
-                            var sep = new Separator
-                            {
-                                VerticalAlignment = VerticalAlignment.Top,
-                                Margin = new(-70, 13.5, -18, 13.5),
-                                Height = 1
-                            };
+                            var sep = new Separator();
 
-                            sep.SetResourceReference(Separator.BackgroundProperty, "Color03B");
+                            sep.SetResourceReference(Separator.StyleProperty, "SettingPanelSeperatorStyle");
 
                             contentControl = sep;
 

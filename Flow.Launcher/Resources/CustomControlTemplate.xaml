@@ -5607,4 +5607,10 @@
     <system:Double x:Key="SettingPanelPathTextBoxMinWidth">240</system:Double>
     <system:Double x:Key="SettingPanelAreaTextBoxMinWidth">270</system:Double>
     <system:Double x:Key="SettingPanelAreaTextBoxMinHeight">150</system:Double>
+
+    <Style x:Key="SettingPanelTextBlockDescriptionStyle" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Margin" Value="0 2 0 0" />
+        <Setter Property="Foreground" Value="{DynamicResource Color04B}" />
+    </Style>
 </ResourceDictionary>
