@@ -174,7 +174,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
+                Width="{StaticResource SettingPanelPathTextBoxWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FileEditorPath}"
@@ -200,7 +200,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
+                Width="{StaticResource SettingPanelPathTextBoxWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding FolderEditorPath}"
@@ -226,7 +226,7 @@
             Margin="{StaticResource SettingPanelItemLeftTopBottomMargin}"
             Orientation="Horizontal">
             <TextBox
-                MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
+                Width="{StaticResource SettingPanelPathTextBoxWidth}"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"
                 Text="{Binding ShellPath}"
@@ -523,10 +523,11 @@
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             VerticalAlignment="Center"
             Text="{DynamicResource plugin_explorer_everything_installed_path}" />
+        <!--  Here we can use min width because there is no botton following textbox  -->
         <TextBox
             Grid.Row="26"
             Grid.Column="1"
-            MinWidth="{StaticResource SettingPanelPathTextBoxMinWidth}"
+            MinWidth="{StaticResource SettingPanelPathTextBoxWidth}"
             Margin="{StaticResource SettingPanelItemRightTopBottomMargin}"
             HorizontalAlignment="Left"
             Text="{Binding EverythingInstalledPath}" />
