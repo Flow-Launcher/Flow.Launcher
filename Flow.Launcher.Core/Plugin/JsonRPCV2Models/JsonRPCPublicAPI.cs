@@ -175,5 +175,15 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
         {
             _api.BackToQueryResults();
         }
+
+        public void StartLoadingBar()
+        {
+            _api.StartLoadingBar();
+        }
+
+        public void StopLoadingBar()
+        {
+            _api.StopLoadingBar();
+        }
     }
 }

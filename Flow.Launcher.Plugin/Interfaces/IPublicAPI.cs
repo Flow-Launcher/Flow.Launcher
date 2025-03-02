@@ -334,5 +334,15 @@ namespace Flow.Launcher.Plugin
         /// <param name="cancelProgress">When user cancel the progress, this action will be called.</param>
         /// <returns></returns>
         public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null);
+
+        /// <summary>
+        /// Start the loading bar in main window
+        /// </summary>
+        public void StartLoadingBar();
+
+        /// <summary>
+        /// Stop the loading bar in main window
+        /// </summary>
+        public void StopLoadingBar();
     }
 }
