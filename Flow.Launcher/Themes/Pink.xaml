@@ -1,7 +1,15 @@
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
+    <system:String x:Key="BlurMode">Light</system:String>
+    <system:String x:Key="CornerType">RoundSmall</system:String>
+    <Color x:Key="lightBG">#DDFEC7D7</Color>
+    <Color x:Key="darkBG">#DDFEC7D7</Color>
     <Thickness x:Key="ResultMargin">0 0 0 0</Thickness>
     <Style
         x:Key="ItemGlyph"
@@ -32,15 +40,15 @@
         TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Background" Value="#fec7d7" />
-        <Setter Property="BorderThickness" Value="3" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="#0e172c" />
     </Style>
     <Style
         x:Key="SeparatorStyle"
         BasedOn="{StaticResource BaseSeparatorStyle}"
         TargetType="{x:Type Rectangle}">
-        <Setter Property="Fill" Value="#0e172c" />
-        <Setter Property="Height" Value="3" />
+        <Setter Property="Fill" Value="#DFDE89A2" />
+        <Setter Property="Height" Value="1" />
         <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style

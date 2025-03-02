@@ -153,7 +153,6 @@ namespace Flow.Launcher.Core.Resource
 
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-            ThemeModeColor(BlurMode());
             SetBlurForWindow();
             SetCornerForWindow();
         }
@@ -197,12 +196,11 @@ namespace Flow.Launcher.Core.Resource
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
             if (windowBorderStyle == null)
                 return;
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             if (BlurEnabled)
             {
                 //mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
                 //BlurColor(BlurMode());
-                ThemeModeColor(BlurMode());
                 Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~");
                 Debug.WriteLine(BlurMode());
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
@@ -219,6 +217,7 @@ namespace Flow.Launcher.Core.Resource
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
 
             }
+            ThemeModeColor(BlurMode());
             UpdateResourceDictionary(dict);
         }
 
@@ -342,6 +341,10 @@ namespace Flow.Launcher.Core.Resource
                 mainWindow.Background = new SolidColorBrush(lightBG);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 return;
+            }
+            else
+            {
+                mainWindow.Background = new SolidColorBrush(Colors.Transparent);
             }
         }
         public void BlurColor(string Color)

@@ -190,7 +190,6 @@ namespace Flow.Launcher
             {
                 ThemeManager.Instance.RefreshFrame();
             }), DispatcherPriority.Background);
-
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
             CheckFirstLaunch();
