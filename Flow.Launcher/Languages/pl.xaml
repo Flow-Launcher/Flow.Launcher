@@ -6,14 +6,14 @@
 {2}{2}
 Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy poproszony o wybranie folderu zawierającego plik wykonywalny {1}
     </system:String>
-    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Proszę wybrać plik wykonywalny {0}</system:String>
-    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki pliku wykonywalnego {0}, proszę spróbować z poziomu ustawień Flow (przewiń na dół strony).</system:String>
+    <system:String x:Key="runtimePluginChooseRuntimeExecutable">Wybierz plik wykonywalny {0}</system:String>
+    <system:String x:Key="runtimePluginUnableToSetExecutablePath">Nie można ustawić ścieżki do pliku wykonywalnego {0}. Spróbuj ponownie w ustawieniach Flow (przewiń na sam dół).</system:String>
     <system:String x:Key="failedToInitializePluginsTitle">Nie udało się zainicjować wtyczek</system:String>
-    <system:String x:Key="failedToInitializePluginsMessage">Wtyczki: {0} - nie udało się załadować i zostaną wyłączone, proszę skontaktować się z twórcą wtyczki w celu uzyskania pomocy</system:String>
+    <system:String x:Key="failedToInitializePluginsMessage">Wtyczki: {0} – nie udało się ich wczytać i zostaną wyłączone. Skontaktuj się z twórcą wtyczki, aby uzyskać pomoc</system:String>
 
     <!--  MainWindow  -->
-    <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego &quot;{0}&quot;. Klucz skrótu może być używany przez inny program. Zmień skrót klawiszowy lub wyjdź z innego programu.</system:String>
-    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
+    <system:String x:Key="registerHotkeyFailed">Nie udało się zarejestrować skrótu klawiszowego „{0}”. Skrót może być używany przez inny program. Zmień skrót na inny lub zamknij program, który go używa.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Nie udało się wyrejestrować skrótu „{0}”. Spróbuj ponownie lub sprawdź szczegóły w dzienniku</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nie udało się uruchomić: {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Niepoprawny format pliku wtyczki</system:String>
@@ -45,8 +45,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="portableMode">Tryb przenośny</system:String>
     <system:String x:Key="portableModeToolTIp">Przechowuj wszystkie ustawienia i dane użytkownika w jednym folderze (Przydatne, gdy używane na dyskach wymiennych lub usługach chmurowych).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Uruchamiaj Flow Launcher przy starcie systemu</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
-    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Użyj zadania logowania zamiast wpisu autostartu, aby przyspieszyć uruchamianie</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Po odinstalowaniu musisz ręcznie usunąć to zadanie (Flow.Launcher Startup) za pomocą Harmonogramu zadań</system:String>
     <system:String x:Key="setAutoStartFailed">Błąd uruchamiania ustawień przy starcie</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Ukryj okno Flow Launcher kiedy przestanie ono być aktywne</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nie pokazuj powiadomienia o nowej wersji</system:String>
@@ -68,8 +68,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="LastQueryPreserved">Zachowaj ostatnie zapytanie</system:String>
     <system:String x:Key="LastQuerySelected">Wybierz ostatnie zapytanie</system:String>
     <system:String x:Key="LastQueryEmpty">Puste ostatnie zapytanie</system:String>
-    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
-    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Zachowaj ostatnie słowo kluczowe akcji</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Wybierz ostatnie słowo kluczowe akcji</system:String>
     <system:String x:Key="KeepMaxResults">Stała wysokość okna</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Wysokość okna nie jest regulowana poprzez przeciąganie.</system:String>
     <system:String x:Key="maxShowResults">Maksymalna liczba wyników</system:String>
@@ -129,8 +129,8 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="plugin_query_version">Wersja</system:String>
     <system:String x:Key="plugin_query_web">Strona</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalowywanie</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
-    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Nie udało się usunąć ustawień wtyczki</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Wtyczki: {0} – nie udało się usunąć plików ustawień wtyczek, usuń je ręcznie</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Sklep z wtyczkami</system:String>
@@ -385,9 +385,9 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="reportWindow_report_succeed">Raport wysłany pomyślnie</system:String>
     <system:String x:Key="reportWindow_report_failed">Nie udało się wysłać raportu</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">W programie Flow Launcher wystąpił błąd</system:String>
-    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
-    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
-    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Otwórz nowe zgłoszenie w</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Prześlij plik dziennika: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Skopiuj poniższą wiadomość wyjątku</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Proszę czekać...</system:String>
