@@ -357,7 +357,6 @@ namespace Flow.Launcher.Core.Plugin
                                 ToolTip = attributes.Description,
                             };
 
-                            // TODO: Fix issue here
                             passwordBox.PasswordChanged += (sender, _) =>
                             {
                                 Settings[attributes.Name] = ((PasswordBox)sender).Password;
