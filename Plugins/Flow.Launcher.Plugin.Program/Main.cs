@@ -11,6 +11,7 @@ using Flow.Launcher.Plugin.Program.Programs;
 using Flow.Launcher.Plugin.Program.Views;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using Microsoft.Extensions.Caching.Memory;
+using Path = System.IO.Path;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Plugin.Program
@@ -33,6 +34,46 @@ namespace Flow.Launcher.Plugin.Program
         private static readonly MemoryCacheOptions cacheOptions = new() { SizeLimit = 1560 };
         private static MemoryCache cache = new(cacheOptions);
 
+        private static readonly string[] commonUninstallerNames =
+        {
+            "uninst.exe",
+            "unins000.exe",
+            "uninst000.exe",
+            "uninstall.exe"
+        };
+        private static readonly string[] commonUninstallerPrefixs =
+        {
+            "uninstall",//en
+            "卸载",//zh-cn
+            "卸載",//zh-tw
+            "видалити",//uk-UA
+            "удалить",//ru
+            "désinstaller",//fr
+            "アンインストール",//ja
+            "deïnstalleren",//nl
+            "odinstaluj",//pl
+            "afinstallere",//da
+            "deinstallieren",//de
+            "삭제",//ko
+            "деинсталирај",//sr
+            "desinstalar",//pt-pt
+            "desinstalar",//pt-br
+            "desinstalar",//es
+            "desinstalar",//es-419
+            "disinstallare",//it
+            "avinstallere",//nb-NO
+            "odinštalovať",//sk
+            "kaldır",//tr
+            "odinstalovat",//cs
+            "إلغاء التثبيت",//ar
+            "gỡ bỏ",//vi-vn
+            "הסרה"//he
+        };
+        private const string ExeUninstallerSuffix = ".exe";
+        private const string InkUninstallerSuffix = ".lnk";
+
+        private static readonly string WindowsAppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "WindowsApps");
+
         static Main()
         {
         }
@@ -48,14 +89,35 @@ namespace Flow.Launcher.Plugin.Program
             var result = await cache.GetOrCreateAsync(query.Search, async entry =>
             {
                 var resultList = await Task.Run(() =>
-                    _win32s.Cast<IProgram>()
-                        .Concat(_uwps)
-                        .AsParallel()
-                        .WithCancellation(token)
-                        .Where(p => p.Enabled)
-                        .Select(p => p.Result(query.Search, Context.API))
-                        .Where(r => r?.Score > 0)
-                        .ToList());
+                {
+                    try
+                    {
+                        // Collect all UWP Windows app directories
+                        var uwpsDirectories = _settings.HideDuplicatedWindowsApp ? _uwps
+                            .Where(uwp => !string.IsNullOrEmpty(uwp.Location)) // Exclude invalid paths
+                            .Where(uwp => uwp.Location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase)) // Keep system apps
+                            .Select(uwp => uwp.Location.TrimEnd('\\')) // Remove trailing slash
+                            .Distinct(StringComparer.OrdinalIgnoreCase)
+                            .ToArray() : null;
+
+                        return _win32s.Cast<IProgram>()
+                            .Concat(_uwps)
+                            .AsParallel()
+                            .WithCancellation(token)
+                            .Where(HideUninstallersFilter)
+                            .Where(p => HideDuplicatedWindowsAppFilter(p, uwpsDirectories))
+                            .Where(p => p.Enabled)
+                            .Select(p => p.Result(query.Search, Context.API))
+                            .Where(r => r?.Score > 0)
+                            .ToList();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Log.Debug("|Flow.Launcher.Plugin.Program.Main|Query operation cancelled");
+                        return emptyResults;
+                    }
+                   
+                }, token);
 
                 resultList = resultList.Any() ? resultList : emptyResults;
 
@@ -66,6 +128,56 @@ namespace Flow.Launcher.Plugin.Program
             });
 
             return result;
+        }
+
+        private bool HideUninstallersFilter(IProgram program)
+        {
+            if (!_settings.HideUninstallers) return true;
+            if (program is not Win32 win32) return true;
+
+            // First check the executable path
+            var fileName = Path.GetFileName(win32.ExecutablePath);
+            // For cases when the uninstaller is named like "uninst.exe"
+            if (commonUninstallerNames.Contains(fileName, StringComparer.OrdinalIgnoreCase)) return false;
+            // For cases when the uninstaller is named like "Uninstall Program Name.exe"
+            foreach (var prefix in commonUninstallerPrefixs)
+            {
+                if (fileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                    fileName.EndsWith(ExeUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
+                    return false;
+            }
+
+            // Second check the lnk path
+            if (!string.IsNullOrEmpty(win32.LnkResolvedPath))
+            {
+                var inkFileName = Path.GetFileName(win32.FullPath);
+                // For cases when the uninstaller is named like "Uninstall Program Name.ink"
+                foreach (var prefix in commonUninstallerPrefixs)
+                {
+                    if (inkFileName.StartsWith(prefix, StringComparison.OrdinalIgnoreCase) &&
+                        inkFileName.EndsWith(InkUninstallerSuffix, StringComparison.OrdinalIgnoreCase))
+                        return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static bool HideDuplicatedWindowsAppFilter(IProgram program, string[] uwpsDirectories)
+        {
+            if (uwpsDirectories == null || uwpsDirectories.Length == 0) return true;
+            if (program is UWPApp) return true;
+
+            var location = program.Location.TrimEnd('\\'); // Ensure trailing slash
+            if (string.IsNullOrEmpty(location))
+                return true; // Keep if location is invalid
+
+            if (!location.StartsWith(WindowsAppPath, StringComparison.OrdinalIgnoreCase))
+                return true; // Keep if not a Windows app
+
+            // Check if the any Win32 executable directory contains UWP Windows app location matches 
+            return !uwpsDirectories.Any(uwpDirectory =>
+                location.StartsWith(uwpDirectory, StringComparison.OrdinalIgnoreCase));
         }
 
         public async Task InitAsync(PluginInitContext context)
@@ -180,6 +292,7 @@ namespace Flow.Launcher.Plugin.Program
                             Context.API.GetTranslation("flowlauncher_plugin_program_disable_dlgtitle_success"),
                             Context.API.GetTranslation(
                                 "flowlauncher_plugin_program_disable_dlgtitle_success_message"));
+                        Context.API.ReQuery();
                         return false;
                     },
                     IcoPath = "Images/disable.png",

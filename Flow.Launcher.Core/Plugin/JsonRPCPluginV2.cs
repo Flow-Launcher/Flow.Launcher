@@ -26,54 +26,33 @@ namespace Flow.Launcher.Core.Plugin
 
         protected override async Task<bool> ExecuteResultAsync(JsonRPCResult result)
         {
-            try
-            {
-                var res = await RPC.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method,
-                    argument: result.JsonRPCAction.Parameters);
+            var res = await RPC.InvokeAsync<JsonRPCExecuteResponse>(result.JsonRPCAction.Method,
+                argument: result.JsonRPCAction.Parameters);
 
-                return res.Hide;
-            }
-            catch
-            {
-                return false;
-            }
+            return res.Hide;
         }
 
         private JoinableTaskFactory JTF { get; } = new JoinableTaskFactory(new JoinableTaskContext());
 
         public override List<Result> LoadContextMenus(Result selectedResult)
         {
-            try
-            {
-                var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
-                    new object[] { selectedResult.ContextData }));
+            var res = JTF.Run(() => RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("context_menu",
+                new object[] { selectedResult.ContextData }));
 
-                var results = ParseResults(res);
+            var results = ParseResults(res);
 
-                return results;
-            }
-            catch
-            {
-                return new List<Result>();
-            }
+            return results;
         }
 
         public override async Task<List<Result>> QueryAsync(Query query, CancellationToken token)
         {
-            try
-            {
-                var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
-                    new object[] { query, Settings.Inner },
-                    token);
+            var res = await RPC.InvokeWithCancellationAsync<JsonRPCQueryResponseModel>("query",
+                new object[] { query, Settings.Inner },
+                token);
 
-                var results = ParseResults(res);
+            var results = ParseResults(res);
 
-                return results;
-            }
-            catch
-            {
-                return new List<Result>();
-            }
+            return results;
         }
 
 
@@ -133,17 +112,31 @@ namespace Flow.Launcher.Core.Plugin
             RPC.StartListening();
         }
 
-        public virtual Task ReloadDataAsync()
+        public virtual async Task ReloadDataAsync()
         {
-            SetupJsonRPC();
-            return Task.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("reload_data", Context);
+            }
+            catch (RemoteMethodNotFoundException e)
+            {
+            }
         }
 
-        public virtual ValueTask DisposeAsync()
+        public virtual async ValueTask DisposeAsync()
         {
-            RPC?.Dispose();
-            ErrorStream?.Dispose();
-            return ValueTask.CompletedTask;
+            try
+            {
+                await RPC.InvokeAsync("close");
+            }
+            catch (RemoteMethodNotFoundException e)
+            {
+            }
+            finally
+            {
+                RPC?.Dispose();
+                ErrorStream?.Dispose();
+            }
         }
     }
 }

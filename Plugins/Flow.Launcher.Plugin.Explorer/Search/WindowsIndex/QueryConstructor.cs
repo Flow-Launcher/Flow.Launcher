@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using Microsoft.Search.Interop;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
 {
     public class QueryConstructor
     {
+        private static Regex _specialCharacterMatcher = new(@"[\@\＠\#\＃\&\＆＊_;,\%\|\!\(\)\{\}\[\]\^\~\?\\""\/\:\=\-]+", RegexOptions.Compiled);
+        private static Regex _multiWhiteSpacesMatcher = new(@"\s+", RegexOptions.Compiled);
+
         private Settings settings { get; }
 
         private const string SystemIndex = "SystemIndex";
@@ -76,8 +80,39 @@ namespace Flow.Launcher.Plugin.Explorer.Search.WindowsIndex
             if (userSearchString.IsWhiteSpace())
                 userSearchString = "*";
 
+            // Remove any special characters that might cause issues with the query
+            var replacedSearchString = ReplaceSpecialCharacterWithTwoSideWhiteSpace(userSearchString);
+
             // Generate SQL from constructed parameters, converting the userSearchString from AQS->WHERE clause
-            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(userSearchString.ToString())} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+            return $"{CreateBaseQuery().GenerateSQLFromUserQuery(replacedSearchString)} AND {RestrictionsForAllFilesAndFoldersSearch} ORDER BY {FileName}";
+        }
+
+        /// <summary>
+        /// If one special character have white space on one side, replace it with one white space.
+        /// So command will not have "[special character]+*" which will cause OLEDB exception.
+        /// </summary>
+        private static string ReplaceSpecialCharacterWithTwoSideWhiteSpace(ReadOnlySpan<char> input)
+        {
+            const string whiteSpace = " ";
+
+            var inputString = input.ToString();
+
+            // Use regex to match special characters with whitespace on one side
+            // and replace them with a single space
+            var result = _specialCharacterMatcher.Replace(inputString, match =>
+            {
+                // Check if the match has whitespace on one side
+                bool hasLeadingWhitespace = match.Index > 0 && char.IsWhiteSpace(inputString[match.Index - 1]);
+                bool hasTrailingWhitespace = match.Index + match.Length < inputString.Length && char.IsWhiteSpace(inputString[match.Index + match.Length]);
+                if (hasLeadingWhitespace || hasTrailingWhitespace)
+                {
+                    return whiteSpace;
+                }
+                return match.Value;
+            });
+
+            // Remove any extra spaces that might have been introduced
+            return _multiWhiteSpacesMatcher.Replace(result, whiteSpace).Trim();
         }
 
         ///<summary>

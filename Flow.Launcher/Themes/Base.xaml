@@ -28,8 +28,8 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FontSize" Value="28" />
         <Setter Property="FontWeight" Value="Regular" />
-        <Setter Property="Margin" Value="16,7,0,7" />
-        <Setter Property="Padding" Value="0,4,68,0" />
+        <Setter Property="Margin" Value="16 7 0 7" />
+        <Setter Property="Padding" Value="0 0 68 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Height" Value="48" />
         <Setter Property="Foreground" Value="#E3E0E3" />
@@ -69,7 +69,7 @@
 
     <!--  Further font customisations are dynamically loaded in Theme.cs  -->
     <Style x:Key="BaseQueryBoxBgStyle" TargetType="{x:Type Border}">
-        <Setter Property="Margin" Value="0,2,0,0" />
+        <Setter Property="Margin" Value="0 0 0 0" />
     </Style>
     <Style
         x:Key="QueryBoxBgStyle"
@@ -81,22 +81,24 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="Foreground" Value="DarkGray" />
         <Setter Property="Height" Value="48" />
-        <Setter Property="Margin" Value="16,7,0,7" />
+        <Setter Property="Margin" Value="16 7 0 7" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Padding" Value="0,4,68,0" />
+        <Setter Property="Padding" Value="0 0 68 0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
     </Style>
 
     <Style x:Key="BaseWindowBorderStyle" TargetType="{x:Type Border}">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="#2F2F2F" />
-        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="UseLayoutRounding" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
     <Style x:Key="BaseWindowStyle" TargetType="{x:Type Window}">
+        <Setter Property="RenderOptions.ClearTypeHint" Value="Enabled" />
         <Setter Property="Width" Value="600" />
     </Style>
 
@@ -115,18 +117,20 @@
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Height" Value="Auto" />
-        <Setter Property="Margin" Value="0,0,66,0" />
+        <Setter Property="Margin" Value="0 0 66 0" />
         <Setter Property="Visibility" Value="Collapsed" />
     </Style>
     <Style x:Key="BaseClockBox" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="20" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0 0 0 3" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=DateBox, Path=Visibility}" Value="Visible">
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0 0 0 0" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -135,10 +139,11 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="HorizontalAlignment" Value="Right" />
         <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Margin" Value="0 0 0 0" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=ClockBox, Path=Visibility}" Value="Visible">
                 <Setter Property="FontSize" Value="14" />
+                <Setter Property="Margin" Value="0 0 0 3" />
             </DataTrigger>
         </Style.Triggers>
     </Style>
@@ -188,7 +193,7 @@
     <!--  Item Style  -->
     <Style x:Key="ProgressBarResult" TargetType="{x:Type ProgressBar}">
         <Setter Property="Height" Value="18" />
-        <Setter Property="Margin" Value="0,0,0,4" />
+        <Setter Property="Margin" Value="0 0 0 4" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="Maximum" Value="100" />
         <Setter Property="Minimum" Value="0" />
@@ -214,7 +219,7 @@
     <Style x:Key="BaseItemNumberStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="HorizontalAlignment" Value="Center" />
-        <Setter Property="Margin" Value="3,0,0,0" />
+        <Setter Property="Margin" Value="3 0 0 0" />
         <Setter Property="FontSize" Value="22" />
     </Style>
     <Style x:Key="BaseGlyphStyle" TargetType="{x:Type TextBlock}">
@@ -255,7 +260,7 @@
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto" />
         <Setter Property="Margin" Value="{DynamicResource ResultMargin}" />
-        <Setter Property="Padding" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="0 0 0 0" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -265,12 +270,12 @@
                             <Style TargetType="ScrollViewer">
                                 <Style.Triggers>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">
-                                        <Setter Property="Margin" Value="0,0,0,0" />
-                                        <Setter Property="Padding" Value="0,0,0,0" />
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
                                     </Trigger>
                                     <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Collapsed">
-                                        <Setter Property="Margin" Value="0,0,0,0" />
-                                        <Setter Property="Padding" Value="0,0,0,0" />
+                                        <Setter Property="Margin" Value="0 0 0 0" />
+                                        <Setter Property="Padding" Value="0 0 0 0" />
                                     </Trigger>
                                 </Style.Triggers>
                             </Style>
@@ -312,7 +317,7 @@
                 x:Name="PART_VerticalScrollBar"
                 Grid.Row="0"
                 Grid.Column="0"
-                Margin="0,0,0,0"
+                Margin="0 0 0 0"
                 HorizontalAlignment="Right"
                 AutomationProperties.AutomationId="VerticalScrollBar"
                 Cursor="Arrow"
@@ -368,22 +373,7 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle">
-        <Style.Triggers>
-            <MultiDataTrigger>
-                <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
-                    <Condition Binding="{Binding ElementName=ContextMenu, Path=Visibility}" Value="Collapsed" />
-                    <Condition Binding="{Binding ElementName=History, Path=Visibility}" Value="Collapsed" />
-                </MultiDataTrigger.Conditions>
-                <MultiDataTrigger.Setters>
-                    <Setter Property="Visibility" Value="Collapsed" />
-                    <Setter Property="Margin" Value="0" />
-                    <Setter Property="Height" Value="0" />
-                </MultiDataTrigger.Setters>
-            </MultiDataTrigger>
-        </Style.Triggers>
-    </Style>
+    <Style x:Key="BaseSeparatorStyle" TargetType="Rectangle" />
     <Style x:Key="HighlightStyle">
         <Setter Property="Inline.FontWeight" Value="Bold" />
     </Style>
@@ -413,16 +403,30 @@
     <Style x:Key="BaseSearchIconPosition" TargetType="{x:Type Canvas}">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,2,18,0" />
+        <Setter Property="Margin" Value="0 0 18 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
     <Style x:Key="BasePreviewBorderStyle" TargetType="{x:Type Border}">
-        <Setter Property="BorderThickness" Value="1,0,0,0" />
+        <Setter Property="BorderThickness" Value="1 0 0 0" />
+        <Setter Property="Width" Value="5" />
         <Setter Property="BorderBrush" Value="#FFEAEAEA" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="0,0,10,10" />
+        <Setter Property="Margin" Value="0 0 10 10" />
+        <Setter Property="Background" Value="Transparent" />
+        <Style.Triggers>
+            <MultiDataTrigger>
+                <MultiDataTrigger.Conditions>
+                    <Condition Binding="{Binding ElementName=ResultListBox, Path=Items.Count}" Value="0" />
+                </MultiDataTrigger.Conditions>
+                <MultiDataTrigger.Setters>
+                    <Setter Property="Height" Value="0" />
+                    <Setter Property="Margin" Value="0" />
+                </MultiDataTrigger.Setters>
+            </MultiDataTrigger>
+        </Style.Triggers>
     </Style>
+
     <Style x:Key="BasePreviewGlyph" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#555555" />
         <Setter Property="VerticalAlignment" Value="Center" />
@@ -447,7 +451,7 @@
     <Style x:Key="PreviewSep" TargetType="{x:Type Separator}">
         <Setter Property="Visibility" Value="Visible" />
         <Setter Property="Background" Value="{Binding ElementName=MiddleSeparator, Path=Fill}" />
-        <Setter Property="Margin" Value="0,15,0,5" />
+        <Setter Property="Margin" Value="0 15 5 5" />
         <Style.Triggers>
             <DataTrigger Binding="{Binding ElementName=PreviewSubTitle, UpdateSourceTrigger=PropertyChanged, Path=Text.Length}" Value="0">
                 <Setter Property="Visibility" Value="Collapsed" />
@@ -459,6 +463,7 @@
         BasedOn="{StaticResource BasePreviewBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="BorderBrush" Value="Gray" />
+
     </Style>
 
     <Style x:Key="PreviewArea" TargetType="{x:Type Grid}">
@@ -483,7 +488,7 @@
     <Style x:Key="PluginActivationIcon" TargetType="{x:Type Image}">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,0,18,0" />
+        <Setter Property="Margin" Value="0 0 18 0" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
 
@@ -495,7 +500,7 @@
     <Style x:Key="SearchIconPosition" TargetType="{x:Type Canvas}">
         <Setter Property="Width" Value="32" />
         <Setter Property="Height" Value="32" />
-        <Setter Property="Margin" Value="0,2,18,0" />
+        <Setter Property="Margin" Value="0 0 18 0" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="HorizontalAlignment" Value="Right" />
     </Style>
@@ -503,7 +508,7 @@
         x:Key="ClockPanelPosition"
         BasedOn="{StaticResource BaseClockPanelPosition}"
         TargetType="{x:Type Canvas}">
-        <Setter Property="Margin" Value="0,2,66,0" />
+        <Setter Property="Margin" Value="0 0 66 0" />
     </Style>
     <Style
         x:Key="ItemHotkeyStyle"
@@ -536,7 +541,7 @@
     <Style x:Key="BasePreviewItemTitleStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="FontSize" Value="15" />
-        <Setter Property="Margin" Value="0,6,0,0" />
+        <Setter Property="Margin" Value="0 6 0 0" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="TextAlignment" Value="Center" />
         <Setter Property="TextWrapping" Value="Wrap" />
@@ -545,7 +550,7 @@
         <Setter Property="Foreground" Value="#8f8f8f" />
         <Setter Property="FontSize" Value="12" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="Margin" Value="0,6,0,10" />
+        <Setter Property="Margin" Value="5 6 0 10" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="LineHeight" Value="18" />
         <Setter Property="TextAlignment" Value="Left" />

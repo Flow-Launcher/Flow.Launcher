@@ -1,75 +1,52 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Interop;
 using System.Windows.Media;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.UI.WindowsAndMessaging;
 using Point = System.Windows.Point;
 
 namespace Flow.Launcher.Helper;
 
 public class WindowsInteropHelper
 {
-    private const int GWL_STYLE = -16; //WPF's Message code for Title Bar's Style
-    private const int WS_SYSMENU = 0x80000; //WPF's Message code for System Menu
-    private static IntPtr _hwnd_shell;
-    private static IntPtr _hwnd_desktop;
+    private static HWND _hwnd_shell;
+    private static HWND _hwnd_desktop;
 
     //Accessors for shell and desktop handlers
     //Will set the variables once and then will return them
-    private static IntPtr HWND_SHELL
+    private static HWND HWND_SHELL
     {
         get
         {
-            return _hwnd_shell != IntPtr.Zero ? _hwnd_shell : _hwnd_shell = GetShellWindow();
+            return _hwnd_shell != HWND.Null ? _hwnd_shell : _hwnd_shell = PInvoke.GetShellWindow();
         }
     }
-    private static IntPtr HWND_DESKTOP
+
+    private static HWND HWND_DESKTOP
     {
         get
         {
-            return _hwnd_desktop != IntPtr.Zero ? _hwnd_desktop : _hwnd_desktop = GetDesktopWindow();
+            return _hwnd_desktop != HWND.Null ? _hwnd_desktop : _hwnd_desktop = PInvoke.GetDesktopWindow();
         }
     }
-
-    [DllImport("user32.dll", SetLastError = true)]
-    internal static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-
-    [DllImport("user32.dll")]
-    internal static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetForegroundWindow();
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetDesktopWindow();
-
-    [DllImport("user32.dll")]
-    internal static extern IntPtr GetShellWindow();
-
-    [DllImport("user32.dll", SetLastError = true)]
-    internal static extern int GetWindowRect(IntPtr hwnd, out RECT rc);
-
-    [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-    internal static extern int GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
-
-    [DllImport("user32.DLL")]
-    public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
-
 
     const string WINDOW_CLASS_CONSOLE = "ConsoleWindowClass";
     const string WINDOW_CLASS_WINTAB = "Flip3D";
     const string WINDOW_CLASS_PROGMAN = "Progman";
     const string WINDOW_CLASS_WORKERW = "WorkerW";
 
-    public static bool IsWindowFullscreen()
+    public unsafe static bool IsWindowFullscreen()
     {
         //get current active window
-        IntPtr hWnd = GetForegroundWindow();
+        var hWnd = PInvoke.GetForegroundWindow();
 
-        if (hWnd.Equals(IntPtr.Zero))
+        if (hWnd.Equals(HWND.Null))
         {
             return false;
         }
@@ -80,9 +57,17 @@ public class WindowsInteropHelper
             return false;
         }
 
-        StringBuilder sb = new StringBuilder(256);
-        GetClassName(hWnd, sb, sb.Capacity);
-        string windowClass = sb.ToString();
+        string windowClass;
+        const int capacity = 256;
+        Span<char> buffer = stackalloc char[capacity];
+        int validLength;
+        fixed (char* pBuffer = buffer)
+        {
+            validLength = PInvoke.GetClassName(hWnd, pBuffer, capacity);
+        }
+
+        windowClass = buffer[..validLength].ToString();
+
 
         //for Win+Tab (Flip3D)
         if (windowClass == WINDOW_CLASS_WINTAB)
@@ -90,28 +75,28 @@ public class WindowsInteropHelper
             return false;
         }
 
-        RECT appBounds;
-        GetWindowRect(hWnd, out appBounds);
+        PInvoke.GetWindowRect(hWnd, out var appBounds);
 
         //for console (ConsoleWindowClass), we have to check for negative dimensions
         if (windowClass == WINDOW_CLASS_CONSOLE)
         {
-            return appBounds.Top < 0 && appBounds.Bottom < 0;
+            return appBounds.top < 0 && appBounds.bottom < 0;
         }
 
         //for desktop (Progman or WorkerW, depends on the system), we have to check
         if (windowClass is WINDOW_CLASS_PROGMAN or WINDOW_CLASS_WORKERW)
         {
-            IntPtr hWndDesktop = FindWindowEx(hWnd, IntPtr.Zero, "SHELLDLL_DefView", null);
-            hWndDesktop = FindWindowEx(hWndDesktop, IntPtr.Zero, "SysListView32", "FolderView");
-            if (!hWndDesktop.Equals(IntPtr.Zero))
+            var hWndDesktop = PInvoke.FindWindowEx(hWnd, HWND.Null, "SHELLDLL_DefView", null);
+            hWndDesktop = PInvoke.FindWindowEx(hWndDesktop, HWND.Null, "SysListView32", "FolderView");
+            if (hWndDesktop.Value != (IntPtr.Zero))
             {
                 return false;
             }
         }
 
         Rectangle screenBounds = Screen.FromHandle(hWnd).Bounds;
-        return (appBounds.Bottom - appBounds.Top) == screenBounds.Height && (appBounds.Right - appBounds.Left) == screenBounds.Width;
+        return (appBounds.bottom - appBounds.top) == screenBounds.Height &&
+               (appBounds.right - appBounds.left) == screenBounds.Width;
     }
 
     /// <summary>
@@ -120,8 +105,24 @@ public class WindowsInteropHelper
     /// </summary>
     public static void DisableControlBox(Window win)
     {
-        var hwnd = new WindowInteropHelper(win).Handle;
-        SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SYSMENU);
+        var hwnd = new HWND(new WindowInteropHelper(win).Handle);
+        
+        var style = PInvoke.GetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+        
+        if (style == 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
+        
+        style &= ~(int)WINDOW_STYLE.WS_SYSMENU;
+        
+        var previousStyle = PInvoke.SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE,
+            style);
+
+        if (previousStyle == 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
     }
 
     /// <summary>
@@ -144,16 +145,67 @@ public class WindowsInteropHelper
             using var src = new HwndSource(new HwndSourceParameters());
             matrix = src.CompositionTarget.TransformFromDevice;
         }
+
         return new Point((int)(matrix.M11 * unitX), (int)(matrix.M22 * unitY));
     }
 
+    #region Alt Tab
 
-    [StructLayout(LayoutKind.Sequential)]
-    public struct RECT
+    private static int SetWindowLong(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
     {
-        public int Left;
-        public int Top;
-        public int Right;
-        public int Bottom;
+        PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
+
+        var result = PInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
+        if (result == 0 && Marshal.GetLastPInvokeError() != 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
+
+        return result;
     }
+
+    /// <summary>
+    /// Hide windows in the Alt+Tab window list
+    /// </summary>
+    /// <param name="window">To hide a window</param>
+    public static void HideFromAltTab(Window window)
+    {
+        var exStyle = GetCurrentWindowStyle(window);
+
+        // Add TOOLWINDOW style, remove APPWINDOW style
+        var newExStyle = ((uint)exStyle | (uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) & ~(uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
+
+        SetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+    }
+
+    /// <summary>
+    /// Restore window display in the Alt+Tab window list.
+    /// </summary>
+    /// <param name="window">To restore the displayed window</param>
+    public static void ShowInAltTab(Window window)
+    {
+        var exStyle = GetCurrentWindowStyle(window);
+
+        // Remove the TOOLWINDOW style and add the APPWINDOW style.
+        var newExStyle = ((uint)exStyle & ~(uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) | (uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
+
+        SetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+    }
+
+    /// <summary>
+    /// To obtain the current overridden style of a window.
+    /// </summary>
+    /// <param name="window">To obtain the style dialog window</param>
+    /// <returns>current extension style value</returns>
+    private static int GetCurrentWindowStyle(Window window)
+    {
+        var style = PInvoke.GetWindowLong(new(new WindowInteropHelper(window).Handle), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+        if (style == 0 && Marshal.GetLastPInvokeError() != 0)
+        {
+            throw new Win32Exception(Marshal.GetLastPInvokeError());
+        }
+        return style;
+    }
+
+    #endregion
 }

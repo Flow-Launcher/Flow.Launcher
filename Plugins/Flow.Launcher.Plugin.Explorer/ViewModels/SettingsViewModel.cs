@@ -14,7 +14,6 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace Flow.Launcher.Plugin.Explorer.ViewModels
 {
@@ -98,6 +97,40 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             _selectedIndexSearchEngine = IndexSearchEngines.First(x => x.Value == Settings.IndexSearchEngine);
             _selectedContentSearchEngine = ContentIndexSearchEngines.First(x => x.Value == Settings.ContentSearchEngine);
             _selectedPathEnumerationEngine = PathEnumerationEngines.First(x => x.Value == Settings.PathEnumerationEngine);
+        }
+
+        #endregion
+
+        #region Native Context Menu
+
+        public bool ShowWindowsContextMenu
+        {
+            get => Settings.ShowInlinedWindowsContextMenu;
+            set
+            {
+                Settings.ShowInlinedWindowsContextMenu = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuIncludedItems
+        {
+            get => Settings.WindowsContextMenuIncludedItems;
+            set
+            {
+                Settings.WindowsContextMenuIncludedItems = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string WindowsContextMenuExcludedItems
+        {
+            get => Settings.WindowsContextMenuExcludedItems;
+            set
+            {
+                Settings.WindowsContextMenuExcludedItems = value;
+                OnPropertyChanged();
+            }
         }
 
         #endregion
@@ -324,7 +357,7 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
         private void ShowUnselectedMessage()
         {
             var warning = Context.API.GetTranslation("plugin_explorer_make_selection_warning");
-            MessageBox.Show(warning);
+            Context.API.ShowMsgBox(warning);
         }
 
 
@@ -475,6 +508,31 @@ namespace Flow.Launcher.Plugin.Explorer.ViewModels
             set
             {
                 Settings.ShellPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string ExcludedFileTypes
+        {
+            get => Settings.ExcludedFileTypes;
+            set
+            {
+                // remove spaces and dots from the string before saving
+                string sanitized = string.IsNullOrEmpty(value) ? "" : value.Replace(" ", "").Replace(".", "");
+                Settings.ExcludedFileTypes = sanitized;
+                OnPropertyChanged();
+            }
+        }
+
+        public int MaxResultLowerLimit => 100;
+        public int MaxResultUpperLimit => 100000;
+
+        public int MaxResult
+        {
+            get => Settings.MaxResult;
+            set
+            {
+                Settings.MaxResult = Math.Clamp(value, MaxResultLowerLimit, MaxResultUpperLimit);
                 OnPropertyChanged();
             }
         }

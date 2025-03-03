@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
-using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -62,7 +61,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
-        var confirmResult = MessageBox.Show(
+        var confirmResult = App.API.ShowMsgBox(
             InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
             InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
             MessageBoxButton.YesNo
@@ -77,8 +76,17 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenSettingsFolder()
     {
-        PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
     }
+
+    [RelayCommand]
+    private void OpenParentOfSettingsFolder(object parameter)
+    {
+        string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
+        string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
+        App.API.OpenDirectory(parentFolderPath);
+    }
+
 
     [RelayCommand]
     private void OpenLogsFolder()
@@ -87,7 +95,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private Task UpdateApp() => _updater.UpdateAppAsync(App.API, false);
+    private Task UpdateApp() => _updater.UpdateAppAsync(false);
 
     private void ClearLogFolder()
     {
