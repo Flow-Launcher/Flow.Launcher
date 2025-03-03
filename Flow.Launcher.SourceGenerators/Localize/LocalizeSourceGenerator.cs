@@ -173,7 +173,10 @@ namespace Flow.Launcher.SourceGenerators.Localize
                     summary = ExtractDocumentationCommentSummary(commentDoc);
                     foreach (var param in commentDoc.Descendants("param"))
                     {
-                        var index = int.Parse(param.Attribute("index")?.Value ?? "-1");
+                        if (!int.TryParse(param.Attribute("index")?.Value, out var index))
+                        {
+                            index = -1;
+                        }
                         var paramName = param.Attribute("name")?.Value;
                         var paramType = param.Attribute("type")?.Value;
                         if (index < 0 || paramName is null || paramType is null) continue;
