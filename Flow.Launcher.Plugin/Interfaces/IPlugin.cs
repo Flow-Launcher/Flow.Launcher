@@ -30,7 +30,12 @@ namespace Flow.Launcher.Plugin
         /// <param name="context"></param>
         void Init(PluginInitContext context);
 
-        Task IAsyncPlugin.InitAsync(PluginInitContext context) => Task.Run(() => Init(context));
+        async Task IAsyncPlugin.InitAsync(PluginInitContext context)
+        {
+            // Some plugins should not be initialized in task
+            Init(context);
+            await Task.CompletedTask;
+        }
 
         Task<List<Result>> IAsyncPlugin.QueryAsync(Query query, CancellationToken token) => Task.Run(() => Query(query));
     }

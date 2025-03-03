@@ -165,7 +165,8 @@ namespace Flow.Launcher.Core.Plugin
         {
             var failedPlugins = new ConcurrentQueue<PluginPair>();
 
-            var InitTasks = AllPlugins.Select(pair => Task.Run(async delegate
+            // Some plugins should not be initialized in task, so we cannot use Task.WhenAll here
+            foreach (var pair in AllPlugins)
             {
                 try
                 {
@@ -182,9 +183,7 @@ namespace Flow.Launcher.Core.Plugin
                     pair.Metadata.Disabled = true;
                     failedPlugins.Enqueue(pair);
                 }
-            }));
-
-            await Task.WhenAll(InitTasks);
+            }
 
             _contextMenuPlugins = GetPluginsForInterface<IContextMenu>();
             foreach (var plugin in AllPlugins)
