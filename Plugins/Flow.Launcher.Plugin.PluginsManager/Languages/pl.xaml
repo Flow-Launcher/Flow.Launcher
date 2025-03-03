@@ -13,8 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Instalowanie wtyczki</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Pobierz i zainstaluj {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Odinstalowanie wtyczki</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
-    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Zachowaj ustawienia wtyczki</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Czy chcesz zachować ustawienia wtyczki do następnego użycia?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Nie można znaleźć pliku metadanych plugin.json z rozpakowanego pliku zip.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Błąd: Wtyczka o tej samej lub wyższej wersji co {0} już istnieje.</system:String>
