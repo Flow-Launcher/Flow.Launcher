@@ -418,8 +418,8 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <system:String x:Key="Welcome_Page1_Title">Witamy w Flow Launcher</system:String>
     <system:String x:Key="Welcome_Page1_Text01">Witaj, po raz pierwszy uruchamiasz Flow Launcher!</system:String>
     <system:String x:Key="Welcome_Page1_Text02">Przed rozpoczęciem ten kreator pomoże skonfigurować Flow Launcher. Jeśli chcesz, możesz to pominąć. Proszę wybierz język</system:String>
-    <system:String x:Key="Welcome_Page2_Title">Wyszukiwanie i uruchamianie wszystkich plików i aplikacji na PC</system:String>
-    <system:String x:Key="Welcome_Page2_Text01">Przeszukuj wszystko, od aplikacji, plików, zakładek, YouTube, X i nie tylko. Wszystko to z komfortowej klawiatury, bez konieczności dotykania myszy.</system:String>
+    <system:String x:Key="Welcome_Page2_Title">Wyszukuj i uruchamiaj pliki oraz aplikacje na komputerze</system:String>
+    <system:String x:Key="Welcome_Page2_Text01">Wyszukuj wszystko – aplikacje, pliki, zakładki, YouTube, Twitter i nie tylko. Wszystko wygodnie z klawiatury, bez używania myszy.</system:String>
     <system:String x:Key="Welcome_Page2_Text02">Flow Launcher uruchamia się za pomocą poniższego skrótu klawiszowego, śmiało i wypróbuj go teraz. Aby to zmienić, kliknij dane wejściowe i naciśnij żądany klawisz skrótu na klawiaturze.</system:String>
     <system:String x:Key="Welcome_Page3_Title">Skróty klawiszowe</system:String>
     <system:String x:Key="Welcome_Page4_Title">Słowo kluczowe akcji i polecenia</system:String>
@@ -430,7 +430,7 @@ Jeśli dodasz prefiks '@' podczas wprowadzania skrótu, będzie on pasował do d
     <!--  General Guide & Hotkey  -->
 
     <system:String x:Key="HotkeyUpDownDesc">Powrót / Menu kontekstowe</system:String>
-    <system:String x:Key="HotkeyLeftRightDesc">Nawigacja pozycji</system:String>
+    <system:String x:Key="HotkeyLeftRightDesc">Nawigacja po elementach</system:String>
     <system:String x:Key="HotkeyShiftEnterDesc">Otwórz menu kontekstowe</system:String>
     <system:String x:Key="HotkeyCtrlEnterDesc">Otwórz folder zawierający</system:String>
     <system:String x:Key="HotkeyCtrlShiftEnterDesc">Uruchom jako administrator / Otwórz folder w domyślnym menedżerze plików</system:String>
