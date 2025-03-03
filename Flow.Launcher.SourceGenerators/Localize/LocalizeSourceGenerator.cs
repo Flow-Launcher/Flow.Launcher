@@ -54,7 +54,7 @@ namespace Flow.Launcher.SourceGenerators.Localize
                     {
                         var split = v.Expression.ToString().Split('.');
                         if (split.Length < 2) return;
-                        if (!(split[0] is ClassName)) return;
+                        if (split[0] != ClassName) return;
                         allLanguageKeys.Add(split[1]);
                     });
 
