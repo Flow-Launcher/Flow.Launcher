@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -180,9 +181,10 @@ namespace Flow.Launcher.SourceGenerators.Localize
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 // ignore
+                Console.WriteLine($"Exception in ProcessXamlFileComment: {ex.Message}");
             }
 
             return summary;
