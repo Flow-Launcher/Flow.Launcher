@@ -153,23 +153,26 @@ namespace Flow.Launcher.Core.Resource
 
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-       
-            if (!_settings.UseDropShadowEffect && BlurEnabled)
-            {
-                _settings.UseDropShadowEffect = true;
-                AddDropShadowEffectToCurrentTheme();
-            }
 
-            if (_settings.UseDropShadowEffect)
-            {
-                AddDropShadowEffectToCurrentTheme();
-            }
+            //if (!_settings.UseDropShadowEffect && BlurEnabled)
+            //{
+            //    _settings.UseDropShadowEffect = true;
+            //    AddDropShadowEffectToCurrentTheme();
+            //}
+
+            //if (_settings.UseDropShadowEffect)
+            //{
+            //    AddDropShadowEffectToCurrentTheme();
+            //}
+            //AutoDropShadow();
+            SetBlurForWindow();
+
             //else if (!_settings.usedropshadoweffect && blurenabled)
             //{
             //    adddropshadoweffecttocurrenttheme();
             //    _settings.usedropshadoweffect = true;
             //}
-            SetBlurForWindow();
+
             //SetCornerForWindow();
         }
 
@@ -185,6 +188,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
+                    SetWindowCornerPreference("Default");
                     Debug.WriteLine("이거는 블러없는 테마");
                     AddDropShadowEffectToCurrentTheme();
                 }
@@ -247,6 +251,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
+            //AutoDropShadow();
             //SetWindowAccent();
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
@@ -265,6 +270,7 @@ namespace Flow.Launcher.Core.Resource
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+                SetWindowCornerPreference("Round");
             }
             else
             {
@@ -274,10 +280,24 @@ namespace Flow.Launcher.Core.Resource
                 //    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 //}
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
+                SetWindowCornerPreference("Default");
+                if (_settings.UseDropShadowEffect)
+                {
+                    
+                    AddDropShadowEffectToCurrentTheme();
+                }
+                else
+                {
+                    RemoveDropShadowEffectFromCurrentTheme();
+                }
 
             }
             ThemeModeColor(BlurMode());
+            
             UpdateResourceDictionary(dict);
+
+            
+
         }
 
         // WindowBorderStyle에서 Background 색상 가져오는 함수
@@ -403,6 +423,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
+                //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 mainWindow.Background = new SolidColorBrush(Colors.Transparent);
             }
         }
@@ -716,14 +737,9 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            SetWindowCornerPreference("Default");
-            if (BlurEnabled)
-            {
-                SetWindowCornerPreference("Round");
-            }
-            else 
-            { 
-                var dict = GetCurrentResourceDictionary();
+
+            //SetWindowCornerPreference("Default");
+            var dict = GetCurrentResourceDictionary();
 
                 var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
@@ -768,13 +784,12 @@ namespace Flow.Launcher.Core.Resource
                 windowBorderStyle.Setters.Add(effectSetter);
 
                 UpdateResourceDictionary(dict);
-            }
+
         }
 
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
-                SetWindowCornerPreference("Default");
-   
+        
             var dict = GetCurrentResourceDictionary();
             //mainWindow.WindowStyle = WindowStyle.None;
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;

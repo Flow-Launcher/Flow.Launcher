@@ -67,11 +67,6 @@ namespace Flow.Launcher
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
             };
-            if (_settings.UseDropShadowEffect == false) /* Shadow Effect */
-            {
-                FlowMainWindow.WindowStyle = WindowStyle.None;
-                FlowMainWindow.AllowsTransparency = true;
-            }
         }
 
         DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };

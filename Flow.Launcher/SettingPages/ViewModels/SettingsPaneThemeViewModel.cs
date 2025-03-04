@@ -38,6 +38,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
                 DropShadowEffect = true;
             ThemeManager.Instance.RefreshFrame();
+            //ThemeManager.Instance.SetBlurForWindow();
         }
     }
 
