@@ -15,8 +15,8 @@
     MinHeight="30"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     AllowDrop="True"
-    AllowsTransparency="False"
-    Background="#E12E2E2E"
+    AllowsTransparency="True"
+    Background="Transparent"
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
@@ -34,7 +34,7 @@
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
-    WindowStyle="SingleBorderWindow"
+    WindowStyle="None"
     mc:Ignorable="d">
     <!--  WindowChrome  -->
     <WindowChrome.WindowChrome>
