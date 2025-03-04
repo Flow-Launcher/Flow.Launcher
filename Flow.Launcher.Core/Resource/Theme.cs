@@ -153,10 +153,69 @@ namespace Flow.Launcher.Core.Resource
 
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+       
+            if (!_settings.UseDropShadowEffect && BlurEnabled)
+            {
+                _settings.UseDropShadowEffect = true;
+                AddDropShadowEffectToCurrentTheme();
+            }
+
+            if (_settings.UseDropShadowEffect)
+            {
+                AddDropShadowEffectToCurrentTheme();
+            }
+            //else if (!_settings.usedropshadoweffect && blurenabled)
+            //{
+            //    adddropshadoweffecttocurrenttheme();
+            //    _settings.usedropshadoweffect = true;
+            //}
             SetBlurForWindow();
             //SetCornerForWindow();
         }
 
+        public void AutoDropShadow()
+        {
+            if (_settings.UseDropShadowEffect)
+            {
+                RemoveDropShadowEffectFromCurrentTheme();
+                if (BlurEnabled)
+                {
+                    Debug.WriteLine("이거는 블러있는 테마이므로 외곽선 주고 그림자");
+                    SetWindowCornerPreference("Round");
+                }
+                else
+                {
+                    Debug.WriteLine("이거는 블러없는 테마");
+                    AddDropShadowEffectToCurrentTheme();
+                }
+            }
+            else
+            {
+                RemoveDropShadowEffectFromCurrentTheme();
+                if (BlurEnabled)
+                {
+                    SetWindowCornerPreference("Default");
+                }
+                else
+                {
+                    RemoveDropShadowEffectFromCurrentTheme();
+                }
+            }
+        }
+
+        public void SetWindowCornerPreference(string cornerType)
+        {
+            DWM_WINDOW_CORNER_PREFERENCE preference = cornerType switch
+            {
+                "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
+                "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
+                "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+                "Default" => DWM_WINDOW_CORNER_PREFERENCE.Default,
+                _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
+            };
+
+            SetWindowCornerPreference(mainWindow, preference);
+        }
 
         public void SetCornerForWindow()
         {
@@ -465,9 +524,10 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = Win32Helper.IsBlurTheme();
-
-                if (_settings.UseDropShadowEffect && !BlurEnabled)
+                if (_settings.UseDropShadowEffect)
                     AddDropShadowEffectToCurrentTheme();
+
+
 
                 //Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
                 SetBlurForWindow();
@@ -656,76 +716,86 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-            var dict = GetCurrentResourceDictionary();
+            SetWindowCornerPreference("Default");
+            if (BlurEnabled)
+            {
+                SetWindowCornerPreference("Round");
+            }
+            else 
+            { 
+                var dict = GetCurrentResourceDictionary();
 
-            //var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+                var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            //var effectSetter = new Setter
-            //{
-            //    Property = Border.EffectProperty,
-            //    Value = new DropShadowEffect
-            //    {
-            //        Opacity = 0.3,
-            //        ShadowDepth = 12,
-            //        Direction = 270,
-            //        BlurRadius = 30
-            //    }
-            //};
+                var effectSetter = new Setter
+                {
+                    Property = Border.EffectProperty,
+                    Value = new DropShadowEffect
+                    {
+                        Opacity = 0.3,
+                        ShadowDepth = 12,
+                        Direction = 270,
+                        BlurRadius = 30
+                    }
+                };
 
-            //var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-            //if (marginSetter == null)
-            //{
-            //    var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
-            //    marginSetter = new Setter()
-            //    {
-            //        Property = Border.MarginProperty,
-            //        Value = margin,
-            //    };
-            //    windowBorderStyle.Setters.Add(marginSetter);
+                var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+                if (marginSetter == null)
+                {
+                    var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
+                    marginSetter = new Setter()
+                    {
+                        Property = Border.MarginProperty,
+                        Value = margin,
+                    };
+                    windowBorderStyle.Setters.Add(marginSetter);
 
-            //    SetResizeBoarderThickness(margin);
-            //}
-            //else
-            //{
-            //    var baseMargin = (Thickness)marginSetter.Value;
-            //    var newMargin = new Thickness(
-            //        baseMargin.Left + ShadowExtraMargin,
-            //        baseMargin.Top + ShadowExtraMargin,
-            //        baseMargin.Right + ShadowExtraMargin,
-            //        baseMargin.Bottom + ShadowExtraMargin);
-            //    marginSetter.Value = newMargin;
+                    SetResizeBoarderThickness(margin);
+                }
+                else
+                {
+                    var baseMargin = (Thickness)marginSetter.Value;
+                    var newMargin = new Thickness(
+                        baseMargin.Left + ShadowExtraMargin,
+                        baseMargin.Top + ShadowExtraMargin,
+                        baseMargin.Right + ShadowExtraMargin,
+                        baseMargin.Bottom + ShadowExtraMargin);
+                    marginSetter.Value = newMargin;
 
-            //    SetResizeBoarderThickness(newMargin);
-            //}
+                    SetResizeBoarderThickness(newMargin);
+                }
 
-            //windowBorderStyle.Setters.Add(effectSetter);
+                windowBorderStyle.Setters.Add(effectSetter);
 
-            UpdateResourceDictionary(dict);
+                UpdateResourceDictionary(dict);
+            }
         }
 
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
+                SetWindowCornerPreference("Default");
+   
             var dict = GetCurrentResourceDictionary();
-            mainWindow.WindowStyle = WindowStyle.None;
-            //var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            //mainWindow.WindowStyle = WindowStyle.None;
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            //var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
-            //var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
+            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
+            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
 
-            //if (effectSetter != null)
-            //{
-            //    windowBorderStyle.Setters.Remove(effectSetter);
-            //}
-            //if (marginSetter != null)
-            //{
-            //    var currentMargin = (Thickness)marginSetter.Value;
-            //    var newMargin = new Thickness(
-            //        currentMargin.Left - ShadowExtraMargin,
-            //        currentMargin.Top - ShadowExtraMargin,
-            //        currentMargin.Right - ShadowExtraMargin,
-            //        currentMargin.Bottom - ShadowExtraMargin);
-            //    marginSetter.Value = newMargin;
-            //}
+            if (effectSetter != null)
+            {
+                windowBorderStyle.Setters.Remove(effectSetter);
+            }
+            if (marginSetter != null)
+            {
+                var currentMargin = (Thickness)marginSetter.Value;
+                var newMargin = new Thickness(
+                    currentMargin.Left - ShadowExtraMargin,
+                    currentMargin.Top - ShadowExtraMargin,
+                    currentMargin.Right - ShadowExtraMargin,
+                    currentMargin.Bottom - ShadowExtraMargin);
+                marginSetter.Value = newMargin;
+            }
 
             SetResizeBoarderThickness(null);
 

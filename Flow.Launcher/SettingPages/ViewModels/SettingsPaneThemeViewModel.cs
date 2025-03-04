@@ -53,14 +53,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 return;
             }
 
-            //if (value)
-            //{
-            //    ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
-            //}
-            //else
-            //{
-            //    ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
-            //}
+            if (value)
+            {
+                ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
+            }
+            else
+            {
+                ThemeManager.Instance.RemoveDropShadowEffectFromCurrentTheme();
+            }
 
             Settings.UseDropShadowEffect = value;
         }
