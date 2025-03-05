@@ -136,14 +136,16 @@ namespace Flow.Launcher.Core.Plugin
         {
             _storage.Save();
         }
-
-        public Control? CreateSettingPanel()
+        
+        public bool NeedCreateSettingPanel()
         {
             // If there are no settings or the settings configuration is empty, return null
-            if (Configuration == null || Settings == null || Configuration.Body.Count == 0)
-            {
-                return null;
-            }
+            return Settings != null && Configuration != null && Configuration.Body.Count != 0;
+        }
+
+        public Control CreateSettingPanel()
+        {
+            // No need to check if NeedCreateSettingPanel is true because CreateSettingPanel will only be called if it's true
 
             // Create main grid with two columns (Column 1: Auto, Column 2: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
