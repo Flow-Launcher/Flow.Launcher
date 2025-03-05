@@ -1385,15 +1385,14 @@ namespace Flow.Launcher.ViewModel
             Application.Current.Dispatcher.Invoke(() =>
             {
                 MainWindowVisibility = Visibility.Visible;
-
-                MainWindowOpacity = 1;
+                MainWindowOpacity = Settings.UseAnimation ? 0 : 1;
 
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
-        public async void Hide()
+        public void Hide()
         {
             lastHistoryIndex = 1;
 
@@ -1412,29 +1411,9 @@ namespace Flow.Launcher.ViewModel
             if (Settings.LastQueryMode == LastQueryMode.Empty)
             {
                 ChangeQueryText(string.Empty);
-                await Task.Yield(); // UI 갱신 보장
             }
 
-            switch (Settings.LastQueryMode)
-            {
-                case LastQueryMode.Preserved:
-                case LastQueryMode.Selected:
-                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
-                    break;
-
-                case LastQueryMode.ActionKeywordPreserved:
-                case LastQueryMode.ActionKeywordSelected:
-                    var newQuery = _lastQuery.ActionKeyword;
-                    if (!string.IsNullOrEmpty(newQuery))
-                        newQuery += " ";
-                    ChangeQueryText(newQuery);
-
-                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                        LastQuerySelected = false;
-                    break;
-            }
-
-            // 창 숨김 즉시 처리
+            // 즉시 창 숨김
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });

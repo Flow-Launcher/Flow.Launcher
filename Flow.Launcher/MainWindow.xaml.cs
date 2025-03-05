@@ -67,7 +67,66 @@ namespace Flow.Launcher
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
             };
+
+            _viewModel.PropertyChanged += (o, e) =>
+            {
+                if (e.PropertyName == nameof(MainViewModel.MainWindowVisibilityStatus))
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        if (_viewModel.MainWindowVisibilityStatus)
+                            ShowWithOptionalAnimation();
+                        else
+                            HideImmediately();
+                    });
+                }
+            };
         }
+
+        private void ShowWithOptionalAnimation()
+        {
+            if (this.Visibility == Visibility.Visible && this.Opacity == 1) return; // ✅ 이미 보이는 상태라면 실행하지 않음.
+
+            this.Opacity = 0;  // 🔹 먼저 Opacity를 0으로 설정하여 깜빡임 방지
+            this.Visibility = Visibility.Visible; // 🔹 이제 Visibility를 변경하여 창을 표시
+
+            UpdatePosition(); // 🔹 창 위치 업데이트
+
+            if (_settings.UseAnimation)
+            {
+                // 🔹 아이콘 & 시계 애니메이션만 실행
+                WindowAnimator();
+            }
+
+            if (_settings.UseAnimation)
+            {
+                var fadeIn = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(150))
+                {
+                    FillBehavior = FillBehavior.HoldEnd
+                };
+
+                fadeIn.Completed += (_, _) =>
+                {
+                    this.Opacity = 1; // 🔹 애니메이션 종료 후 Opacity를 1로 유지
+                };
+                this.BeginAnimation(Window.OpacityProperty, fadeIn);
+            }
+            else
+            {
+                this.Opacity = 1; // 🔹 애니메이션 없이 즉시 표시
+            }
+
+            Activate(); // 🔹 창 활성화
+        }
+
+        private void HideImmediately()
+        {
+            if (this.Visibility != Visibility.Visible) return; // ✅ 이미 숨겨져 있다면 실행하지 않음.
+
+            this.Opacity = 0; // 🔹 Opacity를 먼저 줄여서 깜빡임 방지
+            this.Visibility = Visibility.Collapsed; // 🔹 창을 완전히 숨김
+        }
+
 
         DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };
 
@@ -481,15 +540,11 @@ namespace Flow.Launcher
             if (_animating)
                 return;
 
-            isArrowKeyPressed = true;
             _animating = true;
-            UpdatePosition();
 
-            Storyboard windowsb = new Storyboard();
             Storyboard clocksb = new Storyboard();
             Storyboard iconsb = new Storyboard();
-            CircleEase easing = new CircleEase();
-            easing.EasingMode = EasingMode.EaseInOut;
+            CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
             {
@@ -499,28 +554,13 @@ namespace Flow.Launcher
                 _ => _settings.CustomAnimationLength
             };
 
-            var WindowOpacity = new DoubleAnimation
-            {
-                From = 0,
-                To = 1,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
-            };
-
-            var WindowMotion = new DoubleAnimation
-            {
-                From = Top + 10,
-                To = Top,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
-            };
             var IconMotion = new DoubleAnimation
             {
                 From = 12,
                 To = 0,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd  // ✅ 애니메이션 종료 후 값을 유지
             };
 
             var ClockOpacity = new DoubleAnimation
@@ -529,16 +569,17 @@ namespace Flow.Launcher
                 To = 1,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd  // ✅ 애니메이션 종료 후 값 유지
             };
-            double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
+
+            double TargetIconOpacity = SearchIcon.Opacity;
             var IconOpacity = new DoubleAnimation
             {
                 From = 0,
                 To = TargetIconOpacity,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd  // ✅ 애니메이션 종료 후 값 유지
             };
 
             double right = ClockPanel.Margin.Right;
@@ -548,38 +589,33 @@ namespace Flow.Launcher
                 To = new Thickness(0, 0, right, 0),
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd  // ✅ 애니메이션 종료 후 값 유지
             };
 
             Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
-            Storyboard.SetTarget(WindowOpacity, this);
-            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
-            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
             Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
             Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
 
             clocksb.Children.Add(thicknessAnimation);
             clocksb.Children.Add(ClockOpacity);
-            windowsb.Children.Add(WindowOpacity);
-            windowsb.Children.Add(WindowMotion);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
 
-            windowsb.Completed += (_, _) => _animating = false;
-            _settings.WindowLeft = Left;
-            _settings.WindowTop = Top;
-            isArrowKeyPressed = false;
+            // ✅ 애니메이션 완료 후 _animating 상태를 안전하게 변경
+            clocksb.Completed += (_, _) => _animating = false;
+            iconsb.Completed += (_, _) => _animating = false;
 
+            // ✅ 시계와 아이콘 애니메이션 실행
             if (QueryTextBox.Text.Length == 0)
             {
-                clocksb.Begin(ClockPanel);
+                clocksb.Begin(ClockPanel, HandoffBehavior.SnapshotAndReplace, true);
             }
 
-            iconsb.Begin(SearchIcon);
-            windowsb.Begin(FlowMainWindow);
+            iconsb.Begin(SearchIcon, HandoffBehavior.SnapshotAndReplace, true);
         }
+
 
         private void InitSoundEffects()
         {
