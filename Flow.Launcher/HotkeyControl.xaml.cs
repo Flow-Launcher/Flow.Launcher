@@ -111,7 +111,7 @@ namespace Flow.Launcher
             SelectNextItemHotkey2
         }
 
-        // We can initialize settings in static field because it has been construct in App constuctor
+        // We can initialize settings in static field because it has been constructed in App constuctor
         // and it will not construct settings instances twice
         private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
@@ -202,7 +202,7 @@ namespace Flow.Launcher
             RefreshHotkeyInterface(Hotkey);
         }
 
-        public void RefreshHotkeyInterface(string hotkey)
+        private void RefreshHotkeyInterface(string hotkey)
         {
             SetKeysToDisplay(new HotkeyModel(Hotkey));
             CurrentHotkey = new HotkeyModel(Hotkey);
