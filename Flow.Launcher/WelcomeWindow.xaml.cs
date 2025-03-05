@@ -2,7 +2,6 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Resources.Pages;
 using ModernWpf.Media.Animation;
 
@@ -10,13 +9,10 @@ namespace Flow.Launcher
 {
     public partial class WelcomeWindow : Window
     {
-        private readonly Settings settings;
-
-        public WelcomeWindow(Settings settings)
+        public WelcomeWindow()
         {
             InitializeComponent();
             BackButton.IsEnabled = false;
-            this.settings = settings;
         }
 
         private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
@@ -57,7 +53,7 @@ namespace Flow.Launcher
             pageNum++;
             UpdateView();
 
-            ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _transitionInfo);
+            ContentFrame.Navigate(PageTypeSelector(pageNum), null, _transitionInfo);
         }
 
         private void BackwardButton_Click(object sender, RoutedEventArgs e)
@@ -66,7 +62,7 @@ namespace Flow.Launcher
             {
                 pageNum--;
                 UpdateView();
-                ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _backTransitionInfo);
+                ContentFrame.Navigate(PageTypeSelector(pageNum), null, _backTransitionInfo);
             }
             else
             {
@@ -109,7 +105,7 @@ namespace Flow.Launcher
 
         private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
         {
-            ContentFrame.Navigate(PageTypeSelector(1), settings); /* Set First Page */
+            ContentFrame.Navigate(PageTypeSelector(1)); /* Set First Page */
         }
     }
 }

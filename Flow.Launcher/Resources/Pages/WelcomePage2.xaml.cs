@@ -1,11 +1,11 @@
 ﻿using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System;
 using System.Windows.Navigation;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.ViewModel;
 using System.Windows.Media;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Resources.Pages
 {
@@ -15,11 +15,7 @@ namespace Flow.Launcher.Resources.Pages
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.ExtraData is Settings settings)
-                Settings = settings;
-            else
-                throw new ArgumentException("Unexpected Parameter setting.");
-
+            Settings = Ioc.Default.GetRequiredService<Settings>();
             InitializeComponent();
         }
 

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Windows.Navigation;
+﻿using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Resources.Pages
@@ -8,10 +8,7 @@ namespace Flow.Launcher.Resources.Pages
     {
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.ExtraData is Settings settings)
-                Settings = settings;
-            else if(Settings is null)
-                throw new ArgumentException("Unexpected Navigation Parameter for Settings");
+            Settings = Ioc.Default.GetRequiredService<Settings>();
             InitializeComponent();
         }
 

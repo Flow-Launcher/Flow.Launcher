@@ -54,7 +54,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenWelcomeWindow()
     {
-        var window = new WelcomeWindow(_settings);
+        var window = new WelcomeWindow();
         window.ShowDialog();
     }
 
