@@ -1393,11 +1393,15 @@ namespace Flow.Launcher.ViewModel
             });
         }
 
-        public async void Hide()
+        public void Hide()
         {
-            lastHistoryIndex = 1;
+            // MainWindow 인스턴스를 가져와서 애니메이션 초기화
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                mainWindow.ResetAnimation(); // 애니메이션 강제 리셋
+            }
 
-            // Trick for no delay
+            lastHistoryIndex = 1;
             MainWindowOpacity = 0;
 
             if (ExternalPreviewVisible)
@@ -1408,7 +1412,6 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            // 📌 모든 LastQueryMode에서 텍스트 필드 즉시 업데이트 + 강제 UI 갱신
             Application.Current.Dispatcher.Invoke(() =>
             {
                 switch (Settings.LastQueryMode)
@@ -1437,15 +1440,14 @@ namespace Flow.Launcher.ViewModel
                         break;
                 }
 
-                // 📌 UI 강제 갱신
                 Application.Current.MainWindow.UpdateLayout();
-            }, DispatcherPriority.Render); // UI 스레드에서 즉시 실행
+            }, DispatcherPriority.Render);
 
-            // 📌 창 숨김 처리 (텍스트 변경 후)
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
+
 
 
 

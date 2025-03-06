@@ -27,6 +27,9 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
+using Microsoft.VisualBasic.Devices;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Window = System.Windows.Window;
 
 namespace Flow.Launcher
 {
@@ -45,6 +48,11 @@ namespace Flow.Launcher
 
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
+
+        //For Window Animations
+        private Storyboard clocksb;
+        private Storyboard iconsb;
+        private Storyboard windowsb;
 
         #endregion
 
@@ -476,6 +484,19 @@ namespace Flow.Launcher
             isProgressBarStoryboardPaused = true;
         }
 
+        public void ResetAnimation()
+        {
+            // 애니메이션 중지
+            clocksb?.Stop(ClockPanel);
+            iconsb?.Stop(SearchIcon);
+            windowsb?.Stop(FlowMainWindow);
+
+            // UI 요소 상태 초기화
+            ClockPanel.Margin = new Thickness(0, 0, ClockPanel.Margin.Right, 0);
+            ClockPanel.Opacity = 0;
+            SearchIcon.Opacity = 0;
+        }
+
         public void WindowAnimator()
         {
             if (_animating)
@@ -485,11 +506,10 @@ namespace Flow.Launcher
             _animating = true;
             UpdatePosition();
 
-            Storyboard windowsb = new Storyboard();
-            Storyboard clocksb = new Storyboard();
-            Storyboard iconsb = new Storyboard();
-            CircleEase easing = new CircleEase();
-            easing.EasingMode = EasingMode.EaseInOut;
+            windowsb = new Storyboard();
+            clocksb = new Storyboard();
+            iconsb = new Storyboard();
+            CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
             {
@@ -501,19 +521,21 @@ namespace Flow.Launcher
 
             var WindowOpacity = new DoubleAnimation
             {
-                From = 0,
+                From = 1,
                 To = 1,
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
 
+            // 📌 항상 같은 위치에서 시작하도록 `_originalTop`을 사용
             var WindowMotion = new DoubleAnimation
             {
-                From = Top,
-                To = Top,
+                From = Top + 10, // 원래 위치에서 10px 내려온 후
+                To = Top, // 다시 원래 위치로 이동
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
+
             var IconMotion = new DoubleAnimation
             {
                 From = 12,
@@ -529,16 +551,17 @@ namespace Flow.Launcher
                 To = 1,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
-            double TargetIconOpacity = SearchIcon.Opacity; // Animation Target Opacity from Style
+
+            double TargetIconOpacity = SearchIcon.Opacity;
             var IconOpacity = new DoubleAnimation
             {
                 From = 0,
-                To = TargetIconOpacity,
+                To = 1,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
 
             double right = ClockPanel.Margin.Right;
@@ -548,18 +571,29 @@ namespace Flow.Launcher
                 To = new Thickness(0, 0, right, 0),
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
 
+            // 애니메이션 타겟 설정
             Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
+            Storyboard.SetTarget(ClockOpacity, ClockPanel);
+
             Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
+
             Storyboard.SetTarget(WindowOpacity, this);
             Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
+
+            Storyboard.SetTarget(WindowMotion, this);
             Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
+
+            Storyboard.SetTarget(IconMotion, SearchIcon);
             Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
+
+            Storyboard.SetTarget(IconOpacity, SearchIcon);
             Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
 
+            // 스토리보드에 애니메이션 추가
             clocksb.Children.Add(thicknessAnimation);
             clocksb.Children.Add(ClockOpacity);
             windowsb.Children.Add(WindowOpacity);
@@ -569,7 +603,6 @@ namespace Flow.Launcher
 
             windowsb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
-            _settings.WindowTop = Top;
             isArrowKeyPressed = false;
 
             if (QueryTextBox.Text.Length == 0)
@@ -580,6 +613,8 @@ namespace Flow.Launcher
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
         }
+
+
 
         private void InitSoundEffects()
         {
