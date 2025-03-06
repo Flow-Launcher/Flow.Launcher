@@ -566,11 +566,14 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = SearchIcon.Opacity;
+            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon, SearchIcon.Style, 1.0); // 스타일에서 Opacity 가져오기
+
+            System.Diagnostics.Debug.WriteLine("스타일에서 가져온 투명도: " + TargetIconOpacity);
+
             var IconOpacity = new DoubleAnimation
             {
                 From = 0,
-                To = 1,
+                To = TargetIconOpacity,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.HoldEnd
@@ -625,6 +628,23 @@ namespace Flow.Launcher
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
         }
+
+        private double GetOpacityFromStyle(UIElement element, Style style, double defaultOpacity = 1.0)
+        {
+            if (style == null)
+                return defaultOpacity;
+
+            foreach (Setter setter in style.Setters)
+            {
+                if (setter.Property == UIElement.OpacityProperty)
+                {
+                    return setter.Value is double opacity ? opacity : defaultOpacity;
+                }
+            }
+
+            return defaultOpacity;
+        }
+
 
         private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
 
