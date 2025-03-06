@@ -577,7 +577,7 @@ namespace Flow.Launcher.Core.Plugin
                 throw new ArgumentException($"Plugin {plugin.Name} has been modified");
             }
 
-            if (removePluginFromSettings)
+            if (removePluginSettings || removePluginFromSettings)
             {
                 // If we want to remove plugin from AllPlugins,
                 // we need to dispose them so that they can release file handles
