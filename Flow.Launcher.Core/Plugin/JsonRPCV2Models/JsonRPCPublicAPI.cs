@@ -34,11 +34,6 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.ShellRun(cmd, filename);
         }
 
-        public void CopyToClipboard(string text, bool directCopy = false, bool showDefaultNotification = true)
-        {
-            _api.CopyToClipboard(text, directCopy, showDefaultNotification);
-        }
-
         public void SaveAppAllSettings()
         {
             _api.SaveAppAllSettings();
