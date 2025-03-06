@@ -72,15 +72,20 @@ namespace Flow.Launcher.Core.Plugin
         {
             foreach (var pluginPair in AllPlugins)
             {
-                switch (pluginPair.Plugin)
-                {
-                    case IDisposable disposable:
-                        disposable.Dispose();
-                        break;
-                    case IAsyncDisposable asyncDisposable:
-                        await asyncDisposable.DisposeAsync();
-                        break;
-                }
+                await DisposePluginAsync(pluginPair);
+            }
+        }
+
+        private static async Task DisposePluginAsync(PluginPair pluginPair)
+        {
+            switch (pluginPair.Plugin)
+            {
+                case IDisposable disposable:
+                    disposable.Dispose();
+                    break;
+                case IAsyncDisposable asyncDisposable:
+                    await asyncDisposable.DisposeAsync();
+                    break;
             }
         }
 
@@ -565,11 +570,23 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        internal static void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
                 throw new ArgumentException($"Plugin {plugin.Name} has been modified");
+            }
+
+            if (removePluginFromSettings)
+            {
+                // If we want to remove plugin from AllPlugins,
+                // we need to dispose them so that they can release file handles
+                // which can help FL to delete the plugin settings & cache folders successfully
+                var pluginPairs = AllPlugins.FindAll(p => p.Metadata.ID == plugin.ID);
+                foreach (var pluginPair in pluginPairs)
+                {
+                    await DisposePluginAsync(pluginPair);
+                }
             }
 
             if (removePluginSettings)
