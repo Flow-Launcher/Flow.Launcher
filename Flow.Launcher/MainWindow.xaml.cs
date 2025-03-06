@@ -530,7 +530,7 @@ namespace Flow.Launcher
             // 📌 항상 같은 위치에서 시작하도록 `_originalTop`을 사용
             var WindowMotion = new DoubleAnimation
             {
-                From = Top + 10, // 원래 위치에서 10px 내려온 후
+                From = Top, // 원래 위치에서 10px 내려온 후
                 To = Top, // 다시 원래 위치로 이동
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop

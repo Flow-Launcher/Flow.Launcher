@@ -27,6 +27,8 @@ using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Windows.Threading;
+using System.Runtime.InteropServices;
+using System.Windows.Interop;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1381,28 +1383,46 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        // DWM 관련 상수
+        private const int DWMWA_CLOAK = 14;
+        private const int SW_HIDE = 0;
+        private const int SW_SHOW = 5;
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("dwmapi.dll")]
+        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
+
         public void Show()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                MainWindowVisibility = Visibility.Visible;
-                MainWindowOpacity = 1;
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
 
+                    // 📌 창을 먼저 보이게 설정
+                    ShowWindow(hWnd, SW_SHOW);
+
+                    // 📌 DWM Cloak 해제 (즉시 표시)
+                    int cloak = 0;
+                    DwmSetWindowAttribute(hWnd, DWMWA_CLOAK, ref cloak, sizeof(int));
+                }
+
+                // WPF 속성 업데이트
+                //MainWindowOpacity = 1;
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
         }
 
-        public void Hide()
+        public async void Hide()
         {
-            // MainWindow 인스턴스를 가져와서 애니메이션 초기화
-            if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
-                mainWindow.ResetAnimation(); // 애니메이션 강제 리셋
-            }
-
             lastHistoryIndex = 1;
-            MainWindowOpacity = 0;
+
+            // Trick for no delay
+            //MainWindowOpacity = 0;
 
             if (ExternalPreviewVisible)
                 CloseExternalPreview();
@@ -1412,43 +1432,53 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            Application.Current.Dispatcher.Invoke(() =>
+            // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트
+            if (Settings.LastQueryMode == LastQueryMode.Empty)
             {
-                switch (Settings.LastQueryMode)
+                ChangeQueryText(string.Empty);
+                await Task.Delay(1); // 한 프레임 후 UI가 반영되도록 대기
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    case LastQueryMode.Empty:
-                        ChangeQueryText(string.Empty);
-                        break;
+                    Application.Current.MainWindow.UpdateLayout(); // UI 강제 업데이트
+                });
+            }
 
-                    case LastQueryMode.Preserved:
-                        LastQuerySelected = true;
-                        break;
+            switch (Settings.LastQueryMode)
+            {
+                case LastQueryMode.Preserved:
+                case LastQueryMode.Selected:
+                    LastQuerySelected = (Settings.LastQueryMode == LastQueryMode.Preserved);
+                    break;
 
-                    case LastQueryMode.Selected:
+                case LastQueryMode.ActionKeywordPreserved:
+                case LastQueryMode.ActionKeywordSelected:
+                    var newQuery = _lastQuery.ActionKeyword;
+                    if (!string.IsNullOrEmpty(newQuery))
+                        newQuery += " ";
+                    ChangeQueryText(newQuery);
+
+                    if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
                         LastQuerySelected = false;
-                        break;
+                    break;
+            }
 
-                    case LastQueryMode.ActionKeywordPreserved:
-                    case LastQueryMode.ActionKeywordSelected:
-                        var newQuery = _lastQuery.ActionKeyword;
-                        if (!string.IsNullOrEmpty(newQuery))
-                            newQuery += " ";
-                        ChangeQueryText(newQuery);
+            // 📌 DWM Cloak을 사용하여 창 숨김
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
 
-                        if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
-                            LastQuerySelected = false;
-                        break;
-                }
+                // 📌 DWM Cloak 활성화
+                int cloak = 1;
+                DwmSetWindowAttribute(hWnd, DWMWA_CLOAK, ref cloak, sizeof(int));
 
-                Application.Current.MainWindow.UpdateLayout();
-            }, DispatcherPriority.Render);
+                // 📌 창을 완전히 숨김 (잔상 방지)
+                ShowWindow(hWnd, SW_HIDE);
+            }
 
+            // WPF 속성 업데이트
             MainWindowVisibilityStatus = false;
-            MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
-
-
 
 
         /// <summary>
