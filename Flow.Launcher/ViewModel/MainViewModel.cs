@@ -26,6 +26,7 @@ using System.ComponentModel;
 using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1392,7 +1393,7 @@ namespace Flow.Launcher.ViewModel
             });
         }
 
-        public void Hide()
+        public async void Hide()
         {
             lastHistoryIndex = 1;
 
@@ -1407,17 +1408,46 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            // 텍스트 초기화 즉시 적용
-            if (Settings.LastQueryMode == LastQueryMode.Empty)
+            // 📌 모든 LastQueryMode에서 텍스트 필드 즉시 업데이트 + 강제 UI 갱신
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                ChangeQueryText(string.Empty);
-            }
+                switch (Settings.LastQueryMode)
+                {
+                    case LastQueryMode.Empty:
+                        ChangeQueryText(string.Empty);
+                        break;
 
-            // 즉시 창 숨김
+                    case LastQueryMode.Preserved:
+                        LastQuerySelected = true;
+                        break;
+
+                    case LastQueryMode.Selected:
+                        LastQuerySelected = false;
+                        break;
+
+                    case LastQueryMode.ActionKeywordPreserved:
+                    case LastQueryMode.ActionKeywordSelected:
+                        var newQuery = _lastQuery.ActionKeyword;
+                        if (!string.IsNullOrEmpty(newQuery))
+                            newQuery += " ";
+                        ChangeQueryText(newQuery);
+
+                        if (Settings.LastQueryMode == LastQueryMode.ActionKeywordSelected)
+                            LastQuerySelected = false;
+                        break;
+                }
+
+                // 📌 UI 강제 갱신
+                Application.Current.MainWindow.UpdateLayout();
+            }, DispatcherPriority.Render); // UI 스레드에서 즉시 실행
+
+            // 📌 창 숨김 처리 (텍스트 변경 후)
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
+
+
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
