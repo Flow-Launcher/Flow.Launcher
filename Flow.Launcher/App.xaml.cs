@@ -64,6 +64,7 @@ namespace Flow.Launcher
                         .AddSingleton<IPublicAPI, PublicAPIInstance>()
                         .AddSingleton<MainViewModel>()
                         .AddSingleton<Theme>()
+                        .AddSingleton<WelcomeViewModel>()
                     ).Build();
                 Ioc.Default.ConfigureServices(host.Services);
             }

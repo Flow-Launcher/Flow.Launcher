@@ -16,6 +16,9 @@ namespace Flow.Launcher.Resources.Pages
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             Settings = Ioc.Default.GetRequiredService<Settings>();
+            // Sometimes the navigation is not triggered by button click,
+            // so we need to reset the page number
+            Ioc.Default.GetRequiredService<WelcomeViewModel>().PageNum = 2;
             InitializeComponent();
         }
 
