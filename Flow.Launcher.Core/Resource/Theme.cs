@@ -139,7 +139,6 @@ namespace Flow.Launcher.Core.Resource
             HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
             if (mainWindowSrc == null)
                 return;
-            //mainWindowSrc.CompositionTarget.BackgroundColor = Color.FromArgb(0, 255, 181, 178);
 
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
             margins.cxLeftWidth = -1;
@@ -154,26 +153,17 @@ namespace Flow.Launcher.Core.Resource
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
 
-            //if (!_settings.UseDropShadowEffect && BlurEnabled)
-            //{
-            //    _settings.UseDropShadowEffect = true;
-            //    AddDropShadowEffectToCurrentTheme();
-            //}
-
-            //if (_settings.UseDropShadowEffect)
-            //{
-            //    AddDropShadowEffectToCurrentTheme();
-            //}
-            //AutoDropShadow();
+            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+            if (BlurEnabled)
+            {
+                AutoDropShadow();
+            }
             SetBlurForWindow();
 
-            //else if (!_settings.usedropshadoweffect && blurenabled)
-            //{
-            //    adddropshadoweffecttocurrenttheme();
-            //    _settings.usedropshadoweffect = true;
-            //}
-
-            //SetCornerForWindow();
+            if (!BlurEnabled)
+            {
+                AutoDropShadow();
+            }
         }
 
         public void AutoDropShadow()
@@ -183,13 +173,11 @@ namespace Flow.Launcher.Core.Resource
                 RemoveDropShadowEffectFromCurrentTheme();
                 if (BlurEnabled)
                 {
-                    Debug.WriteLine("이거는 블러있는 테마이므로 외곽선 주고 그림자");
                     SetWindowCornerPreference("Round");
                 }
                 else
                 {
                     SetWindowCornerPreference("Default");
-                    Debug.WriteLine("이거는 블러없는 테마");
                     AddDropShadowEffectToCurrentTheme();
                 }
             }
@@ -251,7 +239,7 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
-            //AutoDropShadow();
+            
             //SetWindowAccent();
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
@@ -270,7 +258,7 @@ namespace Flow.Launcher.Core.Resource
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-                SetWindowCornerPreference("Round");
+                //SetWindowCornerPreference("Round");
             }
             else
             {
@@ -280,27 +268,15 @@ namespace Flow.Launcher.Core.Resource
                 //    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 //}
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
-                SetWindowCornerPreference("Default");
-                if (_settings.UseDropShadowEffect)
-                {
-                    
-                    AddDropShadowEffectToCurrentTheme();
-                }
-                else
-                {
-                    RemoveDropShadowEffectFromCurrentTheme();
-                }
-
             }
             ThemeModeColor(BlurMode());
-            
             UpdateResourceDictionary(dict);
 
             
 
         }
 
-        // WindowBorderStyle에서 Background 색상 가져오는 함수
+        // Get Background Color from WindowBorderStyle when there not color for BG.
         private Color GetWindowBorderStyleBackground()
         {
             var Resources = GetThemeResourceDictionary(_settings.Theme);
@@ -312,19 +288,19 @@ namespace Flow.Launcher.Core.Resource
 
             if (backgroundSetter != null)
             {
-                // Background의 Value가 DynamicColor일 경우 처리
+                // Background's Value is DynamicColor Case
                 var backgroundValue = backgroundSetter.Value;
 
                 if (backgroundValue is SolidColorBrush solidColorBrush)
                 {
-                    return solidColorBrush.Color; // SolidColorBrush의 Color 반환
+                    return solidColorBrush.Color; // Return SolidColorBrush's Color
                 }
                 else if (backgroundValue is DynamicResourceExtension dynamicResource)
                 {
-                    // DynamicResource Extension을 처리할 때, Key는 리소스에 대한 이름입니다.
+                    // When DynamicResource Extension it is, Key is resource's name.
                     var resourceKey = backgroundSetter.Value.ToString();
 
-                    // 리소스에서 해당 키를 찾아 색상 반환
+                    // find key in resource and return color.
                     if (Resources.Contains(resourceKey))
                     {
                         var colorResource = Resources[resourceKey];
@@ -340,7 +316,7 @@ namespace Flow.Launcher.Core.Resource
                 }
             }
 
-            return Colors.Transparent; // 기본값: 투명
+            return Colors.Transparent; // Default is transparent
         }
 
         public void ThemeModeColor(string Mode)
@@ -350,26 +326,25 @@ namespace Flow.Launcher.Core.Resource
             Color lightBG;
             Color darkBG;
 
-            // lightBG 값을 가져오기 (없으면 WindowBorderStyle의 Background 값 사용)
+            // get lightBG value. if not, get windowborderstyle's background.
             try
             {
-                // dict["lightBG"] 값이 없거나 null이면 WindowBorderStyle의 Background 값 사용
                 lightBG = dict.Contains("lightBG") ? (Color)dict["lightBG"] : GetWindowBorderStyleBackground();
             }
             catch (Exception)
             {
-                // lightBG가 없으면 WindowBorderStyle의 Background 값 사용
+                // if not lightBG, use windowborderstyle's background.
                 lightBG = GetWindowBorderStyleBackground();
             }
 
-            // darkBG 값을 가져오기 (없으면 lightBG 값으로 설정)
+            // get darkBG value, (if not, use lightBG)
             try
             {
                 darkBG = dict.Contains("darkBG") ? (Color)dict["darkBG"] : lightBG;
             }
             catch (Exception)
             {
-                darkBG = lightBG; // darkBG가 없으면 lightBG 값을 사용
+                darkBG = lightBG; // if not darkBG, use lightBG
             }
 
 
@@ -377,7 +352,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
                 string colorScheme = _settings.ColorScheme;
-                bool isDarkMode = themeValue == 0; // 0이면 다크 모드
+                bool isDarkMode = themeValue == 0; // 0 is dark mode.
                 if (colorScheme == "System")
                 {
                     if (isDarkMode)
@@ -423,38 +398,8 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 mainWindow.Background = new SolidColorBrush(Colors.Transparent);
             }
-        }
-        public void BlurColor(string Color)
-        {
-
-            if (Color == "Light")
-            {
-                //mainWindow.Background = new SolidColorBrush(defaultBGcolor.Value);
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-            }
-            else if (Color == "Dark")
-            {
-                //mainWindow.Background = new SolidColorBrush(darkBGcolor.Value);
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-            }
-            else /* Case of "Auto" Blur Type Theme */
-            {
-                //if (_isDarkTheme())
-                //{
-                //    mainWindow.Background = new SolidColorBrush(darkBGcolor.Value);
-                //    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                //}
-                //else
-                //{
-                //    mainWindow.Background = new SolidColorBrush(defaultBGcolor.Value);
-                //    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                //}
-                //mainWindow.Background = new SolidColorBrush(Colors.Red);
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);            }
-
         }
 
         public bool IsBlurTheme()
@@ -485,24 +430,6 @@ namespace Flow.Launcher.Core.Resource
 
             return null;
         }
-
-        //public SolidColorBrush BGColor(string colorBgKey)
-        //{
-        //    var defaultBG = Application.Current.TryFindResource("DefaultBG");
-        //    var darkBG = Application.Current.TryFindResource("DarkBG");
-
-        //    if (colorBgKey == "")
-        //    {
-        //        var resource = Application.Current.TryFindResource("BlurMode");
-
-        //        if (resource is string)
-        //            return (SolidColorBrush)resource;
-
-        //        return new SolidColorBrush(Colors.DarkGray);
-        //    }
-
-        //    return null;
-        //}
 
         #endregion
 
