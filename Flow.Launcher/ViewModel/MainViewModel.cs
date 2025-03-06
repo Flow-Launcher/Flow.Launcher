@@ -1422,15 +1422,30 @@ namespace Flow.Launcher.ViewModel
         {
             lastHistoryIndex = 1;
 
-            // Trick for no delay
-            //MainWindowOpacity = 0;
-
             if (ExternalPreviewVisible)
                 CloseExternalPreview();
 
             if (!SelectedIsFromQueryResults())
             {
                 SelectedResults = Results;
+            }
+
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                // 📌 아이콘과 시계 Opacity를 0으로 강제 설정하고 Visibility.Hidden 적용 (쿼리 상태와 관계없이 실행)
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainWindow.ClockPanel.Opacity = 0;
+                    mainWindow.SearchIcon.Opacity = 0;
+                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                    mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+
+                    // 강제 UI 업데이트
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+                }, DispatcherPriority.Render);
+
+                await Task.Delay(10); // UI 반영 대기
             }
 
             // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트
@@ -1463,25 +1478,9 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
-            // 📌 DWM Cloak을 사용하여 창 숨김
-            if (Application.Current.MainWindow is MainWindow mainWindow)
+            if (Application.Current.MainWindow is MainWindow mainWindow2)
             {
-                // 📌 아이콘과 시계 Opacity를 0으로 강제 설정하고 Visibility.Hidden 적용
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainWindow.ClockPanel.Opacity = 0;
-                    mainWindow.SearchIcon.Opacity = 0;
-                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    mainWindow.SearchIcon.Visibility = Visibility.Hidden;
-
-                    // 강제 UI 업데이트
-                    mainWindow.ClockPanel.UpdateLayout();
-                    mainWindow.SearchIcon.UpdateLayout();
-                }, DispatcherPriority.Render);
-
-                await Task.Delay(10); // UI 반영 대기
-
-                IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
+                IntPtr hWnd = new WindowInteropHelper(mainWindow2).Handle;
 
                 // 📌 DWM Cloak 활성화
                 int cloak = 1;
@@ -1495,7 +1494,6 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibilityStatus = false;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
-
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
