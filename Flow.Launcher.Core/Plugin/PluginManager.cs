@@ -469,10 +469,10 @@ namespace Flow.Launcher.Core.Plugin
         /// Update a plugin to new version, from a zip file. By default will remove the zip file if update is via url,
         /// unless it's a local path installation
         /// </summary>
-        public static void UpdatePlugin(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
+        public static async Task UpdatePluginAsync(PluginMetadata existingVersion, UserPlugin newVersion, string zipFilePath)
         {
             InstallPlugin(newVersion, zipFilePath, checkModified:false);
-            UninstallPlugin(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
+            await UninstallPluginAsync(existingVersion, removePluginFromSettings:false, removePluginSettings:false, checkModified: false);
             _modifiedPlugins.Add(existingVersion.ID);
         }
 
@@ -487,9 +487,9 @@ namespace Flow.Launcher.Core.Plugin
         /// <summary>
         /// Uninstall a plugin.
         /// </summary>
-        public static void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
+        public static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings = true, bool removePluginSettings = false)
         {
-            UninstallPlugin(plugin, removePluginFromSettings, removePluginSettings, true);
+            await UninstallPluginAsync(plugin, removePluginFromSettings, removePluginSettings, true);
         }
 
         #endregion
@@ -570,7 +570,7 @@ namespace Flow.Launcher.Core.Plugin
             }
         }
 
-        internal static async void UninstallPlugin(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
+        internal static async Task UninstallPluginAsync(PluginMetadata plugin, bool removePluginFromSettings, bool removePluginSettings, bool checkModified)
         {
             if (checkModified && PluginModified(plugin.ID))
             {
