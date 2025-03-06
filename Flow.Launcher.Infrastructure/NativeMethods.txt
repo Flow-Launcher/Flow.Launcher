@@ -17,3 +17,6 @@ WM_SYSKEYDOWN
 WM_SYSKEYUP
 
 EnumWindows
+
+OleInitialize
+OleUninitialize

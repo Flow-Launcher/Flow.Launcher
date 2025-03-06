@@ -118,35 +118,89 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
+        public async void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
             if (string.IsNullOrEmpty(stringToCopy))
+            {
                 return;
+            }
 
             var isFile = File.Exists(stringToCopy);
             if (directCopy && (isFile || Directory.Exists(stringToCopy)))
             {
-                var paths = new StringCollection
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    var paths = new StringCollection
                     {
                         stringToCopy
                     };
 
-                Clipboard.SetFileDropList(paths);
-
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
-                        GetTranslation("completedSuccessfully"));
+                    Clipboard.SetFileDropList(paths);
+                });
+                
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy file/folder to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }
             }
             else
             {
-                Clipboard.SetDataObject(stringToCopy);
+                // Sometimes the clipboard is locked and cannot be accessed,
+                // we need to retry a few times before giving up
+                var exception = await RetryActionOnSTAThreadAsync(() =>
+                {
+                    // We shouold use SetText instead of SetDataObject to avoid the clipboard being locked by other applications
+                    Clipboard.SetText(stringToCopy);
+                });
 
-                if (showDefaultNotification)
-                    ShowMsg(
-                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
-                        GetTranslation("completedSuccessfully"));
+                if (exception == null)
+                {
+                    if (showDefaultNotification)
+                    {
+                        ShowMsg(
+                            $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                            GetTranslation("completedSuccessfully"));
+                    }
+                }
+                else
+                {
+                    LogException(nameof(PublicAPIInstance), "Failed to copy text to clipboard", exception);
+                    ShowMsgError(GetTranslation("failedToCopy"));
+                }  
             }
+        }
+
+        private static async Task<Exception> RetryActionOnSTAThreadAsync(Action action, int retryCount = 6, int retryDelay = 150)
+        {
+            for (var i = 0; i < retryCount; i++)
+            {
+                try
+                {
+                    await Win32Helper.StartSTATaskAsync(action);
+                    break;
+                }
+                catch (Exception e)
+                {
+                    if (i == retryCount - 1)
+                    {
+                        return e;
+                    }
+                    await Task.Delay(retryDelay);
+                }
+            }
+            return null;
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
