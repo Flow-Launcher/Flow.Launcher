@@ -1404,7 +1404,8 @@ namespace Flow.Launcher.ViewModel
 
                     // 📌 창을 먼저 보이게 설정
                     ShowWindow(hWnd, SW_SHOW);
-
+                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                    mainWindow.SearchIcon.Visibility = Visibility.Visible;
                     // 📌 DWM Cloak 해제 (즉시 표시)
                     int cloak = 0;
                     DwmSetWindowAttribute(hWnd, DWMWA_CLOAK, ref cloak, sizeof(int));
@@ -1465,6 +1466,21 @@ namespace Flow.Launcher.ViewModel
             // 📌 DWM Cloak을 사용하여 창 숨김
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
+                // 📌 아이콘과 시계 Opacity를 0으로 강제 설정하고 Visibility.Hidden 적용
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainWindow.ClockPanel.Opacity = 0;
+                    mainWindow.SearchIcon.Opacity = 0;
+                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                    mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+
+                    // 강제 UI 업데이트
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+                }, DispatcherPriority.Render);
+
+                await Task.Delay(10); // UI 반영 대기
+
                 IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
 
                 // 📌 DWM Cloak 활성화
