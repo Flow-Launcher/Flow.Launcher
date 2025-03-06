@@ -509,7 +509,7 @@ namespace Flow.Launcher
 
             var WindowMotion = new DoubleAnimation
             {
-                From = Top,
+                From = Top + 10,
                 To = Top,
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
