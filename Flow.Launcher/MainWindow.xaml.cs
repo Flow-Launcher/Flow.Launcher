@@ -309,6 +309,18 @@ namespace Flow.Launcher
                         break;
                 }
             };
+            // ✅ QueryTextBox.Text 변경 감지 (글자 수 1 이상일 때만 동작하도록 수정)
+            QueryTextBox.TextChanged += (sender, e) => UpdateClockPanelVisibility();
+
+            // ✅ ContextMenu.Visibility 변경 감지
+            DependencyPropertyDescriptor
+                .FromProperty(UIElement.VisibilityProperty, typeof(ContextMenu))
+                .AddValueChanged(ContextMenu, (s, e) => UpdateClockPanelVisibility());
+
+            // ✅ History.Visibility 변경 감지
+            DependencyPropertyDescriptor
+                .FromProperty(UIElement.VisibilityProperty, typeof(StackPanel)) // History는 StackPanel이라고 가정
+                .AddValueChanged(History, (s, e) => UpdateClockPanelVisibility());
         }
 
         private void InitializePosition()
@@ -613,6 +625,81 @@ namespace Flow.Launcher
             iconsb.Begin(SearchIcon);
             windowsb.Begin(FlowMainWindow);
         }
+
+        private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
+
+        private void UpdateClockPanelVisibility()
+        {
+            if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
+                return;
+
+            // ✅ `WindowAnimator`와 동일한 애니메이션 속도 설정 참조
+            var animationLength = _settings.AnimationSpeed switch
+            {
+                AnimationSpeeds.Slow => 560,
+                AnimationSpeeds.Medium => 360,
+                AnimationSpeeds.Fast => 160,
+                _ => _settings.CustomAnimationLength
+            };
+
+            var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3); // ✅ 같은 비율 적용
+
+            // ✅ 글자 수가 1 이상이면 애니메이션 추가 실행 방지
+            if (QueryTextBox.Text.Length > 0 ||
+                ContextMenu.Visibility != Visibility.Collapsed ||
+                History.Visibility != Visibility.Collapsed)
+            {
+                if (ClockPanel.Visibility == Visibility.Hidden || _isClockPanelAnimating)
+                    return; // ✅ 이미 숨겨져 있거나 애니메이션 실행 중이면 다시 실행하지 않음
+
+                _isClockPanelAnimating = true;
+
+                // Opacity 애니메이션 적용 후 Visibility.Hidden 처리
+                var fadeOut = new DoubleAnimation
+                {
+                    From = 1.0,
+                    To = 0.0,
+                    Duration = animationDuration,
+                    FillBehavior = FillBehavior.Stop
+                };
+
+                fadeOut.Completed += (s, e) =>
+                {
+                    ClockPanel.Visibility = Visibility.Hidden;
+                    _isClockPanelAnimating = false;
+                };
+
+                ClockPanel.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+            }
+            else
+            {
+                if (ClockPanel.Visibility == Visibility.Visible || _isClockPanelAnimating)
+                    return; // ✅ 이미 표시 중이거나 애니메이션 실행 중이면 다시 실행하지 않음
+
+                _isClockPanelAnimating = true;
+
+                // ✅ Dispatcher를 사용하여 UI 업데이트 후 `ClockPanel` 표시
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    ClockPanel.Visibility = Visibility.Visible;
+
+                    // Opacity 애니메이션 적용
+                    var fadeIn = new DoubleAnimation
+                    {
+                        From = 0.0,
+                        To = 1.0,
+                        Duration = animationDuration,
+                        FillBehavior = FillBehavior.HoldEnd
+                    };
+
+                    fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
+                    ClockPanel.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                }, DispatcherPriority.Render);
+            }
+        }
+
+
+
 
 
 
