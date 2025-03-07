@@ -135,24 +135,24 @@
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_created">תאריך יצירה</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_modified">תאריך שינוי</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_attributes">מאפיינים</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">File List FileName</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">Run Count</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_file_list_filename">מיון לפי שם קובץ ברשימה</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_sort_by_run_count">מספר הפעלות</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_recently_changed">תאריך שינוי אחרון</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_accessed">תאריך גישה</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_date_run">תאריך הרצה</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_ascending">↑</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_sort_by_descending">↓</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Warning: This is not a Fast Sort option, searches may be slow</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">אזהרה: זוהי לא אפשרות מיון מהיר, החיפושים עשויים להיות איטיים</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Search Full Path</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Enable File/Folder Run Count</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Click to launch or install Everything</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_installing_title">Everything Installation</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_installing_title">התקנת Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">מתקין את שירות Everything. אנא המתן...</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationsuccess_subtitle">שירות Everything הותקן בהצלחה</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installationfailed_subtitle">התקנה אוטומטית של שירות Everything נכשלה. אנא הורד אותו ידנית מ- https://www.voidtools.com</system:String>
-    <system:String x:Key="flowlauncher_plugin_everything_run_service">Click here to start it</system:String>
+    <system:String x:Key="flowlauncher_plugin_everything_run_service">לחץ כאן כדי להפעיל אותו</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_select">לא מצליח למצוא התקנה של Everything, האם תרצה לבחור מיקום באופן ידני?{0}{0}לחץ על לא וEverything יותקן עבורך אוטומטית</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Do you want to enable content search for Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">It can be very slow without index (which is only supported in Everything v1.5+)</system:String>
