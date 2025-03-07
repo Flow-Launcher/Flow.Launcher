@@ -45,7 +45,7 @@
     <system:String x:Key="portableMode">מצב נייד</system:String>
     <system:String x:Key="portableModeToolTIp">אחסן את כל ההגדרות ונתוני המשתמש בתיקייה אחת (שימושי בשימוש עם כוננים נשלפים או שירותי ענן).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">הפעל את Flow Launcher בעת הפעלת Window</system:String>
-    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartup">השתמש במשימת כניסה במקום בכניסה בעת האתחול, לחוויית הפעלה מהירה יותר</system:String>
     <system:String x:Key="useLogonTaskForStartupTooltip">לאחר הסרת ההתקנה, עליך להסיר ידנית משימה זו (Flow.Launcher Startup) דרך מתזמן המשימות</system:String>
     <system:String x:Key="setAutoStartFailed">שגיאה בהגדרת ההפעלה בעת הפעלת windows</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">הסתר את Flow Launcher כאשר הוא אינו החלון הפעיל</system:String>
@@ -63,7 +63,7 @@
     <system:String x:Key="SearchWindowAlignRightTop">ימין עליון</system:String>
     <system:String x:Key="SearchWindowAlignCustom">Custom Position</system:String>
     <system:String x:Key="language">שפה</system:String>
-    <system:String x:Key="lastQueryMode">Last Query Style</system:String>
+    <system:String x:Key="lastQueryMode">סגנון שאילתה אחרונה</system:String>
     <system:String x:Key="lastQueryModeToolTip">הצג/הסתר תוצאות קודמות כאשר Flow Launcher מופעל מחדש.</system:String>
     <system:String x:Key="LastQueryPreserved">שמור את השאילתה האחרונה</system:String>
     <system:String x:Key="LastQuerySelected">בחר שאילתא אחרונה</system:String>
@@ -295,7 +295,7 @@
     <system:String x:Key="clearlogfolder">נקה יומני רישום</system:String>
     <system:String x:Key="clearlogfolderMessage">האם אתה בטוח שברצונך למחוק את כל היומנים?</system:String>
     <system:String x:Key="welcomewindow">אשף</system:String>
-    <system:String x:Key="userdatapath">User Data Location</system:String>
+    <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
 
@@ -361,7 +361,7 @@
 
     <!--  Common Action  -->
     <system:String x:Key="commonSave">שמור</system:String>
-    <system:String x:Key="commonOverwrite">Overwrite</system:String>
+    <system:String x:Key="commonOverwrite">שכתב</system:String>
     <system:String x:Key="commonCancel">ביטול</system:String>
     <system:String x:Key="commonReset">אפס</system:String>
     <system:String x:Key="commonDelete">מחק</system:String>
