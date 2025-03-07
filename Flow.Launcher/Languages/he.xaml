@@ -20,7 +20,7 @@
     <system:String x:Key="setAsTopMostInThisQuery">הגדר כגבוה ביותר בשאילתה זו</system:String>
     <system:String x:Key="cancelTopMostInThisQuery">בטל העלאה בשאילתה זו</system:String>
     <system:String x:Key="executeQuery">בצע שאילתה: {0}</system:String>
-    <system:String x:Key="lastExecuteTime">Last execution time: {0}</system:String>
+    <system:String x:Key="lastExecuteTime">זמן ביצוע אחרון: {0}</system:String>
     <system:String x:Key="iconTrayOpen">פתח</system:String>
     <system:String x:Key="iconTraySettings">הגדרות</system:String>
     <system:String x:Key="iconTrayAbout">אודות</system:String>
@@ -380,7 +380,7 @@
     <system:String x:Key="reportWindow_exceptions">חריגים</system:String>
     <system:String x:Key="reportWindow_exception_type">סוג החריגה</system:String>
     <system:String x:Key="reportWindow_source">מקור</system:String>
-    <system:String x:Key="reportWindow_stack_trace">Stack Trace</system:String>
+    <system:String x:Key="reportWindow_stack_trace">מעקב מחסנית</system:String>
     <system:String x:Key="reportWindow_sending">שולח</system:String>
     <system:String x:Key="reportWindow_report_succeed">הדוח נשלח בהצלחה</system:String>
     <system:String x:Key="reportWindow_report_failed">שליחת הדוח נכשלה</system:String>
