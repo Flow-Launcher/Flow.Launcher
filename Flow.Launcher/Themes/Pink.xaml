@@ -8,7 +8,7 @@
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="BlurMode">Light</system:String>
     <system:String x:Key="CornerType">RoundSmall</system:String>
-    <Color x:Key="lightBG">#4BFEC7D7</Color>
+    <Color x:Key="lightBG">#B6C8C7FE</Color>
     <Color x:Key="darkBG">#53FEC7D7</Color>
     <Thickness x:Key="ResultMargin">0 0 0 0</Thickness>
     <Style

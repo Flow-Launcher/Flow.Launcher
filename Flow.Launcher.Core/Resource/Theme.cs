@@ -154,7 +154,8 @@ namespace Flow.Launcher.Core.Resource
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
 
-            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.            if (BlurEnabled)
+            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+            if (BlurEnabled)
             {
                 AutoDropShadow();
             }

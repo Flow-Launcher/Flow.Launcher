@@ -819,18 +819,19 @@ namespace Flow.Launcher
             if (_settings.HideOnStartup)
             {
                 // 📌 최초 실행 시 창이 깜빡이는 문제 방지 (완전히 숨긴 상태로 시작)
-                System.Windows.Application.Current.MainWindow.Visibility = Visibility.Hidden;
+                //System.Windows.Application.Current.MainWindow.Visibility = Visibility.Hidden;
 
-                Dispatcher.BeginInvoke((Action)(() =>
-                {
-                    _viewModel.Hide();
-                    System.Windows.Application.Current.MainWindow.Visibility = Visibility.Collapsed;
-                }), DispatcherPriority.Background);
+                //Dispatcher.BeginInvoke((Action)(() =>
+                //{
+                //    _viewModel.Hide();
+                //    System.Windows.Application.Current.MainWindow.Visibility = Visibility.Collapsed;
+                //}), DispatcherPriority.Background);
+                _viewModel.Hide();
             }
             else
             {
                 // 📌 최초 실행 시 그림자 효과를 미리 적용하여 Show() 할 때 렌더링이 느려지지 않도록 함
-                ThemeManager.Instance.SetBlurForWindow();
+                //ThemeManager.Instance.SetBlurForWindow();
                 //ThemeManager.Instance.AutoDropShadow();
                 _viewModel.Show();
             }
