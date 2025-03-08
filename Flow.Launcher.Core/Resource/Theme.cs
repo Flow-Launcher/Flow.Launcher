@@ -140,6 +140,7 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindowSrc == null)
                 return;
 
+
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
             margins.cxLeftWidth = -1;
             margins.cxRightWidth = -1;
@@ -153,8 +154,7 @@ namespace Flow.Launcher.Core.Resource
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
 
-            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
-            if (BlurEnabled)
+            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.            if (BlurEnabled)
             {
                 AutoDropShadow();
             }
@@ -164,6 +164,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 AutoDropShadow();
             }
+
         }
 
         public void AutoDropShadow()
@@ -248,6 +249,7 @@ namespace Flow.Launcher.Core.Resource
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
             if (windowBorderStyle == null)
                 return;
+            
             //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             if (BlurEnabled)
             {
@@ -255,9 +257,9 @@ namespace Flow.Launcher.Core.Resource
                 //BlurColor(BlurMode());
                 Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~");
                 Debug.WriteLine(BlurMode());
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
                 //SetWindowCornerPreference("Round");
             }
             else

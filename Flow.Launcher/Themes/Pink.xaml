@@ -8,8 +8,8 @@
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="BlurMode">Light</system:String>
     <system:String x:Key="CornerType">RoundSmall</system:String>
-    <Color x:Key="lightBG">#DDFEC7D7</Color>
-    <Color x:Key="darkBG">#DDFEC7D7</Color>
+    <Color x:Key="lightBG">#4BFEC7D7</Color>
+    <Color x:Key="darkBG">#53FEC7D7</Color>
     <Thickness x:Key="ResultMargin">0 0 0 0</Thickness>
     <Style
         x:Key="ItemGlyph"
@@ -39,7 +39,7 @@
         BasedOn="{StaticResource BaseWindowBorderStyle}"
         TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="8" />
-        <Setter Property="Background" Value="#fec7d7" />
+        <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="BorderBrush" Value="#0e172c" />
     </Style>
