@@ -995,7 +995,7 @@
     <value>זמין רק כאשר חיברת מכשיר נייד למכשיר שלך.</value>
   </data>
   <data name="NoteAdvancedGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced graphics options.</value>
+    <value>זמין רק במכשירים התומכים באפשרויות גרפיקה מתקדמות.</value>
   </data>
   <data name="NoteBattery" xml:space="preserve">
     <value>זמין רק במכשירים עם סוללה, כגון טאבלט.</value>
@@ -1004,25 +1004,25 @@
     <value>הוצא משימוש ב-Windows 10, גרסה 1809 (build 17763) ואילך.</value>
   </data>
   <data name="NoteDialPaired" xml:space="preserve">
-    <value>Only available if Dial is paired.</value>
+    <value>זמין רק אם Dial מחובר.</value>
   </data>
   <data name="NoteDirectAccess" xml:space="preserve">
     <value>זמין רק אם DirectAccess מופעלת.</value>
   </data>
   <data name="NoteDisplayGraphics" xml:space="preserve">
-    <value>Only available on devices that support advanced display options.</value>
+    <value>זמין רק במכשירים התומכים באפשרויות תצוגה מתקדמות.</value>
   </data>
   <data name="NoteEnrolledWIP" xml:space="preserve">
-    <value>Only present if user is enrolled in WIP.</value>
+    <value>זמין רק אם המשתמש רשום ל-WIP.</value>
   </data>
   <data name="NoteEyetrackerHardware" xml:space="preserve">
-    <value>Requires eyetracker hardware.</value>
+    <value>דורש חומרת מעקב עיניים.</value>
   </data>
   <data name="NoteImeJapan" xml:space="preserve">
-    <value>Available if the Microsoft Japan input method editor is installed.</value>
+    <value>זמין אם מותקן עורך קלט של Microsoft Japan.</value>
   </data>
   <data name="NoteImePinyin" xml:space="preserve">
-    <value>Available if the Microsoft Pinyin input method editor is installed.</value>
+    <value>זמין אם מותקן עורך קלט של Microsoft Pinyin.</value>
   </data>
   <data name="NoteImeWubi" xml:space="preserve">
     <value>זמין אם מותקן עורך שיטות הקלט של Microsoft Wubi.</value>
@@ -1031,7 +1031,7 @@
     <value>זמין רק אם האפליקציה Mixed Reality Portal מותקנת.</value>
   </data>
   <data name="NoteMobileProvisioning" xml:space="preserve">
-    <value>Only available on mobile and if the enterprise has deployed a provisioning package.</value>
+    <value>זמין רק במכשירים ניידים ואם הארגון פרס חבילת פריסה.</value>
   </data>
   <data name="NoteSince18362" xml:space="preserve">
     <value>נוסף ב-Windows 10, גרסה 1903 (build 18362).</value>
@@ -1040,7 +1040,7 @@
     <value>נוסף ב-Windows 10, גרסה 2004 (build 19041).</value>
   </data>
   <data name="NoteThirdParty" xml:space="preserve">
-    <value>Only available if "settings apps" are installed, for example, by a 3rd party.</value>
+    <value>זמין רק אם מותקנות "אפליקציות הגדרות", לדוגמה, על ידי צד שלישי.</value>
   </data>
   <data name="NoteTouchpad" xml:space="preserve">
     <value>זמין רק אם קיימת חומרת לוח המגע.</value>
