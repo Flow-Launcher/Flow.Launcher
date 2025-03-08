@@ -2052,7 +2052,7 @@
     <value>Configurer l'initiateur iSCSI</value>
   </data>
   <data name="AccommodateLowVision" xml:space="preserve">
-    <value>Accommodate low vision</value>
+    <value>Adapter à une faible vision</value>
   </data>
   <data name="ManageOfflineFiles" xml:space="preserve">
     <value>Gérer les fichiers hors ligne</value>
@@ -2269,73 +2269,73 @@
     <value>Gérer l'espace disque utilisé par vos fichiers hors ligne</value>
   </data>
   <data name="TurnHighContrastOnOrOff" xml:space="preserve">
-    <value>Allumer ou éteindre le contraste élevé</value>
+    <value>Activer ou désactiver le contraste élevé</value>
   </data>
   <data name="ChangeTheWayTimeIsDisplayed" xml:space="preserve">
-    <value>Change the way time is displayed</value>
+    <value>Modifier la façon dont l'heure est affichée</value>
   </data>
   <data name="ChangeHowWebPagesAreDisplayedInTabs" xml:space="preserve">
-    <value>Change how web pages are displayed in tabs</value>
+    <value>Modifier l'affichage des pages web dans les onglets</value>
   </data>
   <data name="ChangeTheWayDatesAndListsAreDisplayed" xml:space="preserve">
-    <value>Change the way dates and lists are displayed</value>
+    <value>Modifier la façon dont les dates et les listes sont affichées</value>
   </data>
   <data name="ManageAudioDevices" xml:space="preserve">
     <value>Gérer les appareils audio</value>
   </data>
   <data name="ChangeSecuritySettings" xml:space="preserve">
-    <value>Change security settings</value>
+    <value>Changer les paramètres de sécurité</value>
   </data>
   <data name="CheckSecurityStatus" xml:space="preserve">
-    <value>Check security status</value>
+    <value>Vérifier le statut de sécurité</value>
   </data>
   <data name="DeleteCookiesOrTemporaryFiles" xml:space="preserve">
     <value>Supprimer les cookies ou les fichiers temporaires</value>
   </data>
   <data name="SpecifyWhichHandYouWriteWith" xml:space="preserve">
-    <value>Specify which hand you write with</value>
+    <value>Spécifiez la main avec laquelle vous écrivez</value>
   </data>
   <data name="ChangeTouchInputSettings" xml:space="preserve">
-    <value>Change touch input settings</value>
+    <value>Modifier les paramètres de saisie tactile</value>
   </data>
   <data name="HowToChangeTheSizeOfVirtualMemory" xml:space="preserve">
-    <value>How to change the size of virtual memory</value>
+    <value>Comment changer la taille de la mémoire virtuelle</value>
   </data>
   <data name="HearTextReadAloudWithNarrator" xml:space="preserve">
-    <value>Hear text read aloud with Narrator</value>
+    <value>Écouter du texte lu à haute voix avec Narrator</value>
   </data>
   <data name="SetUpUSBGameControllers" xml:space="preserve">
-    <value>Set up USB game controllers</value>
+    <value>Configurer des contrôleurs de jeu USB</value>
   </data>
   <data name="ShowWhichDomainYourComputerIsOn" xml:space="preserve">
-    <value>Show which domain your computer is on</value>
+    <value>Afficher avec quel domaine votre ordinateur est allumé</value>
   </data>
   <data name="ViewAllProblemReports" xml:space="preserve">
-    <value>View all problem reports</value>
+    <value>Voir tous les rapports de problèmes</value>
   </data>
   <data name="16BitApplicationSupport" xml:space="preserve">
-    <value>16-Bit Application Support</value>
+    <value>Support des applications 16-Bit</value>
   </data>
   <data name="SetUpDiallingRules" xml:space="preserve">
-    <value>Set up dialling rules</value>
+    <value>Configurer les règles d'appel</value>
   </data>
   <data name="EnableOrDisableSessionCookies" xml:space="preserve">
-    <value>Enable or disable session cookies</value>
+    <value>Activer ou désactiver les cookies de la session</value>
   </data>
   <data name="GiveAdministrativeRightsToADomainUser" xml:space="preserve">
     <value>Donner des droits d'administration à un utilisateur du domaine</value>
   </data>
   <data name="ChooseWhenToTurnOffDisplay" xml:space="preserve">
-    <value>Choose when to turn off display</value>
+    <value>Choisir quand désactiver l'affichage</value>
   </data>
   <data name="MoveThePointerWithTheKeypadUsingMousekeys" xml:space="preserve">
-    <value>Move the pointer with the keypad using MouseKeys</value>
+    <value>Déplacez le pointeur avec le pavé numérique en utilisant les touches souris</value>
   </data>
   <data name="ChangeWindowsSideshowCompatibleDeviceSettings" xml:space="preserve">
     <value>Modifier les paramètres des appareils compatibles avec Windows SideShow</value>
   </data>
   <data name="AdjustCommonlyUsedMobilitySettings" xml:space="preserve">
-    <value>Adjust commonly used mobility settings</value>
+    <value>Ajuster les paramètres de mobilité couramment utilisés</value>
   </data>
   <data name="ChangeTextToSpeechSettings" xml:space="preserve">
     <value>Modifier les paramètres de synthèse vocale</value>
