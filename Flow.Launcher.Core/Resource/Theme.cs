@@ -140,13 +140,6 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindowSrc == null)
                 return;
 
-            // Check Windows version and disable BlurEnabled if Mica is not supported
-            bool isWindows11OrHigher = Environment.OSVersion.Version.Build >= 22000;
-            if (!isWindows11OrHigher)
-            {
-                BlurEnabled = false;
-            }
-
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
             margins.cxLeftWidth = -1;
             margins.cxRightWidth = -1;
@@ -247,15 +240,6 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
-            // Check Windows version (Windows 11 or higher)
-            bool isWindows11OrHigher = Environment.OSVersion.Version.Build >= 22000;
-
-            // If Mica is not supported, force disable BlurEnabled
-            if (!isWindows11OrHigher)
-            {
-                BlurEnabled = false;
-            }
-
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
                 return;
