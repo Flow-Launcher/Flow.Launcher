@@ -140,6 +140,12 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindowSrc == null)
                 return;
 
+            // Check Windows version and disable BlurEnabled if Mica is not supported
+            bool isWindows11OrHigher = Environment.OSVersion.Version.Build >= 22000;
+            if (!isWindows11OrHigher)
+            {
+                BlurEnabled = false;
+            }
 
             ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
             margins.cxLeftWidth = -1;
@@ -149,10 +155,10 @@ namespace Flow.Launcher.Core.Resource
             Methods.ExtendFrame(mainWindowSrc.Handle, margins);
 
             // Remove OS minimizing/maximizing animation
-            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
 
-            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
 
             // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
             if (BlurEnabled)
@@ -165,8 +171,8 @@ namespace Flow.Launcher.Core.Resource
             {
                 AutoDropShadow();
             }
-
         }
+
 
         public void AutoDropShadow()
         {
@@ -241,42 +247,46 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public void SetBlurForWindow()
         {
-            
-            //SetWindowAccent();
+            // Check Windows version (Windows 11 or higher)
+            bool isWindows11OrHigher = Environment.OSVersion.Version.Build >= 22000;
+
+            // If Mica is not supported, force disable BlurEnabled
+            if (!isWindows11OrHigher)
+            {
+                BlurEnabled = false;
+            }
+
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null)
-                return; 
+                return;
 
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
             if (windowBorderStyle == null)
                 return;
-            
-            //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+
+            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
             if (BlurEnabled)
             {
-                //mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
-                //BlurColor(BlurMode());
+                // mainWindow.WindowStyle = WindowStyle.SingleBorderWindow;
+                // BlurColor(BlurMode());
                 Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~");
                 Debug.WriteLine(BlurMode());
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                //SetWindowCornerPreference("Round");
+                // SetWindowCornerPreference("Round");
             }
             else
             {
-                //mainWindow.WindowStyle = WindowStyle.None;
-                //if (windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background") != null)
-                //{
-                //    windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                //}
+                // mainWindow.WindowStyle = WindowStyle.None;
+                // if (windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background") != null)
+                // {
+                //     windowBorderStyle.Setters.Add(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                // }
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
             }
             ThemeModeColor(BlurMode());
             UpdateResourceDictionary(dict);
-
-            
-
         }
 
         // Get Background Color from WindowBorderStyle when there not color for BG.
