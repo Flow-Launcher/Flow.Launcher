@@ -815,7 +815,7 @@ namespace Flow.Launcher
         public void HideStartup()
         {
             UpdatePosition();
-
+            _viewModel.MainWindowOpacity = 0.2; /*Fix Render Blinking */
             if (_settings.HideOnStartup)
             {
                 // 📌 최초 실행 시 창이 깜빡이는 문제 방지 (완전히 숨긴 상태로 시작)
@@ -834,6 +834,7 @@ namespace Flow.Launcher
                 //ThemeManager.Instance.SetBlurForWindow();
                 //ThemeManager.Instance.AutoDropShadow();
                 _viewModel.Show();
+                //_viewModel.MainWindowOpacity = 1;
             }
         }
 

@@ -1412,6 +1412,7 @@ namespace Flow.Launcher.ViewModel
 
                 // WPF 속성 업데이트
                 MainWindowVisibility = Visibility.Visible;
+                MainWindowOpacity = 1;
                 MainWindowVisibilityStatus = true;
                 VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
             });
