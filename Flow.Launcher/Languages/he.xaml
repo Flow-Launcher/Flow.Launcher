@@ -450,7 +450,7 @@
     <system:String x:Key="RecommendWeather">מזג אוויר</system:String>
     <system:String x:Key="RecommendWeatherDesc">מזג אוויר מתוצאות Google</system:String>
     <system:String x:Key="RecommendShell">&gt; ping 8.8.8.8</system:String>
-    <system:String x:Key="RecommendShellDesc">Shell Command</system:String>
+    <system:String x:Key="RecommendShellDesc">פקודת Shell</system:String>
     <system:String x:Key="RecommendBluetooth">s Bluetooth</system:String>
     <system:String x:Key="RecommendBluetoothDesc">Bluetooth בהגדרות Windows</system:String>
     <system:String x:Key="RecommendAcronyms">sn</system:String>
