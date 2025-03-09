@@ -15,6 +15,8 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
+using static Flow.Launcher.Core.Resource.Theme;
+using System.Windows.Interop;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -176,6 +178,54 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public class AnimationSpeedData : DropdownDataGeneric<AnimationSpeeds> { }
     public List<AnimationSpeedData> AnimationSpeeds { get; } = DropdownDataGeneric<AnimationSpeeds>.GetValues<AnimationSpeedData>("AnimationSpeed");
+
+    public class BackdropTypeData : DropdownDataGeneric<BackdropTypes>
+    {
+        public void ApplyBackdrop()
+        {
+            IntPtr hWnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            if (hWnd == IntPtr.Zero)
+                return;
+
+            int backdropValue = Value switch
+            {
+                BackdropTypes.Acrylic => 3, // ✅ Acrylic (DWM_SYSTEMBACKDROP_TYPE = 3)
+                BackdropTypes.Mica => 2,    // ✅ Mica (DWM_SYSTEMBACKDROP_TYPE = 2)
+                BackdropTypes.MicaAlt => 4, // ✅ MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
+                _ => 0                      // ✅ None (DWM_SYSTEMBACKDROP_TYPE = 0)
+            };
+
+            Methods.SetWindowAttribute(hWnd, ParameterTypes.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+        }
+    }
+
+    // ✅ BackdropTypeData 리스트 (Dropdown과 연동)
+    public List<BackdropTypeData> BackdropTypesList { get; } =
+        DropdownDataGeneric<BackdropTypes>.GetValues<BackdropTypeData>("BackdropTypes");
+
+    // ✅ BackdropType 속성 (값 저장 + 자동 적용)
+    public BackdropTypes BackdropType
+    {
+        get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
+               ? (BackdropTypes)Settings.BackdropType
+               : BackdropTypes.None;
+
+        set
+        {
+            if (!Enum.IsDefined(typeof(BackdropTypes), value))
+            {
+                value = BackdropTypes.None;
+            }
+
+            Settings.BackdropType = value;
+
+            // ✅ BackdropTypeData 리스트에서 해당하는 값 찾기
+            var backdropData = BackdropTypesList.FirstOrDefault(b => b.Value == value);
+            backdropData?.ApplyBackdrop();
+        }
+    }
+
+
 
     public bool UseSound
     {

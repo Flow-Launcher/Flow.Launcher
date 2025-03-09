@@ -370,6 +370,25 @@
                     </DockPanel>
                 </Border>
             </Grid>
+
+            <!--  Drop shadow effect  -->
+            <cc:Card
+                Title="Backdrop Type"
+                Margin="0 8 0 0"
+                Icon="&#xeb91;"
+                Sub="{DynamicResource shadowEffectRestart}">
+
+                <ComboBox
+                    MinWidth="160"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="Display"
+                    FontSize="14"
+                    ItemsSource="{Binding BackdropTypesList}"
+                    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
+            </cc:Card>
+
+
             <!--  Drop shadow effect  -->
             <cc:Card
                 Title="{DynamicResource queryWindowShadowEffect}"
