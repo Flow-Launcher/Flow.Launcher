@@ -259,6 +259,7 @@ namespace Flow.Launcher.Core.Resource
                 windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                 windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 // SetWindowCornerPreference("Round");
+                ThemeModeColor(BlurMode());
             }
             else
             {
@@ -269,7 +270,6 @@ namespace Flow.Launcher.Core.Resource
                 // }
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 1);
             }
-            ThemeModeColor(BlurMode());
             UpdateResourceDictionary(dict);
         }
 
@@ -344,12 +344,22 @@ namespace Flow.Launcher.Core.Resource
                 darkBG = lightBG; // if not darkBG, use lightBG
             }
 
+            // ✅ 백드롭 타입 확인 (Mica 또는 MicaAlt인 경우 배경을 투명으로 설정)
+            bool isMica = _settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt;
+
+            if (isMica)
+            {
+                // ✅ 드래그 가능한 반투명 배경 적용
+                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+                return;
+            }
 
             if (Mode == "Auto")
             {
                 int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
                 string colorScheme = _settings.ColorScheme;
                 bool isDarkMode = themeValue == 0; // 0 is dark mode.
+
                 if (colorScheme == "System")
                 {
                     if (isDarkMode)
@@ -398,6 +408,7 @@ namespace Flow.Launcher.Core.Resource
                 mainWindow.Background = new SolidColorBrush(Colors.Transparent);
             }
         }
+
 
         public bool IsBlurTheme()
         {
