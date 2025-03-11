@@ -66,11 +66,13 @@ namespace Flow.Launcher.Infrastructure.Logger
         public static void UseDebugLogLevel()
         {
             LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
+            Info(nameof(Logger), "Using DEBUG log level.");
         }
 
         public static void UseInfoLogLevel()
         {
             LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
+            Info(nameof(Logger), "Using INFO log level.");
         }
 
         private static void LogFaultyFormat(string message)
