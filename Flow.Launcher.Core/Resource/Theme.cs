@@ -140,12 +140,12 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindowSrc == null)
                 return;
 
-            //ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
-            //margins.cxLeftWidth = -1;
-            //margins.cxRightWidth = -1;
-            //margins.cyTopHeight = -1;
-            //margins.cyBottomHeight = -1;
-            //Methods.ExtendFrame(mainWindowSrc.Handle, margins);
+            ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
+            margins.cxLeftWidth = -1;
+            margins.cxRightWidth = -1;
+            margins.cyTopHeight = -1;
+            margins.cyBottomHeight = -1;
+            Methods.ExtendFrame(mainWindowSrc.Handle, margins);
 
             // Remove OS minimizing/maximizing animation
             // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
@@ -578,8 +578,8 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = Win32Helper.IsBlurTheme();
-                //if (_settings.UseDropShadowEffect)
-                // AddDropShadowEffectToCurrentTheme();
+                if (_settings.UseDropShadowEffect)
+                 AddDropShadowEffectToCurrentTheme();
 
 
 

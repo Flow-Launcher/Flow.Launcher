@@ -39,8 +39,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
                 DropShadowEffect = true;
-            //ThemeManager.Instance.RefreshFrame();
-            ThemeManager.Instance.SetBlurForWindow();
+            ThemeManager.Instance.RefreshFrame();
+            //uThemeManager.Instance.SetBlurForWindow();
         }
     }
 
@@ -183,17 +183,17 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         public void ApplyBackdrop()
         {
-            IntPtr hWnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-            if (hWnd == IntPtr.Zero)
-                return;
+            //IntPtr hWnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
+            //if (hWnd == IntPtr.Zero)
+            //    return;
 
-            int backdropValue = Value switch
-            {
-                BackdropTypes.Acrylic => 3, // ✅ Acrylic (DWM_SYSTEMBACKDROP_TYPE = 3)
-                BackdropTypes.Mica => 2,    // ✅ Mica (DWM_SYSTEMBACKDROP_TYPE = 2)
-                BackdropTypes.MicaAlt => 4, // ✅ MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
-                _ => 0                      // ✅ None (DWM_SYSTEMBACKDROP_TYPE = 0)
-            };
+            //int backdropValue = Value switch
+            //{
+            //    BackdropTypes.Acrylic => 3, // ✅ Acrylic (DWM_SYSTEMBACKDROP_TYPE = 3)
+            //    BackdropTypes.Mica => 2,    // ✅ Mica (DWM_SYSTEMBACKDROP_TYPE = 2)
+            //    BackdropTypes.MicaAlt => 4, // ✅ MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
+            //    _ => 0                      // ✅ None (DWM_SYSTEMBACKDROP_TYPE = 0)
+            //};
             ThemeManager.Instance.SetBlurForWindow();
             //Methods.SetWindowAttribute(hWnd, ParameterTypes.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
         }
