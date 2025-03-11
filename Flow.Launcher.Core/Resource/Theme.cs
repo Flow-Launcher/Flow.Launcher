@@ -140,12 +140,12 @@ namespace Flow.Launcher.Core.Resource
             if (mainWindowSrc == null)
                 return;
 
-            ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
-            margins.cxLeftWidth = -1;
-            margins.cxRightWidth = -1;
-            margins.cyTopHeight = -1;
-            margins.cyBottomHeight = -1;
-            Methods.ExtendFrame(mainWindowSrc.Handle, margins);
+            //ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
+            //margins.cxLeftWidth = -1;
+            //margins.cxRightWidth = -1;
+            //margins.cyTopHeight = -1;
+            //margins.cyBottomHeight = -1;
+            //Methods.ExtendFrame(mainWindowSrc.Handle, margins);
 
             // Remove OS minimizing/maximizing animation
             // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
@@ -251,8 +251,8 @@ namespace Flow.Launcher.Core.Resource
             // ✅ 설정된 BackdropType 확인
             int backdropValue = _settings.BackdropType switch
             {
-                BackdropTypes.Acrylic => 2, // Acrylic (DWM_SYSTEMBACKDROP_TYPE = 2)
-                BackdropTypes.Mica => 3,    // Mica (DWM_SYSTEMBACKDROP_TYPE = 3)
+                BackdropTypes.Acrylic => 3, // Acrylic (DWM_SYSTEMBACKDROP_TYPE = 2)
+                BackdropTypes.Mica => 2,    // Mica (DWM_SYSTEMBACKDROP_TYPE = 3)
                 BackdropTypes.MicaAlt => 4, // MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
                 _ => 0                      // None (DWM_SYSTEMBACKDROP_TYPE = 0)
             };
@@ -260,7 +260,7 @@ namespace Flow.Launcher.Core.Resource
             Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~");
             Debug.WriteLine($"Backdrop Mode: {BlurMode()}, DWM Value: {backdropValue}");
 
-            Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+
 
             if (BlurEnabled)
             {
@@ -269,19 +269,24 @@ namespace Flow.Launcher.Core.Resource
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)))); // 드래그 가능 투명색
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+                    ThemeModeColorforMica(BlurMode()); // ✅ 테마 모드 적용
                 }
                 else if (_settings.BackdropType == BackdropTypes.Acrylic)
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+                    ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
                 }
                 else
                 {
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+                    ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
                     //windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     //windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
                 }
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
+
             }
             else
             {
@@ -364,8 +369,88 @@ namespace Flow.Launcher.Core.Resource
                 darkBG = lightBG; // if not darkBG, use lightBG
             }
 
-            // ✅ 백드롭 타입 확인 (Mica 또는 MicaAlt인 경우 배경을 투명하게 설정)
-            bool isMica = _settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt;
+            if (Mode == "Auto")
+            {
+                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                string colorScheme = _settings.ColorScheme;
+                bool isDarkMode = themeValue == 0; // 0 is dark mode.
+
+                if (colorScheme == "System")
+                {
+                    if (isDarkMode)
+                    {
+                        mainWindow.Background = new SolidColorBrush(darkBG);
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+                        return;
+                    }
+                    else
+                    {
+                        mainWindow.Background = new SolidColorBrush(lightBG);
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+                        return;
+                    }
+                }
+                else
+                {
+                    if (colorScheme == "Dark")
+                    {
+                        mainWindow.Background = new SolidColorBrush(darkBG);
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+                        return;
+                    }
+                    else if (colorScheme == "Light")
+                    {
+                        mainWindow.Background = new SolidColorBrush(lightBG);
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+                        return;
+                    }
+                }
+            }
+            else if (Mode == "Dark")
+            {
+                mainWindow.Background = new SolidColorBrush(darkBG);
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
+                return;
+            }
+            else if (Mode == "Light")
+            {
+                mainWindow.Background = new SolidColorBrush(lightBG);
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
+                return;
+            }
+            else
+            {
+                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
+            }
+        }
+
+        public void ThemeModeColorforMica(string Mode)
+        {
+            var dict = GetThemeResourceDictionary(_settings.Theme);
+
+            Color lightBG;
+            Color darkBG;
+
+            // get lightBG value. if not, get windowborderstyle's background.
+            try
+            {
+                lightBG = dict.Contains("lightBG") ? (Color)dict["lightBG"] : GetWindowBorderStyleBackground();
+            }
+            catch (Exception)
+            {
+                // if not lightBG, use windowborderstyle's background.
+                lightBG = GetWindowBorderStyleBackground();
+            }
+
+            // get darkBG value, (if not, use lightBG)
+            try
+            {
+                darkBG = dict.Contains("darkBG") ? (Color)dict["darkBG"] : lightBG;
+            }
+            catch (Exception)
+            {
+                darkBG = lightBG; // if not darkBG, use lightBG
+            }
 
             if (Mode == "Auto")
             {
@@ -377,29 +462,13 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (isDarkMode)
                     {
-                        if (isMica)
-                        {
-                            mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                        }
-                        else
-                        {
-                            mainWindow.Background = new SolidColorBrush(darkBG);
-                        }
-
+                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else
                     {
-                        if (isMica)
-                        {
-                            mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                        }
-                        else
-                        {
-                            mainWindow.Background = new SolidColorBrush(lightBG);
-                        }
-
+                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
                     }
@@ -408,29 +477,13 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (colorScheme == "Dark")
                     {
-                        if (isMica)
-                        {
-                            mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                        }
-                        else
-                        {
-                            mainWindow.Background = new SolidColorBrush(darkBG);
-                        }
-
+                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else if (colorScheme == "Light")
                     {
-                        if (isMica)
-                        {
-                            mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                        }
-                        else
-                        {
-                            mainWindow.Background = new SolidColorBrush(lightBG);
-                        }
-
+                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
                     }
@@ -438,45 +491,21 @@ namespace Flow.Launcher.Core.Resource
             }
             else if (Mode == "Dark")
             {
-                if (isMica)
-                {
-                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                }
-                else
-                {
-                    mainWindow.Background = new SolidColorBrush(darkBG);
-                }
-
+                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                 return;
             }
             else if (Mode == "Light")
             {
-                if (isMica)
-                {
-                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                }
-                else
-                {
-                    mainWindow.Background = new SolidColorBrush(lightBG);
-                }
-
+                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 return;
             }
             else
             {
-                if (isMica)
-                {
-                    mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)); // ✅ Mica 배경 투명 처리
-                }
-                else
-                {
-                    mainWindow.Background = new SolidColorBrush(Colors.Transparent);
-                }
+                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
             }
         }
-
 
 
         public bool IsBlurTheme()
@@ -549,8 +578,8 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = Win32Helper.IsBlurTheme();
-                if (_settings.UseDropShadowEffect)
-                    AddDropShadowEffectToCurrentTheme();
+                //if (_settings.UseDropShadowEffect)
+                // AddDropShadowEffectToCurrentTheme();
 
 
 

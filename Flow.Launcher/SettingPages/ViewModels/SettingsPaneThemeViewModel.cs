@@ -39,8 +39,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
                 DropShadowEffect = true;
-            ThemeManager.Instance.RefreshFrame();
-            //ThemeManager.Instance.SetBlurForWindow();
+            //ThemeManager.Instance.RefreshFrame();
+            ThemeManager.Instance.SetBlurForWindow();
         }
     }
 
@@ -194,8 +194,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 BackdropTypes.MicaAlt => 4, // ✅ MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
                 _ => 0                      // ✅ None (DWM_SYSTEMBACKDROP_TYPE = 0)
             };
-
-            Methods.SetWindowAttribute(hWnd, ParameterTypes.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+            ThemeManager.Instance.SetBlurForWindow();
+            //Methods.SetWindowAttribute(hWnd, ParameterTypes.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
         }
     }
 
