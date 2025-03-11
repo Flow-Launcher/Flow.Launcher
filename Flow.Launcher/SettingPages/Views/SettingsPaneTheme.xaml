@@ -371,36 +371,6 @@
                 </Border>
             </Grid>
 
-            <!--  Drop shadow effect  -->
-            <cc:Card
-                Title="Backdrop Type"
-                Margin="0 8 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectRestart}">
-
-                <ComboBox
-                    MinWidth="160"
-                    VerticalAlignment="Center"
-                    DisplayMemberPath="Display"
-                    FontSize="14"
-                    ItemsSource="{Binding BackdropTypesList}"
-                    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
-                    SelectedValuePath="Value" />
-            </cc:Card>
-
-
-            <!--  Drop shadow effect  -->
-            <cc:Card
-                Title="{DynamicResource queryWindowShadowEffect}"
-                Margin="0 8 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectRestart}">
-                <ui:ToggleSwitch
-                    IsOn="{Binding DropShadowEffect}"
-                    OffContent="{DynamicResource disable}"
-                    OnContent="{DynamicResource enable}" />
-            </cc:Card>
-
             <!--  Theme  -->
             <cc:ExCard
                 x:Name="ThemeCard"
@@ -488,11 +458,43 @@
                     </ListBox.Template>
                 </ListBox>
             </cc:ExCard>
+
+            <!--  Backdrop effect  -->
+            <cc:Card
+                Title="Backdrop Type"
+                Margin="0 8 0 0"
+                Icon="&#xeb91;"
+                Sub="{DynamicResource shadowEffectRestart}">
+
+                <ComboBox
+                    MinWidth="160"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="Display"
+                    FontSize="14"
+                    ItemsSource="{Binding BackdropTypesList}"
+                    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
+            </cc:Card>
+
+
+            <!--  Drop shadow effect  -->
+            <cc:Card
+                Title="{DynamicResource queryWindowShadowEffect}"
+                Margin="0 8 0 0"
+                Icon="&#xeb91;"
+                Sub="{DynamicResource shadowEffectRestart}">
+                <ui:ToggleSwitch
+                    IsOn="{Binding DropShadowEffect}"
+                    OffContent="{DynamicResource disable}"
+                    OnContent="{DynamicResource enable}" />
+            </cc:Card>
             <cc:HyperLink
                 Margin="10"
                 HorizontalAlignment="Right"
                 Text="{DynamicResource browserMoreThemes}"
                 Uri="{Binding LinkThemeGallery}" />
+
+
 
             <!--  Fixed Height  -->
             <cc:CardGroup Margin="0 20 0 0">

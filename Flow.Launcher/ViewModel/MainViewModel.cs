@@ -1407,7 +1407,8 @@ namespace Flow.Launcher.ViewModel
 
                     // 📌 UI 요소 복원
                     mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    mainWindow.SearchIcon.Visibility = Visibility.Visible;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
+                    SearchIconVisibility = Visibility.Visible;
                 }
 
                 // WPF 속성 업데이트
@@ -1439,7 +1440,8 @@ namespace Flow.Launcher.ViewModel
                     mainWindow.ClockPanel.Opacity = 0;
                     mainWindow.SearchIcon.Opacity = 0;
                     mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                    SearchIconVisibility = Visibility.Hidden;
 
                     // 강제 UI 업데이트
                     mainWindow.ClockPanel.UpdateLayout();
