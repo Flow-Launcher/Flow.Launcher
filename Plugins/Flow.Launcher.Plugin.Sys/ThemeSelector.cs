@@ -82,6 +82,7 @@ namespace Flow.Launcher.Plugin.Sys
             {
                 Title = title,
                 TitleHighlightData = highlightData,
+                IcoPath = "Images\\theme_selector.png",
                 Glyph = new GlyphInfo("/Resources/#Segoe Fluent Icons", "\ue790"),
                 Score = score,
                 Action = c =>

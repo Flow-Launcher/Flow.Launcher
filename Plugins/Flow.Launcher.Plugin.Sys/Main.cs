@@ -464,8 +464,8 @@ namespace Flow.Launcher.Plugin.Sys
                 {
                     Title = "Set Flow Launcher Theme",
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
-                    IcoPath = "Images\\theme_selector.png",
-                    Glyph = new GlyphInfo("/Resources/#Segoe Fluent Icons", "\ue790"),
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
                     Action = c =>
                     {
                         context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
