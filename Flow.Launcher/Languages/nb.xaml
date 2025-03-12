@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">Alltid forhåndsvisning</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Åpne alltid forhåndsvisningspanel når Flow aktiveres. Trykk på {0} for å velge forhåndsvisning.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Skyggeeffekt er ikke tillatt mens gjeldende tema har uskarphet-effekt aktivert</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Søk etter programtillegg</system:String>
