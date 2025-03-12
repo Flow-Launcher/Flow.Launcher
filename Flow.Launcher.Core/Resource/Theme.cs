@@ -276,7 +276,8 @@ namespace Flow.Launcher.Core.Resource
                 {
                     windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                     windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+                    //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
                     ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
                 }
                 else
@@ -292,6 +293,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 // ✅ Blur가 비활성화되면 기본 스타일 적용
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 0);
+                ThemeModeColor(BlurMode());
             }
 
             UpdateResourceDictionary(dict);
@@ -578,8 +580,8 @@ namespace Flow.Launcher.Core.Resource
                 }
 
                 BlurEnabled = Win32Helper.IsBlurTheme();
-                if (_settings.UseDropShadowEffect)
-                 AddDropShadowEffectToCurrentTheme();
+                //if (_settings.UseDropShadowEffect)
+                // AddDropShadowEffectToCurrentTheme();
 
 
 
