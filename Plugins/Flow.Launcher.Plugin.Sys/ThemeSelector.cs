@@ -2,6 +2,7 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -9,8 +10,55 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
+        private readonly Settings _settings;
         private readonly Theme _theme;
         private readonly PluginInitContext _context;
+
+        #region Theme Selection
+
+        // Theme select codes from SettingsPaneThemeViewModel.cs
+
+        private Theme.ThemeData _selectedTheme;
+        private Theme.ThemeData SelectedTheme
+        {
+            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.CurrentTheme);
+            set
+            {
+                _selectedTheme = value;
+                _theme.ChangeTheme(value.FileNameWithoutExtension);
+
+                if (_theme.BlurEnabled && _settings.UseDropShadowEffect)
+                    DropShadowEffect = false;
+            }
+        }
+
+        private List<Theme.ThemeData> Themes => _theme.LoadAvailableThemes();
+
+        private bool DropShadowEffect
+        {
+            get => _settings.UseDropShadowEffect;
+            set
+            {
+                if (_theme.BlurEnabled && value)
+                {
+                    _context.API.ShowMsgBox(_context.API.GetTranslation("shadowEffectNotAllowed"));
+                    return;
+                }
+
+                if (value)
+                {
+                    _theme.AddDropShadowEffectToCurrentTheme();
+                }
+                else
+                {
+                    _theme.RemoveDropShadowEffectFromCurrentTheme();
+                }
+
+                _settings.UseDropShadowEffect = value;
+            }
+        }
+
+        #endregion
 
         public ThemeSelector(PluginInitContext context)
         {
@@ -20,52 +68,66 @@ namespace Flow.Launcher.Plugin.Sys
 
         public List<Result> Query(Query query)
         {
-            var themes = _theme.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
-
-            string search = query.SecondToEndSearch;
-
+            var search = query.SecondToEndSearch;
             if (string.IsNullOrWhiteSpace(search))
             {
-                return themes.Select(CreateThemeResult)
+                return Themes.Select(CreateThemeResult)
                     .OrderBy(x => x.Title)
                     .ToList();
             }
 
-            return themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme)))
+            return Themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme.Name)))
                 .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
                 .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
                 .OrderBy(x => x.Title)
                 .ToList();
         }
 
-        private Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
+        private Result CreateThemeResult(Theme.ThemeData theme) => CreateThemeResult(theme, 0, null);
 
-        private Result CreateThemeResult(string theme, int score, IList<int> highlightData)
+        private Result CreateThemeResult(Theme.ThemeData theme, int score, IList<int> highlightData)
         {
+            string themeName = theme.Name;
             string title;
-            if (theme == _theme.CurrentTheme)
+            if (theme == SelectedTheme)
             {
-                title = $"{theme} ★";
+                title = $"{theme.Name} ★";
                 // Set current theme to the top
                 score = 2000;
             }
             else
             {
-                title = theme;
+                title = theme.Name;
                 // Set them to 1000 so that they are higher than other non-theme records
                 score = 1000;
+            }
+
+            string description = string.Empty;
+            if (theme.IsDark == true)
+            {
+                description += _context.API.GetTranslation("TypeIsDarkToolTip");
+                if (theme.HasBlur == true)
+                {
+                    description += "";
+                    description += _context.API.GetTranslation("TypeHasBlurToolTip");
+                }
+            }
+            else if (theme.HasBlur == true)
+            {
+                description += _context.API.GetTranslation("TypeHasBlurToolTip");
             }
 
             return new Result
             {
                 Title = title,
                 TitleHighlightData = highlightData,
+                SubTitle = description,
                 IcoPath = "Images\\theme_selector.png",
                 Glyph = new GlyphInfo("/Resources/#Segoe Fluent Icons", "\ue790"),
                 Score = score,
                 Action = c =>
                 {
-                    _theme.ChangeTheme(theme);
+                    SelectedTheme = theme;
                     _context.API.ReQuery();
                     return false;
                 }
