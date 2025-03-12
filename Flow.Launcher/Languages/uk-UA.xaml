@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">Завжди переглядати</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Завжди відкривати панель попереднього перегляду при активації Flow. Натисніть {0}, щоб переключити попередній перегляд.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Ефект тіні не дозволено, коли поточна тема має ефект розмиття</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Плагін для пошуку</system:String>
