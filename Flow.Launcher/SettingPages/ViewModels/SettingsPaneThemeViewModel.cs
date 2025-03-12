@@ -43,6 +43,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             //uThemeManager.Instance.SetBlurForWindow();
         }
     }
+    public bool IsBackdropEnabled => SelectedTheme?.HasBlur ?? false;
 
     public bool DropShadowEffect
     {
