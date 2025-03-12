@@ -124,15 +124,11 @@ namespace Flow.Launcher
 
                 switch (_settings.LogLevel)
                 {
-                    case "debug":
+                    case LOGLEVEL.DEBUG:
                         Log.UseDebugLogLevel();
-                        break;
-                    case "info":
-                        Log.UseInfoLogLevel();
                         break;
                     default:
-                        Log.Error(nameof(Flow.Launcher.App), "Unrecognized log level");
-                        Log.UseDebugLogLevel();
+                        Log.UseInfoLogLevel();
                         break;
                 }
 

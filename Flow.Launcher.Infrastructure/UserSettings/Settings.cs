@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Windows;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -199,7 +200,8 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         };
 
-        public string LogLevel { get; set; } = "info";
+        [JsonConverter(typeof(JsonStringEnumConverter))]
+        public LOGLEVEL LogLevel { get; set; } = LOGLEVEL.INFO;
 
         /// <summary>
         /// when false Alphabet static service will always return empty results
