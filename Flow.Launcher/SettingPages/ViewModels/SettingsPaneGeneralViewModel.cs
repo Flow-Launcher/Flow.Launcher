@@ -7,6 +7,7 @@ using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedModels;
@@ -31,6 +32,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public class SearchWindowAlignData : DropdownDataGeneric<SearchWindowAligns> { }
     public class SearchPrecisionData : DropdownDataGeneric<SearchPrecisionScore> { }
     public class LastQueryModeData : DropdownDataGeneric<LastQueryMode> { }
+    public class LogLevelData : DropdownDataGeneric<LOGLEVEL> { }
 
     public bool StartFlowLauncherOnSystemStartup
     {
@@ -143,12 +145,16 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 
+    public List<LogLevelData> LogLevels { get; } =
+        DropdownDataGeneric<LOGLEVEL>.GetValues<LogLevelData>("LogLevel");
+
     private void UpdateEnumDropdownLocalizations()
     {
         DropdownDataGeneric<SearchWindowScreens>.UpdateLabels(SearchWindowScreens);
         DropdownDataGeneric<SearchWindowAligns>.UpdateLabels(SearchWindowAligns);
         DropdownDataGeneric<SearchPrecisionScore>.UpdateLabels(SearchPrecisionScores);
         DropdownDataGeneric<LastQueryMode>.UpdateLabels(LastQueryModes);
+        DropdownDataGeneric<LOGLEVEL>.UpdateLabels(LogLevels);
     }
 
     public string Language
@@ -212,6 +218,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             if (value)
             {
                 UpdateApp();
+            }
+        }
+    }
+
+    public LOGLEVEL LogLevel
+    {
+        get => Settings.LogLevel;
+        set
+        {
+            if (Settings.LogLevel != value)
+            {
+                Settings.LogLevel = value;
+
+                Log.SetLogLevel(value);
+
+                UpdateEnumDropdownLocalizations();
             }
         }
     }
