@@ -16,7 +16,7 @@ namespace Flow.Launcher.Plugin.Sys
 
         #region Theme Selection
 
-        // Theme select codes from SettingsPaneThemeViewModel.cs
+        // Theme select codes simplified from SettingsPaneThemeViewModel.cs
 
         private Theme.ThemeData _selectedTheme;
         private Theme.ThemeData SelectedTheme
@@ -28,35 +28,14 @@ namespace Flow.Launcher.Plugin.Sys
                 _theme.ChangeTheme(value.FileNameWithoutExtension);
 
                 if (_theme.BlurEnabled && _settings.UseDropShadowEffect)
-                    DropShadowEffect = false;
+                {
+                    _theme.RemoveDropShadowEffectFromCurrentTheme();
+                    _settings.UseDropShadowEffect = false;
+                }
             }
         }
 
         private List<Theme.ThemeData> Themes => _theme.LoadAvailableThemes();
-
-        private bool DropShadowEffect
-        {
-            get => _settings.UseDropShadowEffect;
-            set
-            {
-                if (_theme.BlurEnabled && value)
-                {
-                    _context.API.ShowMsgBox(_context.API.GetTranslation("shadowEffectNotAllowed"));
-                    return;
-                }
-
-                if (value)
-                {
-                    _theme.AddDropShadowEffectToCurrentTheme();
-                }
-                else
-                {
-                    _theme.RemoveDropShadowEffectFromCurrentTheme();
-                }
-
-                _settings.UseDropShadowEffect = value;
-            }
-        }
 
         #endregion
 
@@ -107,14 +86,12 @@ namespace Flow.Launcher.Plugin.Sys
             if (theme.IsDark == true)
             {
                 description += _context.API.GetTranslation("TypeIsDarkToolTip");
-                if (theme.HasBlur == true)
-                {
-                    description += "";
-                    description += _context.API.GetTranslation("TypeHasBlurToolTip");
-                }
             }
-            else if (theme.HasBlur == true)
+
+            if (theme.HasBlur == true)
             {
+                if (!string.IsNullOrEmpty(description))
+                    description += " ";
                 description += _context.API.GetTranslation("TypeHasBlurToolTip");
             }
 
