@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,14 +15,22 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Channels;
 using Flow.Launcher.Plugin.Program.Views.Models;
 using IniParser;
+using System.Windows.Input;
+using MemoryPack;
 
 namespace Flow.Launcher.Plugin.Program.Programs
 {
-    [Serializable]
-    public class Win32 : IProgram, IEquatable<Win32>
+    [MemoryPackable]
+    public partial class Win32 : IProgram, IEquatable<Win32>
     {
         public string Name { get; set; }
-        public string UniqueIdentifier { get => _uid; set => _uid = value == null ? string.Empty : value.ToLowerInvariant(); } // For path comparison
+
+        public string UniqueIdentifier
+        {
+            get => _uid;
+            set => _uid = value == null ? string.Empty : value.ToLowerInvariant();
+        } // For path comparison
+
         public string IcoPath { get; set; }
 
         /// <summary>
@@ -32,14 +39,19 @@ namespace Flow.Launcher.Plugin.Program.Programs
         public string FullPath { get; set; }
 
         /// <summary>
-        /// Path of the executable for .lnk, or the URL for .url. Arguments are included if any.
+        /// Path of the executable for .lnk, or the URL for .url
         /// </summary>
         public string LnkResolvedPath { get; set; }
 
         /// <summary>
-        /// Path of the actual executable file. Args are included.
+        /// Path of the actual executable file
         /// </summary>
         public string ExecutablePath => LnkResolvedPath ?? FullPath;
+
+        /// <summary>
+        /// Arguments for the executable.
+        /// </summary>
+        public string Args { get; set; }
 
         public string ParentDirectory { get; set; }
 
@@ -96,7 +108,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             bool useLocalizedName = !string.IsNullOrEmpty(LocalizedName) && !Name.Equals(LocalizedName);
             string resultName = useLocalizedName ? LocalizedName : Name;
 
-            if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) || resultName.Equals(Description))
+            if (!Main._settings.EnableDescription || string.IsNullOrWhiteSpace(Description) ||
+                resultName.Equals(Description))
             {
                 title = resultName;
                 matchResult = StringMatcher.FuzzySearch(query, resultName);
@@ -113,6 +126,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         descriptionMatch.MatchData[i] += resultName.Length + 2; // 2 is ": "
                     }
+
                     matchResult = descriptionMatch;
                 }
                 else
@@ -129,10 +143,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 {
                     candidates.Add(ExecutableName);
                 }
+
                 if (useLocalizedName)
                 {
                     candidates.Add(Name);
                 }
+
                 matchResult = Match(query, candidates);
                 if (matchResult == null)
                 {
@@ -167,21 +183,26 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 Score = matchResult.Score,
                 TitleHighlightData = matchResult.MatchData,
                 ContextData = this,
+                TitleToolTip = $"{title}\n{ExecutablePath}",
                 Action = c =>
                 {
-                    var runAsAdmin = (
-                        c.SpecialKeyState.CtrlPressed &&
-                        c.SpecialKeyState.ShiftPressed &&
-                        !c.SpecialKeyState.AltPressed &&
-                        !c.SpecialKeyState.WinPressed
-                        );
+                    // Ctrl + Enter to open containing folder
+                    bool openFolder = c.SpecialKeyState.ToModifierKeys() == ModifierKeys.Control;
+                    if (openFolder)
+                    {
+                        Main.Context.API.OpenDirectory(ParentDirectory, FullPath);
+                        return true;
+                    }
+
+                    // Ctrl + Shift + Enter to run as admin
+                    bool runAsAdmin = c.SpecialKeyState.ToModifierKeys() == (ModifierKeys.Control | ModifierKeys.Shift);
 
                     var info = new ProcessStartInfo
                     {
                         FileName = FullPath,
                         WorkingDirectory = ParentDirectory,
                         UseShellExecute = true,
-                        Verb = runAsAdmin ? "runas" : ""
+                        Verb = runAsAdmin ? "runas" : "",
                     };
 
                     _ = Task.Run(() => Main.StartProcess(Process.Start, info));
@@ -205,9 +226,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     {
                         var info = new ProcessStartInfo
                         {
-                            FileName = FullPath, 
-                            WorkingDirectory = ParentDirectory, 
-                            UseShellExecute = true
+                            FileName = FullPath, WorkingDirectory = ParentDirectory, UseShellExecute = true
                         };
 
                         Task.Run(() => Main.StartProcess(ShellCommand.RunAsDifferentUser, info));
@@ -248,11 +267,29 @@ namespace Flow.Launcher.Plugin.Program.Programs
                     },
                     IcoPath = "Images/folder.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe838"),
-                }
+                },
             };
+            if (Extension(FullPath) == ShortcutExtension)
+            {
+                contextMenus.Add(OpenTargetFolderContextMenuResult(api));
+            }
             return contextMenus;
         }
 
+        private Result OpenTargetFolderContextMenuResult(IPublicAPI api)
+        {
+            return new Result
+            {
+                Title = api.GetTranslation("flowlauncher_plugin_program_open_target_folder"),
+                Action = _ =>
+                {
+                    api.OpenDirectory(Path.GetDirectoryName(ExecutablePath), ExecutablePath);
+                    return true;
+                },
+                IcoPath = "Images/folder.png",
+                Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xe8de"),
+            };
+        }
 
         public override string ToString()
         {
@@ -309,12 +346,12 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 if (!string.IsNullOrEmpty(target) && File.Exists(target))
                 {
                     program.LnkResolvedPath = Path.GetFullPath(target);
-                    program.ExecutableName = Path.GetFileName(target);
+                    program.ExecutableName = Path.GetFileNameWithoutExtension(target);
 
                     var args = _helper.arguments;
                     if (!string.IsNullOrEmpty(args))
                     {
-                        program.LnkResolvedPath += " " + args;
+                        program.Args = args;
                     }
 
                     var description = _helper.description;
@@ -420,7 +457,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes, bool recursive = true)
+        private static IEnumerable<string> EnumerateProgramsInDir(string directory, string[] suffixes,
+            bool recursive = true)
         {
             if (!Directory.Exists(directory))
                 return Enumerable.Empty<string>();
@@ -444,7 +482,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             }
         }
 
-        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes, string[] protocols)
+        private static IEnumerable<Win32> UnregisteredPrograms(List<string> directories, string[] suffixes,
+            string[] protocols)
         {
             // Disabled custom sources are not in DisabledProgramSources
             var paths = directories.AsParallel()
@@ -461,12 +500,16 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 .SelectMany(p => EnumerateProgramsInDir(p, suffixes))
                 .Distinct();
 
+            var startupPaths = GetStartupPaths();
+
             var programs = ExceptDisabledSource(allPrograms)
+                .Where(x => !startupPaths.Any(startup => FilesFolders.PathContains(startup, x)))
                 .Select(x => GetProgramFromPath(x, protocols));
             return programs;
         }
 
-        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols, List<string> commonParents)
+        private static IEnumerable<Win32> PATHPrograms(string[] suffixes, string[] protocols,
+            List<string> commonParents)
         {
             var pathEnv = Environment.GetEnvironmentVariable("Path");
             if (String.IsNullOrEmpty(pathEnv))
@@ -508,7 +551,8 @@ namespace Flow.Launcher.Plugin.Program.Programs
             toFilter = toFilter.Distinct().Where(p => suffixes.Contains(Extension(p)));
 
             var programs = ExceptDisabledSource(toFilter)
-                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid).ToList(); // ToList due to disposing issue
+                .Select(x => GetProgramFromPath(x, protocols)).Where(x => x.Valid)
+                .ToList(); // ToList due to disposing issue
             return programs;
         }
 
@@ -603,13 +647,23 @@ namespace Flow.Launcher.Plugin.Program.Programs
 
         private static IEnumerable<Win32> ProgramsHasher(IEnumerable<Win32> programs)
         {
-            return programs.GroupBy(p => p.ExecutablePath.ToLowerInvariant())
+            var startMenuPaths = GetStartMenuPaths();
+            return programs.GroupBy(p => (p.ExecutablePath + p.Args).ToLowerInvariant())
                 .AsParallel()
                 .SelectMany(g =>
                 {
+                    // is shortcut and in start menu
+                    var startMenu = g.Where(g =>
+                            g.LnkResolvedPath != null &&
+                            startMenuPaths.Any(x => FilesFolders.PathContains(x, g.FullPath)))
+                        .ToList();
+                    if (startMenu.Any())
+                        return startMenu.Take(1);
+
+                    // distinct by description
                     var temp = g.Where(g => !string.IsNullOrEmpty(g.Description)).ToList();
                     if (temp.Any())
-                        return DistinctBy(temp, x => x.Description);
+                        return temp.Take(1);
                     return g.Take(1);
                 });
         }
@@ -705,6 +759,14 @@ namespace Flow.Launcher.Plugin.Program.Programs
             return new[] { userStartMenu, commonStartMenu };
         }
 
+        private static IEnumerable<string> GetStartupPaths()
+        {
+            var userStartup = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
+            var commonStartup = Environment.GetFolderPath(Environment.SpecialFolder.CommonStartup);
+
+            return new[] { userStartup, commonStartup };
+        }
+
         public static void WatchProgramUpdate(Settings settings)
         {
             var paths = new List<string>();
@@ -734,6 +796,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
                 while (reader.TryRead(out _))
                 {
                 }
+
                 await Task.Run(Main.IndexWin32Programs);
             }
         }
@@ -744,6 +807,7 @@ namespace Flow.Launcher.Plugin.Program.Programs
             {
                 throw new ArgumentException("Path Not Exist");
             }
+
             var watcher = new FileSystemWatcher(directory);
 
             watcher.Created += static (_, _) => indexQueue.Writer.TryWrite(default);
@@ -782,8 +846,10 @@ namespace Flow.Launcher.Plugin.Program.Programs
                         parents.Remove(source);
                     }
                 }
+
                 result.AddRange(parents.Select(x => x.Location));
             }
+
             return result.DistinctBy(x => x.ToLowerInvariant()).ToList();
         }
     }

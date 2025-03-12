@@ -10,6 +10,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">삭제</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">편집</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">추가</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">켬</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_true">켬</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_false">Disabled</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">확인</system:String>
@@ -28,7 +29,8 @@
         Thus, the generic formula for a search on Netflix is https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copy URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copy search URL to clipboard</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">이름</system:String>

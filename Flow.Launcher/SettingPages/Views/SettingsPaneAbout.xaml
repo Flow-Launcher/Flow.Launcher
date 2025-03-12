@@ -1,0 +1,137 @@
+﻿<ui:Page
+    x:Class="Flow.Launcher.SettingPages.Views.SettingsPaneAbout"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cc="clr-namespace:Flow.Launcher.Resources.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settingsVm="clr-namespace:Flow.Launcher.SettingPages.ViewModels"
+    xmlns:ui="http://schemas.modernwpf.com/2019"
+    Title="About"
+    d:DataContext="{d:DesignInstance Type=settingsVm:SettingsPaneAboutViewModel}"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <ScrollViewer
+        Margin="0"
+        CanContentScroll="True"
+        FontSize="14"
+        VirtualizingStackPanel.IsVirtualizing="True"
+        VirtualizingStackPanel.ScrollUnit="Pixel">
+        <StackPanel Margin="5 14 25 30" Orientation="Vertical">
+            <TextBlock
+                Margin="0 5"
+                FontSize="30"
+                Style="{DynamicResource PageTitle}"
+                Text="{DynamicResource about}"
+                TextAlignment="left" />
+
+            <cc:Card
+                Title="{Binding Version}"
+                Icon="&#xe946;"
+                Sub="{DynamicResource version}">
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Margin="0 0 10 0"
+                        Command="{Binding UpdateAppCommand}"
+                        Content="{DynamicResource checkUpdates}" />
+                    <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
+                        <Hyperlink
+                            NavigateUri="{Binding SponsorPage}"
+                            RequestNavigate="OnRequestNavigate"
+                            TextDecorations="None">
+                            <TextBlock
+                                Padding="10 5"
+                                Foreground="{StaticResource SystemControlForegroundAltHighBrush}"
+                                Text="{DynamicResource BecomeASponsor}" />
+                        </Hyperlink>
+                    </Button>
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource releaseNotes}" Icon="&#xe8fd;">
+                <cc:HyperLink Text="{DynamicResource releaseNotes}" Uri="{Binding ReleaseNotes}" />
+            </cc:Card>
+
+
+            <cc:Card
+                Title="{DynamicResource userdatapath}"
+                Margin="0 14 0 0"
+                Icon="&#xEC25;;"
+                Sub="{DynamicResource userdatapathToolTip}">
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding OpenParentOfSettingsFolderCommand}" Content="{DynamicResource userdatapathButton}" />
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource website}"
+                Margin="0 14 0 0"
+                Icon="&#xeb41;">
+                <StackPanel Orientation="Horizontal">
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource website}"
+                        Uri="{Binding Website}" />
+                    <cc:HyperLink
+                        Margin="0 0 12 0"
+                        Text="{DynamicResource documentation}"
+                        Uri="{Binding Documentation}" />
+                    <cc:HyperLink Text="{DynamicResource github}" Uri="{Binding Github}" />
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource icons}" Icon="&#xE8FE;">
+                <cc:HyperLink Text="icons8.com" Uri="https://icons8.com/" />
+            </cc:Card>
+
+            <cc:Card
+                Title="{DynamicResource devtool}"
+                Margin="0 12 0 0"
+                Icon="&#xf12b;">
+                <StackPanel Orientation="Horizontal">
+                    <Button
+                        Margin="0 0 12 0"
+                        Command="{Binding AskClearLogFolderConfirmationCommand}"
+                        Content="{Binding LogFolderSize, Mode=OneWay}" />
+                    <Button
+                        Content="&#xec7a;"
+                        FontFamily="/Resources/#Segoe Fluent Icons"
+                        FontSize="20">
+                        <ui:FlyoutService.Flyout>
+                            <ui:MenuFlyout>
+                                <MenuItem Command="{Binding OpenWelcomeWindowCommand}" Header="{DynamicResource welcomewindow}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe939;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding OpenSettingsFolderCommand}" Header="{DynamicResource settingfolder}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8b7;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Command="{Binding OpenLogsFolderCommand}" Header="{DynamicResource logfolder}">
+                                    <MenuItem.Icon>
+                                        <ui:FontIcon Glyph="&#xe8b7;" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ui:MenuFlyout>
+                        </ui:FlyoutService.Flyout>
+                    </Button>
+                </StackPanel>
+            </cc:Card>
+
+            <TextBlock
+                Margin="14 20 0 0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                DockPanel.Dock="Bottom"
+                FontSize="12"
+                Foreground="{DynamicResource Color15B}"
+                Text="{Binding ActivatedTimes}"
+                TextWrapping="WrapWithOverflow" />
+        </StackPanel>
+    </ScrollViewer>
+</ui:Page>

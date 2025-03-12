@@ -16,6 +16,8 @@
     <system:String x:Key="plugin_explorer_alternative">Upozornenie bolo vypnuté. Chceli by ste ako alternatívu na vyhľadávanie súborov a priečinkov nainštalovať plugin Everything?{0}{0}Ak chcete nainštalovať plugin Everything, zvoľte 'Áno', pre návrat zvoľte 'Nie'</system:String>
     <system:String x:Key="plugin_explorer_alternative_title">Alternatíva pre Prieskumníka</system:String>
     <system:String x:Key="plugin_explorer_directoryinfosearch_error">Počas vyhľadávania došlo k chybe: {0}</system:String>
+    <system:String x:Key="plugin_explorer_opendir_error">Nepodarilo sa otvoriť priečinok</system:String>
+    <system:String x:Key="plugin_explorer_openfile_error">Nepodarilo sa otvoriť súbor</system:String>
 
     <!--  Controls  -->
     <system:String x:Key="plugin_explorer_delete">Odstrániť</system:String>
@@ -25,6 +27,12 @@
     <system:String x:Key="plugin_explorer_manageactionkeywords_header">Upraviť aktivačný príkaz</system:String>
     <system:String x:Key="plugin_explorer_quickaccesslinks_header">Odkazy Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_everything_setting_header">Nastavenia Everything</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_setting_header">Panel náhľadu</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_size_checkbox">Veľkosť</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_creation_checkbox">Dátum vytvorenia</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_display_file_modification_checkbox">Dátum úpravy</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_file_info_label">Zobraziť informácie o súbore</system:String>
+    <system:String x:Key="plugin_explorer_previewpanel_date_and_time_format_label">Formát dátumu a času</system:String>
     <system:String x:Key="plugin_explorer_everything_sort_option">Zoradenie:</system:String>
     <system:String x:Key="plugin_explorer_everything_installed_path">Umiestnenie Everything:</system:String>
     <system:String x:Key="plugin_explorer_launch_hidden">Spustiť skryté</system:String>
@@ -32,6 +40,7 @@
     <system:String x:Key="plugin_explorer_shell_path">Cesta k príkazovému riadku</system:String>
     <system:String x:Key="plugin_explorer_indexsearchexcludedpaths_header">Vylúčené umiestnenia indexovania</system:String>
     <system:String x:Key="plugin_explorer_use_location_as_working_dir">Použiť umiestnenie výsledku vyhľadávania ako pracovný priečinok spustiteľného súboru</system:String>
+    <system:String x:Key="plugin_explorer_default_open_in_file_manager">Stlačením klávesu Enter otvoriť priečinok v predvolenom správcovi súborov</system:String>
     <system:String x:Key="plugin_explorer_usewindowsindexfordirectorysearch">Na vyhľadanie cesty použiť vyhľadávanie v indexe</system:String>
     <system:String x:Key="plugin_explorer_manageindexoptions">Možnosti indexovania</system:String>
     <system:String x:Key="plugin_explorer_actionkeywordview_search">Vyhľadávanie:</system:String>
@@ -48,11 +57,17 @@
     <system:String x:Key="plugin_explorer_path_enumeration_engine_none">Zoznam priečinkov</system:String>
     <system:String x:Key="plugin_explorer_file_editor_path">Cesta k editoru súborov</system:String>
     <system:String x:Key="plugin_explorer_folder_editor_path">Cesta k editoru priečinkov</system:String>
+    <system:String x:Key="plugin_explorer_enabled">Povolené</system:String>
+    <system:String x:Key="plugin_explorer_disabled">Vypnuté</system:String>
 
     <system:String x:Key="plugin_explorer_Content_Search_Engine">Vyhľadávač obsahu</system:String>
     <system:String x:Key="plugin_explorer_Directory_Recursive_Search_Engine">Priečinkový rekurzívny vyhľadávač</system:String>
     <system:String x:Key="plugin_explorer_Index_Search_Engine">Indexový vyhľadávač</system:String>
     <system:String x:Key="plugin_explorer_Open_Window_Index_Option">Otvoriť možnosti vyhľadávania vo Windowse</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types">Vylúčené typy súborov (oddelené čiarkou)</system:String>
+    <system:String x:Key="plugin_explorer_Excluded_File_Types_Tooltip">Napr.: exe,jpg,png</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results">Maximum výsledkov</system:String>
+    <system:String x:Key="plugin_explorer_Maximum_Results_Tooltip">Maximálny počet výsledkov pre aktívny vyhľadávač</system:String>
 
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_explorer_plugin_name">Prieskumník</system:String>
@@ -97,11 +112,15 @@
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_title">Odstráni z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_remove_from_quickaccess_subtitle">Odstrániť aktuálnu položku z Rýchleho prístupu</system:String>
     <system:String x:Key="plugin_explorer_show_contextmenu_title">Zobraziť kontextovú ponuku Windowsu</system:String>
-    
-    <!-- Special Results-->
+    <system:String x:Key="plugin_explorer_openwith">Otvoriť s</system:String>
+    <system:String x:Key="plugin_explorer_openwith_subtitle">Vyberte program, ktorým chcete otvoriť súbor</system:String>
+
+    <!--  Special Results  -->
     <system:String x:Key="plugin_explorer_diskfreespace">Voľných {0} z {1}</system:String>
     <system:String x:Key="plugin_explorer_openresultfolder">Otvoriť v predvolenom správcovi súborov</system:String>
-    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">Použite &quot;&gt;&quot; na vyhľadávanie v tomto priečinku, &quot;*&quot; na vyhľadávanie prípon súborov alebo &quot;&gt;*&quot; na kombináciu oboch hľadaní.</system:String>
+    <system:String x:Key="plugin_explorer_openresultfolder_subtitle">
+        Použite &quot;&gt;&quot; na vyhľadávanie v tomto priečinku, &quot;*&quot; na vyhľadávanie prípon súborov alebo &quot;&gt;*&quot; na kombináciu oboch hľadaní.
+    </system:String>
 
     <!--  Everything  -->
     <system:String x:Key="flowlauncher_plugin_everything_sdk_issue">Nepodarilo sa načítať SDK Everything</system:String>
@@ -126,7 +145,8 @@
     <system:String x:Key="flowlauncher_plugin_everything_nonfastsort_warning">Upozornenie: Toto nie je voľba Fast Sort, vyhľadávanie môže byť pomalé</system:String>
 
     <system:String x:Key="flowlauncher_plugin_everything_search_fullpath">Vyhľadávanie celej cesty</system:String>
-    
+    <system:String x:Key="flowlauncher_plugin_everything_enable_run_count">Povoliť počítadlo spustení súboru/priečinka</system:String>
+
     <system:String x:Key="flowlauncher_plugin_everything_click_to_launch_or_install">Kliknutím spustíte alebo nainštalujete Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_title">Inštalácia Everything</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_installing_subtitle">Inštaluje sa služba Everything. Čakajte, prosím…</system:String>
@@ -137,4 +157,9 @@
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search">Chcete povoliť vyhľadávanie obsahu cez Everything?</system:String>
     <system:String x:Key="flowlauncher_plugin_everything_enable_content_search_tips">Bez indexu (ktorý je podporovaný len v Everything v1.5+) to môže byť veľmi pomalé</system:String>
 
+    <!--  Native Context Menu  -->
+    <system:String x:Key="plugin_explorer_native_context_menu_header">Natívna kontextová ponuka</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_display_context_menu">Zobraziť natívnu kontextovú ponuku (experimentálne)</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_include_patterns_guide">Nižšie môžete určiť položky, ktoré chcete zahrnúť do kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
+    <system:String x:Key="plugin_explorer_native_context_menu_exclude_patterns_guide">Nižšie môžete určiť položky, ktoré chcete vylúčiť z kontextovej ponuky, môžu byť čiastočné (napr. &quot;tvoriť v program&quot;) alebo úplné (&quot;Otvoriť v programe&quot;).</system:String>
 </ResourceDictionary>

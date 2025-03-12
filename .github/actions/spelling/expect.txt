@@ -19,7 +19,6 @@ Prioritise
 Segoe
 Google
 Customise
-UWP
 uwp
 Bokmal
 Bokm
@@ -59,7 +58,6 @@ popup
 ptr
 pluginindicator
 TobiasSekan
-Img
 img
 resx
 bak
@@ -76,6 +74,7 @@ WCA_ACCENT_POLICY
 HGlobal
 dopusrt
 firefox
+Firefox
 msedge
 svgc
 ime
@@ -84,7 +83,30 @@ txb
 btn
 otf
 searchplugin
-Noresult
 wpftk
 mkv
 flac
+IPublic
+keyevent
+KListener
+requery
+vkcode
+čeština
+Polski
+Srpski
+Português
+Português (Brasil)
+Italiano
+Slovenský
+quicklook
+Tiếng Việt
+Droplex
+Preinstalled
+errormetadatafile
+noresult
+pluginsmanager
+alreadyexists
+JsonRPC
+JsonRPCV2
+Softpedia
+img

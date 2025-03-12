@@ -1,0 +1,9 @@
+﻿<?xml version="1.0"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_result_subtitle">Aktivace pluginu {0} pomocí aktivačního příkazu</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_name">Indikátor pluginu</system:String>
+    <system:String x:Key="flowlauncher_plugin_pluginindicator_plugin_description">Poskytuje návrhy akcí v pluginech</system:String>
+
+</ResourceDictionary>

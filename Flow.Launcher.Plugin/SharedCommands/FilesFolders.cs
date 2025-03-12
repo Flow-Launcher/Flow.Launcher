@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 #pragma warning disable IDE0005
 using System.Windows;
 #pragma warning restore IDE0005
@@ -20,7 +21,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="sourcePath"></param>
         /// <param name="targetPath"></param>
-        public static void CopyAll(this string sourcePath, string targetPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void CopyAll(this string sourcePath, string targetPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             // Get the subdirectories for the specified directory.
             DirectoryInfo dir = new DirectoryInfo(sourcePath);
@@ -53,7 +55,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
                 foreach (DirectoryInfo subdir in dirs)
                 {
                     string temppath = Path.Combine(targetPath, subdir.Name);
-                    CopyAll(subdir.FullName, temppath);
+                    CopyAll(subdir.FullName, temppath, messageBoxExShow);
                 }
             }
             catch (Exception)
@@ -61,8 +63,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
-                RemoveFolderIfExists(targetPath);
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Copying path {0} has failed, it will now be deleted for consistency", targetPath));
+                RemoveFolderIfExists(targetPath, messageBoxExShow);
 #endif
             }
 
@@ -74,8 +77,9 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// </summary>
         /// <param name="fromPath"></param>
         /// <param name="toPath"></param>
+        /// <param name="messageBoxExShow"></param>
         /// <returns></returns>
-        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath)
+        public static bool VerifyBothFolderFilesEqual(this string fromPath, string toPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             try
             {
@@ -95,7 +99,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to verify folders and files between {0} and {1}", fromPath, toPath));
                 return false;
 #endif
             }
@@ -106,7 +111,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Deletes a folder if it exists
         /// </summary>
         /// <param name="path"></param>
-        public static void RemoveFolderIfExists(this string path)
+        /// <param name="messageBoxExShow"></param>
+        public static void RemoveFolderIfExists(this string path, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             try
             {
@@ -118,7 +124,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Not able to delete folder {0}, please go to the location and manually delete it", path));
 #endif
             }
         }
@@ -147,7 +154,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// Open a directory window (using the OS's default handler, usually explorer)
         /// </summary>
         /// <param name="fileOrFolderPath"></param>
-        public static void OpenPath(string fileOrFolderPath)
+        /// <param name="messageBoxExShow"></param>
+        public static void OpenPath(string fileOrFolderPath, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -165,7 +173,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", fileOrFolderPath));
 #endif
             }
         }
@@ -176,7 +185,8 @@ namespace Flow.Launcher.Plugin.SharedCommands
         /// <param name="filePath">File path</param>
         /// <param name="workingDir">Working directory</param>
         /// <param name="asAdmin">Open as Administrator</param>
-        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false)
+        /// <param name="messageBoxExShow"></param>
+        public static void OpenFile(string filePath, string workingDir = "", bool asAdmin = false, Func<string, MessageBoxResult> messageBoxExShow = null)
         {
             var psi = new ProcessStartInfo
             {
@@ -195,9 +205,28 @@ namespace Flow.Launcher.Plugin.SharedCommands
 #if DEBUG
                 throw;
 #else
-                MessageBox.Show(string.Format("Unable to open the path {0}, please check if it exists", filePath));
+                messageBoxExShow ??= MessageBox.Show;
+                messageBoxExShow(string.Format("Unable to open the path {0}, please check if it exists", filePath));
 #endif
             }
+        }
+
+        ///<summary>
+        /// This checks whether a given string is a zip file path.
+        /// By default does not check if the zip file actually exist on disk, can do so by
+        /// setting checkFileExists = true.
+        ///</summary>
+        public static bool IsZipFilePath(string querySearchString, bool checkFileExists = false)
+        {
+            if (IsLocationPathString(querySearchString) && querySearchString.Split('.').Last() == "zip")
+            {
+                if (checkFileExists)
+                    return FileExists(querySearchString);
+
+                return true;
+            }
+
+            return false;
         }
 
         ///<summary>
@@ -263,7 +292,7 @@ namespace Flow.Launcher.Plugin.SharedCommands
         }
 
         /// <summary>
-        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>.
+        /// Returns if <paramref name="parentPath"/> contains <paramref name="subPath"/>. Equal paths are not considered to be contained by default.
         /// From https://stackoverflow.com/a/66877016
         /// </summary>
         /// <param name="parentPath">Parent path</param>

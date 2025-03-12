@@ -1,5 +1,4 @@
-﻿using System;
-using Flow.Launcher.Plugin.Everything.Everything;
+﻿using Flow.Launcher.Plugin.Everything.Everything;
 
 namespace Flow.Launcher.Plugin.Explorer.Search.Everything
 {
@@ -12,6 +11,7 @@ namespace Flow.Launcher.Plugin.Explorer.Search.Everything
         bool IsRecursive = true,
         int Offset = 0,
         int MaxCount = 100,
-        bool IsFullPathSearch = true
+        bool IsFullPathSearch = true,
+        bool IsRunCounterEnabled = true
     );
 }

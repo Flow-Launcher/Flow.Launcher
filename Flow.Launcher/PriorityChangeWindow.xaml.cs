@@ -2,17 +2,10 @@
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -31,7 +24,7 @@ namespace Flow.Launcher
             this.pluginViewModel = pluginViewModel;
             if (plugin == null)
             {
-                MessageBox.Show(translater.GetTranslation("cannotFindSpecifiedPlugin"));
+                App.API.ShowMsgBox(translater.GetTranslation("cannotFindSpecifiedPlugin"));
                 Close();
             }
         }
@@ -51,7 +44,7 @@ namespace Flow.Launcher
             else
             {
                 string msg = translater.GetTranslation("invalidPriority");
-                MessageBox.Show(msg);
+                App.API.ShowMsgBox(msg);
             }
 
         }

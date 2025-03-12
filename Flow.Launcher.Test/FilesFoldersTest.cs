@@ -1,5 +1,6 @@
-using Flow.Launcher.Plugin.SharedCommands;
+﻿using Flow.Launcher.Plugin.SharedCommands;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Flow.Launcher.Test
 {
@@ -33,21 +34,21 @@ namespace Flow.Launcher.Test
         [TestCase(@"c:\foo", @"c:\foo\..\bar\baz", false)]
         [TestCase(@"c:\bar", @"c:\foo\..\bar\baz", true)]
         [TestCase(@"c:\barr", @"c:\foo\..\bar\baz", false)]
+        public void GivenTwoPaths_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
+        {
+            ClassicAssert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path));
+        }
+
         // Equality
         [TestCase(@"c:\foo", @"c:\foo", false)]
         [TestCase(@"c:\foo\", @"c:\foo", false)]
         [TestCase(@"c:\foo", @"c:\foo\", false)]
-        public void GivenTwoPaths_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
-        {
-            Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path));
-        }
-
         [TestCase(@"c:\foo", @"c:\foo", true)]
         [TestCase(@"c:\foo\", @"c:\foo", true)]
         [TestCase(@"c:\foo", @"c:\foo\", true)]
-        public void GivenTwoPathsAreTheSame_WhenCheckPathContains_ThenShouldBeTrue(string parentPath, string path, bool expectedResult)
+        public void GivenTwoPathsAreTheSame_WhenCheckPathContains_ThenShouldBeExpectedResult(string parentPath, string path, bool expectedResult)
         {
-            Assert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, true));
+            ClassicAssert.AreEqual(expectedResult, FilesFolders.PathContains(parentPath, path, allowEqual: expectedResult));
         }
     }
 }

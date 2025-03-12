@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
 using System.Windows;
 using System.Windows.Media;
 using Flow.Launcher.Plugin;
@@ -7,6 +7,7 @@ using Flow.Launcher.Core.Plugin;
 using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Resources.Controls;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -23,6 +24,21 @@ namespace Flow.Launcher.ViewModel
                 {
                     if (args.PropertyName == nameof(PluginPair.Metadata.AvgQueryTime))
                         OnPropertyChanged(nameof(QueryTime));
+                };
+            }
+        }
+
+        private string PluginManagerActionKeyword
+        {
+            get
+            {
+                var keyword = PluginManager
+                    .GetPluginForId("9f8f9b14-2518-4907-b211-35ab6290dee7")
+                    .Metadata.ActionKeywords.FirstOrDefault();
+                return keyword switch
+                {
+                    null or "*" => string.Empty,
+                    _ => keyword
                 };
             }
         }
@@ -47,7 +63,11 @@ namespace Flow.Launcher.ViewModel
         public bool PluginState
         {
             get => !PluginPair.Metadata.Disabled;
-            set => PluginPair.Metadata.Disabled = !value;
+            set
+            {
+                PluginPair.Metadata.Disabled = !value;
+                PluginSettingsObject.Disabled = !value;
+            }
         }
         public bool IsExpanded
         {
@@ -63,12 +83,20 @@ namespace Flow.Launcher.ViewModel
 
         private Control _settingControl;
         private bool _isExpanded;
+
+        private Control _bottomPart1;
+        public Control BottomPart1 => IsExpanded ? _bottomPart1 ??= new InstalledPluginDisplayKeyword() : null;
+
+        private Control _bottomPart2;
+        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
+
+        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider && (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
         public Control SettingControl
             => IsExpanded
                 ? _settingControl
-                    ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? new Control()
-                        : settingProvider.CreateSettingPanel()
+                    ??= HasSettingControl
+                        ? ((ISettingProvider)PluginPair.Plugin).CreateSettingPanel()
+                        : null
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
@@ -79,6 +107,7 @@ namespace Flow.Launcher.ViewModel
         public string InitAndQueryTime => InternationalizationManager.Instance.GetTranslation("plugin_init_time") + " " + PluginPair.Metadata.InitTime + "ms, " + InternationalizationManager.Instance.GetTranslation("plugin_query_time") + " " + PluginPair.Metadata.AvgQueryTime + "ms";
         public string ActionKeywordsText => string.Join(Query.ActionKeywordSeparator, PluginPair.Metadata.ActionKeywords);
         public int Priority => PluginPair.Metadata.Priority;
+        public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
         public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
         {
@@ -89,13 +118,14 @@ namespace Flow.Launcher.ViewModel
         public void ChangePriority(int newPriority)
         {
             PluginPair.Metadata.Priority = newPriority;
+            PluginSettingsObject.Priority = newPriority;
             OnPropertyChanged(nameof(Priority));
         }
 
         [RelayCommand]
         private void EditPluginPriority()
         {
-            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair.Metadata.ID, this);
+            PriorityChangeWindow priorityChangeWindow = new PriorityChangeWindow(PluginPair. Metadata.ID, this);
             priorityChangeWindow.ShowDialog();
         }
 
@@ -104,7 +134,20 @@ namespace Flow.Launcher.ViewModel
         {
             var directory = PluginPair.Metadata.PluginDirectory;
             if (!string.IsNullOrEmpty(directory))
-                PluginManager.API.OpenDirectory(directory);
+                App.API.OpenDirectory(directory);
+        }
+
+        [RelayCommand]
+        private void OpenSourceCodeLink()
+        {
+            App.API.OpenUrl(PluginPair.Metadata.Website);
+        }
+
+        [RelayCommand]
+        private void OpenDeletePluginWindow()
+        {
+            App.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
+            App.API.ShowMainWindow();
         }
 
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
@@ -116,5 +159,4 @@ namespace Flow.Launcher.ViewModel
             changeKeywordsWindow.ShowDialog();
         }
     }
-
 }

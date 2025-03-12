@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="http://schemas.modernwpf.com/2019"
     Title="WelcomePage2"
+    DataContext="{Binding RelativeSource={RelativeSource Self}}"
     mc:Ignorable="d">
     <Page.Resources>
         <converters:BorderClipConverter x:Key="BorderClipConverter" />
@@ -110,12 +111,13 @@
                         FontWeight="SemiBold"
                         Text="{DynamicResource flowlauncherHotkey}" />
                     <flowlauncher:HotkeyControl
-                        x:Name="HotkeyControl"
-                        Width="300"
-                        Height="35"
-                        Margin="-206,10,0,0"
-                        GotFocus="HotkeyControl_OnGotFocus"
-                        LostFocus="HotkeyControl_OnLostFocus"/>
+                        Margin="0,8,0,0"
+                        ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
+                        DefaultHotkey="Alt+Space"
+                        Hotkey="{Binding Settings.Hotkey}"
+                        HotkeySettings="{Binding Settings}"
+                        ValidateKeyGesture="True"
+                        WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
 
             </StackPanel>

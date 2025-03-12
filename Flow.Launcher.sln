@@ -2,15 +2,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Test", "Flow.Launcher.Test\Flow.Launcher.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
-	ProjectSection(ProjectDependencies) = postProject
-		{DB90F671-D861-46BB-93A3-F1304F5BA1C5} = {DB90F671-D861-46BB-93A3-F1304F5BA1C5}
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin", "Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj", "{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher", "Flow.Launcher\Flow.Launcher.csproj", "{DB90F671-D861-46BB-93A3-F1304F5BA1C5}"
 	ProjectSection(ProjectDependencies) = postProject
 		{0B9DE348-9361-4940-ADB6-F5953BFFCCEC} = {0B9DE348-9361-4940-ADB6-F5953BFFCCEC}
@@ -26,6 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher", "Flow.Launc
 		{403B57F2-1856-4FC7-8A24-36AB346B763E} = {403B57F2-1856-4FC7-8A24-36AB346B763E}
 		{588088F4-3262-4F9F-9663-A05DE12534C3} = {588088F4-3262-4F9F-9663-A05DE12534C3}
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Test", "Flow.Launcher.Test\Flow.Launcher.Test.csproj", "{FF742965-9A80-41A5-B042-D6C7D3A21708}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DB90F671-D861-46BB-93A3-F1304F5BA1C5} = {DB90F671-D861-46BB-93A3-F1304F5BA1C5}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin", "Flow.Launcher.Plugin\Flow.Launcher.Plugin.csproj", "{8451ECDD-2EA4-4966-BB0A-7BBC40138E80}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{3A73F5A7-0335-40D8-BF7C-F20BE5D0BA87}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Infrastructure", "Flow.Launcher.Infrastructure\Flow.Launcher.Infrastructure.csproj", "{4FD29318-A8AB-4D8F-AA47-60BC241B8DA3}"
 EndProject
@@ -47,12 +47,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		Scripts\flowlauncher.nuspec = Scripts\flowlauncher.nuspec
 		LICENSE = LICENSE
 		Scripts\post_build.ps1 = Scripts\post_build.ps1
 		README.md = README.md
 		SolutionAssemblyInfo.cs = SolutionAssemblyInfo.cs
+		Settings.XamlStyler = Settings.XamlStyler
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flow.Launcher.Plugin.Shell", "Plugins\Flow.Launcher.Plugin.Shell\Flow.Launcher.Plugin.Shell.csproj", "{C21BFF9C-2C99-4B5F-B7C9-A5E6DDDB37B0}"

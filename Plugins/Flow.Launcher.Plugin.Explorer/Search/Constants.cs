@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Reflection;
 
 namespace Flow.Launcher.Plugin.Explorer.Search
@@ -23,7 +22,6 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const string WindowsIndexErrorImagePath = "Images\\index_error2.png";
         internal const string GeneralSearchErrorImagePath = "Images\\robot_error.png";
 
-
         internal const string ToolTipOpenDirectory = "Ctrl + Enter to open the directory";
 
         internal const string ToolTipOpenContainingFolder = "Ctrl + Enter to open the containing folder";
@@ -31,6 +29,8 @@ namespace Flow.Launcher.Plugin.Explorer.Search
         internal const char AllFilesFolderSearchWildcard = '>';
 
         internal const string DefaultContentSearchActionKeyword = "doc:";
+
+        internal const char UnixDirectorySeparator = '/';
 
         internal const char DirectorySeparator = '\\';
 

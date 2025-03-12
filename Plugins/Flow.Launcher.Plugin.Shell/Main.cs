@@ -5,14 +5,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using WindowsInput;
 using WindowsInput.Native;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Logger;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin.SharedCommands;
-using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
 using Keys = System.Windows.Forms.Keys;
 
@@ -84,7 +81,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                                 Execute(Process.Start, PrepareProcessStartInfo(m, runAsAdministrator));
                                 return true;
-                            }
+                            },
+                            CopyText = m
                         }));
                     }
                 }
@@ -123,7 +121,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                             Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                             return true;
-                        }
+                        },
+                        CopyText = m.Key
                     };
                     return ret;
                 }).Where(o => o != null);
@@ -152,7 +151,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                     Execute(Process.Start, PrepareProcessStartInfo(cmd, runAsAdministrator));
                     return true;
-                }
+                },
+                CopyText = cmd
             };
 
             return result;
@@ -176,7 +176,8 @@ namespace Flow.Launcher.Plugin.Shell
 
                         Execute(Process.Start, PrepareProcessStartInfo(m.Key, runAsAdministrator));
                         return true;
-                    }
+                    },
+                    CopyText = m.Key
                 });
 
             if (_settings.ShowOnlyMostUsedCMDs)
@@ -200,28 +201,31 @@ namespace Flow.Launcher.Plugin.Shell
             {
                 case Shell.Cmd:
                 {
-                    info.FileName = "cmd.exe";
-                    info.Arguments = $"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command}";
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("cmd");
+                    }
+                    else
+                    {
+                        info.FileName = "cmd.exe";
+                    }
 
-                    //// Use info.Arguments instead of info.ArgumentList to enable users better control over the arguments they are writing.
-                    //// Previous code using ArgumentList, commands needed to be separated correctly:                      
-                    //// Incorrect:
-                    // info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                    // info.ArgumentList.Add(command); //<== info.ArgumentList.Add("mkdir \"c:\\test new\"");
-
-                    //// Correct version should be:
-                    //info.ArgumentList.Add(_settings.LeaveShellOpen ? "/k" : "/c");
-                    //info.ArgumentList.Add("mkdir");
-                    //info.ArgumentList.Add(@"c:\test new");
-
-                    //https://docs.microsoft.com/en-us/dotnet/api/system.diagnostics.processstartinfo.argumentlist?view=net-6.0#remarks
-
+                    info.ArgumentList.Add($"{(_settings.LeaveShellOpen ? "/k" : "/c")} {command} {(_settings.CloseShellAfterPress ? $"&& echo {context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")} && pause > nul /c" : "")}");
                     break;
                 }
 
                 case Shell.Powershell:
                 {
-                    info.FileName = "powershell.exe";
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("powershell");
+                    }
+                    else
+                    {
+                        info.FileName = "powershell.exe";
+                    }
                     if (_settings.LeaveShellOpen)
                     {
                         info.ArgumentList.Add("-NoExit");
@@ -230,8 +234,28 @@ namespace Flow.Launcher.Plugin.Shell
                     else
                     {
                         info.ArgumentList.Add("-Command");
-                        info.ArgumentList.Add(command);
+                        info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     }
+                    break;
+                }
+
+                case Shell.Pwsh:
+                {
+                    if (_settings.UseWindowsTerminal)
+                    {
+                        info.FileName = "wt.exe";
+                        info.ArgumentList.Add("pwsh");
+                    }
+                    else
+                    {
+                        info.FileName = "pwsh.exe";
+                    }
+                    if (_settings.LeaveShellOpen)
+                    {
+                        info.ArgumentList.Add("-NoExit");
+                    }
+                    info.ArgumentList.Add("-Command");
+                    info.ArgumentList.Add($"{command}\\; {(_settings.CloseShellAfterPress ? $"Write-Host '{context.API.GetTranslation("flowlauncher_plugin_cmd_press_any_key_to_close")}'\\; [System.Console]::ReadKey()\\; exit" : "")}");
                     break;
                 }
 
@@ -259,6 +283,8 @@ namespace Flow.Launcher.Plugin.Shell
                     {
                         info.FileName = command;
                     }
+
+                    info.UseShellExecute = true;
 
                     break;
                 }
@@ -352,7 +378,7 @@ namespace Flow.Launcher.Plugin.Shell
         private void OnWinRPressed()
         {
             // show the main window and set focus to the query box
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 context.API.ShowMainWindow();
                 context.API.ChangeQuery($"{context.CurrentPluginMetadata.ActionKeywords[0]}{Plugin.Query.TermSeparator}");
@@ -406,7 +432,7 @@ namespace Flow.Launcher.Plugin.Shell
                     Title = context.API.GetTranslation("flowlauncher_plugin_cmd_copy"),
                     Action = c =>
                     {
-                        Clipboard.SetDataObject(selectedResult.Title);
+                        context.API.CopyToClipboard(selectedResult.Title);
                         return true;
                     },
                     IcoPath = "Images/copy.png",

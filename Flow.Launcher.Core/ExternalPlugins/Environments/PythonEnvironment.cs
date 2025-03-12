@@ -16,7 +16,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override string EnvPath => Path.Combine(DataLocation.PluginEnvironmentsPath, EnvName);
 
-        internal override string InstallPath => Path.Combine(EnvPath, "PythonEmbeddable-v3.8.9");
+        internal override string InstallPath => Path.Combine(EnvPath, "PythonEmbeddable-v3.11.4");
 
         internal override string ExecutablePath => Path.Combine(InstallPath, "pythonw.exe");
 
@@ -28,10 +28,11 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override void InstallEnvironment()
         {
-            FilesFolders.RemoveFolderIfExists(InstallPath);
+            FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
-            // Python 3.8.9 is used for Windows 7 compatibility
-            DroplexPackage.Drop(App.python_3_8_9_embeddable, InstallPath).Wait();
+            // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
+            // uses Python plugin they need to custom install and use v3.8.9
+            DroplexPackage.Drop(App.python_3_11_4_embeddable, InstallPath).Wait();
 
             PluginsSettingsFilePath = ExecutablePath;
         }

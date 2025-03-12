@@ -1,16 +1,14 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using System;
-using System.ComponentModel;
 using System.Threading;
-using System.Windows.Interop;
 using Flow.Launcher.Plugin;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Infrastructure.Http
 {
@@ -19,8 +17,6 @@ namespace Flow.Launcher.Infrastructure.Http
         private const string UserAgent = @"Mozilla/5.0 (Trident/7.0; rv:11.0) like Gecko";
 
         private static HttpClient client = new HttpClient();
-
-        public static IPublicAPI API { get; set; }
 
         static Http()
         {
@@ -81,20 +77,55 @@ namespace Flow.Launcher.Infrastructure.Http
             }
             catch (UriFormatException e)
             {
-                API.ShowMsg("Please try again", "Unable to parse Http Proxy");
+                Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsg("Please try again", "Unable to parse Http Proxy");
                 Log.Exception("Flow.Launcher.Infrastructure.Http", "Unable to parse Uri", e);
             }
         }
 
-        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default)
+        public static async Task DownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default)
         {
             try
             {
                 using var response = await client.GetAsync(url, HttpCompletionOption.ResponseHeadersRead, token);
+
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
-                    await response.Content.CopyToAsync(fileStream, token);
+                    var totalBytes = response.Content.Headers.ContentLength ?? -1L;
+                    var canReportProgress = totalBytes != -1;
+
+                    if (canReportProgress && reportProgress != null)
+                    {
+                        await using var contentStream = await response.Content.ReadAsStreamAsync(token);
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew, FileAccess.Write, FileShare.None, 8192, true);
+
+                        var buffer = new byte[8192];
+                        long totalRead = 0;
+                        int read;
+                        double progressValue = 0;
+
+                        reportProgress(0);
+
+                        while ((read = await contentStream.ReadAsync(buffer, token)) > 0)
+                        {
+                            await fileStream.WriteAsync(buffer.AsMemory(0, read), token);
+                            totalRead += read;
+
+                            progressValue = totalRead * 100.0 / totalBytes;
+
+                            if (token.IsCancellationRequested)
+                                return;
+                            else
+                                reportProgress(progressValue);
+                        }
+
+                        if (progressValue < 100)
+                            reportProgress(100);
+                    }
+                    else
+                    {
+                        await using var fileStream = new FileStream(filePath, FileMode.CreateNew);
+                        await response.Content.CopyToAsync(fileStream, token);
+                    }
                 }
                 else
                 {

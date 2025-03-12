@@ -24,7 +24,7 @@ namespace Flow.Launcher.Plugin.Program.Views
         private ListSortDirection _lastDirection;
 
         // We do not save all program sources to settings, so using
-        // this as temporary holder for displaying all loaded programs sources. 
+        // this as temporary holder for displaying all loaded programs sources.
         internal static List<ProgramSource> ProgramSettingDisplayList { get; set; }
 
         public bool EnableDescription
@@ -44,6 +44,26 @@ namespace Flow.Launcher.Plugin.Program.Views
             {
                 Main.ResetCache();
                 _settings.HideAppsPath = value;
+            }
+        }
+
+        public bool HideUninstallers
+        {
+            get => _settings.HideUninstallers;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideUninstallers = value;
+            }
+        }
+
+        public bool HideDuplicatedWindowsApp
+        {
+            get => _settings.HideDuplicatedWindowsApp;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideDuplicatedWindowsApp = value;
             }
         }
 
@@ -87,21 +107,9 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
-        public string CustomizedExplorerPath
-        {
-            get => _settings.CustomizedExplorer;
-            set => _settings.CustomizedExplorer = value;
-        }
+        public bool ShowUWPCheckbox => UWPPackage.SupportUWP();
 
-        public string CustomizedExplorerArg
-        {
-            get => _settings.CustomizedArgs;
-            set => _settings.CustomizedArgs = value;
-        }
-
-        public bool ShowUWPCheckbox => UWP.SupportUWP();
-
-        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWP.Application[] uwps)
+        public ProgramSetting(PluginInitContext context, Settings settings, Win32[] win32s, UWPApp[] uwps)
         {
             this.context = context;
             _settings = settings;
@@ -161,9 +169,9 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void DeleteProgramSources(List<ProgramSource> itemsToDelete)
         {
             itemsToDelete.ForEach(t1 => _settings.ProgramSources
-                                                    .Remove(_settings.ProgramSources
-                                                                        .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
-                                                                        .FirstOrDefault()));
+                .Remove(_settings.ProgramSources
+                    .Where(x => x.UniqueIdentifier == t1.UniqueIdentifier)
+                    .FirstOrDefault()));
             itemsToDelete.ForEach(x => ProgramSettingDisplayList.Remove(x));
 
             ReIndexing();
@@ -180,7 +188,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedProgramSource == null)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
             }
             else
             {
@@ -194,16 +202,20 @@ namespace Flow.Launcher.Plugin.Program.Views
                 {
                     if (selectedProgramSource.Enabled)
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, true);  // sync status in win32, uwp and disabled
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                            true); // sync status in win32, uwp and disabled
                         ProgramSettingDisplay.RemoveDisabledFromSettings();
                     }
                     else
                     {
-                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource }, false);
+                        ProgramSettingDisplay.SetProgramSourcesStatus(new List<ProgramSource> { selectedProgramSource },
+                            false);
                         ProgramSettingDisplay.StoreDisabledInSettings();
                     }
+
                     ReIndexing();
                 }
+
                 programSourceView.SelectedIndex = selectedIndex;
             }
         }
@@ -245,7 +257,8 @@ namespace Flow.Launcher.Plugin.Program.Views
                 foreach (string directory in directories)
                 {
                     if (Directory.Exists(directory)
-                        && !ProgramSettingDisplayList.Any(x => x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
+                        && !ProgramSettingDisplayList.Any(x =>
+                            x.UniqueIdentifier.Equals(directory, System.StringComparison.OrdinalIgnoreCase)))
                     {
                         var source = new ProgramSource(directory);
 
@@ -274,21 +287,22 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void btnProgramSourceStatus_OnClick(object sender, RoutedEventArgs e)
         {
             var selectedItems = programSourceView
-                                .SelectedItems.Cast<ProgramSource>()
-                                .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
             if (selectedItems.Count == 0)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
                 return;
             }
 
             if (IsAllItemsUserAdded(selectedItems))
             {
-                var msg = string.Format(context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
+                var msg = string.Format(
+                    context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
-                if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (context.API.ShowMsgBox(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }
@@ -376,8 +390,8 @@ namespace Flow.Launcher.Plugin.Program.Views
         private void programSourceView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var selectedItems = programSourceView
-                                    .SelectedItems.Cast<ProgramSource>()
-                                    .ToList();
+                .SelectedItems.Cast<ProgramSource>()
+                .ToList();
 
             if (IsAllItemsUserAdded(selectedItems))
             {
@@ -412,7 +426,8 @@ namespace Flow.Launcher.Plugin.Program.Views
             ListView listView = sender as ListView;
             GridView gView = listView.View as GridView;
 
-            var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
+            var workingWidth =
+                listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
             var col1 = 0.25;
             var col2 = 0.15;
             var col3 = 0.60;

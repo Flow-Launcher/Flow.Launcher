@@ -22,7 +22,12 @@ namespace Flow.Launcher.Plugin.Sys
 
             var workingWidth = listView.ActualWidth - SystemParameters.VerticalScrollBarWidth; // take into account vertical scrollbar
             var col1 = 0.3;
-            var col2 = 0.7;            
+            var col2 = 0.7;
+
+            if (workingWidth <= 0)
+            {
+                return;
+            }
 
             gView.Columns[0].Width = workingWidth * col1;
             gView.Columns[1].Width = workingWidth * col2;

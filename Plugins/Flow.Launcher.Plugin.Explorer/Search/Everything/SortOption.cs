@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Flow.Launcher.Plugin.Everything.Everything
+﻿namespace Flow.Launcher.Plugin.Everything.Everything
 {
     public enum SortOption : uint
     {

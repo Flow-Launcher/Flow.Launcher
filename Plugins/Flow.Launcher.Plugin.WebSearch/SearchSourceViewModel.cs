@@ -1,9 +1,10 @@
 ﻿using Flow.Launcher.Infrastructure.Image;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading.Tasks;
+#pragma warning disable IDE0005
 using System.Windows;
+#pragma warning restore IDE0005
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -40,7 +41,7 @@ namespace Flow.Launcher.Plugin.WebSearch
 #if DEBUG
                     throw;
 #else
-                MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
+                Main._context.API.ShowMsgBox(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
                 UpdateIconAttributes(selectedSearchSource, fullPathToOriginalImage);
 #endif
                 }

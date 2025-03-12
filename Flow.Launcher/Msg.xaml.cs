@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
@@ -70,11 +69,13 @@ namespace Flow.Launcher
             {
                 tbSubTitle.Visibility = Visibility.Collapsed;
             }
+            
             if (!File.Exists(iconPath))
             {
                 imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
-            else {
+            else 
+            {
                 imgIco.Source = await ImageLoader.LoadAsync(iconPath);
             }
 

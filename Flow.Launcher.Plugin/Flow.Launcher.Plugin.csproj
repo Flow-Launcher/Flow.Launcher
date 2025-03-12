@@ -14,10 +14,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>4.0.0</Version>
-    <PackageVersion>4.0.0</PackageVersion>
-    <AssemblyVersion>4.0.0</AssemblyVersion>
-    <FileVersion>4.0.0</FileVersion>
+    <Version>4.4.0</Version>
+    <PackageVersion>4.4.0</PackageVersion>
+    <AssemblyVersion>4.4.0</AssemblyVersion>
+    <FileVersion>4.4.0</FileVersion>
     <PackageId>Flow.Launcher.Plugin</PackageId>
     <Authors>Flow-Launcher</Authors>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -26,6 +26,7 @@
     <PackageTags>flowlauncher</PackageTags>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(APPVEYOR)' == 'True'">
@@ -56,7 +57,11 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <None Include="README.md" />
+    <AdditionalFiles Include="NativeMethods.txt" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="Readme.md" Pack="true" PackagePath="\" />
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
 
@@ -66,7 +71,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
-    <PackageReference Include="JetBrains.Annotations" Version="2022.3.1" />
+    <PackageReference Include="JetBrains.Annotations" Version="2024.3.0" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.106">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
   </ItemGroup>
 

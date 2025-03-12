@@ -1,4 +1,4 @@
-version: '1.14.0.{build}'
+version: '1.19.5.{build}'
 
 init:
 - ps: |
@@ -51,7 +51,7 @@ deploy:
   - provider: NuGet
     artifact: Plugin nupkg
     api_key:
-      secure: EwKxUgjI8VGouFq9fdhI68+uj42amAhwE65JixIbqx8VlqLbyEuW97CLjBBOIL0r
+      secure: sCSd5JWgdzJWDa9kpqECut5ACPKZqcoxKU8ERKC00k7VIjig3/+nFV5zzTcGb0w3
     on:
       APPVEYOR_REPO_TAG: true
 

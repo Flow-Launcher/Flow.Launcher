@@ -4,14 +4,18 @@ using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Forms;
+using Flow.Launcher.Core.Resource;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.ExternalPlugins.Environments
 {
     public abstract class AbstractPluginEnvironment
     {
+        protected readonly IPublicAPI API = Ioc.Default.GetRequiredService<IPublicAPI>();
+
         internal abstract string Language { get; }
 
         internal abstract string EnvName { get; }
@@ -24,7 +28,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal virtual string FileDialogFilter => string.Empty;
 
-        internal  abstract string PluginsSettingsFilePath { get; set; }
+        internal abstract string PluginsSettingsFilePath { get; set; }
 
         internal List<PluginMetadata> PluginMetadataList;
 
@@ -41,18 +45,6 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             if (!PluginMetadataList.Any(o => o.Language.Equals(Language, StringComparison.OrdinalIgnoreCase)))
                 return new List<PluginPair>();
 
-            // TODO: Remove. This is backwards compatibility for 1.10.0 release- changed PythonEmbeded to Environments/Python
-            if (Language.Equals(AllowedLanguage.Python, StringComparison.OrdinalIgnoreCase))
-            {
-                FilesFolders.RemoveFolderIfExists(Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable"));
-
-                if (!string.IsNullOrEmpty(PluginSettings.PythonDirectory) && PluginSettings.PythonDirectory.StartsWith(Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable")))
-                {
-                    InstallEnvironment();
-                    PluginSettings.PythonDirectory = string.Empty;
-                }
-            }
-
             if (!string.IsNullOrEmpty(PluginsSettingsFilePath) && FilesFolders.FileExists(PluginsSettingsFilePath))
             {
                 // Ensure latest only if user is using Flow's environment setup.
@@ -62,15 +54,16 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
                 return SetPathForPluginPairs(PluginsSettingsFilePath, Language);
             }
 
-            if (MessageBox.Show($"Flow detected you have installed {Language} plugins, which " +
-                                $"will require {EnvName} to run. Would you like to download {EnvName}? " +
-                                Environment.NewLine + Environment.NewLine +
-                                "Click no if it's already installed, " +
-                                $"and you will be prompted to select the folder that contains the {EnvName} executable",
-                    string.Empty, MessageBoxButtons.YesNo) == DialogResult.No)
+            var noRuntimeMessage = string.Format(
+                InternationalizationManager.Instance.GetTranslation("runtimePluginInstalledChooseRuntimePrompt"),
+                Language,
+                EnvName,
+                Environment.NewLine
+            );
+            if (API.ShowMsgBox(noRuntimeMessage, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
             {
-                var msg = $"Please select the {EnvName} executable";
-                var selectedFile = string.Empty;
+                var msg = string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginChooseRuntimeExecutable"), EnvName);
+                string selectedFile;
 
                 selectedFile = GetFileFromDialog(msg, FileDialogFilter);
 
@@ -92,8 +85,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             }
             else
             {
-                MessageBox.Show(
-                    $"Unable to set {Language} executable path, please try from Flow's settings (scroll down to the bottom).");
+                API.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("runtimePluginUnableToSetExecutablePath"), Language));
                 Log.Error("PluginsLoader",
                     $"Not able to successfully set {EnvName} path, setting's plugin executable path variable is still an empty string.",
                     $"{Language}Environment");
@@ -109,7 +101,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             if (expectedPath == currentPath)
                 return;
 
-            FilesFolders.RemoveFolderIfExists(installedDirPath);
+            FilesFolders.RemoveFolderIfExists(installedDirPath, (s) => API.ShowMsgBox(s));
 
             InstallEnvironment();
 
@@ -143,14 +135,8 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
             };
 
             var result = dlg.ShowDialog();
-            if (result == DialogResult.OK)
-            {
-                return dlg.FileName;
-            }
-            else
-            {
-                return string.Empty;
-            }
+            return result == DialogResult.OK ? dlg.FileName : string.Empty;
+
         }
 
         /// <summary>
