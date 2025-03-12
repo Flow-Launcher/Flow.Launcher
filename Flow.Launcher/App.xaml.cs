@@ -121,7 +121,7 @@ namespace Flow.Launcher
 
                 RegisterAppDomainExceptions();
                 RegisterDispatcherUnhandledException();
-                
+
                 var imageLoadertask = ImageLoader.InitializeAsync();
 
                 AbstractPluginEnvironment.PreStartPluginExecutablePathUpdate(_settings);

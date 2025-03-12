@@ -43,7 +43,6 @@ namespace Flow.Launcher.Core
         public async Task UpdateAppAsync(bool silentUpdate = true)
         {
             await UpdateLock.WaitAsync().ConfigureAwait(false);
-
             try
             {
                 if (!silentUpdate)
@@ -144,7 +143,6 @@ namespace Flow.Launcher.Core
             {
                 Proxy = Http.WebProxy
             };
-
             var downloader = new FileDownloader(client);
 
             var manager = new UpdateManager(latestUrl, urlDownloader: downloader);

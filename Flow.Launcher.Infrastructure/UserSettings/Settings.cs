@@ -110,7 +110,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public double SettingWindowHeight { get; set; } = 700;
         public double? SettingWindowTop { get; set; } = null;
         public double? SettingWindowLeft { get; set; } = null;
-        public System.Windows.WindowState SettingWindowState { get; set; } = WindowState.Normal;
+        public WindowState SettingWindowState { get; set; } = WindowState.Normal;
 
         public bool PrereleaseUpdateSource { get; set; }
         
