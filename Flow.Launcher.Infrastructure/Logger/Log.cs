@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using NLog;
@@ -16,6 +16,14 @@ namespace Flow.Launcher.Infrastructure.Logger
 
         public static string CurrentLogDirectory { get; }
 
+        /// <summary>
+        /// Initializes the logging infrastructure for the Log class by configuring the log directory and NLog targets.
+        /// </summary>
+        /// <remarks>
+        /// This static constructor sets up the current log directory based on the application's data directory, ensuring it exists before any logging occurs.
+        /// It configures an asynchronous file logging target with a predefined message layout and, in debug builds, an additional debug output target.
+        /// Logging rules are established for both targets to ensure a consistent logging format throughout the application.
+        /// </remarks>
         static Log()
         {
             CurrentLogDirectory = Path.Combine(DataLocation.DataDirectory(), DirectoryName, Constant.Version);
@@ -63,18 +71,31 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogManager.Configuration = configuration;
         }
 
+        /// <summary>
+        /// Configures the file logging rule to capture logs from Debug to Fatal.
+        /// </summary>
+        /// <remarks>
+        /// This method updates the logging configuration by locating the rule named "file" and setting its logging levels to include Debug messages, ensuring detailed log output. It then logs an informational message indicating that the DEBUG log level is now active.
+        /// </remarks>
         public static void UseDebugLogLevel()
         {
             LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
             Info(nameof(Logger), "Using DEBUG log level.");
         }
 
+        /// <summary>
+        /// Configures the file logging target to record messages from Info to Fatal level and logs an informational message indicating that the INFO log level is in use.
+        /// </summary>
         public static void UseInfoLogLevel()
         {
             LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
             Info(nameof(Logger), "Using INFO log level.");
         }
 
+        /// <summary>
+        /// Logs a fatal error indicating that a log message does not adhere to the expected format.
+        /// </summary>
+        /// <param name="message">The original log message that failed to meet the required format.</param>
         private static void LogFaultyFormat(string message)
         {
             var logger = LogManager.GetLogger("FaultyLogger");

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
@@ -108,6 +108,15 @@ namespace Flow.Launcher
             }
         }
 
+        /// <summary>
+        /// Asynchronously executes the startup initialization sequence for the application.
+        /// </summary>
+        /// <remarks>
+        /// This method performs pre-start cleanup, registers global exception handlers, configures logging 
+        /// based on user settings, initializes images and plugins, and sets up internationalization and theme settings. 
+        /// It also creates and displays the main window while registering exit events and enabling auto-startup and 
+        /// periodic update checks to ensure a fully configured runtime environment.
+        /// </remarks>
         private async void OnStartupAsync(object sender, StartupEventArgs e)
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
