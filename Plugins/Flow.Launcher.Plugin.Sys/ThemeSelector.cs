@@ -74,6 +74,8 @@ namespace Flow.Launcher.Plugin.Sys
             else
             {
                 title = theme;
+                // Set them to 1000 so that they are higher than other non-theme records
+                score = 1000;
             }
 
             return new Result
