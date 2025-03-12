@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">Всегда предпросмотр</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Всегда открывать панель предварительного просмотра при запуске Flow. Нажмите {0}, чтобы переключить предварительный просмотр.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Эффект тени не допускается, если в текущей теме включён эффект размытия</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Поиск плагина</system:String>
