@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -10,13 +11,23 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly PluginInitContext context;
+        private readonly Settings _settings;
+        private readonly Theme _theme;
+        private readonly PluginInitContext _context;
+
         private IEnumerable<string> themes;
 
         public ThemeSelector(PluginInitContext context)
         {
-            this.context = context;
+            _context = context;
+            _theme = Ioc.Default.GetRequiredService<Theme>();
+            _settings = Ioc.Default.GetRequiredService<Settings>();
             context.API.VisibilityChanged += OnVisibilityChanged;
+        }
+
+        ~ThemeSelector()
+        {
+            Dispose(false);
         }
 
         public List<Result> Query(Query query)
@@ -31,34 +42,34 @@ namespace Flow.Launcher.Plugin.Sys
             if (string.IsNullOrWhiteSpace(search))
             {
                 return themes.Select(CreateThemeResult)
-                                .OrderBy(x => x.Title)
-                                .ToList();
+                    .OrderBy(x => x.Title)
+                    .ToList();
             }
 
-            return themes.Select(theme => (theme, matchResult: context.API.FuzzySearch(search, theme)))
-                            .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
-                            .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
-                            .OrderBy(x => x.Title)
-                            .ToList();
+            return themes.Select(theme => (theme, matchResult: _context.API.FuzzySearch(search, theme)))
+                .Where(x => x.matchResult.IsSearchPrecisionScoreMet())
+                .Select(x => CreateThemeResult(x.theme, x.matchResult.Score, x.matchResult.MatchData))
+                .OrderBy(x => x.Title)
+                .ToList();
         }
 
         private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
         {
-            if (args.IsVisible && !context.CurrentPluginMetadata.Disabled)
+            if (args.IsVisible && !_context.CurrentPluginMetadata.Disabled)
             {
                 LoadThemes();
             }
         }
 
         private void LoadThemes() 
-            => themes = ThemeManager.Instance.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
+            => themes = _theme.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
 
-        private static Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
+        private Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
 
-        private static Result CreateThemeResult(string theme, int score, IList<int> highlightData)
+        private Result CreateThemeResult(string theme, int score, IList<int> highlightData)
         {
             string title;
-            if (theme == ThemeManager.Instance.Settings.Theme)
+            if (theme == _settings.Theme)
             {
                 title = $"{theme} ★";
                 score = 2000;
@@ -76,7 +87,7 @@ namespace Flow.Launcher.Plugin.Sys
                 Score = score,
                 Action = c =>
                 {
-                    ThemeManager.Instance.ChangeTheme(theme);
+                    _theme.ChangeTheme(theme);
                     return true;
                 }
             };
@@ -90,19 +101,16 @@ namespace Flow.Launcher.Plugin.Sys
                 if (disposing)
                 {
                     // Dispose managed resources
-                    if (context?.API != null)
+                    if (_context?.API != null)
                     {
-                        context.API.VisibilityChanged -= OnVisibilityChanged;
+                        _context.API.VisibilityChanged -= OnVisibilityChanged;
                     }
                 }
                 // Free unmanaged resources
                 disposed = true;
             }
         }
-        ~ThemeSelector()
-        {
-            Dispose(false);
-        }
+        
         public void Dispose()
         {
             Dispose(true);
