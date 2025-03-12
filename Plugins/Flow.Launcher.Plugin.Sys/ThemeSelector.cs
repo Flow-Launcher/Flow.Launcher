@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -11,7 +10,6 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly Settings _settings;
         private readonly Theme _theme;
         private readonly PluginInitContext _context;
 
@@ -21,7 +19,6 @@ namespace Flow.Launcher.Plugin.Sys
         {
             _context = context;
             _theme = Ioc.Default.GetRequiredService<Theme>();
-            _settings = Ioc.Default.GetRequiredService<Settings>();
             context.API.VisibilityChanged += OnVisibilityChanged;
         }
 
@@ -69,7 +66,7 @@ namespace Flow.Launcher.Plugin.Sys
         private Result CreateThemeResult(string theme, int score, IList<int> highlightData)
         {
             string title;
-            if (theme == _settings.Theme)
+            if (theme == _theme.CurrentTheme)
             {
                 title = $"{theme} ★";
                 score = 2000;
