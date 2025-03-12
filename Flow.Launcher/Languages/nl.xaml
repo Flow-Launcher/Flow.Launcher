@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">Altijd voorbeeld</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Open altijd het voorbeeld paneel wanneer Flow activeert. Druk op {0} om voorbeeld te schakelen.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Schaduw effect is niet toegestaan omdat het huidige thema een vervagingseffect heeft</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plug-ins zoeken</system:String>
