@@ -64,6 +64,7 @@ namespace Flow.Launcher.Plugin.Sys
         {
             _context = context;
             _theme = Ioc.Default.GetRequiredService<Theme>();
+            _settings = Ioc.Default.GetRequiredService<Settings>();
         }
 
         public List<Result> Query(Query query)
