@@ -242,6 +242,7 @@ namespace Flow.Launcher.Plugin.Explorer
                                 var name = "Plugin: Folder";
                                 var message = $"File not found: {e.Message}";
                                 Context.API.ShowMsgError(name, message);
+                                return false;
                             }
 
                             return true;

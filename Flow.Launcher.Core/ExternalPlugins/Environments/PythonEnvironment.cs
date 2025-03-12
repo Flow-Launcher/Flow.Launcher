@@ -28,7 +28,7 @@ namespace Flow.Launcher.Core.ExternalPlugins.Environments
 
         internal override void InstallEnvironment()
         {
-            FilesFolders.RemoveFolderIfExists(InstallPath, MessageBoxEx.Show);
+            FilesFolders.RemoveFolderIfExists(InstallPath, (s) => API.ShowMsgBox(s));
 
             // Python 3.11.4 is no longer Windows 7 compatible. If user is on Win 7 and
             // uses Python plugin they need to custom install and use v3.8.9

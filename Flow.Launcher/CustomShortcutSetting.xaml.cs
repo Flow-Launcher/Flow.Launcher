@@ -43,13 +43,13 @@ namespace Flow.Launcher
         {
             if (String.IsNullOrEmpty(Key) || String.IsNullOrEmpty(Value))
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("emptyShortcut"));
                 return;
             }
             // Check if key is modified or adding a new one
             if (((update && originalKey != Key) || !update) && _hotkeyVm.DoesShortcutExist(Key))
             {
-                MessageBoxEx.Show(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
+                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("duplicateShortcut"));
                 return;
             }
             DialogResult = !update || originalKey != Key || originalValue != Value;
@@ -65,8 +65,7 @@ namespace Flow.Launcher
         private void BtnTestShortcut_OnClick(object sender, RoutedEventArgs e)
         {
             App.API.ChangeQuery(tbExpand.Text);
-            Application.Current.MainWindow.Show();
-            Application.Current.MainWindow.Opacity = 1;
+            App.API.ShowMainWindow();
             Application.Current.MainWindow.Focus();
         }
     }
