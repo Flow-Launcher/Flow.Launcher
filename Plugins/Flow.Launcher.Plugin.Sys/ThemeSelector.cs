@@ -1,38 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
 
 namespace Flow.Launcher.Plugin.Sys
 {
-    public class ThemeSelector : IDisposable
+    public class ThemeSelector
     {
         public const string Keyword = "fltheme";
 
         private readonly Theme _theme;
         private readonly PluginInitContext _context;
 
-        private IEnumerable<string> themes;
-
         public ThemeSelector(PluginInitContext context)
         {
             _context = context;
             _theme = Ioc.Default.GetRequiredService<Theme>();
-            context.API.VisibilityChanged += OnVisibilityChanged;
-        }
-
-        ~ThemeSelector()
-        {
-            Dispose(false);
         }
 
         public List<Result> Query(Query query)
         {
-            if (query.IsReQuery)
-            {
-                LoadThemes();
-            }
+            var themes = _theme.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
 
             string search = query.SecondToEndSearch;
 
@@ -50,17 +38,6 @@ namespace Flow.Launcher.Plugin.Sys
                 .ToList();
         }
 
-        private void OnVisibilityChanged(object sender, VisibilityChangedEventArgs args)
-        {
-            if (args.IsVisible && !_context.CurrentPluginMetadata.Disabled)
-            {
-                LoadThemes();
-            }
-        }
-
-        private void LoadThemes() 
-            => themes = _theme.LoadAvailableThemes().Select(x => x.FileNameWithoutExtension);
-
         private Result CreateThemeResult(string theme) => CreateThemeResult(theme, 0, null);
 
         private Result CreateThemeResult(string theme, int score, IList<int> highlightData)
@@ -69,6 +46,7 @@ namespace Flow.Launcher.Plugin.Sys
             if (theme == _theme.CurrentTheme)
             {
                 title = $"{theme} ★";
+                // Set current theme to the top
                 score = 2000;
             }
             else
@@ -91,30 +69,6 @@ namespace Flow.Launcher.Plugin.Sys
                     return true;
                 }
             };
-        }
-
-        private bool disposed;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    // Dispose managed resources
-                    if (_context?.API != null)
-                    {
-                        _context.API.VisibilityChanged -= OnVisibilityChanged;
-                    }
-                }
-                // Free unmanaged resources
-                disposed = true;
-            }
-        }
-        
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
         }
     }
 }

@@ -7,7 +7,6 @@ using System.Windows;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.SharedCommands;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.Security;
@@ -17,7 +16,7 @@ using Control = System.Windows.Controls.Control;
 
 namespace Flow.Launcher.Plugin.Sys
 {
-    public class Main : IPlugin, ISettingProvider, IPluginI18n, IDisposable
+    public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
         private PluginInitContext context;
         private ThemeSelector themeSelector;
@@ -485,11 +484,6 @@ namespace Flow.Launcher.Plugin.Sys
         public string GetTranslatedPluginDescription()
         {
             return context.API.GetTranslation("flowlauncher_plugin_sys_plugin_description");
-        }
-
-        public void Dispose()
-        {
-            themeSelector.Dispose(); 
         }
     }
 }
