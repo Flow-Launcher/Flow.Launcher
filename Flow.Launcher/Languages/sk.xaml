@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">Vždy zobraziť náhľad</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Pri aktivácii Flowu vždy otvoriť panel s náhľadom. Stlačením klávesu {0} prepnete náhľad.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt tieňa nie je povolený, kým má aktuálny motív povolený efekt rozostrenia</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Vyhľadať plugin</system:String>
