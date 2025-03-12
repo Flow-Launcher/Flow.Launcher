@@ -102,6 +102,9 @@
     <system:String x:Key="AlwaysPreview">دائمًا معاينة</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">فتح لوحة المعاينة دائمًا عند تنشيط Flow. اضغط على {0} للتبديل بين المعاينة وعدمها.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">تأثير الظل غير مسموح به بينما يتم تمكين تأثير التمويه في السمة الحالية</system:String>
+    <system:String x:Key="logLevel">Log level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">البحث عن إضافة</system:String>
