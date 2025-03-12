@@ -66,7 +66,8 @@ namespace Flow.Launcher.Plugin.Sys
                 Action = c =>
                 {
                     _theme.ChangeTheme(theme);
-                    return true;
+                    _context.API.ReQuery();
+                    return false;
                 }
             };
         }
