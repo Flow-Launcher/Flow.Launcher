@@ -22,21 +22,20 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
+        public string GitHubReleaseRepository { get; }
+        public string GitHubPrereleaseRepository { get; }
+
         public bool UpdateToPrerelease { get; set; }
-        
-        // TODO
-        public const string ReleaseRepository = "https://github.com/Flow-Launcher/Flow.Launcher";
-        public const string PrereleaseRepository = "https://github.com/Flow-Launcher/Prereleases";
-        
-        // TODO
-        public string GitHubRepository => UpdateToPrerelease ? PrereleaseRepository : ReleaseRepository;
+
+        public string GitHubRepository => UpdateToPrerelease ? GitHubPrereleaseRepository : GitHubReleaseRepository;
 
         private readonly IPublicAPI _api;
 
-        public Updater(IPublicAPI publicAPI, string gitHubRepository)
+        public Updater(IPublicAPI publicAPI, string gitHubReleaseRepository, string gitHubPrereleaseRepository)
         {
             _api = publicAPI;
-            GitHubRepository = gitHubRepository;
+            GitHubReleaseRepository = gitHubReleaseRepository;
+            GitHubPrereleaseRepository = gitHubPrereleaseRepository;
         }
 
         private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
