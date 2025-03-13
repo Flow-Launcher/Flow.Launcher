@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
 using Flow.Launcher.Infrastructure;
@@ -73,18 +74,14 @@ namespace Flow.Launcher.Plugin.Sys
             var results = new List<Result>();
             foreach (var c in commands)
             {
-                c.Title = GetDynamicTitle(query, c);
+                var command = _settings.Commands.First(x => x.Key == c.Title);
+                c.Title = command.Name;
+                c.SubTitle = command.Description;
 
-                var titleMatch = StringMatcher.FuzzySearch(query.Search, c.Title);
-                var subTitleMatch = StringMatcher.FuzzySearch(query.Search, c.SubTitle);
-
-                var score = Math.Max(titleMatch.Score, subTitleMatch.Score);
+                var score = _context.API.FuzzySearch(query.Search, command.Keyword).Score;
                 if (score > 0)
                 {
                     c.Score = score;
-
-                    if (score == titleMatch.Score)
-                        c.TitleHighlightData = titleMatch.MatchData;
 
                     results.Add(c);
                 }
@@ -113,33 +110,6 @@ namespace Flow.Launcher.Plugin.Sys
             }
 
             return _context.API.GetTranslation(translationKey);
-        }
-
-        [Obsolete]
-        private string GetDynamicTitle(Query query, Result result)
-        {
-            if (!KeywordTitleMappings.TryGetValue(result.Title, out var translationKey))
-            {
-                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Dynamic Title not found for: {result.Title}");
-                return "Title Not Found";
-            }
-
-            var translatedTitle = _context.API.GetTranslation(translationKey);
-
-            if (query == null)
-            {
-                return translatedTitle;
-            }
-
-            if (result.Title == translatedTitle)
-            {
-                return result.Title;
-            }
-
-            var englishTitleMatch = StringMatcher.FuzzySearch(query.Search, result.Title);
-            var translatedTitleMatch = StringMatcher.FuzzySearch(query.Search, translatedTitle);
-
-            return englishTitleMatch.Score >= translatedTitleMatch.Score ? result.Title : translatedTitle;
         }
 
         public void Init(PluginInitContext context)
@@ -216,7 +186,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Shutdown",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
@@ -238,7 +207,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Restart",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
                     IcoPath = "Images\\restart.png",
                     Action = c =>
@@ -260,7 +228,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Restart With Advanced Boot Options",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
@@ -282,7 +249,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Log Off/Sign Out",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
@@ -301,7 +267,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Lock",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_lock"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
                     IcoPath = "Images\\lock.png",
                     Action = c =>
@@ -313,7 +278,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Sleep",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
@@ -325,7 +289,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Hibernate",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe945"),
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
@@ -337,7 +300,6 @@ namespace Flow.Launcher.Plugin.Sys
                  new Result
                 {
                     Title = "Index Option",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
                     IcoPath = "Images\\indexoption.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
                     Action = c =>
@@ -349,7 +311,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Empty Recycle Bin",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
@@ -374,7 +335,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Open Recycle Bin",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
                     IcoPath = "Images\\openrecyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     CopyText = recycleBinFolder,
@@ -387,7 +347,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Exit",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_exit"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -398,7 +357,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Save Settings",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_save_all_settings"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -411,7 +369,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Restart Flow Launcher",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -422,7 +379,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Settings",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_setting"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -433,7 +389,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Reload Plugin Data",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_reload_plugin_data"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -453,7 +408,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
@@ -465,7 +419,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Open Log Location",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
                     IcoPath = "Images\\app.png",
                     CopyText = logPath,
                     AutoCompleteText = logPath,
@@ -478,7 +431,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Flow Launcher Tips",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
                     IcoPath = "Images\\app.png",
                     CopyText = Constant.Documentation,
                     AutoCompleteText = Constant.Documentation,
@@ -491,7 +443,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Flow Launcher UserData Folder",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
                     IcoPath = "Images\\app.png",
                     CopyText = userDataPath,
                     AutoCompleteText = userDataPath,
@@ -504,7 +455,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Toggle Game Mode",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_toggle_game_mode"),
                     IcoPath = "Images\\app.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
                     Action = c =>
@@ -516,7 +466,6 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Set Flow Launcher Theme",
-                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
                     IcoPath = "Images\\app.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
                     Action = c =>
