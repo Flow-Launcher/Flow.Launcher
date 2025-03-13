@@ -334,10 +334,13 @@ Or download the [early access version](https://github.com/Flow-Launcher/Prerelea
   <a href="https://coderabbit.ai/">
     <img src="https://github.com/Flow-Launcher/Flow.Launcher/assets/6903107/7c996d74-0c69-4011-922f-a95ca7e874b0" width="30%" alt="Coderabbit Logo" />
   </a>
-        <br />
-        <br />
+  <br />
+  <br />
   <a href="https://github.com/TheBestPessimist">
     <img src='https://avatars.githubusercontent.com/u/4482210?v=4' width="10%"/>
+  </a>
+  <a href="https://github.com/AjmalParkar006">
+    <img src='https://avatars.githubusercontent.com/u/76547256?v=4' width="10%"/>
   </a>
 </p>
 <p align="center">

@@ -12,7 +12,6 @@ using System.Windows.Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
 
 namespace Flow.Launcher.Core.Resource
@@ -34,6 +33,8 @@ namespace Flow.Launcher.Core.Resource
         private const string Extension = ".xaml";
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+
+        public string CurrentTheme => _settings.Theme;
 
         public bool BlurEnabled { get; set; }
 

@@ -113,6 +113,8 @@ namespace Flow.Launcher
         {
             await Stopwatch.NormalAsync("|App.OnStartup|Startup cost", async () =>
             {
+                Log.SetLogLevel(_settings.LogLevel);
+
                 Ioc.Default.GetRequiredService<Portable>().PreStartCleanUpAfterPortabilityUpdate();
 
                 Log.Info("|App.OnStartup|Begin Flow Launcher startup ----------------------------------------------------");
