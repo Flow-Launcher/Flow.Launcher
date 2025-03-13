@@ -68,7 +68,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         public static unsafe Dictionary<int, string> GetProcessesWithNonEmptyWindowTitle()
         {
             var processDict = new Dictionary<int, string>();
-            PInvoke.EnumWindows((hWnd, lParam) =>
+            PInvoke.EnumWindows((hWnd, _) =>
             {
                 var windowTitle = GetWindowTitle(hWnd);
                 if (!string.IsNullOrWhiteSpace(windowTitle) && PInvoke.IsWindowVisible(hWnd))
