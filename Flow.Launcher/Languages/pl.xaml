@@ -102,9 +102,6 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="AlwaysPreview">Zawsze podgląd</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Zawsze otwieraj panel podglądu, gdy aktywowany jest Flow. Naciśnij {0}, aby przełączyć podgląd.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Efekt cienia jest niedozwolony, gdy bieżący motyw ma włączony efekt rozmycia</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Szukaj wtyczek</system:String>
@@ -301,6 +298,9 @@ Kliknij &quot;nie&quot;, jeśli jest już zainstalowany. Zostaniesz wtedy popros
     <system:String x:Key="userdatapath">Lokalizacja danych użytkownika</system:String>
     <system:String x:Key="userdatapathToolTip">Ustawienia użytkownika i zainstalowane wtyczki są zapisywane w folderze danych użytkownika. Ta lokalizacja może się różnić w zależności od tego, czy aplikacja jest w trybie przenośnym, czy nie.</system:String>
     <system:String x:Key="userdatapathButton">Otwórz folder</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Wybierz menedżer plików</system:String>
