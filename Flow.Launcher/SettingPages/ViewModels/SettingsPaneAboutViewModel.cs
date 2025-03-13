@@ -45,6 +45,16 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         _settings.ActivateTimes
     );
 
+    public int PrereleaseSelectedIndex
+    {
+        get => _settings.PrereleaseUpdateSource ? 1 : 0;
+        set
+        {
+            _settings.PrereleaseUpdateSource = value == 1;
+            OnPropertyChanged();
+        }
+    }
+
     public SettingsPaneAboutViewModel(Settings settings, Updater updater)
     {
         _settings = settings;

@@ -31,10 +31,6 @@
                 Icon="&#xe946;"
                 Sub="{DynamicResource version}">
                 <StackPanel Orientation="Horizontal">
-                    <Button
-                        Margin="0 0 10 0"
-                        Command="{Binding UpdateAppCommand}"
-                        Content="{DynamicResource checkUpdates}" />
                     <Button Padding="0" Style="{StaticResource AccentButtonStyle}">
                         <Hyperlink
                             NavigateUri="{Binding SponsorPage}"
@@ -46,6 +42,16 @@
                                 Text="{DynamicResource BecomeASponsor}" />
                         </Hyperlink>
                     </Button>
+                </StackPanel>
+            </cc:Card>
+
+            <cc:Card Title="{DynamicResource updateSource}">
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Margin="0 0 10 0" SelectedIndex="{Binding PrereleaseSelectedIndex}">
+                        <ComboBoxItem Content="{DynamicResource release}" />
+                        <ComboBoxItem Content="{DynamicResource prerelease}" />
+                    </ComboBox>
+                    <Button Command="{Binding UpdateAppCommand}" Content="{DynamicResource checkUpdates}" />
                 </StackPanel>
             </cc:Card>
 

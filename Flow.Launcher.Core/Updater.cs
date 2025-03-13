@@ -25,14 +25,16 @@ namespace Flow.Launcher.Core
         public string GitHubReleaseRepository { get; }
         public string GitHubPrereleaseRepository { get; }
 
-        public bool UpdateToPrerelease { get; set; }
+        public bool UpdateToPrerelease => _settings.PrereleaseUpdateSource;
 
         public string GitHubRepository => UpdateToPrerelease ? GitHubPrereleaseRepository : GitHubReleaseRepository;
 
+        private readonly Settings _settings;
         private readonly IPublicAPI _api;
 
-        public Updater(IPublicAPI publicAPI, string gitHubReleaseRepository, string gitHubPrereleaseRepository)
+        public Updater(Settings settings, IPublicAPI publicAPI, string gitHubReleaseRepository, string gitHubPrereleaseRepository)
         {
+            _settings = settings;
             _api = publicAPI;
             GitHubReleaseRepository = gitHubReleaseRepository;
             GitHubPrereleaseRepository = gitHubPrereleaseRepository;
