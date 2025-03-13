@@ -25,7 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Tipy pre Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Používateľský priečinok Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Prepnúť herný režim</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Nastaviť motív pre Flow Laucher</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnúť počítač</system:String>
@@ -48,7 +48,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">V dokumentácii k aplikácii Flow Launcher nájdete ďalšiu pomoc a tipy na používanie</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otvoriť umiestnenie, kde sú uložené nastavenia Flow Launchera</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Prepnúť herný režim</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Rýchla zmena motívu Flow Launchera</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspešné</system:String>
