@@ -84,6 +84,11 @@ namespace Flow.Launcher.Infrastructure.Image
                     // Fallback to IconOnly if ThumbnailOnly fails
                     imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
                 }
+                catch (FileNotFoundException) when (options == ThumbnailOptions.ThumbnailOnly)
+                {
+                    // Fallback to IconOnly if files cannot be found
+                    imageFactory.GetImage(size, (SIIGBF)ThumbnailOptions.IconOnly, &hBitmap);
+                }
             }
             finally
             {

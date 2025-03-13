@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Forms;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
@@ -43,9 +42,20 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             try
             {
                 if (value)
-                    AutoStartup.Enable();
+                {
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.EnableViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.EnableViaRegistry();
+                    }
+                }
                 else
-                    AutoStartup.Disable();
+                {
+                    AutoStartup.DisableViaLogonTaskAndRegistry();
+                }  
             }
             catch (Exception e)
             {
@@ -54,11 +64,40 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
             }
         }
     }
-
-    public bool SelectAllQueryOnReopen // Pbff7
+    
+    public bool SelectAllQueryOnReopen
     {
         get => Settings.SelectAllQueryOnReopen;
         set => Settings.SelectAllQueryOnReopen = value;
+    }
+    
+    public bool UseLogonTaskForStartup
+    {
+        get => Settings.UseLogonTaskForStartup;
+        set
+        {
+            Settings.UseLogonTaskForStartup = value;
+
+            if (StartFlowLauncherOnSystemStartup)
+            {
+                try
+                {
+                    if (UseLogonTaskForStartup)
+                    {
+                        AutoStartup.ChangeToViaLogonTask();
+                    }
+                    else
+                    {
+                        AutoStartup.ChangeToViaRegistry();
+                    }
+                }
+                catch (Exception e)
+                {
+                    Notification.Show(InternationalizationManager.Instance.GetTranslation("setAutoStartFailed"),
+                        e.Message);
+                }
+            } 
+        }
     }
 
     public List<SearchWindowScreenData> SearchWindowScreens { get; } =
@@ -166,7 +205,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
 
     private void UpdateApp()
     {
-        _ = _updater.UpdateAppAsync(App.API, false);
+        _ = _updater.UpdateAppAsync(false);
     }
 
     public bool AutoUpdates
