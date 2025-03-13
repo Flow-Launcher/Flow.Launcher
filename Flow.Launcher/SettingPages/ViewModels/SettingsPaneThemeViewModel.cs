@@ -39,11 +39,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
                 DropShadowEffect = true;
+                OnPropertyChanged(nameof(IsDropShadowEnabled));
             ThemeManager.Instance.RefreshFrame();
             //uThemeManager.Instance.SetBlurForWindow();
         }
     }
     public bool IsBackdropEnabled => SelectedTheme?.HasBlur ?? false;
+    public bool IsDropShadowEnabled => !ThemeManager.Instance.BlurEnabled;
 
     public bool DropShadowEffect
     {
@@ -52,7 +54,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (ThemeManager.Instance.BlurEnabled && value == false)
             {
-                App.API.ShowMsgBox(InternationalizationManager.Instance.GetTranslation("shadowEffectNotAllowedBlur"));
                 Settings.UseDropShadowEffect = true;
                 return;
             }
@@ -223,8 +224,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             // ✅ BackdropTypeData 리스트에서 해당하는 값 찾기
             var backdropData = BackdropTypesList.FirstOrDefault(b => b.Value == value);
             backdropData?.ApplyBackdrop();
+
+            // ✅ DropShadow 활성화 여부 갱신
+            OnPropertyChanged(nameof(IsDropShadowEnabled));
         }
     }
+
 
 
 

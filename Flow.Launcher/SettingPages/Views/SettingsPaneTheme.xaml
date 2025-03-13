@@ -467,15 +467,15 @@
                 Sub="{DynamicResource shadowEffectRestart}">
 
                 <ComboBox
-    MinWidth="160"
-    VerticalAlignment="Center"
-    DisplayMemberPath="Display"
-    FontSize="14"
-    ItemsSource="{Binding BackdropTypesList}"
-    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
-    SelectedValuePath="Value"
-    IsEnabled="{Binding IsBackdropEnabled}" />
-                <!-- ✅ 추가 -->
+                    MinWidth="160"
+                    VerticalAlignment="Center"
+                    DisplayMemberPath="Display"
+                    FontSize="14"
+                    IsEnabled="{Binding IsBackdropEnabled}"
+                    ItemsSource="{Binding BackdropTypesList}"
+                    SelectedValue="{Binding BackdropType, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
+                <!--  ✅ 추가  -->
             </cc:Card>
 
 
@@ -486,6 +486,7 @@
                 Icon="&#xeb91;"
                 Sub="{DynamicResource shadowEffectRestart}">
                 <ui:ToggleSwitch
+                    IsEnabled="{Binding IsDropShadowEnabled}"
                     IsOn="{Binding DropShadowEffect}"
                     OffContent="{DynamicResource disable}"
                     OnContent="{DynamicResource enable}" />
