@@ -19,8 +19,36 @@ namespace Flow.Launcher.Plugin.Sys
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
         private PluginInitContext context;
+        private Settings settings;
         private ThemeSelector themeSelector;
-        private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
+
+        private readonly Dictionary<string, string> KeywordTitleMappings = new()
+        {
+            {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
+            {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
+            {"Restart With Advanced Boot Options", "flowlauncher_plugin_sys_restart_advanced_cmd"},
+            {"Log Off/Sign Out", "flowlauncher_plugin_sys_log_off_cmd"},
+            {"Lock", "flowlauncher_plugin_sys_lock_cmd"},
+            {"Sleep", "flowlauncher_plugin_sys_sleep_cmd"},
+            {"Hibernate", "flowlauncher_plugin_sys_hibernate_cmd"},
+            {"Index Option", "flowlauncher_plugin_sys_indexoption_cmd"},
+            {"Empty Recycle Bin", "flowlauncher_plugin_sys_emptyrecyclebin_cmd"},
+            {"Open Recycle Bin", "flowlauncher_plugin_sys_openrecyclebin_cmd"},
+            {"Exit", "flowlauncher_plugin_sys_exit_cmd"},
+            {"Save Settings", "flowlauncher_plugin_sys_save_all_settings_cmd"},
+            {"Restart Flow Launcher", "flowlauncher_plugin_sys_restart_cmd"},
+            {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
+            {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
+            {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
+            {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
+            {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
+            {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
+            {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"},
+            {"Set Flow Launcher Theme", "flowlauncher_plugin_sys_theme_selector_cmd"}
+        };
+        private readonly Dictionary<string, string> KeywordDescriptionMappings = new();
+
+        private SettingsViewModel _viewModel;
 
         // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure, software updates, or other predefined reasons.
         // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
@@ -28,12 +56,8 @@ namespace Flow.Launcher.Plugin.Sys
 
         public Control CreateSettingPanel()
         {
-            var commands = Commands();
-            foreach (var c in commands)
-            {
-                c.Title = GetDynamicTitle(null, c);
-            }
-            return new SysSettings(commands);
+            UpdateLocalizedNameDescription(false);
+            return new SysSettings(_viewModel);
         }
 
         public List<Result> Query(Query query)
@@ -67,6 +91,29 @@ namespace Flow.Launcher.Plugin.Sys
             return results;
         }
 
+        private string GetTitle(string key)
+        {
+            if (!KeywordTitleMappings.TryGetValue(key, out var translationKey))
+            {
+                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Title not found for: {key}");
+                return "Title Not Found";
+            }
+
+            return context.API.GetTranslation(translationKey);
+        }
+
+        private string GetDescription(string key)
+        {
+            if (!KeywordDescriptionMappings.TryGetValue(key, out var translationKey))
+            {
+                Log.Error("Flow.Launcher.Plugin.Sys.Main", $"Description not found for: {key}");
+                return "Description Not Found";
+            }
+
+            return context.API.GetTranslation(translationKey);
+        }
+
+        [Obsolete]
         private string GetDynamicTitle(Query query, Result result)
         {
             if (!KeywordTitleMappings.TryGetValue(result.Title, out var translationKey))
@@ -96,30 +143,26 @@ namespace Flow.Launcher.Plugin.Sys
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(settings);
             themeSelector = new ThemeSelector(context);
-            KeywordTitleMappings = new Dictionary<string, string>{
-                {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
-                {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
-                {"Restart With Advanced Boot Options", "flowlauncher_plugin_sys_restart_advanced_cmd"},
-                {"Log Off/Sign Out", "flowlauncher_plugin_sys_log_off_cmd"},
-                {"Lock", "flowlauncher_plugin_sys_lock_cmd"},
-                {"Sleep", "flowlauncher_plugin_sys_sleep_cmd"},
-                {"Hibernate", "flowlauncher_plugin_sys_hibernate_cmd"},
-                {"Index Option", "flowlauncher_plugin_sys_indexoption_cmd"},
-                {"Empty Recycle Bin", "flowlauncher_plugin_sys_emptyrecyclebin_cmd"},
-                {"Open Recycle Bin", "flowlauncher_plugin_sys_openrecyclebin_cmd"},
-                {"Exit", "flowlauncher_plugin_sys_exit_cmd"},
-                {"Save Settings", "flowlauncher_plugin_sys_save_all_settings_cmd"},
-                {"Restart Flow Launcher", "flowlauncher_plugin_sys_restart_cmd"},
-                {"Settings", "flowlauncher_plugin_sys_setting_cmd"},
-                {"Reload Plugin Data", "flowlauncher_plugin_sys_reload_plugin_data_cmd"},
-                {"Check For Update", "flowlauncher_plugin_sys_check_for_update_cmd"},
-                {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
-                {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
-                {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
-                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"},
-                {"Set Flow Launcher Theme", "flowlauncher_plugin_sys_theme_selector_cmd"}
-            };
+            foreach (string key in KeywordTitleMappings.Keys)
+            {
+                // Remove _cmd in the last of the strings
+                KeywordDescriptionMappings[key] = KeywordTitleMappings[key][..^4];
+            }
+        }
+
+        private void UpdateLocalizedNameDescription(bool force)
+        {
+            if (string.IsNullOrEmpty(settings.Commands[0].Name) || force)
+            {
+                foreach (var c in settings.Commands)
+                {
+                    c.Name = GetTitle(c.Key);
+                    c.Description = GetDescription(c.Key);
+                }
+            }
         }
 
         private static unsafe bool EnableShutdownPrivilege()

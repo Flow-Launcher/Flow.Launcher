@@ -4,8 +4,9 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <!--  Command List  -->
-    <system:String x:Key="flowlauncher_plugin_sys_command">Command</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_name">Name</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_desc">Description</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command">Command</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer_cmd">Shutdown</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_restart_computer_cmd">Restart</system:String>
@@ -28,6 +29,8 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Toggle Game Mode</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+
+    <system:String x:Key="flowlauncher_plugin_sys_edit">Edit</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Shutdown Computer</system:String>
