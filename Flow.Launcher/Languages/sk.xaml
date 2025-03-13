@@ -298,7 +298,7 @@
     <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
     <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
-    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="logLevel">Úroveň logovania</system:String>
     <system:String x:Key="LogLevelDEBUG">Debug</system:String>
     <system:String x:Key="LogLevelINFO">Info</system:String>
 
