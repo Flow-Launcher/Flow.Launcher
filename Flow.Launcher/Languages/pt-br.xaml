@@ -102,9 +102,6 @@
     <system:String x:Key="AlwaysPreview">Sempre Pré-visualizar</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Sempre abrir o painel de pré-visualização quando o Flow é ativado. Pressione {0} para ativar ou desativar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito de sombra não é permitido enquanto o tema atual tem o efeito de desfoque ativado</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar Plugin</system:String>
@@ -301,6 +298,9 @@
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Selecione o Gerenciador de Arquivos</system:String>
