@@ -109,9 +109,6 @@
     <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
