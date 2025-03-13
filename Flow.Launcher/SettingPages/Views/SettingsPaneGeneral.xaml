@@ -278,14 +278,6 @@
                     SelectedValue="{Binding Language}"
                     SelectedValuePath="LanguageCode" />
             </cc:Card>
-
-            <cc:Card Title="{DynamicResource logLevel}" Margin="0 14 0 0">
-                <ComboBox
-                    DisplayMemberPath="Display"
-                    ItemsSource="{Binding LogLevels}"
-                    SelectedValue="{Binding LogLevel}"
-                    SelectedValuePath="Value" />
-            </cc:Card>
         </VirtualizingStackPanel>
     </ScrollViewer>
 </ui:Page>

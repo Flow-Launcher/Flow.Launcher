@@ -45,6 +45,8 @@ namespace Flow.Launcher.Core.Resource
         private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
         private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
 
+        public string CurrentTheme => _settings.Theme;
+
         public bool BlurEnabled { get; set; }
 
         private double mainWindowWidth;
