@@ -28,8 +28,12 @@ namespace Flow.Launcher.Plugin.Sys
 
         public Control CreateSettingPanel()
         {
-            var results = Commands();
-            return new SysSettings(results);
+            var commands = Commands();
+            foreach (var c in commands)
+            {
+                c.Title = GetDynamicTitle(null, c);
+            }
+            return new SysSettings(commands);
         }
 
         public List<Result> Query(Query query)
@@ -72,6 +76,11 @@ namespace Flow.Launcher.Plugin.Sys
             }
 
             var translatedTitle = context.API.GetTranslation(translationKey);
+
+            if (query == null)
+            {
+                return translatedTitle;
+            }
 
             if (result.Title == translatedTitle)
             {
