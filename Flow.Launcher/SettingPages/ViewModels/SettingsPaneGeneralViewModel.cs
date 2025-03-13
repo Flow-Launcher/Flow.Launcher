@@ -24,7 +24,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         _updater = updater;
         _portable = portable;
         UpdateEnumDropdownLocalizations();
-        SelectAllQueryOnReopen = settings.SelectAllQueryOnReopen; // Pfa33
     }
 
     public class SearchWindowScreenData : DropdownDataGeneric<SearchWindowScreens> { }
@@ -63,12 +62,6 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
                     e.Message);
             }
         }
-    }
-    
-    public bool SelectAllQueryOnReopen
-    {
-        get => Settings.SelectAllQueryOnReopen;
-        set => Settings.SelectAllQueryOnReopen = value;
     }
     
     public bool UseLogonTaskForStartup

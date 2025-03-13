@@ -20,7 +20,6 @@
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
-    SourceInitialized="OnSourceInitialized"
     Initialized="OnInitialized"
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
@@ -31,6 +30,7 @@
     ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
+    SourceInitialized="OnSourceInitialized"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
@@ -240,13 +240,13 @@
                             FontSize="{Binding QueryBoxFontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             InputMethod.PreferredImeConversionMode="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEConversionModeConverter}}"
                             InputMethod.PreferredImeState="{Binding StartWithEnglishMode, Converter={StaticResource BoolToIMEStateConverter}}"
+                            Loaded="SelectAllQueryText"
                             PreviewDragOver="OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
                             Style="{DynamicResource QueryBoxStyle}"
                             Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Visibility="Visible"
-                            WindowChrome.IsHitTestVisibleInChrome="True"
-                            Loaded="SelectAllQueryText">
+                            WindowChrome.IsHitTestVisibleInChrome="True">
                             <TextBox.CommandBindings>
                                 <CommandBinding Command="ApplicationCommands.Copy" Executed="OnCopy" />
                             </TextBox.CommandBindings>
