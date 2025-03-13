@@ -57,6 +57,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        public bool HideDuplicatedWindowsApp
+        {
+            get => _settings.HideDuplicatedWindowsApp;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideDuplicatedWindowsApp = value;
+            }
+        }
+
         public bool EnableRegistrySource
         {
             get => _settings.EnableRegistrySource;
@@ -178,7 +188,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedProgramSource == null)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
             }
             else
             {
@@ -283,7 +293,7 @@ namespace Flow.Launcher.Plugin.Program.Views
             if (selectedItems.Count == 0)
             {
                 string msg = context.API.GetTranslation("flowlauncher_plugin_program_pls_select_program_source");
-                MessageBox.Show(msg);
+                context.API.ShowMsgBox(msg);
                 return;
             }
 
@@ -292,7 +302,7 @@ namespace Flow.Launcher.Plugin.Program.Views
                 var msg = string.Format(
                     context.API.GetTranslation("flowlauncher_plugin_program_delete_program_source"));
 
-                if (MessageBox.Show(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+                if (context.API.ShowMsgBox(msg, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 {
                     return;
                 }

@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Giữ lại truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQuerySelected">Chọn truy vấn cuối cùng</system:String>
     <system:String x:Key="LastQueryEmpty">Trống truy vấn cuối cùng</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">Giữ nguyên chiều cao cửa sổ</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">Chiều cao cửa sổ không thể thay đổi bằng cách kéo.</system:String>
     <system:String x:Key="maxShowResults">Số kết quả tối đa</system:String>

@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">Mantener la última consulta</system:String>
     <system:String x:Key="LastQuerySelected">Seleccionar la última consulta</system:String>
     <system:String x:Key="LastQueryEmpty">Limpiar la última consulta</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Conservar última palabra clave de acción</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Seleccionar última palabra clave de acción</system:String>
     <system:String x:Key="KeepMaxResults">Altura de la ventana fija</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">La altura de la ventana no se puede ajustar arrastrando el ratón.</system:String>
     <system:String x:Key="maxShowResults">Número máximo de resultados mostrados</system:String>
@@ -218,7 +220,7 @@
     <system:String x:Key="OpenNativeContextMenuHotkey">Abrir menú contextual nativo</system:String>
     <system:String x:Key="SettingWindowHotkey">Abrir ventana de configuración</system:String>
     <system:String x:Key="CopyFilePathHotkey">Copiar ruta del archivo</system:String>
-    <system:String x:Key="ToggleGameModeHotkey">Cambia a Modo Juego</system:String>
+    <system:String x:Key="ToggleGameModeHotkey">Cambiar a Modo Juego</system:String>
     <system:String x:Key="ToggleHistoryHotkey">Cambiar historial</system:String>
     <system:String x:Key="OpenContainFolderHotkey">Abrir carpeta contenedora</system:String>
     <system:String x:Key="RunAsAdminHotkey">Ejecutar como administrador</system:String>
@@ -293,7 +295,7 @@
     <system:String x:Key="clearlogfolderMessage">¿Está seguro de que desea eliminar todos los registros?</system:String>
     <system:String x:Key="welcomewindow">Asistente</system:String>
     <system:String x:Key="userdatapath">Ubicación de datos del usuario</system:String>
-    <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portátil o no.</system:String>
+    <system:String x:Key="userdatapathToolTip">La configuración del usuario y los complementos instalados se guardan en la carpeta de datos del usuario. Esta ubicación puede variar dependiendo de si está en modo portable o no.</system:String>
     <system:String x:Key="userdatapathButton">Abrir carpeta</system:String>
 
     <!--  FileManager Setting Dialog  -->

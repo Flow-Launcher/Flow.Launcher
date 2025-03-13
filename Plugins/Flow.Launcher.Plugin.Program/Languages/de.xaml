@@ -29,15 +29,15 @@
     <system:String x:Key="flowlauncher_plugin_program_index_PATH">PATH</system:String>
     <system:String x:Key="flowlauncher_plugin_program_index_PATH_tooltip">Wenn aktiviert, wird Flow Programme aus der PATH-Umgebungsvariable laden</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath">App-Pfad ausblenden</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Für ausführbare Dateien wie UWP oder lnk Dateipfad ausblenden</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Deinstallationsprogramme ausblenden</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Versteckt Programme mit gängigen Deinstallationsprogramm-Namen, wie unins000.exe</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hidelnkpath_tooltip">Für ausführbare Dateien wie UWP oder lnk den Dateipfad nicht mehr sichtbar machen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers">Uninstaller ausblenden</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Blendet Programme mit gängigen Uninstaller-Namen aus, wie unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">In Programmbeschreibung suchen</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow wird die Programmbeschreibung durchsuchen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow wird in Programmbeschreibung suchen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Suffixe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Maximale Tiefe</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_directory">Verzeichnis:</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_directory">Verzeichnis</system:String>
     <system:String x:Key="flowlauncher_plugin_program_browse">Durchsuchen</system:String>
     <system:String x:Key="flowlauncher_plugin_program_file_suffixes">Dateisuffixe:</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_search_depth">Maximale Suchtiefe (-1 ist unlimitiert):</system:String>
@@ -55,7 +55,7 @@
     <system:String x:Key="flowlauncher_plugin_program_suffixes_cannot_empty">Dateisuffixe dürfen nicht leer sein</system:String>
     <system:String x:Key="flowlauncher_plugin_protocols_cannot_empty">Protokolle dürfen nicht leer sein</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Indexiere Dateiendungen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_suffixes_executable_types">Dateisuffixe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_types">URL-Protokolle</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_steam">Steam Games</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_URL_epic">Epic Games</system:String>
@@ -76,9 +76,9 @@
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Zielordner öffnen</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programm</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Programme im Flow Launcher suchen</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_description">Programme in Flow Launcher suchen</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Ungültiger Pfad</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_invalid_path">Pfad ungültig</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Individuell angepasster Explorer</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Args</system:String>
@@ -88,7 +88,7 @@
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success">Erfolg</system:String>
     <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_error">Fehler</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Dieses Programm wurde erfolgreich von der Anzeige in Ihrer Anfrage deaktiviert</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_disable_dlgtitle_success_message">Dieses Programm wurde erfolgreich von der Anzeige in Ihrer Abfrage deaktiviert</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_as_administrator_not_supported_message">Diese App ist nicht zur Ausführung als Administrator gedacht</system:String>
     <system:String x:Key="flowlauncher_plugin_program_run_failed">{0} kann nicht ausgeführt werden</system:String>
 

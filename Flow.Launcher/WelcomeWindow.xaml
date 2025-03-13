@@ -36,8 +36,6 @@
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Image
                         Grid.Column="0"
@@ -53,9 +51,8 @@
                         FontSize="12"
                         Foreground="{DynamicResource Color05B}"
                         Text="{DynamicResource Welcome_Page1_Title}" />
-
                     <Button
-                        Grid.Column="4"
+                        Grid.Column="2"
                         Click="BtnCancel_OnClick"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
@@ -82,6 +79,7 @@
                 <ui:Frame
                     x:Name="ContentFrame"
                     HorizontalAlignment="Stretch"
+                    Loaded="ContentFrame_Loaded"
                     ScrollViewer.CanContentScroll="True"
                     ScrollViewer.HorizontalScrollBarVisibility="Visible"
                     ScrollViewer.VerticalScrollBarVisibility="Visible">

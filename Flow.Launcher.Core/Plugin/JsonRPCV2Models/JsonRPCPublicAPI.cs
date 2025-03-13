@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Runtime.CompilerServices;
@@ -121,10 +120,10 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             return _api.HttpGetStreamAsync(url, token);
         }
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
             CancellationToken token = default)
         {
-            return _api.HttpDownloadAsync(url, filePath, token);
+            return _api.HttpDownloadAsync(url, filePath, reportProgress, token);
         }
 
         public void AddActionKeyword(string pluginId, string newActionKeyword)
@@ -162,16 +161,29 @@ namespace Flow.Launcher.Core.Plugin.JsonRPCV2Models
             _api.OpenDirectory(DirectoryPath, FileNameOrFilePath);
         }
 
-
         public void OpenUrl(string url, bool? inPrivate = null)
         {
             _api.OpenUrl(url, inPrivate);
         }
 
-
         public void OpenAppUri(string appUri)
         {
             _api.OpenAppUri(appUri);
+        }
+
+        public void BackToQueryResults()
+        {
+            _api.BackToQueryResults();
+        }
+
+        public void StartLoadingBar()
+        {
+            _api.StartLoadingBar();
+        }
+
+        public void StopLoadingBar()
+        {
+            _api.StopLoadingBar();
         }
     }
 }

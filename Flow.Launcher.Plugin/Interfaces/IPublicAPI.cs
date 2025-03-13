@@ -7,6 +7,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Flow.Launcher.Plugin
 {
@@ -16,7 +17,8 @@ namespace Flow.Launcher.Plugin
     public interface IPublicAPI
     {
         /// <summary>
-        /// Change Flow.Launcher query
+        /// Change Flow.Launcher query.
+        /// When current results are from context menu or history, it will go back to query results before changing query.
         /// </summary>
         /// <param name="query">query text</param>
         /// <param name="requery">
@@ -180,9 +182,13 @@ namespace Flow.Launcher.Plugin
         /// </summary>
         /// <param name="url">URL to download file</param>
         /// <param name="filePath">path to save downloaded file</param>
+        /// <param name="reportProgress">
+        /// Action to report progress. The input of the action is the progress value which is a double value between 0 and 100.
+        /// It will be called if url support range request and the reportProgress is not null.
+        /// </param>
         /// <param name="token">place to store file</param>
         /// <returns>Task showing the progress</returns>
-        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, CancellationToken token = default);
+        Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
         /// Add ActionKeyword for specific plugin
@@ -294,9 +300,49 @@ namespace Flow.Launcher.Plugin
 
         /// <summary>
         /// Reloads the query.
-        /// This method should run
+        /// When current results are from context menu or history, it will go back to query results before requerying.
         /// </summary>
         /// <param name="reselect">Choose the first result after reload if true; keep the last selected result if false. Default is true.</param>
         public void ReQuery(bool reselect = true);
+
+        /// <summary>
+        /// Back to the query results.
+        /// This method should run when selected item is from context menu or history.
+        /// </summary>
+        public void BackToQueryResults();
+
+        /// <summary>
+        /// Displays a standardised Flow message box.
+        /// </summary>
+        /// <param name="messageBoxText">The message of the message box.</param>
+        /// <param name="caption">The caption of the message box.</param>
+        /// <param name="button">Specifies which button or buttons to display.</param>
+        /// <param name="icon">Specifies the icon to display.</param>
+        /// <param name="defaultResult">Specifies the default result of the message box.</param>
+        /// <returns>Specifies which message box button is clicked by the user.</returns>
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK);
+
+        /// <summary>
+        /// Displays a standardised Flow progress box.
+        /// </summary>
+        /// <param name="caption">The caption of the progress box.</param>
+        /// <param name="reportProgressAsync">
+        /// Time-consuming task function, whose input is the action to report progress.
+        /// The input of the action is the progress value which is a double value between 0 and 100.
+        /// If there are any exceptions, this action will be null.
+        /// </param>
+        /// <param name="cancelProgress">When user cancel the progress, this action will be called.</param>
+        /// <returns></returns>
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null);
+
+        /// <summary>
+        /// Start the loading bar in main window
+        /// </summary>
+        public void StartLoadingBar();
+
+        /// <summary>
+        /// Stop the loading bar in main window
+        /// </summary>
+        public void StopLoadingBar();
     }
 }

@@ -75,7 +75,7 @@
     <system:String x:Key="flowlauncher_plugin_program_disable_program">Masquer ce programme des résultats</system:String>
     <system:String x:Key="flowlauncher_plugin_program_open_target_folder">Ouvrir le répertoire cible</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programme</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_plugin_name">Programmes</system:String>
     <system:String x:Key="flowlauncher_plugin_program_plugin_description">Rechercher des programmes dans Flow Launcher</system:String>
 
     <system:String x:Key="flowlauncher_plugin_program_invalid_path">Chemin d'accès invalide</system:String>

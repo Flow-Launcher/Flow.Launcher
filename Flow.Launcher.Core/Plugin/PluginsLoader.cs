@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.ExternalPlugins.Environments;
 #pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
@@ -119,10 +120,10 @@ namespace Flow.Launcher.Core.Plugin
 
                 _ = Task.Run(() =>
                 {
-                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                     $"Please refer to the logs for more information", "",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
                 });
             }
 

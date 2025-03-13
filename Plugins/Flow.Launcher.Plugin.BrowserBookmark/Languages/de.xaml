@@ -12,11 +12,11 @@
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_newTab">Neuer Tab</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_setBrowserFromPath">Browser aus Pfad festlegen:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_settings_choose">Wählen</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">Kopiere Url</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">Die Url des Lesezeichens in die Zwischenablage kopieren</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_title">URL kopieren</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_copyurl_subtitle">URL des Lesezeichens in Zwischenablage kopieren</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_loadBrowserFrom">Browser laden aus:</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_browserName">Browser-Name</system:String>
-    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">URL des Lesezeichens in Zwischenablage kopieren</system:String>
+    <system:String x:Key="flowlauncher_plugin_browserbookmark_browserBookmarkDataDirectory">Pfad zu Datenverzeichnis</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_addBrowserBookmark">Hinzufügen</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_editBrowserBookmark">Bearbeiten</system:String>
     <system:String x:Key="flowlauncher_plugin_browserbookmark_removeBrowserBookmark">Löschen</system:String>

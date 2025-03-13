@@ -26,16 +26,13 @@ using System.Media;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
-using System.Runtime.InteropServices;
+using Windows.Win32;
 
 namespace Flow.Launcher
 {
     public partial class MainWindow
     {
         #region Private Fields
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern IntPtr SetForegroundWindow(IntPtr hwnd);
 
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
         private bool isProgressBarStoryboardPaused;
@@ -81,21 +78,19 @@ namespace Flow.Launcher
             InitializeComponent();
         }
 
-        private const int WM_ENTERSIZEMOVE = 0x0231;
-        private const int WM_EXITSIZEMOVE = 0x0232;
         private int _initialWidth;
         private int _initialHeight;
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == WM_ENTERSIZEMOVE)
+            if (msg == PInvoke.WM_ENTERSIZEMOVE)
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
                 handled = true;
             }
 
-            if (msg == WM_EXITSIZEMOVE)
+            if (msg == PInvoke.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {
@@ -174,6 +169,11 @@ namespace Flow.Launcher
             await PluginManager.DisposePluginsAsync();
             Notification.Uninstall();
             Environment.Exit(0);
+        }
+
+        private void OnSourceInitialized(object sender, EventArgs e)
+        {
+            WindowsInteropHelper.HideFromAltTab(this);
         }
 
         private void OnInitialized(object sender, EventArgs e)
@@ -424,7 +424,7 @@ namespace Flow.Launcher
                         // Get context menu handle and bring it to the foreground
                         if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
                         {
-                            _ = SetForegroundWindow(hwndSource.Handle);
+                            PInvoke.SetForegroundWindow(new(hwndSource.Handle));
                         }
 
                         contextMenu.Focus();
@@ -438,7 +438,7 @@ namespace Flow.Launcher
             if (_settings.FirstLaunch)
             {
                 _settings.FirstLaunch = false;
-                PluginManager.API.SaveAppAllSettings();
+                App.API.SaveAppAllSettings();
                 OpenWelcomeWindow();
             }
         }
@@ -692,7 +692,7 @@ namespace Flow.Launcher
                     screen = Screen.PrimaryScreen;
                     break;
                 case SearchWindowScreens.Focus:
-                    IntPtr foregroundWindowHandle = WindowsInteropHelper.GetForegroundWindow();
+                    var foregroundWindowHandle = PInvoke.GetForegroundWindow().Value;
                     screen = Screen.FromHandle(foregroundWindowHandle);
                     break;
                 case SearchWindowScreens.Custom:

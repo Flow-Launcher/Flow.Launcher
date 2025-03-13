@@ -4,8 +4,15 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Plugin;
+using CheckBox = System.Windows.Controls.CheckBox;
+using ComboBox = System.Windows.Controls.ComboBox;
+using Control = System.Windows.Controls.Control;
+using Orientation = System.Windows.Controls.Orientation;
+using TextBox = System.Windows.Controls.TextBox;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace Flow.Launcher.Core.Plugin
 {
@@ -102,10 +109,15 @@ namespace Flow.Launcher.Core.Plugin
             _storage.Save();
         }
 
+        public bool NeedCreateSettingPanel()
+        {
+            // If there are no settings or the settings configuration is empty, return null
+            return Settings != null && Configuration != null && Configuration.Body.Count != 0;
+        }
+
         public Control CreateSettingPanel()
         {
-            if (Settings == null || Settings.Count == 0)
-                return new();
+            // No need to check if NeedCreateSettingPanel is true because CreateSettingPanel will only be called if it's true
 
             var settingWindow = new UserControl();
             var mainPanel = new Grid { Margin = settingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
@@ -224,6 +236,7 @@ namespace Flow.Launcher.Core.Plugin
                         break;
                     }
                     case "inputWithFileBtn":
+                    case "inputWithFolderBtn":
                     {
                         var textBox = new TextBox()
                         {
@@ -241,6 +254,24 @@ namespace Flow.Launcher.Core.Plugin
                         var Btn = new System.Windows.Controls.Button()
                         {
                             Margin = new Thickness(10, 0, 0, 0), Content = "Browse"
+                        };
+
+                        Btn.Click += (_, _) =>
+                        {
+                            using CommonDialog dialog = type switch
+                            {
+                                "inputWithFolderBtn" => new FolderBrowserDialog(),
+                                _ => new OpenFileDialog(),
+                            };
+                            if (dialog.ShowDialog() != DialogResult.OK) return;
+
+                            var path = dialog switch
+                            {
+                                FolderBrowserDialog folderDialog => folderDialog.SelectedPath,
+                                OpenFileDialog fileDialog => fileDialog.FileName,
+                            };
+                            textBox.Text = path;
+                            Settings[attribute.Name] = path;
                         };
 
                         var dockPanel = new DockPanel() { Margin = settingControlMargin };

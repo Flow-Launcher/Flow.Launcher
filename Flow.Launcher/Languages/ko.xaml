@@ -65,6 +65,8 @@
     <system:String x:Key="LastQueryPreserved">직전 쿼리에 계속 입력</system:String>
     <system:String x:Key="LastQuerySelected">직전 쿼리 내용 선택</system:String>
     <system:String x:Key="LastQueryEmpty">직전 쿼리 지우기</system:String>
+    <system:String x:Key="LastQueryActionKeywordPreserved">Preserve Last Action Keyword</system:String>
+    <system:String x:Key="LastQueryActionKeywordSelected">Select Last Action Keyword</system:String>
     <system:String x:Key="KeepMaxResults">창 높이 고정</system:String>
     <system:String x:Key="KeepMaxResultsToolTip">드래그로 창 높이를 조정하지 않습니다.</system:String>
     <system:String x:Key="maxShowResults">표시할 결과 수</system:String>

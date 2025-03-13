@@ -2,6 +2,7 @@
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.ViewModel;
+using Flow.Launcher.Core;
 
 namespace Flow.Launcher
 {
@@ -43,7 +44,7 @@ namespace Flow.Launcher
             else
             {
                 string msg = translater.GetTranslation("newActionKeywordsHasBeenAssigned");
-                MessageBox.Show(msg);
+                App.API.ShowMsgBox(msg);
             }
         }
     }

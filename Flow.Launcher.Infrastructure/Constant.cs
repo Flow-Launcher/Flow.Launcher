@@ -31,6 +31,7 @@ namespace Flow.Launcher.Infrastructure
         public static readonly string ErrorIcon = Path.Combine(ImagesDirectory, "app_error.png");
         public static readonly string MissingImgIcon = Path.Combine(ImagesDirectory, "app_missing_img.png");
         public static readonly string LoadingImgIcon = Path.Combine(ImagesDirectory, "loading.png");
+        public static readonly string ImageIcon = Path.Combine(ImagesDirectory, "image.png");
 
         public static string PythonPath;
         public static string NodePath;
@@ -51,5 +52,7 @@ namespace Flow.Launcher.Infrastructure
         public const string SponsorPage = "https://github.com/sponsors/Flow-Launcher";
         public const string GitHub = "https://github.com/Flow-Launcher/Flow.Launcher";
         public const string Docs = "https://flowlauncher.com/docs";
+
+        public const string SystemLanguageCode = "system";
     }
 }

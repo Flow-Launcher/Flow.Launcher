@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Helper;
@@ -17,29 +18,33 @@ namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
+    private readonly Updater _updater;
+    private readonly IPortable _portable;
     private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
 
-    public SettingWindow(IPublicAPI api, SettingWindowViewModel viewModel)
+    public SettingWindow()
     {
-        _settings = viewModel.Settings;
+        var viewModel = Ioc.Default.GetRequiredService<SettingWindowViewModel>();
+        _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
-        _api = api;
+        _updater = Ioc.Default.GetRequiredService<Updater>();
+        _portable = Ioc.Default.GetRequiredService<Portable>();
+        _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         InitializePosition();
         InitializeComponent();
-        NavView.SelectedItem = NavView.MenuItems[0]; /* Set First Page */
     }
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
         RefreshMaximizeRestoreButton();
-        // Fix (workaround) for the window freezes after lock screen (Win+L)
+        // Fix (workaround) for the window freezes after lock screen (Win+L) or sleep
         // https://stackoverflow.com/questions/4951058/software-rendering-mode-wpf
         HwndSource hwndSource = PresentationSource.FromVisual(this) as HwndSource;
         HwndTarget hwndTarget = hwndSource.CompositionTarget;
-        hwndTarget.RenderMode = RenderMode.Default;
+        hwndTarget.RenderMode = RenderMode.SoftwareOnly;  // Must use software only render mode here
 
         InitializePosition();
     }
@@ -126,7 +131,7 @@ public partial class SettingWindow
         WindowState = _settings.SettingWindowState;
     }
 
-    private bool IsPositionValid(double top, double left)
+    private static bool IsPositionValid(double top, double left)
     {
         foreach (var screen in Screen.AllScreens)
         {
@@ -146,7 +151,7 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
-        var left = (dip2.X - this.ActualWidth) / 2 + dip1.X;
+        var left = (dip2.X - ActualWidth) / 2 + dip1.X;
         return left;
     }
 
@@ -155,13 +160,13 @@ public partial class SettingWindow
         var screen = Screen.FromPoint(System.Windows.Forms.Cursor.Position);
         var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
         var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
-        var top = (dip2.Y - this.ActualHeight) / 2 + dip1.Y - 20;
+        var top = (dip2.Y - ActualHeight) / 2 + dip1.Y - 20;
         return top;
     }
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _viewModel.Updater, _viewModel.Portable);
+        var paneData = new PaneData(_settings, _updater, _portable);
         if (args.IsSettingsSelected)
         {
             ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);
@@ -169,7 +174,11 @@ public partial class SettingWindow
         else
         {
             var selectedItem = (NavigationViewItem)args.SelectedItem;
-            if (selectedItem == null) return;
+            if (selectedItem == null)
+            {
+                NavView_Loaded(sender, null); /* Reset First Page */
+                return;
+            }
 
             var pageType = selectedItem.Name switch
             {
@@ -184,6 +193,23 @@ public partial class SettingWindow
             };
             ContentFrame.Navigate(pageType, paneData);
         }
+    }
+
+    private void NavView_Loaded(object sender, RoutedEventArgs e)
+    {
+        if (ContentFrame.IsLoaded)
+        {
+            ContentFrame_Loaded(sender, e);
+        }
+        else
+        {
+            ContentFrame.Loaded += ContentFrame_Loaded;
+        }
+    }
+
+    private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
+    {
+        NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
 
     public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
