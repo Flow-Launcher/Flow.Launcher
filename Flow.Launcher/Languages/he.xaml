@@ -102,9 +102,6 @@
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">חפש תוסף</system:String>
@@ -301,6 +298,9 @@
     <system:String x:Key="userdatapath">מיקום נתוני משתמש</system:String>
     <system:String x:Key="userdatapathToolTip">הגדרות המשתמש והתוספים המותקנים נשמרים בתיקיית נתוני המשתמש. מיקום זה עשוי להשתנות אם התוכנה במצב נייד.</system:String>
     <system:String x:Key="userdatapathButton">פתח תיקיה</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">בחר מנהל קבצים</system:String>
