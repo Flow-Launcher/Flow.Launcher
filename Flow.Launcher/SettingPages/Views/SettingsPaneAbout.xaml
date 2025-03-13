@@ -45,7 +45,7 @@
                 </StackPanel>
             </cc:Card>
 
-            <cc:Card Title="{DynamicResource updateSource}">
+            <cc:Card Title="{DynamicResource updateSource}" Icon="&#xE777;">
                 <StackPanel Orientation="Horizontal">
                     <ComboBox Margin="0 0 10 0" SelectedIndex="{Binding PrereleaseSelectedIndex}">
                         <ComboBoxItem Content="{DynamicResource release}" />
