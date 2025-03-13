@@ -461,11 +461,9 @@
 
             <!--  Backdrop effect  -->
             <cc:Card
-                Title="Backdrop Type"
+                Title="{DynamicResource BackdropType}"
                 Margin="0 8 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectRestart}">
-
+                Icon="&#xeb42;">
                 <ComboBox
                     MinWidth="160"
                     VerticalAlignment="Center"
@@ -483,8 +481,7 @@
             <cc:Card
                 Title="{DynamicResource queryWindowShadowEffect}"
                 Margin="0 8 0 0"
-                Icon="&#xeb91;"
-                Sub="{DynamicResource shadowEffectRestart}">
+                Icon="&#xeb91;">
                 <ui:ToggleSwitch
                     IsEnabled="{Binding IsDropShadowEnabled}"
                     IsOn="{Binding DropShadowEffect}"
