@@ -129,6 +129,14 @@
                 </StackPanel>
             </cc:Card>
 
+            <cc:Card Title="{DynamicResource logLevel}" Icon="&#xE749;">
+                <ComboBox
+                    DisplayMemberPath="Display"
+                    ItemsSource="{Binding LogLevels}"
+                    SelectedValue="{Binding LogLevel}"
+                    SelectedValuePath="Value" />
+            </cc:Card>
+
             <TextBlock
                 Margin="14 20 0 0"
                 HorizontalAlignment="Center"
