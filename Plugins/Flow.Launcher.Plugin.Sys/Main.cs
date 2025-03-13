@@ -4,49 +4,27 @@ using System.Diagnostics;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Forms;
-using System.Windows.Interop;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.Plugin.SharedCommands;
+using Windows.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.Security;
+using Windows.Win32.System.Shutdown;
 using Application = System.Windows.Application;
 using Control = System.Windows.Controls.Control;
-using FormsApplication = System.Windows.Forms.Application;
 
 namespace Flow.Launcher.Plugin.Sys
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
         private PluginInitContext context;
+        private ThemeSelector themeSelector;
         private Dictionary<string, string> KeywordTitleMappings = new Dictionary<string, string>();
 
-        #region DllImport
-
-        internal const int EWX_LOGOFF = 0x00000000;
-        internal const int EWX_SHUTDOWN = 0x00000001;
-        internal const int EWX_REBOOT = 0x00000002;
-        internal const int EWX_FORCE = 0x00000004;
-        internal const int EWX_POWEROFF = 0x00000008;
-        internal const int EWX_FORCEIFHUNG = 0x00000010;
-
-        [DllImport("user32")]
-        private static extern bool ExitWindowsEx(uint uFlags, uint dwReason);
-
-        [DllImport("user32")]
-        private static extern void LockWorkStation();
-
-        [DllImport("Shell32.dll", CharSet = CharSet.Unicode)]
-        private static extern uint SHEmptyRecycleBin(IntPtr hWnd, uint dwFlags);
-
-        // http://www.pinvoke.net/default.aspx/Enums/HRESULT.html
-        private enum HRESULT : uint
-        {
-            S_FALSE = 0x0001,
-            S_OK = 0x0000
-        }
-
-        #endregion
+        // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure, software updates, or other predefined reasons.
+        // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
+        private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
 
         public Control CreateSettingPanel()
         {
@@ -56,6 +34,11 @@ namespace Flow.Launcher.Plugin.Sys
 
         public List<Result> Query(Query query)
         {
+            if(query.Search.StartsWith(ThemeSelector.Keyword))
+            {
+                return themeSelector.Query(query);
+            }
+
             var commands = Commands();
             var results = new List<Result>();
             foreach (var c in commands)
@@ -104,6 +87,7 @@ namespace Flow.Launcher.Plugin.Sys
         public void Init(PluginInitContext context)
         {
             this.context = context;
+            themeSelector = new ThemeSelector(context);
             KeywordTitleMappings = new Dictionary<string, string>{
                 {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
                 {"Restart", "flowlauncher_plugin_sys_restart_computer_cmd"},
@@ -124,8 +108,47 @@ namespace Flow.Launcher.Plugin.Sys
                 {"Open Log Location", "flowlauncher_plugin_sys_open_log_location_cmd"},
                 {"Flow Launcher Tips", "flowlauncher_plugin_sys_open_docs_tips_cmd"},
                 {"Flow Launcher UserData Folder", "flowlauncher_plugin_sys_open_userdata_location_cmd"},
-                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"}
+                {"Toggle Game Mode", "flowlauncher_plugin_sys_toggle_game_mode_cmd"},
+                {"Set Flow Launcher Theme", "flowlauncher_plugin_sys_theme_selector_cmd"}
             };
+        }
+
+        private static unsafe bool EnableShutdownPrivilege()
+        {
+            try
+            {
+                if (!PInvoke.OpenProcessToken(Process.GetCurrentProcess().SafeHandle, TOKEN_ACCESS_MASK.TOKEN_ADJUST_PRIVILEGES | TOKEN_ACCESS_MASK.TOKEN_QUERY, out var tokenHandle))
+                {
+                    return false;
+                }
+
+                if (!PInvoke.LookupPrivilegeValue(null, PInvoke.SE_SHUTDOWN_NAME, out var luid))
+                {
+                    return false;
+                }
+
+                var privileges = new TOKEN_PRIVILEGES
+                {
+                    PrivilegeCount = 1,
+                    Privileges = new() { e0 = new LUID_AND_ATTRIBUTES { Luid = luid, Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED } }
+                };
+
+                if (!PInvoke.AdjustTokenPrivileges(tokenHandle, false, &privileges, 0, null, null))
+                {
+                    return false;
+                }
+
+                if (Marshal.GetLastWin32Error() != (int)WIN32_ERROR.NO_ERROR)
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private List<Result> Commands()
@@ -148,10 +171,12 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
-                        {
-                            Process.Start("shutdown", "/s /t 0");
-                        }
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_SHUTDOWN | EXIT_WINDOWS_FLAGS.EWX_POWEROFF, REASON);
+                            else
+                                Process.Start("shutdown", "/s /t 0");
 
                         return true;
                     }
@@ -168,10 +193,12 @@ namespace Flow.Launcher.Plugin.Sys
                             context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
                             context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
                         if (result == MessageBoxResult.Yes)
-                        {
-                            Process.Start("shutdown", "/r /t 0");
-                        }
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT, REASON);
+                            else
+                                Process.Start("shutdown", "/r /t 0");
 
                         return true;
                     }
@@ -190,7 +217,10 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            Process.Start("shutdown", "/r /o /t 0");
+                            if (EnableShutdownPrivilege())
+                                PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_REBOOT | EXIT_WINDOWS_FLAGS.EWX_BOOTOPTIONS, REASON);
+                            else
+                                Process.Start("shutdown", "/r /o /t 0");
 
                         return true;
                     }
@@ -209,7 +239,7 @@ namespace Flow.Launcher.Plugin.Sys
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
-                            ExitWindowsEx(EWX_LOGOFF, 0);
+                            PInvoke.ExitWindowsEx(EXIT_WINDOWS_FLAGS.EWX_LOGOFF, REASON);
 
                         return true;
                     }
@@ -222,7 +252,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\lock.png",
                     Action = c =>
                     {
-                        LockWorkStation();
+                        PInvoke.LockWorkStation();
                         return true;
                     }
                 },
@@ -232,7 +262,11 @@ namespace Flow.Launcher.Plugin.Sys
                     SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
-                    Action = c => FormsApplication.SetSuspendState(PowerState.Suspend, false, false)
+                    Action = c =>
+                    {
+                        PInvoke.SetSuspendState(false, false, false);
+                        return true;
+                    }
                 },
                 new Result
                 {
@@ -242,12 +276,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
                     {
-                        var info = ShellCommand.SetProcessStartInfo("shutdown", arguments:"/h");
-                        info.WindowStyle = ProcessWindowStyle.Hidden;
-                        info.UseShellExecute = true;
-
-                        ShellCommand.Execute(info);
-
+                        PInvoke.SetSuspendState(true, false, false);
                         return true;
                     }
                 },
@@ -259,10 +288,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
                     Action = c =>
                     {
-                        {
-                            System.Diagnostics.Process.Start("control.exe", "srchadmin.dll");
-                        }
-
+                        Process.Start("control.exe", "srchadmin.dll");
                         return true;
                     }
                 },
@@ -277,11 +303,13 @@ namespace Flow.Launcher.Plugin.Sys
                         // http://www.pinvoke.net/default.aspx/shell32/SHEmptyRecycleBin.html
                         // FYI, couldn't find documentation for this but if the recycle bin is already empty, it will return -2147418113 (0x8000FFFF (E_UNEXPECTED))
                         // 0 for nothing
-                        var result = SHEmptyRecycleBin(new WindowInteropHelper(Application.Current.MainWindow).Handle, 0);
-                        if (result != (uint) HRESULT.S_OK && result != (uint) 0x8000FFFF)
+                        var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
+                        if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                         {
-                            context.API.ShowMsgBox($"Error emptying recycle bin, error code: {result}\n" +
-                                            "please refer to https://msdn.microsoft.com/en-us/library/windows/desktop/aa378137",
+                            context.API.ShowMsgBox("Failed to empty the recycle bin. This might happen if:\n" +
+                                            "- A file in the recycle bin is in use\n" +
+                                            "- You don't have permission to delete some items\n" +
+                                            "Please close any applications that might be using these files and try again.",
                                 "Error",
                                 MessageBoxButton.OK, MessageBoxImage.Error);
                         }
@@ -298,10 +326,7 @@ namespace Flow.Launcher.Plugin.Sys
                     CopyText = recycleBinFolder,
                     Action = c =>
                     {
-                        {
-                                   System.Diagnostics.Process.Start("explorer", recycleBinFolder);
-                        }
-
+                        Process.Start("explorer", recycleBinFolder);
                         return true;
                     }
                 },
@@ -359,7 +384,7 @@ namespace Flow.Launcher.Plugin.Sys
                     Action = c =>
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
-                        Application.Current.MainWindow.Hide();
+                        context.API.HideMainWindow();
 
                         _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
                             context.API.ShowMsg(
@@ -378,7 +403,7 @@ namespace Flow.Launcher.Plugin.Sys
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
-                        Application.Current.MainWindow.Hide();
+                        context.API.HideMainWindow();
                         context.API.CheckForNewUpdate();
                         return true;
                     }
@@ -432,6 +457,18 @@ namespace Flow.Launcher.Plugin.Sys
                     {
                         context.API.ToggleGameMode();
                         return true;
+                    }
+                },
+                new Result
+                {
+                    Title = "Set Flow Launcher Theme",
+                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
+                    IcoPath = "Images\\app.png",
+                    Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
+                    Action = c =>
+                    {
+                        context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
+                        return false;
                     }
                 }
             });

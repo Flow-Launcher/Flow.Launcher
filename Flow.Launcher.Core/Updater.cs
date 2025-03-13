@@ -22,23 +22,26 @@ namespace Flow.Launcher.Core
 {
     public class Updater
     {
-        public string GitHubRepository { get; }
+        public string GitHubRepository { get; init; }
 
-        public Updater(string gitHubRepository)
+        private readonly IPublicAPI _api;
+
+        public Updater(IPublicAPI publicAPI, string gitHubRepository)
         {
+            _api = publicAPI;
             GitHubRepository = gitHubRepository;
         }
 
         private SemaphoreSlim UpdateLock { get; } = new SemaphoreSlim(1);
 
-        public async Task UpdateAppAsync(IPublicAPI api, bool silentUpdate = true)
+        public async Task UpdateAppAsync(bool silentUpdate = true)
         {
             await UpdateLock.WaitAsync().ConfigureAwait(false);
             try
             {
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("pleaseWait"),
-                        api.GetTranslation("update_flowlauncher_update_check"));
+                    _api.ShowMsg(_api.GetTranslation("pleaseWait"),
+                        _api.GetTranslation("update_flowlauncher_update_check"));
 
                 using var updateManager = await GitHubUpdateManagerAsync(GitHubRepository).ConfigureAwait(false);
 
@@ -53,13 +56,13 @@ namespace Flow.Launcher.Core
                 if (newReleaseVersion <= currentVersion)
                 {
                     if (!silentUpdate)
-                        MessageBoxEx.Show(api.GetTranslation("update_flowlauncher_already_on_latest"));
+                        _api.ShowMsgBox(_api.GetTranslation("update_flowlauncher_already_on_latest"));
                     return;
                 }
 
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("update_flowlauncher_update_found"),
-                        api.GetTranslation("update_flowlauncher_updating"));
+                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_update_found"),
+                        _api.GetTranslation("update_flowlauncher_updating"));
 
                 await updateManager.DownloadReleases(newUpdateInfo.ReleasesToApply).ConfigureAwait(false);
 
@@ -68,9 +71,9 @@ namespace Flow.Launcher.Core
                 if (DataLocation.PortableDataLocationInUse())
                 {
                     var targetDestination = updateManager.RootAppDirectory + $"\\app-{newReleaseVersion.ToString()}\\{DataLocation.PortableFolderName}";
-                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show);
-                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, MessageBoxEx.Show))
-                        MessageBoxEx.Show(string.Format(api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
+                    FilesFolders.CopyAll(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s));
+                    if (!FilesFolders.VerifyBothFolderFilesEqual(DataLocation.PortableDataPath, targetDestination, (s) => _api.ShowMsgBox(s)))
+                        _api.ShowMsgBox(string.Format(_api.GetTranslation("update_flowlauncher_fail_moving_portable_user_profile_data"),
                             DataLocation.PortableDataPath,
                             targetDestination));
                 }
@@ -83,7 +86,7 @@ namespace Flow.Launcher.Core
 
                 Log.Info($"|Updater.UpdateApp|Update success:{newVersionTips}");
 
-                if (MessageBoxEx.Show(newVersionTips, api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                if (_api.ShowMsgBox(newVersionTips, _api.GetTranslation("update_flowlauncher_new_update"), MessageBoxButton.YesNo) == MessageBoxResult.Yes)
                 {
                     UpdateManager.RestartApp(Constant.ApplicationFileName);
                 }
@@ -96,8 +99,8 @@ namespace Flow.Launcher.Core
                     Log.Exception($"|Updater.UpdateApp|Error Occurred", e);
                 
                 if (!silentUpdate)
-                    api.ShowMsg(api.GetTranslation("update_flowlauncher_fail"),
-                        api.GetTranslation("update_flowlauncher_check_connection"));
+                    _api.ShowMsg(_api.GetTranslation("update_flowlauncher_fail"),
+                        _api.GetTranslation("update_flowlauncher_check_connection"));
             }
             finally
             {

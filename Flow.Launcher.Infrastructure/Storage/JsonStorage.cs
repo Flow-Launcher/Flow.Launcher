@@ -31,11 +31,12 @@ namespace Flow.Launcher.Infrastructure.Storage
         protected JsonStorage()
         {
         }
+
         public JsonStorage(string filePath)
         {
             FilePath = filePath;
             DirectoryPath = Path.GetDirectoryName(filePath) ?? throw new ArgumentException("Invalid file path");
-            
+
             Helper.ValidateDirectory(DirectoryPath);
         }
 
@@ -97,6 +98,7 @@ namespace Flow.Launcher.Infrastructure.Storage
                 return default;
             }
         }
+
         private void RestoreBackup()
         {
             Log.Info($"|JsonStorage.Load|Failed to load settings.json, {BackupFilePath} restored successfully");
@@ -179,25 +181,21 @@ namespace Flow.Launcher.Infrastructure.Storage
         public void Save()
         {
             string serialized = JsonSerializer.Serialize(Data,
-                new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                });
+                new JsonSerializerOptions { WriteIndented = true });
 
             File.WriteAllText(TempFilePath, serialized);
 
             AtomicWriteSetting();
         }
+
         public async Task SaveAsync()
         {
-            var tempOutput = File.OpenWrite(TempFilePath);
+            await using var tempOutput = File.OpenWrite(TempFilePath);
             await JsonSerializer.SerializeAsync(tempOutput, Data,
-                new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                });
+                new JsonSerializerOptions { WriteIndented = true });
             AtomicWriteSetting();
         }
+
         private void AtomicWriteSetting()
         {
             if (!File.Exists(FilePath))
@@ -206,9 +204,9 @@ namespace Flow.Launcher.Infrastructure.Storage
             }
             else
             {
-                File.Replace(TempFilePath, FilePath, BackupFilePath);
+                var finalFilePath = new FileInfo(FilePath).LinkTarget ?? FilePath;
+                File.Replace(TempFilePath, finalFilePath, BackupFilePath);
             }
         }
-        
     }
 }

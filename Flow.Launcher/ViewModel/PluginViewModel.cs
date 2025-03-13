@@ -90,13 +90,13 @@ namespace Flow.Launcher.ViewModel
         private Control _bottomPart2;
         public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
-        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider;
+        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider && (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
         public Control SettingControl
             => IsExpanded
                 ? _settingControl
-                    ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? null
-                        : settingProvider.CreateSettingPanel()
+                    ??= HasSettingControl
+                        ? ((ISettingProvider)PluginPair.Plugin).CreateSettingPanel()
+                        : null
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
@@ -134,20 +134,20 @@ namespace Flow.Launcher.ViewModel
         {
             var directory = PluginPair.Metadata.PluginDirectory;
             if (!string.IsNullOrEmpty(directory))
-                PluginManager.API.OpenDirectory(directory);
+                App.API.OpenDirectory(directory);
         }
 
         [RelayCommand]
         private void OpenSourceCodeLink()
         {
-            PluginManager.API.OpenUrl(PluginPair.Metadata.Website);
+            App.API.OpenUrl(PluginPair.Metadata.Website);
         }
 
         [RelayCommand]
         private void OpenDeletePluginWindow()
         {
-            PluginManager.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
-            PluginManager.API.ShowMainWindow();
+            App.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
+            App.API.ShowMainWindow();
         }
 
         public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
@@ -159,5 +159,4 @@ namespace Flow.Launcher.ViewModel
             changeKeywordsWindow.ShowDialog();
         }
     }
-
 }

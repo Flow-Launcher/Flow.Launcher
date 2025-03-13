@@ -57,6 +57,16 @@ namespace Flow.Launcher.Plugin.Program.Views
             }
         }
 
+        public bool HideDuplicatedWindowsApp
+        {
+            get => _settings.HideDuplicatedWindowsApp;
+            set
+            {
+                Main.ResetCache();
+                _settings.HideDuplicatedWindowsApp = value;
+            }
+        }
+
         public bool EnableRegistrySource
         {
             get => _settings.EnableRegistrySource;

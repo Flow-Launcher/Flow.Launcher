@@ -30,7 +30,6 @@ namespace Flow.Launcher.Core.Resource
         public static Language Vietnamese = new Language("vi-vn", "Tiếng Việt");
         public static Language Hebrew = new Language("he", "עברית");
 
-
         public static List<Language> GetAvailableLanguages()
         {
             List<Language> languages = new List<Language>
@@ -62,6 +61,39 @@ namespace Flow.Launcher.Core.Resource
                 Hebrew
             };
             return languages;
+        }
+
+        public static string GetSystemTranslation(string languageCode)
+        {
+            return languageCode switch
+            {
+                "en" => "System",
+                "zh-cn" => "系统",
+                "zh-tw" => "系統",
+                "uk-UA" => "Система",
+                "ru" => "Система",
+                "fr" => "Système",
+                "ja" => "システム",
+                "nl" => "Systeem",
+                "pl" => "System",
+                "da" => "System",
+                "de" => "System",
+                "ko" => "시스템",
+                "sr" => "Систем",
+                "pt-pt" => "Sistema",
+                "pt-br" => "Sistema",
+                "es" => "Sistema",
+                "es-419" => "Sistema",
+                "it" => "Sistema",
+                "nb-NO" => "System",
+                "sk" => "Systém",
+                "tr" => "Sistem",
+                "cs" => "Systém",
+                "ar" => "النظام",
+                "vi-vn" => "Hệ thống",
+                "he" => "מערכת",
+                _ => "System",
+            };
         }
     }
 }
