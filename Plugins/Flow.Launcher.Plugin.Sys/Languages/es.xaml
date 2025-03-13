@@ -25,6 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Consejos Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Carpeta UserData de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Apaga el equipo</system:String>
@@ -47,8 +48,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Accede a la documentación de Flow Launcher para más ayuda y consejos de uso</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abre la ubicación donde se almacena la configuración de Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Cambiar a Modo Juego</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Correcto</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Toda la configuración de Flow Launcher ha sido guardada</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Se recargaron todos los datos del complemento</system:String>
