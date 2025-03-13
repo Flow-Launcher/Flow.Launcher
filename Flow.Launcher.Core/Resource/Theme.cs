@@ -22,6 +22,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Controls.TextBox;
+using System.Windows.Threading;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -343,6 +345,68 @@ namespace Flow.Launcher.Core.Resource
             return Colors.Transparent; // Default is transparent
         }
 
+        private void ApplyPreviewBackground(Color bgColor)
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                Style baseStyle = null;
+
+                // ✅ `WindowBorderStyle`이 존재하면 가져오기
+                if (Application.Current.Resources.Contains("WindowBorderStyle"))
+                {
+                    baseStyle = Application.Current.Resources["WindowBorderStyle"] as Style;
+                }
+
+                // ✅ `WindowBorderStyle`이 없으면 `Base.xaml`의 기본 스타일 사용
+                if (baseStyle == null && Application.Current.Resources.Contains("BaseWindowBorderStyle"))
+                {
+                    baseStyle = Application.Current.Resources["BaseWindowBorderStyle"] as Style;
+                }
+
+                // ✅ 투명도가 존재하면 불투명한 색상으로 변경
+                if (bgColor.A < 255)
+                {
+                    bgColor = Color.FromRgb(bgColor.R, bgColor.G, bgColor.B); // 알파값 제거
+                }
+
+                // ✅ 기존 스타일이 존재하면 복사하여 새로운 스타일 생성
+                if (baseStyle != null)
+                {
+                    var newStyle = new Style(typeof(Border));
+
+                    // ✅ 기존 스타일의 Setter를 복사 (Background 제외)
+                    foreach (var setter in baseStyle.Setters.OfType<Setter>())
+                    {
+                        if (setter.Property != Border.BackgroundProperty) // Background는 새 값으로 대체
+                        {
+                            newStyle.Setters.Add(new Setter(setter.Property, setter.Value));
+                        }
+                    }
+
+                    // ✅ 새로운 Background Setter 추가
+                    newStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(bgColor)));
+
+                    // ✅ 새 스타일을 `PreviewWindowBorderStyle`로 적용
+                    Application.Current.Resources["PreviewWindowBorderStyle"] = newStyle;
+                }
+                else
+                {
+                    // ✅ `WindowBorderStyle`이 없으면 기본 스타일 생성
+                    var defaultStyle = new Style(typeof(Border));
+                    defaultStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(bgColor)));
+                    defaultStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(0)));
+                    defaultStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
+                    defaultStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
+                    defaultStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
+
+                    Application.Current.Resources["PreviewWindowBorderStyle"] = defaultStyle;
+                }
+            }, DispatcherPriority.Render);
+        }
+
+
+
+
         public void ThemeModeColor(string Mode)
         {
             var dict = GetThemeResourceDictionary(_settings.Theme);
@@ -381,12 +445,14 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (isDarkMode)
                     {
+                        ApplyPreviewBackground(darkBG);
                         mainWindow.Background = new SolidColorBrush(darkBG);
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else
                     {
+                        ApplyPreviewBackground(lightBG);
                         mainWindow.Background = new SolidColorBrush(lightBG);
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
@@ -396,12 +462,14 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (colorScheme == "Dark")
                     {
+                        ApplyPreviewBackground(darkBG);
                         mainWindow.Background = new SolidColorBrush(darkBG);
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else if (colorScheme == "Light")
                     {
+                        ApplyPreviewBackground(lightBG);
                         mainWindow.Background = new SolidColorBrush(lightBG);
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
@@ -411,17 +479,20 @@ namespace Flow.Launcher.Core.Resource
             else if (Mode == "Dark")
             {
                 mainWindow.Background = new SolidColorBrush(darkBG);
+                ApplyPreviewBackground(darkBG);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                 return;
             }
             else if (Mode == "Light")
             {
                 mainWindow.Background = new SolidColorBrush(lightBG);
+                ApplyPreviewBackground(lightBG);
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 return;
             }
             else
             {
+                ApplyPreviewBackground(lightBG);
                 mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
             }
         }
@@ -464,12 +535,14 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (isDarkMode)
                     {
+                        ApplyPreviewBackground(darkBG);
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else
                     {
+                        ApplyPreviewBackground(lightBG);
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
@@ -479,12 +552,14 @@ namespace Flow.Launcher.Core.Resource
                 {
                     if (colorScheme == "Dark")
                     {
+                        ApplyPreviewBackground(darkBG);
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                         return;
                     }
                     else if (colorScheme == "Light")
                     {
+                        ApplyPreviewBackground(lightBG);
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                         Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                         return;
@@ -493,18 +568,21 @@ namespace Flow.Launcher.Core.Resource
             }
             else if (Mode == "Dark")
             {
+                ApplyPreviewBackground(darkBG);
                 mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
                 return;
             }
             else if (Mode == "Light")
             {
+                ApplyPreviewBackground(lightBG);
                 mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
                 return;
             }
             else
             {
+                ApplyPreviewBackground(lightBG);
                 mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
             }
         }

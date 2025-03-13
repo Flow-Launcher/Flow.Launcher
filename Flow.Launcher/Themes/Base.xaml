@@ -557,6 +557,14 @@
         <Setter Property="TextWrapping" Value="Wrap" />
     </Style>
 
+    <Style x:Key="PreviewWindowBorderStyle" TargetType="{x:Type Border}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="#2F2F2F" />
+        <Setter Property="Padding" Value="0 0 0 0" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
     <!--  Style for old version themes  -->
     <Style
         x:Key="PreviewItemTitleStyle"
