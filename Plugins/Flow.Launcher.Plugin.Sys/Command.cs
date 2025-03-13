@@ -6,12 +6,39 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public string Key { get; set; }
 
+        private string name;
         [JsonIgnore]
-        public string Name { get; set; }
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyChanged();
+            }
+        }
 
+        private string description;
         [JsonIgnore]
-        public string Description { get; set; }
+        public string Description
+        {
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Keyword { get; set; }
+        private string keyword;
+        public string Keyword
+        {
+            get => keyword;
+            set
+            {
+                keyword = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -18,10 +19,6 @@ namespace Flow.Launcher.Plugin.Sys
 {
     public class Main : IPlugin, ISettingProvider, IPluginI18n
     {
-        private PluginInitContext context;
-        private Settings settings;
-        private ThemeSelector themeSelector;
-
         private readonly Dictionary<string, string> KeywordTitleMappings = new()
         {
             {"Shutdown", "flowlauncher_plugin_sys_shutdown_computer_cmd"},
@@ -48,23 +45,28 @@ namespace Flow.Launcher.Plugin.Sys
         };
         private readonly Dictionary<string, string> KeywordDescriptionMappings = new();
 
-        private SettingsViewModel _viewModel;
-
-        // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure, software updates, or other predefined reasons.
+        // SHTDN_REASON_MAJOR_OTHER indicates a generic shutdown reason that isn't categorized under hardware failure,
+        // software updates, or other predefined reasons.
         // SHTDN_REASON_FLAG_PLANNED marks the shutdown as planned rather than an unexpected shutdown or failure
-        private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER | SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
+        private const SHUTDOWN_REASON REASON = SHUTDOWN_REASON.SHTDN_REASON_MAJOR_OTHER |
+            SHUTDOWN_REASON.SHTDN_REASON_FLAG_PLANNED;
+
+        private PluginInitContext _context;
+        private Settings _settings;
+        private ThemeSelector _themeSelector;
+        private SettingsViewModel _viewModel;
 
         public Control CreateSettingPanel()
         {
             UpdateLocalizedNameDescription(false);
-            return new SysSettings(_viewModel);
+            return new SysSettings(_context, _viewModel);
         }
 
         public List<Result> Query(Query query)
         {
             if(query.Search.StartsWith(ThemeSelector.Keyword))
             {
-                return themeSelector.Query(query);
+                return _themeSelector.Query(query);
             }
 
             var commands = Commands();
@@ -99,7 +101,7 @@ namespace Flow.Launcher.Plugin.Sys
                 return "Title Not Found";
             }
 
-            return context.API.GetTranslation(translationKey);
+            return _context.API.GetTranslation(translationKey);
         }
 
         private string GetDescription(string key)
@@ -110,7 +112,7 @@ namespace Flow.Launcher.Plugin.Sys
                 return "Description Not Found";
             }
 
-            return context.API.GetTranslation(translationKey);
+            return _context.API.GetTranslation(translationKey);
         }
 
         [Obsolete]
@@ -122,7 +124,7 @@ namespace Flow.Launcher.Plugin.Sys
                 return "Title Not Found";
             }
 
-            var translatedTitle = context.API.GetTranslation(translationKey);
+            var translatedTitle = _context.API.GetTranslation(translationKey);
 
             if (query == null)
             {
@@ -142,10 +144,10 @@ namespace Flow.Launcher.Plugin.Sys
 
         public void Init(PluginInitContext context)
         {
-            this.context = context;
-            settings = context.API.LoadSettingJsonStorage<Settings>();
-            _viewModel = new SettingsViewModel(settings);
-            themeSelector = new ThemeSelector(context);
+            _context = context;
+            _settings = context.API.LoadSettingJsonStorage<Settings>();
+            _viewModel = new SettingsViewModel(_settings);
+            _themeSelector = new ThemeSelector(context);
             foreach (string key in KeywordTitleMappings.Keys)
             {
                 // Remove _cmd in the last of the strings
@@ -155,9 +157,9 @@ namespace Flow.Launcher.Plugin.Sys
 
         private void UpdateLocalizedNameDescription(bool force)
         {
-            if (string.IsNullOrEmpty(settings.Commands[0].Name) || force)
+            if (string.IsNullOrEmpty(_settings.Commands[0].Name) || force)
             {
-                foreach (var c in settings.Commands)
+                foreach (var c in _settings.Commands)
                 {
                     c.Name = GetTitle(c.Key);
                     c.Description = GetDescription(c.Key);
@@ -214,14 +216,14 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Shutdown",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe7e8"),
                     IcoPath = "Images\\shutdown.png",
                     Action = c =>
                     {
-                        var result = context.API.ShowMsgBox(
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
+                        var result = _context.API.ShowMsgBox(
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_shutdown_computer"),
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_shutdown_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
@@ -236,14 +238,14 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Restart",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe777"),
                     IcoPath = "Images\\restart.png",
                     Action = c =>
                     {
-                        var result = context.API.ShowMsgBox(
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                        var result = _context.API.ShowMsgBox(
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer"),
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
@@ -258,14 +260,14 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Restart With Advanced Boot Options",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart_advanced"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xecc5"),
                     IcoPath = "Images\\restart_advanced.png",
                     Action = c =>
                     {
-                        var result = context.API.ShowMsgBox(
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
+                        var result = _context.API.ShowMsgBox(
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_restart_computer_advanced"),
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_restart_computer"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
@@ -280,14 +282,14 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Log Off/Sign Out",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe77b"),
                     IcoPath = "Images\\logoff.png",
                     Action = c =>
                     {
-                        var result = context.API.ShowMsgBox(
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
+                        var result = _context.API.ShowMsgBox(
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_logoff_computer"),
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_log_off"),
                             MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                         if (result == MessageBoxResult.Yes)
@@ -299,7 +301,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Lock",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_lock"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_lock"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe72e"),
                     IcoPath = "Images\\lock.png",
                     Action = c =>
@@ -311,7 +313,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Sleep",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_sleep"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xec46"),
                     IcoPath = "Images\\sleep.png",
                     Action = c =>
@@ -323,7 +325,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Hibernate",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_hibernate"),
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe945"),
                     IcoPath = "Images\\hibernate.png",
                     Action= c =>
@@ -335,7 +337,7 @@ namespace Flow.Launcher.Plugin.Sys
                  new Result
                 {
                     Title = "Index Option",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_indexoption"),
                     IcoPath = "Images\\indexoption.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe773"),
                     Action = c =>
@@ -347,7 +349,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Empty Recycle Bin",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_emptyrecyclebin"),
                     IcoPath = "Images\\recyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     Action = c =>
@@ -358,7 +360,7 @@ namespace Flow.Launcher.Plugin.Sys
                         var result = PInvoke.SHEmptyRecycleBin(new(), string.Empty, 0);
                         if (result != HRESULT.S_OK && result != HRESULT.E_UNEXPECTED)
                         {
-                            context.API.ShowMsgBox("Failed to empty the recycle bin. This might happen if:\n" +
+                            _context.API.ShowMsgBox("Failed to empty the recycle bin. This might happen if:\n" +
                                             "- A file in the recycle bin is in use\n" +
                                             "- You don't have permission to delete some items\n" +
                                             "Please close any applications that might be using these files and try again.",
@@ -372,7 +374,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Open Recycle Bin",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_openrecyclebin"),
                     IcoPath = "Images\\openrecyclebin.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\xe74d"),
                     CopyText = recycleBinFolder,
@@ -385,7 +387,7 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Exit",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_exit"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_exit"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
@@ -396,52 +398,52 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Save Settings",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_save_all_settings"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_save_all_settings"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        context.API.SaveAppAllSettings();
-                        context.API.ShowMsg(context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                            context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_all_settings_saved"));
+                        _context.API.SaveAppAllSettings();
+                        _context.API.ShowMsg(_context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
+                            _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtext_all_settings_saved"));
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Restart Flow Launcher",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_restart"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_restart"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        context.API.RestartApp();
+                        _context.API.RestartApp();
                         return false;
                     }
                 },
                 new Result
                 {
                     Title = "Settings",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_setting"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_setting"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
-                        context.API.OpenSettingDialog();
+                        _context.API.OpenSettingDialog();
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Reload Plugin Data",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_reload_plugin_data"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_reload_plugin_data"),
                     IcoPath = "Images\\app.png",
                     Action = c =>
                     {
                         // Hide the window first then show msg after done because sometimes the reload could take a while, so not to make user think it's frozen. 
-                        context.API.HideMainWindow();
+                        _context.API.HideMainWindow();
 
-                        _ = context.API.ReloadAllPluginData().ContinueWith(_ =>
-                            context.API.ShowMsg(
-                                context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
-                                context.API.GetTranslation(
+                        _ = _context.API.ReloadAllPluginData().ContinueWith(_ =>
+                            _context.API.ShowMsg(
+                                _context.API.GetTranslation("flowlauncher_plugin_sys_dlgtitle_success"),
+                                _context.API.GetTranslation(
                                     "flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded")),
                             System.Threading.Tasks.TaskScheduler.Current);
 
@@ -451,75 +453,75 @@ namespace Flow.Launcher.Plugin.Sys
                 new Result
                 {
                     Title = "Check For Update",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_check_for_update"),
                     IcoPath = "Images\\checkupdate.png",
                     Action = c =>
                     {
-                        context.API.HideMainWindow();
-                        context.API.CheckForNewUpdate();
+                        _context.API.HideMainWindow();
+                        _context.API.CheckForNewUpdate();
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Open Log Location",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_log_location"),
                     IcoPath = "Images\\app.png",
                     CopyText = logPath,
                     AutoCompleteText = logPath,
                     Action = c =>
                     {
-                        context.API.OpenDirectory(logPath);
+                        _context.API.OpenDirectory(logPath);
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Flow Launcher Tips",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_docs_tips"),
                     IcoPath = "Images\\app.png",
                     CopyText = Constant.Documentation,
                     AutoCompleteText = Constant.Documentation,
                     Action = c =>
                     {
-                        context.API.OpenUrl(Constant.Documentation);
+                        _context.API.OpenUrl(Constant.Documentation);
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Flow Launcher UserData Folder",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_open_userdata_location"),
                     IcoPath = "Images\\app.png",
                     CopyText = userDataPath,
                     AutoCompleteText = userDataPath,
                     Action = c =>
                     {
-                        context.API.OpenDirectory(userDataPath);
+                        _context.API.OpenDirectory(userDataPath);
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Toggle Game Mode",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_toggle_game_mode"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_toggle_game_mode"),
                     IcoPath = "Images\\app.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
                     Action = c =>
                     {
-                        context.API.ToggleGameMode();
+                        _context.API.ToggleGameMode();
                         return true;
                     }
                 },
                 new Result
                 {
                     Title = "Set Flow Launcher Theme",
-                    SubTitle = context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_sys_theme_selector"),
                     IcoPath = "Images\\app.png",
                     Glyph = new GlyphInfo (FontFamily:"/Resources/#Segoe Fluent Icons", Glyph:"\ue7fc"),
                     Action = c =>
                     {
-                        context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
+                        _context.API.ChangeQuery($"{ThemeSelector.Keyword} ");
                         return false;
                     }
                 }
@@ -530,12 +532,17 @@ namespace Flow.Launcher.Plugin.Sys
 
         public string GetTranslatedPluginTitle()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_sys_plugin_name");
+            return _context.API.GetTranslation("flowlauncher_plugin_sys_plugin_name");
         }
 
         public string GetTranslatedPluginDescription()
         {
-            return context.API.GetTranslation("flowlauncher_plugin_sys_plugin_description");
+            return _context.API.GetTranslation("flowlauncher_plugin_sys_plugin_description");
+        }
+
+        public void OnCultureInfoChanged(CultureInfo _)
+        {
+            UpdateLocalizedNameDescription(true);
         }
     }
 }

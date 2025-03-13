@@ -5,11 +5,13 @@ namespace Flow.Launcher.Plugin.Sys
 {
     public partial class SysSettings : UserControl
     {
+        private readonly PluginInitContext _context;
         private readonly Settings _settings;
 
-        public SysSettings(SettingsViewModel viewModel)
+        public SysSettings(PluginInitContext context, SettingsViewModel viewModel)
         {
             InitializeComponent();
+            _context = context;
             _settings = viewModel.Settings;
             DataContext = viewModel;
         }
@@ -36,24 +38,16 @@ namespace Flow.Launcher.Plugin.Sys
 
         public void OnEditCommandKeywordClick(object sender, RoutedEventArgs e)
         {
-            /*var webSearch = new SearchSourceSettingWindow
-                (
-                    _settings.SearchSources, _context, _settings.SelectedSearchSource
-                );
-
-            webSearch.ShowDialog();*/
+            var commandKeyword = new CommandKeywordSettingWindow(_context, _settings.SelectedCommand);
+            commandKeyword.ShowDialog();
         }
 
         private void MouseDoubleClickItem(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (((FrameworkElement)e.OriginalSource).DataContext is Command && _settings.SelectedCommand != null)
             {
-                /*var webSearch = new SearchSourceSettingWindow
-                (
-                    _settings.SearchSources, _context, _settings.SelectedSearchSource
-                );
-
-                webSearch.ShowDialog();*/
+                var commandKeyword = new CommandKeywordSettingWindow(_context, _settings.SelectedCommand);
+                commandKeyword.ShowDialog();
             }
         }
     }
