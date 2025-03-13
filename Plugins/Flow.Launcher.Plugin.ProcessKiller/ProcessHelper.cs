@@ -13,21 +13,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     internal class ProcessHelper
     {
-        [DllImport("user32.dll")]
-        private static extern bool EnumWindows(EnumWindowsProc enumProc, IntPtr lParam);
-
-        private delegate bool EnumWindowsProc(IntPtr hWnd, IntPtr lParam);
-
-        [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
-        [DllImport("user32.dll")]
-        private static extern bool IsWindowVisible(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        private readonly HashSet<string> _systemProcessList = new HashSet<string>()
+        private readonly HashSet<string> _systemProcessList = new()
         {
             "conhost",
             "svchost",
@@ -79,22 +65,25 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// <summary>
         /// Returns a dictionary of process IDs and their window titles for processes that have a visible main window with a non-empty title.
         /// </summary>
-        public Dictionary<int, string> GetProcessesWithNonEmptyWindowTitle()
+        public static unsafe Dictionary<int, string> GetProcessesWithNonEmptyWindowTitle()
         {
             var processDict = new Dictionary<int, string>();
-            EnumWindows((hWnd, lParam) =>
+            PInvoke.EnumWindows((hWnd, lParam) =>
             {
-                StringBuilder windowTitle = new StringBuilder();
-                GetWindowText(hWnd, windowTitle, windowTitle.Capacity);
-
-                if (!string.IsNullOrWhiteSpace(windowTitle.ToString()) && IsWindowVisible(hWnd))
+                var windowTitle = GetWindowTitle(hWnd);
+                if (!string.IsNullOrWhiteSpace(windowTitle) && PInvoke.IsWindowVisible(hWnd))
                 {
-                    GetWindowThreadProcessId(hWnd, out var processId);
-                    var process = Process.GetProcessById((int)processId);
+                    uint processId = 0;
+                    var result = PInvoke.GetWindowThreadProcessId(hWnd, &processId);
+                    if (result == 0u || processId == 0u)
+                    {
+                        return false;
+                    }
 
+                    var process = Process.GetProcessById((int)processId);
                     if (!processDict.ContainsKey((int)processId))
                     {
-                        processDict.Add((int)processId, windowTitle.ToString());
+                        processDict.Add((int)processId, windowTitle);
                     }
                 }
 
@@ -102,6 +91,21 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }, IntPtr.Zero);
 
             return processDict;
+        }
+
+        private static unsafe string GetWindowTitle(HWND hwnd)
+        {
+            var capacity = PInvoke.GetWindowTextLength(hwnd) + 1;
+            int length;
+            Span<char> buffer = capacity < 1024 ? stackalloc char[capacity] : new char[capacity];
+            fixed (char* pBuffer = buffer)
+            {
+                // If the window has no title bar or text, if the title bar is empty,
+                // or if the window or control handle is invalid, the return value is zero.
+                length = PInvoke.GetWindowText(hwnd, pBuffer, capacity);
+            }
+
+            return buffer[..length].ToString();
         }
 
         /// <summary>

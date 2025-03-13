@@ -6,7 +6,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 {
     public class Main : IPlugin, IPluginI18n, IContextMenu
     {
-        private ProcessHelper processHelper = new ProcessHelper();
+        private readonly ProcessHelper processHelper = new();
 
         private static PluginInitContext _context;
 
@@ -66,7 +66,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             string termToSearch = query.Search;
             var processList = processHelper.GetMatchingProcesses(termToSearch);
-            var processWithNonEmptyMainWindowTitleList = processHelper.GetProcessesWithNonEmptyWindowTitle();
+            var processWithNonEmptyMainWindowTitleList = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
 
             if (!processList.Any())
             {
