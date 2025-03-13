@@ -123,7 +123,7 @@
                 </StackPanel>
             </cc:Card>
 
-            <cc:Card Title="{DynamicResource logLevel}">
+            <cc:Card Title="{DynamicResource logLevel}" Icon="&#xE749;">
                 <ComboBox
                     DisplayMemberPath="Display"
                     ItemsSource="{Binding LogLevels}"
