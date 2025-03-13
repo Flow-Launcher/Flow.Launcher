@@ -102,9 +102,6 @@
     <system:String x:Key="AlwaysPreview">Luôn xem trước</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Luôn mở bảng xem trước khi Flow kích hoạt. Nhấn {0} để chuyển đổi chế độ xem trước.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">Hiệu ứng đổ bóng không được phép nếu chủ đề hiện tại bật hiệu ứng làm mờ</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Plugin tìm kiếm</system:String>
@@ -303,6 +300,9 @@
     <system:String x:Key="userdatapath">Vị trí dữ liệu người dùng</system:String>
     <system:String x:Key="userdatapathToolTip">Thiết đặt người dùng và plugin đã cài đặt sẽ được lưu trong thư mục dữ liệu người dùng. Vị trí này có thể thay đổi tùy thuộc vào việc nó có ở chế độ di động hay không.</system:String>
     <system:String x:Key="userdatapathButton">Mở thư mục</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Chọn trình quản lý tệp</system:String>
