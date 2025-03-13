@@ -102,9 +102,6 @@
     <system:String x:Key="AlwaysPreview">始终打开预览</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow 启动时总是打开预览面板。按 {0} 以切换预览。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">当前主题已启用模糊效果，不允许启用阴影效果</system:String>
-    <system:String x:Key="logLevel">Log level</system:String>
-    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
-    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">搜索插件</system:String>
@@ -301,6 +298,9 @@
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
