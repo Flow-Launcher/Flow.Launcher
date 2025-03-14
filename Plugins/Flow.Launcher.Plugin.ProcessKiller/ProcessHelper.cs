@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Windows.Win32;
 using Windows.Win32.Foundation;
 using Windows.Win32.System.Threading;
@@ -31,15 +32,20 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         private const string FlowLauncherProcessName = "Flow.Launcher";
 
-        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower()) ||
-            string.Compare(p.ProcessName, FlowLauncherProcessName, StringComparison.OrdinalIgnoreCase) == 0;
+        private bool IsSystemProcessOrFlowLauncher(Process p) => 
+            _systemProcessList.Contains(p.ProcessName.ToLower()) ||
+            string.Equals(p.ProcessName, FlowLauncherProcessName, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// Get title based on process name and id
         /// </summary>
         public static string GetProcessNameIdTitle(Process p)
         {
-            return p.ProcessName + " - " + p.Id;
+            var sb = new StringBuilder();
+            sb.Append(p.ProcessName);
+            sb.Append(" - ");
+            sb.Append(p.Id);
+            return sb.ToString();
         }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
             foreach (var p in Process.GetProcesses())
             {
-                if (IsSystemProcess(p)) continue;
+                if (IsSystemProcessOrFlowLauncher(p)) continue;
 
                 processlist.Add(p);
             }
@@ -110,7 +116,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// </summary>
         public IEnumerable<Process> GetSimilarProcesses(string processPath)
         {
-            return Process.GetProcesses().Where(p => !IsSystemProcess(p) && TryGetProcessFilename(p) == processPath);
+            return Process.GetProcesses().Where(p => !IsSystemProcessOrFlowLauncher(p) && TryGetProcessFilename(p) == processPath);
         }
 
         public void TryKill(PluginInitContext context, Process p)
