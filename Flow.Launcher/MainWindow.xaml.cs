@@ -333,7 +333,6 @@ namespace Flow.Launcher
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-          
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
@@ -341,26 +340,22 @@ namespace Flow.Launcher
                          _settings.Hotkey + ")",
                 Icon = openIcon
             };
+            var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
             };
+            var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
             };
-            var settingsIcon = new FontIcon
-            {
-                Glyph = "\ue713"
-            };
+            var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
             };
-            var exitIcon = new FontIcon
-            {
-                Glyph = "\ue7e8"
-            };
+            var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
                 Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
