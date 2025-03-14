@@ -27,6 +27,7 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
+using System.Windows.Shapes;
 
 namespace Flow.Launcher
 {
@@ -460,8 +461,7 @@ namespace Flow.Launcher
             trigger.EnterActions.Add(beginStoryboard);
             trigger.ExitActions.Add(stopStoryboard);
 
-
-            var progressStyle = new Style(typeof(System.Windows.Shapes.Line))
+            var progressStyle = new Style(typeof(Line))
             {
                 BasedOn = FindResource("PendingLineStyle") as Style
             };

@@ -331,7 +331,6 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Bottom"
                     StrokeThickness="2"
-                    Style="{DynamicResource PendingLineStyle}"
                     Visibility="{Binding ProgressBarVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     X1="-100"
                     X2="0"
