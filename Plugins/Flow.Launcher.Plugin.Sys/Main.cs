@@ -78,26 +78,23 @@ namespace Flow.Launcher.Plugin.Sys
                 c.Title = command.Name;
                 c.SubTitle = command.Description;
 
-                // Firstly, we will search the localized title & subtitle
+                // Match from localized title & localized subtitle & keyword
                 var titleMatch = _context.API.FuzzySearch(query.Search, c.Title);
                 var subTitleMatch = _context.API.FuzzySearch(query.Search, c.SubTitle);
+                var keywordMatch = _context.API.FuzzySearch(query.Search, command.Keyword);
 
+                // Get the largest score from them
                 var score = Math.Max(titleMatch.Score, subTitleMatch.Score);
-                if (score > 0)
+                var finalScore = Math.Max(score, keywordMatch.Score);
+                if (finalScore > 0)
                 {
-                    c.Score = score;
+                    c.Score = finalScore;
 
-                    if (score == titleMatch.Score)
+                    // If title match has the highest score, highlight title
+                    if (finalScore == titleMatch.Score)
+                    {
                         c.TitleHighlightData = titleMatch.MatchData;
-
-                    results.Add(c);
-                }
-
-                // If no match found, we will search the keyword
-                score = _context.API.FuzzySearch(query.Search, command.Keyword).Score;
-                if (score > 0)
-                {
-                    c.Score = score;
+                    }
 
                     results.Add(c);
                 }
