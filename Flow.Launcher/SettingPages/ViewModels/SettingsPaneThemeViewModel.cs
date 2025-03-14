@@ -108,16 +108,16 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
     public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
-    public ColorSchemes ColorScheme
+    public string ColorScheme
     {
         get => Settings.ColorScheme;
         set
         {
             ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
             {
-                Infrastructure.UserSettings.ColorSchemes.Light => ApplicationTheme.Light,
-                Infrastructure.UserSettings.ColorSchemes.Dark => ApplicationTheme.Dark,
-                Infrastructure.UserSettings.ColorSchemes.System => null,
+                Constant.Light => ApplicationTheme.Light,
+                Constant.Dark => ApplicationTheme.Dark,
+                Constant.System => null,
                 _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
             };
 
