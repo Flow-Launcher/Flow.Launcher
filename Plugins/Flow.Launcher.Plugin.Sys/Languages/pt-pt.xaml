@@ -25,7 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Dicas Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Pasta de dados do utilizador Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Comutar modo de jogo</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Definir tema Flow Launcher</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Desligar computador</system:String>
@@ -48,7 +48,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Aceda à documentação para mais informações e dicas de utilização</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Abrir localização onde as definições do Flow Launcher estão guardadas</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Comutar modo de jogo</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Alterar rapidamente o tema da aplicação</system:String>
 
     <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Sucesso</system:String>
