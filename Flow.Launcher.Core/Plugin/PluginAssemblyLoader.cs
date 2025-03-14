@@ -1,7 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -36,6 +33,17 @@ namespace Flow.Launcher.Core.Plugin
             var existAssembly = Default.Assemblies.FirstOrDefault(x => x.FullName == assemblyName.FullName);
 
             return existAssembly ?? (assemblyPath == null ? null : LoadFromAssemblyPath(assemblyPath));
+        }
+        
+        protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
+        {
+            var path = dependencyResolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+            if (!string.IsNullOrEmpty(path))
+            {
+                return LoadUnmanagedDllFromPath(path);
+            }
+
+            return IntPtr.Zero;
         }
 
         internal Type FromAssemblyGetTypeOfInterface(Assembly assembly, Type type)

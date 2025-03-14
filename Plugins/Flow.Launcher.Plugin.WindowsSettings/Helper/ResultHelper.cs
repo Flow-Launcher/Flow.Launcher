@@ -1,9 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;
 
@@ -18,7 +18,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
 
         public static void Init(IPublicAPI api) => _api = api;
 
-        private static List<Result> GetDefaultReuslts(in IEnumerable<WindowsSetting> list,
+        private static List<Result> GetDefaultResults(in IEnumerable<WindowsSetting> list,
             string windowsSettingIconPath,
             string controlPanelIconPath)
         {
@@ -45,7 +45,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
         {
             if (string.IsNullOrWhiteSpace(query.Search))
             {
-                return GetDefaultReuslts(list, windowsSettingIconPath, controlPanelIconPath);
+                return GetDefaultResults(list, windowsSettingIconPath, controlPanelIconPath);
             }
 
             var resultList = new List<Result>();
@@ -110,7 +110,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             return resultList;
         }
 
-        private const int TaskLinkScorePanelty = 50;
+        private const int TaskLinkScorePenalty = 50;
 
         private static Result NewSettingResult(int score, string type, string windowsSettingIconPath, string controlPanelIconPath, WindowsSetting entry) => new()
         {
@@ -120,7 +120,7 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             SubTitle = GetSubtitle(entry.Area, type),
             Title = entry.Name,
             ContextData = entry,
-            Score = score - (type == "TaskLink" ? TaskLinkScorePanelty : 0),
+            Score = score - (type == "TaskLink" ? TaskLinkScorePenalty : 0),
         };
 
         private static string GetSubtitle(string section, string entryType)
@@ -200,6 +200,21 @@ namespace Flow.Launcher.Plugin.WindowsSettings.Helper
             {
                 Process.Start(processStartInfo);
                 return true;
+            }
+            catch (Win32Exception)
+            {
+                try
+                {
+                    processStartInfo.UseShellExecute = true;
+                    processStartInfo.Verb = "runas";
+                    Process.Start(processStartInfo);
+                    return true;
+                }
+                catch (Exception exception)
+                {
+                    Log.Exception("can't open settings on elevated permission", exception, typeof(ResultHelper));
+                    return false;
+                }
             }
             catch (Exception exception)
             {

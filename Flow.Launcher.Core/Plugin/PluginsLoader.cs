@@ -1,30 +1,52 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using Droplex;
-using Flow.Launcher.Infrastructure;
+using System.Windows;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.ExternalPlugins.Environments;
+#pragma warning disable IDE0005
 using Flow.Launcher.Infrastructure.Logger;
+#pragma warning restore IDE0005
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
-using Flow.Launcher.Plugin.SharedCommands;
 using Stopwatch = Flow.Launcher.Infrastructure.Stopwatch;
 
 namespace Flow.Launcher.Core.Plugin
 {
     public static class PluginsLoader
     {
-        public const string PythonExecutable = "pythonw.exe";
-
         public static List<PluginPair> Plugins(List<PluginMetadata> metadatas, PluginsSettings settings)
         {
             var dotnetPlugins = DotNetPlugins(metadatas);
-            var pythonPlugins = PythonPlugins(metadatas, settings);
+
+            var pythonEnv = new PythonEnvironment(metadatas, settings);
+            var pythonV2Env = new PythonV2Environment(metadatas, settings);
+            var tsEnv = new TypeScriptEnvironment(metadatas, settings);
+            var jsEnv = new JavaScriptEnvironment(metadatas, settings);
+            var tsV2Env = new TypeScriptV2Environment(metadatas, settings);
+            var jsV2Env = new JavaScriptV2Environment(metadatas, settings);
+            var pythonPlugins = pythonEnv.Setup();
+            var pythonV2Plugins = pythonV2Env.Setup();
+            var tsPlugins = tsEnv.Setup();
+            var jsPlugins = jsEnv.Setup();
+            var tsV2Plugins = tsV2Env.Setup();
+            var jsV2Plugins = jsV2Env.Setup();
+
             var executablePlugins = ExecutablePlugins(metadatas);
-            var plugins = dotnetPlugins.Concat(pythonPlugins).Concat(executablePlugins).ToList();
+            var executableV2Plugins = ExecutableV2Plugins(metadatas);
+
+            var plugins = dotnetPlugins
+                .Concat(pythonPlugins)
+                .Concat(pythonV2Plugins)
+                .Concat(tsPlugins)
+                .Concat(jsPlugins)
+                .Concat(tsV2Plugins)
+                .Concat(jsV2Plugins)
+                .Concat(executablePlugins)
+                .Concat(executableV2Plugins)
+                .ToList();
             return plugins;
         }
 
@@ -83,7 +105,7 @@ namespace Flow.Launcher.Core.Plugin
                             return;
                         }
 
-                        plugins.Add(new PluginPair {Plugin = plugin, Metadata = metadata});
+                        plugins.Add(new PluginPair { Plugin = plugin, Metadata = metadata });
                     });
                 metadata.InitTime += milliseconds;
             }
@@ -98,110 +120,33 @@ namespace Flow.Launcher.Core.Plugin
 
                 _ = Task.Run(() =>
                 {
-                    MessageBox.Show($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
+                    Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsgBox($"{errorMessage}{Environment.NewLine}{Environment.NewLine}" +
                                     $"{errorPluginString}{Environment.NewLine}{Environment.NewLine}" +
                                     $"Please refer to the logs for more information", "",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBoxButton.OK, MessageBoxImage.Warning);
                 });
             }
 
             return plugins;
         }
 
-        public static IEnumerable<PluginPair> PythonPlugins(List<PluginMetadata> source, PluginsSettings settings)
-        {
-            if (!source.Any(o => o.Language.ToUpper() == AllowedLanguage.Python))
-                return new List<PluginPair>();
-
-            if (!string.IsNullOrEmpty(settings.PythonDirectory) && FilesFolders.LocationExists(settings.PythonDirectory))
-                return SetPythonPathForPluginPairs(source, Path.Combine(settings.PythonDirectory, PythonExecutable));
-
-            var pythonPath = string.Empty;
-            
-            if (MessageBox.Show("Flow detected you have installed Python plugins, which " +
-                                "will need Python to run. Would you like to download Python? " +
-                                Environment.NewLine + Environment.NewLine +
-                                "Click no if it's already installed, " +
-                                "and you will be prompted to select the folder that contains the Python executable",
-                    string.Empty, MessageBoxButtons.YesNo) == DialogResult.No
-                && string.IsNullOrEmpty(settings.PythonDirectory))
-            {
-                var dlg = new FolderBrowserDialog
-                {
-                    SelectedPath = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles)
-                };
-
-                var result = dlg.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    string pythonDirectory = dlg.SelectedPath;
-                    if (!string.IsNullOrEmpty(pythonDirectory))
-                    {
-                        pythonPath = Path.Combine(pythonDirectory, PythonExecutable);
-                        if (File.Exists(pythonPath))
-                        {
-                            settings.PythonDirectory = pythonDirectory;
-                            Constant.PythonPath = pythonPath;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Can't find python in given directory");
-                        }
-                    }
-                }
-            }
-            else
-            {
-                var installedPythonDirectory = Path.Combine(DataLocation.DataDirectory(), "PythonEmbeddable");
-
-                // Python 3.8.9 is used for Windows 7 compatibility
-                DroplexPackage.Drop(App.python_3_8_9_embeddable, installedPythonDirectory).Wait();
-
-                pythonPath = Path.Combine(installedPythonDirectory, PythonExecutable);
-                if (FilesFolders.FileExists(pythonPath))
-                {
-                    settings.PythonDirectory = installedPythonDirectory;
-                    Constant.PythonPath = pythonPath;
-                }
-                else
-                {
-                    Log.Error("PluginsLoader",
-                        $"Failed to set Python path after Droplex install, {pythonPath} does not exist",
-                        "PythonPlugins");
-                }
-            }
-
-            if (string.IsNullOrEmpty(settings.PythonDirectory) || string.IsNullOrEmpty(pythonPath))
-            {
-                MessageBox.Show(
-                    "Unable to set Python executable path, please try from Flow's settings (scroll down to the bottom).");
-                Log.Error("PluginsLoader",
-                    $"Not able to successfully set Python path, the PythonDirectory variable is still an empty string.",
-                    "PythonPlugins");
-
-                return new List<PluginPair>();
-            }
-
-            return SetPythonPathForPluginPairs(source, pythonPath);
-        }
-
-        private static IEnumerable<PluginPair> SetPythonPathForPluginPairs(List<PluginMetadata> source, string pythonPath)
-            =>  source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Python)
-                .Select(metadata => new PluginPair
-                {
-                    Plugin = new PythonPlugin(pythonPath), 
-                    Metadata = metadata
-                })
-                .ToList();
-
-    public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
+        public static IEnumerable<PluginPair> ExecutablePlugins(IEnumerable<PluginMetadata> source)
         {
             return source
-                .Where(o => o.Language.ToUpper() == AllowedLanguage.Executable)
+                .Where(o => o.Language.Equals(AllowedLanguage.Executable, StringComparison.OrdinalIgnoreCase))
                 .Select(metadata => new PluginPair
                 {
                     Plugin = new ExecutablePlugin(metadata.ExecuteFilePath), Metadata = metadata
+                });
+        }
+
+        public static IEnumerable<PluginPair> ExecutableV2Plugins(IEnumerable<PluginMetadata> source)
+        {
+            return source
+                .Where(o => o.Language.Equals(AllowedLanguage.ExecutableV2, StringComparison.OrdinalIgnoreCase))
+                .Select(metadata => new PluginPair
+                {
+                    Plugin = new ExecutablePluginV2(metadata.ExecuteFilePath), Metadata = metadata
                 });
         }
     }

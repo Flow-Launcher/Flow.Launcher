@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Windows.Data;
 
-namespace Flow.Launcher.Core
+namespace Flow.Launcher.Core.Resource
 {
     public class LocalizationConverter : IValueConverter
     {

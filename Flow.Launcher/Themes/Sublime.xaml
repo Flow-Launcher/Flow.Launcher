@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
@@ -16,7 +17,6 @@
         BasedOn="{StaticResource BaseQueryBoxStyle}"
         TargetType="{x:Type TextBox}">
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#303840" />
         <Setter Property="Foreground" Value="#d2d8e5" />
         <Setter Property="CaretBrush" Value="#FFAA47" />
         <Setter Property="FontSize" Value="26" />
@@ -27,7 +27,6 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#303840" />
         <Setter Property="Foreground" Value="#798189" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Height" Value="42" />
@@ -161,6 +160,30 @@
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#5bafb0" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#3c454e" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#5989b2" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#7b858f" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#5bafb0" />
     </Style>

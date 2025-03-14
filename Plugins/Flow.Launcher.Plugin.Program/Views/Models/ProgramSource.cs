@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Text.Json.Serialization;
 using Flow.Launcher.Plugin.Program.Programs;
 
@@ -83,7 +82,7 @@ namespace Flow.Launcher.Plugin.Program.Views.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(UniqueIdentifier);
+            return uniqueIdentifier.GetHashCode();
         }
     }
 }

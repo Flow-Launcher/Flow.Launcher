@@ -1,7 +1,4 @@
-﻿using Flow.Launcher.Infrastructure.Storage;
-using Flow.Launcher.Infrastructure.UserSettings;
-
-namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
+﻿namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
 {
     internal class SettingsViewModel
     {
@@ -19,6 +16,12 @@ namespace Flow.Launcher.Plugin.PluginsManager.ViewModels
         {
             get => Settings.WarnFromUnknownSource;
             set => Settings.WarnFromUnknownSource = value;
+        }
+
+        public bool AutoRestartAfterChanging
+        { 
+            get => Settings.AutoRestartAfterChanging;
+            set => Settings.AutoRestartAfterChanging = value;
         }
     }
 }

@@ -10,6 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Odstrániť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Upraviť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Pridať</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Povolené</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Zapnuté</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Vypnuté</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Potvrdiť</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktivačný príkaz</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">Adresa URL</system:String>
@@ -26,11 +29,12 @@
         Všeobecný vzorec pre vyhľadávanie na Netflix je teda https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Kopírovať URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Kopírovať URL vyhľadávanie do schránky</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Názov</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Povoliť</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Stav</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Vybrať ikonu</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Ikona</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Zrušiť</system:String>

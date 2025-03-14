@@ -1,6 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Globalization;
 using System.Linq;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;

@@ -2,14 +2,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Reemplazar Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Cerrar símbolo del sistema después de pulsar cualquier tecla</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Pulsar cualquier tecla para cerrar esta ventana...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">No cerrar el símbolo del sistema después de la ejecución del comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Ejecutar siempre como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Usar Terminal Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Terminal</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permite ejecutar comandos del sistema desde Flow Launcher. Los comandos deben comenzar con &gt;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permite ejecutar comandos del sistema desde Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">este comando ha sido ejecutado {0} veces</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">ejecutar comando en la terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Ejecutar como administrador</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_copy">Copiar el comando</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_history">Mostrar sólo el número de comandos más usados:</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_history">Mostrar solo el siguiente número de comandos más usados:</system:String>
 </ResourceDictionary>

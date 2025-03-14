@@ -1,6 +1,7 @@
-﻿using System;
+﻿#nullable enable
+
+using System;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -16,7 +17,7 @@ namespace Flow.Launcher.Infrastructure
         /// <summary>
         /// http://www.yinwang.org/blog-cn/2015/11/21/programming-philosophy
         /// </summary>
-        public static T NonNull<T>(this T obj)
+        public static T NonNull<T>(this T? obj)
         {
             if (obj == null)
             {

@@ -1,7 +1,8 @@
-﻿using System;
-
-namespace Flow.Launcher.Plugin
+﻿namespace Flow.Launcher.Plugin
 {
+    /// <summary>
+    /// Carries data passed to a plugin when it gets initialized.
+    /// </summary>
     public class PluginInitContext
     {
         public PluginInitContext()
@@ -14,6 +15,9 @@ namespace Flow.Launcher.Plugin
             API = api;
         }
 
+        /// <summary>
+        /// The metadata of the plugin being initialized.
+        /// </summary>
         public PluginMetadata CurrentPluginMetadata { get; internal set; }
 
         /// <summary>

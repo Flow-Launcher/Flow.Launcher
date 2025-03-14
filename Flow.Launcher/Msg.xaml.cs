@@ -4,7 +4,6 @@ using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Image;
@@ -38,8 +37,14 @@ namespace Flow.Launcher
             Storyboard.SetTargetProperty(fadeOutAnimation, new PropertyPath(TopProperty));
             fadeOutStoryboard.Children.Add(fadeOutAnimation);
 
-            imgClose.Source = ImageLoader.Load(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
+            _ = LoadImageAsync();
+            
             imgClose.MouseUp += imgClose_MouseUp;
+        }
+
+        private async System.Threading.Tasks.Task LoadImageAsync()
+        {
+            imgClose.Source = await ImageLoader.LoadAsync(Path.Combine(Infrastructure.Constant.ProgramDirectory, "Images\\close.png"));
         }
 
         void imgClose_MouseUp(object sender, MouseButtonEventArgs e)
@@ -56,7 +61,7 @@ namespace Flow.Launcher
             Close();
         }
 
-        public void Show(string title, string subTitle, string iconPath)
+        public async void Show(string title, string subTitle, string iconPath)
         {
             tbTitle.Text = title;
             tbSubTitle.Text = subTitle;
@@ -64,17 +69,19 @@ namespace Flow.Launcher
             {
                 tbSubTitle.Visibility = Visibility.Collapsed;
             }
+            
             if (!File.Exists(iconPath))
             {
-                imgIco.Source = ImageLoader.Load(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
+                imgIco.Source = await ImageLoader.LoadAsync(Path.Combine(Constant.ProgramDirectory, "Images\\app.png"));
             }
-            else {
-                imgIco.Source = ImageLoader.Load(iconPath);
+            else 
+            {
+                imgIco.Source = await ImageLoader.LoadAsync(iconPath);
             }
 
             Show();
 
-            Dispatcher.InvokeAsync(async () =>
+            await Dispatcher.InvokeAsync(async () =>
                                    {
                                        if (!closing)
                                        {

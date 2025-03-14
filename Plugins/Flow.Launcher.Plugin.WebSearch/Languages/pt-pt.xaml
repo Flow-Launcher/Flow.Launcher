@@ -10,6 +10,9 @@
     <system:String x:Key="flowlauncher_plugin_websearch_delete">Eliminar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_edit">Editar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_add">Adicionar</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enabled_label">Ativo</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_true">Ativo</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_false">Inativo</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Palavra-chave de ação</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
@@ -26,11 +29,12 @@
         Assim, a fórmula genérica de uma pesquisa na Netflix é https://www.netflix.com/search?q={q}
     </system:String>
 
-
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_title">Copiar URL</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_copyurl_subtitle">Copiar URL para a área de transferência</system:String>
 
     <!--  web search edit  -->
     <system:String x:Key="flowlauncher_plugin_websearch_title">Título</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable">Ativar</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable">Estado</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_select_icon">Selecionar ícone</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_icon">Ícone</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_cancel">Cancelar</system:String>
@@ -40,7 +44,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_input_url">Introduza um URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword_exist">Esta palavra-chave já existe. Por favor escolha outra.</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_succeed">Sucesso</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é necessário colocar imagens personalizadas neste diretório porque se Flow Launcher for atualizado, estas serão perdidas. A aplicação irá copiar todas as imagens que estejam fora deste diretório para todas as pesquisas Web.</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_iconpath_hint">Dica: não é preciso colocar imagens personalizadas nesta pasta pois se Flow Launcher for atualizado, serão perdidas. Flow irá copiar todas as imagens que estejam fora desta pasta em todas as pesquisas Web.</system:String>
 
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_name">Pesquisas web</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_plugin_description">Permite pesquisar diretamente na web</system:String>

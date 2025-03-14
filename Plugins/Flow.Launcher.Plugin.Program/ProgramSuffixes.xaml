@@ -162,7 +162,7 @@
                             Margin="0,0,0,8"
                             FontSize="16"
                             FontWeight="SemiBold"
-                            Text="{DynamicResource flowlauncher_plugin_program_suffixes_excutable_types}" />
+                            Text="{DynamicResource flowlauncher_plugin_program_suffixes_executable_types}" />
                         <CheckBox
                             Name="apprefMS"
                             Margin="10,0,0,0"

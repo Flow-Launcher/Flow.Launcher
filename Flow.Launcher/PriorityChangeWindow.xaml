@@ -29,14 +29,11 @@
             <StackPanel>
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Button
-                        Grid.Column="4"
+                        Grid.Column="1"
                         Click="BtnCancel_OnClick"
                         Style="{StaticResource TitleBarCloseButtonStyle}">
                         <Path
@@ -85,6 +82,8 @@
                     <ui:NumberBox
                         x:Name="tbAction"
                         Width="200"
+                        Maximum="100"
+                        Minimum="-100"
                         Margin="10,0,15,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"

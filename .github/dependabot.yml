@@ -8,10 +8,15 @@ updates:
   - package-ecosystem: "nuget" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
+    open-pull-requests-limit: 3
     ignore:
       - dependency-name: "squirrel-windows"
     reviewers:
       - "jjw24"
       - "taooceros"
       - "JohnTheGr8"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"

@@ -5,6 +5,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <Thickness x:Key="ResultMargin">0 0 0 6</Thickness>
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"
@@ -17,7 +18,6 @@
         TargetType="{x:Type TextBox}">
         <Setter Property="SelectionBrush" Value="#ff79c6" />
         <Setter Property="FontSize" Value="24" />
-        <Setter Property="Background" Value="#282a36" />
         <Setter Property="Foreground" Value="#f8f8f2" />
         <Setter Property="CaretBrush" Value="#ffb86c" />
         <Setter Property="FontSize" Value="26" />
@@ -28,7 +28,6 @@
         x:Key="QuerySuggestionBoxStyle"
         BasedOn="{StaticResource BaseQuerySuggestionBoxStyle}"
         TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="#282a36" />
         <Setter Property="Foreground" Value="#6272a4" />
         <Setter Property="FontSize" Value="26" />
         <Setter Property="Padding" Value="0,4,66,0" />
@@ -98,7 +97,7 @@
         <Setter Property="Cursor" Value="Arrow" />
     </Style>
     <Style x:Key="HighlightStyle">
-        <Setter Property="Inline.Foreground" Value="#bd93f9" />
+        <Setter Property="Inline.FontWeight" Value="SemiBold" />
     </Style>
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="13" />
@@ -106,7 +105,7 @@
     </Style>
     <Style
         x:Key="ItemHotkeySelectedStyle"
-        BasedOn="{StaticResource BaseItemHotkeySelecetedStyle}"
+        BasedOn="{StaticResource BaseItemHotkeySelectedStyle}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="FontSize" Value="13" />
         <Setter Property="Foreground" Value="#ff79c6" />
@@ -144,7 +143,7 @@
         TargetType="{x:Type Rectangle}">
         <Setter Property="Fill" Value="#44475a" />
         <Setter Property="Height" Value="1" />
-        <Setter Property="Margin" Value="12,0,12,8" />
+        <Setter Property="Margin" Value="12,0,12,6" />
     </Style>
     <Style
         x:Key="SearchIconStyle"
@@ -166,5 +165,29 @@
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#6272a4" />
+    </Style>
+    <Style
+        x:Key="PreviewBorderStyle"
+        BasedOn="{StaticResource BasePreviewBorderStyle}"
+        TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush" Value="#44475a" />
+    </Style>
+    <Style
+        x:Key="PreviewItemTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#f8f8f2" />
+    </Style>
+    <Style
+        x:Key="PreviewItemSubTitleStyle"
+        BasedOn="{StaticResource BasePreviewItemSubTitleStyle}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#6272a4" />
+    </Style>
+    <Style
+        x:Key="PreviewGlyph"
+        BasedOn="{StaticResource BasePreviewGlyph}"
+        TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#f8f8f2" />
     </Style>
 </ResourceDictionary>

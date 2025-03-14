@@ -2,76 +2,57 @@
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Controls;
-using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Resources.Pages;
 using ModernWpf.Media.Animation;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.ViewModel;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class WelcomeWindow : Window
     {
-        private readonly Settings settings;
+        private readonly WelcomeViewModel _viewModel;
 
-        public WelcomeWindow(Settings settings)
-        {
-            InitializeComponent();
-            BackButton.IsEnabled = false;
-            this.settings = settings;
-            ContentFrame.Navigate(PageTypeSelector(1), settings);
-        }
-
-        private NavigationTransitionInfo _transitionInfo = new SlideNavigationTransitionInfo()
+        private readonly NavigationTransitionInfo _forwardTransitionInfo = new SlideNavigationTransitionInfo()
         {
             Effect = SlideNavigationTransitionEffect.FromRight
         };
-        private NavigationTransitionInfo _backTransitionInfo = new SlideNavigationTransitionInfo()
+        private readonly NavigationTransitionInfo _backTransitionInfo = new SlideNavigationTransitionInfo()
         {
             Effect = SlideNavigationTransitionEffect.FromLeft
         };
 
-        private int pageNum = 1;
-        private int MaxPage = 5;
-        public string PageDisplay => $"{pageNum}/5";
-
-        private void UpdateView()
+        public WelcomeWindow()
         {
-            PageNavigation.Text = PageDisplay;
-            if (pageNum == 1)
-            {
-                BackButton.IsEnabled = false;
-                NextButton.IsEnabled = true;
-            }
-            else if (pageNum == MaxPage)
-            {
-                BackButton.IsEnabled = true;
-                NextButton.IsEnabled = false;
-            }
-            else
-            {
-                BackButton.IsEnabled = true;
-                NextButton.IsEnabled = true;
-            }
+            _viewModel = Ioc.Default.GetRequiredService<WelcomeViewModel>();
+            DataContext = _viewModel;
+            InitializeComponent();
         }
 
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            pageNum++;
-            UpdateView();
-
-            ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _transitionInfo);
+            if (_viewModel.PageNum < WelcomeViewModel.MaxPageNum)
+            {
+                _viewModel.PageNum++;
+                ContentFrame.Navigate(PageTypeSelector(_viewModel.PageNum), null, _forwardTransitionInfo);
+            }
+            else
+            {
+                _viewModel.NextEnabled = false;
+            }
         }
 
         private void BackwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (pageNum > 1)
+            if (_viewModel.PageNum > 1)
             {
-                pageNum--;
-                UpdateView();
-                ContentFrame.Navigate(PageTypeSelector(pageNum), settings, _backTransitionInfo);
+                _viewModel.PageNum--;
+                ContentFrame.Navigate(PageTypeSelector(_viewModel.PageNum), null, _backTransitionInfo);
             }
             else
             {
-                BackButton.IsEnabled = false;
+                _viewModel.BackEnabled = false;
             }
         }
 
@@ -102,9 +83,21 @@ namespace Flow.Launcher
             var tRequest = new TraversalRequest(FocusNavigationDirection.Next);
             textBox.MoveFocus(tRequest);
         }
+
         private void OnActivated(object sender, EventArgs e)
         {
             Keyboard.ClearFocus();
+        }
+
+        private void ContentFrame_Loaded(object sender, RoutedEventArgs e)
+        {
+            ContentFrame.Navigate(PageTypeSelector(1)); /* Set First Page */
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            // Save settings when window is closed
+            Ioc.Default.GetRequiredService<Settings>().Save();
         }
     }
 }

@@ -1,26 +1,12 @@
-﻿namespace Flow.Launcher.Core.Resource
+﻿using System;
+using CommunityToolkit.Mvvm.DependencyInjection;
+
+namespace Flow.Launcher.Core.Resource
 {
+    [Obsolete("ThemeManager.Instance is obsolete. Use Ioc.Default.GetRequiredService<Theme>() instead.")]
     public class ThemeManager
     {
-        private static Theme instance;
-        private static object syncObject = new object();
-
         public static Theme Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    lock (syncObject)
-                    {
-                        if (instance == null)
-                        {
-                            instance = new Theme();
-                        }
-                    }
-                }
-                return instance;
-            }
-        }
+            => Ioc.Default.GetRequiredService<Theme>();
     }
 }
