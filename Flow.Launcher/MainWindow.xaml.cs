@@ -171,6 +171,11 @@ namespace Flow.Launcher
             Environment.Exit(0);
         }
 
+        private void OnSourceInitialized(object sender, EventArgs e)
+        {
+            WindowsInteropHelper.HideFromAltTab(this);
+        }
+
         private void OnInitialized(object sender, EventArgs e)
         {
         }
@@ -433,14 +438,14 @@ namespace Flow.Launcher
             if (_settings.FirstLaunch)
             {
                 _settings.FirstLaunch = false;
-                PluginManager.API.SaveAppAllSettings();
+                App.API.SaveAppAllSettings();
                 OpenWelcomeWindow();
             }
         }
 
         private void OpenWelcomeWindow()
         {
-            var WelcomeWindow = new WelcomeWindow(_settings);
+            var WelcomeWindow = new WelcomeWindow();
             WelcomeWindow.Show();
         }
 

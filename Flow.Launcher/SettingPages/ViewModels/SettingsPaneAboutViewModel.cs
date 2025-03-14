@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
-using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -46,23 +46,48 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         _settings.ActivateTimes
     );
 
+    public class LogLevelData : DropdownDataGeneric<LOGLEVEL> { }
+
+    public List<LogLevelData> LogLevels { get; } =
+        DropdownDataGeneric<LOGLEVEL>.GetValues<LogLevelData>("LogLevel");
+
+    public LOGLEVEL LogLevel
+    {
+        get => _settings.LogLevel;
+        set
+        {
+            if (_settings.LogLevel != value)
+            {
+                _settings.LogLevel = value;
+
+                Log.SetLogLevel(value);
+            }
+        }
+    }
+
     public SettingsPaneAboutViewModel(Settings settings, Updater updater)
     {
         _settings = settings;
         _updater = updater;
+        UpdateEnumDropdownLocalizations();
+    }
+
+    private void UpdateEnumDropdownLocalizations()
+    {
+        DropdownDataGeneric<LOGLEVEL>.UpdateLabels(LogLevels);
     }
 
     [RelayCommand]
     private void OpenWelcomeWindow()
     {
-        var window = new WelcomeWindow(_settings);
+        var window = new WelcomeWindow();
         window.ShowDialog();
     }
 
     [RelayCommand]
     private void AskClearLogFolderConfirmation()
     {
-        var confirmResult = MessageBoxEx.Show(
+        var confirmResult = App.API.ShowMsgBox(
             InternationalizationManager.Instance.GetTranslation("clearlogfolderMessage"),
             InternationalizationManager.Instance.GetTranslation("clearlogfolder"),
             MessageBoxButton.YesNo
@@ -77,7 +102,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     [RelayCommand]
     private void OpenSettingsFolder()
     {
-        PluginManager.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
+        App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Settings));
     }
 
     [RelayCommand]
@@ -85,7 +110,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     {
         string settingsFolderPath = Path.Combine(DataLocation.DataDirectory(), Constant.Settings);
         string parentFolderPath = Path.GetDirectoryName(settingsFolderPath);
-        PluginManager.API.OpenDirectory(parentFolderPath);
+        App.API.OpenDirectory(parentFolderPath);
     }
 
 
@@ -96,7 +121,7 @@ public partial class SettingsPaneAboutViewModel : BaseModel
     }
 
     [RelayCommand]
-    private Task UpdateApp() => _updater.UpdateAppAsync(App.API, false);
+    private Task UpdateApp() => _updater.UpdateAppAsync(false);
 
     private void ClearLogFolder()
     {
@@ -139,5 +164,4 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         return "0 B";
     }
-
 }

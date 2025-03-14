@@ -34,7 +34,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    public abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext Context;
         public const string JsonRPC = "JsonRPC";
@@ -44,8 +44,10 @@ namespace Flow.Launcher.Core.Plugin
         private string SettingConfigurationPath =>
             Path.Combine(Context.CurrentPluginMetadata.PluginDirectory, "SettingsTemplate.yaml");
 
-        private string SettingPath => Path.Combine(DataLocation.PluginSettingsDirectory,
-            Context.CurrentPluginMetadata.Name, "Settings.json");
+        private string SettingDirectory => Path.Combine(DataLocation.PluginSettingsDirectory,
+            Context.CurrentPluginMetadata.Name);
+
+        private string SettingPath => Path.Combine(SettingDirectory, "Settings.json");
 
         public abstract List<Result> LoadContextMenus(Result selectedResult);
 
@@ -155,9 +157,22 @@ namespace Flow.Launcher.Core.Plugin
             Settings?.Save();
         }
 
+        public bool NeedCreateSettingPanel()
+        {
+            return Settings.NeedCreateSettingPanel();
+        }
+
         public Control CreateSettingPanel()
         {
             return Settings.CreateSettingPanel();
+        }
+
+        public void DeletePluginSettingsDirectory()
+        {
+            if (Directory.Exists(SettingDirectory))
+            {
+                Directory.Delete(SettingDirectory, true);
+            }
         }
     }
 }
