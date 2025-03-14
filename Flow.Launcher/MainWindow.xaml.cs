@@ -69,13 +69,11 @@ namespace Flow.Launcher
             };
         }
 
-        DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };
-
         public MainWindow()
         {
             InitializeComponent();
         }
-      
+
         private int _initialWidth;
         private int _initialHeight;
 
@@ -343,22 +341,26 @@ namespace Flow.Launcher
             var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"), Icon = positionresetIcon
+                Header = InternationalizationManager.Instance.GetTranslation("PositionReset"),
+                Icon = positionresetIcon
             };
             var settingsIcon = new FontIcon { Glyph = "\ue713" };
             var settings = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"), Icon = settingsIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTraySettings"),
+                Icon = settingsIcon
             };
             var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -636,7 +638,7 @@ namespace Flow.Launcher
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
                     await Task.Delay(100);
-              
+
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
                 {
                     _viewModel.Hide();
@@ -677,7 +679,7 @@ namespace Flow.Launcher
                 _viewModel.Show();
             }
         }
-      
+
         public Screen SelectedScreen()
         {
             Screen screen = null;
