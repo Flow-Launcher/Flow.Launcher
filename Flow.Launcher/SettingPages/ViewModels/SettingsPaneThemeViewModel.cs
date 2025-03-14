@@ -113,7 +113,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.ColorScheme;
         set
         {
-            UpdateColorScheme();
+            ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
+            {
+                Infrastructure.UserSettings.ColorSchemes.Light => ApplicationTheme.Light,
+                Infrastructure.UserSettings.ColorSchemes.Dark => ApplicationTheme.Dark,
+                Infrastructure.UserSettings.ColorSchemes.System => null,
+                _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+            };
+
+            ThemeManager.Instance.RefreshFrame();
 
             Settings.ColorScheme = value;
         }
@@ -220,9 +228,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public BackdropTypes BackdropType
     {
         get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
-               ? (BackdropTypes)Settings.BackdropType
+               ? Settings.BackdropType
                : BackdropTypes.None;
-
         set
         {
             if (!Enum.IsDefined(typeof(BackdropTypes), value))
@@ -240,9 +247,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             OnPropertyChanged(nameof(IsDropShadowEnabled));
         }
     }
-
-
-
 
     public bool UseSound
     {
@@ -468,27 +472,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
+    public SettingsPaneThemeViewModel(Settings settings)
+    {
+        Settings = settings;
+    }
+
     [RelayCommand]
     private void OpenThemesFolder()
     {
         App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
-    }
-
-    private void UpdateColorScheme()
-    {
-        ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = Settings.ColorScheme switch
-        {
-            Infrastructure.UserSettings.ColorSchemes.Light => ApplicationTheme.Light,
-            Infrastructure.UserSettings.ColorSchemes.Dark => ApplicationTheme.Dark,
-            Infrastructure.UserSettings.ColorSchemes.System => null,
-            _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
-        };
-        ThemeManager.Instance.RefreshFrame();
-    }
-
-    public SettingsPaneThemeViewModel(Settings settings)
-    {
-        Settings = settings;
     }
 
     [RelayCommand]
