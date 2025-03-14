@@ -688,9 +688,8 @@
                     DisplayMemberPath="Display"
                     FontSize="14"
                     ItemsSource="{Binding ColorSchemes}"
-                    SelectedValue="{Binding Settings.ColorScheme}"
-                    SelectedValuePath="Value"
-                    SelectionChanged="Selector_OnSelectionChanged" />
+                    SelectedValue="{Binding ColorScheme, Mode=TwoWay}"
+                    SelectedValuePath="Value" />
             </cc:Card>
 
             <!--  Theme folder  -->

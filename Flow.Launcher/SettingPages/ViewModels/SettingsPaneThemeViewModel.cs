@@ -15,8 +15,6 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
-using static Flow.Launcher.Core.Resource.Theme;
-using System.Windows.Interop;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -38,8 +36,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
+            {
                 DropShadowEffect = true;
                 OnPropertyChanged(nameof(IsDropShadowEnabled));
+            }
+
             ThemeManager.Instance.RefreshFrame();
             //ThemeManager.Instance.SetBlurForWindow();
         }
@@ -107,6 +108,24 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
     public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
+    public string ColorScheme
+    {
+        get => Settings.ColorScheme;
+        set
+        {
+            ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = value switch
+            {
+                Constant.Light => ApplicationTheme.Light,
+                Constant.Dark => ApplicationTheme.Dark,
+                Constant.System => null,
+                _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
+            };
+
+            ThemeManager.Instance.RefreshFrame();
+
+            Settings.ColorScheme = value;
+        }
+    }
 
     public List<string> TimeFormatList { get; } = new()
     {
@@ -209,9 +228,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public BackdropTypes BackdropType
     {
         get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
-               ? (BackdropTypes)Settings.BackdropType
+               ? Settings.BackdropType
                : BackdropTypes.None;
-
         set
         {
             if (!Enum.IsDefined(typeof(BackdropTypes), value))
@@ -229,9 +247,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             OnPropertyChanged(nameof(IsDropShadowEnabled));
         }
     }
-
-
-
 
     public bool UseSound
     {
@@ -457,27 +472,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
 
     public string ThemeImage => Constant.QueryTextBoxIconImagePath;
 
+    public SettingsPaneThemeViewModel(Settings settings)
+    {
+        Settings = settings;
+    }
+
     [RelayCommand]
     private void OpenThemesFolder()
     {
         App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
-    }
-
-    public void UpdateColorScheme()
-    {
-        ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = Settings.ColorScheme switch
-        {
-            Constant.Light => ApplicationTheme.Light,
-            Constant.Dark => ApplicationTheme.Dark,
-            Constant.System => null,
-            _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
-        };
-        ThemeManager.Instance.RefreshFrame();
-    }
-
-    public SettingsPaneThemeViewModel(Settings settings)
-    {
-        Settings = settings;
     }
 
     [RelayCommand]
