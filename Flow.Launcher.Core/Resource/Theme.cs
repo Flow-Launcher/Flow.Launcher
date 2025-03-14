@@ -420,6 +420,7 @@ namespace Flow.Launcher.Core.Resource
 
         public void ColorizeWindow(string Mode)
         {
+            Debug.WriteLine("창 DWM 색상 설정");
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var dict = GetThemeResourceDictionary(_settings.Theme);
@@ -430,6 +431,37 @@ namespace Flow.Launcher.Core.Resource
 
                 // ✅ 블러 테마인지 확인
                 bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+
+                // ✅ SystemBG 값 확인 (Auto, Light, Dark)
+                string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
+
+                // ✅ 사용자의 ColorScheme 설정 확인
+                string colorScheme = _settings.ColorScheme;
+
+                // ✅ 시스템의 다크 모드 설정 확인 (AppsUseLightTheme 값 읽기)
+                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                bool isSystemDark = themeValue == 0;
+
+                // ✅ 최종적으로 사용할 다크 모드 여부 결정
+                bool useDarkMode = false;
+
+                if (colorScheme == "Dark" || systemBG == "Dark")
+                {
+                    useDarkMode = true;  // 사용자가 강제 다크 모드 선택
+                }
+                else if (colorScheme == "Light" || systemBG == "Light")
+                {
+                    useDarkMode = false; // 사용자가 강제 라이트 모드 선택
+                }
+                else if (colorScheme == "System" || systemBG == "Auto")
+                {
+                    useDarkMode = isSystemDark; // 시스템 설정을 따름
+                }
+
+                Debug.WriteLine($"[ColorizeWindow] SystemBG: {systemBG}, ColorScheme: {colorScheme}, 시스템 다크 모드 여부: {isSystemDark}, 최종 적용: {useDarkMode}");
+
+                // ✅ DWM 다크 모드 설정 적용
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
 
                 Color LightBG;
                 Color DarkBG;
@@ -454,11 +486,7 @@ namespace Flow.Launcher.Core.Resource
                     DarkBG = LightBG;
                 }
 
-                // ✅ 설정의 ColorScheme을 우선 사용
-                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-                bool isSystemDark = themeValue == 0;
-                bool useDarkMode = Mode == "Dark" || (Mode == "Auto" && _settings.ColorScheme == "System" && isSystemDark) || (_settings.ColorScheme == "Dark");
-
+                // ✅ ColorScheme과 SystemBG에 맞춰서 배경색 선택
                 Color selectedBG = useDarkMode ? DarkBG : LightBG;
                 ApplyPreviewBackground(selectedBG);
 
@@ -479,11 +507,9 @@ namespace Flow.Launcher.Core.Resource
                         mainWindow.Background = new SolidColorBrush(selectedBG);
                     }
                 }
-
-                // ✅ DWM 다크 모드 적용
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
             }, DispatcherPriority.Normal);
         }
+
 
 
 
