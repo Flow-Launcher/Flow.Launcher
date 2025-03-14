@@ -31,7 +31,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             "explorer" 
         };
 
-        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower());
+        private const string FlowLauncherProcessName = "Flow.Launcher";
+
+        private bool IsSystemProcess(Process p) => _systemProcessList.Contains(p.ProcessName.ToLower()) ||
+            string.Compare(p.ProcessName, FlowLauncherProcessName, StringComparison.OrdinalIgnoreCase) == 0;
 
         /// <summary>
         /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
