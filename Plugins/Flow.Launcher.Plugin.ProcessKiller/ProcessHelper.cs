@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// <summary>
         /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
         /// </summary>
-        public List<ProcessResult> GetMatchingProcesses(string searchTerm)
+        public List<ProcessResult> GetMatchingProcesses(string searchTerm, Dictionary<int, string> processWindowTitle)
         {
             var processlist = new List<ProcessResult>();
 
@@ -49,15 +49,27 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
                 if (string.IsNullOrWhiteSpace(searchTerm))
                 {
-                    // show all non-system processes
+                    // Show all non-system processes
                     processlist.Add(new ProcessResult(p, 0));
                 }
                 else
                 {
-                    var score = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score;
-                    if (score > 0)
+                    // Search window title first
+                    if (processWindowTitle.TryGetValue(p.Id, out var windowTitle))
                     {
-                        processlist.Add(new ProcessResult(p, score));
+                        var score = StringMatcher.FuzzySearch(searchTerm, windowTitle).Score;
+                        if (score > 0)
+                        {
+                            processlist.Add(new ProcessResult(p, score));
+                        }
+                    }
+
+                    // Search process name and process id
+                    var score1 = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + " - " + p.Id).Score;
+                    if (score1 > 0)
+                    {
+                        processlist.Add(new ProcessResult(p, score1));
+                        continue;
                     }
                 }
             }

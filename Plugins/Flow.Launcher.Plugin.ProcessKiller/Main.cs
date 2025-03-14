@@ -64,9 +64,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         private List<Result> CreateResultsFromQuery(Query query)
         {
-            string termToSearch = query.Search;
-            var processList = processHelper.GetMatchingProcesses(termToSearch);
-            var processWithNonEmptyMainWindowTitleList = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
+            var searchTerm = query.Search;
+            var processWindowTitle = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
+            var processList = processHelper.GetMatchingProcesses(searchTerm, processWindowTitle);
 
             if (!processList.Any())
             {
@@ -74,18 +74,28 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             var results = new List<Result>();
-
             foreach (var pr in processList)
             {
                 var p = pr.Process;
                 var path = processHelper.TryGetProcessFilename(p);
+                var title = p.ProcessName + " - " + p.Id;
+                var score = pr.Score;
+                if (processWindowTitle.TryGetValue(p.Id, out var mainWindowTitle))
+                {
+                    title = mainWindowTitle;
+                    if (string.IsNullOrWhiteSpace(searchTerm))
+                    {
+                        // Add score to prioritize processes with visible windows
+                        score += 200;
+                    }
+                }
                 results.Add(new Result()
                 {
                     IcoPath = path,
-                    Title = processWithNonEmptyMainWindowTitleList.TryGetValue(p.Id, out var mainWindowTitle) ? mainWindowTitle : p.ProcessName + " - " + p.Id,
+                    Title = title,
                     SubTitle = path,
-                    TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
-                    Score = pr.Score,
+                    TitleHighlightData = StringMatcher.FuzzySearch(searchTerm, p.ProcessName).MatchData,
+                    Score = score,
                     ContextData = new RunningProcessInfo(p.ProcessName, mainWindowTitle),
                     AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
@@ -98,14 +108,13 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
 
             var sortedResults = results
-                .OrderBy(x => string.IsNullOrEmpty(((RunningProcessInfo)x.ContextData).MainWindowTitle))
-                .ThenBy(x => x.Title)
+                .OrderBy(x => x.Title)
                 .ToList();
 
             // When there are multiple results AND all of them are instances of the same executable
             // add a quick option to kill them all at the top of the results.
             var firstResult = sortedResults.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubTitle));
-            if (processList.Count > 1 && !string.IsNullOrEmpty(termToSearch) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
+            if (processList.Count > 1 && !string.IsNullOrEmpty(searchTerm) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
             {
                 sortedResults.Insert(1, new Result()
                 {
