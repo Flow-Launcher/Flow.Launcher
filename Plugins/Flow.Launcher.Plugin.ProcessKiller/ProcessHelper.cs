@@ -1,6 +1,4 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
-using Microsoft.Win32.SafeHandles;
+﻿using Microsoft.Win32.SafeHandles;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -37,41 +35,25 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             string.Compare(p.ProcessName, FlowLauncherProcessName, StringComparison.OrdinalIgnoreCase) == 0;
 
         /// <summary>
-        /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
+        /// Get title based on process name and id
         /// </summary>
-        public List<ProcessResult> GetMatchingProcesses(string searchTerm, Dictionary<int, string> processWindowTitle)
+        public static string GetProcessNameIdTitle(Process p)
         {
-            var processlist = new List<ProcessResult>();
+            return p.ProcessName + " - " + p.Id;
+        }
+
+        /// <summary>
+        /// Returns a Process for evey running non-system process
+        /// </summary>
+        public List<Process> GetMatchingProcesses()
+        {
+            var processlist = new List<Process>();
 
             foreach (var p in Process.GetProcesses())
             {
                 if (IsSystemProcess(p)) continue;
 
-                if (string.IsNullOrWhiteSpace(searchTerm))
-                {
-                    // Show all non-system processes
-                    processlist.Add(new ProcessResult(p, 0));
-                }
-                else
-                {
-                    // Search window title first
-                    if (processWindowTitle.TryGetValue(p.Id, out var windowTitle))
-                    {
-                        var score = StringMatcher.FuzzySearch(searchTerm, windowTitle).Score;
-                        if (score > 0)
-                        {
-                            processlist.Add(new ProcessResult(p, score));
-                        }
-                    }
-
-                    // Search process name and process id
-                    var score1 = StringMatcher.FuzzySearch(searchTerm, p.ProcessName + " - " + p.Id).Score;
-                    if (score1 > 0)
-                    {
-                        processlist.Add(new ProcessResult(p, score1));
-                        continue;
-                    }
-                }
+                processlist.Add(p);
             }
 
             return processlist;
@@ -131,7 +113,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             return Process.GetProcesses().Where(p => !IsSystemProcess(p) && TryGetProcessFilename(p) == processPath);
         }
 
-        public void TryKill(Process p)
+        public void TryKill(PluginInitContext context, Process p)
         {
             try
             {
@@ -143,7 +125,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception e)
             {
-                Log.Exception($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
+                context.API.LogException($"{nameof(ProcessHelper)}", $"Failed to kill process {p.ProcessName}", e);
             }
         }
 

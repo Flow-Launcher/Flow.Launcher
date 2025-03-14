@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using Flow.Launcher.Infrastructure;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
 {
@@ -48,7 +48,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     {
                         foreach (var p in similarProcesses)
                         {
-                            processHelper.TryKill(p);
+                            processHelper.TryKill(_context, p);
                         }
 
                         return true;
@@ -60,73 +60,113 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             return menuOptions;
         }
 
-        private record RunningProcessInfo(string ProcessName, string MainWindowTitle);
-
         private List<Result> CreateResultsFromQuery(Query query)
         {
-            var searchTerm = query.Search;
-            var processWindowTitle = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
-            var processList = processHelper.GetMatchingProcesses(searchTerm, processWindowTitle);
-
-            if (!processList.Any())
+            // Get all non-system processes
+            var allPocessList = processHelper.GetMatchingProcesses();
+            if (!allPocessList.Any())
             {
                 return null;
             }
 
+            // Filter processes based on search term
+            var searchTerm = query.Search;
+            var processlist = new List<ProcessResult>();
+            var processWindowTitle = ProcessHelper.GetProcessesWithNonEmptyWindowTitle();
+            if (string.IsNullOrWhiteSpace(searchTerm))
+            {
+                foreach (var p in allPocessList)
+                {
+                    var progressNameIdTitle = ProcessHelper.GetProcessNameIdTitle(p);
+
+                    if (processWindowTitle.TryGetValue(p.Id, out var windowTitle))
+                    {
+                        // Add score to prioritize processes with visible windows
+                        // And use window title for those processes
+                        processlist.Add(new ProcessResult(p, 200, windowTitle, null, progressNameIdTitle));
+                    }
+                    else
+                    {
+                        processlist.Add(new ProcessResult(p, 0, progressNameIdTitle, null, progressNameIdTitle));
+                    }
+                }
+            }
+            else
+            {
+                foreach (var p in allPocessList)
+                {
+                    var progressNameIdTitle = ProcessHelper.GetProcessNameIdTitle(p);
+
+                    if (processWindowTitle.TryGetValue(p.Id, out var windowTitle))
+                    {
+                        // Get max score from searching process name, window title and process id
+                        var windowTitleMatch = _context.API.FuzzySearch(searchTerm, windowTitle);
+                        var processNameIdMatch = _context.API.FuzzySearch(searchTerm, progressNameIdTitle);
+                        var score = Math.Max(windowTitleMatch.Score, processNameIdMatch.Score);
+                        if (score > 0)
+                        {
+                            // Add score to prioritize processes with visible windows
+                            // And use window title for those processes
+                            score += 200;
+                            processlist.Add(new ProcessResult(p, score, windowTitle, 
+                                score == windowTitleMatch.Score ? windowTitleMatch : null, progressNameIdTitle));
+                        }
+                    }
+                    else
+                    {
+                        var processNameIdMatch = _context.API.FuzzySearch(searchTerm, progressNameIdTitle);
+                        var score = processNameIdMatch.Score;
+                        if (score > 0)
+                        {
+                            processlist.Add(new ProcessResult(p, score, progressNameIdTitle, processNameIdMatch, progressNameIdTitle));
+                        }
+                    }
+                }
+            }
+
             var results = new List<Result>();
-            foreach (var pr in processList)
+            foreach (var pr in processlist)
             {
                 var p = pr.Process;
                 var path = processHelper.TryGetProcessFilename(p);
-                var title = p.ProcessName + " - " + p.Id;
-                var score = pr.Score;
-                if (processWindowTitle.TryGetValue(p.Id, out var mainWindowTitle))
-                {
-                    title = mainWindowTitle;
-                    if (string.IsNullOrWhiteSpace(searchTerm))
-                    {
-                        // Add score to prioritize processes with visible windows
-                        score += 200;
-                    }
-                }
                 results.Add(new Result()
                 {
                     IcoPath = path,
-                    Title = title,
+                    Title = pr.Title,
+                    TitleToolTip = pr.Tooltip,
                     SubTitle = path,
-                    TitleHighlightData = StringMatcher.FuzzySearch(searchTerm, p.ProcessName).MatchData,
-                    Score = score,
-                    ContextData = new RunningProcessInfo(p.ProcessName, mainWindowTitle),
+                    TitleHighlightData = pr.TitleMatch?.MatchData,
+                    Score = pr.Score,
+                    ContextData = p.ProcessName,
                     AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
                     {
-                        processHelper.TryKill(p);
+                        processHelper.TryKill(_context, p);
                         _context.API.ReQuery();
                         return false;
                     }
                 });
             }
 
-            var sortedResults = results
-                .OrderBy(x => x.Title)
-                .ToList();
+            // Order results by process name for processes without visible windows
+            var sortedResults = results.OrderBy(x => x.Title).ToList();
 
             // When there are multiple results AND all of them are instances of the same executable
             // add a quick option to kill them all at the top of the results.
             var firstResult = sortedResults.FirstOrDefault(x => !string.IsNullOrEmpty(x.SubTitle));
-            if (processList.Count > 1 && !string.IsNullOrEmpty(searchTerm) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
+            if (processlist.Count > 1 && !string.IsNullOrEmpty(searchTerm) && sortedResults.All(r => r.SubTitle == firstResult?.SubTitle))
             {
                 sortedResults.Insert(1, new Result()
                 {
                     IcoPath = firstResult?.IcoPath,
-                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), ((RunningProcessInfo)firstResult?.ContextData).ProcessName),
-                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processList.Count),
+                    Title = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all"), firstResult?.ContextData),
+                    SubTitle = string.Format(_context.API.GetTranslation("flowlauncher_plugin_processkiller_kill_all_count"), processlist.Count),
                     Score = 200,
                     Action = (c) =>
                     {
-                        foreach (var p in processList)
+                        foreach (var p in processlist)
                         {
-                            processHelper.TryKill(p.Process);
+                            processHelper.TryKill(_context, p.Process);
                         }
                         _context.API.ReQuery();
                         return false;
