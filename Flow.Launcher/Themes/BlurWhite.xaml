@@ -11,10 +11,10 @@
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
-    <system:String x:Key="BlurMode">Light</system:String>
+    <system:String x:Key="SystemBG">Light</system:String>
     <system:String x:Key="CornerType">DoNotRound</system:String>
-    <Color x:Key="lightBG">#BFFAFAFA</Color>
-    <Color x:Key="darkBG">#BFFAFAFA</Color>
+    <Color x:Key="LightBG">#BFFAFAFA</Color>
+    <Color x:Key="DarkBG">#BFFAFAFA</Color>
     <Style
         x:Key="ItemGlyph"
         BasedOn="{StaticResource BaseGlyphStyle}"

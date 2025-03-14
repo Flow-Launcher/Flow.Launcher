@@ -132,50 +132,64 @@ namespace Flow.Launcher.Core.Resource
                 => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
         }
 
-        System.Windows.Window mainWindow = Application.Current.MainWindow;
+        private System.Windows.Window GetMainWindow()
+        {
+            return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow);
+        }
+
 
         public void RefreshFrame()
         {
-            IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
-            if (mainWindowPtr == IntPtr.Zero)
-                return;
-
-            HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
-            if (mainWindowSrc == null)
-                return;
-
-            ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
-            margins.cxLeftWidth = -1;
-            margins.cxRightWidth = -1;
-            margins.cyTopHeight = -1;
-            margins.cyBottomHeight = -1;
-            Methods.ExtendFrame(mainWindowSrc.Handle, margins);
-
-            // Remove OS minimizing/maximizing animation
-            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
-
-            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-            // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-
-            // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
-            if (BlurEnabled)
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                AutoDropShadow();
-            }
-            SetBlurForWindow();
+                System.Windows.Window mainWindow = Application.Current.MainWindow;
+                if (mainWindow == null)
+                    return;
 
-            if (!BlurEnabled)
-            {
-                AutoDropShadow();
-            }
+                IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
+                if (mainWindowPtr == IntPtr.Zero)
+                    return;
+
+                HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
+                if (mainWindowSrc == null)
+                    return;
+
+                ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
+                margins.cxLeftWidth = -1;
+                margins.cxRightWidth = -1;
+                margins.cyTopHeight = -1;
+                margins.cyBottomHeight = -1;
+                Methods.ExtendFrame(mainWindowSrc.Handle, margins);
+
+                // Remove OS minimizing/maximizing animation
+                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
+
+                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
+                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
+
+                // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
+                if (BlurEnabled)
+                {
+                    AutoDropShadow();
+                }
+                SetBlurForWindow();
+
+                if (!BlurEnabled)
+                {
+                    AutoDropShadow();
+                }
+            }, DispatcherPriority.Normal);
         }
+
 
 
         public void AutoDropShadow()
         {
+            SetWindowCornerPreference("Default");
+            RemoveDropShadowEffectFromCurrentTheme();
             if (_settings.UseDropShadowEffect)
             {
-                RemoveDropShadowEffectFromCurrentTheme();
+                //RemoveDropShadowEffectFromCurrentTheme();
                 if (BlurEnabled)
                 {
                     SetWindowCornerPreference("Round");
@@ -188,7 +202,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                RemoveDropShadowEffectFromCurrentTheme();
+                //RemoveDropShadowEffectFromCurrentTheme();
                 if (BlurEnabled)
                 {
                     SetWindowCornerPreference("Default");
@@ -202,106 +216,128 @@ namespace Flow.Launcher.Core.Resource
 
         public void SetWindowCornerPreference(string cornerType)
         {
-            DWM_WINDOW_CORNER_PREFERENCE preference = cornerType switch
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
-                "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
-                "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
-                "Default" => DWM_WINDOW_CORNER_PREFERENCE.Default,
-                _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
-            };
+                System.Windows.Window mainWindow = GetMainWindow();
+                if (mainWindow == null)
+                    return;
 
-            SetWindowCornerPreference(mainWindow, preference);
-        }
-
-        public void SetCornerForWindow()
-        {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
-            if (dict == null)
-                return;
-            if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
-            {
-                DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
+                DWM_WINDOW_CORNER_PREFERENCE preference = cornerType switch
                 {
                     "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
                     "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
                     "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+                    "Default" => DWM_WINDOW_CORNER_PREFERENCE.Default,
                     _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
                 };
 
                 SetWindowCornerPreference(mainWindow, preference);
-           
-            }
-            else
-            {
-                SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
- 
-            }
+            }, DispatcherPriority.Normal);
         }
+
+
+        public void SetCornerForWindow()
+        {
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                var dict = GetThemeResourceDictionary(_settings.Theme);
+                if (dict == null)
+                    return;
+
+                System.Windows.Window mainWindow = Application.Current.MainWindow;
+                if (mainWindow == null)
+                    return;
+
+                if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
+                {
+                    DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
+                    {
+                        "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
+                        "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
+                        "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+                        _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
+                    };
+
+                    SetWindowCornerPreference(mainWindow, preference);
+                }
+                else
+                {
+                    SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
+                }
+            }, DispatcherPriority.Normal);
+        }
+
 
         /// <summary>
         /// Sets the blur for a window via SetWindowCompositionAttribute
         /// </summary>
         public void SetBlurForWindow()
         {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
-            if (dict == null)
-                return;
-
-            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
-            if (windowBorderStyle == null)
-                return;
-
-            // ✅ 설정된 BackdropType 확인
-            int backdropValue = _settings.BackdropType switch
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                BackdropTypes.Acrylic => 3, // Acrylic (DWM_SYSTEMBACKDROP_TYPE = 2)
-                BackdropTypes.Mica => 2,    // Mica (DWM_SYSTEMBACKDROP_TYPE = 3)
-                BackdropTypes.MicaAlt => 4, // MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
-                _ => 0                      // None (DWM_SYSTEMBACKDROP_TYPE = 0)
-            };
+                var dict = GetThemeResourceDictionary(_settings.Theme);
+                if (dict == null)
+                    return;
 
-            Debug.WriteLine("~~~~~~~~~~~~~~~~~~~~");
-            Debug.WriteLine($"Backdrop Mode: {BlurMode()}, DWM Value: {backdropValue}");
+                var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+                if (windowBorderStyle == null)
+                    return;
 
+                System.Windows.Window mainWindow = GetMainWindow();
+                if (mainWindow == null)
+                    return;
 
-
-            if (BlurEnabled)
-            {
-                // ✅ Mica 또는 MicaAlt인 경우 배경을 투명하게 설정
-                if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
+                // ✅ 테마가 블러를 지원하는지 확인
+                bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+                if (!hasBlur)
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0)))); // 드래그 가능 투명색
-                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                    ThemeModeColorforMica(BlurMode()); // ✅ 테마 모드 적용
+                    _settings.BackdropType = BackdropTypes.None;  // 🔥 블러가 없는 테마는 강제 None 처리
                 }
-                else if (_settings.BackdropType == BackdropTypes.Acrylic)
+
+                // ✅ 설정된 BackdropType 확인
+                int backdropValue = _settings.BackdropType switch
                 {
-                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                    //Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
-                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                    ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
+                    BackdropTypes.Acrylic => 3, // Acrylic
+                    BackdropTypes.Mica => 2,    // Mica
+                    BackdropTypes.MicaAlt => 4, // MicaAlt
+                    _ => 0                      // None
+                };
+
+                if (BlurEnabled && hasBlur)
+                {
+                    // ✅ Mica 또는 MicaAlt인 경우 배경을 투명하게 설정
+                    if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
+                    {
+                        windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                        windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+                        ColorizeWindow(GetSystemBG());
+                    }
+                    else if (_settings.BackdropType == BackdropTypes.Acrylic)
+                    {
+                        windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                        windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+                        ColorizeWindow(GetSystemBG());
+                    }
+                    else
+                    {
+                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+                        ColorizeWindow(GetSystemBG());
+                    }
                 }
                 else
                 {
-                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                    ThemeModeColor(BlurMode()); // ✅ 테마 모드 적용
-                    //windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                    //windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                    // ✅ Blur가 비활성화되면 기본 스타일 적용
+                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 0);
+                    ColorizeWindow(GetSystemBG());
                 }
 
-            }
-            else
-            {
-                // ✅ Blur가 비활성화되면 기본 스타일 적용
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 0);
-                ThemeModeColor(BlurMode());
-            }
-
-            UpdateResourceDictionary(dict);
+                UpdateResourceDictionary(dict);
+            }, DispatcherPriority.Normal);
         }
+
+
 
 
         // Get Background Color from WindowBorderStyle when there not color for BG.
@@ -347,247 +383,110 @@ namespace Flow.Launcher.Core.Resource
             return Colors.Transparent; // Default is transparent
         }
 
-        private void ApplyPreviewBackground(Color bgColor)
+        private void ApplyPreviewBackground(Color? bgColor = null)
         {
+            if (bgColor == null) return;
+
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Style baseStyle = null;
-
-                // ✅ `WindowBorderStyle`이 존재하면 가져오기
+                // 1. 기존 WindowBorderStyle을 복사
+                var previewStyle = new Style(typeof(Border));
                 if (Application.Current.Resources.Contains("WindowBorderStyle"))
                 {
-                    baseStyle = Application.Current.Resources["WindowBorderStyle"] as Style;
-                }
-
-                // ✅ `WindowBorderStyle`이 없으면 `Base.xaml`의 기본 스타일 사용
-                if (baseStyle == null && Application.Current.Resources.Contains("BaseWindowBorderStyle"))
-                {
-                    baseStyle = Application.Current.Resources["BaseWindowBorderStyle"] as Style;
-                }
-
-                // ✅ 투명도가 존재하면 불투명한 색상으로 변경
-                if (bgColor.A < 255)
-                {
-                    bgColor = Color.FromRgb(bgColor.R, bgColor.G, bgColor.B); // 알파값 제거
-                }
-
-                // ✅ 기존 스타일이 존재하면 복사하여 새로운 스타일 생성
-                if (baseStyle != null)
-                {
-                    var newStyle = new Style(typeof(Border));
-
-                    // ✅ 기존 스타일의 Setter를 복사 (Background 제외)
-                    foreach (var setter in baseStyle.Setters.OfType<Setter>())
+                    var originalStyle = Application.Current.Resources["WindowBorderStyle"] as Style;
+                    if (originalStyle != null)
                     {
-                        if (setter.Property != Border.BackgroundProperty) // Background는 새 값으로 대체
+                        foreach (var setter in originalStyle.Setters.OfType<Setter>())
                         {
-                            newStyle.Setters.Add(new Setter(setter.Property, setter.Value));
+                            previewStyle.Setters.Add(new Setter(setter.Property, setter.Value));
                         }
                     }
-
-                    // ✅ 새로운 Background Setter 추가
-                    newStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(bgColor)));
-
-                    // ✅ 새 스타일을 `PreviewWindowBorderStyle`로 적용
-                    Application.Current.Resources["PreviewWindowBorderStyle"] = newStyle;
                 }
-                else
-                {
-                    // ✅ `WindowBorderStyle`이 없으면 기본 스타일 생성
-                    var defaultStyle = new Style(typeof(Border));
-                    defaultStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(bgColor)));
-                    defaultStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(0)));
-                    defaultStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
-                    defaultStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
-                    defaultStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
 
-                    Application.Current.Resources["PreviewWindowBorderStyle"] = defaultStyle;
-                }
+                // 2. 투명도 제거 후 background 적용
+                Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
+                previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
+
+                // 3. 기타 설정 추가
+                previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(0)));
+                previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
+                previewStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
+                previewStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
+
+                Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
             }, DispatcherPriority.Render);
         }
 
 
-
-
-        public void ThemeModeColor(string Mode)
+        public void ColorizeWindow(string Mode)
         {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
-
-            Color lightBG;
-            Color darkBG;
-
-            // get lightBG value. if not, get windowborderstyle's background.
-            try
+            Application.Current.Dispatcher.Invoke(() =>
             {
-                lightBG = dict.Contains("lightBG") ? (Color)dict["lightBG"] : GetWindowBorderStyleBackground();
-            }
-            catch (Exception)
-            {
-                // if not lightBG, use windowborderstyle's background.
-                lightBG = GetWindowBorderStyleBackground();
-            }
+                var dict = GetThemeResourceDictionary(_settings.Theme);
+                if (dict == null) return;
 
-            // get darkBG value, (if not, use lightBG)
-            try
-            {
-                darkBG = dict.Contains("darkBG") ? (Color)dict["darkBG"] : lightBG;
-            }
-            catch (Exception)
-            {
-                darkBG = lightBG; // if not darkBG, use lightBG
-            }
+                var mainWindow = Application.Current.MainWindow;
+                if (mainWindow == null) return;
 
-            if (Mode == "Auto")
-            {
-                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-                string colorScheme = _settings.ColorScheme;
-                bool isDarkMode = themeValue == 0; // 0 is dark mode.
+                // ✅ 블러 테마인지 확인
+                bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
 
-                if (colorScheme == "System")
+                Color LightBG;
+                Color DarkBG;
+
+                // LightBG 값 가져오기 (없으면 WindowBorderStyle의 배경색 사용)
+                try
                 {
-                    if (isDarkMode)
-                    {
-                        ApplyPreviewBackground(darkBG);
-                        mainWindow.Background = new SolidColorBrush(darkBG);
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                        return;
-                    }
-                    else
-                    {
-                        ApplyPreviewBackground(lightBG);
-                        mainWindow.Background = new SolidColorBrush(lightBG);
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                        return;
-                    }
+                    LightBG = dict.Contains("LightBG") ? (Color)dict["LightBG"] : GetWindowBorderStyleBackground();
+                }
+                catch (Exception)
+                {
+                    LightBG = GetWindowBorderStyleBackground();
+                }
+
+                // DarkBG 값 가져오기 (없으면 LightBG 사용)
+                try
+                {
+                    DarkBG = dict.Contains("DarkBG") ? (Color)dict["DarkBG"] : LightBG;
+                }
+                catch (Exception)
+                {
+                    DarkBG = LightBG;
+                }
+
+                // ✅ 설정의 ColorScheme을 우선 사용
+                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
+                bool isSystemDark = themeValue == 0;
+                bool useDarkMode = Mode == "Dark" || (Mode == "Auto" && _settings.ColorScheme == "System" && isSystemDark) || (_settings.ColorScheme == "Dark");
+
+                Color selectedBG = useDarkMode ? DarkBG : LightBG;
+                ApplyPreviewBackground(selectedBG);
+
+                // ✅ Windows 10 테마(HasBlur=False)는 mainWindow.Background를 설정하지 않음
+                if (!hasBlur)
+                {
+                    mainWindow.Background = Brushes.Transparent;
                 }
                 else
                 {
-                    if (colorScheme == "Dark")
+                    // ✅ 블러 테마일 경우만 배경을 투명하게 설정
+                    if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
                     {
-                        ApplyPreviewBackground(darkBG);
-                        mainWindow.Background = new SolidColorBrush(darkBG);
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                        return;
-                    }
-                    else if (colorScheme == "Light")
-                    {
-                        ApplyPreviewBackground(lightBG);
-                        mainWindow.Background = new SolidColorBrush(lightBG);
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                        return;
-                    }
-                }
-            }
-            else if (Mode == "Dark")
-            {
-                mainWindow.Background = new SolidColorBrush(darkBG);
-                ApplyPreviewBackground(darkBG);
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                return;
-            }
-            else if (Mode == "Light")
-            {
-                mainWindow.Background = new SolidColorBrush(lightBG);
-                ApplyPreviewBackground(lightBG);
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                return;
-            }
-            else
-            {
-                ApplyPreviewBackground(lightBG);
-                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-            }
-        }
-
-        public void ThemeModeColorforMica(string Mode)
-        {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
-
-            Color lightBG;
-            Color darkBG;
-
-            // get lightBG value. if not, get windowborderstyle's background.
-            try
-            {
-                lightBG = dict.Contains("lightBG") ? (Color)dict["lightBG"] : GetWindowBorderStyleBackground();
-            }
-            catch (Exception)
-            {
-                // if not lightBG, use windowborderstyle's background.
-                lightBG = GetWindowBorderStyleBackground();
-            }
-
-            // get darkBG value, (if not, use lightBG)
-            try
-            {
-                darkBG = dict.Contains("darkBG") ? (Color)dict["darkBG"] : lightBG;
-            }
-            catch (Exception)
-            {
-                darkBG = lightBG; // if not darkBG, use lightBG
-            }
-
-            if (Mode == "Auto")
-            {
-                int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
-                string colorScheme = _settings.ColorScheme;
-                bool isDarkMode = themeValue == 0; // 0 is dark mode.
-
-                if (colorScheme == "System")
-                {
-                    if (isDarkMode)
-                    {
-                        ApplyPreviewBackground(darkBG);
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                        return;
                     }
                     else
                     {
-                        ApplyPreviewBackground(lightBG);
-                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                        return;
+                        mainWindow.Background = new SolidColorBrush(selectedBG);
                     }
                 }
-                else
-                {
-                    if (colorScheme == "Dark")
-                    {
-                        ApplyPreviewBackground(darkBG);
-                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                        return;
-                    }
-                    else if (colorScheme == "Light")
-                    {
-                        ApplyPreviewBackground(lightBG);
-                        mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                        return;
-                    }
-                }
-            }
-            else if (Mode == "Dark")
-            {
-                ApplyPreviewBackground(darkBG);
-                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 1);
-                return;
-            }
-            else if (Mode == "Light")
-            {
-                ApplyPreviewBackground(lightBG);
-                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, 0);
-                return;
-            }
-            else
-            {
-                ApplyPreviewBackground(lightBG);
-                mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
-            }
+
+                // ✅ DWM 다크 모드 적용
+                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
+            }, DispatcherPriority.Normal);
         }
+
+
+
 
 
         public bool IsBlurTheme()
@@ -604,11 +503,11 @@ namespace Flow.Launcher.Core.Resource
 
             return false;
         }
-        public string BlurMode()
+        public string GetSystemBG()
         {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
-                var resource = Application.Current.TryFindResource("BlurMode");
+                var resource = Application.Current.TryFindResource("SystemBG");
 
                 if (resource is string)
                     return (string)resource;

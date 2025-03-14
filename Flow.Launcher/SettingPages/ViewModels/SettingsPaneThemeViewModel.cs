@@ -41,7 +41,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 DropShadowEffect = true;
                 OnPropertyChanged(nameof(IsDropShadowEnabled));
             ThemeManager.Instance.RefreshFrame();
-            //uThemeManager.Instance.SetBlurForWindow();
+            //ThemeManager.Instance.SetBlurForWindow();
         }
     }
     public bool IsBackdropEnabled => SelectedTheme?.HasBlur ?? false;
