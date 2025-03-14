@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">Hides programs with common uninstaller names, such as unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">Поиск в описании программы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">Flow будет искать в описании программ</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">Суффиксы</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">Макс. глубина</system:String>
 
@@ -82,8 +84,7 @@
 
     <system:String x:Key="flowlauncher_plugin_program_customizedexplorer">Настраиваемый проводник</system:String>
     <system:String x:Key="flowlauncher_plugin_program_args">Аргументы</system:String>
-    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">Вы можете настроить проводник, используемый для открытия папки контейнера, введя переменную окружения проводника, который вы хотите использовать. Будет полезно использовать командную строку для проверки доступности переменной среды.</system:String>
-
+    <system:String x:Key="flowlauncher_plugin_program_tooltip_customizedexplorer">You can customize the explorer used for opening the container folder by inputing the Environmental Variable of the explorer you want to use. It will be useful to use CMD to test whether the Environmental Variable is available.</system:String>
     <system:String x:Key="flowlauncher_plugin_program_tooltip_args">Введите настраиваемые аргументы, которые вы хотите добавить для вашего настраиваемого проводника. %s для родительского каталога, %f для полного пути (работает только для win32). Подробности смотрите на сайте проводника.</system:String>
 
     <!--  Dialogs  -->

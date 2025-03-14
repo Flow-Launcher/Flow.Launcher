@@ -6,6 +6,7 @@
     <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Pulsar cualquier tecla para cerrar esta ventana...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">No cerrar el símbolo del sistema después de la ejecución del comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Ejecutar siempre como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Usar Terminal Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Ejecutar como usuario diferente</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Terminal</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permite ejecutar comandos del sistema desde Flow Launcher</system:String>

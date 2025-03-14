@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodarilo sa zaregistrovať klávesovú skratku &quot;{0}&quot;. Klávesová skratka môže byť používaná iným programom. Zmeňte klávesovú skratku na inú alebo ukončite iný program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Nepodarilo sa registrovať klávesovú skratku &quot;{0}&quot;. Skúste to znova alebo si pozrite podrobnosti v denníku</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodarilo sa spustiť {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný formát súboru pre plugin Flow Launchera</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Prenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Uloží všetky nastavenia a používateľské údaje do jedného priečinka (Užitočné pri vymeniteľných diskoch a cloudových službách).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustiť Flow Launcher pri spustení systému</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Pre rýchlejšie spustenie použiť úlohu pri prihlásení namiesto položky po spustení</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Po odinštalovaní musíte úlohu manuálne odstrániť (Flow.Launcher Startup) cez Plánovač úloh</system:String>
     <system:String x:Key="setAutoStartFailed">Chybné nastavenie spustenia pri spustení</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Schovať Flow Launcher po strate fokusu</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovať upozornenia na novú verziu</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Verzia</system:String>
     <system:String x:Key="plugin_query_web">Webstránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinštalovať</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Nepodarilo sa odstrániť nastavenia pluginu</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Pluginy: {0} – Nepodarilo sa odstrániť súbory s nastaveniami pluginu, odstráňte ich manuálne</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Repozitár pluginov</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Nová verzia</system:String>
     <system:String x:Key="LabelNewToolTip">Tento plugin bol aktualizovaný za posledných 7 dní</system:String>
     <system:String x:Key="LabelUpdateToolTip">K dispozícii je nová aktualizácia</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motív</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Dátum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Tento motív podporuje 2 režimy (svetlý/tmavý).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Tento motív podporuje rozostrenie priehľadného pozadia.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesové skratky</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">Cesta k používateľskému priečinku</system:String>
     <system:String x:Key="userdatapathToolTip">Nastavenia používateľa a nainštalované pluginy sa ukladajú do používateľského priečinka. Toto umiestnenie sa môže líšiť v závislosti od toho, či je v prenosnom režime alebo nie.</system:String>
     <system:String x:Key="userdatapathButton">Otvoriť priečinok</system:String>
+    <system:String x:Key="logLevel">Úroveň logovania</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vyberte správcu súborov</system:String>
@@ -367,6 +371,7 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="commonOK">Aktualizovať</system:String>
     <system:String x:Key="commonYes">Áno</system:String>
     <system:String x:Key="commonNo">Nie</system:String>
+    <system:String x:Key="commonBackground">Pozadie</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verzia</system:String>
@@ -383,6 +388,9 @@ Ak pri zadávaní skratky pred ňu pridáte &quot;@&quot;, bude sa zhodovať s �
     <system:String x:Key="reportWindow_report_succeed">Hlásenie bolo úspešne odoslané</system:String>
     <system:String x:Key="reportWindow_report_failed">Odoslanie hlásenia zlyhalo</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Prosím, otvorte nové issue na</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Nahrajte súbor logu: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Skopírujte nižšie uvedenú správu o výnimke</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Čakajte, prosím...</system:String>

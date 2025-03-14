@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Failed to register hotkey &quot;{0}&quot;. The hotkey may be in use by another program. Change to a different hotkey, or exit another program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0}을 실행할 수 없습니다.</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher 플러그인 파일 형식이 유효하지 않습니다.</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">포터블 모드</system:String>
     <system:String x:Key="portableModeToolTIp">모든 설정이 폴더안에 들어갑니다. USB 드라이브나 클라우드로 사용 가능합니다.</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">시스템 시작 시 Flow Launcher 실행</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Error setting launch on startup</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">포커스 잃으면 Flow Launcher 숨김</system:String>
     <system:String x:Key="dontPromptUpdateMsg">새 버전 알림 끄기</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">버전</system:String>
     <system:String x:Key="plugin_query_web">웹사이트</system:String>
     <system:String x:Key="plugin_uninstall">제거</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">플러그인 스토어</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">새 버전</system:String>
     <system:String x:Key="LabelNewToolTip">이 플러그인은 최근 7일 사이 업데이트 되었습니다</system:String>
     <system:String x:Key="LabelUpdateToolTip">새 업데이트 설치 가능</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">테마</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">날짜</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">단축키</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">사용자 데이터 위치</system:String>
     <system:String x:Key="userdatapathToolTip">사용자 설정과 설치된 플러그인은 사용자 데이터 폴더에 저장됩니다. 이 위치는 휴대용 모드 활성화 여부에 따라 달라질 수 있습니다.</system:String>
     <system:String x:Key="userdatapathButton">폴더 열기</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">파일관리자 선택</system:String>
@@ -367,6 +371,7 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="commonOK">확인</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">배경</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">버전</system:String>
@@ -383,6 +388,9 @@ If you add an '@' prefix while inputting a shortcut, it matches any position in 
     <system:String x:Key="reportWindow_report_succeed">보고서를 정상적으로 보냈습니다.</system:String>
     <system:String x:Key="reportWindow_report_failed">보고서를 보내지 못했습니다.</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher에 문제가 발생했습니다.</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">잠시 기다려주세요...</system:String>
