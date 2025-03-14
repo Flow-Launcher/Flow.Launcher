@@ -35,6 +35,15 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             _selectedTheme = value;
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
+            // ✅ 테마 변경 후 BackdropType 자동 업데이트
+            if (!ThemeManager.Instance.BlurEnabled)
+            {
+                Settings.BackdropType = BackdropTypes.None;
+            }
+
+            OnPropertyChanged(nameof(BackdropType));
+            OnPropertyChanged(nameof(IsBackdropEnabled));
+
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
             {
                 DropShadowEffect = true;
@@ -42,7 +51,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
 
             ThemeManager.Instance.RefreshFrame();
-            //ThemeManager.Instance.SetBlurForWindow();
         }
     }
     public bool IsBackdropEnabled => SelectedTheme?.HasBlur ?? false;
