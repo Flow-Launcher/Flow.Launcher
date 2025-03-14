@@ -457,7 +457,7 @@ namespace Flow.Launcher.Core.Resource
                 // ✅ 설정의 ColorScheme을 우선 사용
                 int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
                 bool isSystemDark = themeValue == 0;
-                bool useDarkMode = Mode == "Dark" || (Mode == "Auto" && _settings.ColorScheme == "System" && isSystemDark) || (_settings.ColorScheme == "Dark");
+                bool useDarkMode = Mode == "Dark" || (Mode == "Auto" && _settings.ColorScheme == ColorSchemes.System && isSystemDark) || (_settings.ColorScheme == ColorSchemes.Dark);
 
                 Color selectedBG = useDarkMode ? DarkBG : LightBG;
                 ApplyPreviewBackground(selectedBG);

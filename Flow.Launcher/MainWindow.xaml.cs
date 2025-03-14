@@ -998,11 +998,11 @@ namespace Flow.Launcher
 
         public void InitializeColorScheme()
         {
-            if (_settings.ColorScheme == Constant.Light)
+            if (_settings.ColorScheme == ColorSchemes.Light)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
             }
-            else if (_settings.ColorScheme == Constant.Dark)
+            else if (_settings.ColorScheme == ColorSchemes.Dark)
             {
                 ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
             }

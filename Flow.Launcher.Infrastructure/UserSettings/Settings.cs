@@ -37,7 +37,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         private string _theme = Constant.DefaultTheme;
         public string Hotkey { get; set; } = $"{KeyConstant.Alt} + {KeyConstant.Space}";
         public string OpenResultModifiers { get; set; } = KeyConstant.Alt;
-        public string ColorScheme { get; set; } = "System";
+        public ColorSchemes ColorScheme { get; set; } = ColorSchemes.System;
         public bool ShowOpenResultHotkey { get; set; } = true;
         public double WindowSize { get; set; } = 580;
         public string PreviewHotkey { get; set; } = $"F1";

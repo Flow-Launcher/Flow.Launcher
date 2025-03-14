@@ -15,8 +15,6 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
-using static Flow.Launcher.Core.Resource.Theme;
-using System.Windows.Interop;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -38,8 +36,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
             if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
+            {
                 DropShadowEffect = true;
                 OnPropertyChanged(nameof(IsDropShadowEnabled));
+            }
+
             ThemeManager.Instance.RefreshFrame();
             //ThemeManager.Instance.SetBlurForWindow();
         }
@@ -107,6 +108,16 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public class ColorSchemeData : DropdownDataGeneric<ColorSchemes> { }
 
     public List<ColorSchemeData> ColorSchemes { get; } = DropdownDataGeneric<ColorSchemes>.GetValues<ColorSchemeData>("ColorScheme");
+    public ColorSchemes ColorScheme
+    {
+        get => Settings.ColorScheme;
+        set
+        {
+            UpdateColorScheme();
+
+            Settings.ColorScheme = value;
+        }
+    }
 
     public List<string> TimeFormatList { get; } = new()
     {
@@ -463,13 +474,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         App.API.OpenDirectory(Path.Combine(DataLocation.DataDirectory(), Constant.Themes));
     }
 
-    public void UpdateColorScheme()
+    private void UpdateColorScheme()
     {
         ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme = Settings.ColorScheme switch
         {
-            Constant.Light => ApplicationTheme.Light,
-            Constant.Dark => ApplicationTheme.Dark,
-            Constant.System => null,
+            Infrastructure.UserSettings.ColorSchemes.Light => ApplicationTheme.Light,
+            Infrastructure.UserSettings.ColorSchemes.Dark => ApplicationTheme.Dark,
+            Infrastructure.UserSettings.ColorSchemes.System => null,
             _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
         };
         ThemeManager.Instance.RefreshFrame();
