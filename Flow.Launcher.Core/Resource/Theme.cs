@@ -236,36 +236,36 @@ namespace Flow.Launcher.Core.Resource
         }
 
 
-        public void SetCornerForWindow()
-        {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                var dict = GetThemeResourceDictionary(_settings.Theme);
-                if (dict == null)
-                    return;
+        //public void SetCornerForWindow()
+        //{
+        //    Application.Current.Dispatcher.Invoke(() =>
+        //    {
+        //        var dict = GetThemeResourceDictionary(_settings.Theme);
+        //        if (dict == null)
+        //            return;
 
-                System.Windows.Window mainWindow = Application.Current.MainWindow;
-                if (mainWindow == null)
-                    return;
+        //        System.Windows.Window mainWindow = Application.Current.MainWindow;
+        //        if (mainWindow == null)
+        //            return;
 
-                if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
-                {
-                    DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
-                    {
-                        "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
-                        "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
-                        "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
-                        _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
-                    };
+        //        if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
+        //        {
+        //            DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
+        //            {
+        //                "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
+        //                "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
+        //                "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
+        //                _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
+        //            };
 
-                    SetWindowCornerPreference(mainWindow, preference);
-                }
-                else
-                {
-                    SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
-                }
-            }, DispatcherPriority.Normal);
-        }
+        //            SetWindowCornerPreference(mainWindow, preference);
+        //        }
+        //        else
+        //        {
+        //            SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
+        //        }
+        //    }, DispatcherPriority.Normal);
+        //}
 
 
         /// <summary>
@@ -389,7 +389,7 @@ namespace Flow.Launcher.Core.Resource
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // 1. 기존 WindowBorderStyle을 복사
+                // ✅ 기존 WindowBorderStyle을 복사
                 var previewStyle = new Style(typeof(Border));
                 if (Application.Current.Resources.Contains("WindowBorderStyle"))
                 {
@@ -403,16 +403,23 @@ namespace Flow.Launcher.Core.Resource
                     }
                 }
 
-                // 2. 투명도 제거 후 background 적용
+                // ✅ 배경색 적용 (투명도 제거)
                 Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
                 previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
 
-                // 3. 기타 설정 추가
-                previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(0)));
-                previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
-                previewStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
-                previewStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
+                // ✅ 블러 테마면 CornerRadius = 5, 비블러 테마면 기존 스타일 유지
+                if (BlurEnabled)
+                {
+                    previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
+                    previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
+                }
 
+                // ✅ 기타 설정 추가
+                //previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
+                //previewStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
+                //reviewStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
+
+                // ✅ 최종 적용
                 Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
             }, DispatcherPriority.Render);
         }

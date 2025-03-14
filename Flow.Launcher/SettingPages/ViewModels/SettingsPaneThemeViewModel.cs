@@ -35,20 +35,23 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             _selectedTheme = value;
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
-            // ✅ 테마 변경 후 BackdropType 자동 업데이트
+            // ✅ 비블러 테마로 변경 시 BackdropType을 None으로 자동 설정
             if (!ThemeManager.Instance.BlurEnabled)
             {
                 Settings.BackdropType = BackdropTypes.None;
             }
 
+            // ✅ 블러 테마에서는 DropShadow를 자동으로 켜고 비활성화 (사용자 변경 불가)
+            if (ThemeManager.Instance.BlurEnabled)
+            {
+                Settings.UseDropShadowEffect = true;
+            }
+
+            // ✅ UI 상태 업데이트
             OnPropertyChanged(nameof(BackdropType));
             OnPropertyChanged(nameof(IsBackdropEnabled));
-
-            if (ThemeManager.Instance.BlurEnabled && Settings.UseDropShadowEffect == false)
-            {
-                DropShadowEffect = true;
-                OnPropertyChanged(nameof(IsDropShadowEnabled));
-            }
+            OnPropertyChanged(nameof(IsDropShadowEnabled));
+            OnPropertyChanged(nameof(DropShadowEffect));
 
             ThemeManager.Instance.RefreshFrame();
         }
@@ -61,12 +64,14 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         get => Settings.UseDropShadowEffect;
         set
         {
-            if (ThemeManager.Instance.BlurEnabled && value == false)
+            if (ThemeManager.Instance.BlurEnabled)
             {
+                // 🔥 블러 테마에서는 항상 DropShadowEffect = true 유지
                 Settings.UseDropShadowEffect = true;
                 return;
             }
 
+            // ✅ 비블러 테마에서는 사용자가 수동으로 변경 가능
             if (value)
             {
                 ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
@@ -77,6 +82,9 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
 
             Settings.UseDropShadowEffect = value;
+
+            // ✅ UI 업데이트
+            OnPropertyChanged(nameof(DropShadowEffect));
         }
     }
 
