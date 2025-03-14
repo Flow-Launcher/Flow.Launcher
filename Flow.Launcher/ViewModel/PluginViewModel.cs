@@ -89,13 +89,13 @@ namespace Flow.Launcher.ViewModel
         private Control _bottomPart2;
         public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
 
-        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider settingProvider && settingProvider.CreateSettingPanel() != null;
+        public bool HasSettingControl => PluginPair.Plugin is ISettingProvider && (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
         public Control SettingControl
             => IsExpanded
                 ? _settingControl
-                    ??= PluginPair.Plugin is not ISettingProvider settingProvider
-                        ? null
-                        : settingProvider.CreateSettingPanel()
+                    ??= HasSettingControl
+                        ? ((ISettingProvider)PluginPair.Plugin).CreateSettingPanel()
+                        : null
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 

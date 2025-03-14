@@ -1,27 +1,19 @@
-﻿#nullable enable
+#nullable enable
 
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public partial class HotkeyControl
     {
-        public IHotkeySettings HotkeySettings {
-            get { return (IHotkeySettings)GetValue(HotkeySettingsProperty); }
-            set { SetValue(HotkeySettingsProperty, value); }
-        }
-
-        public static readonly DependencyProperty HotkeySettingsProperty = DependencyProperty.Register(
-            nameof(HotkeySettings),
-            typeof(IHotkeySettings),
-            typeof(HotkeyControl),
-            new PropertyMetadata()
-        );
         public string WindowTitle {
             get { return (string)GetValue(WindowTitleProperty); }
             set { SetValue(WindowTitleProperty, value); }
@@ -70,8 +62,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            hotkeyControl.SetKeysToDisplay(new HotkeyModel(hotkeyControl.Hotkey));
-            hotkeyControl.CurrentHotkey = new HotkeyModel(hotkeyControl.Hotkey);
+            hotkeyControl.RefreshHotkeyInterface(hotkeyControl.Hotkey);
         }
 
 
@@ -89,17 +80,117 @@ namespace Flow.Launcher
         }
 
 
-        public static readonly DependencyProperty HotkeyProperty = DependencyProperty.Register(
-            nameof(Hotkey),
-            typeof(string),
+        public static readonly DependencyProperty TypeProperty = DependencyProperty.Register(
+            nameof(Type),
+            typeof(HotkeyType),
             typeof(HotkeyControl),
-            new FrameworkPropertyMetadata("", FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
+            new FrameworkPropertyMetadata(HotkeyType.Hotkey, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
         );
+
+        public HotkeyType Type
+        {
+            get { return (HotkeyType)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
+        }
+
+        public enum HotkeyType
+        {
+            Hotkey,
+            PreviewHotkey,
+            OpenContextMenuHotkey,
+            SettingWindowHotkey,
+            CycleHistoryUpHotkey,
+            CycleHistoryDownHotkey,
+            SelectPrevPageHotkey,
+            SelectNextPageHotkey,
+            AutoCompleteHotkey,
+            AutoCompleteHotkey2,
+            SelectPrevItemHotkey,
+            SelectPrevItemHotkey2,
+            SelectNextItemHotkey,
+            SelectNextItemHotkey2
+        }
+
+        // We can initialize settings in static field because it has been constructed in App constuctor
+        // and it will not construct settings instances twice
+        private static readonly Settings _settings = Ioc.Default.GetRequiredService<Settings>();
 
         public string Hotkey
         {
-            get { return (string)GetValue(HotkeyProperty); }
-            set { SetValue(HotkeyProperty, value); }
+            get
+            {
+                return Type switch
+                {
+                    HotkeyType.Hotkey => _settings.Hotkey,
+                    HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
+                    HotkeyType.OpenContextMenuHotkey => _settings.OpenContextMenuHotkey,
+                    HotkeyType.SettingWindowHotkey => _settings.SettingWindowHotkey,
+                    HotkeyType.CycleHistoryUpHotkey => _settings.CycleHistoryUpHotkey,
+                    HotkeyType.CycleHistoryDownHotkey => _settings.CycleHistoryDownHotkey,
+                    HotkeyType.SelectPrevPageHotkey => _settings.SelectPrevPageHotkey,
+                    HotkeyType.SelectNextPageHotkey => _settings.SelectNextPageHotkey,
+                    HotkeyType.AutoCompleteHotkey => _settings.AutoCompleteHotkey,
+                    HotkeyType.AutoCompleteHotkey2 => _settings.AutoCompleteHotkey2,
+                    HotkeyType.SelectPrevItemHotkey => _settings.SelectPrevItemHotkey,
+                    HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
+                    HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
+                    HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
+                    _ => string.Empty
+                };
+            }
+            set
+            {
+                switch (Type)
+                {
+                    case HotkeyType.Hotkey:
+                        _settings.Hotkey = value;
+                        break;
+                    case HotkeyType.PreviewHotkey:
+                        _settings.PreviewHotkey = value;
+                        break;
+                    case HotkeyType.OpenContextMenuHotkey:
+                        _settings.OpenContextMenuHotkey = value;
+                        break;
+                    case HotkeyType.SettingWindowHotkey:
+                        _settings.SettingWindowHotkey = value;
+                        break;
+                    case HotkeyType.CycleHistoryUpHotkey:
+                        _settings.CycleHistoryUpHotkey = value;
+                        break;
+                    case HotkeyType.CycleHistoryDownHotkey:
+                        _settings.CycleHistoryDownHotkey = value;
+                        break;
+                    case HotkeyType.SelectPrevPageHotkey:
+                        _settings.SelectPrevPageHotkey = value;
+                        break;
+                    case HotkeyType.SelectNextPageHotkey:
+                        _settings.SelectNextPageHotkey = value;
+                        break;
+                    case HotkeyType.AutoCompleteHotkey:
+                        _settings.AutoCompleteHotkey = value;
+                        break;
+                    case HotkeyType.AutoCompleteHotkey2:
+                        _settings.AutoCompleteHotkey2 = value;
+                        break;
+                    case HotkeyType.SelectPrevItemHotkey:
+                        _settings.SelectPrevItemHotkey = value;
+                        break;
+                    case HotkeyType.SelectNextItemHotkey:
+                        _settings.SelectNextItemHotkey = value;
+                        break;
+                    case HotkeyType.SelectPrevItemHotkey2:
+                        _settings.SelectPrevItemHotkey2 = value;
+                        break;
+                    case HotkeyType.SelectNextItemHotkey2:
+                        _settings.SelectNextItemHotkey2 = value;
+                        break;
+                    default:
+                        return;
+                }
+
+                // After setting the hotkey, we need to refresh the interface
+                RefreshHotkeyInterface(Hotkey);
+            }
         }
 
         public HotkeyControl()
@@ -107,7 +198,14 @@ namespace Flow.Launcher
             InitializeComponent();
 
             HotkeyList.ItemsSource = KeysToDisplay;
-            SetKeysToDisplay(CurrentHotkey);
+
+            RefreshHotkeyInterface(Hotkey);
+        }
+
+        private void RefreshHotkeyInterface(string hotkey)
+        {
+            SetKeysToDisplay(new HotkeyModel(Hotkey));
+            CurrentHotkey = new HotkeyModel(Hotkey);
         }
 
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
@@ -132,7 +230,7 @@ namespace Flow.Launcher
                 HotKeyMapper.RemoveHotkey(Hotkey);
             }
 
-            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, HotkeySettings, WindowTitle);
+            var dialog = new HotkeyControlDialog(Hotkey, DefaultHotkey, WindowTitle);
             await dialog.ShowAsync();
             switch (dialog.ResultType)
             {

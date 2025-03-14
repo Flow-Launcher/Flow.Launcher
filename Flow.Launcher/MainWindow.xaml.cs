@@ -442,7 +442,7 @@ namespace Flow.Launcher
 
         private void OpenWelcomeWindow()
         {
-            var WelcomeWindow = new WelcomeWindow(_settings);
+            var WelcomeWindow = new WelcomeWindow();
             WelcomeWindow.Show();
         }
 
