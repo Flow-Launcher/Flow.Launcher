@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -23,7 +22,7 @@ namespace Flow.Launcher.Plugin.WebSearch.SuggestionSources
             try
             {
                 const string api = "http://suggestion.baidu.com/su?json=1&wd=";
-                result = await Http.GetAsync(api + Uri.EscapeUriString(query), token).ConfigureAwait(false);
+                result = await Http.GetAsync(api + Uri.EscapeDataString(query), token).ConfigureAwait(false);
             }
             catch (Exception e) when (e is HttpRequestException or {InnerException: TimeoutException})
             {

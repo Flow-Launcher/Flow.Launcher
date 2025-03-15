@@ -1,8 +1,10 @@
-using Flow.Launcher.Infrastructure.Image;
+﻿using Flow.Launcher.Infrastructure.Image;
 using System;
-using System.Drawing;
 using System.IO;
+using System.Threading.Tasks;
+#pragma warning disable IDE0005
 using System.Windows;
+#pragma warning restore IDE0005
 using System.Windows.Media;
 
 namespace Flow.Launcher.Plugin.WebSearch
@@ -34,12 +36,12 @@ namespace Flow.Launcher.Plugin.WebSearch
                 {
                     File.Copy(fullpathToSelectedImage, destinationFileNameFullPath);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 #if DEBUG
-                    throw e;
+                    throw;
 #else
-                MessageBox.Show(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
+                Main._context.API.ShowMsgBox(string.Format("Copying the selected image file to {0} has failed, changes will now be reverted", destinationFileNameFullPath));
                 UpdateIconAttributes(selectedSearchSource, fullPathToOriginalImage);
 #endif
                 }
@@ -57,9 +59,9 @@ namespace Flow.Launcher.Plugin.WebSearch
             return Directory.GetParent(fullPathToSelectedImage).ToString() == Main.DefaultImagesDirectory;
         }
 
-        internal ImageSource LoadPreviewIcon(string pathToPreviewIconImage)
+        internal async ValueTask<ImageSource> LoadPreviewIconAsync(string pathToPreviewIconImage)
         {
-            return ImageLoader.Load(pathToPreviewIconImage);
+            return await ImageLoader.LoadAsync(pathToPreviewIconImage);
         }
     }
 }

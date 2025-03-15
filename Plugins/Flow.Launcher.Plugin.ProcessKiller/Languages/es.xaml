@@ -4,8 +4,8 @@
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_name">Finalizador de procesos</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_plugin_description">Finaliza procesos en ejecución desde Flow Launcher</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">finaliza todas las instancias de &quot;{0}&quot;</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_all">finalizar todas las instancias de &quot;{0}&quot;</system:String>
     <system:String x:Key="flowlauncher_plugin_processkiller_kill_all_count">finalizar {0} procesos</system:String>
-    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">finaliza todas las instancias</system:String>
+    <system:String x:Key="flowlauncher_plugin_processkiller_kill_instances">finalizar todas las instancias</system:String>
 
 </ResourceDictionary>

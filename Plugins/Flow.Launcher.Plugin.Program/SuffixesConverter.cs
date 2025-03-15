@@ -12,7 +12,7 @@ namespace Flow.Launcher.Plugin.Program
             var text = value as string[];
             if (text != null)
             {
-                return string.Join(";", text);
+                return string.Join(Settings.SuffixSeparator, text);
             }
             else
             {

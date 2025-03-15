@@ -1,7 +1,13 @@
+﻿using Flow.Launcher.Plugin.Everything.Everything;
 using Flow.Launcher.Plugin.Explorer.Search;
+using Flow.Launcher.Plugin.Explorer.Search.Everything;
 using Flow.Launcher.Plugin.Explorer.Search.QuickAccessLinks;
+using Flow.Launcher.Plugin.Explorer.Search.WindowsIndex;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
+using Flow.Launcher.Plugin.Explorer.Search.IProvider;
 
 namespace Flow.Launcher.Plugin.Explorer
 {
@@ -9,14 +15,28 @@ namespace Flow.Launcher.Plugin.Explorer
     {
         public int MaxResult { get; set; } = 100;
 
-        public List<AccessLink> QuickAccessLinks { get; set; } = new List<AccessLink>();
+        public ObservableCollection<AccessLink> QuickAccessLinks { get; set; } = new();
 
-        // as at v1.7.0 this is to maintain backwards compatibility, need to be removed afterwards.
-        public List<AccessLink> QuickFolderAccessLinks { get; set; } = new List<AccessLink>();
+        public ObservableCollection<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new ObservableCollection<AccessLink>();
 
-        public bool UseWindowsIndexForDirectorySearch { get; set; } = false;
+        public string EditorPath { get; set; } = "";
 
-        public List<AccessLink> IndexSearchExcludedSubdirectoryPaths { get; set; } = new List<AccessLink>();
+        public string FolderEditorPath { get; set; } = "";
+
+        public string ShellPath { get; set; } = "cmd";
+
+        public string ExcludedFileTypes { get; set; } = "";
+
+
+        public bool UseLocationAsWorkingDir { get; set; } = false;
+
+        public bool ShowInlinedWindowsContextMenu { get; set; } = false;
+
+        public string WindowsContextMenuIncludedItems { get; set; } = string.Empty;
+
+        public string WindowsContextMenuExcludedItems { get; set; } = string.Empty;
+
+        public bool DefaultOpenFolderInFileManager { get; set; } = false;
 
         public string SearchActionKeyword { get; set; } = Query.GlobalPluginWildcardSign;
 
@@ -38,7 +58,104 @@ namespace Flow.Launcher.Plugin.Explorer
 
         public bool QuickAccessKeywordEnabled { get; set; }
 
+
         public bool WarnWindowsSearchServiceOff { get; set; } = true;
+
+        public bool ShowFileSizeInPreviewPanel { get; set; } = true;
+
+        public bool ShowCreatedDateInPreviewPanel { get; set; } = true;
+
+        public bool ShowModifiedDateInPreviewPanel { get; set; } = true;
+
+        public string PreviewPanelDateFormat { get; set; } = "yyyy-MM-dd";
+
+        public string PreviewPanelTimeFormat { get; set; } = "HH:mm";
+
+        private EverythingSearchManager _everythingManagerInstance;
+        private WindowsIndexSearchManager _windowsIndexSearchManager;
+
+        #region SearchEngine
+
+        private EverythingSearchManager EverythingManagerInstance => _everythingManagerInstance ??= new EverythingSearchManager(this);
+        private WindowsIndexSearchManager WindowsIndexSearchManager => _windowsIndexSearchManager ??= new WindowsIndexSearchManager(this);
+
+
+        public IndexSearchEngineOption IndexSearchEngine { get; set; } = IndexSearchEngineOption.WindowsIndex;
+        [JsonIgnore]
+        public IIndexProvider IndexProvider => IndexSearchEngine switch
+        {
+            IndexSearchEngineOption.Everything => EverythingManagerInstance,
+            IndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(IndexSearchEngine))
+        };
+
+        public PathEnumerationEngineOption PathEnumerationEngine { get; set; } = PathEnumerationEngineOption.WindowsIndex;
+
+        [JsonIgnore]
+        public IPathIndexProvider PathEnumerator => PathEnumerationEngine switch
+        {
+            PathEnumerationEngineOption.Everything => EverythingManagerInstance,
+            PathEnumerationEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(PathEnumerationEngine))
+        };
+
+        public ContentIndexSearchEngineOption ContentSearchEngine { get; set; } = ContentIndexSearchEngineOption.WindowsIndex;
+        [JsonIgnore]
+        public IContentIndexProvider ContentIndexProvider => ContentSearchEngine switch
+        {
+            ContentIndexSearchEngineOption.Everything => EverythingManagerInstance,
+            ContentIndexSearchEngineOption.WindowsIndex => WindowsIndexSearchManager,
+            _ => throw new ArgumentOutOfRangeException(nameof(ContentSearchEngine))
+        };
+
+        public enum PathEnumerationEngineOption
+        {
+            [Description("plugin_explorer_engine_windows_index")]
+            WindowsIndex,
+            [Description("plugin_explorer_engine_everything")]
+            Everything,
+            [Description("plugin_explorer_path_enumeration_engine_none")]
+            DirectEnumeration
+        }
+
+        public enum IndexSearchEngineOption
+        {
+            [Description("plugin_explorer_engine_windows_index")]
+            WindowsIndex,
+            [Description("plugin_explorer_engine_everything")]
+            Everything,
+        }
+
+        public enum ContentIndexSearchEngineOption
+        {
+            [Description("plugin_explorer_engine_windows_index")]
+            WindowsIndex,
+            [Description("plugin_explorer_engine_everything")]
+            Everything,
+        }
+
+        #endregion
+
+
+        #region Everything Settings
+
+        public string EverythingInstalledPath { get; set; }
+
+        [JsonIgnore]
+        public SortOption[] SortOptions { get; set; } = Enum.GetValues<SortOption>();
+
+        public SortOption SortOption { get; set; } = SortOption.NAME_ASCENDING;
+
+        public bool EnableEverythingContentSearch { get; set; } = false;
+
+        public bool EverythingEnabled => IndexSearchEngine == IndexSearchEngineOption.Everything ||
+                                         PathEnumerationEngine == PathEnumerationEngineOption.Everything ||
+                                         ContentSearchEngine == ContentIndexSearchEngineOption.Everything;
+
+        public bool EverythingSearchFullPath { get; set; } = false;
+        public bool EverythingEnableRunCount { get; set; } = true;
+
+        #endregion
 
         internal enum ActionKeyword
         {

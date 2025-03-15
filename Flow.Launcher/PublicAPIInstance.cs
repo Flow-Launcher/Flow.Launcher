@@ -23,24 +23,25 @@ using System.Runtime.CompilerServices;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using System.Collections.Concurrent;
-using Flow.Launcher.Plugin.SharedCommands;
 using System.Diagnostics;
+using System.Collections.Specialized;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Core;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher
 {
     public class PublicAPIInstance : IPublicAPI
     {
-        private readonly SettingWindowViewModel _settingsVM;
+        private readonly Settings _settings;
         private readonly MainViewModel _mainVM;
-        private readonly PinyinAlphabet _alphabet;
 
         #region Constructor
 
-        public PublicAPIInstance(SettingWindowViewModel settingsVM, MainViewModel mainVM, PinyinAlphabet alphabet)
+        public PublicAPIInstance(Settings settings, MainViewModel mainVM)
         {
-            _settingsVM = settingsVM;
+            _settings = settings;
             _mainVM = mainVM;
-            _alphabet = alphabet;
             GlobalHotkey.hookedKeyboardCallback = KListener_hookedKeyboardCallback;
             WebRequest.RegisterPrefix("data", new DataWebRequestFactory());
         }
@@ -69,21 +70,26 @@ namespace Flow.Launcher
             UpdateManager.RestartApp(Constant.ApplicationFileName);
         }
 
-        public void RestarApp() => RestartApp();
-
         public void ShowMainWindow() => _mainVM.Show();
 
-        public void CheckForNewUpdate() => _settingsVM.UpdateApp();
+        public void HideMainWindow() => _mainVM.Hide();
+
+        public bool IsMainWindowVisible() => _mainVM.MainWindowVisibilityStatus;
+
+        public event VisibilityChangedEventHandler VisibilityChanged { add => _mainVM.VisibilityChanged += value; remove => _mainVM.VisibilityChanged -= value; }
+
+        // Must use Ioc.Default.GetRequiredService<Updater>() to avoid circular dependency
+        public void CheckForNewUpdate() => _ = Ioc.Default.GetRequiredService<Updater>().UpdateAppAsync(false);
 
         public void SaveAppAllSettings()
         {
-            SavePluginSettings();
+            PluginManager.Save();
             _mainVM.Save();
-            _settingsVM.Save();
-            ImageLoader.Save();
+            _settings.Save();
+            _ = ImageLoader.Save();
         }
 
-        public Task ReloadAllPluginData() => PluginManager.ReloadData();
+        public Task ReloadAllPluginData() => PluginManager.ReloadDataAsync();
 
         public void ShowMsgError(string title, string subTitle = "") =>
             ShowMsg(title, subTitle, Constant.ErrorIcon, true);
@@ -93,17 +99,14 @@ namespace Flow.Launcher
 
         public void ShowMsg(string title, string subTitle, string iconPath, bool useMainWindowAsOwner = true)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                Notification.Show(title, subTitle, iconPath);
-            });
+            Notification.Show(title, subTitle, iconPath);
         }
 
         public void OpenSettingDialog()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>(this, _settingsVM);
+                SettingWindow sw = SingletonWindowOpener.Open<SettingWindow>();
             });
         }
 
@@ -115,9 +118,35 @@ namespace Flow.Launcher
             ShellCommand.Execute(startInfo);
         }
 
-        public void CopyToClipboard(string text)
+        public void CopyToClipboard(string stringToCopy, bool directCopy = false, bool showDefaultNotification = true)
         {
-            Clipboard.SetDataObject(text);
+            if (string.IsNullOrEmpty(stringToCopy))
+                return;
+
+            var isFile = File.Exists(stringToCopy);
+            if (directCopy && (isFile || Directory.Exists(stringToCopy)))
+            {
+                var paths = new StringCollection
+                    {
+                        stringToCopy
+                    };
+
+                Clipboard.SetFileDropList(paths);
+
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {(isFile ? GetTranslation("fileTitle") : GetTranslation("folderTitle"))}",
+                        GetTranslation("completedSuccessfully"));
+            }
+            else
+            {
+                Clipboard.SetDataObject(stringToCopy);
+
+                if (showDefaultNotification)
+                    ShowMsg(
+                        $"{GetTranslation("copy")} {GetTranslation("textTitle")}",
+                        GetTranslation("completedSuccessfully"));
+            }
         }
 
         public void StartLoadingBar() => _mainVM.ProgressBarVisibility = Visibility.Visible;
@@ -136,11 +165,13 @@ namespace Flow.Launcher
         public Task<Stream> HttpGetStreamAsync(string url, CancellationToken token = default) =>
             Http.GetStreamAsync(url);
 
-        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath,
-            CancellationToken token = default) => Http.DownloadAsync(url, filePath, token);
+        public Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null,
+            CancellationToken token = default) => Http.DownloadAsync(url, filePath, reportProgress, token);
 
         public void AddActionKeyword(string pluginId, string newActionKeyword) =>
             PluginManager.AddActionKeyword(pluginId, newActionKeyword);
+
+        public bool ActionKeywordAssigned(string actionKeyword) => PluginManager.ActionKeywordRegistered(actionKeyword);
 
         public void RemoveActionKeyword(string pluginId, string oldActionKeyword) =>
             PluginManager.RemoveActionKeyword(pluginId, oldActionKeyword);
@@ -159,6 +190,26 @@ namespace Flow.Launcher
 
         private readonly ConcurrentDictionary<Type, object> _pluginJsonStorages = new();
 
+        public object RemovePluginSettings(string assemblyName)
+        {
+            foreach (var keyValuePair in _pluginJsonStorages)
+            {
+                var key = keyValuePair.Key;
+                var value = keyValuePair.Value;
+                var name = value.GetType().GetField("AssemblyName")?.GetValue(value)?.ToString();
+                if (name == assemblyName)
+                {
+                    _pluginJsonStorages.Remove(key, out var pluginJsonStorage);
+                    return pluginJsonStorage;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Save plugin settings.
+        /// </summary>
         public void SavePluginSettings()
         {
             foreach (var value in _pluginJsonStorages.Values)
@@ -194,17 +245,22 @@ namespace Flow.Launcher
             ((PluginJsonStorage<T>)_pluginJsonStorages[type]).Save();
         }
 
-        public void OpenDirectory(string DirectoryPath, string FileName = null)
+        public void OpenDirectory(string DirectoryPath, string FileNameOrFilePath = null)
         {
             using var explorer = new Process();
-            var explorerInfo = _settingsVM.Settings.CustomExplorer;
+            var explorerInfo = _settings.CustomExplorer;
+
             explorer.StartInfo = new ProcessStartInfo
             {
-                FileName = explorerInfo.Path,
-                Arguments = FileName is null ?
-                    explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath) :
-                    explorerInfo.FileArgument.Replace("%d", DirectoryPath).Replace("%f",
-                        Path.IsPathRooted(FileName) ? FileName : Path.Combine(DirectoryPath, FileName))
+                FileName = explorerInfo.Path.Replace("%d", DirectoryPath),
+                UseShellExecute = true,
+                Arguments = FileNameOrFilePath is null
+                    ? explorerInfo.DirectoryArgument.Replace("%d", DirectoryPath)
+                    : explorerInfo.FileArgument
+                        .Replace("%d", DirectoryPath)
+                        .Replace("%f",
+                            Path.IsPathRooted(FileNameOrFilePath) ? FileNameOrFilePath : Path.Combine(DirectoryPath, FileNameOrFilePath)
+                        )
             };
             explorer.Start();
         }
@@ -213,7 +269,7 @@ namespace Flow.Launcher
         {
             if (uri.Scheme == Uri.UriSchemeHttp || uri.Scheme == Uri.UriSchemeHttps)
             {
-                var browserInfo = _settingsVM.Settings.CustomBrowser;
+                var browserInfo = _settings.CustomBrowser;
 
                 var path = browserInfo.Path == "*" ? "" : browserInfo.Path;
 
@@ -258,12 +314,35 @@ namespace Flow.Launcher
             OpenUri(appUri);
         }
 
-        public event FlowLauncherGlobalKeyboardEventHandler GlobalKeyboardEvent;
+        public void ToggleGameMode() 
+        {
+            _mainVM.ToggleGameMode();
+        }
+
+        public void SetGameMode(bool value)
+        {
+            _mainVM.GameModeStatus = value;
+        }
+
+        public bool IsGameModeOn()
+        {
+            return _mainVM.GameModeStatus;
+        }
+
 
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Remove(callback);
+
+        public void ReQuery(bool reselect = true) => _mainVM.ReQuery(reselect);
+
+        public void BackToQueryResults() => _mainVM.BackToQueryResults();
+
+        public MessageBoxResult ShowMsgBox(string messageBoxText, string caption = "", MessageBoxButton button = MessageBoxButton.OK, MessageBoxImage icon = MessageBoxImage.None, MessageBoxResult defaultResult = MessageBoxResult.OK) =>
+            MessageBoxEx.Show(messageBoxText, caption, button, icon, defaultResult);
+
+        public Task ShowProgressBoxAsync(string caption, Func<Action<double>, Task> reportProgressAsync, Action cancelProgress = null) => ProgressBoxEx.ShowAsync(caption, reportProgressAsync, cancelProgress);
 
         #endregion
 
@@ -272,10 +351,6 @@ namespace Flow.Launcher
         private bool KListener_hookedKeyboardCallback(KeyEvent keyevent, int vkcode, SpecialKeyState state)
         {
             var continueHook = true;
-            if (GlobalKeyboardEvent != null)
-            {
-                continueHook = GlobalKeyboardEvent((int)keyevent, vkcode, state);
-            }
             foreach (var x in _globalKeyboardHandlers)
             {
                 continueHook &= x((int)keyevent, vkcode, state);

@@ -17,6 +17,9 @@
     /// </summary>
     public interface IReloadable : IFeatures
     {
+        /// <summary>
+        /// Synchronously reload plugin data 
+        /// </summary>
         void ReloadData();
     }
 }

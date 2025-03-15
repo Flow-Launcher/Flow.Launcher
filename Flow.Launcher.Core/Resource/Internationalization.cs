@@ -11,27 +11,27 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using System.Globalization;
 using System.Threading.Tasks;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher.Core.Resource
 {
     public class Internationalization
     {
-        public Settings Settings { get; set; }
         private const string Folder = "Languages";
+        private const string DefaultLanguageCode = "en";
         private const string DefaultFile = "en.xaml";
         private const string Extension = ".xaml";
+        private readonly Settings _settings;
         private readonly List<string> _languageDirectories = new List<string>();
         private readonly List<ResourceDictionary> _oldResources = new List<ResourceDictionary>();
+        private readonly string SystemLanguageCode;
 
-        public Internationalization()
+        public Internationalization(Settings settings)
         {
-            AddPluginLanguageDirectories();
-            LoadDefaultLanguage();
-            // we don't want to load /Languages/en.xaml twice
-            // so add flowlauncher language directory after load plugin language files
+            _settings = settings;
             AddFlowLauncherLanguageDirectory();
+            SystemLanguageCode = GetSystemLanguageCodeAtStartup();
         }
-
 
         private void AddFlowLauncherLanguageDirectory()
         {
@@ -39,10 +39,37 @@ namespace Flow.Launcher.Core.Resource
             _languageDirectories.Add(directory);
         }
 
-
-        private void AddPluginLanguageDirectories()
+        private static string GetSystemLanguageCodeAtStartup()
         {
-            foreach (var plugin in PluginManager.GetPluginsForInterface<IPluginI18n>())
+            var availableLanguages = AvailableLanguages.GetAvailableLanguages();
+
+            // Retrieve the language identifiers for the current culture.
+            // ChangeLanguage method overrides the CultureInfo.CurrentCulture, so this needs to
+            // be called at startup in order to get the correct lang code of system. 
+            var currentCulture = CultureInfo.CurrentCulture;
+            var twoLetterCode = currentCulture.TwoLetterISOLanguageName;
+            var threeLetterCode = currentCulture.ThreeLetterISOLanguageName;
+            var fullName = currentCulture.Name;
+
+            // Try to find a match in the available languages list
+            foreach (var language in availableLanguages)
+            {
+                var languageCode = language.LanguageCode;
+
+                if (string.Equals(languageCode, twoLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, threeLetterCode, StringComparison.OrdinalIgnoreCase) ||
+                    string.Equals(languageCode, fullName, StringComparison.OrdinalIgnoreCase))
+                {
+                    return languageCode;
+                }
+            }
+
+            return DefaultLanguageCode;
+        }
+
+        internal void AddPluginLanguageDirectories(IEnumerable<PluginPair> plugins)
+        {
+            foreach (var plugin in plugins)
             {
                 var location = Assembly.GetAssembly(plugin.Plugin.GetType()).Location;
                 var dir = Path.GetDirectoryName(location);
@@ -56,10 +83,15 @@ namespace Flow.Launcher.Core.Resource
                     Log.Error($"|Internationalization.AddPluginLanguageDirectories|Can't find plugin path <{location}> for <{plugin.Metadata.Name}>");
                 }
             }
+
+            LoadDefaultLanguage();
         }
 
         private void LoadDefaultLanguage()
         {
+            // Removes language files loaded before any plugins were loaded.
+            // Prevents the language Flow started in from overwriting English if the user switches back to English
+            RemoveOldLanguageFiles();
             LoadLanguage(AvailableLanguages.English);
             _oldResources.Clear();
         }
@@ -67,8 +99,18 @@ namespace Flow.Launcher.Core.Resource
         public void ChangeLanguage(string languageCode)
         {
             languageCode = languageCode.NonNull();
-            Language language = GetLanguageByLanguageCode(languageCode);
-            ChangeLanguage(language);
+
+            // Get actual language if language code is system
+            var isSystem = false;
+            if (languageCode == Constant.SystemLanguageCode)
+            {
+                languageCode = SystemLanguageCode;
+                isSystem = true;
+            }
+
+            // Get language by language code and change language
+            var language = GetLanguageByLanguageCode(languageCode);
+            ChangeLanguage(language, isSystem);
         }
 
         private Language GetLanguageByLanguageCode(string languageCode)
@@ -86,19 +128,22 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        public void ChangeLanguage(Language language)
+        private void ChangeLanguage(Language language, bool isSystem)
         {
             language = language.NonNull();
-
 
             RemoveOldLanguageFiles();
             if (language != AvailableLanguages.English)
             {
                 LoadLanguage(language);
             }
-            Settings.Language = language.LanguageCode;
-            CultureInfo.CurrentCulture = new CultureInfo(language.LanguageCode);
+            // Culture of main thread
+            // Use CreateSpecificCulture to preserve possible user-override settings in Windows, if Flow's language culture is the same as Windows's
+            CultureInfo.CurrentCulture = CultureInfo.CreateSpecificCulture(language.LanguageCode);
             CultureInfo.CurrentUICulture = CultureInfo.CurrentCulture;
+
+            // Raise event after culture is set
+            _settings.Language = isSystem ? Constant.SystemLanguageCode : language.LanguageCode;
             _ = Task.Run(() =>
             {
                 UpdatePluginMetadataTranslations();
@@ -109,13 +154,17 @@ namespace Flow.Launcher.Core.Resource
         {
             var languageToSet = GetLanguageByLanguageCode(languageCodeToSet);
 
-            if (Settings.ShouldUsePinyin)
+            if (_settings.ShouldUsePinyin)
                 return false;
 
             if (languageToSet != AvailableLanguages.Chinese && languageToSet != AvailableLanguages.Chinese_TW)
                 return false;
 
-            if (MessageBox.Show("Do you want to turn on search with Pinyin?", string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
+            // No other languages should show the following text so just make it hard-coded
+            // "Do you want to search with pinyin?"
+            string text = languageToSet == AvailableLanguages.Chinese ? "是否启用拼音搜索？" : "是否啓用拼音搜索？" ;
+
+            if (Ioc.Default.GetRequiredService<IPublicAPI>().ShowMsgBox(text, string.Empty, MessageBoxButton.YesNo) == MessageBoxResult.No)
                 return false;
 
             return true;
@@ -132,11 +181,14 @@ namespace Flow.Launcher.Core.Resource
 
         private void LoadLanguage(Language language)
         {
+            var flowEnglishFile = Path.Combine(Constant.ProgramDirectory, Folder, DefaultFile);
             var dicts = Application.Current.Resources.MergedDictionaries;
             var filename = $"{language.LanguageCode}{Extension}";
             var files = _languageDirectories
                 .Select(d => LanguageFile(d, filename))
-                .Where(f => !string.IsNullOrEmpty(f))
+                // Exclude Flow's English language file since it's built into the binary, and there's no need to load
+                // it again from the file system.
+                .Where(f => !string.IsNullOrEmpty(f) && f != flowEnglishFile)
                 .ToArray();
 
             if (files.Length > 0)
@@ -155,7 +207,9 @@ namespace Flow.Launcher.Core.Resource
 
         public List<Language> LoadAvailableLanguages()
         {
-            return AvailableLanguages.GetAvailableLanguages();
+            var list = AvailableLanguages.GetAvailableLanguages();
+            list.Insert(0, new Language(Constant.SystemLanguageCode, AvailableLanguages.GetSystemTranslation(SystemLanguageCode)));
+            return list;
         }
 
         public string GetTranslation(string key)

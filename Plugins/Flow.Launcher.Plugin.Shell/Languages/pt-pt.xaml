@@ -2,11 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Substituir Win+R</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Fechar linha de comandos ao premir qualquer tecla</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Prima uma tecla para fechar esta janela...</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Não fechar linha de comandos depois de executar o comando</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Executar sempre como administrador</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Usar terminal do Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Executar com outro utilizador</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Consola</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permite a execução de comandos do sistema no Flow Launcher. Deve iniciar o comando o '&gt;'</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permite executar comandos do sistema via Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">este comando foi executado {0} vezes</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">executar comando através de uma consola</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Executar como administrador</system:String>

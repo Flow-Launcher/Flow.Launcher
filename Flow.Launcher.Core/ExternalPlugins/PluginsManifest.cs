@@ -1,10 +1,6 @@
-﻿using Flow.Launcher.Infrastructure.Http;
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -12,38 +8,37 @@ namespace Flow.Launcher.Core.ExternalPlugins
 {
     public static class PluginsManifest
     {
-        private const string manifestFileUrl = "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json";
+        private static readonly CommunityPluginStore mainPluginStore =
+            new("https://raw.githubusercontent.com/Flow-Launcher/Flow.Launcher.PluginsManifest/plugin_api_v2/plugins.json",
+                "https://fastly.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json",
+                "https://gcore.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json",
+                "https://cdn.jsdelivr.net/gh/Flow-Launcher/Flow.Launcher.PluginsManifest@plugin_api_v2/plugins.json");
 
         private static readonly SemaphoreSlim manifestUpdateLock = new(1);
 
-        private static string latestEtag = "";
+        private static DateTime lastFetchedAt = DateTime.MinValue;
+        private static TimeSpan fetchTimeout = TimeSpan.FromMinutes(2);
 
-        public static List<UserPlugin> UserPlugins { get; private set; } = new List<UserPlugin>();
+        public static List<UserPlugin> UserPlugins { get; private set; }
 
-        public static async Task UpdateManifestAsync(CancellationToken token = default)
+        public static async Task<bool> UpdateManifestAsync(CancellationToken token = default, bool usePrimaryUrlOnly = false)
         {
             try
             {
                 await manifestUpdateLock.WaitAsync(token).ConfigureAwait(false);
 
-                var request = new HttpRequestMessage(HttpMethod.Get, manifestFileUrl);
-                request.Headers.Add("If-None-Match", latestEtag);
-
-                var response = await Http.SendAsync(request, token).ConfigureAwait(false);
-
-                if (response.StatusCode == HttpStatusCode.OK)
+                if (UserPlugins == null || usePrimaryUrlOnly || DateTime.Now.Subtract(lastFetchedAt) >= fetchTimeout)
                 {
-                    Log.Info($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Fetched plugins from manifest repo");
+                    var results = await mainPluginStore.FetchAsync(token, usePrimaryUrlOnly).ConfigureAwait(false);
 
-                    var json = await response.Content.ReadAsStreamAsync(token).ConfigureAwait(false);
+                    // If the results are empty, we shouldn't update the manifest because the results are invalid.
+                    if (results.Count != 0)
+                    {
+                        UserPlugins = results;
+                        lastFetchedAt = DateTime.Now;
 
-                    UserPlugins = await JsonSerializer.DeserializeAsync<List<UserPlugin>>(json, cancellationToken: token).ConfigureAwait(false);
-
-                    latestEtag = response.Headers.ETag.Tag;
-                }
-                else if (response.StatusCode != HttpStatusCode.NotModified)
-                {
-                    Log.Warn($"|PluginsManifest.{nameof(UpdateManifestAsync)}|Http response for manifest file was {response.StatusCode}");
+                        return true;
+                    }
                 }
             }
             catch (Exception e)
@@ -54,6 +49,8 @@ namespace Flow.Launcher.Core.ExternalPlugins
             {
                 manifestUpdateLock.Release();
             }
+
+            return false;
         }
     }
 }

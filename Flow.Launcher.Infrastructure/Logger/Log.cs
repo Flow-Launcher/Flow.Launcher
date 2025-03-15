@@ -1,15 +1,12 @@
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
 using NLog;
 using NLog.Config;
 using NLog.Targets;
 using Flow.Launcher.Infrastructure.UserSettings;
-using JetBrains.Annotations;
-using NLog.Fluent;
 using NLog.Targets.Wrappers;
 using System.Runtime.ExceptionServices;
-using System.Text;
 
 namespace Flow.Launcher.Infrastructure.Logger
 {
@@ -51,15 +48,43 @@ namespace Flow.Launcher.Infrastructure.Logger
             configuration.AddTarget("file", fileTargetASyncWrapper);
             configuration.AddTarget("debug", debugTarget);
 
+            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper)
+            {
+                RuleName = "file"
+            };
 #if DEBUG
-            var fileRule = new LoggingRule("*", LogLevel.Debug, fileTargetASyncWrapper);
-            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget);
+            var debugRule = new LoggingRule("*", LogLevel.Debug, debugTarget)
+            {
+                RuleName = "debug"
+            };
             configuration.LoggingRules.Add(debugRule);
-#else
-            var fileRule = new LoggingRule("*", LogLevel.Info, fileTargetASyncWrapper);
 #endif
             configuration.LoggingRules.Add(fileRule);
             LogManager.Configuration = configuration;
+        }
+
+        public static void SetLogLevel(LOGLEVEL level)
+        {
+            switch (level)
+            {
+                case LOGLEVEL.DEBUG:
+                    UseDebugLogLevel();
+                    break;
+                default:
+                    UseInfoLogLevel();
+                    break;
+            }
+            Info(nameof(Logger), $"Using log level: {level}.");
+        }
+
+        private static void UseDebugLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Debug, LogLevel.Fatal);
+        }
+
+        private static void UseInfoLogLevel()
+        {
+            LogManager.Configuration.FindRuleByName("file").SetLoggingLevels(LogLevel.Info, LogLevel.Fatal);
         }
 
         private static void LogFaultyFormat(string message)
@@ -75,7 +100,6 @@ namespace Flow.Launcher.Infrastructure.Logger
             var valid = parts.Length == 3 && !string.IsNullOrWhiteSpace(parts[1]) && !string.IsNullOrWhiteSpace(parts[2]);
             return valid;
         }
-
 
         public static void Exception(string className, string message, System.Exception exception, [CallerMemberName] string methodName = "")
         {
@@ -115,8 +139,6 @@ namespace Flow.Launcher.Infrastructure.Logger
         {
             var logger = LogManager.GetLogger(classAndMethod);
 
-            var messageBuilder = new StringBuilder();
-
             logger.Error(e, message);
         }
 
@@ -136,7 +158,8 @@ namespace Flow.Launcher.Infrastructure.Logger
             }
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
+        /// <param name="message">Example: "|ClassName.MethodName|Message" </param>
         /// <param name="e">Exception</param>
         public static void Exception(string message, System.Exception e)
         {
@@ -158,7 +181,7 @@ namespace Flow.Launcher.Infrastructure.Logger
 #endif
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Error(string message)
         {
             LogInternal(message, LogLevel.Error);
@@ -183,7 +206,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Debug, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message""
         public static void Debug(string message)
         {
             LogInternal(message, LogLevel.Debug);
@@ -194,7 +217,7 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Info, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Info(string message)
         {
             LogInternal(message, LogLevel.Info);
@@ -205,10 +228,16 @@ namespace Flow.Launcher.Infrastructure.Logger
             LogInternal(LogLevel.Warn, className, message, methodName);
         }
 
-        /// <param name="message">example: "|prefix|unprefixed" </param>
+        /// Example: "|ClassName.MethodName|Message"
         public static void Warn(string message)
         {
             LogInternal(message, LogLevel.Warn);
         }
+    }
+
+    public enum LOGLEVEL
+    {
+        DEBUG,
+        INFO
     }
 }

@@ -1,6 +1,7 @@
-﻿What does Flow.Launcher.Plugin do?
-====
+﻿Reference this package to develop a plugin for [Flow Launcher](https://github.com/Flow-Launcher/Flow.Launcher).
 
-* Defines base objects and interfaces for plugins
-* Plugin authors making C# plugins should reference this DLL via nuget
-* Contains commands and models that can be used by plugins
+Useful links:
+
+* [General plugin development guide](https://www.flowlauncher.com/docs/#/plugin-dev)
+* [.Net plugin development guide](https://www.flowlauncher.com/docs/#/develop-dotnet-plugins)
+* [Package API Reference](https://www.flowlauncher.com/docs/#/API-Reference/Flow.Launcher.Plugin)

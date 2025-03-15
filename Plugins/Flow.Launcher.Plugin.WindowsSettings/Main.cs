@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Reflection;
-using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.WindowsSettings.Classes;
 using Flow.Launcher.Plugin.WindowsSettings.Helper;
 using Flow.Launcher.Plugin.WindowsSettings.Properties;

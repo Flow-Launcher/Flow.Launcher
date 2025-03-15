@@ -1,22 +1,19 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 
 namespace Flow.Launcher.Plugin.WebSearch
 {
-    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated
+    public class Main : IAsyncPlugin, ISettingProvider, IPluginI18n, IResultUpdated, IContextMenu
     {
-        private PluginInitContext _context;
+        internal static PluginInitContext _context;
 
         private Settings _settings;
         private SettingsViewModel _viewModel;
@@ -79,7 +76,8 @@ namespace Flow.Launcher.Plugin.WebSearch
                             _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)));
 
                             return true;
-                        }
+                        },
+                        ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(keyword)),
                     };
 
                     results.Add(result);
@@ -142,9 +140,29 @@ namespace Flow.Launcher.Plugin.WebSearch
                     _context.API.OpenUrl(searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)));
 
                     return true;
-                }
+                },
+                ContextData = searchSource.Url.Replace("{q}", Uri.EscapeDataString(o)),
             });
             return resultsFromSuggestion;
+        }
+
+        public List<Result> LoadContextMenus(Result selected)
+        {
+            if (selected?.ContextData == null || selected.ContextData is not string) return new List<Result>();
+            return new List<Result>() {
+                new Result
+                {
+                    Title = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_title"),
+                    SubTitle = _context.API.GetTranslation("flowlauncher_plugin_websearch_copyurl_subtitle"),
+                    IcoPath = "Images/copylink.png",
+                    Action = c =>
+                    {
+                        _context.API.CopyToClipboard(selected.ContextData as string);
+
+                        return true;
+                    }
+                },
+            };
         }
 
         public Task InitAsync(PluginInitContext context)

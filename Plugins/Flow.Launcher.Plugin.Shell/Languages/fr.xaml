@@ -2,11 +2,14 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:system="clr-namespace:System;assembly=mscorlib">
 
     <system:String x:Key="flowlauncher_plugin_cmd_relace_winr">Remplacer Win+R</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Ne pas fermer l'invite de commandes après l'execution de la commande</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_close_cmd_after_press">Fermer l'invite de commande après avoir appuyé sur n'importe quelle touche</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_press_any_key_to_close">Appuyez sur n'importe quelle touche pour fermer cette fenêtre...</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_leave_cmd_open">Ne pas fermer l'invite de commandes après l'exécution de la commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_always_run_as_administrator">Toujours exécuter en tant qu'administrateur</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_use_windows_terminal">Utiliser le Terminal Windows</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_different_user">Exécuter en tant qu'utilisateur différent</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_plugin_name">Shell</system:String>
-    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permet d'exécuter des commandes système à partir de Flow Launcher. Les commandes doivent commencer par &gt;</system:String>
+    <system:String x:Key="flowlauncher_plugin_cmd_plugin_description">Permet d'exécuter des commandes système depuis Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_cmd_has_been_executed_times">cette commande a été exécutée {0} fois</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_execute_through_shell">exécuter la commande via le shell de commande</system:String>
     <system:String x:Key="flowlauncher_plugin_cmd_run_as_administrator">Exécuter en tant qu'administrateur</system:String>
