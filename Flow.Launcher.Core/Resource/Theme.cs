@@ -189,7 +189,6 @@ namespace Flow.Launcher.Core.Resource
             RemoveDropShadowEffectFromCurrentTheme();
             if (_settings.UseDropShadowEffect)
             {
-                //RemoveDropShadowEffectFromCurrentTheme();
                 if (BlurEnabled)
                 {
                     SetWindowCornerPreference("Round");
@@ -202,7 +201,6 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                //RemoveDropShadowEffectFromCurrentTheme();
                 if (BlurEnabled)
                 {
                     SetWindowCornerPreference("Default");
@@ -235,39 +233,6 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Normal);
         }
 
-
-        //public void SetCornerForWindow()
-        //{
-        //    Application.Current.Dispatcher.Invoke(() =>
-        //    {
-        //        var dict = GetThemeResourceDictionary(_settings.Theme);
-        //        if (dict == null)
-        //            return;
-
-        //        System.Windows.Window mainWindow = Application.Current.MainWindow;
-        //        if (mainWindow == null)
-        //            return;
-
-        //        if (dict.Contains("CornerType") && dict["CornerType"] is string cornerMode)
-        //        {
-        //            DWM_WINDOW_CORNER_PREFERENCE preference = cornerMode switch
-        //            {
-        //                "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
-        //                "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
-        //                "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
-        //                _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
-        //            };
-
-        //            SetWindowCornerPreference(mainWindow, preference);
-        //        }
-        //        else
-        //        {
-        //            SetWindowCornerPreference(mainWindow, DWM_WINDOW_CORNER_PREFERENCE.Default);
-        //        }
-        //    }, DispatcherPriority.Normal);
-        //}
-
-
         /// <summary>
         /// Sets the blur for a window via SetWindowCompositionAttribute
         /// </summary>
@@ -287,14 +252,14 @@ namespace Flow.Launcher.Core.Resource
                 if (mainWindow == null)
                     return;
 
-                // ✅ 테마가 블러를 지원하는지 확인
+                //  Check if the theme supports blur
                 bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
                 if (!hasBlur)
                 {
-                    _settings.BackdropType = BackdropTypes.None;  // 🔥 블러가 없는 테마는 강제 None 처리
+                    _settings.BackdropType = BackdropTypes.None;
                 }
 
-                // ✅ 설정된 BackdropType 확인
+                // Check the configured BackdropType
                 int backdropValue = _settings.BackdropType switch
                 {
                     BackdropTypes.Acrylic => 3, // Acrylic
@@ -305,7 +270,7 @@ namespace Flow.Launcher.Core.Resource
 
                 if (BlurEnabled && hasBlur)
                 {
-                    // ✅ Mica 또는 MicaAlt인 경우 배경을 투명하게 설정
+                    //  If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                     if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
                     {
                         windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
@@ -328,7 +293,7 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else
                 {
-                    // ✅ Blur가 비활성화되면 기본 스타일 적용
+                    //  Apply default style when Blur is disabled
                     Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 0);
                     ColorizeWindow(GetSystemBG());
                 }
@@ -341,6 +306,7 @@ namespace Flow.Launcher.Core.Resource
 
 
         // Get Background Color from WindowBorderStyle when there not color for BG.
+        // for theme has not "LightBG" or "DarkBG" case.
         private Color GetWindowBorderStyleBackground()
         {
             var Resources = GetThemeResourceDictionary(_settings.Theme);
@@ -389,7 +355,7 @@ namespace Flow.Launcher.Core.Resource
 
             Application.Current.Dispatcher.Invoke(() =>
             {
-                // ✅ 기존 WindowBorderStyle을 복사
+                // Copy the existing WindowBorderStyle
                 var previewStyle = new Style(typeof(Border));
                 if (Application.Current.Resources.Contains("WindowBorderStyle"))
                 {
@@ -403,23 +369,19 @@ namespace Flow.Launcher.Core.Resource
                     }
                 }
 
-                // ✅ 배경색 적용 (투명도 제거)
+                // Apply background color (remove transparency in color)
+                // WPF does not allow the use of an acrylic brush within the window's internal area,
+                // so transparency effects are not applied to the preview.
                 Color backgroundColor = Color.FromRgb(bgColor.Value.R, bgColor.Value.G, bgColor.Value.B);
                 previewStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(backgroundColor)));
 
-                // ✅ 블러 테마면 CornerRadius = 5, 비블러 테마면 기존 스타일 유지
+                // The blur theme keeps the corner round fixed (applying DWM code to modify it causes rendering issues).
+                // The non-blur theme retains the previously set WindowBorderStyle.
                 if (BlurEnabled)
                 {
                     previewStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(5)));
                     previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
                 }
-
-                // ✅ 기타 설정 추가
-                //previewStyle.Setters.Add(new Setter(Border.BorderThicknessProperty, new Thickness(1)));
-                //previewStyle.Setters.Add(new Setter(Border.UseLayoutRoundingProperty, true));
-                //reviewStyle.Setters.Add(new Setter(Border.SnapsToDevicePixelsProperty, true));
-
-                // ✅ 최종 적용
                 Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
             }, DispatcherPriority.Render);
         }
@@ -436,44 +398,42 @@ namespace Flow.Launcher.Core.Resource
                 var mainWindow = Application.Current.MainWindow;
                 if (mainWindow == null) return;
 
-                // ✅ 블러 테마인지 확인
+                // Check if the theme supports blur
                 bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
 
-                // ✅ SystemBG 값 확인 (Auto, Light, Dark)
+                // SystemBG value check (Auto, Light, Dark)
                 string systemBG = dict.Contains("SystemBG") ? dict["SystemBG"] as string : "Auto"; // 기본값 Auto
 
-                // ✅ 사용자의 ColorScheme 설정 확인
+                // Check the user's ColorScheme setting
                 string colorScheme = _settings.ColorScheme;
 
-                // ✅ 시스템의 다크 모드 설정 확인 (AppsUseLightTheme 값 읽기)
+                // Check system dark mode setting (read AppsUseLightTheme value)
                 int themeValue = (int)Registry.GetValue(@"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize", "AppsUseLightTheme", 1);
                 bool isSystemDark = themeValue == 0;
 
-                // ✅ 최종적으로 사용할 다크 모드 여부 결정
+                // Final decision on whether to use dark mode
                 bool useDarkMode = false;
 
                 if (colorScheme == "Dark" || systemBG == "Dark")
                 {
-                    useDarkMode = true;  // 사용자가 강제 다크 모드 선택
+                    useDarkMode = true;  // Dark
                 }
                 else if (colorScheme == "Light" || systemBG == "Light")
                 {
-                    useDarkMode = false; // 사용자가 강제 라이트 모드 선택
+                    useDarkMode = false; // Light
                 }
                 else if (colorScheme == "System" || systemBG == "Auto")
                 {
-                    useDarkMode = isSystemDark; // 시스템 설정을 따름
+                    useDarkMode = isSystemDark; // Auto
                 }
-
-                Debug.WriteLine($"[ColorizeWindow] SystemBG: {systemBG}, ColorScheme: {colorScheme}, 시스템 다크 모드 여부: {isSystemDark}, 최종 적용: {useDarkMode}");
-
-                // ✅ DWM 다크 모드 설정 적용
+                
+                // Apply DWM Dark Mode 
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
 
                 Color LightBG;
                 Color DarkBG;
 
-                // LightBG 값 가져오기 (없으면 WindowBorderStyle의 배경색 사용)
+                // Retrieve LightBG value (fallback to WindowBorderStyle background color if not found)
                 try
                 {
                     LightBG = dict.Contains("LightBG") ? (Color)dict["LightBG"] : GetWindowBorderStyleBackground();
@@ -483,7 +443,7 @@ namespace Flow.Launcher.Core.Resource
                     LightBG = GetWindowBorderStyleBackground();
                 }
 
-                // DarkBG 값 가져오기 (없으면 LightBG 사용)
+                // Retrieve DarkBG value (fallback to LightBG if not found)
                 try
                 {
                     DarkBG = dict.Contains("DarkBG") ? (Color)dict["DarkBG"] : LightBG;
@@ -493,18 +453,17 @@ namespace Flow.Launcher.Core.Resource
                     DarkBG = LightBG;
                 }
 
-                // ✅ ColorScheme과 SystemBG에 맞춰서 배경색 선택
+                // Select background color based on ColorScheme and SystemBG
                 Color selectedBG = useDarkMode ? DarkBG : LightBG;
                 ApplyPreviewBackground(selectedBG);
 
-                // ✅ Windows 10 테마(HasBlur=False)는 mainWindow.Background를 설정하지 않음
                 if (!hasBlur)
                 {
                     mainWindow.Background = Brushes.Transparent;
                 }
                 else
                 {
-                    // ✅ 블러 테마일 경우만 배경을 투명하게 설정
+                    // Only set the background to transparent if the theme supports blur
                     if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
                     {
                         mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
@@ -516,11 +475,6 @@ namespace Flow.Launcher.Core.Resource
                 }
             }, DispatcherPriority.Normal);
         }
-
-
-
-
-
 
         public bool IsBlurTheme()
         {
@@ -785,7 +739,6 @@ namespace Flow.Launcher.Core.Resource
         public void AddDropShadowEffectToCurrentTheme()
         {
 
-            //SetWindowCornerPreference("Default");
             var dict = GetCurrentResourceDictionary();
 
                 var windowBorderStyle = dict["WindowBorderStyle"] as Style;
@@ -838,7 +791,6 @@ namespace Flow.Launcher.Core.Resource
         {
         
             var dict = GetCurrentResourceDictionary();
-            //mainWindow.WindowStyle = WindowStyle.None;
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
             var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
