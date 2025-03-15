@@ -1,9 +1,6 @@
-﻿using Flow.Launcher.Infrastructure;
-using Flow.Launcher.Infrastructure.Logger;
+﻿using Flow.Launcher.Infrastructure.Logger;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Management;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
@@ -18,9 +15,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         public string Path { get; set; }
         public override string ToString()
         {
-            return string.Format(@" Process Name: {0} ,Process ID: {1} ,
-                                    Port: {2} ,\nPath : {3}", ProcessName,
-                                    ProcessID, Port, Path);
+            return $@" Process Name: {ProcessName}, Process ID: {ProcessID}, Port: {Port}, Path : {Path}";
         }
 
     }
@@ -128,7 +123,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 // interested in first result.
                 foreach (ManagementObject item in results)
                 {
-                    result = Tuple.Create<string, string>(Convert.ToString(item["Name"]),
+                    result = Tuple.Create(Convert.ToString(item["Name"]),
                     Convert.ToString(item["ExecutablePath"]));
                     break;
 

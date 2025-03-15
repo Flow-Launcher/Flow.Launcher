@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Flow.Launcher.Infrastructure;
 
@@ -79,14 +79,14 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 results.Add(new Result()
                 {
                     IcoPath = path,
-                    Title = p.ProcessName + " - " + p.Id + (pr.Port!=0? $" - [{pr.Port}]":""),
+                    Title = $"{p.ProcessName} - {p.Id}" + (pr.Port != 0 ? $" - [{pr.Port}]" : ""),
                     SubTitle = path,
                     TitleHighlightData = StringMatcher.FuzzySearch(termToSearch, p.ProcessName).MatchData,
                     Score = pr.Score,
                     ContextData = p.ProcessName,
                     AutoCompleteText = $"{_context.CurrentPluginMetadata.ActionKeyword}{Plugin.Query.TermSeparator}{p.ProcessName}",
                     Action = (c) =>
-                    {              
+                    {
                         processHelper.TryKill(p);
                         // Re-query to refresh process list
                         _context.API.ChangeQuery(query.RawQuery, true);
