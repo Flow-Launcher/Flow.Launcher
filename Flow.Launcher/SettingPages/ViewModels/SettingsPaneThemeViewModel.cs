@@ -35,19 +35,19 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             _selectedTheme = value;
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
-            // ✅ 비블러 테마로 변경 시 BackdropType을 None으로 자동 설정
+            // when changed non-blur theme, change to backdrop to none
             if (!ThemeManager.Instance.BlurEnabled)
             {
                 Settings.BackdropType = BackdropTypes.None;
             }
 
-            // ✅ 블러 테마에서는 DropShadow를 자동으로 켜고 비활성화 (사용자 변경 불가)
+            // dropshadow on and control disabled.(user can't change dropshadow with blur theme)
             if (ThemeManager.Instance.BlurEnabled)
             {
                 Settings.UseDropShadowEffect = true;
             }
 
-            // ✅ UI 상태 업데이트
+            // Update UI state
             OnPropertyChanged(nameof(BackdropType));
             OnPropertyChanged(nameof(IsBackdropEnabled));
             OnPropertyChanged(nameof(IsDropShadowEnabled));
@@ -66,12 +66,12 @@ public partial class SettingsPaneThemeViewModel : BaseModel
         {
             if (ThemeManager.Instance.BlurEnabled)
             {
-                // 🔥 블러 테마에서는 항상 DropShadowEffect = true 유지
+                // Always DropShadowEffect = true with blur theme
                 Settings.UseDropShadowEffect = true;
                 return;
             }
 
-            // ✅ 비블러 테마에서는 사용자가 수동으로 변경 가능
+            // User can change shadow with non-blur theme.
             if (value)
             {
                 ThemeManager.Instance.AddDropShadowEffectToCurrentTheme();
@@ -82,8 +82,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
 
             Settings.UseDropShadowEffect = value;
-
-            // ✅ UI 업데이트
             OnPropertyChanged(nameof(DropShadowEffect));
         }
     }
@@ -220,27 +218,13 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         public void ApplyBackdrop()
         {
-            //IntPtr hWnd = new WindowInteropHelper(Application.Current.MainWindow).Handle;
-            //if (hWnd == IntPtr.Zero)
-            //    return;
-
-            //int backdropValue = Value switch
-            //{
-            //    BackdropTypes.Acrylic => 3, // ✅ Acrylic (DWM_SYSTEMBACKDROP_TYPE = 3)
-            //    BackdropTypes.Mica => 2,    // ✅ Mica (DWM_SYSTEMBACKDROP_TYPE = 2)
-            //    BackdropTypes.MicaAlt => 4, // ✅ MicaAlt (DWM_SYSTEMBACKDROP_TYPE = 4)
-            //    _ => 0                      // ✅ None (DWM_SYSTEMBACKDROP_TYPE = 0)
-            //};
-            ThemeManager.Instance.SetBlurForWindow();
-            //Methods.SetWindowAttribute(hWnd, ParameterTypes.DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
+            ThemeManager.Instance.SetBlurForWindow();  
         }
     }
 
-    // ✅ BackdropTypeData 리스트 (Dropdown과 연동)
     public List<BackdropTypeData> BackdropTypesList { get; } =
         DropdownDataGeneric<BackdropTypes>.GetValues<BackdropTypeData>("BackdropTypes");
-
-    // ✅ BackdropType 속성 (값 저장 + 자동 적용)
+    
     public BackdropTypes BackdropType
     {
         get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
@@ -254,12 +238,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             }
 
             Settings.BackdropType = value;
-
-            // ✅ BackdropTypeData 리스트에서 해당하는 값 찾기
             var backdropData = BackdropTypesList.FirstOrDefault(b => b.Value == value);
             backdropData?.ApplyBackdrop();
-
-            // ✅ DropShadow 활성화 여부 갱신
             OnPropertyChanged(nameof(IsDropShadowEnabled));
         }
     }

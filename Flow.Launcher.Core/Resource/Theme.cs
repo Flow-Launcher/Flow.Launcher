@@ -117,16 +117,9 @@ namespace Flow.Launcher.Core.Resource
 
         public static class Methods
         {
-            [DllImport("DwmApi.dll")]
-            static extern int DwmExtendFrameIntoClientArea(
-                IntPtr hwnd,
-                ref ParameterTypes.MARGINS pMarInset);
 
             [DllImport("dwmapi.dll")]
             static extern int DwmSetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE dwAttribute, ref int pvAttribute, int cbAttribute);
-
-            public static int ExtendFrame(IntPtr hwnd, ParameterTypes.MARGINS margins)
-                => DwmExtendFrameIntoClientArea(hwnd, ref margins);
 
             public static int SetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE attribute, int parameter)
                 => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
@@ -154,18 +147,8 @@ namespace Flow.Launcher.Core.Resource
                 if (mainWindowSrc == null)
                     return;
 
-                ParameterTypes.MARGINS margins = new ParameterTypes.MARGINS();
-                margins.cxLeftWidth = -1;
-                margins.cxRightWidth = -1;
-                margins.cyTopHeight = -1;
-                margins.cyBottomHeight = -1;
-                Methods.ExtendFrame(mainWindowSrc.Handle, margins);
-
                 // Remove OS minimizing/maximizing animation
                 // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
-
-                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_BORDER_COLOR, 0x00FF0000);
-                // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 3);
 
                 // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
                 if (BlurEnabled)
@@ -389,7 +372,6 @@ namespace Flow.Launcher.Core.Resource
 
         public void ColorizeWindow(string Mode)
         {
-            Debug.WriteLine("창 DWM 색상 설정");
             Application.Current.Dispatcher.Invoke(() =>
             {
                 var dict = GetThemeResourceDictionary(_settings.Theme);
