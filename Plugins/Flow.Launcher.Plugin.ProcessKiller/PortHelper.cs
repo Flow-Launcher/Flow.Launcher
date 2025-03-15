@@ -10,9 +10,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         public int Port { get; set; }
         public int ProcessID { get; set; }
         public string ProcessName { get; set; }
-
         public Process Process { get; set; }
         public string Path { get; set; }
+
         public override string ToString()
         {
             return $@" Process Name: {ProcessName}, Process ID: {ProcessID}, Port: {Port}, Path : {Path}";
@@ -80,12 +80,12 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
             PortDetail.Port = port;
             PortDetail.ProcessID = int.Parse(stringTokens[4].Trim());
-            Tuple<string, string> processNameAndPath;
+            (string Name, string Path) processNameAndPath;
             try
             {
                 processNameAndPath = GetProcessNameAndCommandLineArgs(PortDetail.ProcessID, context);
-                PortDetail.ProcessName = processNameAndPath.Item1;
-                PortDetail.Path = processNameAndPath.Item2;
+                PortDetail.ProcessName = processNameAndPath.Name;
+                PortDetail.Path = processNameAndPath.Path;
                 PortDetail.Process = Process.GetProcessById(PortDetail.ProcessID);
                 result = Tuple.Create(true, PortDetail);
             }
@@ -106,9 +106,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// <param name="processID"></param>
         /// <param name="context"></param>
         /// <returns></returns>
-        private static Tuple<string, string> GetProcessNameAndCommandLineArgs(int processID, PluginInitContext context)
+        private static (string Name, string Path) GetProcessNameAndCommandLineArgs(int processID, PluginInitContext context)
         {
-            Tuple<string, string> result = Tuple.Create(string.Empty, string.Empty);
+            var name = string.Empty;
+            var path = string.Empty;
             string query = string.Format("Select Name,ExecutablePath from Win32_Process WHERE ProcessId='{0}'", processID);
             try
             {
@@ -119,8 +120,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 // interested in first result.
                 foreach (var item in results.Cast<ManagementObject>())
                 {
-                    result = Tuple.Create(Convert.ToString(item["Name"]),
-                    Convert.ToString(item["ExecutablePath"]));
+                    name = Convert.ToString(item["Name"]);
+                    path = Convert.ToString(item["ExecutablePath"]);
                     break;
                 }
             }
@@ -129,7 +130,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 context.API.LogException(ClassName, "Failed to get process name and path", e);
             }
 
-            return result;
+            return (name, path);
         }
 
         /// <summary>
