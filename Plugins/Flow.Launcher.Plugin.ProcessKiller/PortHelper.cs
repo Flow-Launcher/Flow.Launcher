@@ -1,6 +1,6 @@
-﻿using Flow.Launcher.Infrastructure.Logger;
-using System;
+﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Management;
 
 namespace Flow.Launcher.Plugin.ProcessKiller
@@ -17,8 +17,8 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         {
             return $@" Process Name: {ProcessName}, Process ID: {ProcessID}, Port: {Port}, Path : {Path}";
         }
-
     }
+
     /// <summary>
     /// Usage:
     /// int port = 8081
@@ -32,19 +32,15 @@ namespace Flow.Launcher.Plugin.ProcessKiller
     /// {
     ///     Console.WriteLine("Port {0} is free ",port);
     /// }
-    ///
     /// </summary>
     internal class PortHelper
     {
         private const short MINIMUM_TOKEN_IN_A_LINE = 5;
         private const string COMMAND_EXE = "cmd";
 
-        public PortHelper()
-        {
+        private static string ClassName => nameof(PortHelper);
 
-        }
-
-        public static Tuple<bool, PortDetail> GetPortDetails(int port)
+        public static Tuple<bool, PortDetail> GetPortDetails(int port, PluginInitContext context)
         {
             PortDetail PortDetail = new PortDetail();
             Tuple<bool, PortDetail> result = Tuple.Create(false, PortDetail);
@@ -52,14 +48,14 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             // execute netstat command for the given port
             string commandArgument = string.Format("/c netstat -an -o -p tcp|findstr \":{0}.*LISTENING\"", port);
 
-            string commandOut = ExecuteCommandAndCaptureOutput(COMMAND_EXE, commandArgument);
+            string commandOut = ExecuteCommandAndCaptureOutput(COMMAND_EXE, commandArgument, context);
             if (string.IsNullOrEmpty(commandOut))
             {
                 // port is not in use
                 return result;
             }
 
-            var stringTokens = commandOut.Split(default(Char[]), StringSplitOptions.RemoveEmptyEntries);
+            var stringTokens = commandOut.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
             if (stringTokens.Length < MINIMUM_TOKEN_IN_A_LINE)
             {
                 return result;
@@ -72,11 +68,11 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 return result;
             }
 
-            int portFromHostPortToken = 0;
-            if (!int.TryParse(hostPortTokens[1], out portFromHostPortToken))
+            if (!int.TryParse(hostPortTokens[1], out var portFromHostPortToken))
             {
                 return result;
             }
+
             if (portFromHostPortToken != port)
             {
                 return result;
@@ -84,24 +80,23 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
             PortDetail.Port = port;
             PortDetail.ProcessID = int.Parse(stringTokens[4].Trim());
-            Tuple<string, string> processNameAndPath = null;
+            Tuple<string, string> processNameAndPath;
             try
             {
-                processNameAndPath = GetProcessNameAndCommandLineArgs(PortDetail.ProcessID);
+                processNameAndPath = GetProcessNameAndCommandLineArgs(PortDetail.ProcessID, context);
                 PortDetail.ProcessName = processNameAndPath.Item1;
                 PortDetail.Path = processNameAndPath.Item2;
                 PortDetail.Process = Process.GetProcessById(PortDetail.ProcessID);
                 result = Tuple.Create(true, PortDetail);
             }
-            catch (Exception exp)
+            catch (Exception e)
             {
-                Console.WriteLine(exp.ToString());
-
+                context.API.LogException(ClassName, "Failed to get process name and path", e);
             }
 
             return result;
-
         }
+
         /// <summary>
         /// Using WMI API to get process name and path instead of
         /// Process.GetProcessById, because if calling process ins
@@ -109,8 +104,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// get the process name
         /// </summary>
         /// <param name="processID"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        private static Tuple<string, string> GetProcessNameAndCommandLineArgs(int processID)
+        private static Tuple<string, string> GetProcessNameAndCommandLineArgs(int processID, PluginInitContext context)
         {
             Tuple<string, string> result = Tuple.Create(string.Empty, string.Empty);
             string query = string.Format("Select Name,ExecutablePath from Win32_Process WHERE ProcessId='{0}'", processID);
@@ -121,22 +117,19 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                 ManagementObjectCollection results = searcher.Get();
 
                 // interested in first result.
-                foreach (ManagementObject item in results)
+                foreach (var item in results.Cast<ManagementObject>())
                 {
                     result = Tuple.Create(Convert.ToString(item["Name"]),
                     Convert.ToString(item["ExecutablePath"]));
                     break;
-
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
-
-                throw;
+                context.API.LogException(ClassName, "Failed to get process name and path", e);
             }
 
             return result;
-
         }
 
         /// <summary>
@@ -144,8 +137,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// </summary>
         /// <param name="commandName"></param>
         /// <param name="arguments"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        private static string ExecuteCommandAndCaptureOutput(string commandName, string arguments)
+        private static string ExecuteCommandAndCaptureOutput(string commandName, string arguments, PluginInitContext context)
         {
             string commandOut = string.Empty;
             Process process = new Process();
@@ -165,9 +159,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             }
             catch (Exception exp)
             {
-                Log.Exception($"|ProcessKiller.CreateResultsFromProcesses|Failed to ExecuteCommandAndCaptureOutput {commandName + arguments}", exp);
-                Console.WriteLine(exp.ToString());
+                context.API.LogException(ClassName, $"Failed to ExecuteCommandAndCaptureOutput {commandName + arguments}", exp);
             }
+
             return commandOut;
         }
     }

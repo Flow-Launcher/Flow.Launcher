@@ -36,15 +36,16 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         /// <summary>
         /// Returns a ProcessResult for evey running non-system process whose name matches the given searchTerm
         /// </summary>
-        public List<ProcessResult> GetMatchingProcesses(string searchTerm)
+        public List<ProcessResult> GetMatchingProcesses(string searchTerm, PluginInitContext context)
         {
             var processlist = new List<ProcessResult>();
 
-            int portNum;
-            bool canConvert = int.TryParse(searchTerm, out portNum);
+            bool canConvert = int.TryParse(searchTerm, out var portNum);
             Tuple<bool, PortDetail> tcpPortListeningProcess = null;
-            if(canConvert)
-                tcpPortListeningProcess = PortHelper.GetPortDetails(portNum);
+            if (canConvert)
+            {
+                tcpPortListeningProcess = PortHelper.GetPortDetails(portNum, context);
+            }
 
             foreach (var p in Process.GetProcesses())
             {

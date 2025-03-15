@@ -63,7 +63,7 @@ namespace Flow.Launcher.Plugin.ProcessKiller
         private List<Result> CreateResultsFromQuery(Query query)
         {
             string termToSearch = query.Search;
-            var processlist = processHelper.GetMatchingProcesses(termToSearch);
+            var processlist = processHelper.GetMatchingProcesses(termToSearch, _context);
             
             if (!processlist.Any())
             {
