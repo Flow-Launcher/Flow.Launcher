@@ -865,7 +865,7 @@ namespace Flow.Launcher
 
         private IDisposable _reactiveSubscription;
 
-        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
+        public void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
         {
             if (_reactiveSubscription != null)
             {

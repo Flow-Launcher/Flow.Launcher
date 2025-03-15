@@ -139,6 +139,22 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
+    public bool SearchQueryResultsWithDelay
+    {
+        get => Settings.SearchQueryResultsWithDelay;
+        set
+        {
+            Settings.SearchQueryResultsWithDelay = value;
+
+            ((MainWindow)System.Windows.Application.Current.MainWindow).SetupSearchTextBoxReactiveness(value);
+        }
+    }
+
+    public IEnumerable<int> SearchInputDelayRange => new List<int>()
+    {
+        30, 60, 90, 120, 150, 180, 210, 240, 270, 300
+    };
+
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");
 

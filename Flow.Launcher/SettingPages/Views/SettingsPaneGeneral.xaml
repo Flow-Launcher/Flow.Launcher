@@ -173,6 +173,28 @@
             </cc:Card>
 
             <cc:CardGroup Margin="0 14 0 0">
+                <cc:Card
+                    Title="{DynamicResource searchDelay}"
+                    Icon="&#xE961;"
+                    Sub="{DynamicResource searchDelayToolTip}">
+                    <ui:ToggleSwitch
+                        IsOn="{Binding SearchQueryResultsWithDelay}"
+                        OffContent="{DynamicResource disable}"
+                        OnContent="{DynamicResource enable}" />
+                </cc:Card>
+
+                <cc:Card
+                    Title="{DynamicResource searchDelayTime}"
+                    Icon="&#xE916;"
+                    Sub="{DynamicResource searchDelayTimeToolTip}">
+                    <ComboBox
+                        Width="100"
+                        ItemsSource="{Binding SearchInputDelayRange}"
+                        SelectedItem="{Binding Settings.SearchInputDelay}" />
+                </cc:Card>
+            </cc:CardGroup>
+
+            <cc:CardGroup Margin="0 14 0 0">
                 <cc:Card Title="{DynamicResource querySearchPrecision}" Sub="{DynamicResource querySearchPrecisionToolTip}">
                     <ComboBox
                         MaxWidth="200"
