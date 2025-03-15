@@ -40,10 +40,9 @@ namespace Flow.Launcher.Plugin.ProcessKiller
 
         private static string ClassName => nameof(PortHelper);
 
-        public static Tuple<bool, PortDetail> GetPortDetails(int port, PluginInitContext context)
+        public static (bool Result, PortDetail Detail) GetPortDetails(int port, PluginInitContext context)
         {
-            PortDetail PortDetail = new PortDetail();
-            Tuple<bool, PortDetail> result = Tuple.Create(false, PortDetail);
+            var portDetail = new PortDetail();
 
             // execute netstat command for the given port
             string commandArgument = string.Format("/c netstat -an -o -p tcp|findstr \":{0}.*LISTENING\"", port);
@@ -52,49 +51,49 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             if (string.IsNullOrEmpty(commandOut))
             {
                 // port is not in use
-                return result;
+                return (false, portDetail);
             }
 
             var stringTokens = commandOut.Split(default(char[]), StringSplitOptions.RemoveEmptyEntries);
             if (stringTokens.Length < MINIMUM_TOKEN_IN_A_LINE)
             {
-                return result;
+                return (false, portDetail);
             }
 
             // split host:port
             var hostPortTokens = stringTokens[1].Split(new char[] { ':' });
             if (hostPortTokens.Length < 2)
             {
-                return result;
+                return (false, portDetail);
             }
 
             if (!int.TryParse(hostPortTokens[1], out var portFromHostPortToken))
             {
-                return result;
+                return (false, portDetail);
             }
 
             if (portFromHostPortToken != port)
             {
-                return result;
+                return (false, portDetail);
             }
 
-            PortDetail.Port = port;
-            PortDetail.ProcessID = int.Parse(stringTokens[4].Trim());
+            portDetail.Port = port;
+            portDetail.ProcessID = int.Parse(stringTokens[4].Trim());
             (string Name, string Path) processNameAndPath;
             try
             {
-                processNameAndPath = GetProcessNameAndCommandLineArgs(PortDetail.ProcessID, context);
-                PortDetail.ProcessName = processNameAndPath.Name;
-                PortDetail.Path = processNameAndPath.Path;
-                PortDetail.Process = Process.GetProcessById(PortDetail.ProcessID);
-                result = Tuple.Create(true, PortDetail);
+                processNameAndPath = GetProcessNameAndCommandLineArgs(portDetail.ProcessID, context);
+                portDetail.ProcessName = processNameAndPath.Name;
+                portDetail.Path = processNameAndPath.Path;
+                portDetail.Process = Process.GetProcessById(portDetail.ProcessID);
+                return (true, portDetail);
             }
             catch (Exception e)
             {
                 context.API.LogException(ClassName, "Failed to get process name and path", e);
             }
 
-            return result;
+            return (false, portDetail);
         }
 
         /// <summary>

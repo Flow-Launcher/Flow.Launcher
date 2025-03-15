@@ -41,16 +41,17 @@ namespace Flow.Launcher.Plugin.ProcessKiller
             var processlist = new List<ProcessResult>();
 
             bool canConvert = int.TryParse(searchTerm, out var portNum);
-            Tuple<bool, PortDetail> tcpPortListeningProcess = null;
+            bool portResult = false;
+            PortDetail portDetail = new();
             if (canConvert)
             {
-                tcpPortListeningProcess = PortHelper.GetPortDetails(portNum, context);
+                (portResult, portDetail) = PortHelper.GetPortDetails(portNum, context);
             }
 
             foreach (var p in Process.GetProcesses())
             {
                 if (IsSystemProcess(p)) continue;
-                if (tcpPortListeningProcess != null && tcpPortListeningProcess.Item1 && tcpPortListeningProcess.Item2.Process.Id == p.Id)
+                if (portResult && portDetail.Process.Id == p.Id)
                 {
                     continue;
                 }
@@ -68,9 +69,10 @@ namespace Flow.Launcher.Plugin.ProcessKiller
                     }
                 }
             }
-            if (tcpPortListeningProcess != null && tcpPortListeningProcess.Item1)
+
+            if (portResult)
             {
-                var p = tcpPortListeningProcess.Item2.Process;
+                var p = portDetail.Process;
                 processlist.Add(new ProcessResult(p, StringMatcher.FuzzySearch(searchTerm, p.ProcessName + p.Id).Score, portNum));
             }
             return processlist;
