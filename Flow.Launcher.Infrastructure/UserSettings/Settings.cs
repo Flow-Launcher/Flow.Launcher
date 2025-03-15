@@ -275,6 +275,9 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
 
+        public bool SearchQueryResultsWithDelay { get; set; } = false;
+        public int SearchInputDelay { get; set; } = 150;
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
 

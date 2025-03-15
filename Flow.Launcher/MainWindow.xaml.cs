@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Helper;
@@ -27,6 +26,7 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
+using System.Reactive.Linq;
 
 namespace Flow.Launcher
 {
@@ -68,6 +68,7 @@ namespace Flow.Launcher
                 var handle = new WindowInteropHelper(this).Handle;
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
+                SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
             };
         }
 
@@ -204,63 +205,63 @@ namespace Flow.Launcher
                 switch (e.PropertyName)
                 {
                     case nameof(MainViewModel.MainWindowVisibilityStatus):
-                    {
-                        Dispatcher.Invoke(() =>
                         {
-                            if (_viewModel.MainWindowVisibilityStatus)
+                            Dispatcher.Invoke(() =>
                             {
-                                if (_settings.UseSound)
+                                if (_viewModel.MainWindowVisibilityStatus)
                                 {
-                                    SoundPlay();
-                                }
+                                    if (_settings.UseSound)
+                                    {
+                                        SoundPlay();
+                                    }
 
-                                UpdatePosition();
-                                PreviewReset();
-                                Activate();
-                                QueryTextBox.Focus();
-                                _settings.ActivateTimes++;
-                                if (!_viewModel.LastQuerySelected)
+                                    UpdatePosition();
+                                    PreviewReset();
+                                    Activate();
+                                    QueryTextBox.Focus();
+                                    _settings.ActivateTimes++;
+                                    if (!_viewModel.LastQuerySelected)
+                                    {
+                                        QueryTextBox.SelectAll();
+                                        _viewModel.LastQuerySelected = true;
+                                    }
+
+                                    if (_viewModel.ProgressBarVisibility == Visibility.Visible &&
+                                        isProgressBarStoryboardPaused)
+                                    {
+                                        _progressBarStoryboard.Begin(ProgressBar, true);
+                                        isProgressBarStoryboardPaused = false;
+                                    }
+
+                                    if (_settings.UseAnimation)
+                                        WindowAnimator();
+                                }
+                                else if (!isProgressBarStoryboardPaused)
                                 {
-                                    QueryTextBox.SelectAll();
-                                    _viewModel.LastQuerySelected = true;
+                                    _progressBarStoryboard.Stop(ProgressBar);
+                                    isProgressBarStoryboardPaused = true;
                                 }
-
-                                if (_viewModel.ProgressBarVisibility == Visibility.Visible &&
-                                    isProgressBarStoryboardPaused)
+                            });
+                            break;
+                        }
+                    case nameof(MainViewModel.ProgressBarVisibility):
+                        {
+                            Dispatcher.Invoke(() =>
+                            {
+                                if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
+                                {
+                                    _progressBarStoryboard.Stop(ProgressBar);
+                                    isProgressBarStoryboardPaused = true;
+                                }
+                                else if (_viewModel.MainWindowVisibilityStatus &&
+                                         isProgressBarStoryboardPaused)
                                 {
                                     _progressBarStoryboard.Begin(ProgressBar, true);
                                     isProgressBarStoryboardPaused = false;
                                 }
-
-                                if (_settings.UseAnimation)
-                                    WindowAnimator();
-                            }
-                            else if (!isProgressBarStoryboardPaused)
-                            {
-                                _progressBarStoryboard.Stop(ProgressBar);
-                                isProgressBarStoryboardPaused = true;
-                            }
-                        });
-                        break;
-                    }
-                    case nameof(MainViewModel.ProgressBarVisibility):
-                    {
-                        Dispatcher.Invoke(() =>
-                        {
-                            if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
-                            {
-                                _progressBarStoryboard.Stop(ProgressBar);
-                                isProgressBarStoryboardPaused = true;
-                            }
-                            else if (_viewModel.MainWindowVisibilityStatus &&
-                                     isProgressBarStoryboardPaused)
-                            {
-                                _progressBarStoryboard.Begin(ProgressBar, true);
-                                isProgressBarStoryboardPaused = false;
-                            }
-                        });
-                        break;
-                    }
+                            });
+                            break;
+                        }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
                         if (_viewModel.QueryTextCursorMovedToEnd)
                         {
@@ -415,10 +416,10 @@ namespace Flow.Launcher
             {
                 switch (e.Button)
                 {
-                    case MouseButtons.Left:
+                    case System.Windows.Forms.MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-                    case MouseButtons.Right:
+                    case System.Windows.Forms.MouseButtons.Right:
 
                         contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
@@ -857,5 +858,78 @@ namespace Flow.Launcher
                 be.UpdateSource();
             }
         }
+
+        #region Search Delay
+
+        // Edited from: https://github.com/microsoft/PowerToys
+
+        private IDisposable _reactiveSubscription;
+
+        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
+        {
+            if (_reactiveSubscription != null)
+            {
+                _reactiveSubscription.Dispose();
+                _reactiveSubscription = null;
+            }
+
+            QueryTextBox.TextChanged -= QueryTextBox_TextChanged;
+
+            if (showResultsWithDelay)
+            {
+                _reactiveSubscription = Observable.FromEventPattern<TextChangedEventHandler, TextChangedEventArgs>(
+                    conversion => (sender, eventArg) => conversion(sender, eventArg),
+                    add => QueryTextBox.TextChanged += add,
+                    remove => QueryTextBox.TextChanged -= remove)
+                    .Do(@event => ClearAutoCompleteText((TextBox)@event.Sender))
+                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery((TextBox)@event.Sender)))
+                    .Subscribe();
+            }
+            else
+            {
+                QueryTextBox.TextChanged += QueryTextBox_TextChanged;
+            }
+        }
+
+        private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (TextBox)sender;
+            ClearAutoCompleteText(textBox);
+            PerformSearchQuery(textBox);
+        }
+
+        private void ClearAutoCompleteText(TextBox textBox)
+        {
+            var text = textBox.Text;
+            var autoCompleteText = QueryTextSuggestionBox.Text;
+
+            if (ShouldAutoCompleteTextBeEmpty(text, autoCompleteText))
+            {
+                QueryTextSuggestionBox.Text = string.Empty;
+            }
+        }
+
+        private static bool ShouldAutoCompleteTextBeEmpty(string queryText, string autoCompleteText)
+        {
+            if (string.IsNullOrEmpty(autoCompleteText))
+            {
+                return false;
+            }
+            else
+            {
+                // Using Ordinal this is internal
+                return string.IsNullOrEmpty(queryText) || !autoCompleteText.StartsWith(queryText, StringComparison.Ordinal);
+            }
+        }
+
+        private void PerformSearchQuery(TextBox textBox)
+        {
+            var text = textBox.Text;
+            _viewModel.QueryText = text;
+            _viewModel.Query();
+        }
+
+        #endregion
     }
 }

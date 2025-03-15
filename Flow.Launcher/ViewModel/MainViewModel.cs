@@ -569,7 +569,6 @@ namespace Flow.Launcher.ViewModel
             {
                 _queryText = value;
                 OnPropertyChanged();
-                Query();
             }
         }
 
@@ -631,6 +630,7 @@ namespace Flow.Launcher.ViewModel
                 {
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
+                    Query();
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
@@ -695,6 +695,7 @@ namespace Flow.Launcher.ViewModel
                     else
                     {
                         QueryText = string.Empty;
+                        Query();
                     }
                 }
 
