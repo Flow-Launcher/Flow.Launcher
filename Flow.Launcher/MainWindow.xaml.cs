@@ -62,17 +62,12 @@ namespace Flow.Launcher
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
 
-            this.Loaded += (_, _) =>
+            Loaded += (_, _) =>
             {
                 var handle = new WindowInteropHelper(this).Handle;
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
             };
-        }
-
-        public MainWindow()
-        {
-            InitializeComponent();
         }
 
         private int _initialWidth;
