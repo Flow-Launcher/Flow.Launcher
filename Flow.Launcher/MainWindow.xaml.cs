@@ -505,7 +505,7 @@ namespace Flow.Launcher
             windowsb?.Stop(FlowMainWindow);
 
             // UI 요소 상태 초기화
-            ClockPanel.Margin = new Thickness(0, 0, ClockPanel.Margin.Right, 0);
+            //ClockPanel.Margin = new Thickness(0, 0, ClockPanel.Margin.Right, 0);
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
         }
@@ -540,11 +540,10 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.Stop
             };
 
-            // 📌 항상 같은 위치에서 시작하도록 `_originalTop`을 사용
             var WindowMotion = new DoubleAnimation
             {
-                From = Top, // 원래 위치에서 10px 내려온 후
-                To = Top, // 다시 원래 위치로 이동
+                From = Top,
+                To = Top,
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
                 FillBehavior = FillBehavior.Stop
             };
@@ -567,9 +566,8 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon, SearchIcon.Style, 1.0); // 스타일에서 Opacity 가져오기
-
-            System.Diagnostics.Debug.WriteLine("스타일에서 가져온 투명도: " + TargetIconOpacity);
+            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon, SearchIcon.Style, 1.0);
+            
 
             var IconOpacity = new DoubleAnimation
             {
@@ -580,17 +578,18 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double right = ClockPanel.Margin.Right;
+            const double DefaultRightMargin = 66; //* this value from base.xaml
+            double rightMargin = GetThicknessFromStyle(ClockPanel, ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
+
             var thicknessAnimation = new ThicknessAnimation
             {
-                From = new Thickness(0, 12, right, 0),
-                To = new Thickness(0, 0, right, 0),
+                From = new Thickness(0, 12, rightMargin, 0),
+                To = new Thickness(0, 0, rightMargin, 0),
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            // 애니메이션 타겟 설정
             Storyboard.SetTargetProperty(ClockOpacity, new PropertyPath(OpacityProperty));
             Storyboard.SetTarget(ClockOpacity, ClockPanel);
 
@@ -609,7 +608,6 @@ namespace Flow.Launcher
             Storyboard.SetTarget(IconOpacity, SearchIcon);
             Storyboard.SetTargetProperty(IconOpacity, new PropertyPath(OpacityProperty));
 
-            // 스토리보드에 애니메이션 추가
             clocksb.Children.Add(thicknessAnimation);
             clocksb.Children.Add(ClockOpacity);
             windowsb.Children.Add(WindowOpacity);
@@ -645,6 +643,23 @@ namespace Flow.Launcher
 
             return defaultOpacity;
         }
+
+        private Thickness GetThicknessFromStyle(UIElement element, Style style, Thickness defaultThickness)
+        {
+            if (style == null)
+                return defaultThickness;
+
+            foreach (Setter setter in style.Setters)
+            {
+                if (setter.Property == FrameworkElement.MarginProperty)
+                {
+                    return setter.Value is Thickness thickness ? thickness : defaultThickness;
+                }
+            }
+
+            return defaultThickness;
+        }
+
 
 
         private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
