@@ -125,6 +125,12 @@ namespace Flow.Launcher.Core.Resource
                 => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
         }
 
+        private bool IsBackdropSupported()
+        {
+            // Windows 11 (22000) over mica and arcrylic.
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                   Environment.OSVersion.Version.Build >= 22000;
+        }
         private System.Windows.Window GetMainWindow()
         {
             return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow);
@@ -172,7 +178,7 @@ namespace Flow.Launcher.Core.Resource
             RemoveDropShadowEffectFromCurrentTheme();
             if (_settings.UseDropShadowEffect)
             {
-                if (BlurEnabled)
+                if (BlurEnabled && IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Round");
                 }
@@ -184,7 +190,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                if (BlurEnabled)
+                if (BlurEnabled && IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Default");
                 }
@@ -251,7 +257,7 @@ namespace Flow.Launcher.Core.Resource
                     _ => 0                      // None
                 };
 
-                if (BlurEnabled && hasBlur)
+                if (BlurEnabled && hasBlur && IsBackdropSupported())
                 {
                     //  If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                     if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
@@ -446,7 +452,9 @@ namespace Flow.Launcher.Core.Resource
                 Color selectedBG = useDarkMode ? DarkBG : LightBG;
                 ApplyPreviewBackground(selectedBG);
 
-                if (!hasBlur)
+                bool isBlurAvailable = hasBlur && IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
+
+                if (!isBlurAvailable)
                 {
                     mainWindow.Background = Brushes.Transparent;
                 }
@@ -469,17 +477,12 @@ namespace Flow.Launcher.Core.Resource
 
         public bool IsBlurTheme()
         {
-            if (Environment.OSVersion.Version >= new Version(6, 2))
-            {
-                var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
-
-                if (resource is bool)
-                    return (bool)resource;
-
+            if (!IsBackdropSupported()) // Windows 11 미만이면 무조건 false
                 return false;
-            }
 
-            return false;
+            var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
+
+            return resource is bool b && b;
         }
         public string GetSystemBG()
         {
@@ -536,7 +539,7 @@ namespace Flow.Launcher.Core.Resource
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
 
-                BlurEnabled = Win32Helper.IsBlurTheme();
+                BlurEnabled = IsBlurTheme();
                 //if (_settings.UseDropShadowEffect)
                 // AddDropShadowEffectToCurrentTheme();
 
