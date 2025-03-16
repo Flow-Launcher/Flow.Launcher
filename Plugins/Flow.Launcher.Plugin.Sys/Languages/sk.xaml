@@ -62,14 +62,14 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Naozaj chcete počítač reštartovať s pokročilými možnosťami spúšťania?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Naozaj sa chcete odhlásiť?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Nastavenia kľúčového slova príkazu</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Vlastné kľúčové slovo príkazu</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Na vyhľadanie príkazu zadajte kľúčové slovo: {0}. Toto kľúčové slovo sa použije na vyhľadnie príkazu.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Kľúčové slovo príkazu</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Resetovať</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Potvrdiť</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Zrušiť</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Prosím, zadajte neprázdne kľúčové slovo príkazu</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Systémové príkazy</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Poskytuje príkazy súvisiace so systémom ako je vypnutie, uzamknutie počítača atď.</system:String>
