@@ -72,7 +72,7 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
 
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    dotnet pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
