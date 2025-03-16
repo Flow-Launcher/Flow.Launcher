@@ -396,19 +396,26 @@ namespace Flow.Launcher.Core.Resource
                 // Final decision on whether to use dark mode
                 bool useDarkMode = false;
 
-                if (colorScheme == "Dark" || systemBG == "Dark")
+                // If systemBG is not "Auto", prioritize it over ColorScheme and set the mode based on systemBG value
+                if (systemBG == "Dark")
                 {
                     useDarkMode = true;  // Dark
                 }
-                else if (colorScheme == "Light" || systemBG == "Light")
+                else if (systemBG == "Light")
                 {
                     useDarkMode = false; // Light
                 }
-                else if (colorScheme == "System" || systemBG == "Auto")
+                else if (systemBG == "Auto")
                 {
-                    useDarkMode = isSystemDark; // Auto
+                    // If systemBG is "Auto", decide based on ColorScheme
+                    if (colorScheme == "Dark")
+                        useDarkMode = true;
+                    else if (colorScheme == "Light")
+                        useDarkMode = false;
+                    else
+                        useDarkMode = isSystemDark;  // Auto (based on system setting)
                 }
-                
+
                 // Apply DWM Dark Mode 
                 Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
 
@@ -457,6 +464,8 @@ namespace Flow.Launcher.Core.Resource
                 }
             }, DispatcherPriority.Normal);
         }
+
+
 
         public bool IsBlurTheme()
         {

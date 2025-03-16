@@ -134,10 +134,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 Constant.System => null,
                 _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
             };
-
-            ThemeManager.Instance.RefreshFrame();
-
             Settings.ColorScheme = value;
+            ThemeManager.Instance.RefreshFrame();
         }
     }
 

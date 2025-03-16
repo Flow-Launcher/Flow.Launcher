@@ -13,7 +13,6 @@
 
     <system:Boolean x:Key="ThemeBlurEnabled">True</system:Boolean>
     <system:String x:Key="SystemBG">Dark</system:String>
-    <system:String x:Key="CornerType">DoNotRound</system:String>
     <Color x:Key="LightBG">#C7000000</Color>
     <Color x:Key="DarkBG">#C7000000</Color>
 
