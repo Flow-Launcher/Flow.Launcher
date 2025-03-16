@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows;
@@ -435,7 +434,7 @@ namespace Flow.Launcher.Plugin.Sys
                     AutoCompleteText = DataLocation.VersionLogDirectory,
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(logPath);
+                        _context.API.OpenDirectory(DataLocation.VersionLogDirectory);
                         return true;
                     }
                 },
@@ -459,7 +458,7 @@ namespace Flow.Launcher.Plugin.Sys
                     AutoCompleteText = DataLocation.DataDirectory(),
                     Action = c =>
                     {
-                        _context.API.OpenDirectory(userDataPath);
+                        _context.API.OpenDirectory(DataLocation.DataDirectory());
                         return true;
                     }
                 },
