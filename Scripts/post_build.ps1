@@ -46,9 +46,11 @@ function Delete-Unused ($path, $config) {
             # ignore some specific dll that seems to make issue
             continue
         }
-        $deleteList = Get-ChildItem $target\Plugins -Filter $i.Name -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq $i.Name } 
-        $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
-        $deleteList | Remove-Item
+        foreach ($plugin in Get-ChildItem $target\Plugins){
+            $deleteList = Get-ChildItem $target\Plugins -Filter $i.Name | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq $i.Name }
+            $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
+            $deleteList | Remove-Item
+        }
     }
     Remove-Item -Path $target -Include "*.xml" -Recurse 
 }
