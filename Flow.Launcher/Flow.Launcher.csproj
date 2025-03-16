@@ -85,7 +85,7 @@
   <ItemGroup>
     <PackageReference Include="ChefKeys" Version="0.1.2" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
-    <PackageReference Include="Fody" Version="6.5.4">
+    <PackageReference Include="Fody" Version="6.5.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -104,7 +104,7 @@
     <PackageReference Include="NHotkey.Wpf" Version="3.0.0" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.4.0" />
     <PackageReference Include="SemanticVersioning" Version="3.0.0" />
-    <PackageReference Include="Jack251970.TaskScheduler" Version="2.12.1" />
+    <PackageReference Include="TaskScheduler" Version="2.12.1" />
     <PackageReference Include="VirtualizingWrapPanel" Version="2.1.1" />
   </ItemGroup>
 

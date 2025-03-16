@@ -103,7 +103,6 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Center"
                         HorizontalContentAlignment="Left"
-                        HotkeySettings="{Binding Settings}"
                         DefaultHotkey="" />
                     <TextBlock
                         Grid.Row="1"

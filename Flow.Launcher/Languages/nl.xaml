@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Sneltoets &quot;{0}&quot; registreren. De sneltoets kan in gebruik zijn door een ander programma. Verander naar een andere sneltoets of sluit een ander programma.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Kan {0} niet starten</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Ongeldige Flow Launcher plugin bestandsextensie</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Draagbare Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Alle instellingen en gebruikersgegevens opslaan in één map (Nuttig bij het gebruik van verwijderbare schijven of cloud services).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Start Flow Launcher als systeem opstart</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Fout bij het instellen van uitvoeren bij opstarten</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Verberg Flow Launcher als focus verloren is</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Laat geen nieuwe versie notificaties zien</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Versie</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Verwijderen</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plugin Winkel</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Nieuwe Versie</system:String>
     <system:String x:Key="LabelNewToolTip">Deze plug-in is in de laatste 7 dagen bijgewerkt</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nieuwe update beschikbaar</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thema</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dit thema ondersteunt twee (licht/donker) modi.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Sneltoets</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">Gegevenslocatie van gebruiker</system:String>
     <system:String x:Key="userdatapathToolTip">Gebruikersinstellingen en geïnstalleerde plug-ins worden opgeslagen in de gebruikersgegevensmap. Deze locatie kan variëren afhankelijk van of het in draagbare modus is of niet.</system:String>
     <system:String x:Key="userdatapathButton">Map openen</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Bestandsbeheerder selecteren</system:String>
@@ -367,6 +371,7 @@ Als u een '@' voorvoegsel toevoegt tijdens het invoeren van een snelkoppeling, m
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">Background</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Versie</system:String>
@@ -383,6 +388,9 @@ Als u een '@' voorvoegsel toevoegt tijdens het invoeren van een snelkoppeling, m
     <system:String x:Key="reportWindow_report_succeed">Rapport succesvol verzonden</system:String>
     <system:String x:Key="reportWindow_report_failed">Verzenden van rapport mislukt</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher heeft een error</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Please wait...</system:String>

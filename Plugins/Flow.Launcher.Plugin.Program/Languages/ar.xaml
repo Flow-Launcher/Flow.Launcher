@@ -34,6 +34,8 @@
     <system:String x:Key="flowlauncher_plugin_program_enable_hideuninstallers_tooltip">إخفاء البرامج التي تحمل أسماء برامج إلغاء تثبيت شائعة، مثل unins000.exe</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description">البحث في وصف البرنامج</system:String>
     <system:String x:Key="flowlauncher_plugin_program_enable_description_tooltip">سيقوم Flow بالبحث في وصف البرنامج</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp">Hide duplicated apps</system:String>
+    <system:String x:Key="flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip">Hide duplicated Win32 programs that are already in the UWP list</system:String>
     <system:String x:Key="flowlauncher_plugin_program_suffixes_header">اللاحقات</system:String>
     <system:String x:Key="flowlauncher_plugin_program_max_depth_header">أقصى عمق</system:String>
 

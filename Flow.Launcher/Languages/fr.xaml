@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Échec lors de l'enregistrement du raccourci : {0}</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Échec de la réinitialisation du raccourci &quot;{0}&quot;. Veuillez réessayer ou consulter le journal pour plus de détails</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Impossible de lancer {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Le format de fichier n'est pas un plugin Flow Launcher valide</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Mode Portable</system:String>
     <system:String x:Key="portableModeToolTIp">Stocker tous les paramètres et données utilisateur dans un seul dossier (Pratique en cas d'utilisation de disques amovibles ou de services cloud).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Lancer Flow Launcher au démarrage du système</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Utilisez la tâche de connexion au lieu de l'entrée de démarrage pour une expérience de démarrage plus rapide</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">Après une désinstallation, vous devez supprimer manuellement cette tâche (Flow.Launcher Startup) via le planificateur de tâches</system:String>
     <system:String x:Key="setAutoStartFailed">Erreur lors de la configuration du lancement au démarrage</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Cacher Flow Launcher lors de la perte de focus</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Ne pas afficher le message de mise à jour pour les nouvelles versions</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Site Web</system:String>
     <system:String x:Key="plugin_uninstall">Désinstaller</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Échec de la suppression des paramètres du plugin</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins : {0} - Échec de la suppression des fichiers de configuration des plugins, veuillez les supprimer manuellement</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Magasin des Plugins</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Nouvelle version</system:String>
     <system:String x:Key="LabelNewToolTip">Cette extension a été mis à jour au cours des 7 derniers jours</system:String>
     <system:String x:Key="LabelUpdateToolTip">Une nouvelle mise à jour est disponible</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Thèmes</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Date</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Ce thème prend en charge deux modes (clair/sombre).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Ce thème prend en charge l'arrière-plan flou et transparent.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Raccourcis</system:String>
@@ -296,6 +297,9 @@
     <system:String x:Key="userdatapath">Emplacement des données utilisateur</system:String>
     <system:String x:Key="userdatapathToolTip">Les paramètres utilisateur et les plugins installés sont enregistrés dans le dossier des données utilisateur. Cet emplacement peut varier selon que vous soyez en mode portable ou non.</system:String>
     <system:String x:Key="userdatapathButton">Ouvrir le dossier</system:String>
+    <system:String x:Key="logLevel">Niveau de journalisation</system:String>
+    <system:String x:Key="LogLevelDEBUG">Débogage</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Sélectionner le gestionnaire de fichiers</system:String>
@@ -326,7 +330,7 @@
     <system:String x:Key="oldActionKeywords">Ancien mot-clé d'action</system:String>
     <system:String x:Key="newActionKeywords">Nouveau mot-clé d'action</system:String>
     <system:String x:Key="cancel">Annuler</system:String>
-    <system:String x:Key="done">Termin</system:String>
+    <system:String x:Key="done">Terminé</system:String>
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossible de trouver le module spécifi</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Le nouveau mot-clé d'action doit être spécifi</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Le nouveau mot-clé d'action a été assigné à un autre module, veuillez en choisir un autre</system:String>
@@ -366,6 +370,7 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="commonOK">Ok</system:String>
     <system:String x:Key="commonYes">Oui</system:String>
     <system:String x:Key="commonNo">Non</system:String>
+    <system:String x:Key="commonBackground">Arrière-plan</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
@@ -382,6 +387,9 @@ Si vous ajoutez un préfixe &quot;@&quot; lors de la saisie d'un raccourci, celu
     <system:String x:Key="reportWindow_report_succeed">Signalement envoy</system:String>
     <system:String x:Key="reportWindow_report_failed">Échec de l'envoi du signalement</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher a rencontré une erreur</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Veuillez ouvrir un nouveau ticket dans</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Télécharger le fichier journal : {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copiez le message d’exception ci-dessous</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Veuillez patienter...</system:String>

@@ -593,7 +593,10 @@ namespace Flow.Launcher.Plugin.PluginsManager
             var constructedUrlPart = string.Format("{0}/{1}/", acceptedSource, author);
 
             return url.StartsWith(acceptedSource) &&
-                   Context.API.GetAllPlugins().Any(x => x.Metadata.Website.StartsWith(constructedUrlPart));
+                Context.API.GetAllPlugins().Any(x => 
+                    !string.IsNullOrEmpty(x.Metadata.Website) &&
+                    x.Metadata.Website.StartsWith(constructedUrlPart)
+                );
         }
 
         internal async ValueTask<List<Result>> RequestInstallOrUpdateAsync(string search, CancellationToken token,

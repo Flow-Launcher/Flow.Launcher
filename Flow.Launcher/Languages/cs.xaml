@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Nepodařilo se zaregistrovat hotkey &quot;{0}&quot;. Klávesová zkratka může být používána jiným programem. Změňte na jinou klávesu nebo ukončíte jiný program.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Nepodařilo se spustit {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Neplatný typ souboru pluginu aplikace Flow Launcher</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Přenosný režim</system:String>
     <system:String x:Key="portableModeToolTIp">Ukládat všechna nastavení a uživatelská data v jedné složce (Užitečné při užití s přenosnými zařízeními).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Spustit Flow Launcher při spuštění systému</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Při nastavování spouštění došlo k chybě</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Skrýt Flow Launcher při vykliknutí</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Nezobrazovat oznámení o nové verzi</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Verze</system:String>
     <system:String x:Key="plugin_query_web">Webová stránka</system:String>
     <system:String x:Key="plugin_uninstall">Odinstalovat</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Obchod s pluginy</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Nová verze</system:String>
     <system:String x:Key="LabelNewToolTip">Tento plugin byl aktualizován během posledních 7 dní</system:String>
     <system:String x:Key="LabelUpdateToolTip">Nová aktualizace je k dispozici</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Motiv</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Klávesová zkratka</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">User Data Location</system:String>
     <system:String x:Key="userdatapathToolTip">User settings and installed plugins are saved in the user data folder. This location may vary depending on whether it's in portable mode or not.</system:String>
     <system:String x:Key="userdatapathButton">Open Folder</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Vybrat správce souborů</system:String>
@@ -367,6 +371,7 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="commonOK">Dobře</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">Pozadí</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Verze</system:String>
@@ -383,6 +388,9 @@ Pokud před zkratku při zadávání přidáte znak &quot;@&quot;, bude odpovíd
     <system:String x:Key="reportWindow_report_succeed">Hlášení bylo úspěšně odesláno</system:String>
     <system:String x:Key="reportWindow_report_failed">Nepodařilo se odeslat hlášení</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher zaznamenal chybu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Počkejte prosím...</system:String>

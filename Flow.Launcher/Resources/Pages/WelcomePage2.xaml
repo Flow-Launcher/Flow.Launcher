@@ -114,8 +114,7 @@
                         Margin="0,8,0,0"
                         ChangeHotkey="{Binding SetTogglingHotkeyCommand}"
                         DefaultHotkey="Alt+Space"
-                        Hotkey="{Binding Settings.Hotkey}"
-                        HotkeySettings="{Binding Settings}"
+                        Type="Hotkey"
                         ValidateKeyGesture="True"
                         WindowTitle="{DynamicResource flowlauncherHotkey}" />
                 </StackPanel>
