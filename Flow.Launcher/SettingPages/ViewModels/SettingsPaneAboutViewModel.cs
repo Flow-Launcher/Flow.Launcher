@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 
@@ -45,16 +46,41 @@ public partial class SettingsPaneAboutViewModel : BaseModel
         _settings.ActivateTimes
     );
 
+    public class LogLevelData : DropdownDataGeneric<LOGLEVEL> { }
+
+    public List<LogLevelData> LogLevels { get; } =
+        DropdownDataGeneric<LOGLEVEL>.GetValues<LogLevelData>("LogLevel");
+
+    public LOGLEVEL LogLevel
+    {
+        get => _settings.LogLevel;
+        set
+        {
+            if (_settings.LogLevel != value)
+            {
+                _settings.LogLevel = value;
+
+                Log.SetLogLevel(value);
+            }
+        }
+    }
+
     public SettingsPaneAboutViewModel(Settings settings, Updater updater)
     {
         _settings = settings;
         _updater = updater;
+        UpdateEnumDropdownLocalizations();
+    }
+
+    private void UpdateEnumDropdownLocalizations()
+    {
+        DropdownDataGeneric<LOGLEVEL>.UpdateLabels(LogLevels);
     }
 
     [RelayCommand]
     private void OpenWelcomeWindow()
     {
-        var window = new WelcomeWindow(_settings);
+        var window = new WelcomeWindow();
         window.ShowDialog();
     }
 
@@ -138,5 +164,4 @@ public partial class SettingsPaneAboutViewModel : BaseModel
 
         return "0 B";
     }
-
 }

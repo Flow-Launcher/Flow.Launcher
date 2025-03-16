@@ -13,6 +13,8 @@
     <system:String x:Key="plugin_pluginsmanager_installing_plugin">Installerer programtillegg</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_from_web">Last ned og installer {0}</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_title">Programtillegg avinstallasjon</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_title">Keep plugin settings</system:String>
+    <system:String x:Key="plugin_pluginsmanager_keep_plugin_settings_subtitle">Do you want to keep the settings of the plugin for the next usage?</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_success_restart">Plugin successfully installed. Restarting Flow, please wait...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_errormetadatafile">Kunne ikke finne filen plugin.json metadata fra utpakket zip-fil.</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_error_duplicate">Feil: det finnes allerede et programtillegg som har samme eller større versjon med {0}.</system:String>
@@ -35,13 +37,13 @@
     <system:String x:Key="plugin_pluginsmanager_update_success_restart">Programtillegg {0} oppdatert. Starter Flow på nytt, vennligst vent...</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning_title">Installerer fra en ukjent kilde</system:String>
     <system:String x:Key="plugin_pluginsmanager_install_unknown_source_warning">Du installerer dette tillegget fra en ukjent kilde og det kan inneholde potensielle risikoer!{0}{0}Forsikre deg om at du forstår hvor denne utvidelsen er fra og at den er sikker.{0}{0}Vil du fortsette å gjøre?{0}{0}(Du kan slå av denne advarselen via innstillinger)</system:String>
-    
+
     <system:String x:Key="plugin_pluginsmanager_install_success_no_restart">Programtillegg {0} installert. Vennligst start Flow på nytt.</system:String>
     <system:String x:Key="plugin_pluginsmanager_uninstall_success_no_restart">Programtillegg {0} avinstallert. Vennligst start Flow på nytt.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_success_no_restart">Programtillegg {0} oppdatert. Vennligst restart Flow.</system:String>
     <system:String x:Key="plugin_pluginsmanager_update_all_success_no_restart">{0} programtillegg oppdatert. Start Flow på nytt.</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_modified_error">Programtillegg {0} er allerede endret. Start Flow på nytt før nye endringer foretas.</system:String>
-   
+
     <!--  Plugin Infos  -->
     <system:String x:Key="plugin_pluginsmanager_plugin_name">Programtilleggsbehandling</system:String>
     <system:String x:Key="plugin_pluginsmanager_plugin_description">Administrasjon av installasjon, avinstallere eller oppdatere Flow Launcher programtillegg</system:String>

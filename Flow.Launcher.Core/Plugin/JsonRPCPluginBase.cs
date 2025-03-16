@@ -17,7 +17,7 @@ namespace Flow.Launcher.Core.Plugin
     /// Represent the plugin that using JsonPRC
     /// every JsonRPC plugin should has its own plugin instance
     /// </summary>
-    internal abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
+    public abstract class JsonRPCPluginBase : IAsyncPlugin, IContextMenu, ISettingProvider, ISavable
     {
         protected PluginInitContext Context;
         public const string JsonRPC = "JsonRPC";
@@ -137,6 +137,11 @@ namespace Flow.Launcher.Core.Plugin
         public void Save()
         {
             Settings?.Save();
+        }
+
+        public bool NeedCreateSettingPanel()
+        {
+            return Settings.NeedCreateSettingPanel();
         }
 
         public Control CreateSettingPanel()
