@@ -33,14 +33,14 @@ function Build-Path {
 
 function Copy-Resources ($path) {
     # making version static as multiple versions can exist in the nuget folder and in the case a breaking change is introduced.
-    Copy-Item -Force $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
+    Copy-Item -Force $env:NUGET_PACKAGES\squirrel.windows\1.5.2\tools\Squirrel.exe $path\Output\Update.exe
 }
 
 function Delete-Unused ($path, $config) {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
-        $deleteList = Get-ChildItem $target\Plugins -Include $i -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq "$i" } 
+        $deleteList = Get-ChildItem $target\Plugins -Filter $i.Name -Recurse | Where { $_.VersionInfo.FileVersion -eq $i.VersionInfo.FileVersion -And $_.Name -eq $i.Name } 
         $deleteList | ForEach-Object{ Write-Host Deleting duplicated $_.Name with version $_.VersionInfo.FileVersion at location $_.Directory.FullName }
         $deleteList | Remove-Item
     }
@@ -72,14 +72,14 @@ function Pack-Squirrel-Installer ($path, $version, $output) {
     Write-Host "Input path:  $input"
 
     # dotnet pack is not used because ran into issues, need to test installation and starting up if to use it.
-    nuget pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
+    dotnet pack $spec -Version $version -BasePath $input -OutputDirectory $output -Properties Configuration=Release
 
     $nupkg = "$output\FlowLauncher.$version.nupkg"
     Write-Host "nupkg path: $nupkg"
     $icon = "$path\Flow.Launcher\Resources\app.ico"
     Write-Host "icon: $icon"
     # Squirrel.com: https://github.com/Squirrel/Squirrel.Windows/issues/369
-    New-Alias Squirrel $env:USERPROFILE\.nuget\packages\squirrel.windows\1.5.2\tools\Squirrel.exe -Force
+    New-Alias Squirrel $env:NUGET_PACKAGES\squirrel.windows\1.5.2\tools\Squirrel.exe -Force
     # why we need Write-Output: https://github.com/Squirrel/Squirrel.Windows/issues/489#issuecomment-156039327
     # directory of releaseDir in squirrel can't be same as directory ($nupkg) in releasify
     $temp = "$output\Temp"
