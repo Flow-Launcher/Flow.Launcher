@@ -28,7 +28,6 @@ using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Windows.Threading;
 using System.Windows.Interop;
-using System.Runtime.InteropServices;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1389,13 +1388,12 @@ namespace Flow.Launcher.ViewModel
                 {
                     IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
 
-                    // 📌 DWM Cloak 해제 (창을 정상적으로 표시)
-                    int cloak = 0;
-                    DwmSetWindowAttribute(hWnd, 13, ref cloak, sizeof(int));
+                    // 📌 창을 보이도록 설정 (Cloak 사용 안 함)
+                    //ShowWindow(hWnd, SW_SHOW);
 
                     // 📌 UI 요소 복원
                     mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    mainWindow.ClockPanel.Opacity = 1;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
                     SearchIconVisibility = Visibility.Visible;
                 }
 
@@ -1421,14 +1419,13 @@ namespace Flow.Launcher.ViewModel
 
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
-                IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
-
-                // 📌 UI 요소 숨기기
+                // 📌 아이콘과 시계 Opacity를 0으로 설정하고 Visibility.Hidden 적용
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     mainWindow.ClockPanel.Opacity = 0;
                     mainWindow.SearchIcon.Opacity = 0;
                     mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
                     SearchIconVisibility = Visibility.Hidden;
 
                     // 강제 UI 업데이트
@@ -1436,9 +1433,7 @@ namespace Flow.Launcher.ViewModel
                     mainWindow.SearchIcon.UpdateLayout();
                 }, DispatcherPriority.Render);
 
-                // 📌 DWM Cloak 적용 (창을 완전히 숨김)
-                int cloak = 1;
-                DwmSetWindowAttribute(hWnd, 13, ref cloak, sizeof(int));
+                //await Task.Delay(10); // UI 반영 대기
             }
 
             // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트
@@ -1471,15 +1466,19 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
+            //if (Application.Current.MainWindow is MainWindow mainWindow2)
+            //{
+            //    IntPtr hWnd = new WindowInteropHelper(mainWindow2).Handle;
+
+            //    // 📌 Cloak을 사용하지 않고 일반적인 `ShowWindow(SW_HIDE)` 사용 → Mica/Acrylic 유지됨
+            //    ShowWindow(hWnd, SW_HIDE);
+            //}
+
             // WPF 속성 업데이트
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
-
-        // 📌 DWM API 추가 (P/Invoke)
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
