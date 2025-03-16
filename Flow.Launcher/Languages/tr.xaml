@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">&quot;{0}&quot; kısayolunu atama başarısız oldu. Kısayolu başka bir program kullanıyorsa kapatmayı deneyin veya kısayolu değiştirin.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">{0} başlatılamıyor</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Geçersiz Flow Launcher eklenti dosyası formatı</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Taşınabilir Mod</system:String>
     <system:String x:Key="portableModeToolTIp">Tüm ayarları ve kullanıcı verilerini tek bir klasörde saklayın (Çıkarılabilir sürücüler veya bulut hizmetleri ile kullanıldığında kullanışlıdır).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Sistem ile Başlat</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Sistemle başlatma ayarı başarısız oldu</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Odak Pencereden Ayrıldığında Gizle</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Güncelleme bildirimlerini gösterme</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Sürüm</system:String>
     <system:String x:Key="plugin_query_web">İnternet Sitesi</system:String>
     <system:String x:Key="plugin_uninstall">Kaldır</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Eklenti Mağazası</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Yeni Sürüm</system:String>
     <system:String x:Key="LabelNewToolTip">Bu eklenti son 7 gün içerisinde güncellenmiş.</system:String>
     <system:String x:Key="LabelUpdateToolTip">Yeni Bir Güncelleme Mevcut</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Temalar</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Tarih</system:String>
     <system:String x:Key="TypeIsDarkToolTip">This theme supports two(light/dark) modes.</system:String>
     <system:String x:Key="TypeHasBlurToolTip">This theme supports Blur Transparent Background.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Kısayol Tuşu</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">Kullanıcı Verisi Dizini</system:String>
     <system:String x:Key="userdatapathToolTip">Kullanıcı ayarları ve yüklü eklentiler bu klasörde saklanır. Klasörün konumu taşınabilir moda bağlı olarak değişebilir.</system:String>
     <system:String x:Key="userdatapathButton">Klasörü Aç</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dosya Yöneticisi Seçenekleri</system:String>
@@ -365,6 +369,7 @@
     <system:String x:Key="commonOK">Güncelle</system:String>
     <system:String x:Key="commonYes">Yes</system:String>
     <system:String x:Key="commonNo">No</system:String>
+    <system:String x:Key="commonBackground">Arka plan</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Sürüm</system:String>
@@ -381,6 +386,9 @@
     <system:String x:Key="reportWindow_report_succeed">Hata raporu başarıyla gönderildi</system:String>
     <system:String x:Key="reportWindow_report_failed">Hata raporu gönderimi başarısız oldu</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher'da bir hata oluştu</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Lütfen bekleyin...</system:String>

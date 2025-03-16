@@ -1,4 +1,4 @@
-﻿namespace Flow.Launcher.Plugin.WebSearch
+﻿namespace Flow.Launcher.Plugin.Sys
 {
     public class SettingsViewModel
     {

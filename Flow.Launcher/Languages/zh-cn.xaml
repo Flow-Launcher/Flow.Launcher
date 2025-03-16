@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">无法注册热键“{0}”。该热键可能正在被其他程序使用。更改为不同的热键，或退出其他程序。</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">启动命令 {0} 失败</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">无效的 Flow Launcher 插件文件格式</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">便携模式</system:String>
     <system:String x:Key="portableModeToolTIp">将所有设置和用户数据存储在一个文件夹中 (可用于可移除驱动器或云服务)。</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">开机自启</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">设置开机自启时出错</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">失去焦点时自动隐藏 Flow Launcher</system:String>
     <system:String x:Key="dontPromptUpdateMsg">不显示新版本提示</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">版本</system:String>
     <system:String x:Key="plugin_query_web">官方网站</system:String>
     <system:String x:Key="plugin_uninstall">卸载</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">插件商店</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">新版本</system:String>
     <system:String x:Key="LabelNewToolTip">此插件在过去7天内有更新</system:String>
     <system:String x:Key="LabelUpdateToolTip">有可用的更新</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">主题</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">日期</system:String>
     <system:String x:Key="TypeIsDarkToolTip">该主题支持两种（浅色/深色）模式。</system:String>
     <system:String x:Key="TypeHasBlurToolTip">该主题支持模糊透明背景。</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">热键</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">用户数据位置</system:String>
     <system:String x:Key="userdatapathToolTip">用户设置和已安装的插件保存在用户数据文件夹中。此位置可能因是否处于便携模式而异。</system:String>
     <system:String x:Key="userdatapathButton">打开文件夹</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">默认文件管理器</system:String>
@@ -367,6 +371,7 @@
     <system:String x:Key="commonOK">更新</system:String>
     <system:String x:Key="commonYes">是</system:String>
     <system:String x:Key="commonNo">否</system:String>
+    <system:String x:Key="commonBackground">背景</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">版本</system:String>
@@ -383,6 +388,9 @@
     <system:String x:Key="reportWindow_report_succeed">发送成功</system:String>
     <system:String x:Key="reportWindow_report_failed">发送失败</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher 出错啦</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">请稍等...</system:String>

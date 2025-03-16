@@ -25,6 +25,7 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips_cmd">Flow Launcher Tips</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location_cmd">Flow Launcher UserData Folder</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode_cmd">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector_cmd">Set the Flow Launcher Theme</system:String>
 
     <!--  Command Descriptions  -->
     <system:String x:Key="flowlauncher_plugin_sys_shutdown_computer">Vypnout počítač</system:String>
@@ -47,8 +48,9 @@
     <system:String x:Key="flowlauncher_plugin_sys_open_docs_tips">Další nápovědu a tipy k jeho používání najdete v dokumentaci ke službě Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_open_userdata_location">Otevře místo, kde jsou uložena nastavení Flow Launcher</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_toggle_game_mode">Toggle Game Mode</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_theme_selector">Quickly change the Flow Launcher theme</system:String>
 
-        <!--  Dialogs  -->
+    <!--  Dialogs  -->
     <system:String x:Key="flowlauncher_plugin_sys_dlgtitle_success">Úspěšné</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_settings_saved">Uložení všech nastavení Flow Launcheru</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_all_applicableplugins_reloaded">Aktualizace všech dat pluginů</system:String>

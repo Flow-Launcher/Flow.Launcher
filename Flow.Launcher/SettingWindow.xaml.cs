@@ -4,8 +4,6 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Flow.Launcher.Core;
-using Flow.Launcher.Core.Configuration;
 using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
@@ -18,8 +16,6 @@ namespace Flow.Launcher;
 
 public partial class SettingWindow
 {
-    private readonly Updater _updater;
-    private readonly IPortable _portable;
     private readonly IPublicAPI _api;
     private readonly Settings _settings;
     private readonly SettingWindowViewModel _viewModel;
@@ -30,8 +26,6 @@ public partial class SettingWindow
         _settings = Ioc.Default.GetRequiredService<Settings>();
         DataContext = viewModel;
         _viewModel = viewModel;
-        _updater = Ioc.Default.GetRequiredService<Updater>();
-        _portable = Ioc.Default.GetRequiredService<Portable>();
         _api = Ioc.Default.GetRequiredService<IPublicAPI>();
         InitializePosition();
         InitializeComponent();
@@ -166,10 +160,9 @@ public partial class SettingWindow
 
     private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        var paneData = new PaneData(_settings, _updater, _portable);
         if (args.IsSettingsSelected)
         {
-            ContentFrame.Navigate(typeof(SettingsPaneGeneral), paneData);
+            ContentFrame.Navigate(typeof(SettingsPaneGeneral));
         }
         else
         {
@@ -191,7 +184,7 @@ public partial class SettingWindow
                 nameof(About) => typeof(SettingsPaneAbout),
                 _ => typeof(SettingsPaneGeneral)
             };
-            ContentFrame.Navigate(pageType, paneData);
+            ContentFrame.Navigate(pageType);
         }
     }
 
@@ -211,6 +204,4 @@ public partial class SettingWindow
     {
         NavView.SelectedItem ??= NavView.MenuItems[0]; /* Set First Page */
     }
-
-    public record PaneData(Settings Settings, Updater Updater, IPortable Portable);
 }
