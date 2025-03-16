@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure.UserSettings;
@@ -63,13 +62,6 @@ namespace Flow.Launcher
             
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
-            
-            Loaded += (_, _) =>
-            {
-                var handle = new WindowInteropHelper(this).Handle;
-                var win = HwndSource.FromHwnd(handle);
-                win.AddHook(WndProc);
-            };
         }
 
         private int _initialWidth;
@@ -143,13 +135,13 @@ namespace Flow.Launcher
 
         private void OnPaste(object sender, DataObjectPastingEventArgs e)
         {
-            var isText = e.SourceDataObject.GetDataPresent(System.Windows.DataFormats.UnicodeText, true);
+            var isText = e.SourceDataObject.GetDataPresent(DataFormats.UnicodeText, true);
             if (isText)
             {
-                var text = e.SourceDataObject.GetData(System.Windows.DataFormats.UnicodeText) as string;
+                var text = e.SourceDataObject.GetData(DataFormats.UnicodeText) as string;
                 text = text.Replace(Environment.NewLine, " ");
                 DataObject data = new DataObject();
-                data.SetData(System.Windows.DataFormats.UnicodeText, text);
+                data.SetData(DataFormats.UnicodeText, text);
                 e.DataObject = data;
             }
         }
@@ -166,6 +158,9 @@ namespace Flow.Launcher
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
+            var handle = Win32Helper.GetWindowHandle(this, true);
+            var win = HwndSource.FromHwnd(handle);
+            win.AddHook(WndProc);
             Win32Helper.HideFromAltTab(this);
             Win32Helper.DisableControlBox(this);
         }
@@ -392,10 +387,10 @@ namespace Flow.Launcher
             {
                 switch (e.Button)
                 {
-                    case MouseButtons.Left:
+                    case System.Windows.Forms.MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-                    case MouseButtons.Right:
+                    case System.Windows.Forms.MouseButtons.Right:
 
                         contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
@@ -713,7 +708,7 @@ namespace Flow.Launcher
             {
                 _isClockPanelAnimating = true;
 
-                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     ClockPanel.Visibility = Visibility.Visible;  // ✅ Visibility를 먼저 Visible로 설정
 
@@ -969,7 +964,7 @@ namespace Flow.Launcher
             }
         }
 
-        private void MainPreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void MainPreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (isArrowKeyPressed)
             {
@@ -1005,7 +1000,7 @@ namespace Flow.Launcher
         {
             if (_viewModel.QueryText != QueryTextBox.Text)
             {
-                BindingExpression be = QueryTextBox.GetBindingExpression(System.Windows.Controls.TextBox.TextProperty);
+                BindingExpression be = QueryTextBox.GetBindingExpression(TextBox.TextProperty);
                 be.UpdateSource();
             }
         }

@@ -313,10 +313,13 @@ namespace Flow.Launcher.Infrastructure
 
         #region Window Handle
 
-        internal static HWND GetWindowHandle(Window window)
+        internal static HWND GetWindowHandle(Window window, bool ensure = false)
         {
             var windowHelper = new WindowInteropHelper(window);
-            windowHelper.EnsureHandle();
+            if (ensure)
+            {
+                windowHelper.EnsureHandle();
+            }
             return new(windowHelper.Handle);
         }
 
