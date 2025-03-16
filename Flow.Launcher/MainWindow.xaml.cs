@@ -187,10 +187,8 @@ namespace Flow.Launcher
 
         private void OnLoaded(object sender, RoutedEventArgs _)
         {
-            Dispatcher.BeginInvoke((Action)(() =>
-            {
-                ThemeManager.Instance.RefreshFrame();
-            }), DispatcherPriority.Background);
+            // Refresh frame
+            ThemeManager.Instance.RefreshFrame();
 
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;

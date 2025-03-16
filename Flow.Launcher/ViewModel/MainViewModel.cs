@@ -143,7 +143,6 @@ namespace Flow.Launcher.ViewModel
             _userSelectedRecord = _userSelectedRecordStorage.Load();
             _topMostRecord = _topMostRecordStorage.Load();
 
-
             ContextMenu = new ResultsViewModel(Settings)
             {
                 LeftClickResultCommand = OpenResultCommand,
@@ -791,7 +790,6 @@ namespace Flow.Launcher.ViewModel
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
 
-
         public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
@@ -1407,7 +1405,6 @@ namespace Flow.Launcher.ViewModel
             });
         }
 
-
         public async void Hide()
         {
             lastHistoryIndex = 1;
@@ -1482,8 +1479,6 @@ namespace Flow.Launcher.ViewModel
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
-
-
 
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
