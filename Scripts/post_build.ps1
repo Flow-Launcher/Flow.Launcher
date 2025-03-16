@@ -40,7 +40,9 @@ function Delete-Unused ($path, $config) {
     $target = "$path\Output\$config"
     $included = Get-ChildItem $target -Filter "*.dll"
     foreach ($i in $included){
-        if ($i.Name in ["System.Text.Encodings.Web.dll"]) {
+        $ignored = ["System.Text.Encodings.Web.dll"]
+        
+        if ($ignored.Contains($i.Name)) {
             # ignore some specific dll that seems to make issue
             continue
         }
