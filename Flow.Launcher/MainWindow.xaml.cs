@@ -8,7 +8,6 @@ using System.Windows.Controls;
 using System.Windows.Forms;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.ViewModel;
 using Screen = System.Windows.Forms.Screen;
@@ -26,10 +25,10 @@ using System.Media;
 using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
-using Windows.Win32;
 using Window = System.Windows.Window;
 using System.Linq;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace Flow.Launcher
 {
@@ -78,14 +77,13 @@ namespace Flow.Launcher
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (msg == PInvoke.WM_ENTERSIZEMOVE)
+            if (Win32Helper.WM_ENTERSIZEMOVE(msg))
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
                 handled = true;
             }
-
-            if (msg == PInvoke.WM_EXITSIZEMOVE)
+            else if (Win32Helper.WM_EXITSIZEMOVE(msg))
             {
                 if (_initialHeight != (int)Height)
                 {
@@ -168,7 +166,8 @@ namespace Flow.Launcher
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
-            WindowsInteropHelper.HideFromAltTab(this);
+            Win32Helper.HideFromAltTab(this);
+            Win32Helper.DisableControlBox(this);
         }
 
         private void OnInitialized(object sender, EventArgs e)
@@ -184,13 +183,12 @@ namespace Flow.Launcher
             // Show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
             InitializeColorScheme();
-            WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
             // Refresh frame
-            await ThemeManager.Instance.RefreshFrameAsync();
+            await Ioc.Default.GetRequiredService<Theme>().RefreshFrameAsync();
             PreviewReset();
             // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
@@ -314,9 +312,9 @@ namespace Flow.Launcher
                             Top = 10;
                             break;
                         case SearchWindowAligns.Custom:
-                            Left = WindowsInteropHelper.TransformPixelsToDIP(this,
+                            Left = Win32Helper.TransformPixelsToDIP(this,
                                 screen.WorkingArea.X + _settings.CustomWindowLeft, 0).X;
-                            Top = WindowsInteropHelper.TransformPixelsToDIP(this, 0,
+                            Top = Win32Helper.TransformPixelsToDIP(this, 0,
                                 screen.WorkingArea.Y + _settings.CustomWindowTop).Y;
                             break;
                     }
@@ -377,7 +375,7 @@ namespace Flow.Launcher
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
             gamemode.Click += (o, e) => _viewModel.ToggleGameMode();
-            positionreset.Click += (o, e) => PositionReset();
+            positionreset.Click += (o, e) => _ = PositionResetAsync();
             settings.Click += (o, e) => App.API.OpenSettingDialog();
             exit.Click += (o, e) => Close();
 
@@ -403,7 +401,7 @@ namespace Flow.Launcher
                         // Get context menu handle and bring it to the foreground
                         if (PresentationSource.FromVisual(contextMenu) is HwndSource hwndSource)
                         {
-                            PInvoke.SetForegroundWindow(new(hwndSource.Handle));
+                            Win32Helper.SetForegroundWindow(hwndSource.Handle);
                         }
 
                         contextMenu.Focus();
@@ -422,13 +420,13 @@ namespace Flow.Launcher
             }
         }
 
-        private void OpenWelcomeWindow()
+        private static void OpenWelcomeWindow()
         {
             var WelcomeWindow = new WelcomeWindow();
             WelcomeWindow.Show();
         }
 
-        private async void PositionReset()
+        private async Task PositionResetAsync()
         {
             _viewModel.Show();
             await Task.Delay(300); // If don't give a time, Positioning will be weird.
@@ -846,7 +844,7 @@ namespace Flow.Launcher
                     screen = Screen.PrimaryScreen;
                     break;
                 case SearchWindowScreens.Focus:
-                    var foregroundWindowHandle = PInvoke.GetForegroundWindow().Value;
+                    var foregroundWindowHandle = Win32Helper.GetForegroundWindow();
                     screen = Screen.FromHandle(foregroundWindowHandle);
                     break;
                 case SearchWindowScreens.Custom:
@@ -865,38 +863,38 @@ namespace Flow.Launcher
 
         public double HorizonCenter(Screen screen)
         {
-            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = (dip2.X - ActualWidth) / 2 + dip1.X;
             return left;
         }
 
         public double VerticalCenter(Screen screen)
         {
-            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
-            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Y);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, 0, screen.WorkingArea.Height);
             var top = (dip2.Y - QueryTextBox.ActualHeight) / 4 + dip1.Y;
             return top;
         }
 
         public double HorizonRight(Screen screen)
         {
-            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
-            var dip2 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip2 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.Width, 0);
             var left = (dip1.X + dip2.X - ActualWidth) - 10;
             return left;
         }
 
         public double HorizonLeft(Screen screen)
         {
-            var dip1 = WindowsInteropHelper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
+            var dip1 = Win32Helper.TransformPixelsToDIP(this, screen.WorkingArea.X, 0);
             var left = dip1.X + 10;
             return left;
         }
 
         /// <summary>
         /// Register up and down key
-        /// todo: any way to put this in xaml ?
+        /// todo: Put this in xaml?
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {

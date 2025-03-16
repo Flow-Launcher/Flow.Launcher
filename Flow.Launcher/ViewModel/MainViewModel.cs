@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
 using Flow.Launcher.Infrastructure.Storage;
@@ -27,7 +26,6 @@ using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Windows.Threading;
-using System.Windows.Interop;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -1484,7 +1482,7 @@ namespace Flow.Launcher.ViewModel
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
+            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
         }
 
         #endregion
