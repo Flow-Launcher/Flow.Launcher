@@ -65,7 +65,8 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            
+            UpdatePosition(true);
+
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, QueryTextBox_OnPaste);
         }
@@ -97,6 +98,7 @@ namespace Flow.Launcher
             }
 
             // Hide window if need
+            UpdatePosition(true);
             if (_settings.HideOnStartup)
             {
                 _viewModel.Hide();
