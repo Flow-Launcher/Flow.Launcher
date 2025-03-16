@@ -30,7 +30,7 @@ namespace Flow.Launcher.Plugin.Sys
                 // when changed non-blur theme, change to backdrop to none
                 if (!_theme.BlurEnabled)
                 {
-                    _settings.BackdropType = BackdropTypes.None;
+                    _settings.BackdropType = 0;  // Change to 0 instead of BackdropTypes.None
                 }
 
                 // dropshadow on and control disabled.(user can't change dropshadow with blur theme)
