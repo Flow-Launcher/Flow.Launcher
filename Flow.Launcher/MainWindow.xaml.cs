@@ -62,10 +62,7 @@ namespace Flow.Launcher
             _settings = settings;
 
             InitializeComponent();
-            // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
-            InitializePosition();
-            InitializePosition();
-
+            
             InitSoundEffects();
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
             this.Loaded += (_, _) =>
@@ -185,11 +182,10 @@ namespace Flow.Launcher
         {
         }
 
-        private void OnLoaded(object sender, RoutedEventArgs _)
+        private async void OnLoaded(object sender, RoutedEventArgs _)
         {
             // Refresh frame
-            ThemeManager.Instance.RefreshFrame();
-
+            await ThemeManager.Instance.RefreshFrameAsync();
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
             CheckFirstLaunch();
@@ -833,7 +829,6 @@ namespace Flow.Launcher
 
         public void HideStartup()
         {
-            UpdatePosition();
             //_viewModel.MainWindowOpacity = 0.2; /*Fix Render Blinking */
             if (_settings.HideOnStartup)
             {

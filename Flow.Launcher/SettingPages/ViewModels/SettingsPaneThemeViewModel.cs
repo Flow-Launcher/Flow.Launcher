@@ -53,7 +53,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             OnPropertyChanged(nameof(IsDropShadowEnabled));
             OnPropertyChanged(nameof(DropShadowEffect));
 
-            ThemeManager.Instance.RefreshFrame();
+            _ = ThemeManager.Instance.RefreshFrameAsync();
         }
     }
 
@@ -144,7 +144,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
                 _ => ThemeManagerForColorSchemeSwitch.Current.ApplicationTheme
             };
             Settings.ColorScheme = value;
-            ThemeManager.Instance.RefreshFrame();
+            _ = ThemeManager.Instance.RefreshFrameAsync();
         }
     }
 
@@ -225,7 +225,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         public void ApplyBackdrop()
         {
-            ThemeManager.Instance.SetBlurForWindow();  
+            _ = ThemeManager.Instance.SetBlurForWindowAsync();  
         }
     }
 

@@ -39,7 +39,7 @@ namespace Flow.Launcher.Plugin.Sys
                     _settings.UseDropShadowEffect = true;
                 }
 
-                _theme.RefreshFrame();
+                _ = _theme.RefreshFrameAsync();
             }
         }
 
