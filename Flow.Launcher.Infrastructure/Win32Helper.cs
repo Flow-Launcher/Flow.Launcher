@@ -4,11 +4,50 @@ using System.Windows.Interop;
 using System.Windows;
 using Windows.Win32;
 using Windows.Win32.Graphics.Dwm;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.Infrastructure
 {
     public static class Win32Helper
     {
+        #region Blur Handling
+
+        public static unsafe bool DWMSetBackdropForWindow(Window window, BackdropTypes backdrop)
+        {
+            var windowHelper = new WindowInteropHelper(window);
+            windowHelper.EnsureHandle();
+
+            var backdropType = backdrop switch
+            {
+                BackdropTypes.Acrylic => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TRANSIENTWINDOW,
+                BackdropTypes.Mica => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_MAINWINDOW,
+                BackdropTypes.MicaAlt => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_TABBEDWINDOW,
+                _ => DWM_SYSTEMBACKDROP_TYPE.DWMSBT_AUTO
+            };
+
+            return PInvoke.DwmSetWindowAttribute(
+                new(windowHelper.Handle),
+                DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE,
+                &backdropType,
+                (uint)Marshal.SizeOf<int>()).Succeeded;
+        }
+
+        public static unsafe bool DWMSetDarkModeForWindow(Window window, bool useDarkMode)
+        {
+            var windowHelper = new WindowInteropHelper(window);
+            windowHelper.EnsureHandle();
+
+            var darkMode = useDarkMode ? 1 : 0;
+
+            return PInvoke.DwmSetWindowAttribute(
+                new(windowHelper.Handle),
+                DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE,
+                &darkMode,
+                (uint)Marshal.SizeOf<int>()).Succeeded;
+        }
+
+        #endregion
+
         #region Backdrop
 
         public static bool IsBackdropSupported()

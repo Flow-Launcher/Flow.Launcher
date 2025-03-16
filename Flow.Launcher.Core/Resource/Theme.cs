@@ -12,7 +12,6 @@ using System.Windows.Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using static Flow.Launcher.Core.Resource.Theme.ParameterTypes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using Microsoft.Win32;
@@ -85,37 +84,6 @@ namespace Flow.Launcher.Core.Resource
         {
             IntPtr hWnd = new WindowInteropHelper(window).Handle;
             DwmSetWindowAttribute(hWnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(int));
-        }
-        public class ParameterTypes
-        {
-
-            [Flags]
-            public enum DWMWINDOWATTRIBUTE
-            {
-                DWMWA_USE_IMMERSIVE_DARK_MODE = 20,
-                DWMWA_SYSTEMBACKDROP_TYPE = 38,
-                DWMWA_TRANSITIONS_FORCEDISABLED = 3,
-                DWMWA_BORDER_COLOR
-            }
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct MARGINS
-            {
-                public int cxLeftWidth;      // width of left border that retains its size
-                public int cxRightWidth;     // width of right border that retains its size
-                public int cyTopHeight;      // height of top border that retains its size
-                public int cyBottomHeight;   // height of bottom border that retains its size
-            };
-        }
-
-        public static class Methods
-        {
-
-            [DllImport("dwmapi.dll")]
-            static extern int DwmSetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE dwAttribute, ref int pvAttribute, int cbAttribute);
-
-            public static int SetWindowAttribute(IntPtr hwnd, ParameterTypes.DWMWINDOWATTRIBUTE attribute, int parameter)
-                => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
         }
 
         private Window GetMainWindow()
@@ -221,7 +189,7 @@ namespace Flow.Launcher.Core.Resource
                 if (windowBorderStyle == null)
                     return;
 
-                System.Windows.Window mainWindow = GetMainWindow();
+                Window mainWindow = GetMainWindow();
                 if (mainWindow == null)
                     return;
 
@@ -232,42 +200,28 @@ namespace Flow.Launcher.Core.Resource
                     _settings.BackdropType = BackdropTypes.None;
                 }
 
-                // Check the configured BackdropType
-                int backdropValue = _settings.BackdropType switch
-                {
-                    BackdropTypes.Acrylic => 3, // Acrylic
-                    BackdropTypes.Mica => 2,    // Mica
-                    BackdropTypes.MicaAlt => 4, // MicaAlt
-                    _ => 0                      // None
-                };
-
                 if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
                 {
-                    //  If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
+                    // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                     if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
                     {
                         windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                         windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                        ColorizeWindow(GetSystemBG());
                     }
                     else if (_settings.BackdropType == BackdropTypes.Acrylic)
                     {
                         windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
                         windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                        ColorizeWindow(GetSystemBG());
                     }
-                    else
-                    {
-                        Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, backdropValue);
-                        ColorizeWindow(GetSystemBG());
-                    }
+
+                    // Apply the blur effect
+                    Win32Helper.DWMSetBackdropForWindow(mainWindow, _settings.BackdropType);
+                    ColorizeWindow(GetSystemBG());
                 }
                 else
                 {
-                    //  Apply default style when Blur is disabled
-                    Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_SYSTEMBACKDROP_TYPE, 0);
+                    // Apply default style when Blur is disabled
+                    Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
                     ColorizeWindow(GetSystemBG());
                 }
 
@@ -401,9 +355,9 @@ namespace Flow.Launcher.Core.Resource
                         useDarkMode = isSystemDark;  // Auto (based on system setting)
                 }
 
-                // Apply DWM Dark Mode 
-                Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_USE_IMMERSIVE_DARK_MODE, useDarkMode ? 1 : 0);
-
+                // Apply DWM Dark Mode
+                Win32Helper.DWMSetDarkModeForWindow(mainWindow, useDarkMode);
+                
                 Color LightBG;
                 Color DarkBG;
 
