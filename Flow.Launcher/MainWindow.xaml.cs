@@ -181,19 +181,19 @@ namespace Flow.Launcher
             PreviewMouseMove += MainPreviewMouseMove;
             CheckFirstLaunch();
             HideStartup();
-            // show notify icon when flowlauncher is hidden
+            // Show notify icon when flowlauncher is hidden
             InitializeNotifyIcon();
             InitializeColorScheme();
             WindowsInteropHelper.DisableControlBox(this);
             InitProgressbarAnimation();
+            // Move the window out of screen because setting backdrop will cause flicker with a rectangle
+            Left = Top = -10000;
+            await ThemeManager.Instance.RefreshFrameAsync();
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
-            // Refresh frame after position is intialized
-            await ThemeManager.Instance.RefreshFrameAsync();
             PreviewReset();
-            // since the default main window visibility is visible
-            // so we need set focus during startup
+            // Since the default main window visibility is visible, so we need set focus during startup
             QueryTextBox.Focus();
 
             _viewModel.PropertyChanged += (o, e) =>
