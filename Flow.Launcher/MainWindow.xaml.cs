@@ -36,9 +36,7 @@ namespace Flow.Launcher
     public partial class MainWindow
     {
         #region Private Fields
-          
-        private readonly Storyboard _progressBarStoryboard = new Storyboard();
-        private bool isProgressBarStoryboardPaused;
+
         private readonly Settings _settings;
         private NotifyIcon _notifyIcon;
         private readonly ContextMenu contextMenu = new();
