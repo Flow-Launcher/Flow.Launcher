@@ -46,6 +46,33 @@ namespace Flow.Launcher.Infrastructure
                 (uint)Marshal.SizeOf<int>()).Succeeded;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="cornerType">DoNotRound, Round, RoundSmall, Default</param>
+        /// <returns></returns>
+        public static unsafe bool DWMSetCornerPreferenceForWindow(Window window, string cornerType)
+        {
+            var windowHelper = new WindowInteropHelper(window);
+            windowHelper.EnsureHandle();
+
+            var preference = cornerType switch
+            {
+                "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DONOTROUND,
+                "Round" => DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUND,
+                "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_ROUNDSMALL,
+                "Default" => DWM_WINDOW_CORNER_PREFERENCE.DWMWCP_DEFAULT,
+                _ => throw new InvalidOperationException("Invalid corner type")
+            };
+
+            return PInvoke.DwmSetWindowAttribute(
+                new(windowHelper.Handle),
+                DWMWINDOWATTRIBUTE.DWMWA_WINDOW_CORNER_PREFERENCE,
+                &preference,
+                (uint)Marshal.SizeOf<int>()).Succeeded;
+        }
+
         #endregion
 
         #region Backdrop

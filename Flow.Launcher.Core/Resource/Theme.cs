@@ -12,8 +12,6 @@ using System.Windows.Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System.Runtime.InteropServices;
-using System.Windows.Interop;
 using Microsoft.Win32;
 using Flow.Launcher.Plugin;
 using TextBox = System.Windows.Controls.TextBox;
@@ -70,43 +68,11 @@ namespace Flow.Launcher.Core.Resource
         }
 
         #region Blur Handling
-        private const int DWMWA_WINDOW_CORNER_PREFERENCE = 33;
-        public enum DWM_WINDOW_CORNER_PREFERENCE
-        {
-            Default = 0,
-            DoNotRound = 1,
-            Round = 2,
-            RoundSmall = 3
-        }
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref DWM_WINDOW_CORNER_PREFERENCE pvAttribute, int cbAttribute);
-        public static void SetWindowCornerPreference(System.Windows.Window window, DWM_WINDOW_CORNER_PREFERENCE preference)
-        {
-            IntPtr hWnd = new WindowInteropHelper(window).Handle;
-            DwmSetWindowAttribute(hWnd, DWMWA_WINDOW_CORNER_PREFERENCE, ref preference, sizeof(int));
-        }
-
-        private Window GetMainWindow()
-        {
-            return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow);
-        }
 
         public void RefreshFrame()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                Window mainWindow = Application.Current.MainWindow;
-                if (mainWindow == null)
-                    return;
-
-                IntPtr mainWindowPtr = new WindowInteropHelper(mainWindow).Handle;
-                if (mainWindowPtr == IntPtr.Zero)
-                    return;
-
-                HwndSource mainWindowSrc = HwndSource.FromHwnd(mainWindowPtr);
-                if (mainWindowSrc == null)
-                    return;
-
                 // Remove OS minimizing/maximizing animation
                 // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
 
@@ -124,7 +90,7 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Normal);
         }
 
-        public void AutoDropShadow()
+        private void AutoDropShadow()
         {
             SetWindowCornerPreference("Default");
             RemoveDropShadowEffectFromCurrentTheme();
@@ -153,24 +119,15 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        public void SetWindowCornerPreference(string cornerType)
+        private void SetWindowCornerPreference(string cornerType)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                System.Windows.Window mainWindow = GetMainWindow();
+                Window mainWindow = Application.Current.MainWindow;
                 if (mainWindow == null)
                     return;
 
-                DWM_WINDOW_CORNER_PREFERENCE preference = cornerType switch
-                {
-                    "DoNotRound" => DWM_WINDOW_CORNER_PREFERENCE.DoNotRound,
-                    "Round" => DWM_WINDOW_CORNER_PREFERENCE.Round,
-                    "RoundSmall" => DWM_WINDOW_CORNER_PREFERENCE.RoundSmall,
-                    "Default" => DWM_WINDOW_CORNER_PREFERENCE.Default,
-                    _ => DWM_WINDOW_CORNER_PREFERENCE.Default,
-                };
-
-                SetWindowCornerPreference(mainWindow, preference);
+                Win32Helper.DWMSetCornerPreferenceForWindow(mainWindow, cornerType);
             }, DispatcherPriority.Normal);
         }
 
@@ -189,7 +146,7 @@ namespace Flow.Launcher.Core.Resource
                 if (windowBorderStyle == null)
                     return;
 
-                Window mainWindow = GetMainWindow();
+                Window mainWindow = Application.Current.MainWindow;
                 if (mainWindow == null)
                     return;
 
@@ -309,7 +266,7 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Render);
         }
 
-        public void ColorizeWindow(string Mode)
+        private void ColorizeWindow(string mode)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
