@@ -9,7 +9,14 @@ namespace Flow.Launcher.Infrastructure
 {
     public static class Win32Helper
     {
-        #region Mica
+        #region Backdrop
+
+        public static bool IsBackdropSupported()
+        {
+            // Windows 11 (22000) 이상에서만 Mica 및 Acrylic 효과 지원
+            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
+                   Environment.OSVersion.Version.Build >= 22000;
+        }
 
         public static unsafe bool SetMicaForWindow(Window window, bool enableMica)
         {

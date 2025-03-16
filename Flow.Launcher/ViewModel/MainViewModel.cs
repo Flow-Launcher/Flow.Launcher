@@ -27,7 +27,6 @@ using Flow.Launcher.Infrastructure.Image;
 using System.Windows.Media;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
 
 namespace Flow.Launcher.ViewModel
@@ -1382,17 +1381,6 @@ namespace Flow.Launcher.ViewModel
                 Hide();
             }
         }
-
-        // DWM 관련 상수
-        private const int DWMWA_CLOAK = 14;
-        private const int SW_HIDE = 0;
-        private const int SW_SHOW = 5;
-
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        [DllImport("dwmapi.dll")]
-        private static extern int DwmSetWindowAttribute(IntPtr hwnd, int dwAttribute, ref int pvAttribute, int cbAttribute);
 
         public void Show()
         {

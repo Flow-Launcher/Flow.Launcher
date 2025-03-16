@@ -15,7 +15,6 @@ using Flow.Launcher.ViewModel;
 using ModernWpf;
 using ThemeManager = Flow.Launcher.Core.Resource.ThemeManager;
 using ThemeManagerForColorSchemeSwitch = ModernWpf.ThemeManager;
-using System.Runtime.InteropServices;
 
 namespace Flow.Launcher.SettingPages.ViewModels;
 
@@ -61,17 +60,11 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     {
         get
         {
-            if (!IsBackdropSupported()) return false;
+            if (!Win32Helper.IsBackdropSupported()) return false;
             return SelectedTheme?.HasBlur ?? false;
         }
     }
 
-    private bool IsBackdropSupported()
-    {
-        // Windows 11 (22000) 이상에서만 Mica 및 Acrylic 효과 지원
-        return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
-               Environment.OSVersion.Version.Build >= 22000;
-    }
     public bool IsDropShadowEnabled => !ThemeManager.Instance.BlurEnabled;
 
     public bool DropShadowEffect

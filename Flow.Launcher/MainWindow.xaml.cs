@@ -27,8 +27,6 @@ using DataObject = System.Windows.DataObject;
 using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
-using Microsoft.VisualBasic.Devices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Window = System.Windows.Window;
 
 namespace Flow.Launcher
@@ -748,13 +746,6 @@ namespace Flow.Launcher
                 }, DispatcherPriority.Render);
             }
         }
-
-
-
-
-
-
-
 
         private void InitSoundEffects()
         {
