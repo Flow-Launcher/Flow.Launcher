@@ -34,8 +34,8 @@ namespace Flow.Launcher.Core.Resource
         private string _oldTheme;
         private const string Folder = Constant.Themes;
         private const string Extension = ".xaml";
-        private string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
-        private string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
+        private static string DirectoryPath => Path.Combine(Constant.ProgramDirectory, Folder);
+        private static string UserDirectoryPath => Path.Combine(DataLocation.DataDirectory(), Folder);
 
         public string CurrentTheme => _settings.Theme;
 
@@ -119,7 +119,7 @@ namespace Flow.Launcher.Core.Resource
             }
         }
 
-        private void SetWindowCornerPreference(string cornerType)
+        private static void SetWindowCornerPreference(string cornerType)
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -173,13 +173,13 @@ namespace Flow.Launcher.Core.Resource
 
                     // Apply the blur effect
                     Win32Helper.DWMSetBackdropForWindow(mainWindow, _settings.BackdropType);
-                    ColorizeWindow(GetSystemBG());
+                    ColorizeWindow();
                 }
                 else
                 {
                     // Apply default style when Blur is disabled
                     Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
-                    ColorizeWindow(GetSystemBG());
+                    ColorizeWindow();
                 }
 
                 UpdateResourceDictionary(dict);
@@ -266,7 +266,7 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Render);
         }
 
-        private void ColorizeWindow(string mode)
+        private void ColorizeWindow()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
@@ -363,7 +363,7 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Normal);
         }
 
-        public bool IsBlurTheme()
+        private static bool IsBlurTheme()
         {
             if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
                 return false;
@@ -371,21 +371,6 @@ namespace Flow.Launcher.Core.Resource
             var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
 
             return resource is bool b && b;
-        }
-
-        public string GetSystemBG()
-        {
-            if (Environment.OSVersion.Version >= new Version(6, 2))
-            {
-                var resource = Application.Current.TryFindResource("SystemBG");
-
-                if (resource is string str)
-                    return str;
-
-                return null;
-            }
-
-            return null;
         }
 
         #endregion
@@ -544,9 +529,9 @@ namespace Flow.Launcher.Core.Resource
             return dict;
         }
 
-        private ResourceDictionary GetCurrentResourceDictionary( )
+        private ResourceDictionary GetCurrentResourceDictionary()
         {
-            return  GetResourceDictionary(_settings.Theme);
+            return GetResourceDictionary(_settings.Theme);
         }
 
         public List<ThemeData> LoadAvailableThemes()
@@ -583,7 +568,7 @@ namespace Flow.Launcher.Core.Resource
             {
                 if (line.StartsWith(ThemeMetadataNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    name = line.Remove(0, ThemeMetadataNamePrefix.Length).Trim();
+                    name = line[ThemeMetadataNamePrefix.Length..].Trim();
                 }
                 else if (line.StartsWith(ThemeMetadataIsDarkPrefix, StringComparison.OrdinalIgnoreCase))
                 {
