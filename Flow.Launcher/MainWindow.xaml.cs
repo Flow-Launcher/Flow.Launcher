@@ -28,6 +28,7 @@ using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
 using Window = System.Windows.Window;
+using System.Linq;
 
 namespace Flow.Launcher
 {
@@ -37,17 +38,17 @@ namespace Flow.Launcher
 
         private readonly Storyboard _progressBarStoryboard = new Storyboard();
         private bool isProgressBarStoryboardPaused;
-        private Settings _settings;
+        private readonly Settings _settings;
         private NotifyIcon _notifyIcon;
-        private ContextMenu contextMenu = new ContextMenu();
-        private MainViewModel _viewModel;
+        private readonly ContextMenu contextMenu = new();
+        private readonly MainViewModel _viewModel;
         private bool _animating;
         private bool isArrowKeyPressed = false;
 
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
 
-        //For Window Animations
+        // Window Animations
         private Storyboard clocksb;
         private Storyboard iconsb;
         private Storyboard windowsb;
@@ -111,7 +112,6 @@ namespace Flow.Launcher
 
             return IntPtr.Zero;
         }
-
 
         private void OnResizeEnd()
         {
@@ -383,7 +383,7 @@ namespace Flow.Launcher
         {
             _notifyIcon = new NotifyIcon
             {
-                Text = Infrastructure.Constant.FlowLauncherFullName,
+                Text = Constant.FlowLauncherFullName,
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
@@ -564,8 +564,7 @@ namespace Flow.Launcher
                 FillBehavior = FillBehavior.HoldEnd
             };
 
-            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon, SearchIcon.Style, 1.0);
-            
+            double TargetIconOpacity = GetOpacityFromStyle(SearchIcon.Style, 1.0);
 
             var IconOpacity = new DoubleAnimation
             {
@@ -577,7 +576,7 @@ namespace Flow.Launcher
             };
 
             const double DefaultRightMargin = 66; //* this value from base.xaml
-            double rightMargin = GetThicknessFromStyle(ClockPanel, ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
+            double rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
             {
@@ -626,14 +625,14 @@ namespace Flow.Launcher
             windowsb.Begin(FlowMainWindow);
         }
 
-        private double GetOpacityFromStyle(UIElement element, Style style, double defaultOpacity = 1.0)
+        private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
             if (style == null)
                 return defaultOpacity;
 
-            foreach (Setter setter in style.Setters)
+            foreach (Setter setter in style.Setters.Cast<Setter>())
             {
-                if (setter.Property == UIElement.OpacityProperty)
+                if (setter.Property == OpacityProperty)
                 {
                     return setter.Value is double opacity ? opacity : defaultOpacity;
                 }
@@ -642,14 +641,14 @@ namespace Flow.Launcher
             return defaultOpacity;
         }
 
-        private Thickness GetThicknessFromStyle(UIElement element, Style style, Thickness defaultThickness)
+        private static Thickness GetThicknessFromStyle(Style style, Thickness defaultThickness)
         {
             if (style == null)
                 return defaultThickness;
 
-            foreach (Setter setter in style.Setters)
+            foreach (Setter setter in style.Setters.Cast<Setter>())
             {
-                if (setter.Property == FrameworkElement.MarginProperty)
+                if (setter.Property == MarginProperty)
                 {
                     return setter.Value is Thickness thickness ? thickness : defaultThickness;
                 }
@@ -657,8 +656,6 @@ namespace Flow.Launcher
 
             return defaultThickness;
         }
-
-
 
         private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
 
@@ -722,7 +719,7 @@ namespace Flow.Launcher
                     _isClockPanelAnimating = false;
                 };
 
-                ClockPanel.BeginAnimation(UIElement.OpacityProperty, fadeOut);
+                ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
             // ✅ 4. ClockPanel을 표시하는 경우 (페이드인 애니메이션 적용)
             else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
@@ -742,7 +739,7 @@ namespace Flow.Launcher
                     };
 
                     fadeIn.Completed += (s, e) => _isClockPanelAnimating = false;
-                    ClockPanel.BeginAnimation(UIElement.OpacityProperty, fadeIn);
+                    ClockPanel.BeginAnimation(OpacityProperty, fadeIn);
                 }, DispatcherPriority.Render);
             }
         }
@@ -864,7 +861,7 @@ namespace Flow.Launcher
 
         public Screen SelectedScreen()
         {
-            Screen screen = null;
+            Screen screen;
             switch (_settings.SearchWindowScreen)
             {
                 case SearchWindowScreens.Cursor:
