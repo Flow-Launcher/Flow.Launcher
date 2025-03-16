@@ -56,6 +56,7 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             ThemeManager.Instance.RefreshFrame();
         }
     }
+
     public bool IsBackdropEnabled
     {
         get

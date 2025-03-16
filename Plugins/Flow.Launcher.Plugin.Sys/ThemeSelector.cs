@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin.Sys
         // Theme select codes simplified from SettingsPaneThemeViewModel.cs
 
         private Theme.ThemeData _selectedTheme;
-        private Theme.ThemeData SelectedTheme
+        public Theme.ThemeData SelectedTheme
         {
             get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.CurrentTheme);
             set
@@ -27,11 +27,19 @@ namespace Flow.Launcher.Plugin.Sys
                 _selectedTheme = value;
                 _theme.ChangeTheme(value.FileNameWithoutExtension);
 
-                if (_theme.BlurEnabled && _settings.UseDropShadowEffect)
+                // when changed non-blur theme, change to backdrop to none
+                if (!_theme.BlurEnabled)
                 {
-                    _theme.RemoveDropShadowEffectFromCurrentTheme();
-                    _settings.UseDropShadowEffect = false;
+                    _settings.BackdropType = BackdropTypes.None;
                 }
+
+                // dropshadow on and control disabled.(user can't change dropshadow with blur theme)
+                if (_theme.BlurEnabled)
+                {
+                    _settings.UseDropShadowEffect = true;
+                }
+
+                _theme.RefreshFrame();
             }
         }
 
