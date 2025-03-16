@@ -1386,10 +1386,8 @@ namespace Flow.Launcher.ViewModel
             {
                 if (Application.Current.MainWindow is MainWindow mainWindow)
                 {
-                    IntPtr hWnd = new WindowInteropHelper(mainWindow).Handle;
-
-                    // 📌 창을 보이도록 설정 (Cloak 사용 안 함)
-                    //ShowWindow(hWnd, SW_SHOW);
+                    // 📌 DWM Cloak 해제 (창을 정상적으로 표시)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
                     // 📌 UI 요소 복원
                     mainWindow.ClockPanel.Visibility = Visibility.Visible;
@@ -1433,7 +1431,8 @@ namespace Flow.Launcher.ViewModel
                     mainWindow.SearchIcon.UpdateLayout();
                 }, DispatcherPriority.Render);
 
-                //await Task.Delay(10); // UI 반영 대기
+                // 📌 DWM Cloak 적용 (창을 완전히 숨김)
+                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
             }
 
             // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트

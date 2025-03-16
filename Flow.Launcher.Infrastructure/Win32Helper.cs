@@ -16,7 +16,21 @@ namespace Flow.Launcher.Infrastructure
         {
             // Windows 11 (22000) 이상에서만 Mica 및 Acrylic 효과 지원
             return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
-                   Environment.OSVersion.Version.Build >= 22000;
+                Environment.OSVersion.Version.Build >= 22000;
+        }
+
+        public static unsafe bool DWMSetCloakForWindow(Window window, bool cloak)
+        {
+            var windowHelper = new WindowInteropHelper(window);
+            windowHelper.EnsureHandle();
+
+            var cloaked = cloak ? 1 : 0;
+
+            return PInvoke.DwmSetWindowAttribute(
+                new(windowHelper.Handle),
+                DWMWINDOWATTRIBUTE.DWMWA_CLOAK,
+                &cloaked,
+                (uint)Marshal.SizeOf<int>()).Succeeded;
         }
 
         public static unsafe bool DWMSetBackdropForWindow(Window window, BackdropTypes backdrop)
