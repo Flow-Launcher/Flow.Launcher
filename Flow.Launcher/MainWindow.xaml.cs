@@ -669,7 +669,6 @@ namespace Flow.Launcher
             if (QueryTextBox == null || ContextMenu == null || History == null || ClockPanel == null)
                 return;
 
-            // ✅ `WindowAnimator`와 동일한 애니메이션 속도 설정 참조
             var animationLength = _settings.AnimationSpeed switch
             {
                 AnimationSpeeds.Slow => 560,
@@ -678,48 +677,64 @@ namespace Flow.Launcher
                 _ => _settings.CustomAnimationLength
             };
 
-            var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3); // ✅ 같은 비율 적용
+            var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
-            // ✅ 글자 수가 1 이상이면 애니메이션 추가 실행 방지
-            if (QueryTextBox.Text.Length > 0 ||
-                ContextMenu.Visibility != Visibility.Collapsed ||
-                History.Visibility != Visibility.Collapsed)
+            // ✅ ClockPanel이 표시될 조건 (쿼리 입력 없음 & ContextMenu, History가 닫혀 있음)
+            bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
+                                   ContextMenu.Visibility == Visibility.Collapsed &&
+                                   History.Visibility == Visibility.Collapsed;
+
+            // ✅ ClockPanel이 숨겨질 조건 (쿼리에 글자가 있거나, ContextMenu 또는 History가 열려 있음)
+            bool shouldHideClock = QueryTextBox.Text.Length > 0 ||
+                                   ContextMenu.Visibility == Visibility.Visible ||
+                                   History.Visibility != Visibility.Collapsed;
+
+            // ✅ 1. ContextMenu가 열리면 즉시 Visibility.Hidden으로 설정 (애니메이션 없이 강제 숨김)
+            if (ContextMenu.Visibility == Visibility.Visible)
             {
-                if (ClockPanel.Visibility == Visibility.Hidden || _isClockPanelAnimating)
-                    return; // ✅ 이미 숨겨져 있거나 애니메이션 실행 중이면 다시 실행하지 않음
+                ClockPanel.Visibility = Visibility.Hidden;
+                ClockPanel.Opacity = 0.0;  // 혹시라도 Opacity 애니메이션이 영향을 줄 경우 0으로 설정
+                return;
+            }
 
+            // ✅ 2. ContextMenu가 닫혔을 때, 쿼리에 글자가 남아 있다면 Hidden 상태 유지 (이전 상태 기억)
+            if (ContextMenu.Visibility == Visibility.Collapsed && QueryTextBox.Text.Length > 0)
+            {
+                ClockPanel.Visibility = Visibility.Hidden;
+                ClockPanel.Opacity = 0.0;
+                return;
+            }
+
+            // ✅ 3. ClockPanel을 숨기는 경우 (페이드아웃 애니메이션 적용)
+            if (shouldHideClock && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
+            {
                 _isClockPanelAnimating = true;
 
-                // Opacity 애니메이션 적용 후 Visibility.Hidden 처리
                 var fadeOut = new DoubleAnimation
                 {
                     From = 1.0,
                     To = 0.0,
                     Duration = animationDuration,
-                    FillBehavior = FillBehavior.Stop
+                    FillBehavior = FillBehavior.HoldEnd
                 };
 
                 fadeOut.Completed += (s, e) =>
                 {
-                    ClockPanel.Visibility = Visibility.Hidden;
+                    ClockPanel.Visibility = Visibility.Hidden; // ✅ 애니메이션 후 완전히 숨김
                     _isClockPanelAnimating = false;
                 };
 
                 ClockPanel.BeginAnimation(UIElement.OpacityProperty, fadeOut);
             }
-            else
+            // ✅ 4. ClockPanel을 표시하는 경우 (페이드인 애니메이션 적용)
+            else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
             {
-                if (ClockPanel.Visibility == Visibility.Visible || _isClockPanelAnimating)
-                    return; // ✅ 이미 표시 중이거나 애니메이션 실행 중이면 다시 실행하지 않음
-
                 _isClockPanelAnimating = true;
 
-                // ✅ Dispatcher를 사용하여 UI 업데이트 후 `ClockPanel` 표시
                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ClockPanel.Visibility = Visibility.Visible;
+                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Visibility를 먼저 Visible로 설정
 
-                    // Opacity 애니메이션 적용
                     var fadeIn = new DoubleAnimation
                     {
                         From = 0.0,
@@ -733,6 +748,8 @@ namespace Flow.Launcher
                 }, DispatcherPriority.Render);
             }
         }
+
+
 
 
 
