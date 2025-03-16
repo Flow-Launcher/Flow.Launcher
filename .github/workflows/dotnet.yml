@@ -39,12 +39,7 @@ jobs:
 #            Flow.Launcher.Infrastructure/packages.lock.json
 #            Flow.Launcher.Plugin/packages.lock.json
       - name: Install vpk
-          Install vpk tool (dotnet tool install will not reinstall if already installed)
-          We will update the cli by removing cache
-        run: |
-          if (!(Get-Command vpk -ErrorAction SilentlyContinue)) {
-            dotnet tool install -g vpk
-          }
+        run: dotnet tool install -g vpk
       - name: Restore dependencies
         run: dotnet restore --locked-mode
       - name: Build
