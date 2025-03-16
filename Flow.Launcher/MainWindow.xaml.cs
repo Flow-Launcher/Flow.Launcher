@@ -179,8 +179,6 @@ namespace Flow.Launcher
 
         private async void OnLoaded(object sender, RoutedEventArgs _)
         {
-            // Refresh frame
-            await ThemeManager.Instance.RefreshFrameAsync();
             // MouseEventHandler
             PreviewMouseMove += MainPreviewMouseMove;
             CheckFirstLaunch();
@@ -193,6 +191,8 @@ namespace Flow.Launcher
             // Initialize call twice to work around multi-display alignment issue- https://github.com/Flow-Launcher/Flow.Launcher/issues/2910
             InitializePosition();
             InitializePosition();
+            // Refresh frame after position is intialized
+            await ThemeManager.Instance.RefreshFrameAsync();
             PreviewReset();
             // since the default main window visibility is visible
             // so we need set focus during startup
