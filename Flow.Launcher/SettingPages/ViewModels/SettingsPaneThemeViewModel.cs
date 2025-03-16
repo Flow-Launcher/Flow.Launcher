@@ -35,18 +35,6 @@ public partial class SettingsPaneThemeViewModel : BaseModel
             _selectedTheme = value;
             ThemeManager.Instance.ChangeTheme(value.FileNameWithoutExtension);
 
-            // when changed non-blur theme, change to backdrop to none
-            if (!ThemeManager.Instance.BlurEnabled)
-            {
-                Settings.BackdropType = BackdropTypes.None;
-            }
-
-            // dropshadow on and control disabled.(user can't change dropshadow with blur theme)
-            if (ThemeManager.Instance.BlurEnabled)
-            {
-                Settings.UseDropShadowEffect = true;
-            }
-
             // Update UI state
             OnPropertyChanged(nameof(BackdropType));
             OnPropertyChanged(nameof(IsBackdropEnabled));
@@ -235,8 +223,8 @@ public partial class SettingsPaneThemeViewModel : BaseModel
     public BackdropTypes BackdropType
     {
         get => Enum.IsDefined(typeof(BackdropTypes), Settings.BackdropType)
-               ? Settings.BackdropType
-               : BackdropTypes.None;
+            ? Settings.BackdropType
+            : BackdropTypes.None;
         set
         {
             if (!Enum.IsDefined(typeof(BackdropTypes), value))

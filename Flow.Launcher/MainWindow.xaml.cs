@@ -36,6 +36,7 @@ namespace Flow.Launcher
         #region Private Fields
 
         private readonly Settings _settings;
+        private readonly Theme _theme;
         private NotifyIcon _notifyIcon;
         private readonly ContextMenu contextMenu = new();
         private readonly MainViewModel _viewModel;
@@ -58,11 +59,12 @@ namespace Flow.Launcher
 
         #region Constructor
 
-        public MainWindow(Settings settings, MainViewModel mainVM)
+        public MainWindow()
         {
-            DataContext = mainVM;
-            _viewModel = mainVM;
-            _settings = settings;
+            _settings = Ioc.Default.GetRequiredService<Settings>();
+            _theme = Ioc.Default.GetRequiredService<Theme>();
+            _viewModel = Ioc.Default.GetRequiredService<MainViewModel>();
+            DataContext = _viewModel;
 
             InitializeComponent();
             UpdatePosition(true);
@@ -390,7 +392,8 @@ namespace Flow.Launcher
                 if (_initialHeight != (int)Height)
                 {
                     var shadowMargin = 0;
-                    if (_settings.UseDropShadowEffect)
+                    var (_, useDropShadowEffect) = _theme.GetActualValue();
+                    if (useDropShadowEffect)
                     {
                         shadowMargin = 32;
                     }

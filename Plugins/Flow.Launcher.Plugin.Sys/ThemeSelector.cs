@@ -2,7 +2,6 @@
 using System.Linq;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Resource;
-using FLSettings = Flow.Launcher.Infrastructure.UserSettings.Settings;
 
 namespace Flow.Launcher.Plugin.Sys
 {
@@ -10,7 +9,6 @@ namespace Flow.Launcher.Plugin.Sys
     {
         public const string Keyword = "fltheme";
 
-        private readonly FLSettings _settings;
         private readonly Theme _theme;
         private readonly PluginInitContext _context;
 
@@ -27,18 +25,6 @@ namespace Flow.Launcher.Plugin.Sys
                 _selectedTheme = value;
                 _theme.ChangeTheme(value.FileNameWithoutExtension);
 
-                // when changed non-blur theme, change to backdrop to none
-                if (!_theme.BlurEnabled)
-                {
-                    _settings.BackdropType = 0;  // Change to 0 instead of BackdropTypes.None
-                }
-
-                // dropshadow on and control disabled.(user can't change dropshadow with blur theme)
-                if (_theme.BlurEnabled)
-                {
-                    _settings.UseDropShadowEffect = true;
-                }
-
                 _ = _theme.RefreshFrameAsync();
             }
         }
@@ -51,7 +37,6 @@ namespace Flow.Launcher.Plugin.Sys
         {
             _context = context;
             _theme = Ioc.Default.GetRequiredService<Theme>();
-            _settings = Ioc.Default.GetRequiredService<FLSettings>();
         }
 
         public List<Result> Query(Query query)

@@ -137,8 +137,7 @@ namespace Flow.Launcher
                 await PluginManager.InitializePluginsAsync();
                 await imageLoadertask;
 
-                var mainVM = Ioc.Default.GetRequiredService<MainViewModel>();
-                var window = new MainWindow(_settings, mainVM);
+                var window = new MainWindow();
 
                 Log.Info($"|App.OnStartup|Dependencies Info:{ErrorReporting.DependenciesInfo()}");
 

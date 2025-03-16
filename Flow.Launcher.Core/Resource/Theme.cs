@@ -416,21 +416,24 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task RefreshFrameAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(async () =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
+                // Get the actual backdrop type and drop shadow effect settings
+                var (backdropType, useDropShadowEffect) = GetActualValue();
+
                 // Remove OS minimizing/maximizing animation
                 // Methods.SetWindowAttribute(new WindowInteropHelper(mainWindow).Handle, DWMWINDOWATTRIBUTE.DWMWA_TRANSITIONS_FORCEDISABLED, 3);
-                
+
                 // The timing of adding the shadow effect should vary depending on whether the theme is transparent.
                 if (BlurEnabled)
                 {
-                    AutoDropShadow();
+                    AutoDropShadow(useDropShadowEffect);
                 }
-                await SetBlurForWindowAsync();
+                SetBlurForWindow(backdropType);
 
                 if (!BlurEnabled)
                 {
-                    AutoDropShadow();
+                    AutoDropShadow(useDropShadowEffect);
                 }
             }, DispatcherPriority.Normal);
         }
@@ -440,61 +443,87 @@ namespace Flow.Launcher.Core.Resource
         /// </summary>
         public async Task SetBlurForWindowAsync()
         {
-            await Application.Current.Dispatcher.InvokeAsync(async () =>
+            await Application.Current.Dispatcher.InvokeAsync(() =>
             {
-                var dict = GetThemeResourceDictionary(_settings.Theme);
-                if (dict == null)
-                    return;
+                // Get the actual backdrop type and drop shadow effect settings
+                var (backdropType, _) = GetActualValue();
 
-                var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
-                if (windowBorderStyle == null)
-                    return;
-
-                Window mainWindow = Application.Current.MainWindow;
-                if (mainWindow == null)
-                    return;
-
-                //  Check if the theme supports blur
-                bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
-                if (!hasBlur)
-                {
-                    _settings.BackdropType = BackdropTypes.None;
-                }
-
-                if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
-                {
-                    // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
-                    if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
-                    {
-                        windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                        windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
-                    }
-                    else if (_settings.BackdropType == BackdropTypes.Acrylic)
-                    {
-                        windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
-                        windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
-                    }
-
-                    // Apply the blur effect
-                    Win32Helper.DWMSetBackdropForWindow(mainWindow, _settings.BackdropType);
-                    ColorizeWindow();
-                }
-                else
-                {
-                    // Apply default style when Blur is disabled
-                    Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
-                    ColorizeWindow();
-                }
-
-                UpdateResourceDictionary(dict);
+                SetBlurForWindow(backdropType);
             }, DispatcherPriority.Normal);
         }
 
-        private void AutoDropShadow()
+        /// <summary>
+        /// Gets the actual backdrop type and drop shadow effect settings based on the current theme status.
+        /// </summary>
+        public (BackdropTypes BackdropType, bool UseDropShadowEffect) GetActualValue()
+        {
+            var backdropType = _settings.BackdropType;
+            var useDropShadowEffect = _settings.UseDropShadowEffect;
+
+            // When changed non-blur theme, change to backdrop to none
+            if (!BlurEnabled)
+            {
+                backdropType = BackdropTypes.None;
+            }
+
+            // Dropshadow on and control disabled.(user can't change dropshadow with blur theme)
+            if (BlurEnabled)
+            {
+                useDropShadowEffect = true;
+            }
+
+            return (backdropType, useDropShadowEffect);
+        }
+
+        private void SetBlurForWindow(BackdropTypes backdropType)
+        {
+            var dict = GetThemeResourceDictionary(_settings.Theme);
+            if (dict == null)
+                return;
+
+            var windowBorderStyle = dict.Contains("WindowBorderStyle") ? dict["WindowBorderStyle"] as Style : null;
+            if (windowBorderStyle == null)
+                return;
+
+            Window mainWindow = Application.Current.MainWindow;
+            if (mainWindow == null)
+                return;
+
+            // Check if the theme supports blur
+            bool hasBlur = dict.Contains("ThemeBlurEnabled") && dict["ThemeBlurEnabled"] is bool b && b;
+            if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
+            {
+                // If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
+                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
+                {
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Color.FromArgb(1, 0, 0, 0))));
+                }
+                else if (backdropType == BackdropTypes.Acrylic)
+                {
+                    windowBorderStyle.Setters.Remove(windowBorderStyle.Setters.OfType<Setter>().FirstOrDefault(x => x.Property.Name == "Background"));
+                    windowBorderStyle.Setters.Add(new Setter(Border.BackgroundProperty, new SolidColorBrush(Colors.Transparent)));
+                }
+
+                // Apply the blur effect
+                Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
+                ColorizeWindow(backdropType);
+            }
+            else
+            {
+                // Apply default style when Blur is disabled
+                Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
+                ColorizeWindow(backdropType);
+            }
+
+            UpdateResourceDictionary(dict);
+        }
+
+        private void AutoDropShadow(bool useDropShadowEffect)
         {
             SetWindowCornerPreference("Default");
             RemoveDropShadowEffectFromCurrentTheme();
-            if (_settings.UseDropShadowEffect)
+            if (useDropShadowEffect)
             {
                 if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
@@ -605,7 +634,7 @@ namespace Flow.Launcher.Core.Resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
         }
 
-        private void ColorizeWindow()
+        private void ColorizeWindow(BackdropTypes backdropType)
         {
             var dict = GetThemeResourceDictionary(_settings.Theme);
             if (dict == null) return;
@@ -688,7 +717,7 @@ namespace Flow.Launcher.Core.Resource
             else
             {
                 // Only set the background to transparent if the theme supports blur
-                if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
+                if (backdropType == BackdropTypes.Mica || backdropType == BackdropTypes.MicaAlt)
                 {
                     mainWindow.Background = new SolidColorBrush(Color.FromArgb(1, 0, 0, 0));
                 }

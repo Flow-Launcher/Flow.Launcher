@@ -76,7 +76,6 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
-
         public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
