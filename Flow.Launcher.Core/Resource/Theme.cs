@@ -12,18 +12,13 @@ using System.Windows.Shell;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using System.Windows.Shell;
 using static Flow.Launcher.Core.Resource.Theme.ParameterTypes;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using System.Diagnostics;
 using Microsoft.Win32;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Plugin;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using TextBox = System.Windows.Controls.TextBox;
 using System.Windows.Threading;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Flow.Launcher.Core.Resource
 {
@@ -48,8 +43,6 @@ namespace Flow.Launcher.Core.Resource
         public string CurrentTheme => _settings.Theme;
 
         public bool BlurEnabled { get; set; }
-
-        private double mainWindowWidth;
 
         public Theme(IPublicAPI publicAPI, Settings settings)
         {
@@ -125,23 +118,16 @@ namespace Flow.Launcher.Core.Resource
                 => DwmSetWindowAttribute(hwnd, attribute, ref parameter, Marshal.SizeOf<int>());
         }
 
-        private bool IsBackdropSupported()
-        {
-            // Windows 11 (22000) over mica and arcrylic.
-            return RuntimeInformation.IsOSPlatform(OSPlatform.Windows) &&
-                   Environment.OSVersion.Version.Build >= 22000;
-        }
-        private System.Windows.Window GetMainWindow()
+        private Window GetMainWindow()
         {
             return Application.Current.Dispatcher.Invoke(() => Application.Current.MainWindow);
         }
-
 
         public void RefreshFrame()
         {
             Application.Current.Dispatcher.Invoke(() =>
             {
-                System.Windows.Window mainWindow = Application.Current.MainWindow;
+                Window mainWindow = Application.Current.MainWindow;
                 if (mainWindow == null)
                     return;
 
@@ -170,15 +156,13 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Normal);
         }
 
-
-
         public void AutoDropShadow()
         {
             SetWindowCornerPreference("Default");
             RemoveDropShadowEffectFromCurrentTheme();
             if (_settings.UseDropShadowEffect)
             {
-                if (BlurEnabled && IsBackdropSupported())
+                if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Round");
                 }
@@ -190,7 +174,7 @@ namespace Flow.Launcher.Core.Resource
             }
             else
             {
-                if (BlurEnabled && IsBackdropSupported())
+                if (BlurEnabled && Win32Helper.IsBackdropSupported())
                 {
                     SetWindowCornerPreference("Default");
                 }
@@ -257,7 +241,7 @@ namespace Flow.Launcher.Core.Resource
                     _ => 0                      // None
                 };
 
-                if (BlurEnabled && hasBlur && IsBackdropSupported())
+                if (BlurEnabled && hasBlur && Win32Helper.IsBackdropSupported())
                 {
                     //  If the BackdropType is Mica or MicaAlt, set the windowborderstyle's background to transparent
                     if (_settings.BackdropType == BackdropTypes.Mica || _settings.BackdropType == BackdropTypes.MicaAlt)
@@ -290,9 +274,6 @@ namespace Flow.Launcher.Core.Resource
                 UpdateResourceDictionary(dict);
             }, DispatcherPriority.Normal);
         }
-
-
-
 
         // Get Background Color from WindowBorderStyle when there not color for BG.
         // for theme has not "LightBG" or "DarkBG" case.
@@ -348,8 +329,7 @@ namespace Flow.Launcher.Core.Resource
                 var previewStyle = new Style(typeof(Border));
                 if (Application.Current.Resources.Contains("WindowBorderStyle"))
                 {
-                    var originalStyle = Application.Current.Resources["WindowBorderStyle"] as Style;
-                    if (originalStyle != null)
+                    if (Application.Current.Resources["WindowBorderStyle"] is Style originalStyle)
                     {
                         foreach (var setter in originalStyle.Setters.OfType<Setter>())
                         {
@@ -374,7 +354,6 @@ namespace Flow.Launcher.Core.Resource
                 Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
             }, DispatcherPriority.Render);
         }
-
 
         public void ColorizeWindow(string Mode)
         {
@@ -452,7 +431,7 @@ namespace Flow.Launcher.Core.Resource
                 Color selectedBG = useDarkMode ? DarkBG : LightBG;
                 ApplyPreviewBackground(selectedBG);
 
-                bool isBlurAvailable = hasBlur && IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
+                bool isBlurAvailable = hasBlur && Win32Helper.IsBackdropSupported(); // Windows 11 미만이면 hasBlur를 강제 false
 
                 if (!isBlurAvailable)
                 {
@@ -473,25 +452,24 @@ namespace Flow.Launcher.Core.Resource
             }, DispatcherPriority.Normal);
         }
 
-
-
         public bool IsBlurTheme()
         {
-            if (!IsBackdropSupported()) // Windows 11 미만이면 무조건 false
+            if (!Win32Helper.IsBackdropSupported()) // Windows 11 미만이면 무조건 false
                 return false;
 
             var resource = Application.Current.TryFindResource("ThemeBlurEnabled");
 
             return resource is bool b && b;
         }
+
         public string GetSystemBG()
         {
             if (Environment.OSVersion.Version >= new Version(6, 2))
             {
                 var resource = Application.Current.TryFindResource("SystemBG");
 
-                if (resource is string)
-                    return (string)resource;
+                if (resource is string str)
+                    return str;
 
                 return null;
             }
@@ -532,7 +510,6 @@ namespace Flow.Launcher.Core.Resource
 
                 _settings.Theme = theme;
 
-
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
                 if (_oldTheme != theme || theme == defaultTheme)
                 {
@@ -542,9 +519,6 @@ namespace Flow.Launcher.Core.Resource
                 BlurEnabled = IsBlurTheme();
                 //if (_settings.UseDropShadowEffect)
                 // AddDropShadowEffectToCurrentTheme();
-
-
-
                 //Win32Helper.SetBlurForWindow(Application.Current.MainWindow, BlurEnabled);
                 SetBlurForWindow();
             }
@@ -590,8 +564,6 @@ namespace Flow.Launcher.Core.Resource
 
             return dict;
         }
-
-        private ResourceDictionary CurrentThemeResourceDictionary() => GetThemeResourceDictionary(_settings.Theme);
 
         public ResourceDictionary GetResourceDictionary(string theme)
         {
@@ -657,8 +629,7 @@ namespace Flow.Launcher.Core.Resource
             /* Ignore Theme Window Width and use setting */
             var windowStyle = dict["WindowStyle"] as Style;
             var width = _settings.WindowSize;
-            windowStyle.Setters.Add(new Setter(System.Windows.Window.WidthProperty, width));
-            mainWindowWidth = (double)width;
+            windowStyle.Setters.Add(new Setter(Window.WidthProperty, width));
             return dict;
         }
 
@@ -705,11 +676,11 @@ namespace Flow.Launcher.Core.Resource
                 }
                 else if (line.StartsWith(ThemeMetadataIsDarkPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    isDark = bool.Parse(line.Remove(0, ThemeMetadataIsDarkPrefix.Length).Trim());
+                    isDark = bool.Parse(line[ThemeMetadataIsDarkPrefix.Length..].Trim());
                 }
                 else if (line.StartsWith(ThemeMetadataHasBlurPrefix, StringComparison.OrdinalIgnoreCase))
                 {
-                    hasBlur = bool.Parse(line.Remove(0, ThemeMetadataHasBlurPrefix.Length).Trim());
+                    hasBlur = bool.Parse(line[ThemeMetadataHasBlurPrefix.Length..].Trim());
                 }
             }
 
@@ -732,69 +703,63 @@ namespace Flow.Launcher.Core.Resource
 
         public void AddDropShadowEffectToCurrentTheme()
         {
-
             var dict = GetCurrentResourceDictionary();
 
-                var windowBorderStyle = dict["WindowBorderStyle"] as Style;
+            var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-                var effectSetter = new Setter
+            var effectSetter = new Setter
+            {
+                Property = Border.EffectProperty,
+                Value = new DropShadowEffect
                 {
-                    Property = Border.EffectProperty,
-                    Value = new DropShadowEffect
-                    {
-                        Opacity = 0.3,
-                        ShadowDepth = 12,
-                        Direction = 270,
-                        BlurRadius = 30
-                    }
+                    Opacity = 0.3,
+                    ShadowDepth = 12,
+                    Direction = 270,
+                    BlurRadius = 30
+                }
+            };
+
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is not Setter marginSetter)
+            {
+                var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
+                marginSetter = new Setter()
+                {
+                    Property = Border.MarginProperty,
+                    Value = margin,
                 };
+                windowBorderStyle.Setters.Add(marginSetter);
 
-                var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-                if (marginSetter == null)
-                {
-                    var margin = new Thickness(ShadowExtraMargin, 12, ShadowExtraMargin, ShadowExtraMargin);
-                    marginSetter = new Setter()
-                    {
-                        Property = Border.MarginProperty,
-                        Value = margin,
-                    };
-                    windowBorderStyle.Setters.Add(marginSetter);
+                SetResizeBoarderThickness(margin);
+            }
+            else
+            {
+                var baseMargin = (Thickness)marginSetter.Value;
+                var newMargin = new Thickness(
+                    baseMargin.Left + ShadowExtraMargin,
+                    baseMargin.Top + ShadowExtraMargin,
+                    baseMargin.Right + ShadowExtraMargin,
+                    baseMargin.Bottom + ShadowExtraMargin);
+                marginSetter.Value = newMargin;
 
-                    SetResizeBoarderThickness(margin);
-                }
-                else
-                {
-                    var baseMargin = (Thickness)marginSetter.Value;
-                    var newMargin = new Thickness(
-                        baseMargin.Left + ShadowExtraMargin,
-                        baseMargin.Top + ShadowExtraMargin,
-                        baseMargin.Right + ShadowExtraMargin,
-                        baseMargin.Bottom + ShadowExtraMargin);
-                    marginSetter.Value = newMargin;
+                SetResizeBoarderThickness(newMargin);
+            }
 
-                    SetResizeBoarderThickness(newMargin);
-                }
-
-                windowBorderStyle.Setters.Add(effectSetter);
+            windowBorderStyle.Setters.Add(effectSetter);
 
                 UpdateResourceDictionary(dict);
-
         }
 
         public void RemoveDropShadowEffectFromCurrentTheme()
         {
-        
             var dict = GetCurrentResourceDictionary();
             var windowBorderStyle = dict["WindowBorderStyle"] as Style;
 
-            var effectSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) as Setter;
-            var marginSetter = windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) as Setter;
-
-            if (effectSetter != null)
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.EffectProperty) is Setter effectSetter)
             {
                 windowBorderStyle.Setters.Remove(effectSetter);
             }
-            if (marginSetter != null)
+
+            if (windowBorderStyle.Setters.FirstOrDefault(setterBase => setterBase is Setter setter && setter.Property == Border.MarginProperty) is Setter marginSetter)
             {
                 var currentMargin = (Thickness)marginSetter.Value;
                 var newMargin = new Thickness(
