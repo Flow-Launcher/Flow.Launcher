@@ -68,7 +68,6 @@ namespace Flow.Launcher
                 var handle = new WindowInteropHelper(this).Handle;
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
-                SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
             };
         }
 
@@ -196,6 +195,8 @@ namespace Flow.Launcher
             InitializePosition();
             InitializePosition();
             PreviewReset();
+            // Setup search text box reactiveness
+            SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
             // since the default main window visibility is visible
             // so we need set focus during startup
             QueryTextBox.Focus();
