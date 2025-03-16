@@ -13,6 +13,7 @@
 
     <!--  MainWindow  -->
     <system:String x:Key="registerHotkeyFailed">Hotkey &quot;{0}&quot; konnte nicht registriert werden. Der Hotkey ist möglicherweise von einem anderen Programm in Verwendung. Wechseln Sie zu einem anderen Hotkey oder beenden Sie das andere Programm.</system:String>
+    <system:String x:Key="unregisterHotkeyFailed">Failed to unregister hotkey &quot;{0}&quot;. Please try again or see log for details</system:String>
     <system:String x:Key="MessageBoxTitle">Flow Launcher</system:String>
     <system:String x:Key="couldnotStartCmd">Konnte nicht gestartet werden {0}</system:String>
     <system:String x:Key="invalidFlowLauncherPluginFileFormat">Flow Launcher Plug-in-Dateiformat ungültig</system:String>
@@ -44,6 +45,8 @@
     <system:String x:Key="portableMode">Portabler Modus</system:String>
     <system:String x:Key="portableModeToolTIp">Speichern Sie alle Einstellungen und Benutzerdaten in einem Ordner (nützlich bei Verwendung von Wechsellaufwerken oder Cloud-Diensten).</system:String>
     <system:String x:Key="startFlowLauncherOnSystemStartup">Flow Launcher bei Systemstart starten</system:String>
+    <system:String x:Key="useLogonTaskForStartup">Use logon task instead of startup entry for faster startup experience</system:String>
+    <system:String x:Key="useLogonTaskForStartupTooltip">After uninstallation, you need to manually remove this task (Flow.Launcher Startup) via Task Scheduler</system:String>
     <system:String x:Key="setAutoStartFailed">Fehler bei Einstellungsstart bei Start</system:String>
     <system:String x:Key="hideFlowLauncherWhenLoseFocus">Flow Launcher ausblenden, wenn Fokus verloren geht</system:String>
     <system:String x:Key="dontPromptUpdateMsg">Versionsbenachrichtigungen nicht zeigen</system:String>
@@ -126,7 +129,8 @@
     <system:String x:Key="plugin_query_version">Version</system:String>
     <system:String x:Key="plugin_query_web">Website</system:String>
     <system:String x:Key="plugin_uninstall">Deinstallieren</system:String>
-
+    <system:String x:Key="failedToRemovePluginSettingsTitle">Fail to remove plugin settings</system:String>
+    <system:String x:Key="failedToRemovePluginSettingsMessage">Plugins: {0} - Fail to remove plugin settings files, please remove them manually</system:String>
 
     <!--  Setting Plugin Store  -->
     <system:String x:Key="pluginStore">Plug-in-Store</system:String>
@@ -142,8 +146,6 @@
     <system:String x:Key="LabelNew">Neue Version</system:String>
     <system:String x:Key="LabelNewToolTip">Dieses Plug-in ist innerhalb der letzten 7 Tage aktualisiert worden</system:String>
     <system:String x:Key="LabelUpdateToolTip">Neues Update ist verfügbar</system:String>
-
-
 
     <!--  Setting Theme  -->
     <system:String x:Key="theme">Theme</system:String>
@@ -193,7 +195,6 @@
     <system:String x:Key="Date">Datum</system:String>
     <system:String x:Key="TypeIsDarkToolTip">Dieses Theme unterstützt zwei Modi (hell/dunkel).</system:String>
     <system:String x:Key="TypeHasBlurToolTip">Dieses Theme unterstützt Unschärfe und transparenten Hintergrund.</system:String>
-
 
     <!--  Setting Hotkey  -->
     <system:String x:Key="hotkey">Hotkey</system:String>
@@ -297,6 +298,9 @@
     <system:String x:Key="userdatapath">Speicherort für Benutzerdaten</system:String>
     <system:String x:Key="userdatapathToolTip">Benutzereinstellungen und installierte Plug-ins werden im Ordner für Benutzerdaten gespeichert. Dieser Speicherort kann variieren, je nachdem, ob sich das Programm im portablen Modus befindet oder nicht.</system:String>
     <system:String x:Key="userdatapathButton">Ordner öffnen</system:String>
+    <system:String x:Key="logLevel">Log Level</system:String>
+    <system:String x:Key="LogLevelDEBUG">Debug</system:String>
+    <system:String x:Key="LogLevelINFO">Info</system:String>
 
     <!--  FileManager Setting Dialog  -->
     <system:String x:Key="fileManagerWindow">Dateimanager auswählen</system:String>
@@ -367,6 +371,7 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="commonOK">OK</system:String>
     <system:String x:Key="commonYes">Ja</system:String>
     <system:String x:Key="commonNo">Nein</system:String>
+    <system:String x:Key="commonBackground">Hintergrund</system:String>
 
     <!--  Crash Reporter  -->
     <system:String x:Key="reportWindow_version">Version</system:String>
@@ -383,6 +388,9 @@ Wenn Sie bei der Eingabe eines Shortcuts ein '@'-Präfix hinzufügen, stimmt die
     <system:String x:Key="reportWindow_report_succeed">Bericht erfolgreich gesendet</system:String>
     <system:String x:Key="reportWindow_report_failed">Bericht konnte nicht gesendet werden</system:String>
     <system:String x:Key="reportWindow_flowlauncher_got_an_error">Flow Launcher hat einen Fehler</system:String>
+    <system:String x:Key="reportWindow_please_open_issue">Please open new issue in</system:String>
+    <system:String x:Key="reportWindow_upload_log">1. Upload log file: {0}</system:String>
+    <system:String x:Key="reportWindow_copy_below">2. Copy below exception message</system:String>
 
     <!--  General Notice  -->
     <system:String x:Key="pleaseWait">Bitte warten Sie ...</system:String>

@@ -1,7 +1,8 @@
-﻿using System;
 using System.Windows.Navigation;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.SettingPages.ViewModels;
 using Page = ModernWpf.Controls.Page;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.SettingPages.Views;
 
@@ -13,8 +14,7 @@ public partial class SettingsPaneTheme : Page
     {
         if (!IsInitialized)
         {
-            if (e.ExtraData is not SettingWindow.PaneData { Settings: { } settings })
-                throw new ArgumentException($"Settings are required for {nameof(SettingsPaneTheme)}.");
+            var settings = Ioc.Default.GetRequiredService<Settings>();
             _viewModel = new SettingsPaneThemeViewModel(settings);
             DataContext = _viewModel;
             InitializeComponent();
