@@ -20,7 +20,6 @@
     Closing="OnClosing"
     Deactivated="OnDeactivated"
     Icon="Images/app.png"
-    SourceInitialized="OnSourceInitialized"
     Initialized="OnInitialized"
     Left="{Binding Settings.WindowLeft, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     Loaded="OnLoaded"
@@ -31,6 +30,7 @@
     ResizeMode="CanResize"
     ShowInTaskbar="False"
     SizeToContent="Height"
+    SourceInitialized="OnSourceInitialized"
     Topmost="True"
     Visibility="{Binding MainWindowVisibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
     WindowStartupLocation="Manual"
@@ -377,7 +377,7 @@
                         Style="{DynamicResource SeparatorStyle}" />
                 </ContentControl>
             </Grid>
-          
+
             <Border Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
