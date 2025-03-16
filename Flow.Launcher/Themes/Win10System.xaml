@@ -179,13 +179,13 @@
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="PreviewBorderStyle"

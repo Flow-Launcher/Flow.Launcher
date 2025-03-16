@@ -21,6 +21,14 @@
         TargetType="{x:Type TextBlock}">
         <Setter Property="Foreground" Value="#FF000000" />
     </Style>
+    <Style x:Key="ItemGlyphSelectedStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Foreground" Value="#FF000000" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="Width" Value="25" />
+        <Setter Property="Height" Value="25" />
+        <Setter Property="FontSize" Value="25" />
+    </Style>
     <Style x:Key="WindowRadius" TargetType="{x:Type Border}">
         <Setter Property="CornerRadius" Value="0" />
     </Style>
@@ -79,7 +87,7 @@
         x:Key="ItemSubTitleStyle"
         BasedOn="{StaticResource BaseItemSubTitleStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#818181" />
+        <Setter Property="Foreground" Value="#85000000" />
     </Style>
     <Style
         x:Key="ItemTitleSelectedStyle"
@@ -91,12 +99,12 @@
         x:Key="ItemSubTitleSelectedStyle"
         BasedOn="{StaticResource BaseItemSubTitleSelectedStyle}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#72767d" />
+        <Setter Property="Foreground" Value="#85000000" />
     </Style>
     <SolidColorBrush
         x:Key="ItemSelectedBackgroundColor"
-        Opacity="0.5"
-        Color="#ccd0d4" />
+        Opacity="0.6"
+        Color="#33000000" />
 
     <Style
         x:Key="SeparatorStyle"
@@ -135,8 +143,8 @@
         BasedOn="{StaticResource BaseSearchIconStyle}"
         TargetType="{x:Type Path}">
         <Setter Property="Fill" Value="#000000" />
-        <Setter Property="Width" Value="32" />
-        <Setter Property="Height" Value="32" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
         <Setter Property="Opacity" Value="0.2" />
     </Style>
     <Style x:Key="ItemHotkeyStyle" TargetType="{x:Type TextBlock}">
