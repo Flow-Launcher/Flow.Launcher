@@ -275,7 +275,16 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public bool LeaveCmdOpen { get; set; }
         public bool HideWhenDeactivated { get; set; } = true;
 
-        public bool SearchQueryResultsWithDelay { get; set; } = false;
+        bool _searchQueryResultsWithDelay { get; set; }
+        public bool SearchQueryResultsWithDelay
+        {
+            get => _searchQueryResultsWithDelay;
+            set
+            {
+                _searchQueryResultsWithDelay = value;
+                OnPropertyChanged();
+            }
+        }
         public int SearchInputDelay { get; set; } = 120;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

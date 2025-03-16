@@ -297,6 +297,9 @@ namespace Flow.Launcher
                     case nameof(Settings.WindowTop):
                         Top = _settings.WindowTop;
                         break;
+                    case nameof(Settings.SearchQueryResultsWithDelay):
+                        SetupSearchTextBoxReactiveness(_settings.SearchQueryResultsWithDelay);
+                        break;
                 }
             };
         }
@@ -865,7 +868,7 @@ namespace Flow.Launcher
 
         private IDisposable _reactiveSubscription;
 
-        public void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
+        private void SetupSearchTextBoxReactiveness(bool showResultsWithDelay)
         {
             if (_reactiveSubscription != null)
             {

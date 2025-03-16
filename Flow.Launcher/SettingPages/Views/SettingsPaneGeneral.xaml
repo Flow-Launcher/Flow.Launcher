@@ -178,7 +178,7 @@
                     Icon="&#xE961;"
                     Sub="{DynamicResource searchDelayToolTip}">
                     <ui:ToggleSwitch
-                        IsOn="{Binding SearchQueryResultsWithDelay}"
+                        IsOn="{Binding Settings.SearchQueryResultsWithDelay}"
                         OffContent="{DynamicResource disable}"
                         OnContent="{DynamicResource enable}" />
                 </cc:Card>
