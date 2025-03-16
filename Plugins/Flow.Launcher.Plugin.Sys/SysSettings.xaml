@@ -9,13 +9,13 @@
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
-    
+
     <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <ListView
             x:Name="lbxCommands"
             Grid.Row="0"
@@ -58,11 +58,12 @@
 
         <StackPanel
             Grid.Row="1"
+            Margin="{StaticResource SettingPanelItemTopBottomMargin}"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
             <Button
                 Width="100"
-                Margin="10"
+                Margin="{StaticResource SettingPanelItemLeftMargin}"
                 Click="OnEditCommandKeywordClick"
                 Content="{DynamicResource flowlauncher_plugin_sys_edit}" />
         </StackPanel>

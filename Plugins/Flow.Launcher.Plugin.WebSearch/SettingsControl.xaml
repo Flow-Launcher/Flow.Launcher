@@ -9,6 +9,7 @@
     d:DesignHeight="300"
     d:DesignWidth="500"
     mc:Ignorable="d">
+
     <UserControl.Resources>
         <Style x:Key="BrowserPathBoxStyle" TargetType="TextBox">
             <Setter Property="Height" Value="28" />
@@ -35,13 +36,15 @@
             </DockPanel>
         </DataTemplate>
     </UserControl.Resources>
+
     <Grid Margin="{StaticResource SettingPanelMargin}">
         <Grid.RowDefinitions>
             <RowDefinition />
-            <RowDefinition Height="56" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
         <ListView
             x:Name="SearchSourcesListView"
             Grid.Row="0"
@@ -96,6 +99,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
+
         <StackPanel
             Grid.Row="1"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
@@ -117,7 +121,9 @@
                 Click="OnAddSearchSearchClick"
                 Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
+
         <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeperatorStyle}" />
+
         <DockPanel
             Grid.Row="3"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
