@@ -28,7 +28,6 @@ SystemParametersInfo
 SetForegroundWindow
 
 GetWindowLong
-SetWindowLong
 GetForegroundWindow
 GetDesktopWindow
 GetShellWindow

@@ -132,12 +132,12 @@ namespace Flow.Launcher.Infrastructure
         {
             var hwnd = GetWindowHandle(window);
 
-            var exStyle = GetCurrentWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+            var exStyle = GetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
 
             // Add TOOLWINDOW style, remove APPWINDOW style
             var newExStyle = ((uint)exStyle | (uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) & ~(uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
 
-            SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+            SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
         }
 
         /// <summary>
@@ -148,12 +148,12 @@ namespace Flow.Launcher.Infrastructure
         {
             var hwnd = GetWindowHandle(window);
 
-            var exStyle = GetCurrentWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
+            var exStyle = GetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE);
 
             // Remove the TOOLWINDOW style and add the APPWINDOW style.
             var newExStyle = ((uint)exStyle & ~(uint)WINDOW_EX_STYLE.WS_EX_TOOLWINDOW) | (uint)WINDOW_EX_STYLE.WS_EX_APPWINDOW;
 
-            SetWindowLong(GetWindowHandle(window), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
+            SetWindowStyle(GetWindowHandle(window), WINDOW_LONG_PTR_INDEX.GWL_EXSTYLE, (int)newExStyle);
         }
 
         /// <summary>
@@ -164,14 +164,14 @@ namespace Flow.Launcher.Infrastructure
         {
             var hwnd = GetWindowHandle(window);
 
-            var style = GetCurrentWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
+            var style = GetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE);
 
             style &= ~(int)WINDOW_STYLE.WS_SYSMENU;
 
-            SetWindowLong(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
+            SetWindowStyle(hwnd, WINDOW_LONG_PTR_INDEX.GWL_STYLE, style);
         }
 
-        private static int GetCurrentWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
+        private static int GetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex)
         {
             var style = PInvoke.GetWindowLong(hWnd, nIndex);
             if (style == 0 && Marshal.GetLastPInvokeError() != 0)
@@ -181,11 +181,11 @@ namespace Flow.Launcher.Infrastructure
             return style;
         }
 
-        private static int SetWindowLong(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
+        private static nint SetWindowStyle(HWND hWnd, WINDOW_LONG_PTR_INDEX nIndex, int dwNewLong)
         {
             PInvoke.SetLastError(WIN32_ERROR.NO_ERROR); // Clear any existing error
 
-            var result = PInvoke.SetWindowLong(hWnd, nIndex, dwNewLong);
+            var result = PInvoke.SetWindowLongPtr(hWnd, nIndex, dwNewLong);
             if (result == 0 && Marshal.GetLastPInvokeError() != 0)
             {
                 throw new Win32Exception(Marshal.GetLastPInvokeError());
@@ -299,14 +299,14 @@ namespace Flow.Launcher.Infrastructure
 
         #region WndProc
 
-        public static bool WM_ENTERSIZEMOVE(int msg)
+        public static bool WM_ENTERSIZEMOVE(uint msg)
         {
-            return msg == (int)PInvoke.WM_ENTERSIZEMOVE;
+            return msg == PInvoke.WM_ENTERSIZEMOVE;
         }
 
-        public static bool WM_EXITSIZEMOVE(int msg)
+        public static bool WM_EXITSIZEMOVE(uint msg)
         {
-            return msg == (int)PInvoke.WM_EXITSIZEMOVE;
+            return msg == PInvoke.WM_EXITSIZEMOVE;
         }
 
         #endregion
