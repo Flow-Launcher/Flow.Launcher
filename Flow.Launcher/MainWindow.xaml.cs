@@ -31,24 +31,31 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
+        // Dependency Injection
         private readonly Settings _settings;
         private readonly Theme _theme;
+
+        // Window Notify Icon
         private NotifyIcon _notifyIcon;
+
+        // Window Context Menu
         private readonly ContextMenu contextMenu = new();
         private readonly MainViewModel _viewModel;
-        private bool _animating;
+
+        // Window Event : Key Event
         private bool isArrowKeyPressed = false;
 
+        // Window Sound Effects
         private MediaPlayer animationSoundWMP;
         private SoundPlayer animationSoundWPF;
 
+        // Window WndProc
         private int _initialWidth;
         private int _initialHeight;
 
-        // Window Animations
-        private Storyboard clocksb;
-        private Storyboard iconsb;
-        private Storyboard windowsb;
+        // Window Animation
+        private const double DefaultRightMargin = 66; //* this value from base.xaml
+        private bool _animating;
         private bool _isClockPanelAnimating = false; // 애니메이션 실행 중인지 여부
 
         #endregion
@@ -742,9 +749,9 @@ namespace Flow.Launcher
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
             
-            windowsb = new Storyboard();
-            clocksb = new Storyboard();
-            iconsb = new Storyboard();
+            var windowsb = new Storyboard();
+            var clocksb = new Storyboard();
+            var iconsb = new Storyboard();
             CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
 
             var animationLength = _settings.AnimationSpeed switch
@@ -799,8 +806,7 @@ namespace Flow.Launcher
                 Duration = TimeSpan.FromMilliseconds(animationLength),
                 FillBehavior = FillBehavior.HoldEnd
             };
-
-            const double DefaultRightMargin = 66; //* this value from base.xaml
+            
             double rightMargin = GetThicknessFromStyle(ClockPanel.Style, new Thickness(0, 0, DefaultRightMargin, 0)).Right;
 
             var thicknessAnimation = new ThicknessAnimation
@@ -819,10 +825,10 @@ namespace Flow.Launcher
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
 
             Storyboard.SetTarget(WindowOpacity, this);
-            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(Window.OpacityProperty));
+            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(OpacityProperty));
 
             Storyboard.SetTarget(WindowMotion, this);
-            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(Window.TopProperty));
+            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(TopProperty));
 
             Storyboard.SetTarget(IconMotion, SearchIcon);
             Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
