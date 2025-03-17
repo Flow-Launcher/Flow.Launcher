@@ -1410,26 +1410,6 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            if (Application.Current.MainWindow is MainWindow mainWindow)
-            {
-                // 📌 아이콘과 시계 Opacity를 0으로 설정하고 Visibility.Hidden 적용
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    mainWindow.ClockPanel.Opacity = 0;
-                    mainWindow.SearchIcon.Opacity = 0;
-                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
-                    SearchIconVisibility = Visibility.Hidden;
-
-                    // 강제 UI 업데이트
-                    mainWindow.ClockPanel.UpdateLayout();
-                    mainWindow.SearchIcon.UpdateLayout();
-                }, DispatcherPriority.Render);
-
-                // 📌 DWM Cloak 적용 (창을 완전히 숨김)
-                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
-            }
-
             // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트
             if (Settings.LastQueryMode == LastQueryMode.Empty)
             {
@@ -1468,7 +1448,29 @@ namespace Flow.Launcher.ViewModel
             //    ShowWindow(hWnd, SW_HIDE);
             //}
 
+            if (Application.Current.MainWindow is MainWindow mainWindow)
+            {
+                // 📌 아이콘과 시계 Opacity를 0으로 설정하고 Visibility.Hidden 적용
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    mainWindow.ClockPanel.Opacity = 0;
+                    mainWindow.SearchIcon.Opacity = 0;
+                    mainWindow.ClockPanel.Visibility = Visibility.Hidden;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
+                    SearchIconVisibility = Visibility.Hidden;
+
+                    // 강제 UI 업데이트
+                    mainWindow.ClockPanel.UpdateLayout();
+                    mainWindow.SearchIcon.UpdateLayout();
+                }, DispatcherPriority.Render);
+
+                // 📌 DWM Cloak 적용 (창을 완전히 숨김)
+                Win32Helper.DWMSetCloakForWindow(mainWindow, true);
+            }
+            
+            await Task.Delay(50); 
             // WPF 속성 업데이트
+            //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });

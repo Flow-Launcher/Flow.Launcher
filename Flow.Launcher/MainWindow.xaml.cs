@@ -244,6 +244,8 @@ namespace Flow.Launcher
         {
             _settings.WindowLeft = Left;
             _settings.WindowTop = Top;
+            ClockPanel.Opacity = 0;
+            SearchIcon.Opacity = 0;
             //This condition stops extra hide call when animator is on,
             // which causes the toggling to occasional hide instead of show.
             if (_viewModel.MainWindowVisibilityStatus)
@@ -252,6 +254,7 @@ namespace Flow.Launcher
                 // This also stops the mainwindow from flickering occasionally after Settings window is opened
                 // and always after Settings window is closed.
                 if (_settings.UseAnimation)
+ 
                     await Task.Delay(100);
 
                 if (_settings.HideWhenDeactivated && !_viewModel.ExternalPreviewVisible)
