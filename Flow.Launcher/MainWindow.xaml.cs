@@ -506,6 +506,9 @@ namespace Flow.Launcher
             _animating = true;
             UpdatePosition();
 
+            ClockPanel.Opacity = 0;
+            SearchIcon.Opacity = 0;
+            
             windowsb = new Storyboard();
             clocksb = new Storyboard();
             iconsb = new Storyboard();
@@ -524,7 +527,7 @@ namespace Flow.Launcher
                 From = 1,
                 To = 1,
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
 
             var WindowMotion = new DoubleAnimation
@@ -532,7 +535,7 @@ namespace Flow.Launcher
                 From = Top,
                 To = Top,
                 Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
 
             var IconMotion = new DoubleAnimation
@@ -541,7 +544,7 @@ namespace Flow.Launcher
                 To = 0,
                 EasingFunction = easing,
                 Duration = TimeSpan.FromMilliseconds(animationLength),
-                FillBehavior = FillBehavior.Stop
+                FillBehavior = FillBehavior.HoldEnd
             };
 
             var ClockOpacity = new DoubleAnimation
