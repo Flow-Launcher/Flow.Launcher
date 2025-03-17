@@ -1,33 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Input;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
-using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Helper;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
-using System.Text;
-using System.Threading.Channels;
-using ISavable = Flow.Launcher.Plugin.ISavable;
-using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
-using System.Windows.Input;
-using System.ComponentModel;
-using Flow.Launcher.Infrastructure.Image;
-using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using System.Windows.Threading;
-using System.Windows.Interop;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -49,8 +45,6 @@ namespace Flow.Launcher.ViewModel
 
         private CancellationTokenSource _updateSource;
         private CancellationToken _updateToken;
-
-        private readonly Internationalization _translator = InternationalizationManager.Instance;
 
         private ChannelWriter<ResultsForUpdate> _resultsUpdateChannelWriter;
         private Task _resultsViewUpdateTask;
@@ -183,9 +177,9 @@ namespace Flow.Launcher.ViewModel
             var resultUpdateChannel = Channel.CreateUnbounded<ResultsForUpdate>();
             _resultsUpdateChannelWriter = resultUpdateChannel.Writer;
             _resultsViewUpdateTask =
-                Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 
-            async Task updateAction()
+            async Task UpdateActionAsync()
             {
                 var queue = new Dictionary<string, ResultsForUpdate>();
                 var channelReader = resultUpdateChannel.Reader;
@@ -214,7 +208,7 @@ namespace Flow.Launcher.ViewModel
 #else
                 Log.Error($"Error happen in task dealing with viewupdate for results. {t.Exception}");
                 _resultsViewUpdateTask =
-                    Task.Run(updateAction).ContinueWith(continueAction, TaskContinuationOptions.OnlyOnFaulted);
+                    Task.Run(UpdateActionAsync).ContinueWith(continueAction, CancellationToken.None, TaskContinuationOptions.OnlyOnFaulted, TaskScheduler.Default);
 #endif
             }
         }
@@ -252,8 +246,8 @@ namespace Flow.Launcher.ViewModel
             Hide();
 
             await PluginManager.ReloadDataAsync().ConfigureAwait(false);
-            Notification.Show(InternationalizationManager.Instance.GetTranslation("success"),
-                InternationalizationManager.Instance.GetTranslation("completedSuccessfully"));
+            Notification.Show(App.API.GetTranslation("success"),
+                App.API.GetTranslation("completedSuccessfully"));
         }
 
         [RelayCommand]
@@ -275,14 +269,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery: true);
+                _ = QueryResultsAsync(isReQuery: true);
             }
         }
 
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            QueryResults(isReQuery: true, reSelect: reselect);
+            _ = QueryResultsAsync(isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -390,11 +384,11 @@ namespace Flow.Launcher.ViewModel
             }
 
             var hideWindow = await result.ExecuteAsync(new ActionContext
-                {
-                    // not null means pressing modifier key + number, should ignore the modifier key
-                    SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
-                })
-                .ConfigureAwait(false);
+            {
+                // not null means pressing modifier key + number, should ignore the modifier key
+                SpecialKeyState = index is not null ? SpecialKeyState.Default : GlobalHotkey.CheckModifiers()
+            })
+            .ConfigureAwait(false);
 
             if (SelectedIsFromQueryResults())
             {
@@ -458,7 +452,6 @@ namespace Flow.Launcher.ViewModel
             SelectedResults.SelectLastResult();
         }
 
-
         [RelayCommand]
         private void SelectPrevPage()
         {
@@ -485,7 +478,6 @@ namespace Flow.Launcher.ViewModel
             {
                 SelectedResults.SelectPrevResult();
             }
-
         }
 
         [RelayCommand]
@@ -562,7 +554,6 @@ namespace Flow.Launcher.ViewModel
         public bool GameModeStatus { get; set; } = false;
 
         private string _queryText;
-
         public string QueryText
         {
             get => _queryText;
@@ -811,8 +802,8 @@ namespace Flow.Launcher.ViewModel
                 throw new NotImplementedException("ResultAreaColumn should match ResultAreaColumnPreviewShown/ResultAreaColumnPreviewHidden value");
 #else
                 Log.Error("MainViewModel", "ResultAreaColumnPreviewHidden/ResultAreaColumnPreviewShown int value not implemented", "InternalPreviewVisible");
-#endif
                 return false;
+#endif
             }
         }
 
@@ -900,7 +891,7 @@ namespace Flow.Launcher.ViewModel
             ExternalPreviewVisible = false;
         }
 
-        private void SwitchExternalPreview(string path, bool sendFailToast = true)
+        private static void SwitchExternalPreview(string path, bool sendFailToast = true)
         {
             _ = PluginManager.SwitchExternalPreviewAsync(path,sendFailToast).ConfigureAwait(false);
         }
@@ -982,7 +973,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery);
+                _ = QueryResultsAsync(isReQuery);
             }
             else if (ContextMenuSelected())
             {
@@ -1045,8 +1036,8 @@ namespace Flow.Launcher.ViewModel
             var results = new List<Result>();
             foreach (var h in _history.Items)
             {
-                var title = _translator.GetTranslation("executeQuery");
-                var time = _translator.GetTranslation("lastExecuteTime");
+                var title = App.API.GetTranslation("executeQuery");
+                var time = App.API.GetTranslation("lastExecuteTime");
                 var result = new Result
                 {
                     Title = string.Format(title, h.Query),
@@ -1080,7 +1071,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool isReQuery = false, bool reSelect = true)
+        private async Task QueryResultsAsync(bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
@@ -1158,7 +1149,7 @@ namespace Flow.Launcher.ViewModel
 
             var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
             {
-                false => QueryTask(plugin, reSelect),
+                false => QueryTaskAsync(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
 
@@ -1186,7 +1177,7 @@ namespace Flow.Launcher.ViewModel
             }
 
             // Local function
-            async Task QueryTask(PluginPair plugin, bool reSelect = true)
+            async Task QueryTaskAsync(PluginPair plugin, bool reSelect = true)
             {
                 // Since it is wrapped within a ThreadPool Thread, the synchronous context is null
                 // Task.Yield will force it to run in ThreadPool
@@ -1285,13 +1276,13 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("cancelTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("cancelTopMostInThisQuery"),
                     IcoPath = "Images\\down.png",
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.Remove(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1301,14 +1292,14 @@ namespace Flow.Launcher.ViewModel
             {
                 menu = new Result
                 {
-                    Title = InternationalizationManager.Instance.GetTranslation("setAsTopMostInThisQuery"),
+                    Title = App.API.GetTranslation("setAsTopMostInThisQuery"),
                     IcoPath = "Images\\up.png",
                     Glyph = new GlyphInfo(FontFamily: "/Resources/#Segoe Fluent Icons", Glyph: "\xeac2"),
                     PluginDirectory = Constant.ProgramDirectory,
                     Action = _ =>
                     {
                         _topMostRecord.AddOrUpdate(result);
-                        App.API.ShowMsg(InternationalizationManager.Instance.GetTranslation("success"));
+                        App.API.ShowMsg(App.API.GetTranslation("success"));
                         App.API.ReQuery();
                         return false;
                     }
@@ -1318,10 +1309,10 @@ namespace Flow.Launcher.ViewModel
             return menu;
         }
 
-        private Result ContextMenuPluginInfo(string id)
+        private static Result ContextMenuPluginInfo(string id)
         {
             var metadata = PluginManager.GetPluginForId(id).Metadata;
-            var translator = InternationalizationManager.Instance;
+            var translator = App.API;
 
             var author = translator.GetTranslation("author");
             var website = translator.GetTranslation("website");
@@ -1403,12 +1394,16 @@ namespace Flow.Launcher.ViewModel
             });
         }
 
+#pragma warning disable VSTHRD100 // Avoid async void methods
+
         public async void Hide()
         {
             lastHistoryIndex = 1;
 
             if (ExternalPreviewVisible)
+            {
                 CloseExternalPreview();
+            }
 
             if (!SelectedIsFromQueryResults())
             {
@@ -1479,12 +1474,14 @@ namespace Flow.Launcher.ViewModel
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
 
+#pragma warning restore VSTHRD100 // Avoid async void methods
+
         /// <summary>
         /// Checks if Flow Launcher should ignore any hotkeys
         /// </summary>
         public bool ShouldIgnoreHotkeys()
         {
-            return Settings.IgnoreHotkeysOnFullscreen && WindowsInteropHelper.IsWindowFullscreen() || GameModeStatus;
+            return Settings.IgnoreHotkeysOnFullscreen && Win32Helper.IsForegroundWindowFullscreen() || GameModeStatus;
         }
 
         #endregion
