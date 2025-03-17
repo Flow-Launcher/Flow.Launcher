@@ -1091,8 +1091,7 @@ namespace Flow.Launcher.ViewModel
 
             var currentUpdateSource = new CancellationTokenSource();
             _updateSource = currentUpdateSource;
-            var currentCancellationToken = _updateSource.Token;
-            _updateToken = currentCancellationToken;
+            _updateToken = _updateSource.Token;
 
             ProgressBarVisibility = Visibility.Hidden;
             _isQueryRunning = true;
@@ -1100,7 +1099,7 @@ namespace Flow.Launcher.ViewModel
             // Switch to ThreadPool thread
             await TaskScheduler.Default;
 
-            if (currentCancellationToken.IsCancellationRequested)
+            if (_updateSource.Token.IsCancellationRequested)
                 return;
 
             // Update the query's IsReQuery property to true if this is a re-query
@@ -1126,24 +1125,23 @@ namespace Flow.Launcher.ViewModel
                 SearchIconVisibility = Visibility.Visible;
             }
 
-
             if (query.ActionKeyword == Plugin.Query.GlobalPluginWildcardSign)
             {
                 // Wait 45 millisecond for query change in global query
                 // if query changes, return so that it won't be calculated
-                await Task.Delay(45, currentCancellationToken);
-                if (currentCancellationToken.IsCancellationRequested)
+                await Task.Delay(45, _updateSource.Token);
+                if (_updateSource.Token.IsCancellationRequested)
                     return;
             }
 
-            _ = Task.Delay(200, currentCancellationToken).ContinueWith(_ =>
+            _ = Task.Delay(200, _updateSource.Token).ContinueWith(_ =>
             {
                 // start the progress bar if query takes more than 200 ms and this is the current running query and it didn't finish yet
-                if (!currentCancellationToken.IsCancellationRequested && _isQueryRunning)
+                if (!_updateSource.Token.IsCancellationRequested && _isQueryRunning)
                 {
                     ProgressBarVisibility = Visibility.Visible;
                 }
-            }, currentCancellationToken, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
+            }, _updateSource.Token, TaskContinuationOptions.NotOnCanceled, TaskScheduler.Default);
 
             // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
 
@@ -1152,7 +1150,6 @@ namespace Flow.Launcher.ViewModel
                 false => QueryTaskAsync(plugin, reSelect),
                 true => Task.CompletedTask
             }).ToArray();
-
 
             try
             {
@@ -1164,13 +1161,13 @@ namespace Flow.Launcher.ViewModel
                 // nothing to do here
             }
 
-            if (currentCancellationToken.IsCancellationRequested)
+            if (_updateSource.Token.IsCancellationRequested)
                 return;
 
             // this should happen once after all queries are done so progress bar should continue
             // until the end of all querying
             _isQueryRunning = false;
-            if (!currentCancellationToken.IsCancellationRequested)
+            if (!_updateSource.Token.IsCancellationRequested)
             {
                 // update to hidden if this is still the current query
                 ProgressBarVisibility = Visibility.Hidden;
@@ -1184,9 +1181,9 @@ namespace Flow.Launcher.ViewModel
                 await Task.Yield();
 
                 IReadOnlyList<Result> results =
-                    await PluginManager.QueryForPluginAsync(plugin, query, currentCancellationToken);
+                    await PluginManager.QueryForPluginAsync(plugin, query, _updateSource.Token);
 
-                currentCancellationToken.ThrowIfCancellationRequested();
+                _updateSource.Token.ThrowIfCancellationRequested();
 
                 IReadOnlyList<Result> resultsCopy;
                 if (results == null)
@@ -1200,7 +1197,7 @@ namespace Flow.Launcher.ViewModel
                 }
 
                 if (!_resultsUpdateChannelWriter.TryWrite(new ResultsForUpdate(resultsCopy, plugin.Metadata, query,
-                        currentCancellationToken, reSelect)))
+                    _updateSource.Token, reSelect)))
                 {
                     Log.Error("MainViewModel", "Unable to add item to Result Update Queue");
                 }
