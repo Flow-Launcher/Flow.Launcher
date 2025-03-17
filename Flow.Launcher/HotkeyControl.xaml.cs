@@ -84,7 +84,7 @@ namespace Flow.Launcher
             nameof(Type),
             typeof(HotkeyType),
             typeof(HotkeyControl),
-            new FrameworkPropertyMetadata(HotkeyType.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
+            new FrameworkPropertyMetadata(HotkeyType.CustomQueryHotkey, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
         );
 
         public HotkeyType Type
@@ -95,8 +95,8 @@ namespace Flow.Launcher
 
         public enum HotkeyType
         {
-            // Custom hotkeys
-            None,  // Used for getting hotkey from dialog result
+            // Custom query hotkeys
+            CustomQueryHotkey,
             // Settings hotkeys
             Hotkey,
             PreviewHotkey,
@@ -125,8 +125,8 @@ namespace Flow.Launcher
             {
                 return Type switch
                 {
-                    // Custom hotkeys
-                    HotkeyType.None => hotkey,
+                    // Custom query hotkeys
+                    HotkeyType.CustomQueryHotkey => hotkey,
                     // Settings hotkeys
                     HotkeyType.Hotkey => _settings.Hotkey,
                     HotkeyType.PreviewHotkey => _settings.PreviewHotkey,
@@ -149,8 +149,10 @@ namespace Flow.Launcher
             {
                 switch (Type)
                 {
-                    // Custom hotkeys
-                    case HotkeyType.None:
+                    // Custom query hotkeys
+                    case HotkeyType.CustomQueryHotkey:
+                        // We just need to store it in a local field
+                        // because we will save to settings in other place
                         hotkey = value;
                         break;
                     // Settings hotkeys
