@@ -3,20 +3,20 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Shell;
+using System.Windows.Threading;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.UserSettings;
-using Microsoft.Win32;
 using Flow.Launcher.Plugin;
-using System.Windows.Threading;
+using Microsoft.Win32;
 using TextBox = System.Windows.Controls.TextBox;
-using System.Threading.Tasks;
 
 namespace Flow.Launcher.Core.Resource
 {
