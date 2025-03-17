@@ -219,28 +219,12 @@ namespace Flow.Launcher
                                         _viewModel.LastQuerySelected = true;
                                     }
 
-                                    if (_viewModel.ProgressBarVisibility == Visibility.Visible &&
-                                        isProgressBarStoryboardPaused)
-                                    {
-                                        _progressBarStoryboard.Begin(ProgressBar, true);
-                                        isProgressBarStoryboardPaused = false;
-                                    }
-
                                     if (_settings.UseAnimation)
                                         WindowAnimator();
                                 }
-                                else if (!isProgressBarStoryboardPaused)
-                                {
-                                    _progressBarStoryboard.Stop(ProgressBar);
-                                    isProgressBarStoryboardPaused = true;
-                                }
-
-                                if (_settings.UseAnimation)
-                                    WindowAnimator();
-                            }
-                        });
-                        break;
-                    }
+                            });
+                            break;
+                        }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
                         if (_viewModel.QueryTextCursorMovedToEnd)
                         {
