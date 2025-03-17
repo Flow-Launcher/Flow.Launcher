@@ -1,31 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Windows.Input;
 using System.Linq;
+using System.Text;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.Image;
+using Flow.Launcher.Infrastructure.Logger;
 using Flow.Launcher.Infrastructure.Storage;
 using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.Storage;
-using Flow.Launcher.Infrastructure.Logger;
 using Microsoft.VisualStudio.Threading;
-using System.Text;
-using System.Threading.Channels;
-using ISavable = Flow.Launcher.Plugin.ISavable;
-using CommunityToolkit.Mvvm.Input;
-using System.Globalization;
-using System.Windows.Input;
-using System.ComponentModel;
-using Flow.Launcher.Infrastructure.Image;
-using System.Windows.Media;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using System.Windows.Threading;
 
 namespace Flow.Launcher.ViewModel
 {
