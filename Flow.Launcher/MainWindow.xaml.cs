@@ -27,6 +27,7 @@ using System.Windows.Media;
 using System.Windows.Interop;
 using Windows.Win32;
 using System.Reactive.Linq;
+using System.Windows.Shapes;
 
 namespace Flow.Launcher
 {
@@ -34,8 +35,6 @@ namespace Flow.Launcher
     {
         #region Private Fields
 
-        private readonly Storyboard _progressBarStoryboard = new Storyboard();
-        private bool isProgressBarStoryboardPaused;
         private Settings _settings;
         private NotifyIcon _notifyIcon;
         private ContextMenu contextMenu = new ContextMenu();
@@ -63,19 +62,12 @@ namespace Flow.Launcher
 
             DataObject.AddPastingHandler(QueryTextBox, OnPaste);
 
-            this.Loaded += (_, _) =>
+            Loaded += (_, _) =>
             {
                 var handle = new WindowInteropHelper(this).Handle;
                 var win = HwndSource.FromHwnd(handle);
                 win.AddHook(WndProc);
             };
-        }
-
-        DispatcherTimer timer = new DispatcherTimer { Interval = new TimeSpan(0, 0, 0, 0, 500), IsEnabled = false };
-
-        public MainWindow()
-        {
-            InitializeComponent();
         }
 
         private int _initialWidth;
@@ -242,27 +234,13 @@ namespace Flow.Launcher
                                     _progressBarStoryboard.Stop(ProgressBar);
                                     isProgressBarStoryboardPaused = true;
                                 }
-                            });
-                            break;
-                        }
-                    case nameof(MainViewModel.ProgressBarVisibility):
-                        {
-                            Dispatcher.Invoke(() =>
-                            {
-                                if (_viewModel.ProgressBarVisibility == Visibility.Hidden && !isProgressBarStoryboardPaused)
-                                {
-                                    _progressBarStoryboard.Stop(ProgressBar);
-                                    isProgressBarStoryboardPaused = true;
-                                }
-                                else if (_viewModel.MainWindowVisibilityStatus &&
-                                         isProgressBarStoryboardPaused)
-                                {
-                                    _progressBarStoryboard.Begin(ProgressBar, true);
-                                    isProgressBarStoryboardPaused = false;
-                                }
-                            });
-                            break;
-                        }
+
+                                if (_settings.UseAnimation)
+                                    WindowAnimator();
+                            }
+                        });
+                        break;
+                    }
                     case nameof(MainViewModel.QueryTextCursorMovedToEnd):
                         if (_viewModel.QueryTextCursorMovedToEnd)
                         {
@@ -370,7 +348,6 @@ namespace Flow.Launcher
                 Icon = Constant.Version == "1.0.0" ? Properties.Resources.dev : Properties.Resources.app,
                 Visible = !_settings.HideNotifyIcon
             };
-
             var openIcon = new FontIcon { Glyph = "\ue71e" };
             var open = new MenuItem
             {
@@ -381,7 +358,8 @@ namespace Flow.Launcher
             var gamemodeIcon = new FontIcon { Glyph = "\ue7fc" };
             var gamemode = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("GameMode"), Icon = gamemodeIcon
+                Header = InternationalizationManager.Instance.GetTranslation("GameMode"),
+                Icon = gamemodeIcon
             };
             var positionresetIcon = new FontIcon { Glyph = "\ue73f" };
             var positionreset = new MenuItem
@@ -398,7 +376,8 @@ namespace Flow.Launcher
             var exitIcon = new FontIcon { Glyph = "\ue7e8" };
             var exit = new MenuItem
             {
-                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"), Icon = exitIcon
+                Header = InternationalizationManager.Instance.GetTranslation("iconTrayExit"),
+                Icon = exitIcon
             };
 
             open.Click += (o, e) => _viewModel.ToggleFlowLauncher();
@@ -465,17 +444,49 @@ namespace Flow.Launcher
 
         private void InitProgressbarAnimation()
         {
+            var progressBarStoryBoard = new Storyboard();
+
             var da = new DoubleAnimation(ProgressBar.X2, ActualWidth + 100,
                 new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             var da1 = new DoubleAnimation(ProgressBar.X1, ActualWidth + 0,
                 new Duration(new TimeSpan(0, 0, 0, 0, 1600)));
             Storyboard.SetTargetProperty(da, new PropertyPath("(Line.X2)"));
             Storyboard.SetTargetProperty(da1, new PropertyPath("(Line.X1)"));
-            _progressBarStoryboard.Children.Add(da);
-            _progressBarStoryboard.Children.Add(da1);
-            _progressBarStoryboard.RepeatBehavior = RepeatBehavior.Forever;
+            progressBarStoryBoard.Children.Add(da);
+            progressBarStoryBoard.Children.Add(da1);
+            progressBarStoryBoard.RepeatBehavior = RepeatBehavior.Forever;
+
+            da.Freeze();
+            da1.Freeze();
+
+            const string progressBarAnimationName = "ProgressBarAnimation";
+            var beginStoryboard = new BeginStoryboard
+            {
+                Name = progressBarAnimationName, Storyboard = progressBarStoryBoard
+            };
+            
+            var stopStoryboard = new StopStoryboard()
+            {
+                BeginStoryboardName = progressBarAnimationName
+            };
+
+            var trigger = new Trigger
+            {
+                Property = VisibilityProperty, Value = Visibility.Visible
+            };
+            trigger.EnterActions.Add(beginStoryboard);
+            trigger.ExitActions.Add(stopStoryboard);
+
+            var progressStyle = new Style(typeof(Line))
+            {
+                BasedOn = FindResource("PendingLineStyle") as Style
+            };
+            progressStyle.RegisterName(progressBarAnimationName, beginStoryboard);
+            progressStyle.Triggers.Add(trigger);
+
+            ProgressBar.Style = progressStyle;
+          
             _viewModel.ProgressBarVisibility = Visibility.Hidden;
-            isProgressBarStoryboardPaused = true;
         }
 
         public void WindowAnimator()
