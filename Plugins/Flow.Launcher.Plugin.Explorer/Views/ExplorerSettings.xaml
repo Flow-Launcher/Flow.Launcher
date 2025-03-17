@@ -358,10 +358,9 @@
             Grid.Row="15"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            MinWidth="{StaticResource SettingPanelAreaTextBoxMinWidth}"
             MinHeight="{StaticResource SettingPanelAreaTextBoxMinHeight}"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Stretch"
             AcceptsReturn="True"
             Text="{Binding WindowsContextMenuIncludedItems}"
             TextWrapping="Wrap" />
@@ -378,10 +377,9 @@
             Grid.Row="17"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            MinWidth="{StaticResource SettingPanelAreaTextBoxMinWidth}"
             MinHeight="{StaticResource SettingPanelAreaTextBoxMinHeight}"
             Margin="{StaticResource SettingPanelItemTopBottomMargin}"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Stretch"
             AcceptsReturn="True"
             Text="{Binding WindowsContextMenuExcludedItems}"
             TextWrapping="Wrap" />

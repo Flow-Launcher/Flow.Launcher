@@ -31,7 +31,6 @@ namespace Flow.Launcher.Core.Plugin
         private static readonly Thickness SettingPanelItemLeftTopBottomMargin = (Thickness)Application.Current.FindResource("SettingPanelItemLeftTopBottomMargin");
         private static readonly double SettingPanelTextBoxMinWidth = (double)Application.Current.FindResource("SettingPanelTextBoxMinWidth");
         private static readonly double SettingPanelPathTextBoxWidth = (double)Application.Current.FindResource("SettingPanelPathTextBoxWidth");
-        private static readonly double SettingPanelAreaTextBoxMinWidth = (double)Application.Current.FindResource("SettingPanelAreaTextBoxMinWidth");
         private static readonly double SettingPanelAreaTextBoxMinHeight = (double)Application.Current.FindResource("SettingPanelAreaTextBoxMinHeight");
 
         public async Task InitializeAsync()
@@ -327,8 +326,7 @@ namespace Flow.Launcher.Core.Plugin
                             var textBox = new TextBox()
                             {
                                 MinHeight = SettingPanelAreaTextBoxMinHeight,
-                                MinWidth = SettingPanelAreaTextBoxMinWidth,
-                                HorizontalAlignment = HorizontalAlignment.Left,
+                                HorizontalAlignment = HorizontalAlignment.Stretch,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemLeftTopBottomMargin,
                                 TextWrapping = TextWrapping.WrapWithOverflow,
