@@ -1,33 +1,29 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
+using System.Media;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Shapes;
+using System.Windows.Threading;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Flow.Launcher.Core.Plugin;
 using Flow.Launcher.Core.Resource;
-using Flow.Launcher.Infrastructure.UserSettings;
-using Flow.Launcher.ViewModel;
-using Screen = System.Windows.Forms.Screen;
-using DragEventArgs = System.Windows.DragEventArgs;
-using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Flow.Launcher.Infrastructure;
 using Flow.Launcher.Infrastructure.Hotkey;
+using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
-using System.Windows.Threading;
-using System.Windows.Data;
+using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
-using Key = System.Windows.Input.Key;
-using System.Media;
-using DataObject = System.Windows.DataObject;
-using System.Windows.Media;
-using System.Windows.Interop;
-using Window = System.Windows.Window;
-using System.Linq;
-using System.Windows.Shapes;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using MouseButtons = System.Windows.Forms.MouseButtons;
+using NotifyIcon = System.Windows.Forms.NotifyIcon;
+using Screen = System.Windows.Forms.Screen;
 
 namespace Flow.Launcher
 {
@@ -520,10 +516,10 @@ namespace Flow.Launcher
             {
                 switch (e.Button)
                 {
-                    case System.Windows.Forms.MouseButtons.Left:
+                    case MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-                    case System.Windows.Forms.MouseButtons.Right:
+                    case MouseButtons.Right:
 
                         contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
