@@ -24,8 +24,6 @@ namespace Flow.Launcher.Core.Resource
     {
         #region Properties & Fields
 
-        public string CurrentTheme => _settings.Theme;
-
         public bool BlurEnabled { get; set; }
 
         private const string ThemeMetadataNamePrefix = "Name:";
@@ -77,6 +75,11 @@ namespace Flow.Launcher.Core.Resource
         #endregion
 
         #region Theme Resources
+
+        public string GetCurrentTheme()
+        {
+            return _settings.Theme;
+        }
 
         private void MakeSureThemeDirectoriesExist()
         {
@@ -183,7 +186,7 @@ namespace Flow.Launcher.Core.Resource
 
         private ResourceDictionary GetCurrentResourceDictionary()
         {
-            return GetResourceDictionary(_settings.Theme);
+            return GetResourceDictionary(GetCurrentTheme());
         }
 
         private ThemeData GetThemeDataFromPath(string path)
@@ -253,9 +256,10 @@ namespace Flow.Launcher.Core.Resource
             return themes.OrderBy(o => o.Name).ToList();
         }
 
-        public bool ChangeTheme(string theme)
+        public bool ChangeTheme(string theme = null)
         {
-            const string defaultTheme = Constant.DefaultTheme;
+            if (string.IsNullOrEmpty(theme))
+                theme = GetCurrentTheme();
 
             string path = GetThemePath(theme);
             try
@@ -270,7 +274,7 @@ namespace Flow.Launcher.Core.Resource
                 _settings.Theme = theme;
 
                 //always allow re-loading default theme, in case of failure of switching to a new theme from default theme
-                if (_oldTheme != theme || theme == defaultTheme)
+                if (_oldTheme != theme || theme == Constant.DefaultTheme)
                 {
                     _oldTheme = Path.GetFileNameWithoutExtension(_oldResource.Source.AbsolutePath);
                 }
@@ -284,20 +288,20 @@ namespace Flow.Launcher.Core.Resource
             catch (DirectoryNotFoundException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> path can't be found");
-                if (theme != defaultTheme)
+                if (theme != Constant.DefaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_path_not_exists"), theme));
-                    ChangeTheme(defaultTheme);
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_path_not_exists"), theme));
+                    ChangeTheme(Constant.DefaultTheme);
                 }
                 return false;
             }
             catch (XamlParseException)
             {
                 Log.Error($"|Theme.ChangeTheme|Theme <{theme}> fail to parse");
-                if (theme != defaultTheme)
+                if (theme != Constant.DefaultTheme)
                 {
-                    _api.ShowMsgBox(string.Format(InternationalizationManager.Instance.GetTranslation("theme_load_failure_parse_error"), theme));
-                    ChangeTheme(defaultTheme);
+                    _api.ShowMsgBox(string.Format(_api.GetTranslation("theme_load_failure_parse_error"), theme));
+                    ChangeTheme(Constant.DefaultTheme);
                 }
                 return false;
             }
@@ -429,7 +433,7 @@ namespace Flow.Launcher.Core.Resource
                 {
                     AutoDropShadow(useDropShadowEffect);
                 }
-                SetBlurForWindow(backdropType);
+                SetBlurForWindow(GetCurrentTheme(), backdropType);
 
                 if (!BlurEnabled)
                 {
@@ -448,7 +452,7 @@ namespace Flow.Launcher.Core.Resource
                 // Get the actual backdrop type and drop shadow effect settings
                 var (backdropType, _) = GetActualValue();
 
-                SetBlurForWindow(backdropType);
+                SetBlurForWindow(GetCurrentTheme(), backdropType);
             }, DispatcherPriority.Normal);
         }
 
@@ -475,9 +479,9 @@ namespace Flow.Launcher.Core.Resource
             return (backdropType, useDropShadowEffect);
         }
 
-        private void SetBlurForWindow(BackdropTypes backdropType)
+        private void SetBlurForWindow(string theme, BackdropTypes backdropType)
         {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
+            var dict = GetThemeResourceDictionary(theme);
             if (dict == null)
                 return;
 
@@ -507,13 +511,13 @@ namespace Flow.Launcher.Core.Resource
 
                 // Apply the blur effect
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, backdropType);
-                ColorizeWindow(backdropType);
+                ColorizeWindow(theme, backdropType);
             }
             else
             {
                 // Apply default style when Blur is disabled
                 Win32Helper.DWMSetBackdropForWindow(mainWindow, BackdropTypes.None);
-                ColorizeWindow(backdropType);
+                ColorizeWindow(theme, backdropType);
             }
 
             UpdateResourceDictionary(dict);
@@ -559,9 +563,9 @@ namespace Flow.Launcher.Core.Resource
 
         // Get Background Color from WindowBorderStyle when there not color for BG.
         // for theme has not "LightBG" or "DarkBG" case.
-        private Color GetWindowBorderStyleBackground()
+        private Color GetWindowBorderStyleBackground(string theme)
         {
-            var Resources = GetThemeResourceDictionary(_settings.Theme);
+            var Resources = GetThemeResourceDictionary(theme);
             var windowBorderStyle = (Style)Resources["WindowBorderStyle"];
 
             var backgroundSetter = windowBorderStyle.Setters
@@ -634,9 +638,9 @@ namespace Flow.Launcher.Core.Resource
             Application.Current.Resources["PreviewWindowBorderStyle"] = previewStyle;
         }
 
-        private void ColorizeWindow(BackdropTypes backdropType)
+        private void ColorizeWindow(string theme, BackdropTypes backdropType)
         {
-            var dict = GetThemeResourceDictionary(_settings.Theme);
+            var dict = GetThemeResourceDictionary(theme);
             if (dict == null) return;
 
             var mainWindow = Application.Current.MainWindow;
@@ -687,11 +691,11 @@ namespace Flow.Launcher.Core.Resource
             // Retrieve LightBG value (fallback to WindowBorderStyle background color if not found)
             try
             {
-                LightBG = dict.Contains("LightBG") ? (Color)dict["LightBG"] : GetWindowBorderStyleBackground();
+                LightBG = dict.Contains("LightBG") ? (Color)dict["LightBG"] : GetWindowBorderStyleBackground(theme);
             }
             catch (Exception)
             {
-                LightBG = GetWindowBorderStyleBackground();
+                LightBG = GetWindowBorderStyleBackground(theme);
             }
 
             // Retrieve DarkBG value (fallback to LightBG if not found)

@@ -19,7 +19,7 @@ namespace Flow.Launcher.Plugin.Sys
         private Theme.ThemeData _selectedTheme;
         public Theme.ThemeData SelectedTheme
         {
-            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.CurrentTheme);
+            get => _selectedTheme ??= Themes.Find(v => v.FileNameWithoutExtension == _theme.GetCurrentTheme());
             set
             {
                 _selectedTheme = value;
