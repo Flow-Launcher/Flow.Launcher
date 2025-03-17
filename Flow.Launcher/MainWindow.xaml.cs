@@ -77,7 +77,7 @@ namespace Flow.Launcher
 
         #region Window Event
 
-#pragma warning disable VSTHRD100
+#pragma warning disable VSTHRD100 // Avoid async void methods
 
         private void OnSourceInitialized(object sender, EventArgs e)
         {
@@ -346,7 +346,7 @@ namespace Flow.Launcher
             }
         }
 
-#pragma warning restore VSTHRD100
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         #endregion
 
@@ -361,7 +361,7 @@ namespace Flow.Launcher
 
         #region Window Context Menu Event
 
-#pragma warning disable VSTHRD100
+#pragma warning disable VSTHRD100 // Avoid async void methods
 
         private async void OnContextMenusForSettingsClick(object sender, RoutedEventArgs e)
         {
@@ -373,7 +373,7 @@ namespace Flow.Launcher
             App.API.OpenSettingDialog();
         }
 
-#pragma warning restore VSTHRD100
+#pragma warning restore VSTHRD100 // Avoid async void methods
 
         #endregion
 
