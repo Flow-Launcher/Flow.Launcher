@@ -62,14 +62,14 @@
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_restart_computer_advanced">Tem certeza de que deseja reiniciar o computador com as opções avançadas de arranque?</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_dlgtext_logoff_computer">Tem certeza de que deseja terminar a sessão?</system:String>
 
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Command Keyword Setting</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Custom Command Keyword</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Enter a keyword to search for command: {0}. This keyword is used to match your query.</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Command Keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword_setting_window_title">Definição de palavra-chave</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword">Palavra-chave personalizada</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_custom_command_keyword_tip">Indique a palavra-chave para pesquisar o comando: {0}. A aplavra-chave será usada para correspondência com a consulta.</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_command_keyword">Palavra-chave</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_reset">Repor</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_confirm">Confirmar</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_cancel">Cancelar</system:String>
-    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Please enter a non-empty command keyword</system:String>
+    <system:String x:Key="flowlauncher_plugin_sys_input_command_keyword">Não pode indicar uma palavra-chave vazia</system:String>
 
     <system:String x:Key="flowlauncher_plugin_sys_plugin_name">Comandos do sistema</system:String>
     <system:String x:Key="flowlauncher_plugin_sys_plugin_description">Disponibiliza os comandos relacionados com o sistema tais como: desligar, bloquear, reiniciar...</system:String>
