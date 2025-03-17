@@ -84,7 +84,7 @@ namespace Flow.Launcher
             nameof(Type),
             typeof(HotkeyType),
             typeof(HotkeyControl),
-            new FrameworkPropertyMetadata(HotkeyType.CustomQueryHotkey, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
+            new FrameworkPropertyMetadata(HotkeyType.None, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnHotkeyChanged)
         );
 
         public HotkeyType Type
@@ -95,6 +95,7 @@ namespace Flow.Launcher
 
         public enum HotkeyType
         {
+            None,
             // Custom query hotkeys
             CustomQueryHotkey,
             // Settings hotkeys
