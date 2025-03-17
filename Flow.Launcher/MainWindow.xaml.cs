@@ -873,13 +873,8 @@ namespace Flow.Launcher
 
             // ✅ ClockPanel이 표시될 조건 (쿼리 입력 없음 & ContextMenu, History가 닫혀 있음)
             bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
-                                   ContextMenu.Visibility == Visibility.Collapsed &&
-                                   History.Visibility == Visibility.Collapsed;
-
-            // ✅ ClockPanel이 숨겨질 조건 (쿼리에 글자가 있거나, ContextMenu 또는 History가 열려 있음)
-            bool shouldHideClock = QueryTextBox.Text.Length > 0 ||
-                                   ContextMenu.Visibility == Visibility.Visible ||
-                                   History.Visibility != Visibility.Collapsed;
+                ContextMenu.Visibility != Visibility.Visible &&
+                History.Visibility != Visibility.Visible;
 
             // ✅ 1. ContextMenu가 열리면 즉시 Visibility.Hidden으로 설정 (애니메이션 없이 강제 숨김)
             if (ContextMenu.Visibility == Visibility.Visible)
@@ -890,7 +885,7 @@ namespace Flow.Launcher
             }
 
             // ✅ 2. ContextMenu가 닫혔을 때, 쿼리에 글자가 남아 있다면 Hidden 상태 유지 (이전 상태 기억)
-            if (ContextMenu.Visibility == Visibility.Collapsed && QueryTextBox.Text.Length > 0)
+            if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
             {
                 ClockPanel.Visibility = Visibility.Hidden;
                 ClockPanel.Opacity = 0.0;
@@ -898,7 +893,7 @@ namespace Flow.Launcher
             }
 
             // ✅ 3. ClockPanel을 숨기는 경우 (페이드아웃 애니메이션 적용)
-            if (shouldHideClock && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
+            if ((!shouldShowClock) && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
             {
                 _isClockPanelAnimating = true;
 
