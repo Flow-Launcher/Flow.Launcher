@@ -92,13 +92,13 @@ public partial class SettingWindow
     {
         if (WindowState == WindowState.Maximized)
         {
-            MaximizeButton.Visibility = Visibility.Collapsed;
+            MaximizeButton.Visibility = Visibility.Hidden;
             RestoreButton.Visibility = Visibility.Visible;
         }
         else
         {
             MaximizeButton.Visibility = Visibility.Visible;
-            RestoreButton.Visibility = Visibility.Collapsed;
+            RestoreButton.Visibility = Visibility.Hidden;
         }
     }
 
