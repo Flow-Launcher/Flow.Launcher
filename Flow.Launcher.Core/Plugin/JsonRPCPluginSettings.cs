@@ -78,7 +78,8 @@ namespace Flow.Launcher.Core.Plugin
                     {
                         if (type == "checkbox")
                         {
-                            Settings[attributes.Name] = bool.Parse(attributes.DefaultValue);
+                            // If can parse the default value to bool, use it, otherwise use false
+                            Settings[attributes.Name] = bool.TryParse(attributes.DefaultValue, out var value) && value;
                         }
                         else
                         {
@@ -105,19 +106,24 @@ namespace Flow.Launcher.Core.Plugin
                     switch (control)
                     {
                         case TextBox textBox:
-                            textBox.Dispatcher.Invoke(() => textBox.Text = value as string ?? string.Empty);
+                            var text = value as string ?? string.Empty;
+                            textBox.Dispatcher.Invoke(() => textBox.Text = text);
                             break;
                         case PasswordBox passwordBox:
-                            passwordBox.Dispatcher.Invoke(() => passwordBox.Password = value as string ?? string.Empty);
+                            var password = value as string ?? string.Empty;
+                            passwordBox.Dispatcher.Invoke(() => passwordBox.Password = password);
                             break;
                         case ComboBox comboBox:
                             comboBox.Dispatcher.Invoke(() => comboBox.SelectedItem = value);
                             break;
                         case CheckBox checkBox:
+                            var isChecked = value is bool boolValue
+                                ? boolValue
+                                // If can parse the default value to bool, use it, otherwise use false
+                                : value is string stringValue && bool.TryParse(stringValue, out var boolValueFromString)
+                                    && boolValueFromString;
                             checkBox.Dispatcher.Invoke(() =>
-                                checkBox.IsChecked = value is bool isChecked
-                                    ? isChecked
-                                    : bool.Parse(value as string ?? string.Empty));
+                                checkBox.IsChecked = isChecked);
                             break;
                     }
                 }
@@ -145,6 +151,7 @@ namespace Flow.Launcher.Core.Plugin
         public Control CreateSettingPanel()
         {
             // No need to check if NeedCreateSettingPanel is true because CreateSettingPanel will only be called if it's true
+            // if (!NeedCreateSettingPanel()) return null;
 
             // Create main grid with two columns (Column 1: Auto, Column 2: *)
             var mainPanel = new Grid { Margin = SettingPanelMargin, VerticalAlignment = VerticalAlignment.Center };
@@ -159,7 +166,7 @@ namespace Flow.Launcher.Core.Plugin
 
             // Iterate over each setting and create one row for it
             var rowCount = 0;
-            foreach (var (type, attributes) in Configuration.Body)
+            foreach (var (type, attributes) in Configuration!.Body)
             {
                 // Skip if the setting does not have attributes or name
                 if (attributes?.Name == null)
@@ -389,12 +396,14 @@ namespace Flow.Launcher.Core.Plugin
                         }
                     case "checkbox":
                         {
+                            // If can parse the default value to bool, use it, otherwise use false
+                            var defaultValue = bool.TryParse(attributes.DefaultValue, out var value) && value;
                             var checkBox = new CheckBox
                             {
                                 IsChecked =
                                 Settings[attributes.Name] is bool isChecked
                                     ? isChecked
-                                    : bool.Parse(attributes.DefaultValue),
+                                    : defaultValue,
                                 HorizontalAlignment = HorizontalAlignment.Left,
                                 VerticalAlignment = VerticalAlignment.Center,
                                 Margin = SettingPanelItemTopBottomMargin,
@@ -404,7 +413,7 @@ namespace Flow.Launcher.Core.Plugin
 
                             checkBox.Click += (sender, _) =>
                             {
-                                Settings[attributes.Name] = ((CheckBox)sender).IsChecked!;
+                                Settings[attributes.Name] = ((CheckBox)sender).IsChecked ?? defaultValue;
                             };
 
                             contentControl = checkBox;
