@@ -142,7 +142,7 @@ namespace Flow.Launcher
                     HotkeyType.SelectPrevItemHotkey2 => _settings.SelectPrevItemHotkey2,
                     HotkeyType.SelectNextItemHotkey => _settings.SelectNextItemHotkey,
                     HotkeyType.SelectNextItemHotkey2 => _settings.SelectNextItemHotkey2,
-                    _ => throw new System.NotImplementedException("Hotkey type not setted")
+                    _ => throw new System.NotImplementedException("Hotkey type not set")
                 };
             }
             set
@@ -197,7 +197,7 @@ namespace Flow.Launcher
                         _settings.SelectNextItemHotkey2 = value;
                         break;
                     default:
-                        throw new System.NotImplementedException("Hotkey type not setted");
+                        throw new System.NotImplementedException("Hotkey type not set");
                 }
 
                 // After setting the hotkey, we need to refresh the interface
