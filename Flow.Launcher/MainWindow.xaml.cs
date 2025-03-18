@@ -880,8 +880,7 @@ namespace Flow.Launcher
                     conversion => (sender, eventArg) => conversion(sender, eventArg),
                     add => QueryTextBox.TextChanged += add,
                     remove => QueryTextBox.TextChanged -= remove)
-                    .Do(@event => ClearAutoCompleteText((TextBox)@event.Sender))
-                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay))
+                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay * 10))
                     .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery((TextBox)@event.Sender)))
                     .Subscribe();
             }
@@ -894,32 +893,7 @@ namespace Flow.Launcher
         private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            ClearAutoCompleteText(textBox);
             PerformSearchQuery(textBox);
-        }
-
-        private void ClearAutoCompleteText(TextBox textBox)
-        {
-            var text = textBox.Text;
-            var autoCompleteText = QueryTextSuggestionBox.Text;
-
-            if (ShouldAutoCompleteTextBeEmpty(text, autoCompleteText))
-            {
-                QueryTextSuggestionBox.Text = string.Empty;
-            }
-        }
-
-        private static bool ShouldAutoCompleteTextBeEmpty(string queryText, string autoCompleteText)
-        {
-            if (string.IsNullOrEmpty(autoCompleteText))
-            {
-                return false;
-            }
-            else
-            {
-                // Using Ordinal this is internal
-                return string.IsNullOrEmpty(queryText) || !autoCompleteText.StartsWith(queryText, StringComparison.Ordinal);
-            }
         }
 
         private void PerformSearchQuery(TextBox textBox)
