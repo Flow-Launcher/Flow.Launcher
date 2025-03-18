@@ -287,6 +287,18 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         }
         public int SearchInputDelay { get; set; } = 120;
 
+        [JsonIgnore]
+        public List<int> SearchInputDelayRange { get; } = new()
+        {
+            30, 60, 90, 120, 150, 180, 210, 240, 270, 300
+        };
+
+        [JsonIgnore]
+        public List<int> PluginSearchInputDelayRange { get; } = new()
+        {
+            0, 30, 60, 90, 120, 150
+        };
+
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public SearchWindowScreens SearchWindowScreen { get; set; } = SearchWindowScreens.Cursor;
 

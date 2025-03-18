@@ -95,6 +95,8 @@
         <StackPanel>
             <ContentControl Content="{Binding BottomPart1}" />
 
+            <ContentControl Content="{Binding BottomPart2}" />
+
             <Border
                 BorderThickness="0 1 0 0"
                 BorderBrush="{DynamicResource Color03B}"

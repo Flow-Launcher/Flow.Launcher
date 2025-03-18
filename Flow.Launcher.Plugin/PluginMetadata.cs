@@ -34,6 +34,8 @@ namespace Flow.Launcher.Plugin
 
         public List<string> ActionKeywords { get; set; }
 
+        public int SearchDelayTime { get; set; }
+
         public string IcoPath { get; set;}
         
         public override string ToString()

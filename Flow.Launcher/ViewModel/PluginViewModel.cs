@@ -8,6 +8,9 @@ using System.Windows.Controls;
 using CommunityToolkit.Mvvm.Input;
 using Flow.Launcher.Core.Resource;
 using Flow.Launcher.Resources.Controls;
+using System.Collections.Generic;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Flow.Launcher.Infrastructure.UserSettings;
 
 namespace Flow.Launcher.ViewModel
 {
@@ -81,6 +84,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        public IEnumerable<int> PluginSearchInputDelayRange { get; } =
+            Ioc.Default.GetRequiredService<Settings>().PluginSearchInputDelayRange;
+
+        public int PluginSearchDelayTime
+        {
+            get => PluginPair.Metadata.SearchDelayTime;
+            set
+            {
+                PluginPair.Metadata.SearchDelayTime = value;
+                PluginSettingsObject.SearchDelayTime = value;
+            }
+        }
+
         private Control _settingControl;
         private bool _isExpanded;
 
@@ -88,7 +104,10 @@ namespace Flow.Launcher.ViewModel
         public Control BottomPart1 => IsExpanded ? _bottomPart1 ??= new InstalledPluginDisplayKeyword() : null;
 
         private Control _bottomPart2;
-        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginDisplayBottomData() : null;
+        public Control BottomPart2 => IsExpanded ? _bottomPart2 ??= new InstalledPluginSearchDelay() : null;
+
+        private Control _bottomPart3;
+        public Control BottomPart3 => IsExpanded ? _bottomPart3 ??= new InstalledPluginDisplayBottomData() : null;
 
         public bool HasSettingControl => PluginPair.Plugin is ISettingProvider && (PluginPair.Plugin is not JsonRPCPluginBase jsonRPCPluginBase || jsonRPCPluginBase.NeedCreateSettingPanel());
         public Control SettingControl
