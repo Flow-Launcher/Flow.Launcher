@@ -1091,6 +1091,8 @@ namespace Flow.Launcher.ViewModel
 
         private async void QueryResults(int? searchDelay, bool isReQuery = false, bool reSelect = true)
         {
+            System.Diagnostics.Debug.WriteLine("!!!QueryResults");
+
             _updateSource?.Cancel();
 
             var query = ConstructQuery(QueryText, Settings.CustomShortcuts, Settings.BuiltinShortcuts);
@@ -1176,14 +1178,15 @@ namespace Flow.Launcher.ViewModel
                 }).ToArray();
 
                 // TODO: Remove debug codes.
-                System.Diagnostics.Debug.WriteLine($"Querying {searchDelayValue}ms");
+                System.Diagnostics.Debug.Write($"!!!{query.RawQuery} Querying {searchDelayValue}ms");
                 foreach (var plugin in plugins)
                 {
                     if (!(plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue))
                     {
-                        System.Diagnostics.Debug.WriteLine($"Querying {plugin.Metadata.Name}");
+                        System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}");
                     }
                 }
+                System.Diagnostics.Debug.Write("\n");
             }
             else
             {
@@ -1194,14 +1197,15 @@ namespace Flow.Launcher.ViewModel
                 }).ToArray();
 
                 // TODO: Remove debug codes.
-                System.Diagnostics.Debug.WriteLine($"Querying null ms");
+                System.Diagnostics.Debug.Write($"!!!{query.RawQuery} Querying null ms");
                 foreach (var plugin in plugins)
                 {
                     if (!plugin.Metadata.Disabled)
                     {
-                        System.Diagnostics.Debug.WriteLine($"Querying {plugin.Metadata.Name}");
+                        System.Diagnostics.Debug.Write($"{plugin.Metadata.Name}");
                     }
                 }
+                System.Diagnostics.Debug.Write("\n");
             }
 
             try
