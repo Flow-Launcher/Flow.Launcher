@@ -38,8 +38,8 @@
                 Cursor="Hand"
                 DockPanel.Dock="Right"
                 FontWeight="Bold"
-                ItemsSource="{Binding PluginSearchInputDelayRange}"
-                SelectedItem="{Binding PluginSearchDelayTime}"
+                ItemsSource="{Binding PluginSearchDelayRange}"
+                SelectedItem="{Binding PluginSearchDelay}"
                 ToolTip="{DynamicResource pluginSearchDelayTooltip}" />
         </DockPanel>
     </Border>

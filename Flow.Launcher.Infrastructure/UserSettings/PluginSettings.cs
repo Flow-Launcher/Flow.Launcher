@@ -51,7 +51,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                     }
                     metadata.Disabled = settings.Disabled;
                     metadata.Priority = settings.Priority;
-                    metadata.SearchDelayTime = settings.SearchDelayTime;
+                    metadata.SearchDelay = settings.SearchDelay;
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                         ActionKeywords = metadata.ActionKeywords,
                         Disabled = metadata.Disabled,
                         Priority = metadata.Priority,
-                        SearchDelayTime = metadata.SearchDelayTime,
+                        SearchDelay = metadata.SearchDelay,
                     };
                 }
             }
@@ -76,7 +76,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         public string Version { get; set; }
         public List<string> ActionKeywords { get; set; } // a reference of the action keywords from plugin manager
         public int Priority { get; set; }
-        public int SearchDelayTime { get; set; }
+        public int SearchDelay { get; set; }
 
         /// <summary>
         /// Used only to save the state of the plugin in settings

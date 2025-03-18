@@ -139,7 +139,7 @@ public partial class SettingsPaneGeneralViewModel : BaseModel
         }
     }
 
-    public IEnumerable<int> SearchInputDelayRange => Settings.SearchInputDelayRange;
+    public IEnumerable<int> SearchDelayRange => Settings.SearchDelayRange;
 
     public List<LastQueryModeData> LastQueryModes { get; } =
         DropdownDataGeneric<LastQueryMode>.GetValues<LastQueryModeData>("LastQuery");

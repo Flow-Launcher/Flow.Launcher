@@ -285,16 +285,19 @@ namespace Flow.Launcher.Infrastructure.UserSettings
                 OnPropertyChanged();
             }
         }
-        public int SearchInputDelay { get; set; } = 120;
+        public int SearchDelay { get; set; } = 120;
+
+        // TODO: Remove debug codes.
+        public const int SearchDelayInterval = 30 * 60;
 
         [JsonIgnore]
-        public List<int> SearchInputDelayRange { get; } = new()
+        public List<int> SearchDelayRange { get; } = new()
         {
             30, 60, 90, 120, 150, 180, 210, 240, 270, 300
         };
 
         [JsonIgnore]
-        public List<int> PluginSearchInputDelayRange { get; } = new()
+        public List<int> PluginSearchDelayRange { get; } = new()
         {
             0, 30, 60, 90, 120, 150
         };

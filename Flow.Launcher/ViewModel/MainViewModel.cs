@@ -274,14 +274,14 @@ namespace Flow.Launcher.ViewModel
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery: true);
+                QueryResults(null, isReQuery: true);
             }
         }
 
         public void ReQuery(bool reselect)
         {
             BackToQueryResults();
-            QueryResults(isReQuery: true, reSelect: reselect);
+            QueryResults(null, isReQuery: true, reSelect: reselect);
         }
 
         [RelayCommand]
@@ -630,14 +630,14 @@ namespace Flow.Launcher.ViewModel
                 {
                     // re-query is done in QueryText's setter method
                     QueryText = queryText;
-                    Query();
+                    Query(null);
                     // set to false so the subsequent set true triggers
                     // PropertyChanged and MoveQueryTextToEnd is called
                     QueryTextCursorMovedToEnd = false;
                 }
                 else if (isReQuery)
                 {
-                    Query(isReQuery: true);
+                    Query(null, isReQuery: true);
                 }
 
                 QueryTextCursorMovedToEnd = true;
@@ -690,12 +690,12 @@ namespace Flow.Launcher.ViewModel
                     // http://stackoverflow.com/posts/25895769/revisions
                     if (string.IsNullOrEmpty(QueryText))
                     {
-                        Query();
+                        Query(null);
                     }
                     else
                     {
                         QueryText = string.Empty;
-                        Query();
+                        Query(null);
                     }
                 }
 
@@ -979,19 +979,27 @@ namespace Flow.Launcher.ViewModel
 
         #region Query
 
-        public void Query(bool isReQuery = false)
+        public void Query(int? searchDelay, bool isReQuery = false)
         {
             if (SelectedIsFromQueryResults())
             {
-                QueryResults(isReQuery);
+                QueryResults(searchDelay, isReQuery);
             }
             else if (ContextMenuSelected())
             {
-                QueryContextMenu();
+                // Only query history when search delay is null or 0
+                if (searchDelay.GetValueOrDefault(0) == 0)
+                {
+                    QueryContextMenu();
+                }
             }
             else if (HistorySelected())
             {
-                QueryHistory();
+                // Only query history when search delay is null or 0
+                if (searchDelay.GetValueOrDefault(0) == 0)
+                {
+                    QueryHistory();
+                }
             }
         }
 
@@ -1081,7 +1089,7 @@ namespace Flow.Launcher.ViewModel
 
         private readonly IReadOnlyList<Result> _emptyResult = new List<Result>();
 
-        private async void QueryResults(bool isReQuery = false, bool reSelect = true)
+        private async void QueryResults(int? searchDelay, bool isReQuery = false, bool reSelect = true)
         {
             _updateSource?.Cancel();
 
@@ -1157,12 +1165,44 @@ namespace Flow.Launcher.ViewModel
 
             // plugins is ICollection, meaning LINQ will get the Count and preallocate Array
 
-            var tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+            Task[] tasks;
+            if (searchDelay.HasValue)
             {
-                false => QueryTask(plugin, reSelect),
-                true => Task.CompletedTask
-            }).ToArray();
+                var searchDelayValue = searchDelay.Value;
+                tasks = plugins.Select(plugin => (plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue) switch
+                {
+                    false => QueryTask(plugin, reSelect),
+                    true => Task.CompletedTask
+                }).ToArray();
 
+                // TODO: Remove debug codes.
+                System.Diagnostics.Debug.WriteLine($"Querying {searchDelayValue}ms");
+                foreach (var plugin in plugins)
+                {
+                    if (!(plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue))
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Querying {plugin.Metadata.Name}");
+                    }
+                }
+            }
+            else
+            {
+                tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
+                {
+                    false => QueryTask(plugin, reSelect),
+                    true => Task.CompletedTask
+                }).ToArray();
+
+                // TODO: Remove debug codes.
+                System.Diagnostics.Debug.WriteLine($"Querying null ms");
+                foreach (var plugin in plugins)
+                {
+                    if (!plugin.Metadata.Disabled)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"Querying {plugin.Metadata.Name}");
+                    }
+                }
+            }
 
             try
             {

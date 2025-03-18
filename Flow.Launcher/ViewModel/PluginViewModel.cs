@@ -84,16 +84,16 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-        public IEnumerable<int> PluginSearchInputDelayRange { get; } =
-            Ioc.Default.GetRequiredService<Settings>().PluginSearchInputDelayRange;
+        public IEnumerable<int> PluginSearchDelayRange { get; } =
+            Ioc.Default.GetRequiredService<Settings>().PluginSearchDelayRange;
 
-        public int PluginSearchDelayTime
+        public int PluginSearchDelay
         {
-            get => PluginPair.Metadata.SearchDelayTime;
+            get => PluginPair.Metadata.SearchDelay;
             set
             {
-                PluginPair.Metadata.SearchDelayTime = value;
-                PluginSettingsObject.SearchDelayTime = value;
+                PluginPair.Metadata.SearchDelay = value;
+                PluginSettingsObject.SearchDelay = value;
             }
         }
 

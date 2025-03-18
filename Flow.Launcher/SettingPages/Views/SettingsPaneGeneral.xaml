@@ -189,8 +189,8 @@
                     Sub="{DynamicResource searchDelayTimeToolTip}">
                     <ComboBox
                         Width="100"
-                        ItemsSource="{Binding SearchInputDelayRange}"
-                        SelectedItem="{Binding Settings.SearchInputDelay}" />
+                        ItemsSource="{Binding SearchDelayRange}"
+                        SelectedItem="{Binding Settings.SearchDelay}" />
                 </cc:Card>
             </cc:CardGroup>
 

@@ -880,8 +880,18 @@ namespace Flow.Launcher
                     conversion => (sender, eventArg) => conversion(sender, eventArg),
                     add => QueryTextBox.TextChanged += add,
                     remove => QueryTextBox.TextChanged -= remove)
-                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay))
-                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery((TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchDelay * 10))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(0, (TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(30, (TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(60, (TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(90, (TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(120, (TextBox)@event.Sender)))
+                    .Throttle(TimeSpan.FromMilliseconds(Settings.SearchDelayInterval))
+                    .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery(150, (TextBox)@event.Sender)))
                     .Subscribe();
             }
             else
@@ -893,14 +903,19 @@ namespace Flow.Launcher
         private void QueryTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             var textBox = (TextBox)sender;
-            PerformSearchQuery(textBox);
+            PerformSearchQuery(null, textBox);
         }
 
-        private void PerformSearchQuery(TextBox textBox)
+        // If delayInputTime is null, we will query plugins with all plugin search delay times
+        private void PerformSearchQuery(int? searchDelay, TextBox textBox)
         {
-            var text = textBox.Text;
-            _viewModel.QueryText = text;
-            _viewModel.Query();
+            // Only update query text when search delay is null or 0
+            if (searchDelay.GetValueOrDefault(0) == 0)
+            {
+                var text = textBox.Text;
+                _viewModel.QueryText = text;
+            }
+            _viewModel.Query(searchDelay);
         }
 
         #endregion
