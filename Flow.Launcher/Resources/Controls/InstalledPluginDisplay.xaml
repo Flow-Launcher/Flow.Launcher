@@ -117,7 +117,7 @@
                     Content="{Binding SettingControl}" />
             </Border>
 
-            <ContentControl Content="{Binding BottomPart2}" />
+            <ContentControl Content="{Binding BottomPart3}" />
         </StackPanel>
     </Expander>
 </UserControl>
