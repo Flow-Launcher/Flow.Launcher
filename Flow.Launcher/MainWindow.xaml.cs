@@ -749,7 +749,6 @@ namespace Flow.Launcher
             ClockPanel.Opacity = 0;
             SearchIcon.Opacity = 0;
             
-            var windowsb = new Storyboard();
             var clocksb = new Storyboard();
             var iconsb = new Storyboard();
             CircleEase easing = new CircleEase { EasingMode = EasingMode.EaseInOut };
@@ -760,22 +759,6 @@ namespace Flow.Launcher
                 AnimationSpeeds.Medium => 360,
                 AnimationSpeeds.Fast => 160,
                 _ => _settings.CustomAnimationLength
-            };
-
-            var WindowOpacity = new DoubleAnimation
-            {
-                From = 1,
-                To = 1,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.HoldEnd
-            };
-
-            var WindowMotion = new DoubleAnimation
-            {
-                From = Top,
-                To = Top,
-                Duration = TimeSpan.FromMilliseconds(animationLength * 2 / 3),
-                FillBehavior = FillBehavior.HoldEnd
             };
 
             var IconMotion = new DoubleAnimation
@@ -824,12 +807,6 @@ namespace Flow.Launcher
             Storyboard.SetTargetName(thicknessAnimation, "ClockPanel");
             Storyboard.SetTargetProperty(thicknessAnimation, new PropertyPath(MarginProperty));
 
-            Storyboard.SetTarget(WindowOpacity, this);
-            Storyboard.SetTargetProperty(WindowOpacity, new PropertyPath(OpacityProperty));
-
-            Storyboard.SetTarget(WindowMotion, this);
-            Storyboard.SetTargetProperty(WindowMotion, new PropertyPath(TopProperty));
-
             Storyboard.SetTarget(IconMotion, SearchIcon);
             Storyboard.SetTargetProperty(IconMotion, new PropertyPath(TopProperty));
 
@@ -838,12 +815,10 @@ namespace Flow.Launcher
 
             clocksb.Children.Add(thicknessAnimation);
             clocksb.Children.Add(ClockOpacity);
-            windowsb.Children.Add(WindowOpacity);
-            windowsb.Children.Add(WindowMotion);
             iconsb.Children.Add(IconMotion);
             iconsb.Children.Add(IconOpacity);
 
-            windowsb.Completed += (_, _) => _animating = false;
+            clocksb.Completed += (_, _) => _animating = false;
             _settings.WindowLeft = Left;
             isArrowKeyPressed = false;
 
@@ -853,7 +828,6 @@ namespace Flow.Launcher
             }
 
             iconsb.Begin(SearchIcon);
-            windowsb.Begin(this);
         }
 
         private void UpdateClockPanelVisibility()
