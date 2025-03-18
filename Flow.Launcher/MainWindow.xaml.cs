@@ -880,7 +880,7 @@ namespace Flow.Launcher
                     conversion => (sender, eventArg) => conversion(sender, eventArg),
                     add => QueryTextBox.TextChanged += add,
                     remove => QueryTextBox.TextChanged -= remove)
-                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay * 10))
+                    .Throttle(TimeSpan.FromMilliseconds(_settings.SearchInputDelay))
                     .Do(@event => Dispatcher.Invoke(() => PerformSearchQuery((TextBox)@event.Sender)))
                     .Subscribe();
             }
