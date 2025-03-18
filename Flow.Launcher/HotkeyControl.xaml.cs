@@ -214,13 +214,14 @@ namespace Flow.Launcher
 
             HotkeyList.ItemsSource = KeysToDisplay;
 
-            RefreshHotkeyInterface(Hotkey);
+            // We should not call RefreshHotkeyInterface here because DependencyProperty is not set yet
+            // And it will be called in OnHotkeyChanged event or Hotkey setter later
         }
 
         private void RefreshHotkeyInterface(string hotkey)
         {
-            SetKeysToDisplay(new HotkeyModel(Hotkey));
-            CurrentHotkey = new HotkeyModel(Hotkey);
+            SetKeysToDisplay(new HotkeyModel(hotkey));
+            CurrentHotkey = new HotkeyModel(hotkey);
         }
 
         private static bool CheckHotkeyAvailability(HotkeyModel hotkey, bool validateKeyGesture) =>
