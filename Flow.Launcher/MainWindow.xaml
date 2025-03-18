@@ -243,7 +243,7 @@
                             PreviewDragOver="OnPreviewDragOver"
                             PreviewKeyUp="QueryTextBox_KeyUp"
                             Style="{DynamicResource QueryBoxStyle}"
-                            Text="{Binding QueryText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Text="{Binding QueryText, Mode=OneWay}"
                             Visibility="Visible"
                             WindowChrome.IsHitTestVisibleInChrome="True">
                             <TextBox.CommandBindings>
@@ -377,7 +377,7 @@
                         Style="{DynamicResource SeparatorStyle}" />
                 </ContentControl>
             </Grid>
-          
+
             <Border Style="{DynamicResource WindowRadius}">
                 <Border.Clip>
                     <MultiBinding Converter="{StaticResource BorderClipConverter}">
