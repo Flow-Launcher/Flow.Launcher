@@ -1368,27 +1368,27 @@ namespace Flow.Launcher.ViewModel
         }
 
         public void Show()
+{
+    Application.Current.Dispatcher.Invoke(() =>
+    {
+        if (Application.Current.MainWindow is MainWindow mainWindow)
         {
-            Application.Current.Dispatcher.Invoke(() =>
-            {
-                if (Application.Current.MainWindow is MainWindow mainWindow)
-                {
-                    // 📌 DWM Cloak 해제 (창을 정상적으로 표시)
-                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+            // 📌 Remove DWM Cloak (Make the window visible normally)
+            Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
-                    // 📌 UI 요소 복원
-                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
-                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-                    SearchIconVisibility = Visibility.Visible;
-                }
-
-                // WPF 속성 업데이트
-                MainWindowVisibility = Visibility.Visible;
-                MainWindowOpacity = 1;
-                MainWindowVisibilityStatus = true;
-                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
-            });
+            // 📌 Restore UI elements
+            mainWindow.ClockPanel.Visibility = Visibility.Visible;
+            //mainWindow.SearchIcon.Visibility = Visibility.Visible;
+            SearchIconVisibility = Visibility.Visible;
         }
+
+        // Update WPF properties
+        MainWindowVisibility = Visibility.Visible;
+        MainWindowOpacity = 1;
+        MainWindowVisibilityStatus = true;
+        VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+    });
+}
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
@@ -1406,14 +1406,14 @@ namespace Flow.Launcher.ViewModel
                 SelectedResults = Results;
             }
 
-            // 📌 텍스트 초기화 즉시 적용 + UI 강제 업데이트
+            // 📌 Immediately apply text reset + force UI update
             if (Settings.LastQueryMode == LastQueryMode.Empty)
             {
                 ChangeQueryText(string.Empty);
-                await Task.Delay(1); // 한 프레임 후 UI가 반영되도록 대기
+                await Task.Delay(1); // Wait for one frame to ensure UI reflects changes
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Application.Current.MainWindow.UpdateLayout(); // UI 강제 업데이트
+                    Application.Current.MainWindow.UpdateLayout(); // Force UI update
                 });
             }
 
@@ -1436,17 +1436,9 @@ namespace Flow.Launcher.ViewModel
                     break;
             }
 
-            //if (Application.Current.MainWindow is MainWindow mainWindow2)
-            //{
-            //    IntPtr hWnd = new WindowInteropHelper(mainWindow2).Handle;
-
-            //    // 📌 Cloak을 사용하지 않고 일반적인 `ShowWindow(SW_HIDE)` 사용 → Mica/Acrylic 유지됨
-            //    ShowWindow(hWnd, SW_HIDE);
-            //}
-
             if (Application.Current.MainWindow is MainWindow mainWindow)
             {
-                // 📌 아이콘과 시계 Opacity를 0으로 설정하고 Visibility.Hidden 적용
+                // 📌 Set Opacity of icon and clock to 0 and apply Visibility.Hidden
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     mainWindow.ClockPanel.Opacity = 0;
@@ -1455,22 +1447,23 @@ namespace Flow.Launcher.ViewModel
                     //mainWindow.SearchIcon.Visibility = Visibility.Hidden;
                     SearchIconVisibility = Visibility.Hidden;
 
-                    // 강제 UI 업데이트
+                    // Force UI update
                     mainWindow.ClockPanel.UpdateLayout();
                     mainWindow.SearchIcon.UpdateLayout();
                 }, DispatcherPriority.Render);
 
-                // 📌 DWM Cloak 적용 (창을 완전히 숨김)
+                // 📌 Apply DWM Cloak (Completely hide the window)
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
             }
             
             await Task.Delay(50); 
-            // WPF 속성 업데이트
+            // Update WPF properties
             //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
+
 
 #pragma warning restore VSTHRD100 // Avoid async void methods
 

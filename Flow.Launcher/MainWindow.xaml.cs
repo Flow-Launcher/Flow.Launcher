@@ -845,20 +845,20 @@ namespace Flow.Launcher
 
             var animationDuration = TimeSpan.FromMilliseconds(animationLength * 2 / 3);
 
-            // ✅ ClockPanel이 표시될 조건 (쿼리 입력 없음 & ContextMenu, History가 닫혀 있음)
+            // ✅ Conditions for showing ClockPanel (No query input & ContextMenu, History are closed)
             bool shouldShowClock = QueryTextBox.Text.Length == 0 &&
                 ContextMenu.Visibility != Visibility.Visible &&
                 History.Visibility != Visibility.Visible;
 
-            // ✅ 1. ContextMenu가 열리면 즉시 Visibility.Hidden으로 설정 (애니메이션 없이 강제 숨김)
+            // ✅ 1. When ContextMenu opens, immediately set Visibility.Hidden (force hide without animation)
             if (ContextMenu.Visibility == Visibility.Visible)
             {
                 ClockPanel.Visibility = Visibility.Hidden;
-                ClockPanel.Opacity = 0.0;  // 혹시라도 Opacity 애니메이션이 영향을 줄 경우 0으로 설정
+                ClockPanel.Opacity = 0.0;  // Set to 0 in case Opacity animation affects it
                 return;
             }
 
-            // ✅ 2. ContextMenu가 닫혔을 때, 쿼리에 글자가 남아 있다면 Hidden 상태 유지 (이전 상태 기억)
+            // ✅ 2. When ContextMenu is closed, keep it Hidden if there's text in the query (remember previous state)
             if (ContextMenu.Visibility != Visibility.Visible && QueryTextBox.Text.Length > 0)
             {
                 ClockPanel.Visibility = Visibility.Hidden;
@@ -866,7 +866,7 @@ namespace Flow.Launcher
                 return;
             }
 
-            // ✅ 3. ClockPanel을 숨기는 경우 (페이드아웃 애니메이션 적용)
+            // ✅ 3. When hiding ClockPanel (apply fade-out animation)
             if ((!shouldShowClock) && ClockPanel.Visibility == Visibility.Visible && !_isClockPanelAnimating)
             {
                 _isClockPanelAnimating = true;
@@ -881,20 +881,20 @@ namespace Flow.Launcher
 
                 fadeOut.Completed += (s, e) =>
                 {
-                    ClockPanel.Visibility = Visibility.Hidden; // ✅ 애니메이션 후 완전히 숨김
+                    ClockPanel.Visibility = Visibility.Hidden; // ✅ Completely hide after animation
                     _isClockPanelAnimating = false;
                 };
 
                 ClockPanel.BeginAnimation(OpacityProperty, fadeOut);
             }
-            // ✅ 4. ClockPanel을 표시하는 경우 (페이드인 애니메이션 적용)
+            // ✅ 4. When showing ClockPanel (apply fade-in animation)
             else if (shouldShowClock && ClockPanel.Visibility != Visibility.Visible && !_isClockPanelAnimating)
             {
                 _isClockPanelAnimating = true;
 
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Visibility를 먼저 Visible로 설정
+                    ClockPanel.Visibility = Visibility.Visible;  // ✅ Set Visibility to Visible first
 
                     var fadeIn = new DoubleAnimation
                     {
@@ -909,6 +909,7 @@ namespace Flow.Launcher
                 }, DispatcherPriority.Render);
             }
         }
+
 
         private static double GetOpacityFromStyle(Style style, double defaultOpacity = 1.0)
         {
