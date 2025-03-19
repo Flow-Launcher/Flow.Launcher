@@ -299,15 +299,8 @@ namespace Flow.Launcher.Infrastructure
 
         #region WndProc
 
-        public static bool WM_ENTERSIZEMOVE(uint msg)
-        {
-            return msg == PInvoke.WM_ENTERSIZEMOVE;
-        }
-
-        public static bool WM_EXITSIZEMOVE(uint msg)
-        {
-            return msg == PInvoke.WM_EXITSIZEMOVE;
-        }
+        public const int WM_ENTERSIZEMOVE = (int)PInvoke.WM_ENTERSIZEMOVE;
+        public const int WM_EXITSIZEMOVE = (int)PInvoke.WM_EXITSIZEMOVE;
 
         #endregion
 
