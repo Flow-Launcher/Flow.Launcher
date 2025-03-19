@@ -63,6 +63,7 @@
 
   <ItemGroup>
     <PackageReference Include="Mages" Version="3.0.0" />
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
   </ItemGroup>
   
 </Project>

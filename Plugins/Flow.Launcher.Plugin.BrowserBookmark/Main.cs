@@ -68,7 +68,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                         IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                                        ? c.FaviconPath
+                                        : @"Images\bookmark.png",
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
@@ -90,7 +92,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                         IcoPath = !string.IsNullOrEmpty(c.FaviconPath) && File.Exists(c.FaviconPath)
+                                        ? c.FaviconPath
+                                        : @"Images\bookmark.png",
                         Score = 5,
                         Action = _ =>
                         {

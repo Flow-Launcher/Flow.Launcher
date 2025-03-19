@@ -60,6 +60,7 @@
 
   <ItemGroup>
     <PackageReference Include="InputSimulator" Version="1.0.4" NoWarn="NU1701" />
+    <PackageReference Include="SkiaSharp" Version="3.116.1" />
   </ItemGroup>
 
 </Project>

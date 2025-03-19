@@ -4,13 +4,26 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Flow.Launcher.Infrastructure.Logger;
+using SkiaSharp;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
 public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 {
+    private readonly string _faviconCacheDir;
+
+    protected FirefoxBookmarkLoaderBase()
+    {
+        _faviconCacheDir = Path.Combine(
+            Path.GetDirectoryName(typeof(FirefoxBookmarkLoaderBase).Assembly.Location),
+            "FaviconCache");
+        Directory.CreateDirectory(_faviconCacheDir);
+    }
+
     public abstract List<Bookmark> GetBookmarks();
 
+    // Updated query - removed favicon_id column
     private const string QueryAllBookmarks = """
         SELECT moz_places.url, moz_bookmarks.title
         FROM moz_places
@@ -20,35 +33,160 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         ORDER BY moz_places.visit_count DESC
         """;
 
-    private const string DbPathFormat = "Data Source ={0}";
+    private const string DbPathFormat = "Data Source={0}";
 
-    protected static List<Bookmark> GetBookmarksFromPath(string placesPath)
+    protected List<Bookmark> GetBookmarksFromPath(string placesPath)
     {
-        // Return empty list if the places.sqlite file cannot be found
+        // Variable to store bookmark list
+        var bookmarks = new List<Bookmark>();
+
+        // Return empty list if places.sqlite file doesn't exist
         if (string.IsNullOrEmpty(placesPath) || !File.Exists(placesPath))
-            return new List<Bookmark>();
+            return bookmarks;
 
-        Main.RegisterBookmarkFile(placesPath);
+        try
+        {
+            // Try to register file monitoring
+            try
+            {
+                Main.RegisterBookmarkFile(placesPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Exception($"Failed to register Firefox bookmark file monitoring: {placesPath}", ex);
+            }
 
-        // create the connection string and init the connection
-        string dbPath = string.Format(DbPathFormat, placesPath);
-        using var dbConnection = new SqliteConnection(dbPath);
-        // Open connection to the database file and execute the query
-        dbConnection.Open();
-        var reader = new SqliteCommand(QueryAllBookmarks, dbConnection).ExecuteReader();
+            // Use a copy to avoid lock issues with the original file
+            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempplaces_{Guid.NewGuid()}.sqlite");
+            File.Copy(placesPath, tempDbPath, true);
 
-        // return results in List<Bookmark> format
-        return reader
-            .Select(
-                x => new Bookmark(
-                    x["title"] is DBNull ? string.Empty : x["title"].ToString(),
-                    x["url"].ToString()
+            // Connect to database and execute query
+            string dbPath = string.Format(DbPathFormat, tempDbPath);
+            using var dbConnection = new SqliteConnection(dbPath);
+            dbConnection.Open();
+            var reader = new SqliteCommand(QueryAllBookmarks, dbConnection).ExecuteReader();
+
+            // Create bookmark list
+            bookmarks = reader
+                .Select(
+                    x => new Bookmark(
+                        x["title"] is DBNull ? string.Empty : x["title"].ToString(),
+                        x["url"].ToString(),
+                        "Firefox"
+                    )
                 )
-            )
-            .ToList();
+                .ToList();
+
+            // Path to favicon database
+            var faviconDbPath = Path.Combine(Path.GetDirectoryName(placesPath), "favicons.sqlite");
+            if (File.Exists(faviconDbPath))
+            {
+                LoadFaviconsFromDb(faviconDbPath, bookmarks);
+            }
+
+            // Delete temporary file
+            try { File.Delete(tempDbPath); } catch { /* Ignore */ }
+        }
+        catch (Exception ex)
+        {
+            Log.Exception($"Failed to load Firefox bookmarks: {placesPath}", ex);
+        }
+
+        return bookmarks;
+    }
+
+    private void LoadFaviconsFromDb(string faviconDbPath, List<Bookmark> bookmarks)
+    {
+        try
+        {
+            // Use a copy to avoid lock issues with the original file
+            var tempDbPath = Path.Combine(_faviconCacheDir, $"tempfavicons_{Guid.NewGuid()}.sqlite");
+            File.Copy(faviconDbPath, tempDbPath, true);
+
+            string dbPath = string.Format(DbPathFormat, tempDbPath);
+            using var connection = new SqliteConnection(dbPath);
+            connection.Open();
+
+            // Get favicons based on bookmark URLs
+            foreach (var bookmark in bookmarks)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(bookmark.Url))
+                        continue;
+
+                    // Extract domain from URL
+                    if (!Uri.TryCreate(bookmark.Url, UriKind.Absolute, out Uri uri))
+                        continue;
+
+                    var domain = uri.Host;
+
+                    // Query for latest Firefox version favicon structure
+                    using var cmd = connection.CreateCommand();
+                    cmd.CommandText = @"
+                        SELECT i.data
+                        FROM moz_icons i
+                        JOIN moz_icons_to_pages ip ON i.id = ip.icon_id
+                        JOIN moz_pages_w_icons p ON ip.page_id = p.id
+                        WHERE p.page_url LIKE @url
+                        AND i.data IS NOT NULL
+                        ORDER BY i.width DESC  -- Select largest icon available
+                        LIMIT 1";
+
+                    cmd.Parameters.AddWithValue("@url", $"%{domain}%");
+
+                    using var reader = cmd.ExecuteReader();
+                    if (reader.Read() && !reader.IsDBNull(0))
+                    {
+                        var imageData = (byte[])reader["data"];
+
+                        if (imageData != null && imageData.Length > 0)
+                        {
+                            var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
+
+                            if (!File.Exists(faviconPath))
+                            {
+                                SaveBitmapData(imageData, faviconPath);
+                            }
+                            bookmark.FaviconPath = faviconPath;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
+                }
+            }
+
+            // Delete temporary file
+            try { File.Delete(tempDbPath); } catch { /* Ignore */ }
+        }
+        catch (Exception ex)
+        {
+            Log.Exception($"Failed to load Firefox favicon DB: {faviconDbPath}", ex);
+        }
+    }
+
+    private void SaveBitmapData(byte[] imageData, string outputPath)
+    {
+        try
+        {
+            using var ms = new MemoryStream(imageData);
+            using var bitmap = SKBitmap.Decode(ms);
+            if (bitmap != null)
+            {
+                using var image = SKImage.FromBitmap(bitmap);
+                using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+                using var fs = File.OpenWrite(outputPath);
+                data.SaveTo(fs);
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Exception($"Failed to save image: {outputPath}", ex);
+        }
     }
 }
-
 
 public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
 {
@@ -77,33 +215,6 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
             using var sReader = new StreamReader(profileIni);
             var ini = sReader.ReadToEnd();
 
-            /*
-                Current profiles.ini structure example as of Firefox version 69.0.1
-
-                [Install736426B0AF4A39CB]
-                Default=Profiles/7789f565.default-release   <== this is the default profile this plugin will get the bookmarks from. When opened Firefox will load the default profile
-                Locked=1
-
-                [Profile2]
-                Name=newblahprofile
-                IsRelative=0
-                Path=C:\t6h2yuq8.newblahprofile  <== Note this is a custom location path for the profile user can set, we need to cater for this in code.
-
-                [Profile1]
-                Name=default
-                IsRelative=1
-                Path=Profiles/cydum7q4.default
-                Default=1
-
-                [Profile0]
-                Name=default-release
-                IsRelative=1
-                Path=Profiles/7789f565.default-release
-
-                [General]
-                StartWithLastProfile=1
-                Version=2
-            */
             var lines = ini.Split("\r\n").ToList();
 
             var defaultProfileFolderNameRaw = lines.FirstOrDefault(x => x.Contains("Default=") && x != "Default=1") ?? string.Empty;
