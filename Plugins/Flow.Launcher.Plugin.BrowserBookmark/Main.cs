@@ -19,6 +19,8 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 
     private static List<Bookmark> _cachedBookmarks = new List<Bookmark>();
 
+    private static Dictionary<string, string> faviconCache = new Dictionary<string, string>();
+
     private static Settings _settings;
 
     private static bool _initialized = false;
@@ -68,7 +70,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = GetFaviconPath(c.Url),
                         Score = BookmarkLoader.MatchProgram(c, param).Score,
                         Action = _ =>
                         {
@@ -90,7 +92,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
                     {
                         Title = c.Name,
                         SubTitle = c.Url,
-                        IcoPath = @"Images\bookmark.png",
+                        IcoPath = GetFaviconPath(c.Url),
                         Score = 5,
                         Action = _ =>
                         {
@@ -104,6 +106,35 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
     }
 
+    private string GetFaviconPath(string url)
+    {
+        try
+        {
+            var uri = new Uri(url);
+            var domain = uri.Host;
+
+            if (faviconCache.TryGetValue(domain, out var cachedFaviconUrl))
+            {
+                return cachedFaviconUrl;
+            }
+            else
+            {
+                var encodedDomain = Uri.EscapeDataString(domain);
+                var faviconUrl = $"https://www.google.com/s2/favicons?domain={encodedDomain}&sz=64";
+
+                // Store the favicon URL in the cache
+                faviconCache[domain] = faviconUrl;
+                return faviconUrl;
+            }
+        }
+        catch (Exception ex)
+        {
+            Log.Exception("Main", "Failed to generate favicon URL", ex);
+
+            // Fallback to default icon
+            return @"Images\bookmark.png";
+        }
+    }
 
     private static Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
 
