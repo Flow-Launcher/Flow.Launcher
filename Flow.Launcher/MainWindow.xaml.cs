@@ -388,13 +388,13 @@ namespace Flow.Launcher
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            if (Win32Helper.WM_ENTERSIZEMOVE((uint)msg))
+            if (msg == Win32Helper.WM_ENTERSIZEMOVE)
             {
                 _initialWidth = (int)Width;
                 _initialHeight = (int)Height;
                 handled = true;
             }
-            else if (Win32Helper.WM_EXITSIZEMOVE((uint)msg))
+            else if (msg == Win32Helper.WM_EXITSIZEMOVE)
             {
                 if (_initialHeight != (int)Height)
                 {

@@ -240,6 +240,19 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
+        private async Task RegisterClockAndDateUpdateAsync()
+        {
+            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+            // ReSharper disable once MethodSupportsCancellation
+            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
+            {
+                if (Settings.UseClock)
+                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
+                if (Settings.UseDate)
+                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
+            }
+        }
+
         [RelayCommand]
         private async Task ReloadPluginDataAsync()
         {
@@ -284,7 +297,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
                 if (lastHistoryIndex < _history.Items.Count)
                 {
                     lastHistoryIndex++;
@@ -297,7 +310,7 @@ namespace Flow.Launcher.ViewModel
         {
             if (_history.Items.Count > 0)
             {
-                ChangeQueryText(_history.Items[_history.Items.Count - lastHistoryIndex].Query.ToString());
+                ChangeQueryText(_history.Items[^lastHistoryIndex].Query.ToString());
                 if (lastHistoryIndex > 1)
                 {
                     lastHistoryIndex--;
@@ -348,12 +361,12 @@ namespace Flow.Launcher.ViewModel
                 }
                 else if (!string.IsNullOrEmpty(SelectedResults.SelectedItem?.QuerySuggestionText))
                 {
-                    var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
-                    // check if result.actionkeywordassigned is empty
-                    if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
-                    {
-                        autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
-                    }
+                    //var defaultSuggestion = SelectedResults.SelectedItem.QuerySuggestionText;
+                    //// check if result.actionkeywordassigned is empty
+                    //if (!string.IsNullOrEmpty(result.ActionKeywordAssigned))
+                    //{
+                    //    autoCompleteText = $"{result.ActionKeywordAssigned} {defaultSuggestion}";
+                    //}
 
                     autoCompleteText = SelectedResults.SelectedItem.QuerySuggestionText;
                 }
@@ -531,19 +544,6 @@ namespace Flow.Launcher.ViewModel
         public Settings Settings { get; }
         public string ClockText { get; private set; }
         public string DateText { get; private set; }
-
-        private async Task RegisterClockAndDateUpdateAsync()
-        {
-            var timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
-            // ReSharper disable once MethodSupportsCancellation
-            while (await timer.WaitForNextTickAsync().ConfigureAwait(false))
-            {
-                if (Settings.UseClock)
-                    ClockText = DateTime.Now.ToString(Settings.TimeFormat, CultureInfo.CurrentCulture);
-                if (Settings.UseDate)
-                    DateText = DateTime.Now.ToString(Settings.DateFormat, CultureInfo.CurrentCulture);
-            }
-        }
 
         public ResultsViewModel Results { get; private set; }
 
@@ -751,7 +751,7 @@ namespace Flow.Launcher.ViewModel
 
         public string OpenResultCommandModifiers => Settings.OpenResultModifiers;
 
-        public string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
+        private static string VerifyOrSetDefaultHotkey(string hotkey, string defaultHotkey)
         {
             try
             {
@@ -779,8 +779,6 @@ namespace Flow.Launcher.ViewModel
         public string SettingWindowHotkey => VerifyOrSetDefaultHotkey(Settings.SettingWindowHotkey, "Ctrl+I");
         public string CycleHistoryUpHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryUpHotkey, "Alt+Up");
         public string CycleHistoryDownHotkey => VerifyOrSetDefaultHotkey(Settings.CycleHistoryDownHotkey, "Alt+Down");
-
-        public string Image => Constant.QueryTextBoxIconImagePath;
 
         public bool StartWithEnglishMode => Settings.AlwaysStartEn;
 
@@ -863,18 +861,6 @@ namespace Flow.Launcher.ViewModel
             else
             {
                 ShowPreview();
-            }
-        }
-
-        private void ToggleInternalPreview()
-        {
-            if (!InternalPreviewVisible)
-            {
-                ShowInternalPreview();
-            }
-            else
-            {
-                HideInternalPreview();
             }
         }
 
@@ -1368,27 +1354,27 @@ namespace Flow.Launcher.ViewModel
         }
 
         public void Show()
-{
-    Application.Current.Dispatcher.Invoke(() =>
-    {
-        if (Application.Current.MainWindow is MainWindow mainWindow)
         {
-            // 📌 Remove DWM Cloak (Make the window visible normally)
-            Win32Helper.DWMSetCloakForWindow(mainWindow, false);
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                if (Application.Current.MainWindow is MainWindow mainWindow)
+                {
+                    // 📌 Remove DWM Cloak (Make the window visible normally)
+                    Win32Helper.DWMSetCloakForWindow(mainWindow, false);
 
-            // 📌 Restore UI elements
-            mainWindow.ClockPanel.Visibility = Visibility.Visible;
-            //mainWindow.SearchIcon.Visibility = Visibility.Visible;
-            SearchIconVisibility = Visibility.Visible;
+                    // 📌 Restore UI elements
+                    mainWindow.ClockPanel.Visibility = Visibility.Visible;
+                    //mainWindow.SearchIcon.Visibility = Visibility.Visible;
+                    SearchIconVisibility = Visibility.Visible;
+                }
+
+                // Update WPF properties
+                MainWindowVisibility = Visibility.Visible;
+                MainWindowOpacity = 1;
+                MainWindowVisibilityStatus = true;
+                VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
+            });
         }
-
-        // Update WPF properties
-        MainWindowVisibility = Visibility.Visible;
-        MainWindowOpacity = 1;
-        MainWindowVisibilityStatus = true;
-        VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = true });
-    });
-}
 
 #pragma warning disable VSTHRD100 // Avoid async void methods
 
@@ -1456,14 +1442,14 @@ namespace Flow.Launcher.ViewModel
                 Win32Helper.DWMSetCloakForWindow(mainWindow, true);
             }
             
-            await Task.Delay(50); 
+            await Task.Delay(50);
+
             // Update WPF properties
             //MainWindowOpacity = 0;
             MainWindowVisibilityStatus = false;
             MainWindowVisibility = Visibility.Collapsed;
             VisibilityChanged?.Invoke(this, new VisibilityChangedEventArgs { IsVisible = false });
         }
-
 
 #pragma warning restore VSTHRD100 // Avoid async void methods
 
