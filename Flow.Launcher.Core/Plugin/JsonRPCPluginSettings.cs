@@ -65,26 +65,22 @@ namespace Flow.Launcher.Core.Plugin
             foreach (var (type, attributes) in Configuration.Body)
             {
                 // Skip if the setting does not have attributes or name
-                if (attributes?.Name == null)
-                {
-                    continue;
-                }
+                if (attributes?.Name == null) continue;
 
-                if (NeedSaveInSettings(type))
+                // Skip if the setting does not have attributes or name
+                if (!NeedSaveInSettings(type)) continue;
+
+                // If need save in settings, we need to make sure the setting exists in the settings file
+                if (Settings.ContainsKey(attributes.Name)) continue;
+
+                if (type == "checkbox")
                 {
-                    // If need save in settings, we need to make sure the setting exists in the settings file
-                    if (!Settings.ContainsKey(attributes.Name))
-                    {
-                        if (type == "checkbox")
-                        {
-                            // If can parse the default value to bool, use it, otherwise use false
-                            Settings[attributes.Name] = bool.TryParse(attributes.DefaultValue, out var value) && value;
-                        }
-                        else
-                        {
-                            Settings[attributes.Name] = attributes.DefaultValue;
-                        }
-                    }
+                    // If can parse the default value to bool, use it, otherwise use false
+                    Settings[attributes.Name] = bool.TryParse(attributes.DefaultValue, out var value) && value;
+                }
+                else
+                {
+                    Settings[attributes.Name] = attributes.DefaultValue;
                 }
             }
         }
