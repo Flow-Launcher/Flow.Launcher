@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Navedeni plugin nije moguće pronaći</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Prečica za novu radnju ne može da bude prazna</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Prečica za novu radnju je dodeljena drugom plugin-u, molim Vas dodelite drugu prečicu</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Uspešno</system:String>
     <system:String x:Key="completedSuccessfully">Completed successfully</system:String>
-    <system:String x:Key="actionkeyword_tips">Koristite * ako ne želite da navedete prečicu za radnju</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">prečica za ručno dodat upit</system:String>
