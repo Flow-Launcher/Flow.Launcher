@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Kan ikke finne spesifisert programtillegg</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nytt handlingsnøkkelord kan ikke være tom</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Det nye nøkkelordet for handling er allerede tilordnet et annet programtillegg, velg et annet</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Vellykket</system:String>
     <system:String x:Key="completedSuccessfully">Fullført vellykket</system:String>
-    <system:String x:Key="actionkeyword_tips">Skriv inn handlingsnøkkelord du vil bruke for å starte programtillegget. Bruk * hvis du ikke ønsker å spesifisere noen, og utvidelsen vil bli utløst uten noen handlingsord.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Hurtigtast for egendefinert spørring</system:String>
