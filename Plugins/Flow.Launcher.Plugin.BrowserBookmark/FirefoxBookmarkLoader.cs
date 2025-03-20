@@ -82,7 +82,6 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             {
                 LoadFaviconsFromDb(faviconDbPath, bookmarks);
             }
-
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(dbConnection);
             dbConnection.Close();
@@ -168,14 +167,14 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                         }
                         else
                         {
-                            // 변환 실패 시 빈 문자열 설정 (기본 아이콘 사용)
+                            // Set empty string on conversion failure (will use default icon)
                             bookmark.FaviconPath = string.Empty;
                             continue;
                         }
                     }
                     else
                     {
-                        // PNG는 그대로 저장
+                        // Save PNG directly
                         SaveBitmapData(imageData, faviconPath);
                     }
                 }
@@ -208,37 +207,58 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     }
 }
 
-private byte[] ConvertSvgToPng(byte[] svgData)
-{
-    try
+    private byte[] ConvertSvgToPng(byte[] svgData)
     {
-        using var memoryStream = new MemoryStream();
-        // 메모리에 SVG 데이터 로드
-        using (var image = new ImageMagick.MagickImage(svgData))
+        try
         {
-            // 적절한 크기로 리사이징 (32x32가 일반적인 파비콘 크기)
-            image.Resize(32, 32);
-            // PNG 형식으로 변환하여 메모리 스트림에 저장
-            image.Format = ImageMagick.MagickFormat.Png;
-            image.Write(memoryStream);
-        }
+            // Create SKSvg object from SVG data
+            using var stream = new MemoryStream(svgData);
+            var svg = new SkiaSharp.Extended.Svg.SKSvg();
+            svg.Load(stream);
+
+            // Set default values if SVG size is invalid or missing
+            float width = svg.Picture.CullRect.Width > 0 ? svg.Picture.CullRect.Width : 32;
+            float height = svg.Picture.CullRect.Height > 0 ? svg.Picture.CullRect.Height : 32;
         
-        return memoryStream.ToArray();
+            // Calculate scale for 32x32 favicon size
+            float scaleX = 32 / width;
+            float scaleY = 32 / height;
+            float scale = Math.Min(scaleX, scaleY);
+        
+            // Calculate final image dimensions (maintaining aspect ratio)
+            int finalWidth = (int)(width * scale);
+            int finalHeight = (int)(height * scale);
+        
+            // Render to PNG
+            using var surface = SkiaSharp.SKSurface.Create(new SkiaSharp.SKImageInfo(finalWidth, finalHeight));
+            var canvas = surface.Canvas;
+        
+            // Set transparent background
+            canvas.Clear(SkiaSharp.SKColors.Transparent);
+        
+            // Draw SVG (scaled to fit)
+            canvas.Scale(scale);
+            canvas.DrawPicture(svg.Picture);
+        
+            // Extract image data
+            using var image = surface.Snapshot();
+            using var data = image.Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
+            return data.ToArray();
+        }
+        catch (Exception ex)
+        {
+            Log.Exception("SVG to PNG conversion failed", ex);
+            return null;
+        }
     }
-    catch (Exception ex)
-    {
-        Log.Exception("SVG to PNG conversion failed", ex);
-        return null;
-    }
-}
 
     private static bool IsSvgData(byte[] data)
     {
         if (data == null || data.Length < 5)
             return false;
 
-        // SVG 파일 시그니처 확인
-        // ASCII로 시작하는 SVG XML 헤더 확인
+        // Check SVG file signature
+        // Verify SVG XML header starting with ASCII
         string header = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(data.Length, 200)).ToLower();
 
         return header.Contains("<svg") ||

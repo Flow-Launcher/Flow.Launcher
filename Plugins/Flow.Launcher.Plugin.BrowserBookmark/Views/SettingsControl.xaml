@@ -31,10 +31,6 @@
                     Margin="0,0,15,0"
                     Click="Others_Click"
                     Content="{DynamicResource flowlauncher_plugin_browserbookmark_others}" />
-                <Button
-                    Margin="0,0,15,0"
-                    Click="RemoveFaviconCache_Click"
-                    Content="Remove Favicon Cache" />
             </StackPanel>
             <StackPanel Name="CustomBrowsersList" Visibility="Collapsed">
                 <ListView
