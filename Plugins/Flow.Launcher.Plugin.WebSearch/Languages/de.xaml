@@ -17,7 +17,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Aktions-Schlüsselwort</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Suche</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Autovervollständigung von Suchanfragen verwenden:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Daten automatisch vervollständigen aus:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Bitte wählen Sie eine Websuche aus</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Sind Sie sicher, dass Sie {0} löschen wollen?</system:String>
