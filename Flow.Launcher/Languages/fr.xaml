@@ -339,9 +339,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossible de trouver le module spécifi</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Le nouveau mot-clé d'action doit être spécifi</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Le nouveau mot-clé d'action a été assigné à un autre module, veuillez en choisir un autre</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Ajout</system:String>
     <system:String x:Key="completedSuccessfully">Terminé avec succès</system:String>
-    <system:String x:Key="actionkeyword_tips">Saisissez * si vous ne souhaitez pas utiliser de mot-clé spécifique</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Requêtes personnalisées</system:String>
