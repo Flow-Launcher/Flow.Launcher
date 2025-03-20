@@ -342,9 +342,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Không thể tìm thấy plugin được chỉ định</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Từ khóa hành động mới không được để trống</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Từ khóa hành động mới này đã được gán cho một plugin khác, vui lòng chọn một plugin khác</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Thành công</system:String>
     <system:String x:Key="completedSuccessfully">Đã hoàn tất thành công</system:String>
-    <system:String x:Key="actionkeyword_tips">Sử dụng * nếu bạn muốn xác định từ khóa hành động.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Phím nóng truy vấn tùy chỉnh</system:String>
