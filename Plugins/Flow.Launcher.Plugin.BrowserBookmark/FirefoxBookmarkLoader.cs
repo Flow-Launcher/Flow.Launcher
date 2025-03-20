@@ -86,6 +86,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             // Delete temporary file
             try
             {
+                // https://github.com/dotnet/efcore/issues/26580
+                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)
@@ -168,6 +170,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             // Delete temporary file
             try
             {
+                // https://github.com/dotnet/efcore/issues/26580
+                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)
@@ -181,7 +185,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
         }
     }
 
-    private bool IsSvgData(byte[] data)
+    private static bool IsSvgData(byte[] data)
     {
         if (data == null || data.Length < 5)
             return false;
@@ -195,7 +199,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                header.Contains("image/svg+xml");
     }
 
-    private void SaveBitmapData(byte[] imageData, string outputPath)
+    private static void SaveBitmapData(byte[] imageData, string outputPath)
     {
         try
         {
@@ -221,7 +225,7 @@ public class FirefoxBookmarkLoader : FirefoxBookmarkLoaderBase
     /// <summary>
     /// Path to places.sqlite
     /// </summary>
-    private string PlacesPath
+    private static string PlacesPath
     {
         get
         {

@@ -63,7 +63,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         return bookmarks;
     }
 
-    protected List<Bookmark> LoadBookmarksFromFile(string path, string source)
+    protected static List<Bookmark> LoadBookmarksFromFile(string path, string source)
     {
         var bookmarks = new List<Bookmark>();
 
@@ -77,7 +77,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         return bookmarks;
     }
 
-    private void EnumerateRoot(JsonElement rootElement, ICollection<Bookmark> bookmarks, string source)
+    private static void EnumerateRoot(JsonElement rootElement, ICollection<Bookmark> bookmarks, string source)
     {
         foreach (var folder in rootElement.EnumerateObject())
         {
@@ -92,7 +92,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         }
     }
 
-    private void EnumerateFolderBookmark(JsonElement folderElement, ICollection<Bookmark> bookmarks,
+    private static void EnumerateFolderBookmark(JsonElement folderElement, ICollection<Bookmark> bookmarks,
         string source)
     {
         if (!folderElement.TryGetProperty("children", out var childrenElement))
@@ -201,6 +201,8 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
             // Delete temporary file
             try
             {
+                // https://github.com/dotnet/efcore/issues/26580
+                SqliteConnection.ClearAllPools();
                 File.Delete(tempDbPath);
             }
             catch (Exception ex)
@@ -214,7 +216,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
         }
     }
 
-    private void SaveBitmapData(byte[] imageData, string outputPath)
+    private static void SaveBitmapData(byte[] imageData, string outputPath)
     {
         try
         {
