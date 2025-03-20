@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">لا يمكن العثور على الإضافة المحددة</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">كلمة المفتاح الجديدة لا يمكن أن تكون فارغة</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">تم تعيين كلمة المفتاح الجديدة هذه إلى إضافة أخرى، يرجى اختيار كلمة أخرى</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">نجاح</system:String>
     <system:String x:Key="completedSuccessfully">اكتمل بنجاح</system:String>
-    <system:String x:Key="actionkeyword_tips">أدخل كلمة المفتاح التي ترغب في استخدامها لبدء الإضافة. استخدم * إذا كنت لا ترغب في تحديد أي كلمة، وسيتم تشغيل الإضافة بدون كلمات مفتاحية.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">مفتاح اختصار الاستعلام المخصص</system:String>
