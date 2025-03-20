@@ -102,11 +102,11 @@
     <system:String x:Key="AlwaysPreview">Pré-visualizar sempre</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Abrir painel de pré-visualização ao ativar Flow Launcher. Prima {0} para comutar a pré-visualização.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">O efeito sombra não é permitido com este tema porque o efeito desfocar está ativo</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropType">Tipo de fundo</system:String>
     <system:String x:Key="BackdropTypesNone">Nenhuma</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrílico</system:String>
     <system:String x:Key="BackdropTypesMica">Mica</system:String>
-    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica alternativo</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Pesquisar plugins</system:String>
@@ -339,10 +339,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Plugin não encontrado</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">A nova palavra-chave não pode estar vazia</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Esta palavra-chave já está associada a um plugin. Por favor escolha outra.</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">A palavra-chave escolhida é igual à anterior. Por favor escolha outra.</system:String>
     <system:String x:Key="success">Sucesso</system:String>
     <system:String x:Key="completedSuccessfully">Terminado com sucesso</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">Introduza as palavras-chave que pretende utilizar para iniciar o plugin e um espaço vazio caso queira mais do que uma. Utilize * se não quiser especificar uma palavra-chave e o plugin será ativado sem palavras-chave.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tecla de atalho personalizada</system:String>
