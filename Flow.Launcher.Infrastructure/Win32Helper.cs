@@ -338,9 +338,9 @@ namespace Flow.Launcher.Infrastructure
                     action();
                     taskCompletionSource.SetResult();
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-                    taskCompletionSource.SetResult();
+                    taskCompletionSource.SetException(ex);
                 }
                 finally
                 {
