@@ -195,6 +195,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
                 // https://github.com/dotnet/efcore/issues/26580
                 SqliteConnection.ClearPool(connection);
+                connection.Close();
             }
             catch (Exception ex)
             {

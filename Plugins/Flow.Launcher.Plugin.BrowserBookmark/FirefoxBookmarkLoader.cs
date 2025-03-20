@@ -85,6 +85,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(dbConnection);
+            dbConnection.Close();
 
             // Delete temporary file
             try
@@ -171,6 +172,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
             // https://github.com/dotnet/efcore/issues/26580
             SqliteConnection.ClearPool(connection);
+            connection.Close();
 
             // Delete temporary file
             try
