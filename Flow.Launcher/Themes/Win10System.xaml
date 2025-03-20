@@ -11,6 +11,10 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Themes/Base.xaml" />
     </ResourceDictionary.MergedDictionaries>
+    <system:Boolean x:Key="ThemeBlurEnabled">False</system:Boolean>
+    <system:String x:Key="SystemBG">Auto</system:String>
+    <Color x:Key="LightBG">#FFFAFAFA</Color>
+    <Color x:Key="DarkBG">#FF202020</Color>
     <Thickness x:Key="ResultMargin">0 0 0 8</Thickness>
     <Style
         x:Key="ItemGlyph"
@@ -175,13 +179,13 @@
         x:Key="ClockBox"
         BasedOn="{StaticResource BaseClockBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="DateBox"
         BasedOn="{StaticResource BaseDateBox}"
         TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="{DynamicResource ClockDateForeground}" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlBackgroundBaseLowBrush}" />
     </Style>
     <Style
         x:Key="PreviewBorderStyle"
