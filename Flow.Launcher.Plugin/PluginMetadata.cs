@@ -92,6 +92,11 @@ namespace Flow.Launcher.Plugin
         /// All action keywords of plugin.
         /// </summary>
         public List<string> ActionKeywords { get; set; }
+        
+        /// <summary>
+        /// Hide plugin keyword setting panel.
+        /// </summary>
+        public bool HideActionKeywordPanel { get; set; }
 
         /// <summary>
         /// Plugin icon path.

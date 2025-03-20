@@ -152,7 +152,6 @@ namespace Flow.Launcher.Plugin
         /// <param name="callback"></param>
         public void RemoveGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback);
 
-
         /// <summary>
         /// Fuzzy Search the string with the given query. This is the core search mechanism Flow uses
         /// </summary>
@@ -191,14 +190,15 @@ namespace Flow.Launcher.Plugin
         Task HttpDownloadAsync([NotNull] string url, [NotNull] string filePath, Action<double> reportProgress = null, CancellationToken token = default);
 
         /// <summary>
-        /// Add ActionKeyword for specific plugin
+        /// Add ActionKeyword and update action keyword metadata for specific plugin
+        /// Before adding, please check if action keyword is already assigned by <see cref="ActionKeywordAssigned"/>
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to add action keyword</param>
         /// <param name="newActionKeyword">The actionkeyword that is supposed to be added</param>
         void AddActionKeyword(string pluginId, string newActionKeyword);
 
         /// <summary>
-        /// Remove ActionKeyword for specific plugin
+        /// Remove ActionKeyword and update action keyword metadata for specific plugin
         /// </summary>
         /// <param name="pluginId">ID for plugin that needs to remove action keyword</param>
         /// <param name="oldActionKeyword">The actionkeyword that is supposed to be removed</param>
