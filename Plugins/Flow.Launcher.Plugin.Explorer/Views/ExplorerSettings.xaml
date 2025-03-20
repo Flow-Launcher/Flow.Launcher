@@ -90,7 +90,7 @@
                                 <Setter Property="Panel.ZIndex" Value="1" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.FontWeight" Value="SemiBold" />
                             </MultiTrigger>
-                            <!--  비활성화  -->
+                            <!--  Disabled  -->
                             <Trigger Property="IsEnabled" Value="False">
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundDisabled}" />
                             </Trigger>
