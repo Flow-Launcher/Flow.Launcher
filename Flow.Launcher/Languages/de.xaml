@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Das angegebene Plug-in kann nicht gefunden werden</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Neues Aktions-Schlüsselwort darf nicht leer sein</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Dieses neue Aktions-Schlüsselwort ist bereits einem anderen Plug-in zugewiesen, bitte wählen Sie ein anderes</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Erfolg</system:String>
     <system:String x:Key="completedSuccessfully">Erfolgreich abgeschlossen</system:String>
-    <system:String x:Key="actionkeyword_tips">Geben Sie das Aktions-Schlüsselwort ein, das Sie verwenden möchten, um das Plug-in zu starten. Verwenden Sie *, wenn Sie keines angeben möchten, und das Plug-in wird ohne irgendwelche Aktions-Schlüsselwörter ausgelöst.</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Benutzerdefinierter Abfrage-Hotkey</system:String>
