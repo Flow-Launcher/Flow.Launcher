@@ -19,7 +19,7 @@
     <system:String x:Key="flowlauncher_plugin_websearch_action_keyword">Action Keyword</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_url">URL</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_search">Search</system:String>
-    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete:</system:String>
+    <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion">Use Search Query Autocomplete</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_enable_suggestion_provider">Autocomplete Data from:</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_pls_select_web_search">Please select a web search</system:String>
     <system:String x:Key="flowlauncher_plugin_websearch_delete_warning">Are you sure you want to delete {0}?</system:String>
