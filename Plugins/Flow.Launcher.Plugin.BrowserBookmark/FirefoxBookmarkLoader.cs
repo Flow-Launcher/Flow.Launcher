@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Flow.Launcher.Infrastructure.Logger;
-using SkiaSharp;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -149,7 +148,8 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
 
                         if (imageData != null && imageData.Length > 0)
                         {
-                            var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.png");
+                            var ext = IsSvgData(imageData) ? "svg" : "png";
+                            var faviconPath = Path.Combine(_faviconCacheDir, $"firefox_{domain}.{ext}");
 
                             if (!File.Exists(faviconPath))
                             {
@@ -185,12 +185,12 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     {
         if (data == null || data.Length < 5)
             return false;
-    
+
         // SVG 파일 시그니처 확인
         // ASCII로 시작하는 SVG XML 헤더 확인
         string header = System.Text.Encoding.ASCII.GetString(data, 0, Math.Min(data.Length, 200)).ToLower();
 
-        return header.Contains("<svg") || 
+        return header.Contains("<svg") ||
                header.StartsWith("<?xml") && header.Contains("<svg") ||
                header.Contains("image/svg+xml");
     }
@@ -199,30 +199,7 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
     {
         try
         {
-            // SVG 파일 시그니처 확인
-            bool isSvg = IsSvgData(imageData);
-        
-            if (isSvg)
-            {
-                // SVG 데이터는 있는 그대로 저장 (.svg 확장자 사용)
-                string svgOutputPath = Path.ChangeExtension(outputPath, ".svg");
-                File.WriteAllBytes(svgOutputPath, imageData);
-                // 원래 경로 대신 SVG 경로를 반환하도록 outputPath 변수를 업데이트
-                File.Copy(svgOutputPath, outputPath, true);
-            }
-            else
-            {
-                // 기존 비트맵 처리 코드
-                using var ms = new MemoryStream(imageData);
-                using var bitmap = SKBitmap.Decode(ms);
-                if (bitmap != null)
-                {
-                    using var image = SKImage.FromBitmap(bitmap);
-                    using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-                    using var fs = File.OpenWrite(outputPath);
-                    data.SaveTo(fs);
-                }
-            }
+            File.WriteAllBytes(outputPath, imageData);
         }
         catch (Exception ex)
         {

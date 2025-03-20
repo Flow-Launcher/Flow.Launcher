@@ -4,8 +4,7 @@ using System.IO;
 using System.Text.Json;
 using Flow.Launcher.Infrastructure.Logger;
 using System;
-using System.Data.SQLite;
-using SkiaSharp;
+using Microsoft.Data.Sqlite;
 
 namespace Flow.Launcher.Plugin.BrowserBookmark;
 
@@ -143,7 +142,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
 
             try
             {
-                using var connection = new SQLiteConnection($"Data Source={tempDbPath};Version=3;Read Only=True;");
+                using var connection = new SqliteConnection($"Data Source={tempDbPath}");
                 connection.Open();
 
                 foreach (var bookmark in bookmarks)
@@ -219,15 +218,7 @@ public abstract class ChromiumBookmarkLoader : IBookmarkLoader
     {
         try
         {
-            using var ms = new MemoryStream(imageData);
-            using var bitmap = SKBitmap.Decode(ms);
-            if (bitmap != null)
-            {
-                using var image = SKImage.FromBitmap(bitmap);
-                using var data = image.Encode(SKEncodedImageFormat.Png, 100);
-                using var fs = File.OpenWrite(outputPath);
-                data.SaveTo(fs);
-            }
+            File.WriteAllBytes(outputPath, imageData);
         }
         catch (Exception ex)
         {
