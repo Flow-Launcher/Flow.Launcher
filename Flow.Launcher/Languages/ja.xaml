@@ -102,6 +102,11 @@
     <system:String x:Key="AlwaysPreview">常にプレビューする</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Flow が有効になったとき、常にプレビューパネルを開きます。 {0} を押してプレビューの表示/非表示を切り替えます。</system:String>
     <system:String x:Key="shadowEffectNotAllowed">現在のテーマでぼかしの効果が有効になっている場合、影の効果を有効にすることはできません</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">None</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Search Plugin</system:String>
