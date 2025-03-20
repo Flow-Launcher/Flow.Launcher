@@ -102,10 +102,10 @@
     <system:String x:Key="AlwaysPreview">הצג תמיד תצוגה מקדימה</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">פתח תמיד את לוח התצוגה המקדימה כאשר Flow מופעל. הקש על {0} כדי להחליף את התצוגה המקדימה.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">לא ניתן להחיל אפקט צל כאשר העיצוב הנוכחי מוגדר לאפקט טשטוש</system:String>
-    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropType">סוג רקע</system:String>
     <system:String x:Key="BackdropTypesNone">ללא</system:String>
-    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
-    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">אקריליק</system:String>
+    <system:String x:Key="BackdropTypesMica">מיקה</system:String>
     <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
@@ -340,10 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">לא ניתן למצוא את התוסף שצוין</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">מילת הפעולה החדשה לא יכולה להיות ריקה</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">מילת הפעולה החדשה כבר מוקצה לתוסף אחר, אנא בחר אחת שונה</system:String>
-    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">מילת הפעולה החדשה זהה לישנה, נא לבחור מילת פעולה שונה</system:String>
     <system:String x:Key="success">הצליח</system:String>
     <system:String x:Key="completedSuccessfully">הושלם בהצלחה</system:String>
-    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
+    <system:String x:Key="actionkeyword_tips">הזן את מילות הפעולה שבהן תרצה להשתמש כדי להפעיל את התוסף, והשתמש ברווחים כדי להפריד ביניהן. השתמש ב-* אם אינך רוצה להגדיר כלל, והתוסף יופעל ללא מילות פעולה.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">מקש קיצור לשאילתה מותאמת אישית</system:String>
