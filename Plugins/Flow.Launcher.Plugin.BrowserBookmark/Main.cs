@@ -17,7 +17,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
 {
     private static PluginInitContext _context;
 
-    private static List<Bookmark> _cachedBookmarks = new List<Bookmark>();
+    private static List<Bookmark> _cachedBookmarks = new();
 
     private static Settings _settings;
 
@@ -117,9 +117,9 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
         }
     }
 
-    private static Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
+    private static readonly Channel<byte> _refreshQueue = Channel.CreateBounded<byte>(1);
 
-    private static SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
+    private static readonly SemaphoreSlim _fileMonitorSemaphore = new(1, 1);
 
     private static async Task MonitorRefreshQueueAsync()
     {
@@ -153,12 +153,13 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
             return;
         }
 
-        var watcher = new FileSystemWatcher(directory!);
-        watcher.Filter = Path.GetFileName(path);
-
-        watcher.NotifyFilter = NotifyFilters.FileName |
-                               NotifyFilters.LastWrite |
-                               NotifyFilters.Size;
+        var watcher = new FileSystemWatcher(directory!)
+        {
+            Filter = Path.GetFileName(path),
+            NotifyFilter = NotifyFilters.FileName |
+                                   NotifyFilters.LastWrite |
+                                   NotifyFilters.Size
+        };
 
         watcher.Changed += static (_, _) =>
         {
@@ -207,7 +208,7 @@ public class Main : ISettingProvider, IPlugin, IReloadable, IPluginI18n, IContex
     {
         return new List<Result>()
         {
-            new Result
+            new()
             {
                 Title = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_title"),
                 SubTitle = _context.API.GetTranslation("flowlauncher_plugin_browserbookmark_copyurl_subtitle"),
