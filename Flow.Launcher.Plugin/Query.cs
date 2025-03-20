@@ -39,10 +39,9 @@ namespace Flow.Launcher.Plugin
         public const string TermSeparator = " ";
 
         /// <summary>
-        /// User can set multiple action keywords seperated by ';'
+        /// User can set multiple action keywords seperated by whitespace
         /// </summary>
-        public const string ActionKeywordSeparator = ";";
-
+        public const string ActionKeywordSeparator = TermSeparator;
 
         /// <summary>
         /// Wildcard action keyword. Plugins using this value will be queried on every search.
