@@ -16,55 +16,53 @@
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style x:Key="ExplorerTabItem" TargetType="{x:Type TabItem}">
+            <Setter Property="MinWidth" Value="120" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type TabItem}">
-
                         <Border
                             x:Name="LayoutRoot"
-                            Margin="0 0 0 0"
+                            Margin="0"
                             Padding="{TemplateBinding Padding}"
                             SnapsToDevicePixels="True">
                             <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
                                 <Border
                                     x:Name="TabSeparator"
                                     Width="0"
-                                    Margin="{DynamicResource TabViewItemSeparatorMargin}"
+                                    Margin="0"
                                     HorizontalAlignment="Right"
                                     BorderBrush="{DynamicResource TabViewItemSeparator}"
                                     BorderThickness="1" />
+
                                 <Border
                                     x:Name="TabContainer"
                                     Grid.Column="1"
-                                    Padding="{DynamicResource TabViewItemHeaderPadding}"
-                                    Background="{DynamicResource TabViewItemHeaderBackground}"
+                                    Padding="10,5"
+                                    Background="{DynamicResource Color06B}"
                                     BorderBrush="{TemplateBinding BorderBrush}"
                                     BorderThickness="{TemplateBinding BorderThickness}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <ContentPresenter
-                                            x:Name="ContentPresenter"
-                                            Grid.Column="1"
-                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                            ContentSource="Header"
-                                            Focusable="False"
-                                            RecognizesAccessKey="True"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                            TextElement.FontSize="{DynamicResource TabViewItemHeaderFontSize}"
-                                            TextElement.FontWeight="{TemplateBinding FontWeight}"
-                                            TextElement.Foreground="{DynamicResource Color05B}" />
-                                    </Grid>
+                                    <ContentPresenter
+                                        x:Name="ContentPresenter"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                        ContentSource="Header"
+                                        Focusable="False"
+                                        RecognizesAccessKey="True"
+                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                        TextElement.FontSize="{TemplateBinding FontSize}"
+                                        TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                        TextElement.Foreground="{DynamicResource Color08B}" />
                                 </Border>
                             </Grid>
                         </Border>
 
                         <ControlTemplate.Triggers>
-                            <!--  PointerOver  -->
+                            <!--  Default  -->
                             <Trigger Property="IsMouseOver" Value="False">
                                 <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource Color06B}" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource Color08B}" />
@@ -73,13 +71,11 @@
                             <Trigger Property="IsMouseOver" Value="True">
                                 <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource Color06B}" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource TabViewItemHeaderForegroundPointerOver}" />
-
                             </Trigger>
                             <!--  Selected  -->
                             <Trigger Property="IsSelected" Value="True">
                                 <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource Color00B}" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
-
                                 <Setter Property="Panel.ZIndex" Value="1" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.FontWeight" Value="SemiBold" />
                             </Trigger>
@@ -91,7 +87,6 @@
                                 </MultiTrigger.Conditions>
                                 <Setter TargetName="TabContainer" Property="Background" Value="{DynamicResource Color00B}" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.Foreground" Value="{DynamicResource Color05B}" />
-
                                 <Setter Property="Panel.ZIndex" Value="1" />
                                 <Setter TargetName="ContentPresenter" Property="TextElement.FontWeight" Value="SemiBold" />
                             </MultiTrigger>
@@ -175,6 +170,11 @@
             BorderThickness="0"
             SelectedIndex="0"
             TabStripPlacement="Top">
+            <TabControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel IsItemsHost="True" Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </TabControl.ItemsPanel>
             <TabItem
                 Width="Auto"
                 Header="{DynamicResource plugin_explorer_generalsetting_header}"
