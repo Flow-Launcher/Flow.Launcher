@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Impossibile trovare il plugin specificato</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">La nuova parola chiave d'azione non può essere vuota</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">La nuova parola chiave d'azione è stata assegnata ad un altro plugin, per favore sceglierne una differente</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Successo</system:String>
     <system:String x:Key="completedSuccessfully">Completato con successo</system:String>
-    <system:String x:Key="actionkeyword_tips">Usa * se non vuoi specificare una parola chiave d'azione</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Tasti scelta rapida per ricerche personalizzate</system:String>
