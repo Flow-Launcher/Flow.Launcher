@@ -183,8 +183,8 @@ namespace Flow.Launcher.Core.Plugin
                 StackPanel? panel = null;
                 FrameworkElement contentControl;
 
-                // If the type is textBlock, seperator or check box, we do not need to create a panel
-                if (type != "textBlock" && type != "seperator" && type != "checkbox")
+                // If the type is textBlock, separator, or checkbox, we do not need to create a panel
+                if (type != "textBlock" && type != "separator" && type != "checkbox")
                 {
                     // Create a panel to hold the label and description
                     panel = new StackPanel
