@@ -171,7 +171,7 @@
         <TabControl
             x:Name="TabView"
             MinHeight="0"
-            Margin="-25 0"
+            Margin="-25 -10 0 0"
             Background="{DynamicResource Color00B}"
             BorderThickness="0"
             SelectedIndex="0"
