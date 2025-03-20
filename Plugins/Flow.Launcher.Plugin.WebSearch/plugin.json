@@ -23,6 +23,7 @@
     "yahoo",
     "bd"
   ],
+  "HideActionKeywordPanel": true,
   "Name": "Web Searches",
   "Description": "Provide the web search ability",
   "Author": "qianlifeng",

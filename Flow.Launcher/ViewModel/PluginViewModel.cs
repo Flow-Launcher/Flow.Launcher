@@ -46,7 +46,6 @@ namespace Flow.Launcher.ViewModel
             }
         }
 
-
         private async void LoadIconAsync()
         {
             Image = await ImageLoader.LoadAsync(PluginPair.Metadata.IcoPath);
@@ -119,7 +118,7 @@ namespace Flow.Launcher.ViewModel
                 : null;
         private ImageSource _image = ImageLoader.MissingImage;
 
-        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.ActionKeywords.Count == 1 ? Visibility.Visible : Visibility.Collapsed;
+        public Visibility ActionKeywordsVisibility => PluginPair.Metadata.HideActionKeywordPanel ? Visibility.Collapsed : Visibility.Visible;
         public string InitilizaTime => PluginPair.Metadata.InitTime + "ms";
         public string QueryTime => PluginPair.Metadata.AvgQueryTime + "ms";
         public string Version => InternationalizationManager.Instance.GetTranslation("plugin_query_version") + " " + PluginPair.Metadata.Version;
@@ -128,9 +127,8 @@ namespace Flow.Launcher.ViewModel
         public int Priority => PluginPair.Metadata.Priority;
         public Infrastructure.UserSettings.Plugin PluginSettingsObject { get; set; }
 
-        public void ChangeActionKeyword(string newActionKeyword, string oldActionKeyword)
+        public void OnActionKeywordsChanged()
         {
-            PluginManager.ReplaceActionKeyword(PluginPair.Metadata.ID, oldActionKeyword, newActionKeyword);
             OnPropertyChanged(nameof(ActionKeywordsText));
         }
 
@@ -168,8 +166,6 @@ namespace Flow.Launcher.ViewModel
             App.API.ChangeQuery($"{PluginManagerActionKeyword} uninstall {PluginPair.Metadata.Name}".Trim(), true);
             App.API.ShowMainWindow();
         }
-
-        public static bool IsActionKeywordRegistered(string newActionKeyword) => PluginManager.ActionKeywordRegistered(newActionKeyword);
 
         [RelayCommand]
         private void SetActionKeywords()

@@ -33,7 +33,9 @@ namespace Flow.Launcher.Plugin
         public string ActionKeyword { get; set; }
 
         public List<string> ActionKeywords { get; set; }
-
+        
+        public bool HideActionKeywordPanel { get; set; }
+        
         public int SearchDelay { get; set; }
 
         public string IcoPath { get; set;}

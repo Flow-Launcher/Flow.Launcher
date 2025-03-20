@@ -76,6 +76,7 @@ namespace Flow.Launcher.Infrastructure.UserSettings
             }
         }
         public bool UseDropShadowEffect { get; set; } = true;
+        public BackdropTypes BackdropType{ get; set; } = BackdropTypes.None;
 
         /* Appearance Settings. It should be separated from the setting later.*/
         public double WindowHeightSize { get; set; } = 42;
@@ -456,5 +457,13 @@ namespace Flow.Launcher.Infrastructure.UserSettings
         Medium,
         Fast,
         Custom
+    }
+
+    public enum BackdropTypes
+    {
+        None,    
+        Acrylic,
+        Mica,
+        MicaAlt
     }
 }
