@@ -57,10 +57,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
             }
 
-            if (Configuration == null)
-            {
-                return;
-            }
+            if (Configuration == null) return;
 
             foreach (var (type, attributes) in Configuration.Body)
             {
@@ -87,10 +84,7 @@ namespace Flow.Launcher.Core.Plugin
 
         public void UpdateSettings(IReadOnlyDictionary<string, object> settings)
         {
-            if (settings == null || settings.Count == 0)
-            {
-                return;
-            }
+            if (settings == null || settings.Count == 0) return;
 
             foreach (var (key, value) in settings)
             {
@@ -117,8 +111,7 @@ namespace Flow.Launcher.Core.Plugin
                                 // If can parse the default value to bool, use it, otherwise use false
                                 : value is string stringValue && bool.TryParse(stringValue, out var boolValueFromString)
                                     && boolValueFromString;
-                            checkBox.Dispatcher.Invoke(() =>
-                                checkBox.IsChecked = isChecked);
+                            checkBox.Dispatcher.Invoke(() =>checkBox.IsChecked = isChecked);
                             break;
                     }
                 }
@@ -164,10 +157,7 @@ namespace Flow.Launcher.Core.Plugin
             foreach (var (type, attributes) in Configuration!.Body)
             {
                 // Skip if the setting does not have attributes or name
-                if (attributes?.Name == null)
-                {
-                    continue;
-                }
+                if (attributes?.Name == null) continue;
 
                 // Add a new row to the main grid
                 mainPanel.RowDefinitions.Add(new RowDefinition()
@@ -214,10 +204,7 @@ namespace Flow.Launcher.Core.Plugin
 
                     // Add the name and description to the panel
                     panel.Children.Add(name);
-                    if (desc != null)
-                    {
-                        panel.Children.Add(desc);
-                    }
+                    if (desc != null) panel.Children.Add(desc);
                 }
 
                 switch (type)
@@ -481,10 +468,7 @@ namespace Flow.Launcher.Core.Plugin
                 }
 
                 // Add into SettingControls for settings storage if need
-                if (NeedSaveInSettings(type))
-                {
-                    SettingControls[attributes.Name] = contentControl;
-                }
+                if (NeedSaveInSettings(type)) SettingControls[attributes.Name] = contentControl;
 
                 rowCount++;
             }
