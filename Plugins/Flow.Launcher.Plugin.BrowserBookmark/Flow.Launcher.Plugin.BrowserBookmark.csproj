@@ -96,9 +96,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.3" />
-    <PackageReference Include="SkiaSharp" Version="3.116.1" />
-    <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
-    <PackageReference Include="System.Drawing.Common" Version="7.0.0" />
   </ItemGroup>
 
 </Project>
