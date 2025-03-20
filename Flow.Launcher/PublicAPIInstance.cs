@@ -385,7 +385,6 @@ namespace Flow.Launcher
             return _mainVM.GameModeStatus;
         }
 
-
         private readonly List<Func<int, int, SpecialKeyState, bool>> _globalKeyboardHandlers = new();
 
         public void RegisterGlobalKeyboardCallback(Func<int, int, SpecialKeyState, bool> callback) => _globalKeyboardHandlers.Add(callback);

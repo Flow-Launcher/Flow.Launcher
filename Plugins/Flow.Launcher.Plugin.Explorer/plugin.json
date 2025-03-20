@@ -7,6 +7,7 @@
     "*",
     "*"
   ],
+  "HideActionKeywordPanel": true,
   "Name": "Explorer",
   "Description": "Find and manage files and folders via Windows Search or Everything",
   "Author": "Jeremy Wu",
