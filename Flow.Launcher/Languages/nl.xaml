@@ -340,9 +340,10 @@
     <system:String x:Key="cannotFindSpecifiedPlugin">Kan plugin niet vinden</system:String>
     <system:String x:Key="newActionKeywordsCannotBeEmpty">Nieuwe actie sneltoets moet ingevuld worden</system:String>
     <system:String x:Key="newActionKeywordsHasBeenAssigned">Nieuwe actie sneltoets is toegewezen aan een andere plugin, wijs een nieuwe actie sneltoets aan</system:String>
+    <system:String x:Key="newActionKeywordsSameAsOld">This new Action Keyword is the same as old, please choose a different one</system:String>
     <system:String x:Key="success">Succesvol</system:String>
     <system:String x:Key="completedSuccessfully">Succesvol afgerond</system:String>
-    <system:String x:Key="actionkeyword_tips">Gebruik * wanneer je geen nieuwe actie sneltoets wilt specificeren</system:String>
+    <system:String x:Key="actionkeyword_tips">Enter the action keywords you like to use to start the plugin and use whitespace to divide them. Use * if you don't want to specify any, and the plugin will be triggered without any action keywords.</system:String>
 
     <!--  Custom Query Hotkey Dialog  -->
     <system:String x:Key="customeQueryHotkeyTitle">Custom Query Sneltoets</system:String>
