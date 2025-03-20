@@ -5596,7 +5596,7 @@
     <Thickness x:Key="SettingPanelItemLeftTopBottomMargin">9,4.5,0,4.5</Thickness>
     <Thickness x:Key="SettingPanelItemRightTopBottomMargin">0,4.5,9,4.5</Thickness>
 
-    <Style x:Key="SettingPanelSeperatorStyle" TargetType="Separator">
+    <Style x:Key="SettingPanelSeparatorStyle" TargetType="Separator">
         <Setter Property="Margin" Value="-70 13.5 -18 13.5" />
         <Setter Property="Height" Value="1" />
         <Setter Property="VerticalAlignment" Value="Top" />

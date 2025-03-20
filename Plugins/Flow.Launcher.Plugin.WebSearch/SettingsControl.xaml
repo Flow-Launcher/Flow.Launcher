@@ -122,7 +122,7 @@
                 Content="{DynamicResource flowlauncher_plugin_websearch_add}" />
         </StackPanel>
 
-        <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeperatorStyle}" />
+        <Separator Grid.Row="2" Style="{StaticResource SettingPanelSeparatorStyle}" />
 
         <DockPanel
             Grid.Row="3"

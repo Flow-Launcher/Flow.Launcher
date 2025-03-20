@@ -58,7 +58,7 @@
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                 <TextBlock
                     MinWidth="120"
@@ -90,7 +90,7 @@
                         ToolTip="{DynamicResource flowlauncher_plugin_program_enable_hideduplicatedwindowsapp_tooltip}" />
                 </WrapPanel>
             </DockPanel>
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <StackPanel
                 HorizontalAlignment="Left"
                 VerticalAlignment="Center"

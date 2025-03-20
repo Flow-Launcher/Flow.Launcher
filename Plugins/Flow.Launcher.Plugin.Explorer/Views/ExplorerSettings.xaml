@@ -334,7 +334,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_native_context_menu_header}" />
         </StackPanel>
 
@@ -390,7 +390,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_previewpanel_setting_header}" />
         </StackPanel>
 
@@ -470,7 +470,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_everything_setting_header}" />
         </StackPanel>
 
@@ -549,7 +549,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_manageactionkeywords_header}" />
         </StackPanel>
 
@@ -586,7 +586,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_quickaccesslinks_header}" />
         </StackPanel>
 
@@ -642,7 +642,7 @@
             Grid.Column="0"
             Grid.ColumnSpan="2"
             Orientation="Vertical">
-            <Separator Style="{StaticResource SettingPanelSeperatorStyle}" />
+            <Separator Style="{StaticResource SettingPanelSeparatorStyle}" />
             <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="{DynamicResource plugin_explorer_indexsearchexcludedpaths_header}" />
         </StackPanel>
 

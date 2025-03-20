@@ -448,7 +448,7 @@ namespace Flow.Launcher.Core.Plugin
                         {
                             var sep = new Separator();
 
-                            sep.SetResourceReference(Separator.StyleProperty, "SettingPanelSeperatorStyle");
+                            sep.SetResourceReference(Separator.StyleProperty, "SettingPanelSeparatorStyle");
 
                             contentControl = sep;
 
@@ -458,7 +458,7 @@ namespace Flow.Launcher.Core.Plugin
                         continue;
                 }
 
-                // If type is textBlock or seperator, we just add the content control to the main grid
+                // If type is textBlock or separator, we just add the content control to the main grid
                 if (panel == null)
                 {
                     // Add the content control to the column 0, row rowCount and columnSpan 2 of the main grid
@@ -498,7 +498,7 @@ namespace Flow.Launcher.Core.Plugin
 
         private static bool NeedSaveInSettings(string type)
         {
-            return type != "textBlock" && type != "seperator" && type != "hyperlink";
+            return type != "textBlock" && type != "separator" && type != "hyperlink";
         }
     }
 }
