@@ -166,10 +166,10 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
                 {
                     Log.Exception($"Failed to extract Firefox favicon: {bookmark.Url}", ex);
                 }
-
-                // https://github.com/dotnet/efcore/issues/26580
-                SqliteConnection.ClearPool(connection);
             }
+
+            // https://github.com/dotnet/efcore/issues/26580
+            SqliteConnection.ClearPool(connection);
 
             // Delete temporary file
             try
