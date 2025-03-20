@@ -85,7 +85,14 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
 
             // Delete temporary file
-            try { File.Delete(tempDbPath); } catch { /* Ignore */ }
+            try
+            {
+                File.Delete(tempDbPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+            }
         }
         catch (Exception ex)
         {
@@ -159,7 +166,14 @@ public abstract class FirefoxBookmarkLoaderBase : IBookmarkLoader
             }
 
             // Delete temporary file
-            try { File.Delete(tempDbPath); } catch { /* Ignore */ }
+            try
+            {
+                File.Delete(tempDbPath);
+            }
+            catch (Exception ex)
+            {
+                Log.Exception($"Failed to delete temporary favicon DB: {tempDbPath}", ex);
+            }
         }
         catch (Exception ex)
         {
