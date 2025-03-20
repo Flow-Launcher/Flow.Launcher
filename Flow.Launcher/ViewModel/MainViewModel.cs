@@ -1147,7 +1147,7 @@ namespace Flow.Launcher.ViewModel
                 var searchDelayValue = searchDelay.Value;
                 tasks = plugins.Select(plugin => (plugin.Metadata.Disabled || plugin.Metadata.SearchDelay != searchDelayValue) switch
                 {
-                    false => QueryTask(plugin, reSelect),
+                    false => QueryTaskAsync(plugin, reSelect),
                     true => Task.CompletedTask
                 }).ToArray();
 
@@ -1166,7 +1166,7 @@ namespace Flow.Launcher.ViewModel
             {
                 tasks = plugins.Select(plugin => plugin.Metadata.Disabled switch
                 {
-                    false => QueryTask(plugin, reSelect),
+                    false => QueryTaskAsync(plugin, reSelect),
                     true => Task.CompletedTask
                 }).ToArray();
 
