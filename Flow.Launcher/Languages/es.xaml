@@ -102,6 +102,11 @@
     <system:String x:Key="AlwaysPreview">Mostrar siempre vista previa</system:String>
     <system:String x:Key="AlwaysPreviewToolTip">Muestra siempre el panel de vista previa al iniciar Flow. Pulsar {0} para mostrar/ocultar la vista previa.</system:String>
     <system:String x:Key="shadowEffectNotAllowed">El efecto de sombra no está permitido si el tema actual tiene activado el efecto de desenfoque</system:String>
+    <system:String x:Key="BackdropType">Backdrop Type</system:String>
+    <system:String x:Key="BackdropTypesNone">Ninguno</system:String>
+    <system:String x:Key="BackdropTypesAcrylic">Acrylic</system:String>
+    <system:String x:Key="BackdropTypesMica">Mica</system:String>
+    <system:String x:Key="BackdropTypesMicaAlt">Mica Alt</system:String>
 
     <!--  Setting Plugin  -->
     <system:String x:Key="searchplugin">Buscar complemento</system:String>
