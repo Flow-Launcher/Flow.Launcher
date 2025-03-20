@@ -370,9 +370,9 @@ namespace Flow.Launcher.Infrastructure
                 {
                     taskCompletionSource.SetResult(func());
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
-                    taskCompletionSource.SetResult(default);
+                    taskCompletionSource.SetException(ex);
                 }
                 finally
                 {
