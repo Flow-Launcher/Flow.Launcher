@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Media;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -10,7 +11,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -22,14 +22,8 @@ using Flow.Launcher.Infrastructure.UserSettings;
 using Flow.Launcher.Plugin.SharedCommands;
 using Flow.Launcher.ViewModel;
 using ModernWpf.Controls;
-using Key = System.Windows.Input.Key;
-using System.Media;
 using DataObject = System.Windows.DataObject;
-using System.Windows.Media;
-using System.Windows.Interop;
-using Windows.Win32;
-using System.Reactive.Linq;
-using System.Windows.Shapes;
+using Key = System.Windows.Input.Key;
 using MouseButtons = System.Windows.Forms.MouseButtons;
 using NotifyIcon = System.Windows.Forms.NotifyIcon;
 using Screen = System.Windows.Forms.Screen;
@@ -539,10 +533,10 @@ namespace Flow.Launcher
             {
                 switch (e.Button)
                 {
-                    case System.Windows.Forms.MouseButtons.Left:
+                    case MouseButtons.Left:
                         _viewModel.ToggleFlowLauncher();
                         break;
-                    case System.Windows.Forms.MouseButtons.Right:
+                    case MouseButtons.Right:
 
                         contextMenu.IsOpen = true;
                         // Get context menu handle and bring it to the foreground
